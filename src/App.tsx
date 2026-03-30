@@ -5,11 +5,15 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CookieBanner from "@/components/CookieBanner";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index.tsx";
 import Services from "./pages/Services.tsx";
 import About from "./pages/About.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
 import Contact from "./pages/Contact.tsx";
+import Datenschutz from "./pages/Datenschutz.tsx";
+import Impressum from "./pages/Impressum.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -20,6 +24,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
@@ -27,9 +32,12 @@ const App = () => (
           <Route path="/ueber-uns" element={<About />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/kontakt" element={<Contact />} />
+          <Route path="/datenschutz" element={<Datenschutz />} />
+          <Route path="/impressum" element={<Impressum />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <CookieBanner />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
