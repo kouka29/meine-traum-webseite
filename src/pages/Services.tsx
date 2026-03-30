@@ -1,37 +1,45 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
-import { Monitor, TrendingUp, Palette, Search, Settings } from "lucide-react";
+import FreePreviewCTA from "@/components/FreePreviewCTA";
+import { Monitor, TrendingUp, Palette, Search, Settings, ArrowRight, CheckCircle } from "lucide-react";
 
 const services = [
   {
     icon: Monitor,
-    title: "Webdesign",
-    desc: "Wir gestalten individuelle Webseiten, die Ihre Marke perfekt repräsentieren. Modernes Design trifft auf durchdachte Nutzerführung.",
-    features: ["Responsive Design", "Individuelle Layouts", "CMS-Integration", "Schnelle Ladezeiten"],
+    title: "Conversion-Webdesign",
+    desc: "Keine gewöhnliche Website – sondern ein Verkaufsinstrument. Wir gestalten jede Seite so, dass Besucher zu Kunden werden.",
+    features: ["Verkaufspsychologischer Aufbau", "Mobile First", "Unter 3 Sek. Ladezeit", "CMS für einfache Pflege"],
+    result: "Ø 3x mehr Anfragen nach Relaunch",
   },
   {
     icon: TrendingUp,
     title: "Conversion-Optimierung",
-    desc: "Mehr Besucher zu Kunden machen – mit strategisch platzierten Call-to-Actions, überzeugenden Texten und optimierten Landingpages.",
-    features: ["A/B Testing", "Landing Pages", "Funnel-Optimierung", "Analytics"],
+    desc: "Ihre Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
+    features: ["Conversion-Analyse", "Optimierte Landingpages", "A/B Testing", "Tracking & Analytics"],
+    result: "Bis zu 400% mehr Conversions",
   },
   {
     icon: Palette,
     title: "UX/UI Design",
-    desc: "Nutzerzentriertes Design, das begeistert. Wir schaffen intuitive Interfaces, die Ihre Besucher zum Handeln motivieren.",
-    features: ["User Research", "Wireframing", "Prototyping", "Usability Testing"],
+    desc: "Design, das nicht nur gut aussieht – sondern verkauft. Jedes Element hat einen Zweck: Vertrauen schaffen und zum Handeln motivieren.",
+    features: ["Nutzerforschung", "Wireframing & Prototyping", "Visuelles Storytelling", "Usability Testing"],
+    result: "Nachweisbar höhere Verweildauer",
   },
   {
     icon: Search,
-    title: "SEO-Basics",
-    desc: "Damit Ihre Webseite auch gefunden wird. Wir legen das Fundament für eine nachhaltige Sichtbarkeit in Suchmaschinen.",
-    features: ["On-Page SEO", "Meta-Tags", "Seitenstruktur", "Performance-Optimierung"],
+    title: "SEO-Grundlagen",
+    desc: "Gefunden werden, wenn Kunden suchen. Wir sorgen dafür, dass Ihre Website bei Google sichtbar wird – von Anfang an.",
+    features: ["On-Page Optimierung", "Technisches SEO", "Lokale Sichtbarkeit", "Google-konforme Struktur"],
+    result: "Top-Platzierungen bei relevanten Suchbegriffen",
   },
   {
     icon: Settings,
     title: "Individuelle Lösungen",
-    desc: "Besondere Anforderungen? Kein Problem. Wir entwickeln maßgeschneiderte Funktionen und Integrationen für Ihr Projekt.",
-    features: ["API-Integrationen", "Automatisierungen", "Sonderfunktionen", "Beratung"],
+    desc: "Buchungssysteme, Anbindungen, Automatisierungen – wir setzen um, was Ihr Business braucht. Maßgeschneidert und zukunftssicher.",
+    features: ["API-Integrationen", "Buchungssysteme", "Automatisierungen", "Individuelle Beratung"],
+    result: "Zeitersparnis durch Automatisierung",
   },
 ];
 
@@ -42,13 +50,15 @@ const Services = () => (
         <AnimatedSection>
           <div className="text-center mb-16 max-w-2xl mx-auto">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4">
-              Leistungen
+              Unsere Leistungen
             </span>
             <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-              Was wir für Sie <span className="gradient-text">leisten</span>
+              Alles, was Sie brauchen, um{" "}
+              <span className="gradient-text">online Kunden zu gewinnen</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Von der ersten Idee bis zur fertigen Webseite – wir begleiten Sie durch den gesamten Prozess.
+              Keine Standard-Websites. Sondern Verkaufsinstrumente, die sich bezahlt machen – 
+              für Handwerker, Coaches, Berater und lokale Unternehmen.
             </p>
           </div>
         </AnimatedSection>
@@ -61,14 +71,17 @@ const Services = () => (
                   <s.icon size={26} className="text-primary-foreground" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="font-heading text-xl font-bold mb-2">{s.title}</h2>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                    <h2 className="font-heading text-xl font-bold">{s.title}</h2>
+                    <span className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary w-fit">
+                      {s.result}
+                    </span>
+                  </div>
                   <p className="text-muted-foreground mb-4">{s.desc}</p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-3">
                     {s.features.map((f) => (
-                      <span
-                        key={f}
-                        className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-medium"
-                      >
+                      <span key={f} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <CheckCircle size={14} className="text-primary" />
                         {f}
                       </span>
                     ))}
@@ -78,9 +91,18 @@ const Services = () => (
             </AnimatedSection>
           ))}
         </div>
+
+        <div className="text-center mt-12">
+          <Button variant="gradient" size="lg" asChild>
+            <Link to="/kontakt">
+              Kostenlose Vorschau anfordern <ArrowRight size={18} />
+            </Link>
+          </Button>
+        </div>
       </div>
     </section>
 
+    <FreePreviewCTA />
     <CTABanner />
   </main>
 );

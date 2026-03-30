@@ -1,12 +1,23 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
-import { Target, Award, Rocket, Heart } from "lucide-react";
+import { Target, Award, Rocket, Heart, ArrowRight, CheckCircle, Users } from "lucide-react";
 
 const values = [
-  { icon: Target, title: "Zielorientiert", desc: "Jede Entscheidung dient einem klaren Ziel: Ihrem Geschäftserfolg." },
-  { icon: Award, title: "Qualität", desc: "Wir liefern nur Ergebnisse, auf die wir stolz sind." },
-  { icon: Rocket, title: "Performance", desc: "Schnelle, optimierte Webseiten für beste Nutzererfahrung." },
-  { icon: Heart, title: "Leidenschaft", desc: "Wir lieben, was wir tun – und das sieht man." },
+  { icon: Target, title: "Ergebnisorientiert", desc: "Jede Designentscheidung dient einem Ziel: mehr Kunden für Ihr Unternehmen." },
+  { icon: Award, title: "Höchste Qualität", desc: "Wir liefern nur Ergebnisse, die wir selbst nutzen würden." },
+  { icon: Rocket, title: "Schnell & Effizient", desc: "Von der ersten Idee zur fertigen Website – ohne unnötige Wartezeiten." },
+  { icon: Heart, title: "Partnerschaftlich", desc: "Wir arbeiten mit Ihnen, nicht nur für Sie. Ihr Erfolg ist unser Erfolg." },
+];
+
+const reasons = [
+  "Über 150 zufriedene Kunden im DACH-Raum",
+  "Durchschnittlich 3x mehr Anfragen nach Relaunch",
+  "98% Weiterempfehlungsrate",
+  "Kostenlose Website-Vorschau vor Auftragserteilung",
+  "Keine versteckten Kosten – transparente Preise",
+  "Persönlicher Ansprechpartner für jedes Projekt",
 ];
 
 const About = () => (
@@ -19,11 +30,12 @@ const About = () => (
               Über uns
             </span>
             <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-              Ihre Vision. <span className="gradient-text">Unsere Mission.</span>
+              Wir machen aus Websites{" "}
+              <span className="gradient-text">Verkaufsinstrumente</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Wir sind ein Team aus Designern und Entwicklern mit einer gemeinsamen Mission:
-              individuelle Traum-Webseiten zu erstellen, die echte Ergebnisse liefern.
+              Meine Traum Webseite ist keine gewöhnliche Webdesign-Agentur. 
+              Wir bauen Websites, die aktiv Kunden gewinnen – für Selbstständige, Handwerker, Coaches und KMUs.
             </p>
           </div>
         </AnimatedSection>
@@ -32,28 +44,46 @@ const About = () => (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div>
               <h2 className="font-heading text-2xl font-bold mb-4">
-                Wer wir sind
+                Warum wir anders sind
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Meine Traum Webseite ist eine Webdesign-Agentur mit Fokus auf
-                Qualität, Performance und Ergebnisse. Wir arbeiten mit Selbstständigen,
-                kleinen und mittelständischen Unternehmen sowie Startups zusammen.
+                Die meisten Agenturen liefern eine schöne Website – und das war's. 
+                Wir gehen weiter: Jede Website, die wir erstellen, ist ein strategisches Verkaufsinstrument, 
+                das messbar zu Ihrem Geschäftserfolg beiträgt.
               </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Unser Ansatz: Wir kombinieren strategisches Denken mit
-                kreativem Design und modernster Technologie, um Webseiten zu schaffen,
-                die nicht nur gut aussehen – sondern messbar zum Geschäftserfolg beitragen.
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Wir kombinieren verkaufspsychologisches Design mit modernster Technologie – 
+                damit Ihre Website nicht nur Besucher anzieht, sondern sie in zahlende Kunden verwandelt.
               </p>
+              <div className="space-y-3">
+                {reasons.map((r) => (
+                  <div key={r} className="flex items-center gap-3">
+                    <CheckCircle size={18} className="text-primary shrink-0" />
+                    <span className="text-sm">{r}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8">
+                <Button variant="gradient" asChild>
+                  <Link to="/kontakt">
+                    Kostenlose Vorschau anfordern <ArrowRight size={18} />
+                  </Link>
+                </Button>
+              </div>
             </div>
             <div className="aspect-square rounded-2xl gradient-hero-bg flex items-center justify-center">
-              <span className="text-primary-foreground/50 font-heading text-6xl font-bold">MTW</span>
+              <div className="text-center text-primary-foreground">
+                <Users size={64} className="mx-auto mb-4 opacity-50" />
+                <span className="font-heading text-4xl font-bold block">150+</span>
+                <span className="text-primary-foreground/70 text-sm">Zufriedene Kunden</span>
+              </div>
             </div>
           </div>
         </AnimatedSection>
 
         <AnimatedSection>
           <h2 className="font-heading text-2xl font-bold text-center mb-12">
-            Unsere Werte
+            Wofür wir stehen
           </h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
