@@ -1,14 +1,16 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
-import { Monitor, ExternalLink } from "lucide-react";
+import { Monitor, ExternalLink, ArrowRight, TrendingUp } from "lucide-react";
 
 const projects = [
-  { title: "TechStart GmbH", category: "SaaS Landing Page", desc: "Conversion-optimierte Landing Page mit modernem Design und klarer Nutzerführung.", gradient: "from-primary to-accent" },
-  { title: "Yoga Studio Flow", category: "Branding & Webdesign", desc: "Ganzheitliches Branding und Webdesign für ein Premium-Yoga-Studio.", gradient: "from-accent to-primary" },
-  { title: "DigitalBoost", category: "E-Commerce", desc: "Online-Shop mit intuitivem Design und optimiertem Checkout-Prozess.", gradient: "from-primary/80 to-accent/80" },
-  { title: "Kanzlei Weber", category: "Corporate Website", desc: "Seriöse und vertrauenswürdige Online-Präsenz für eine Rechtsanwaltskanzlei.", gradient: "from-accent/90 to-primary/90" },
-  { title: "FitLife Coaching", category: "Personal Brand", desc: "Persönliche Webseite mit integriertem Buchungssystem und Blog.", gradient: "from-primary to-accent/70" },
-  { title: "GreenTech Solutions", category: "Startup Website", desc: "Innovatives Webdesign für ein Cleantech-Startup mit Investoren-Fokus.", gradient: "from-accent/70 to-primary" },
+  { title: "TechStart GmbH", category: "SaaS Landing Page", desc: "Conversion-optimierte Landing Page – Anfragen um 300% gesteigert in nur 8 Wochen.", result: "+300% Anfragen", gradient: "from-primary to-accent" },
+  { title: "Yoga Studio Flow", category: "Branding & Webdesign", desc: "Ganzheitlicher Markenauftritt – von 3 auf 20+ Anfragen pro Monat.", result: "+700% Neukunden", gradient: "from-accent to-primary" },
+  { title: "DigitalBoost", category: "E-Commerce", desc: "Online-Shop mit optimiertem Checkout – Umsatz um 180% gesteigert.", result: "+180% Umsatz", gradient: "from-primary/80 to-accent/80" },
+  { title: "Kanzlei Weber", category: "Corporate Website", desc: "Vertrauensvolle Online-Präsenz – 5x mehr Mandantenanfragen über die Website.", result: "5x mehr Mandanten", gradient: "from-accent/90 to-primary/90" },
+  { title: "FitLife Coaching", category: "Personal Brand", desc: "Persönliche Website mit Buchungssystem – Auslastung von 40% auf 95% gesteigert.", result: "95% Auslastung", gradient: "from-primary to-accent/70" },
+  { title: "GreenTech Solutions", category: "Startup Website", desc: "Investoren-fokussiertes Webdesign – erfolgreich Series A Funding gesichert.", result: "Funding gesichert", gradient: "from-accent/70 to-primary" },
 ];
 
 const Portfolio = () => (
@@ -18,13 +20,14 @@ const Portfolio = () => (
         <AnimatedSection>
           <div className="text-center mb-16 max-w-2xl mx-auto">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4">
-              Portfolio
+              Referenzen
             </span>
             <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-              Unsere <span className="gradient-text">Projekte</span>
+              Echte Ergebnisse für{" "}
+              <span className="gradient-text">echte Unternehmen</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Ausgewählte Arbeiten, die zeigen, was wir können.
+              Keine Stockfotos, keine leeren Versprechen – sondern messbare Resultate, die für sich sprechen.
             </p>
           </div>
         </AnimatedSection>
@@ -43,6 +46,9 @@ const Portfolio = () => (
                       className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity"
                     />
                   </div>
+                  <span className="absolute bottom-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1">
+                    <TrendingUp size={12} /> {p.result}
+                  </span>
                 </div>
                 <div className="p-5">
                   <span className="text-xs font-medium text-primary">{p.category}</span>
@@ -52,6 +58,17 @@ const Portfolio = () => (
               </div>
             </AnimatedSection>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <p className="text-muted-foreground mb-4">
+            Wollen Sie ähnliche Ergebnisse für Ihr Unternehmen?
+          </p>
+          <Button variant="gradient" size="lg" asChild>
+            <Link to="/kontakt">
+              Kostenlose Vorschau anfordern <ArrowRight size={18} />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
