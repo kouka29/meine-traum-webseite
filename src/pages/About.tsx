@@ -21,49 +21,49 @@ const reasons = [
 ];
 
 const About = () => (
-  <main className="pt-16">
+  <main className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="max-w-2xl mx-auto text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4">
+          <div className="max-w-2xl mx-auto text-center mb-20">
+            <span className="badge-label bg-primary/10 text-primary mb-5">
               Über uns
             </span>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="mb-5 text-balance">
               Wir machen aus Websites{" "}
               <span className="gradient-text">Verkaufsinstrumente</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Meine Traum Webseite ist keine gewöhnliche Webdesign-Agentur. 
+              Meine Traum Webseite ist keine gewöhnliche Webdesign-Agentur.
               Wir bauen Websites, die aktiv Kunden gewinnen – für Selbstständige, Handwerker, Coaches und KMUs.
             </p>
           </div>
         </AnimatedSection>
 
         <AnimatedSection delay={0.2}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-24">
             <div>
-              <h2 className="font-heading text-2xl font-bold mb-4">
+              <h2 className="text-2xl md:text-3xl mb-5">
                 Warum wir anders sind
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Die meisten Agenturen liefern eine schöne Website – und das war's. 
-                Wir gehen weiter: Jede Website, die wir erstellen, ist ein strategisches Verkaufsinstrument, 
+                Die meisten Agenturen liefern eine schöne Website – und das war's.
+                Wir gehen weiter: Jede Website, die wir erstellen, ist ein strategisches Verkaufsinstrument,
                 das messbar zu Ihrem Geschäftserfolg beiträgt.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                Wir kombinieren verkaufspsychologisches Design mit modernster Technologie – 
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Wir kombinieren verkaufspsychologisches Design mit modernster Technologie –
                 damit Ihre Website nicht nur Besucher anzieht, sondern sie in zahlende Kunden verwandelt.
               </p>
-              <div className="space-y-3">
+              <div className="space-y-3.5">
                 {reasons.map((r) => (
                   <div key={r} className="flex items-center gap-3">
-                    <CheckCircle size={18} className="text-primary shrink-0" />
+                    <CheckCircle size={17} className="text-primary shrink-0" />
                     <span className="text-sm">{r}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-8">
+              <div className="mt-10">
                 <Button variant="gradient" asChild>
                   <Link to="/kontakt">
                     Kostenlose Vorschau anfordern <ArrowRight size={18} />
@@ -71,30 +71,30 @@ const About = () => (
                 </Button>
               </div>
             </div>
-            <div className="aspect-square rounded-2xl gradient-hero-bg flex items-center justify-center">
+            <div className="aspect-square rounded-3xl gradient-hero-bg flex items-center justify-center">
               <div className="text-center text-primary-foreground">
-                <Users size={64} className="mx-auto mb-4 opacity-50" />
-                <span className="font-heading text-4xl font-bold block">150+</span>
-                <span className="text-primary-foreground/70 text-sm">Zufriedene Kunden</span>
+                <Users size={64} className="mx-auto mb-4 opacity-40" />
+                <span className="font-heading text-5xl font-bold block tracking-tight">150+</span>
+                <span className="text-primary-foreground/60 text-sm mt-1 block">Zufriedene Kunden</span>
               </div>
             </div>
           </div>
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="font-heading text-2xl font-bold text-center mb-12">
+          <h2 className="text-center mb-16 text-balance">
             Wofür wir stehen
           </h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((v, i) => (
             <AnimatedSection key={v.title} delay={i * 0.1}>
-              <div className="text-center p-6 rounded-xl border border-border hover:border-primary/30 transition-colors">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <div className="text-center p-8 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
                   <v.icon size={22} className="text-primary" />
                 </div>
-                <h3 className="font-heading font-semibold mb-2">{v.title}</h3>
-                <p className="text-sm text-muted-foreground">{v.desc}</p>
+                <h3 className="font-heading text-lg font-semibold mb-2">{v.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
               </div>
             </AnimatedSection>
           ))}

@@ -3,11 +3,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => (
-  <footer className="bg-foreground text-background/80 section-padding">
+  <footer className="bg-foreground text-background/70 section-padding">
     <div className="container-narrow px-4">
       {/* Mini CTA */}
-      <div className="text-center mb-12 pb-12 border-b border-background/10">
-        <p className="font-heading text-xl font-semibold text-background mb-4">
+      <div className="text-center mb-16 pb-16 border-b border-background/8">
+        <p className="font-heading text-2xl font-semibold text-background mb-5 text-balance">
           Verlieren Sie keine Kunden mehr an Ihre Konkurrenz.
         </p>
         <Button
@@ -21,19 +21,19 @@ const Footer = () => (
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-14 mb-16">
         <div>
-          <h3 className="font-heading text-lg font-bold text-background mb-4">
+          <h3 className="font-heading text-xl font-bold text-background mb-4 tracking-tight">
             Meine Traum Webseite
           </h3>
           <p className="text-sm leading-relaxed">
-            Wir erstellen Websites, die aktiv Kunden gewinnen – für Selbstständige, 
+            Wir erstellen Websites, die aktiv Kunden gewinnen – für Selbstständige,
             Handwerker, Coaches und KMUs im gesamten DACH-Raum.
           </p>
         </div>
         <div>
-          <h4 className="font-heading font-semibold text-background mb-4">Navigation</h4>
-          <ul className="space-y-2 text-sm">
+          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Navigation</h4>
+          <ul className="space-y-3 text-sm">
             {[
               ["Startseite", "/"],
               ["Leistungen", "/leistungen"],
@@ -50,17 +50,17 @@ const Footer = () => (
           </ul>
         </div>
         <div>
-          <h4 className="font-heading font-semibold text-background mb-4">Kontakt</h4>
-          <p className="text-sm leading-relaxed mb-2">
+          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Kontakt</h4>
+          <p className="text-sm leading-relaxed mb-3">
             info@meinetraumwebseite.de<br />
             +49 123 456 789
           </p>
-          <p className="text-xs text-background/50">
-            Mo-Fr: 9:00 – 18:00 Uhr
+          <p className="text-xs text-background/40">
+            Mo–Fr: 9:00 – 18:00 Uhr
           </p>
         </div>
       </div>
-      <div className="border-t border-background/20 pt-8 text-center text-xs">
+      <div className="border-t border-background/10 pt-8 text-center text-xs text-background/40">
         © {new Date().getFullYear()} Meine Traum Webseite. Alle Rechte vorbehalten.
       </div>
     </div>

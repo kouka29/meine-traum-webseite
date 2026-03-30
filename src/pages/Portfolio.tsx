@@ -14,15 +14,15 @@ const projects = [
 ];
 
 const Portfolio = () => (
-  <main className="pt-16">
+  <main className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="text-center mb-16 max-w-2xl mx-auto">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4">
+          <div className="text-center mb-20 max-w-2xl mx-auto">
+            <span className="badge-label bg-primary/10 text-primary mb-5">
               Referenzen
             </span>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="mb-5 text-balance">
               Echte Ergebnisse für{" "}
               <span className="gradient-text">echte Unternehmen</span>
             </h1>
@@ -32,36 +32,36 @@ const Portfolio = () => (
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {projects.map((p, i) => (
             <AnimatedSection key={p.title} delay={i * 0.08}>
-              <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-elevated transition-all duration-300">
+              <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
                 <div
                   className={`aspect-[4/3] bg-gradient-to-br ${p.gradient} flex items-center justify-center relative`}
                 >
-                  <Monitor size={48} className="text-primary-foreground/40" />
-                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors flex items-center justify-center">
+                  <Monitor size={48} className="text-primary-foreground/30" />
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/15 transition-colors flex items-center justify-center">
                     <ExternalLink
                       size={24}
                       className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity"
                     />
                   </div>
-                  <span className="absolute bottom-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1">
+                  <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
                     <TrendingUp size={12} /> {p.result}
                   </span>
                 </div>
-                <div className="p-5">
-                  <span className="text-xs font-medium text-primary">{p.category}</span>
-                  <h3 className="font-heading font-semibold mt-1 mb-2">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground">{p.desc}</p>
+                <div className="p-6">
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
+                  <h3 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
                 </div>
               </div>
             </AnimatedSection>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4">
+        <div className="text-center mt-16">
+          <p className="text-muted-foreground mb-5 text-lg">
             Wollen Sie ähnliche Ergebnisse für Ihr Unternehmen?
           </p>
           <Button variant="gradient" size="lg" asChild>

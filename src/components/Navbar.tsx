@@ -17,20 +17,20 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-      <div className="container-narrow flex items-center justify-between h-16 px-4">
-        <Link to="/" className="font-heading text-xl font-bold gradient-text">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
+      <div className="container-narrow flex items-center justify-between h-[72px] px-4">
+        <Link to="/" className="font-heading text-xl font-bold gradient-text tracking-tight">
           Meine Traum Webseite
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
+                "text-[13px] font-medium tracking-wide transition-colors hover:text-primary",
                 location.pathname === item.path
                   ? "text-primary"
                   : "text-muted-foreground"
@@ -39,7 +39,7 @@ const Navbar = () => {
               {item.label}
             </Link>
           ))}
-          <Button variant="gradient" size="sm" asChild>
+          <Button variant="gradient" size="sm" className="text-[13px] px-5" asChild>
             <Link to="/kontakt">Erstgespräch buchen</Link>
           </Button>
         </div>
@@ -56,15 +56,15 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-background border-b border-border animate-fade-in">
-          <div className="container-narrow px-4 py-4 flex flex-col gap-4">
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
+          <div className="container-narrow px-4 py-6 flex flex-col gap-5">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "text-sm font-medium py-2 transition-colors",
+                  "text-sm font-medium py-1 transition-colors",
                   location.pathname === item.path
                     ? "text-primary"
                     : "text-muted-foreground"

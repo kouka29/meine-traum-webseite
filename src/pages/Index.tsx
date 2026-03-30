@@ -62,36 +62,31 @@ const portfolioItems = [
 
 const Index = () => (
   <main>
-    {/* Hero – Problem + Lösung + CTA */}
-    <section className="relative min-h-[90vh] flex items-center section-padding pt-32 overflow-hidden">
+    {/* Hero */}
+    <section className="relative min-h-[92vh] flex items-center section-padding pt-36 overflow-hidden">
       <div className="absolute inset-0 glow-bg" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
       <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
           <div className="max-w-3xl">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-destructive/10 text-destructive mb-6 font-semibold">
+            <span className="badge-label bg-destructive/10 text-destructive mb-8">
               Ihre Website bringt keine Kunden? Das ändern wir.
             </span>
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              Webseiten, die nicht nur gut aussehen – sondern{" "}
+            <h1 className="mb-6 text-balance">
+              Webseiten, die nicht nur gut aussehen –{" "}
               <span className="gradient-text">aktiv Kunden gewinnen</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed">
-              Wir erstellen conversion-optimierte Websites für Selbstständige, Handwerker, Coaches und KMUs – 
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-5 leading-relaxed">
+              Wir erstellen conversion-optimierte Websites für Selbstständige, Handwerker, Coaches und KMUs –
               strategisch durchdacht, damit Sie <strong className="text-foreground">planbar mehr Anfragen</strong> erhalten.
             </p>
-            <div className="flex items-center gap-4 mb-8 flex-wrap">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CheckCircle size={16} className="text-primary" />
-                <span>Kostenlose Vorschau</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CheckCircle size={16} className="text-primary" />
-                <span>Keine Verpflichtung</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CheckCircle size={16} className="text-primary" />
-                <span>In 48h fertig</span>
-              </div>
+            <div className="flex items-center gap-5 mb-10 flex-wrap">
+              {["Kostenlose Vorschau", "Keine Verpflichtung", "In 48h fertig"].map((t) => (
+                <div key={t} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <CheckCircle size={15} className="text-primary" />
+                  <span>{t}</span>
+                </div>
+              ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="gradient" size="lg" className="text-base py-6 px-8" asChild>
@@ -116,19 +111,19 @@ const Index = () => (
     {/* Pain Points */}
     <PainPoints />
 
-    {/* Lösung / Services */}
+    {/* Services */}
     <section className="section-padding gradient-subtle-bg">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4">
+          <div className="text-center mb-20">
+            <span className="badge-label bg-primary/10 text-primary mb-5">
               Die Lösung
             </span>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="mb-5 text-balance">
               So machen wir Ihre Website zum{" "}
               <span className="gradient-text">Kundenmagnet</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
               Wir kombinieren verkaufspsychologisches Design mit modernster Technik – für Websites, die messbar Ergebnisse liefern.
             </p>
           </div>
@@ -136,17 +131,17 @@ const Index = () => (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s, i) => (
             <AnimatedSection key={s.title} delay={i * 0.1}>
-              <div className="bg-background rounded-xl p-6 shadow-card hover:shadow-elevated transition-all duration-300 group hover:-translate-y-1">
-                <div className="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <div className="bg-background rounded-2xl p-7 shadow-card hover:shadow-elevated transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-primary/10">
+                <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                   <s.icon size={22} className="text-primary-foreground" />
                 </div>
-                <h3 className="font-heading font-semibold mb-2">{s.title}</h3>
-                <p className="text-sm text-muted-foreground">{s.desc}</p>
+                <h3 className="font-heading text-lg font-semibold mb-2">{s.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </div>
             </AnimatedSection>
           ))}
         </div>
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <Button variant="outline-primary" asChild>
             <Link to="/leistungen">Alle Leistungen ansehen</Link>
           </Button>
@@ -154,38 +149,38 @@ const Index = () => (
       </div>
     </section>
 
-    {/* Kostenlose Vorschau CTA */}
+    {/* Free Preview CTA */}
     <FreePreviewCTA />
 
-    {/* Benefits – Warum wir */}
+    {/* Benefits */}
     <section className="section-padding gradient-subtle-bg">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-20">
+            <h2 className="mb-5 text-balance">
               Warum Unternehmen sich für uns entscheiden
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
               Wir liefern keine digitalen Visitenkarten – sondern Verkaufsinstrumente, die sich bezahlt machen.
             </p>
           </div>
         </AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {benefits.map((b, i) => (
             <AnimatedSection key={b.title} delay={i * 0.1}>
-              <div className="flex gap-5 p-6 rounded-xl border border-border hover:border-primary/30 transition-colors bg-background">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all duration-300 bg-background hover:shadow-card">
+                <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center shrink-0">
                   <b.icon size={22} className="text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-semibold mb-1">{b.title}</h3>
-                  <p className="text-sm text-muted-foreground">{b.desc}</p>
+                  <h3 className="font-heading text-lg font-semibold mb-1.5">{b.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
                 </div>
               </div>
             </AnimatedSection>
           ))}
         </div>
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <Button variant="gradient" size="lg" asChild>
             <Link to="/kontakt">
               Kostenlose Vorschau anfordern <ArrowRight size={18} />
@@ -195,15 +190,15 @@ const Index = () => (
       </div>
     </section>
 
-    {/* Testimonials mit Ergebnissen */}
+    {/* Testimonials */}
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-20">
+            <h2 className="mb-5 text-balance">
               Echte Ergebnisse. Echte Kunden.
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
               Keine leeren Versprechen – sondern nachweisbare Resultate.
             </p>
           </div>
@@ -211,16 +206,16 @@ const Index = () => (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <AnimatedSection key={t.name} delay={i * 0.1}>
-              <div className="bg-card rounded-xl p-6 shadow-card h-full flex flex-col border border-border">
-                <div className="flex gap-1 mb-3">
+              <div className="bg-card rounded-2xl p-7 shadow-card h-full flex flex-col border border-border">
+                <div className="flex gap-1 mb-4">
                   {[...Array(5)].map((_, j) => (
-                    <Star key={j} size={16} className="text-primary fill-primary" />
+                    <Star key={j} size={15} className="text-primary fill-primary" />
                   ))}
                 </div>
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary mb-3 w-fit">
+                <span className="badge-label bg-primary/10 text-primary mb-4 w-fit text-[11px]">
                   {t.result}
                 </span>
-                <p className="text-sm text-muted-foreground mb-6 flex-1 italic">
+                <p className="text-sm text-muted-foreground mb-8 flex-1 italic leading-relaxed">
                   „{t.text}"
                 </p>
                 <div className="flex items-center gap-3">
@@ -239,12 +234,12 @@ const Index = () => (
       </div>
     </section>
 
-    {/* Portfolio mit Ergebnissen */}
+    {/* Portfolio */}
     <section className="section-padding gradient-subtle-bg">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-20">
+            <h2 className="mb-5 text-balance">
               Projekte, die Ergebnisse sprechen lassen
             </h2>
           </div>
@@ -254,20 +249,20 @@ const Index = () => (
             <AnimatedSection key={p.title} delay={i * 0.1}>
               <div className="group cursor-pointer">
                 <div
-                  className={`aspect-[4/3] rounded-xl bg-gradient-to-br ${p.gradient} mb-4 flex flex-col items-center justify-center group-hover:scale-[1.02] transition-transform duration-300 relative`}
+                  className={`aspect-[4/3] rounded-2xl bg-gradient-to-br ${p.gradient} mb-5 flex flex-col items-center justify-center group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden`}
                 >
-                  <Monitor size={48} className="text-primary-foreground/50" />
-                  <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
+                  <Monitor size={48} className="text-primary-foreground/40" />
+                  <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
                     {p.result}
                   </span>
                 </div>
-                <h3 className="font-heading font-semibold">{p.title}</h3>
+                <h3 className="font-heading text-lg font-semibold">{p.title}</h3>
                 <p className="text-sm text-muted-foreground">{p.category}</p>
               </div>
             </AnimatedSection>
           ))}
         </div>
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <Button variant="outline-primary" asChild>
             <Link to="/portfolio">Alle Projekte ansehen</Link>
           </Button>
