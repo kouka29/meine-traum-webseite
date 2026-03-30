@@ -44,43 +44,43 @@ const services = [
 ];
 
 const Services = () => (
-  <main className="pt-16">
+  <main className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="text-center mb-16 max-w-2xl mx-auto">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4">
+          <div className="text-center mb-20 max-w-2xl mx-auto">
+            <span className="badge-label bg-primary/10 text-primary mb-5">
               Unsere Leistungen
             </span>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="mb-5 text-balance">
               Alles, was Sie brauchen, um{" "}
               <span className="gradient-text">online Kunden zu gewinnen</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Keine Standard-Websites. Sondern Verkaufsinstrumente, die sich bezahlt machen – 
+              Keine Standard-Websites. Sondern Verkaufsinstrumente, die sich bezahlt machen –
               für Handwerker, Coaches, Berater und lokale Unternehmen.
             </p>
           </div>
         </AnimatedSection>
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           {services.map((s, i) => (
             <AnimatedSection key={s.title} delay={i * 0.08}>
-              <div className="flex flex-col md:flex-row gap-6 p-8 rounded-2xl border border-border hover:border-primary/30 hover:shadow-elevated transition-all duration-300">
+              <div className="flex flex-col md:flex-row gap-7 p-8 md:p-10 rounded-2xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
                 <div className="w-14 h-14 rounded-xl gradient-bg flex items-center justify-center shrink-0">
                   <s.icon size={26} className="text-primary-foreground" />
                 </div>
                 <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-3">
                     <h2 className="font-heading text-xl font-bold">{s.title}</h2>
-                    <span className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary w-fit">
+                    <span className="badge-label bg-primary/10 text-primary text-[11px] w-fit">
                       {s.result}
                     </span>
                   </div>
-                  <p className="text-muted-foreground mb-4">{s.desc}</p>
-                  <div className="flex flex-wrap gap-3">
+                  <p className="text-muted-foreground mb-5 leading-relaxed">{s.desc}</p>
+                  <div className="flex flex-wrap gap-4">
                     {s.features.map((f) => (
-                      <span key={f} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <span key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
                         <CheckCircle size={14} className="text-primary" />
                         {f}
                       </span>
@@ -92,7 +92,7 @@ const Services = () => (
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <Button variant="gradient" size="lg" asChild>
             <Link to="/kontakt">
               Kostenlose Vorschau anfordern <ArrowRight size={18} />

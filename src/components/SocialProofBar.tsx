@@ -8,14 +8,14 @@ const stats = [
 ];
 
 const SocialProofBar = () => (
-  <section className="py-12 border-y border-border">
+  <section className="py-16 border-y border-border/50 bg-card/50">
     <div className="container-narrow px-4">
       <AnimatedSection>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
           {stats.map((s) => (
             <div key={s.label}>
-              <p className="font-heading text-3xl md:text-4xl font-bold gradient-text">{s.value}</p>
-              <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
+              <p className="font-heading text-3xl md:text-4xl font-bold gradient-text tracking-tight">{s.value}</p>
+              <p className="text-sm text-muted-foreground mt-2">{s.label}</p>
             </div>
           ))}
         </div>
