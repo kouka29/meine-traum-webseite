@@ -47,6 +47,8 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
       </AnimatedSection>
     </div>
   </section>
-);
+));
+
+CTABanner.displayName = "CTABanner";
 
 export default CTABanner;
