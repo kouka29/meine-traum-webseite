@@ -188,6 +188,15 @@ const LeadCaptureModal = () => {
                     <p className="text-xs text-destructive mt-1">{errors.email}</p>
                   )}
                 </div>
+                <div>
+                  <Input
+                    type="tel"
+                    placeholder="Deine Telefonnummer (optional)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    maxLength={30}
+                  />
+                </div>
 
                 {/* DSGVO Checkbox */}
                 <div className="flex items-start gap-2">
@@ -214,8 +223,9 @@ const LeadCaptureModal = () => {
                 {/* CTA Button */}
                 <Button
                   type="submit"
+                  variant="gradient"
                   size="lg"
-                  className="w-full text-base py-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
+                  className="w-full text-base py-6 font-bold shadow-glow hover:shadow-elevated hover:scale-[1.02] transition-all duration-200 animate-cta-pulse"
                 >
                   Jetzt kostenlos herunterladen
                 </Button>
