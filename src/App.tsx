@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
+import LeadCaptureModal from "@/components/LeadCaptureModal";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
 import Index from "./pages/Index.tsx";
@@ -40,6 +41,7 @@ const App = () => (
         </Routes>
         <Footer />
         <CookieBanner />
+        <LeadCaptureModal />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
