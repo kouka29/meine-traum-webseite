@@ -32,7 +32,10 @@ const IndexPortfolio = () => {
         .order("sort_order", { ascending: true })
         .limit(3);
       if (data && data.length > 0) {
-        setItems(data);
+        setItems(data.map(p => ({
+          ...p,
+          image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        })));
       }
     };
     fetch();
