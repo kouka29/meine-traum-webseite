@@ -327,6 +327,84 @@ const AdminLeads = () => {
     });
   };
 
+  // Testimonial actions
+  const openNewTestimonial = () => {
+    setEditingTestimonial(null);
+    setTestimonialForm({ name: "", role: "", text: "", result: "", is_visible: true });
+    setShowTestimonialDialog(true);
+  };
+
+  const openEditTestimonial = (t: Testimonial) => {
+    setEditingTestimonial(t);
+    setTestimonialForm({ name: t.name, role: t.role, text: t.text, result: t.result, is_visible: t.is_visible });
+    setShowTestimonialDialog(true);
+  };
+
+  const saveTestimonial = async () => {
+    if (!testimonialForm.name.trim() || !testimonialForm.text.trim()) {
+      toast.error("Bitte Name und Text eingeben");
+      return;
+    }
+    setSavingTestimonial(true);
+    const action = editingTestimonial ? "testimonials-update" : "testimonials-create";
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: {
+        password, action,
+        ...(editingTestimonial ? { testimonialId: editingTestimonial.id } : {}),
+        ...testimonialForm,
+      },
+    });
+    setSavingTestimonial(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Speichern");
+      return;
+    }
+    toast.success(editingTestimonial ? "Referenz aktualisiert" : "Referenz erstellt");
+    setShowTestimonialDialog(false);
+    fetchTestimonials();
+  };
+
+  const deleteTestimonial = async (id: string) => {
+    if (!confirm("Referenz wirklich löschen?")) return;
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "testimonials-delete", testimonialId: id },
+    });
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Löschen");
+      return;
+    }
+    toast.success("Referenz gelöscht");
+    setTestimonials(prev => prev.filter(t => t.id !== id));
+  };
+
+  const toggleTestimonialVisibility = async (t: Testimonial) => {
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "testimonials-update", testimonialId: t.id, is_visible: !t.is_visible },
+    });
+    if (error || data?.error) {
+      toast.error("Fehler beim Aktualisieren");
+      return;
+    }
+    setTestimonials(prev => prev.map(item => item.id === t.id ? { ...item, is_visible: !item.is_visible } : item));
+  };
+
+  const moveTestimonial = async (index: number, direction: "up" | "down") => {
+    const newList = [...testimonials];
+    const swapIndex = direction === "up" ? index - 1 : index + 1;
+    if (swapIndex < 0 || swapIndex >= newList.length) return;
+    const tempOrder = newList[index].sort_order;
+    newList[index].sort_order = newList[swapIndex].sort_order;
+    newList[swapIndex].sort_order = tempOrder;
+    [newList[index], newList[swapIndex]] = [newList[swapIndex], newList[index]];
+    setTestimonials(newList);
+    await supabase.functions.invoke("admin-leads", {
+      body: {
+        password, action: "testimonials-reorder",
+        testimonials: newList.map(t => ({ id: t.id, sort_order: t.sort_order })),
+      },
+    });
+  };
+
   if (!authenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
