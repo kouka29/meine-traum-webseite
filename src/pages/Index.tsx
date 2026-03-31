@@ -8,6 +8,7 @@ import SocialProofBar from "@/components/SocialProofBar";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
+import heroBg from "@/assets/hero-bg.jpg";
 import {
   ArrowRight,
   Users,
@@ -67,8 +68,10 @@ const Index = () => (
   <main>
     {/* Hero */}
     <section className="relative min-h-[92vh] flex items-center section-padding pt-36 overflow-hidden">
-      <div className="absolute inset-0 glow-bg" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0">
+        <img src={heroBg} alt="" width={1920} height={1080} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/40" />
+      </div>
       <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
           <div className="max-w-3xl">
