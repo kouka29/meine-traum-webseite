@@ -37,6 +37,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <PageMeta />
+        <PageTracker />
         <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
