@@ -99,7 +99,7 @@ export default {
         "fade-up": "fade-up 0.6s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
         float: "float 6s ease-in-out infinite",
-        "cta-pulse": "cta-pulse 4.2s ease-in-out infinite",
+        "cta-pulse": "cta-pulse 7s ease-in-out infinite",
       },
     },
   },
