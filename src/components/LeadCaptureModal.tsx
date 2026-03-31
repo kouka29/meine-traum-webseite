@@ -71,10 +71,10 @@ const LeadCaptureModal = () => {
   if (!open) return null;
 
   const bullets = [
-    { icon: Zap, text: "Die 3 größten Fehler, die dich aktuell blockieren" },
-    { icon: TrendingUp, text: "Eine einfache Schritt-für-Schritt Methode" },
-    { icon: Sparkles, text: "Sofort umsetzbare Strategien ohne Vorkenntnisse" },
-    { icon: ShieldCheck, text: "Insider-Tipps, die sonst nur Experten kennen" },
+    { icon: Zap, text: "7 erprobte Schritte zur Webseite, die Kunden gewinnt" },
+    { icon: TrendingUp, text: "Warum die meisten Webseiten scheitern – und wie du es besser machst" },
+    { icon: Sparkles, text: "Sofort umsetzbar – auch ohne Technikkenntnisse" },
+    { icon: ShieldCheck, text: "Bonus: Die perfekte Webseiten-Checkliste zum Abhaken" },
   ];
 
   return (
@@ -130,12 +130,11 @@ const LeadCaptureModal = () => {
               </div>
 
               <h2 className="font-heading text-xl sm:text-2xl font-bold leading-tight mb-3 text-foreground">
-                Warum 90 % scheitern – und wie du es mit dieser einfachen Methode vermeidest
+                Die 7 geheimen Schritte zu deiner Traum-Webseite, die Kunden gewinnt
               </h2>
 
               <p className="text-muted-foreground text-sm sm:text-base mb-5 leading-relaxed">
-                Entdecke die bewährte Strategie, mit der du mehr Kunden über deine Website gewinnst
-                – selbst wenn du bei null startest.
+                Warum die meisten Webseiten keine Kunden bringen – und wie du es in wenigen Tagen besser machst. Auch ohne Technikkenntnisse.
               </p>
 
               <div className="space-y-2.5 mb-5">
@@ -150,14 +149,13 @@ const LeadCaptureModal = () => {
               </div>
 
               <p className="text-sm italic text-muted-foreground border-l-2 border-primary/30 pl-4 mb-5">
-                „Stell dir vor, wie es sich anfühlt, endlich planbar Kundenanfragen zu erhalten –
-                ohne Stress und ohne Zeitverschwendung."
+                „Stell dir vor, deine Webseite bringt dir täglich Anfragen – automatisch und ohne Stress."
               </p>
 
               <div className="flex items-center gap-2 bg-primary/5 border border-primary/15 rounded-lg px-4 py-2.5 mb-5">
                 <Gift size={16} className="text-primary shrink-0" />
                 <span className="text-sm font-medium text-foreground">
-                  Bonus: Die 5 besten Tools, die dir alles deutlich einfacher machen
+                  Bonus: Die perfekte Webseiten-Checkliste (sofort umsetzbar)
                 </span>
               </div>
 
@@ -262,7 +260,7 @@ const LeadCaptureModal = () => {
                       <Loader2 size={18} className="animate-spin" /> Wird gesendet...
                     </>
                   ) : (
-                    "Jetzt kostenlos herunterladen"
+                    "Jetzt kostenlos herunterladen und direkt starten"
                   )}
                 </Button>
               </form>
@@ -276,7 +274,7 @@ const LeadCaptureModal = () => {
                 onClick={close}
                 className="w-full text-center text-xs text-muted-foreground/60 hover:text-muted-foreground mt-4 transition-colors"
               >
-                Nein danke, ich verzichte auf meinen Vorteil
+                Nein danke, ich brauche keine neuen Kunden über meine Webseite
               </button>
             </>
           )}
