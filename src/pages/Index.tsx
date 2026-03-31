@@ -136,7 +136,7 @@ const Index = () => (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s, i) => (
             <AnimatedSection key={s.title} delay={i * 0.1}>
-              <div className="bg-background rounded-2xl p-7 shadow-card hover:shadow-elevated transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-primary/10">
+              <div className="bg-background rounded-2xl p-7 shadow-card hover:shadow-elevated transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-primary/10 h-full flex flex-col">
                 <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                   <s.icon size={22} className="text-primary-foreground" />
                 </div>
