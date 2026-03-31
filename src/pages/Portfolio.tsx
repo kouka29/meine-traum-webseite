@@ -42,10 +42,8 @@ const Portfolio = () => (
           {projects.map((p, i) => (
             <AnimatedSection key={p.title} delay={i * 0.08}>
               <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
-                <div
-                  className={`aspect-[4/3] bg-gradient-to-br ${p.gradient} flex items-center justify-center relative`}
-                >
-                  <Monitor size={48} className="text-primary-foreground/30" />
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <img src={p.img} alt={`${p.title} – ${p.category}`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/15 transition-colors flex items-center justify-center">
                     <ExternalLink
                       size={24}
