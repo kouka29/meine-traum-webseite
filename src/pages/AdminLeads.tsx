@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Lock, Trash2, RefreshCw, Mail, Phone, User, Calendar, Loader2 } from "lucide-react";
+import { Lock, Trash2, RefreshCw, Mail, Phone, User, Calendar, Loader2, Building2 } from "lucide-react";
 
 interface Lead {
   id: string;
   first_name: string;
+  company_name: string;
   email: string;
   phone: string;
   created_at: string;
@@ -105,10 +106,14 @@ const AdminLeads = () => {
                 key={lead.id}
                 className="bg-card rounded-xl border border-border p-5 hover:shadow-card transition-shadow flex flex-col sm:flex-row sm:items-center gap-4"
               >
-                <div className="flex-1 grid grid-cols-1 sm:grid-cols-4 gap-3">
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-5 gap-3">
                   <div className="flex items-center gap-2">
                     <User size={15} className="text-primary shrink-0" />
                     <span className="font-medium text-foreground truncate">{lead.first_name}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Building2 size={15} className="text-primary shrink-0" />
+                    <span className="text-sm text-muted-foreground truncate">{lead.company_name || "–"}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail size={15} className="text-primary shrink-0" />

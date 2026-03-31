@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck, Loader2 } from "lucide-react";
+import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck, Loader2, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,12 +13,13 @@ const DELAY_MS = 8000;
 const LeadCaptureModal = () => {
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [dsgvoAccepted, setDsgvoAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ firstName?: string; email?: string; phone?: string; dsgvo?: string }>({});
+  const [errors, setErrors] = useState<{ firstName?: string; companyName?: string; email?: string; phone?: string; dsgvo?: string }>({});
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(STORAGE_KEY);
@@ -35,6 +36,7 @@ const LeadCaptureModal = () => {
   const validate = () => {
     const errs: typeof errors = {};
     if (!firstName.trim()) errs.firstName = "Bitte Vornamen eingeben";
+    if (!companyName.trim()) errs.companyName = "Bitte Firmennamen eingeben";
     if (!email.trim()) errs.email = "Bitte E-Mail eingeben";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = "Ungültige E-Mail-Adresse";
     if (!phone.trim()) errs.phone = "Bitte Telefonnummer eingeben";
@@ -51,6 +53,7 @@ const LeadCaptureModal = () => {
     setLoading(true);
     const { error } = await supabase.from("leads").insert({
       first_name: firstName.trim(),
+      company_name: companyName.trim(),
       email: email.trim(),
       phone: phone.trim(),
     });
@@ -176,6 +179,21 @@ const LeadCaptureModal = () => {
                   />
                   {errors.firstName && (
                     <p className="text-xs text-destructive mt-1">{errors.firstName}</p>
+                  )}
+                </div>
+                <div>
+                  <Input
+                    placeholder="Dein Firmenname *"
+                    value={companyName}
+                    onChange={(e) => {
+                      setCompanyName(e.target.value);
+                      if (errors.companyName) setErrors((p) => ({ ...p, companyName: undefined }));
+                    }}
+                    className={errors.companyName ? "border-destructive" : ""}
+                    maxLength={200}
+                  />
+                  {errors.companyName && (
+                    <p className="text-xs text-destructive mt-1">{errors.companyName}</p>
                   )}
                 </div>
                 <div>
