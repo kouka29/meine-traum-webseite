@@ -130,12 +130,11 @@ const LeadCaptureModal = () => {
               </div>
 
               <h2 className="font-heading text-xl sm:text-2xl font-bold leading-tight mb-3 text-foreground">
-                Warum 90 % scheitern – und wie du es mit dieser einfachen Methode vermeidest
+                Die 7 geheimen Schritte zu deiner Traum-Webseite, die Kunden gewinnt
               </h2>
 
               <p className="text-muted-foreground text-sm sm:text-base mb-5 leading-relaxed">
-                Entdecke die bewährte Strategie, mit der du mehr Kunden über deine Website gewinnst
-                – selbst wenn du bei null startest.
+                Warum die meisten Webseiten keine Kunden bringen – und wie du es in wenigen Tagen besser machst. Auch ohne Technikkenntnisse.
               </p>
 
               <div className="space-y-2.5 mb-5">
