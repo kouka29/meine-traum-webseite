@@ -63,6 +63,118 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "analytics") {
+      // Fetch all page views
+      const { data: pageViews, error: pvError } = await supabase
+        .from("page_views")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (pvError) throw pvError;
+
+      // Fetch leads count
+      const { count: leadsCount, error: lcError } = await supabase
+        .from("leads")
+        .select("*", { count: "exact", head: true });
+
+      if (lcError) throw lcError;
+
+      // Process analytics server-side
+      const views = pageViews || [];
+      const totalViews = views.length;
+
+      // Views today
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const viewsToday = views.filter(v => new Date(v.created_at) >= today).length;
+
+      // Device breakdown
+      const devices: Record<string, number> = {};
+      views.forEach(v => {
+        const d = v.device_type || "desktop";
+        devices[d] = (devices[d] || 0) + 1;
+      });
+
+      // Top pages
+      const pages: Record<string, number> = {};
+      views.forEach(v => {
+        pages[v.page_path] = (pages[v.page_path] || 0) + 1;
+      });
+      const topPages = Object.entries(pages)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([path, count]) => ({ path, count }));
+
+      // Traffic sources
+      const sources: Record<string, number> = {};
+      views.forEach(v => {
+        let source = "Direkt";
+        if (v.referrer) {
+          try {
+            const url = new URL(v.referrer);
+            source = url.hostname;
+          } catch {
+            source = v.referrer.substring(0, 50);
+          }
+        }
+        sources[source] = (sources[source] || 0) + 1;
+      });
+      const topSources = Object.entries(sources)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([source, count]) => ({ source, count }));
+
+      // Hourly distribution
+      const hourly = new Array(24).fill(0);
+      views.forEach(v => {
+        const h = new Date(v.created_at).getHours();
+        hourly[h]++;
+      });
+
+      // Timezone/region breakdown
+      const regions: Record<string, number> = {};
+      views.forEach(v => {
+        const tz = v.timezone || "Unbekannt";
+        // Extract region from timezone like "Europe/Berlin" -> "Europe/Berlin"
+        regions[tz] = (regions[tz] || 0) + 1;
+      });
+      const topRegions = Object.entries(regions)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([region, count]) => ({ region, count }));
+
+      // Views per day (last 30 days)
+      const dailyViews: Record<string, number> = {};
+      views.forEach(v => {
+        const day = new Date(v.created_at).toISOString().split("T")[0];
+        dailyViews[day] = (dailyViews[day] || 0) + 1;
+      });
+      const dailyData = Object.entries(dailyViews)
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .slice(-30)
+        .map(([date, count]) => ({ date, count }));
+
+      // Conversion rate
+      const conversionRate = totalViews > 0 ? ((leadsCount || 0) / totalViews * 100).toFixed(1) : "0";
+
+      return new Response(JSON.stringify({
+        analytics: {
+          totalViews,
+          viewsToday,
+          leadsCount: leadsCount || 0,
+          conversionRate,
+          devices,
+          topPages,
+          topSources,
+          hourly,
+          topRegions,
+          dailyData,
+        }
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Ungültige Aktion" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
