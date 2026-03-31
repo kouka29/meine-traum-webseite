@@ -58,9 +58,9 @@ const testimonials = [
 ];
 
 const portfolioItems = [
-  { title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", gradient: "from-primary to-accent" },
-  { title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", gradient: "from-accent to-primary" },
-  { title: "DigitalBoost", category: "E-Commerce", result: "+180% Umsatz", gradient: "from-primary/80 to-accent/80" },
+  { title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", img: techstartImg },
+  { title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", img: yogastudioImg },
+  { title: "DigitalBoost", category: "E-Commerce", result: "+180% Umsatz", img: digitalboostImg },
 ];
 
 const Index = () => (
