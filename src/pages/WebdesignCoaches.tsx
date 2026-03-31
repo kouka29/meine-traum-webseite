@@ -15,7 +15,7 @@ const painPoints = [
 
 const features = [
   { icon: Lightbulb, title: "Persönliches Branding", desc: "Ihre Website wird zur Bühne für Ihre Expertise – mit einem Design, das Ihre Persönlichkeit und Methodik widerspiegelt." },
-  { icon: Search, title: "SEO für Coaches", desc: "Gefunden werden bei "Coach [Thema] [Stadt]", "Berater für [Thema]" und ähnlichen Suchanfragen." },
+  { icon: Search, title: "SEO für Coaches", desc: 'Gefunden werden bei "Coach [Thema] [Stadt]", "Berater für [Thema]" und ähnlichen Suchanfragen.' },
   { icon: Target, title: "Klare Positionierung", desc: "Ihre Zielgruppe erkennt sofort, ob Sie der richtige Coach oder Berater sind – durch gezielte Ansprache." },
   { icon: Users, title: "Vertrauensaufbau", desc: "Testimonials, Erfolgsgeschichten und Zertifizierungen werden professionell präsentiert." },
   { icon: Smartphone, title: "Mobilfreundlich", desc: "Ihre Website sieht auf jedem Gerät professionell aus – wichtig, da viele Klienten unterwegs recherchieren." },
