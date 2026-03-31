@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Lock, Trash2, RefreshCw, Mail, Phone, User, Calendar, Loader2 } from "lucide-react";
+import { Lock, Trash2, RefreshCw, Mail, Phone, User, Calendar, Loader2, Building2 } from "lucide-react";
 
 interface Lead {
   id: string;
   first_name: string;
+  company_name: string;
   email: string;
   phone: string;
   created_at: string;
