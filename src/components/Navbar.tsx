@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       <div className="container-narrow flex items-center justify-between h-[72px] px-4">
         <Link to="/" className="flex items-center gap-2.5">
-          <img src={logo} alt="Meine Traum Webseite Logo" width={36} height={36} className="h-9 w-9" />
+          <img src={logo} alt="Meine Traum Webseite Logo" width={44} height={44} className="h-11 w-11" />
           <span className="font-heading text-xl font-bold gradient-text tracking-tight">Meine Traum Webseite</span>
         </Link>
 
