@@ -1,10 +1,11 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
 import { ArrowRight, PhoneCall } from "lucide-react";
 
-const CTABanner = () => (
-  <section className="section-padding">
+const CTABanner = forwardRef<HTMLElement>((_, ref) => (
+  <section ref={ref} className="section-padding">
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="gradient-hero-bg rounded-3xl p-14 md:p-20 text-center text-primary-foreground relative overflow-hidden">
@@ -46,6 +47,8 @@ const CTABanner = () => (
       </AnimatedSection>
     </div>
   </section>
-);
+));
+
+CTABanner.displayName = "CTABanner";
 
 export default CTABanner;

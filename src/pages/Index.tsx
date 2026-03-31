@@ -22,7 +22,7 @@ const Index = () => (
     {/* Hero */}
     <section className="relative min-h-[92vh] flex items-center section-padding pt-36 overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Webdesign Agentur – moderne Website erstellen lassen" width={1920} height={1080} className="w-full h-full object-cover" />
+        <img src={heroBg} alt="Webdesign Agentur – moderne Website erstellen lassen" width={1920} height={1080} className="w-full h-full object-cover" fetchPriority="high" />
       </div>
       <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
