@@ -155,7 +155,7 @@ const LeadCaptureModal = () => {
               <div className="flex items-center gap-2 bg-primary/5 border border-primary/15 rounded-lg px-4 py-2.5 mb-5">
                 <Gift size={16} className="text-primary shrink-0" />
                 <span className="text-sm font-medium text-foreground">
-                  Bonus: Die 5 besten Tools, die dir alles deutlich einfacher machen
+                  Bonus: Die perfekte Webseiten-Checkliste (sofort umsetzbar)
                 </span>
               </div>
 
