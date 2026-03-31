@@ -170,7 +170,6 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Get max sort_order
       const { data: existing } = await supabase
         .from("portfolio_projects")
         .select("sort_order")
@@ -266,6 +265,102 @@ Deno.serve(async (req) => {
       }
       for (const p of projects) {
         await supabase.from("portfolio_projects").update({ sort_order: p.sort_order }).eq("id", p.id);
+      }
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // =================== TESTIMONIALS ===================
+    if (action === "testimonials-list") {
+      const { data, error } = await supabase
+        .from("testimonials")
+        .select("*")
+        .order("sort_order", { ascending: true });
+      if (error) throw error;
+      return new Response(JSON.stringify({ testimonials: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "testimonials-create") {
+      const { name: tName, role: tRole, text: tText, result: tResult, is_visible: tVisible } = body;
+      if (!tName || !tText) {
+        return new Response(JSON.stringify({ error: "Name und Text sind erforderlich" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { data: existing } = await supabase
+        .from("testimonials")
+        .select("sort_order")
+        .order("sort_order", { ascending: false })
+        .limit(1);
+      const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
+
+      const { data, error } = await supabase.from("testimonials").insert({
+        name: tName, role: tRole || "", text: tText,
+        result: tResult || "", sort_order: nextOrder,
+        is_visible: tVisible !== false,
+      }).select().single();
+      if (error) throw error;
+
+      return new Response(JSON.stringify({ testimonial: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "testimonials-update") {
+      const { testimonialId } = body;
+      if (!testimonialId) {
+        return new Response(JSON.stringify({ error: "Testimonial-ID fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const updates: Record<string, unknown> = {};
+      if (body.name !== undefined) updates.name = body.name;
+      if (body.role !== undefined) updates.role = body.role;
+      if (body.text !== undefined) updates.text = body.text;
+      if (body.result !== undefined) updates.result = body.result;
+      if (body.is_visible !== undefined) updates.is_visible = body.is_visible;
+
+      const { data, error } = await supabase
+        .from("testimonials")
+        .update(updates)
+        .eq("id", testimonialId)
+        .select()
+        .single();
+      if (error) throw error;
+
+      return new Response(JSON.stringify({ testimonial: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "testimonials-delete") {
+      const { testimonialId } = body;
+      if (!testimonialId) {
+        return new Response(JSON.stringify({ error: "Testimonial-ID fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase.from("testimonials").delete().eq("id", testimonialId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "testimonials-reorder") {
+      const { testimonials } = body;
+      if (!Array.isArray(testimonials)) {
+        return new Response(JSON.stringify({ error: "Testimonials-Array fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      for (const t of testimonials) {
+        await supabase.from("testimonials").update({ sort_order: t.sort_order }).eq("id", t.id);
       }
       return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
