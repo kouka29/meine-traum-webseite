@@ -217,7 +217,7 @@ const AdminLeads = () => {
 
   const refreshAll = async () => {
     setLoading(true);
-    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio()]);
+    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio(), fetchTestimonials()]);
     setLoading(false);
   };
 
