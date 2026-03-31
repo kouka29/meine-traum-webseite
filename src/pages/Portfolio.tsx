@@ -49,7 +49,7 @@ const Portfolio = () => {
           category: p.category,
           description: p.description,
           result: p.result,
-          image_url: p.image_url,
+          image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
         })));
       }
       setLoading(false);
