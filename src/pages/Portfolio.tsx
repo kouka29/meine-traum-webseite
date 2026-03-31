@@ -12,6 +12,15 @@ import kanzleiImg from "@/assets/portfolio/kanzlei.jpg";
 import fitlifeImg from "@/assets/portfolio/fitlife.jpg";
 import greentechImg from "@/assets/portfolio/greentech.jpg";
 
+const FALLBACK_IMAGES: Record<string, string> = {
+  "TechStart GmbH": techstartImg,
+  "Yoga Studio Flow": yogastudioImg,
+  "DigitalBoost": digitalboostImg,
+  "Kanzlei Weber": kanzleiImg,
+  "FitLife Coaching": fitlifeImg,
+  "GreenTech Solutions": greentechImg,
+};
+
 const fallbackProjects = [
   { id: "1", title: "TechStart GmbH", category: "SaaS Landing Page", description: "Conversion-optimierte Landing Page – Anfragen um 300% gesteigert in nur 8 Wochen.", result: "+300% Anfragen", image_url: techstartImg },
   { id: "2", title: "Yoga Studio Flow", category: "Branding & Webdesign", description: "Ganzheitlicher Markenauftritt – von 3 auf 20+ Anfragen pro Monat.", result: "+700% Neukunden", image_url: yogastudioImg },
