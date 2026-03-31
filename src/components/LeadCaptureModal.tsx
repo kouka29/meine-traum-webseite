@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck, Phone } from "lucide-react";
+import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const STORAGE_KEY = "lead-modal-dismissed";
 const DELAY_MS = 8000;
@@ -15,6 +17,7 @@ const LeadCaptureModal = () => {
   const [phone, setPhone] = useState("");
   const [dsgvoAccepted, setDsgvoAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ firstName?: string; email?: string; phone?: string; dsgvo?: string }>({});
 
   useEffect(() => {
@@ -34,14 +37,30 @@ const LeadCaptureModal = () => {
     if (!firstName.trim()) errs.firstName = "Bitte Vornamen eingeben";
     if (!email.trim()) errs.email = "Bitte E-Mail eingeben";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = "Ungültige E-Mail-Adresse";
+    if (!phone.trim()) errs.phone = "Bitte Telefonnummer eingeben";
+    else if (phone.trim().length < 6) errs.phone = "Bitte gültige Telefonnummer eingeben";
     if (!dsgvoAccepted) errs.dsgvo = "Bitte Datenschutzbestimmungen akzeptieren";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+
+    setLoading(true);
+    const { error } = await supabase.from("leads").insert({
+      first_name: firstName.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+    });
+    setLoading(false);
+
+    if (error) {
+      toast.error("Es ist ein Fehler aufgetreten. Bitte versuche es erneut.");
+      return;
+    }
+
     setSubmitted(true);
     sessionStorage.setItem(STORAGE_KEY, "1");
   };
@@ -60,15 +79,12 @@ const LeadCaptureModal = () => {
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300"
       onClick={close}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-foreground/60 backdrop-blur-sm" />
 
-      {/* Modal */}
       <div
         className="relative w-full max-w-lg bg-background rounded-2xl shadow-elevated overflow-hidden animate-in zoom-in-95 fade-in duration-400 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           onClick={close}
           className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-muted/80 hover:bg-muted flex items-center justify-center transition-colors"
@@ -77,12 +93,10 @@ const LeadCaptureModal = () => {
           <X size={16} className="text-muted-foreground" />
         </button>
 
-        {/* Top accent bar */}
         <div className="h-1.5 w-full gradient-bg" />
 
         <div className="p-6 sm:p-8">
           {submitted ? (
-            /* Success state */
             <div className="text-center py-8">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5">
                 <CheckCircle size={32} className="text-primary" />
@@ -102,7 +116,6 @@ const LeadCaptureModal = () => {
             </div>
           ) : (
             <>
-              {/* Progress hint */}
               <div className="flex items-center gap-2 mb-5">
                 <div className="flex gap-1">
                   <div className="w-8 h-1.5 rounded-full gradient-bg" />
@@ -113,18 +126,15 @@ const LeadCaptureModal = () => {
                 </span>
               </div>
 
-              {/* Headline */}
               <h2 className="font-heading text-xl sm:text-2xl font-bold leading-tight mb-3 text-foreground">
                 Warum 90 % scheitern – und wie du es mit dieser einfachen Methode vermeidest
               </h2>
 
-              {/* Subheadline */}
               <p className="text-muted-foreground text-sm sm:text-base mb-5 leading-relaxed">
                 Entdecke die bewährte Strategie, mit der du mehr Kunden über deine Website gewinnst
                 – selbst wenn du bei null startest.
               </p>
 
-              {/* Bullet points */}
               <div className="space-y-2.5 mb-5">
                 {bullets.map((b) => (
                   <div key={b.text} className="flex items-start gap-3">
@@ -136,13 +146,11 @@ const LeadCaptureModal = () => {
                 ))}
               </div>
 
-              {/* Emotional hook */}
               <p className="text-sm italic text-muted-foreground border-l-2 border-primary/30 pl-4 mb-5">
                 „Stell dir vor, wie es sich anfühlt, endlich planbar Kundenanfragen zu erhalten –
                 ohne Stress und ohne Zeitverschwendung."
               </p>
 
-              {/* Bonus */}
               <div className="flex items-center gap-2 bg-primary/5 border border-primary/15 rounded-lg px-4 py-2.5 mb-5">
                 <Gift size={16} className="text-primary shrink-0" />
                 <span className="text-sm font-medium text-foreground">
@@ -150,16 +158,14 @@ const LeadCaptureModal = () => {
                 </span>
               </div>
 
-              {/* Urgency */}
               <p className="text-center text-sm font-semibold text-destructive mb-5">
                 ⚠️ Nur für kurze Zeit kostenlos verfügbar
               </p>
 
-              {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
                   <Input
-                    placeholder="Dein Vorname"
+                    placeholder="Dein Vorname *"
                     value={firstName}
                     onChange={(e) => {
                       setFirstName(e.target.value);
@@ -175,7 +181,7 @@ const LeadCaptureModal = () => {
                 <div>
                   <Input
                     type="email"
-                    placeholder="Deine E-Mail-Adresse"
+                    placeholder="Deine E-Mail-Adresse *"
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -191,14 +197,20 @@ const LeadCaptureModal = () => {
                 <div>
                   <Input
                     type="tel"
-                    placeholder="Deine Telefonnummer (optional)"
+                    placeholder="Deine Telefonnummer *"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      if (errors.phone) setErrors((p) => ({ ...p, phone: undefined }));
+                    }}
+                    className={errors.phone ? "border-destructive" : ""}
                     maxLength={30}
                   />
+                  {errors.phone && (
+                    <p className="text-xs text-destructive mt-1">{errors.phone}</p>
+                  )}
                 </div>
 
-                {/* DSGVO Checkbox */}
                 <div className="flex items-start gap-2">
                   <Checkbox
                     id="dsgvo"
@@ -220,24 +232,28 @@ const LeadCaptureModal = () => {
                   <p className="text-xs text-destructive">{errors.dsgvo}</p>
                 )}
 
-                {/* CTA Button */}
                 <Button
                   type="submit"
                   variant="gradient"
                   size="lg"
+                  disabled={loading}
                   className="w-full text-base py-6 font-bold shadow-glow hover:shadow-elevated hover:scale-[1.02] transition-all duration-200 animate-cta-pulse"
                 >
-                  Jetzt kostenlos herunterladen
+                  {loading ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" /> Wird gesendet...
+                    </>
+                  ) : (
+                    "Jetzt kostenlos herunterladen"
+                  )}
                 </Button>
               </form>
 
-              {/* Trust */}
               <p className="text-center text-xs text-muted-foreground mt-4 flex items-center justify-center gap-1.5">
                 <ShieldCheck size={13} />
                 100 % kostenlos. Kein Spam.
               </p>
 
-              {/* Soft dismiss */}
               <button
                 onClick={close}
                 className="w-full text-center text-xs text-muted-foreground/60 hover:text-muted-foreground mt-4 transition-colors"
