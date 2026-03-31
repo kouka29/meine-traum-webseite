@@ -38,6 +38,7 @@ const App = () => (
           <Route path="/kontakt" element={<Contact />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/impressum" element={<Impressum />} />
+          <Route path="/admin" element={<AdminLeads />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
