@@ -8,6 +8,7 @@ import SocialProofBar from "@/components/SocialProofBar";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
+import heroBg from "@/assets/hero-bg.jpg";
 import {
   ArrowRight,
   Users,
