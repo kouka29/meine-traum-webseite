@@ -9,6 +9,7 @@ import CookieBanner from "@/components/CookieBanner";
 import LeadCaptureModal from "@/components/LeadCaptureModal";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
+import PageTracker from "@/components/PageTracker";
 import Index from "./pages/Index.tsx";
 import Services from "./pages/Services.tsx";
 import About from "./pages/About.tsx";
