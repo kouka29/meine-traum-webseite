@@ -50,6 +50,26 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: "Webdesign Preise – Was kostet eine Website? | Meine Traum Webseite",
     description: "Transparente Webdesign Preise ab 1.500 €. Website erstellen lassen Kosten im Überblick. Faire Festpreise ohne versteckte Kosten.",
   },
+  "/webdesign-shk": {
+    title: "Webdesign für SHK-Betriebe – Mehr Anfragen online | Meine Traum Webseite",
+    description: "Professionelles Webdesign für SHK-Betriebe: Sanitär, Heizung, Klima. Mehr Online-Anfragen durch conversion-optimierte Websites. Kostenlose Vorschau in 48h.",
+  },
+  "/webdesign-handwerker": {
+    title: "Webdesign für Handwerker – Die Website die Aufträge bringt | Meine Traum Webseite",
+    description: "Professionelle Websites für Handwerksbetriebe. Lokales SEO, mobilfreundlich, conversion-optimiert. Mehr Aufträge durch bessere Online-Präsenz.",
+  },
+  "/webdesign-aerzte": {
+    title: "Webdesign für Ärzte – Praxis-Website die Patienten gewinnt | Meine Traum Webseite",
+    description: "Professionelles Webdesign für Arztpraxen. DSGVO-konform, mit Online-Terminbuchung und lokalem SEO. Mehr Patienten durch bessere Sichtbarkeit.",
+  },
+  "/webdesign-immobilienmakler": {
+    title: "Webdesign für Immobilienmakler – Mehr Eigentümer-Leads | Meine Traum Webseite",
+    description: "Professionelle Websites für Immobilienmakler. Hochwertige Objektpräsentation, Lead-Generierung und lokales SEO. Kostenlose Vorschau.",
+  },
+  "/webdesign-coaches": {
+    title: "Webdesign für Coaches & Berater – Klienten online gewinnen | Meine Traum Webseite",
+    description: "Professionelle Websites für Coaches und Berater. Persönliches Branding, Conversion-Optimierung und SEO. Mehr Klienten durch starke Online-Präsenz.",
+  },
   "/datenschutz": {
     title: "Datenschutzerklärung | Meine Traum Webseite",
     description: "Datenschutzerklärung gemäß DSGVO, BDSG und TDDDG für die Website meinetraumwebseite.de.",

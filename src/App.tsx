@@ -26,6 +26,11 @@ import WebsiteRelaunch from "./pages/WebsiteRelaunch.tsx";
 import ConversionOptimierung from "./pages/ConversionOptimierung.tsx";
 import KostenloserWebsiteCheck from "./pages/KostenloserWebsiteCheck.tsx";
 import WebdesignPreise from "./pages/WebdesignPreise.tsx";
+import WebdesignSHK from "./pages/WebdesignSHK.tsx";
+import WebdesignHandwerker from "./pages/WebdesignHandwerker.tsx";
+import WebdesignAerzte from "./pages/WebdesignAerzte.tsx";
+import WebdesignImmobilienmakler from "./pages/WebdesignImmobilienmakler.tsx";
+import WebdesignCoaches from "./pages/WebdesignCoaches.tsx";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +57,11 @@ const App = () => (
           <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
           <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
           <Route path="/webdesign-preise" element={<WebdesignPreise />} />
+          <Route path="/webdesign-shk" element={<WebdesignSHK />} />
+          <Route path="/webdesign-handwerker" element={<WebdesignHandwerker />} />
+          <Route path="/webdesign-aerzte" element={<WebdesignAerzte />} />
+          <Route path="/webdesign-immobilienmakler" element={<WebdesignImmobilienmakler />} />
+          <Route path="/webdesign-coaches" element={<WebdesignCoaches />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/admin" element={<AdminLeads />} />
