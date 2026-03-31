@@ -41,6 +41,7 @@ const App = () => (
         </Routes>
         <Footer />
         <CookieBanner />
+        <LeadCaptureModal />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
