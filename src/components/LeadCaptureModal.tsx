@@ -149,8 +149,7 @@ const LeadCaptureModal = () => {
               </div>
 
               <p className="text-sm italic text-muted-foreground border-l-2 border-primary/30 pl-4 mb-5">
-                „Stell dir vor, wie es sich anfühlt, endlich planbar Kundenanfragen zu erhalten –
-                ohne Stress und ohne Zeitverschwendung."
+                „Stell dir vor, deine Webseite bringt dir täglich Anfragen – automatisch und ohne Stress."
               </p>
 
               <div className="flex items-center gap-2 bg-primary/5 border border-primary/15 rounded-lg px-4 py-2.5 mb-5">
