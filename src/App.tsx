@@ -17,6 +17,7 @@ import Contact from "./pages/Contact.tsx";
 import Datenschutz from "./pages/Datenschutz.tsx";
 import Impressum from "./pages/Impressum.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AdminLeads from "./pages/AdminLeads.tsx";
 
 const queryClient = new QueryClient();
 
