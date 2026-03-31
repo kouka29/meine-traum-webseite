@@ -90,7 +90,7 @@ export default {
         },
         "cta-pulse": {
           "0%, 100%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.05)" },
+          "50%": { transform: "scale(1.02)" },
         },
       },
       animation: {
@@ -99,7 +99,7 @@ export default {
         "fade-up": "fade-up 0.6s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
         float: "float 6s ease-in-out infinite",
-        "cta-pulse": "cta-pulse 2s ease-in-out infinite",
+        "cta-pulse": "cta-pulse 3s ease-in-out infinite",
       },
     },
   },
