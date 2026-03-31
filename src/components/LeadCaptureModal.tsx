@@ -274,7 +274,7 @@ const LeadCaptureModal = () => {
                 onClick={close}
                 className="w-full text-center text-xs text-muted-foreground/60 hover:text-muted-foreground mt-4 transition-colors"
               >
-                Nein danke, ich verzichte auf meinen Vorteil
+                Nein danke, ich brauche keine neuen Kunden über meine Webseite
               </button>
             </>
           )}
