@@ -41,14 +41,13 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    // =================== LEADS ===================
     if (action === "list") {
       const { data, error } = await supabase
         .from("leads")
         .select("*")
         .order("created_at", { ascending: false });
-
       if (error) throw error;
-
       return new Response(JSON.stringify({ leads: data }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -57,45 +56,35 @@ Deno.serve(async (req) => {
     if (action === "delete" && leadId) {
       const { error } = await supabase.from("leads").delete().eq("id", leadId);
       if (error) throw error;
-
       return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
     if (action === "analytics") {
-      // Fetch all page views
       const { data: pageViews, error: pvError } = await supabase
         .from("page_views")
         .select("*")
         .order("created_at", { ascending: false });
-
       if (pvError) throw pvError;
 
-      // Fetch leads count
       const { count: leadsCount, error: lcError } = await supabase
         .from("leads")
         .select("*", { count: "exact", head: true });
-
       if (lcError) throw lcError;
 
-      // Process analytics server-side
       const views = pageViews || [];
       const totalViews = views.length;
-
-      // Views today
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const viewsToday = views.filter(v => new Date(v.created_at) >= today).length;
 
-      // Device breakdown
       const devices: Record<string, number> = {};
       views.forEach(v => {
         const d = v.device_type || "desktop";
         devices[d] = (devices[d] || 0) + 1;
       });
 
-      // Top pages
       const pages: Record<string, number> = {};
       views.forEach(v => {
         pages[v.page_path] = (pages[v.page_path] || 0) + 1;
@@ -105,7 +94,6 @@ Deno.serve(async (req) => {
         .slice(0, 10)
         .map(([path, count]) => ({ path, count }));
 
-      // Traffic sources
       const sources: Record<string, number> = {};
       views.forEach(v => {
         let source = "Direkt";
@@ -124,18 +112,15 @@ Deno.serve(async (req) => {
         .slice(0, 10)
         .map(([source, count]) => ({ source, count }));
 
-      // Hourly distribution
       const hourly = new Array(24).fill(0);
       views.forEach(v => {
         const h = new Date(v.created_at).getHours();
         hourly[h]++;
       });
 
-      // Timezone/region breakdown
       const regions: Record<string, number> = {};
       views.forEach(v => {
         const tz = v.timezone || "Unbekannt";
-        // Extract region from timezone like "Europe/Berlin" -> "Europe/Berlin"
         regions[tz] = (regions[tz] || 0) + 1;
       });
       const topRegions = Object.entries(regions)
@@ -143,7 +128,6 @@ Deno.serve(async (req) => {
         .slice(0, 10)
         .map(([region, count]) => ({ region, count }));
 
-      // Views per day (last 30 days)
       const dailyViews: Record<string, number> = {};
       views.forEach(v => {
         const day = new Date(v.created_at).toISOString().split("T")[0];
@@ -154,23 +138,136 @@ Deno.serve(async (req) => {
         .slice(-30)
         .map(([date, count]) => ({ date, count }));
 
-      // Conversion rate
       const conversionRate = totalViews > 0 ? ((leadsCount || 0) / totalViews * 100).toFixed(1) : "0";
 
       return new Response(JSON.stringify({
         analytics: {
-          totalViews,
-          viewsToday,
-          leadsCount: leadsCount || 0,
-          conversionRate,
-          devices,
-          topPages,
-          topSources,
-          hourly,
-          topRegions,
-          dailyData,
+          totalViews, viewsToday, leadsCount: leadsCount || 0, conversionRate,
+          devices, topPages, topSources, hourly, topRegions, dailyData,
         }
       }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // =================== PORTFOLIO ===================
+    if (action === "portfolio-list") {
+      const { data, error } = await supabase
+        .from("portfolio_projects")
+        .select("*")
+        .order("sort_order", { ascending: true });
+      if (error) throw error;
+      return new Response(JSON.stringify({ projects: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "portfolio-create") {
+      const { title, category, description, result, is_visible, image_base64, image_name } = body;
+      if (!title) {
+        return new Response(JSON.stringify({ error: "Titel ist erforderlich" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // Get max sort_order
+      const { data: existing } = await supabase
+        .from("portfolio_projects")
+        .select("sort_order")
+        .order("sort_order", { ascending: false })
+        .limit(1);
+      const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
+
+      let image_url = "";
+      if (image_base64 && image_name) {
+        const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
+        const ext = image_name.split(".").pop() || "jpg";
+        const filePath = `${crypto.randomUUID()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("portfolio-images")
+          .upload(filePath, bytes, { contentType: `image/${ext === "jpg" ? "jpeg" : ext}` });
+        if (uploadError) throw uploadError;
+        const { data: urlData } = supabase.storage.from("portfolio-images").getPublicUrl(filePath);
+        image_url = urlData.publicUrl;
+      }
+
+      const { data, error } = await supabase.from("portfolio_projects").insert({
+        title, category: category || "", description: description || "",
+        result: result || "", image_url, sort_order: nextOrder,
+        is_visible: is_visible !== false,
+      }).select().single();
+      if (error) throw error;
+
+      return new Response(JSON.stringify({ project: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "portfolio-update") {
+      const { projectId, title, category, description, result, is_visible, image_base64, image_name } = body;
+      if (!projectId) {
+        return new Response(JSON.stringify({ error: "Projekt-ID fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const updates: Record<string, unknown> = {};
+      if (title !== undefined) updates.title = title;
+      if (category !== undefined) updates.category = category;
+      if (description !== undefined) updates.description = description;
+      if (result !== undefined) updates.result = result;
+      if (is_visible !== undefined) updates.is_visible = is_visible;
+
+      if (image_base64 && image_name) {
+        const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
+        const ext = image_name.split(".").pop() || "jpg";
+        const filePath = `${crypto.randomUUID()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("portfolio-images")
+          .upload(filePath, bytes, { contentType: `image/${ext === "jpg" ? "jpeg" : ext}` });
+        if (uploadError) throw uploadError;
+        const { data: urlData } = supabase.storage.from("portfolio-images").getPublicUrl(filePath);
+        updates.image_url = urlData.publicUrl;
+      }
+
+      const { data, error } = await supabase
+        .from("portfolio_projects")
+        .update(updates)
+        .eq("id", projectId)
+        .select()
+        .single();
+      if (error) throw error;
+
+      return new Response(JSON.stringify({ project: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "portfolio-delete") {
+      const { projectId } = body;
+      if (!projectId) {
+        return new Response(JSON.stringify({ error: "Projekt-ID fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase.from("portfolio_projects").delete().eq("id", projectId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "portfolio-reorder") {
+      const { projects } = body;
+      if (!Array.isArray(projects)) {
+        return new Response(JSON.stringify({ error: "Projekte-Array fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      for (const p of projects) {
+        await supabase.from("portfolio_projects").update({ sort_order: p.sort_order }).eq("id", p.id);
+      }
+      return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
