@@ -1,9 +1,10 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
 import { ArrowRight, PhoneCall } from "lucide-react";
 
-const CTABanner = () => (
+const CTABanner = forwardRef<HTMLElement>((_, ref) => (
   <section className="section-padding">
     <div className="container-narrow px-4">
       <AnimatedSection>
