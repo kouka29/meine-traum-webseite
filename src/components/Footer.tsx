@@ -23,7 +23,7 @@ const Footer = () => (
           <Button
             size="sm"
             variant="outline"
-            className="border-background/30 text-background hover:bg-background/10"
+            className="border-background/60 text-background bg-background/10 hover:bg-background/20"
             asChild
           >
             <Link to="/kostenloser-website-check">
