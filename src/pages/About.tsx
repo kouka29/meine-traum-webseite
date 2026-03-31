@@ -92,7 +92,7 @@ const About = () => (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((v, i) => (
             <AnimatedSection key={v.title} delay={i * 0.1}>
-              <div className="text-center p-8 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
+              <div className="text-center p-8 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
                   <v.icon size={22} className="text-primary" />
                 </div>
