@@ -186,7 +186,7 @@ const Index = () => (
           ))}
         </div>
         <div className="text-center mt-12">
-          <Button variant="gradient" size="lg" asChild>
+          <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
             <Link to="/kontakt">
               Kostenlose Vorschau anfordern <ArrowRight size={18} />
             </Link>
