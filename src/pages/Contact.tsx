@@ -74,8 +74,8 @@ const Contact = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Telefon</label>
-                    <Input type="tel" placeholder="+49 123 456 789" className="bg-card h-12" />
+                    <label className="text-sm font-medium mb-2 block">Telefon *</label>
+                    <Input required type="tel" placeholder="+49 123 456 789" className="bg-card h-12" />
                   </div>
                   <div>
                     <label className="text-sm font-medium mb-2 block">Website (falls vorhanden)</label>
