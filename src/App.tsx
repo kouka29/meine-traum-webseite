@@ -43,6 +43,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <PageMeta />
+        <StructuredData />
         <PageTracker />
         <Navbar />
         <Routes>
