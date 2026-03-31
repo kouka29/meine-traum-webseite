@@ -94,7 +94,7 @@ const Index = () => (
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="gradient" size="lg" className="text-base py-6 px-8" asChild>
+              <Button variant="gradient" size="lg" className="text-base py-6 px-8 animate-cta-pulse" asChild>
                 <Link to="/kontakt">
                   Kostenlose Website-Vorschau sichern <ArrowRight size={18} />
                 </Link>

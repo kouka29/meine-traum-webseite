@@ -23,7 +23,7 @@ const CTABanner = () => (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold shadow-elevated"
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold shadow-elevated animate-cta-pulse"
                 asChild
               >
                 <Link to="/kontakt">
