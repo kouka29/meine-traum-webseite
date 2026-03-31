@@ -7,6 +7,13 @@ import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
 
+const FALLBACK_IMAGES: Record<string, string> = {
+  "TechStart GmbH": techstartImg,
+  "Studio Flow": yogastudioImg,
+  "Yoga Studio Flow": yogastudioImg,
+  "DigitalBoost": digitalboostImg,
+};
+
 const fallbackItems = [
   { id: "1", title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", image_url: techstartImg },
   { id: "2", title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", image_url: yogastudioImg },
@@ -25,7 +32,10 @@ const IndexPortfolio = () => {
         .order("sort_order", { ascending: true })
         .limit(3);
       if (data && data.length > 0) {
-        setItems(data);
+        setItems(data.map(p => ({
+          ...p,
+          image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        })));
       }
     };
     fetch();
