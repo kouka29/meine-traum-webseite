@@ -33,7 +33,7 @@ const CTABanner = () => (
               <Button
                 variant="outline"
                 size="lg"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 transition-all duration-300"
+                className="border-primary-foreground/50 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-all duration-300"
                 asChild
               >
                 <Link to="/kontakt">
