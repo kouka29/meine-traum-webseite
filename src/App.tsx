@@ -57,6 +57,11 @@ const App = () => (
           <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
           <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
           <Route path="/webdesign-preise" element={<WebdesignPreise />} />
+          <Route path="/webdesign-shk" element={<WebdesignSHK />} />
+          <Route path="/webdesign-handwerker" element={<WebdesignHandwerker />} />
+          <Route path="/webdesign-aerzte" element={<WebdesignAerzte />} />
+          <Route path="/webdesign-immobilienmakler" element={<WebdesignImmobilienmakler />} />
+          <Route path="/webdesign-coaches" element={<WebdesignCoaches />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/admin" element={<AdminLeads />} />

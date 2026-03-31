@@ -84,4 +84,34 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://meinetraumwebseite.de/webdesign-shk</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meinetraumwebseite.de/webdesign-handwerker</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meinetraumwebseite.de/webdesign-aerzte</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meinetraumwebseite.de/webdesign-immobilienmakler</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meinetraumwebseite.de/webdesign-coaches</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
