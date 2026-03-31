@@ -12,9 +12,10 @@ const LeadCaptureModal = () => {
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [dsgvoAccepted, setDsgvoAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<{ firstName?: string; email?: string; dsgvo?: string }>({});
+  const [errors, setErrors] = useState<{ firstName?: string; email?: string; phone?: string; dsgvo?: string }>({});
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(STORAGE_KEY);
