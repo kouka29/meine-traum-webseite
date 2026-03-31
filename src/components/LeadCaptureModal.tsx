@@ -83,8 +83,8 @@ const LeadCaptureModal = () => {
           {submitted ? (
             /* Success state */
             <div className="text-center py-8">
-              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">
-                <CheckCircle size={32} className="text-green-600" />
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5">
+                <CheckCircle size={32} className="text-primary" />
               </div>
               <h3 className="font-heading text-2xl font-bold mb-3 text-foreground">
                 Fast geschafft! 🎉
