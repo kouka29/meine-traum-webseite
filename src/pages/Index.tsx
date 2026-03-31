@@ -70,7 +70,6 @@ const Index = () => (
     <section className="relative min-h-[92vh] flex items-center section-padding pt-36 overflow-hidden">
       <div className="absolute inset-0">
         <img src={heroBg} alt="" width={1920} height={1080} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/40" />
       </div>
       <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
