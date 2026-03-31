@@ -759,6 +759,67 @@ const AdminLeads = () => {
             )}
           </div>
         )}
+
+        {/* Testimonials Tab */}
+        {activeTab === "testimonials" && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-muted-foreground">{testimonials.length} Referenz{testimonials.length !== 1 ? "en" : ""}</p>
+              <Button variant="gradient" size="sm" onClick={openNewTestimonial}>
+                <Plus size={14} /> Neue Referenz
+              </Button>
+            </div>
+
+            {testimonialsLoading ? (
+              <div className="text-center py-20">
+                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
+                <p className="text-muted-foreground">Lade Referenzen...</p>
+              </div>
+            ) : testimonials.length === 0 ? (
+              <div className="text-center py-20 text-muted-foreground">
+                <MessageSquare size={48} className="mx-auto mb-4 opacity-50" />
+                <p className="text-lg mb-2">Noch keine Referenzen vorhanden.</p>
+                <p className="text-sm">Erstellen Sie Ihre erste Kundenreferenz.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {testimonials.map((t, i) => (
+                  <div key={t.id} className={`bg-card rounded-xl border border-border p-4 flex items-center gap-4 transition-all ${!t.is_visible ? "opacity-60" : ""}`}>
+                    <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
+                      <Star size={16} className="text-primary-foreground" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-foreground truncate">{t.name}</h3>
+                        {t.result && <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{t.result}</span>}
+                        {!t.is_visible && <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Versteckt</span>}
+                      </div>
+                      <p className="text-sm text-muted-foreground truncate">{t.role}</p>
+                      <p className="text-xs text-muted-foreground mt-1 truncate italic">„{t.text}"</p>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <Button variant="ghost" size="icon" onClick={() => moveTestimonial(i, "up")} disabled={i === 0} className="h-8 w-8">
+                        <ChevronUp size={14} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => moveTestimonial(i, "down")} disabled={i === testimonials.length - 1} className="h-8 w-8">
+                        <ChevronDown size={14} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => toggleTestimonialVisibility(t)} className="h-8 w-8">
+                        {t.is_visible ? <Eye size={14} /> : <EyeOff size={14} />}
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => openEditTestimonial(t)} className="h-8 w-8">
+                        <Pencil size={14} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => deleteTestimonial(t.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
+                        <Trash2 size={14} />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Project Dialog */}
@@ -800,6 +861,43 @@ const AdminLeads = () => {
             <Button variant="outline" onClick={() => setShowProjectDialog(false)}>Abbrechen</Button>
             <Button variant="gradient" onClick={saveProject} disabled={savingProject}>
               {savingProject ? <Loader2 className="animate-spin" size={16} /> : (editingProject ? "Speichern" : "Erstellen")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Testimonial Dialog */}
+      <Dialog open={showTestimonialDialog} onOpenChange={setShowTestimonialDialog}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{editingTestimonial ? "Referenz bearbeiten" : "Neue Referenz"}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="test-name">Name *</Label>
+              <Input id="test-name" value={testimonialForm.name} onChange={e => setTestimonialForm(f => ({ ...f, name: e.target.value }))} placeholder="z.B. Thomas M." />
+            </div>
+            <div>
+              <Label htmlFor="test-role">Rolle / Firma</Label>
+              <Input id="test-role" value={testimonialForm.role} onChange={e => setTestimonialForm(f => ({ ...f, role: e.target.value }))} placeholder="z.B. Geschäftsführer, TechStart GmbH" />
+            </div>
+            <div>
+              <Label htmlFor="test-result">Ergebnis</Label>
+              <Input id="test-result" value={testimonialForm.result} onChange={e => setTestimonialForm(f => ({ ...f, result: e.target.value }))} placeholder="z.B. 3x mehr Anfragen" />
+            </div>
+            <div>
+              <Label htmlFor="test-text">Bewertungstext *</Label>
+              <Textarea id="test-text" value={testimonialForm.text} onChange={e => setTestimonialForm(f => ({ ...f, text: e.target.value }))} placeholder="Was sagt der Kunde über Sie?" rows={4} />
+            </div>
+            <div className="flex items-center gap-3">
+              <Switch checked={testimonialForm.is_visible} onCheckedChange={v => setTestimonialForm(f => ({ ...f, is_visible: v }))} />
+              <Label>Sichtbar auf der Website</Label>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowTestimonialDialog(false)}>Abbrechen</Button>
+            <Button variant="gradient" onClick={saveTestimonial} disabled={savingTestimonial}>
+              {savingTestimonial ? <Loader2 className="animate-spin" size={16} /> : (editingTestimonial ? "Speichern" : "Erstellen")}
             </Button>
           </DialogFooter>
         </DialogContent>
