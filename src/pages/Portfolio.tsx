@@ -2,15 +2,21 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
-import { Monitor, ExternalLink, ArrowRight, TrendingUp } from "lucide-react";
+import { ExternalLink, ArrowRight, TrendingUp } from "lucide-react";
+import techstartImg from "@/assets/portfolio/techstart.jpg";
+import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
+import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
+import kanzleiImg from "@/assets/portfolio/kanzlei.jpg";
+import fitlifeImg from "@/assets/portfolio/fitlife.jpg";
+import greentechImg from "@/assets/portfolio/greentech.jpg";
 
 const projects = [
-  { title: "TechStart GmbH", category: "SaaS Landing Page", desc: "Conversion-optimierte Landing Page – Anfragen um 300% gesteigert in nur 8 Wochen.", result: "+300% Anfragen", gradient: "from-primary to-accent" },
-  { title: "Yoga Studio Flow", category: "Branding & Webdesign", desc: "Ganzheitlicher Markenauftritt – von 3 auf 20+ Anfragen pro Monat.", result: "+700% Neukunden", gradient: "from-accent to-primary" },
-  { title: "DigitalBoost", category: "E-Commerce", desc: "Online-Shop mit optimiertem Checkout – Umsatz um 180% gesteigert.", result: "+180% Umsatz", gradient: "from-primary/80 to-accent/80" },
-  { title: "Kanzlei Weber", category: "Corporate Website", desc: "Vertrauensvolle Online-Präsenz – 5x mehr Mandantenanfragen über die Website.", result: "5x mehr Mandanten", gradient: "from-accent/90 to-primary/90" },
-  { title: "FitLife Coaching", category: "Personal Brand", desc: "Persönliche Website mit Buchungssystem – Auslastung von 40% auf 95% gesteigert.", result: "95% Auslastung", gradient: "from-primary to-accent/70" },
-  { title: "GreenTech Solutions", category: "Startup Website", desc: "Investoren-fokussiertes Webdesign – erfolgreich Series A Funding gesichert.", result: "Funding gesichert", gradient: "from-accent/70 to-primary" },
+  { title: "TechStart GmbH", category: "SaaS Landing Page", desc: "Conversion-optimierte Landing Page – Anfragen um 300% gesteigert in nur 8 Wochen.", result: "+300% Anfragen", img: techstartImg },
+  { title: "Yoga Studio Flow", category: "Branding & Webdesign", desc: "Ganzheitlicher Markenauftritt – von 3 auf 20+ Anfragen pro Monat.", result: "+700% Neukunden", img: yogastudioImg },
+  { title: "DigitalBoost", category: "E-Commerce", desc: "Online-Shop mit optimiertem Checkout – Umsatz um 180% gesteigert.", result: "+180% Umsatz", img: digitalboostImg },
+  { title: "Kanzlei Weber", category: "Corporate Website", desc: "Vertrauensvolle Online-Präsenz – 5x mehr Mandantenanfragen über die Website.", result: "5x mehr Mandanten", img: kanzleiImg },
+  { title: "FitLife Coaching", category: "Personal Brand", desc: "Persönliche Website mit Buchungssystem – Auslastung von 40% auf 95% gesteigert.", result: "95% Auslastung", img: fitlifeImg },
+  { title: "GreenTech Solutions", category: "Startup Website", desc: "Investoren-fokussiertes Webdesign – erfolgreich Series A Funding gesichert.", result: "Funding gesichert", img: greentechImg },
 ];
 
 const Portfolio = () => (
@@ -36,10 +42,8 @@ const Portfolio = () => (
           {projects.map((p, i) => (
             <AnimatedSection key={p.title} delay={i * 0.08}>
               <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
-                <div
-                  className={`aspect-[4/3] bg-gradient-to-br ${p.gradient} flex items-center justify-center relative`}
-                >
-                  <Monitor size={48} className="text-primary-foreground/30" />
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <img src={p.img} alt={`${p.title} – ${p.category}`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/15 transition-colors flex items-center justify-center">
                     <ExternalLink
                       size={24}

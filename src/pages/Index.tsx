@@ -5,6 +5,9 @@ import CTABanner from "@/components/CTABanner";
 import PainPoints from "@/components/PainPoints";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
 import SocialProofBar from "@/components/SocialProofBar";
+import techstartImg from "@/assets/portfolio/techstart.jpg";
+import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
+import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
 import {
   ArrowRight,
   Users,
@@ -55,9 +58,9 @@ const testimonials = [
 ];
 
 const portfolioItems = [
-  { title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", gradient: "from-primary to-accent" },
-  { title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", gradient: "from-accent to-primary" },
-  { title: "DigitalBoost", category: "E-Commerce", result: "+180% Umsatz", gradient: "from-primary/80 to-accent/80" },
+  { title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", img: techstartImg },
+  { title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", img: yogastudioImg },
+  { title: "DigitalBoost", category: "E-Commerce", result: "+180% Umsatz", img: digitalboostImg },
 ];
 
 const Index = () => (
@@ -249,9 +252,9 @@ const Index = () => (
             <AnimatedSection key={p.title} delay={i * 0.1}>
               <div className="group cursor-pointer">
                 <div
-                  className={`aspect-[4/3] rounded-2xl bg-gradient-to-br ${p.gradient} mb-5 flex flex-col items-center justify-center group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden`}
+                  className={`aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden`}
                 >
-                  <Monitor size={48} className="text-primary-foreground/40" />
+                  <img src={p.img} alt={`${p.title} – ${p.category}`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />
                   <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
                     {p.result}
                   </span>
