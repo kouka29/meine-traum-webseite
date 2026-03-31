@@ -55,6 +55,17 @@ interface PortfolioProject {
   created_at: string;
 }
 
+interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  result: string;
+  sort_order: number;
+  is_visible: boolean;
+  created_at: string;
+}
+
 const CHART_COLORS = [
   "hsl(var(--primary))",
   "hsl(var(--accent))",
