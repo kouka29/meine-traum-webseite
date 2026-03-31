@@ -15,7 +15,7 @@ const painPoints = [
 
 const features = [
   { icon: Flame, title: "Branchenspezifisches Design", desc: "Ihre Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
-  { icon: Search, title: "Lokales SEO für SHK", desc: "Wir optimieren Ihre Website für lokale Suchanfragen wie "Heizungsbauer [Stadt]" oder "Sanitär Notdienst in der Nähe"." },
+  { icon: Search, title: "Lokales SEO für SHK", desc: 'Wir optimieren Ihre Website für lokale Suchanfragen wie "Heizungsbauer [Stadt]" oder "Sanitär Notdienst in der Nähe".' },
   { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – Ihre Leistungen werden übersichtlich und überzeugend dargestellt." },
   { icon: Phone, title: "Sofort-Kontakt-Funktion", desc: "Click-to-Call, Notdienst-Button und Kontaktformular – damit Kunden Sie sofort erreichen." },
   { icon: ThermometerSun, title: "Mobile Optimierung", desc: "Über 70% der Notdienst-Anfragen kommen vom Smartphone. Ihre Website funktioniert auf jedem Gerät perfekt." },
