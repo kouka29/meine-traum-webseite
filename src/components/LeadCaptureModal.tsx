@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck } from "lucide-react";
+import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
