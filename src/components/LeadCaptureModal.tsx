@@ -183,6 +183,21 @@ const LeadCaptureModal = () => {
                 </div>
                 <div>
                   <Input
+                    placeholder="Dein Firmenname *"
+                    value={companyName}
+                    onChange={(e) => {
+                      setCompanyName(e.target.value);
+                      if (errors.companyName) setErrors((p) => ({ ...p, companyName: undefined }));
+                    }}
+                    className={errors.companyName ? "border-destructive" : ""}
+                    maxLength={200}
+                  />
+                  {errors.companyName && (
+                    <p className="text-xs text-destructive mt-1">{errors.companyName}</p>
+                  )}
+                </div>
+                <div>
+                  <Input
                     type="email"
                     placeholder="Deine E-Mail-Adresse *"
                     value={email}
