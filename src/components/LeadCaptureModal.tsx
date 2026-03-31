@@ -36,6 +36,7 @@ const LeadCaptureModal = () => {
   const validate = () => {
     const errs: typeof errors = {};
     if (!firstName.trim()) errs.firstName = "Bitte Vornamen eingeben";
+    if (!companyName.trim()) errs.companyName = "Bitte Firmennamen eingeben";
     if (!email.trim()) errs.email = "Bitte E-Mail eingeben";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = "Ungültige E-Mail-Adresse";
     if (!phone.trim()) errs.phone = "Bitte Telefonnummer eingeben";
