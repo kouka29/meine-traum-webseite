@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck } from "lucide-react";
+import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,9 +12,10 @@ const LeadCaptureModal = () => {
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [dsgvoAccepted, setDsgvoAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<{ firstName?: string; email?: string; dsgvo?: string }>({});
+  const [errors, setErrors] = useState<{ firstName?: string; email?: string; phone?: string; dsgvo?: string }>({});
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(STORAGE_KEY);
@@ -142,8 +143,8 @@ const LeadCaptureModal = () => {
               </p>
 
               {/* Bonus */}
-              <div className="flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-lg px-4 py-2.5 mb-5">
-                <Gift size={16} className="text-accent shrink-0" />
+              <div className="flex items-center gap-2 bg-primary/5 border border-primary/15 rounded-lg px-4 py-2.5 mb-5">
+                <Gift size={16} className="text-primary shrink-0" />
                 <span className="text-sm font-medium text-foreground">
                   Bonus: Die 5 besten Tools, die dir alles deutlich einfacher machen
                 </span>
@@ -187,6 +188,15 @@ const LeadCaptureModal = () => {
                     <p className="text-xs text-destructive mt-1">{errors.email}</p>
                   )}
                 </div>
+                <div>
+                  <Input
+                    type="tel"
+                    placeholder="Deine Telefonnummer (optional)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    maxLength={30}
+                  />
+                </div>
 
                 {/* DSGVO Checkbox */}
                 <div className="flex items-start gap-2">
@@ -213,8 +223,9 @@ const LeadCaptureModal = () => {
                 {/* CTA Button */}
                 <Button
                   type="submit"
+                  variant="gradient"
                   size="lg"
-                  className="w-full text-base py-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
+                  className="w-full text-base py-6 font-bold shadow-glow hover:shadow-elevated hover:scale-[1.02] transition-all duration-200 animate-cta-pulse"
                 >
                   Jetzt kostenlos herunterladen
                 </Button>
