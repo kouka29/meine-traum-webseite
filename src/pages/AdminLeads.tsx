@@ -165,10 +165,23 @@ const AdminLeads = () => {
     setProjects(data.projects || []);
   }, [password]);
 
+  const fetchTestimonials = useCallback(async (pw?: string) => {
+    setTestimonialsLoading(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password: pw || password, action: "testimonials-list" },
+    });
+    setTestimonialsLoading(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Laden der Referenzen");
+      return;
+    }
+    setTestimonials(data.testimonials || []);
+  }, [password]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio()]);
+    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio(), fetchTestimonials()]);
     setLoading(false);
   };
 
