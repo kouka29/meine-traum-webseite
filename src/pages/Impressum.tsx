@@ -12,9 +12,10 @@ const Impressum = () => (
           <AnimatedSection delay={0.1}>
             <h2 className="text-xl font-semibold text-foreground">Angaben gemäß § 5 DDG</h2>
             <p>
-              Meine Traum Webseite<br />
-              Musterstraße 1<br />
-              12345 Musterstadt<br />
+              Meine Traum Webseite ist eine eingetragene Marke der<br />
+              QK Marketing Group<br />
+              Rheinallee 88/Gebäude 23<br />
+              55120 Mainz<br />
               Deutschland
             </p>
           </AnimatedSection>
@@ -22,15 +23,15 @@ const Impressum = () => (
           <AnimatedSection delay={0.15}>
             <h2 className="text-xl font-semibold text-foreground">Kontakt</h2>
             <p>
-              Telefon: +49 123 456 789<br />
-              E-Mail: info@meinetraumwebseite.de
+              Telefon: +49 6131 30 765 00<br />
+              E-Mail: info@meine-traum-webseite.de
             </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
             <h2 className="text-xl font-semibold text-foreground">Vertreten durch</h2>
             <p>
-              [Vorname Nachname], Geschäftsführer/in
+              Muad Amar, Geschäftsführer/in
             </p>
           </AnimatedSection>
 
@@ -38,7 +39,7 @@ const Impressum = () => (
             <h2 className="text-xl font-semibold text-foreground">Umsatzsteuer-ID</h2>
             <p>
               Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:<br />
-              DE XXX XXX XXX
+              DE458070108
             </p>
           </AnimatedSection>
 
@@ -54,9 +55,9 @@ const Impressum = () => (
           <AnimatedSection delay={0.35}>
             <h2 className="text-xl font-semibold text-foreground">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
             <p>
-              [Vorname Nachname]<br />
-              Musterstraße 1<br />
-              12345 Musterstadt
+              Muad Amar<br />
+              Rheinallee 88 / Gebäude 23<br />
+              55120 Mainz
             </p>
           </AnimatedSection>
 
