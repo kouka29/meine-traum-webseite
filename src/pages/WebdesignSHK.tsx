@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const painPoints = [
   "Trotz hoher Nachfrage kommen zu wenig Anfragen über Ihre Website rein",
-  "Kunden finden Sie nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen",
+  'Kunden finden Sie nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen',
   "Ihre Website sieht veraltet aus und schreckt potenzielle Kunden ab",
   "Sie verlieren Aufträge an modernere SHK-Betriebe mit besserer Online-Präsenz",
 ];
