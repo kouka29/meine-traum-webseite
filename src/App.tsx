@@ -26,6 +26,11 @@ import WebsiteRelaunch from "./pages/WebsiteRelaunch.tsx";
 import ConversionOptimierung from "./pages/ConversionOptimierung.tsx";
 import KostenloserWebsiteCheck from "./pages/KostenloserWebsiteCheck.tsx";
 import WebdesignPreise from "./pages/WebdesignPreise.tsx";
+import WebdesignSHK from "./pages/WebdesignSHK.tsx";
+import WebdesignHandwerker from "./pages/WebdesignHandwerker.tsx";
+import WebdesignAerzte from "./pages/WebdesignAerzte.tsx";
+import WebdesignImmobilienmakler from "./pages/WebdesignImmobilienmakler.tsx";
+import WebdesignCoaches from "./pages/WebdesignCoaches.tsx";
 
 const queryClient = new QueryClient();
 
