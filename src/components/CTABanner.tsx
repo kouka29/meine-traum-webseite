@@ -5,7 +5,7 @@ import AnimatedSection from "./AnimatedSection";
 import { ArrowRight, PhoneCall } from "lucide-react";
 
 const CTABanner = forwardRef<HTMLElement>((_, ref) => (
-  <section className="section-padding">
+  <section ref={ref} className="section-padding">
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="gradient-hero-bg rounded-3xl p-14 md:p-20 text-center text-primary-foreground relative overflow-hidden">
