@@ -10,7 +10,7 @@ import {
   Lock, Trash2, RefreshCw, Mail, Phone, User, Calendar, Loader2,
   Building2, BarChart3, Users, Eye, TrendingUp, Monitor, Smartphone,
   Tablet, Globe, Clock, FileDown, ArrowUpRight, Image, Plus, Pencil,
-  ChevronUp, ChevronDown, EyeOff, FolderOpen
+  ChevronUp, ChevronDown, EyeOff, FolderOpen, Star, MessageSquare
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -55,6 +55,17 @@ interface PortfolioProject {
   created_at: string;
 }
 
+interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  result: string;
+  sort_order: number;
+  is_visible: boolean;
+  created_at: string;
+}
+
 const CHART_COLORS = [
   "hsl(var(--primary))",
   "hsl(var(--accent))",
@@ -92,7 +103,7 @@ const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials">("dashboard");
 
   // Portfolio state
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
@@ -104,6 +115,16 @@ const AdminLeads = () => {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [savingProject, setSavingProject] = useState(false);
+
+  // Testimonials state
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(false);
+  const [showTestimonialDialog, setShowTestimonialDialog] = useState(false);
+  const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
+  const [testimonialForm, setTestimonialForm] = useState({
+    name: "", role: "", text: "", result: "", is_visible: true,
+  });
+  const [savingTestimonial, setSavingTestimonial] = useState(false);
 
   const fetchLeads = useCallback(async (pw?: string) => {
     setLoading(true);
@@ -144,10 +165,23 @@ const AdminLeads = () => {
     setProjects(data.projects || []);
   }, [password]);
 
+  const fetchTestimonials = useCallback(async (pw?: string) => {
+    setTestimonialsLoading(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password: pw || password, action: "testimonials-list" },
+    });
+    setTestimonialsLoading(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Laden der Referenzen");
+      return;
+    }
+    setTestimonials(data.testimonials || []);
+  }, [password]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio()]);
+    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio(), fetchTestimonials()]);
     setLoading(false);
   };
 
@@ -183,7 +217,7 @@ const AdminLeads = () => {
 
   const refreshAll = async () => {
     setLoading(true);
-    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio()]);
+    await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio(), fetchTestimonials()]);
     setLoading(false);
   };
 
@@ -293,6 +327,84 @@ const AdminLeads = () => {
     });
   };
 
+  // Testimonial actions
+  const openNewTestimonial = () => {
+    setEditingTestimonial(null);
+    setTestimonialForm({ name: "", role: "", text: "", result: "", is_visible: true });
+    setShowTestimonialDialog(true);
+  };
+
+  const openEditTestimonial = (t: Testimonial) => {
+    setEditingTestimonial(t);
+    setTestimonialForm({ name: t.name, role: t.role, text: t.text, result: t.result, is_visible: t.is_visible });
+    setShowTestimonialDialog(true);
+  };
+
+  const saveTestimonial = async () => {
+    if (!testimonialForm.name.trim() || !testimonialForm.text.trim()) {
+      toast.error("Bitte Name und Text eingeben");
+      return;
+    }
+    setSavingTestimonial(true);
+    const action = editingTestimonial ? "testimonials-update" : "testimonials-create";
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: {
+        password, action,
+        ...(editingTestimonial ? { testimonialId: editingTestimonial.id } : {}),
+        ...testimonialForm,
+      },
+    });
+    setSavingTestimonial(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Speichern");
+      return;
+    }
+    toast.success(editingTestimonial ? "Referenz aktualisiert" : "Referenz erstellt");
+    setShowTestimonialDialog(false);
+    fetchTestimonials();
+  };
+
+  const deleteTestimonial = async (id: string) => {
+    if (!confirm("Referenz wirklich löschen?")) return;
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "testimonials-delete", testimonialId: id },
+    });
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Löschen");
+      return;
+    }
+    toast.success("Referenz gelöscht");
+    setTestimonials(prev => prev.filter(t => t.id !== id));
+  };
+
+  const toggleTestimonialVisibility = async (t: Testimonial) => {
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "testimonials-update", testimonialId: t.id, is_visible: !t.is_visible },
+    });
+    if (error || data?.error) {
+      toast.error("Fehler beim Aktualisieren");
+      return;
+    }
+    setTestimonials(prev => prev.map(item => item.id === t.id ? { ...item, is_visible: !item.is_visible } : item));
+  };
+
+  const moveTestimonial = async (index: number, direction: "up" | "down") => {
+    const newList = [...testimonials];
+    const swapIndex = direction === "up" ? index - 1 : index + 1;
+    if (swapIndex < 0 || swapIndex >= newList.length) return;
+    const tempOrder = newList[index].sort_order;
+    newList[index].sort_order = newList[swapIndex].sort_order;
+    newList[swapIndex].sort_order = tempOrder;
+    [newList[index], newList[swapIndex]] = [newList[swapIndex], newList[index]];
+    setTestimonials(newList);
+    await supabase.functions.invoke("admin-leads", {
+      body: {
+        password, action: "testimonials-reorder",
+        testimonials: newList.map(t => ({ id: t.id, sort_order: t.sort_order })),
+      },
+    });
+  };
+
   if (!authenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -351,6 +463,7 @@ const AdminLeads = () => {
             { key: "dashboard" as const, icon: BarChart3, label: "Dashboard" },
             { key: "leads" as const, icon: Users, label: `Leads (${leads.length})` },
             { key: "portfolio" as const, icon: FolderOpen, label: `Portfolio (${projects.length})` },
+            { key: "testimonials" as const, icon: MessageSquare, label: `Referenzen (${testimonials.length})` },
           ]).map(tab => (
             <button
               key={tab.key}
@@ -646,6 +759,67 @@ const AdminLeads = () => {
             )}
           </div>
         )}
+
+        {/* Testimonials Tab */}
+        {activeTab === "testimonials" && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-muted-foreground">{testimonials.length} Referenz{testimonials.length !== 1 ? "en" : ""}</p>
+              <Button variant="gradient" size="sm" onClick={openNewTestimonial}>
+                <Plus size={14} /> Neue Referenz
+              </Button>
+            </div>
+
+            {testimonialsLoading ? (
+              <div className="text-center py-20">
+                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
+                <p className="text-muted-foreground">Lade Referenzen...</p>
+              </div>
+            ) : testimonials.length === 0 ? (
+              <div className="text-center py-20 text-muted-foreground">
+                <MessageSquare size={48} className="mx-auto mb-4 opacity-50" />
+                <p className="text-lg mb-2">Noch keine Referenzen vorhanden.</p>
+                <p className="text-sm">Erstellen Sie Ihre erste Kundenreferenz.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {testimonials.map((t, i) => (
+                  <div key={t.id} className={`bg-card rounded-xl border border-border p-4 flex items-center gap-4 transition-all ${!t.is_visible ? "opacity-60" : ""}`}>
+                    <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
+                      <Star size={16} className="text-primary-foreground" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-foreground truncate">{t.name}</h3>
+                        {t.result && <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{t.result}</span>}
+                        {!t.is_visible && <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Versteckt</span>}
+                      </div>
+                      <p className="text-sm text-muted-foreground truncate">{t.role}</p>
+                      <p className="text-xs text-muted-foreground mt-1 truncate italic">„{t.text}"</p>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <Button variant="ghost" size="icon" onClick={() => moveTestimonial(i, "up")} disabled={i === 0} className="h-8 w-8">
+                        <ChevronUp size={14} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => moveTestimonial(i, "down")} disabled={i === testimonials.length - 1} className="h-8 w-8">
+                        <ChevronDown size={14} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => toggleTestimonialVisibility(t)} className="h-8 w-8">
+                        {t.is_visible ? <Eye size={14} /> : <EyeOff size={14} />}
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => openEditTestimonial(t)} className="h-8 w-8">
+                        <Pencil size={14} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => deleteTestimonial(t.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
+                        <Trash2 size={14} />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Project Dialog */}
@@ -687,6 +861,43 @@ const AdminLeads = () => {
             <Button variant="outline" onClick={() => setShowProjectDialog(false)}>Abbrechen</Button>
             <Button variant="gradient" onClick={saveProject} disabled={savingProject}>
               {savingProject ? <Loader2 className="animate-spin" size={16} /> : (editingProject ? "Speichern" : "Erstellen")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Testimonial Dialog */}
+      <Dialog open={showTestimonialDialog} onOpenChange={setShowTestimonialDialog}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{editingTestimonial ? "Referenz bearbeiten" : "Neue Referenz"}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="test-name">Name *</Label>
+              <Input id="test-name" value={testimonialForm.name} onChange={e => setTestimonialForm(f => ({ ...f, name: e.target.value }))} placeholder="z.B. Thomas M." />
+            </div>
+            <div>
+              <Label htmlFor="test-role">Rolle / Firma</Label>
+              <Input id="test-role" value={testimonialForm.role} onChange={e => setTestimonialForm(f => ({ ...f, role: e.target.value }))} placeholder="z.B. Geschäftsführer, TechStart GmbH" />
+            </div>
+            <div>
+              <Label htmlFor="test-result">Ergebnis</Label>
+              <Input id="test-result" value={testimonialForm.result} onChange={e => setTestimonialForm(f => ({ ...f, result: e.target.value }))} placeholder="z.B. 3x mehr Anfragen" />
+            </div>
+            <div>
+              <Label htmlFor="test-text">Bewertungstext *</Label>
+              <Textarea id="test-text" value={testimonialForm.text} onChange={e => setTestimonialForm(f => ({ ...f, text: e.target.value }))} placeholder="Was sagt der Kunde über Sie?" rows={4} />
+            </div>
+            <div className="flex items-center gap-3">
+              <Switch checked={testimonialForm.is_visible} onCheckedChange={v => setTestimonialForm(f => ({ ...f, is_visible: v }))} />
+              <Label>Sichtbar auf der Website</Label>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowTestimonialDialog(false)}>Abbrechen</Button>
+            <Button variant="gradient" onClick={saveTestimonial} disabled={savingTestimonial}>
+              {savingTestimonial ? <Loader2 className="animate-spin" size={16} /> : (editingTestimonial ? "Speichern" : "Erstellen")}
             </Button>
           </DialogFooter>
         </DialogContent>

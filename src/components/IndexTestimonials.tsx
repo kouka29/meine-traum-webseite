@@ -1,62 +1,46 @@
 import { useEffect, useState, useCallback } from "react";
 import AnimatedSection from "./AnimatedSection";
 import { Star, Users, ChevronLeft, ChevronRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-const testimonials = [
-  {
-    name: "Thomas M.",
-    role: "Geschäftsführer, TechStart GmbH",
-    text: "Seit dem Relaunch hat sich unsere Anfragequote verdreifacht. Die Investition hat sich innerhalb von 6 Wochen bezahlt gemacht.",
-    result: "3x mehr Anfragen",
-  },
-  {
-    name: "Sarah K.",
-    role: "Inhaberin, Yoga Studio Flow",
-    text: "Vorher hatte ich 2-3 Anfragen im Monat. Jetzt sind es 15-20. Die Website arbeitet rund um die Uhr für mich.",
-    result: "7x mehr Neukunden",
-  },
-  {
-    name: "Michael R.",
-    role: "CEO, DigitalBoost",
-    text: "Endlich eine Agentur, die versteht, dass eine Website ein Verkaufsinstrument ist – nicht nur eine digitale Visitenkarte.",
-    result: "+180% Umsatz",
-  },
-  {
-    name: "Dr. Anna W.",
-    role: "Zahnärztin, Praxis am Park",
-    text: "Unsere Online-Terminbuchungen haben sich vervierfacht. Die Patienten finden uns jetzt sofort bei Google.",
-    result: "4x mehr Termine",
-  },
-  {
-    name: "Markus L.",
-    role: "Inhaber, Elektro Lenz GmbH",
-    text: "Früher kamen Aufträge nur über Empfehlungen. Jetzt generiert unsere Website täglich neue Anfragen aus der Region.",
-    result: "+250% Anfragen",
-  },
-  {
-    name: "Julia F.",
-    role: "Coach & Beraterin",
-    text: "Meine alte Website hat null Vertrauen aufgebaut. Seit dem Relaunch buchen Interessenten direkt nach dem ersten Besuch.",
-    result: "5x mehr Buchungen",
-  },
-  {
-    name: "Stefan H.",
-    role: "Geschäftsführer, Immobilien Huber",
-    text: "Die Conversion-Rate unserer Landingpages ist um 320% gestiegen. Jede Investition hat sich mehrfach ausgezahlt.",
-    result: "+320% Conversion",
-  },
-  {
-    name: "Claudia B.",
-    role: "Inhaberin, Beauty Lounge",
-    text: "Endlich eine Website, die so professionell aussieht wie mein Studio. Die Neukundengewinnung läuft jetzt automatisch.",
-    result: "2x mehr Neukunden",
-  },
+interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  result: string;
+  sort_order: number;
+  is_visible: boolean;
+}
+
+const FALLBACK_TESTIMONIALS: Omit<Testimonial, "id" | "sort_order" | "is_visible">[] = [
+  { name: "Thomas M.", role: "Geschäftsführer, TechStart GmbH", text: "Seit dem Relaunch hat sich unsere Anfragequote verdreifacht. Die Investition hat sich innerhalb von 6 Wochen bezahlt gemacht.", result: "3x mehr Anfragen" },
+  { name: "Sarah K.", role: "Inhaberin, Yoga Studio Flow", text: "Vorher hatte ich 2-3 Anfragen im Monat. Jetzt sind es 15-20. Die Website arbeitet rund um die Uhr für mich.", result: "7x mehr Neukunden" },
+  { name: "Michael R.", role: "CEO, DigitalBoost", text: "Endlich eine Agentur, die versteht, dass eine Website ein Verkaufsinstrument ist – nicht nur eine digitale Visitenkarte.", result: "+180% Umsatz" },
 ];
 
 const IndexTestimonials = () => {
+  const [testimonials, setTestimonials] = useState<Omit<Testimonial, "sort_order" | "is_visible">[]>([]);
   const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const load = async () => {
+      const { data } = await supabase
+        .from("testimonials")
+        .select("*")
+        .eq("is_visible", true)
+        .order("sort_order", { ascending: true });
+      if (data && data.length > 0) {
+        setTestimonials(data);
+      } else {
+        setTestimonials(FALLBACK_TESTIMONIALS.map((t, i) => ({ ...t, id: String(i) })));
+      }
+    };
+    load();
+  }, []);
+
   const visibleCount = 3;
-  const maxIndex = testimonials.length - visibleCount;
+  const maxIndex = Math.max(0, testimonials.length - visibleCount);
 
   const next = useCallback(() => {
     setCurrent((c) => (c >= maxIndex ? 0 : c + 1));
@@ -67,9 +51,12 @@ const IndexTestimonials = () => {
   }, [maxIndex]);
 
   useEffect(() => {
+    if (testimonials.length <= visibleCount) return;
     const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, testimonials.length]);
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section className="section-padding">
@@ -93,9 +80,9 @@ const IndexTestimonials = () => {
                 transform: `translateX(calc(-${current} * (100% / ${visibleCount} + 0.5rem)))`,
               }}
             >
-              {testimonials.map((t, i) => (
+              {testimonials.map((t) => (
                 <div
-                  key={t.name}
+                  key={t.id}
                   className="min-w-0 shrink-0 grow-0"
                   style={{ flexBasis: `calc((100% - ${(visibleCount - 1) * 1.5}rem) / ${visibleCount})` }}
                 >
@@ -126,33 +113,37 @@ const IndexTestimonials = () => {
             </div>
           </div>
 
-          <button
-            onClick={prev}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
-            aria-label="Vorherige Referenz"
-          >
-            <ChevronLeft size={18} className="text-foreground" />
-          </button>
-          <button
-            onClick={next}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
-            aria-label="Nächste Referenz"
-          >
-            <ChevronRight size={18} className="text-foreground" />
-          </button>
-
-          <div className="flex justify-center gap-2 mt-8">
-            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+          {testimonials.length > visibleCount && (
+            <>
               <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  i === current ? "bg-primary w-6" : "bg-muted-foreground/30"
-                }`}
-                aria-label={`Zu Gruppe ${i + 1}`}
-              />
-            ))}
-          </div>
+                onClick={prev}
+                className="absolute -left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
+                aria-label="Vorherige Referenz"
+              >
+                <ChevronLeft size={18} className="text-foreground" />
+              </button>
+              <button
+                onClick={next}
+                className="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
+                aria-label="Nächste Referenz"
+              >
+                <ChevronRight size={18} className="text-foreground" />
+              </button>
+
+              <div className="flex justify-center gap-2 mt-8">
+                {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrent(i)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      i === current ? "bg-primary w-6" : "bg-muted-foreground/30"
+                    }`}
+                    aria-label={`Zu Gruppe ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
