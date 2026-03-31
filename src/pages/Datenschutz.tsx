@@ -27,13 +27,15 @@ const Datenschutz = () => (
             </p>
             <p>
               Meine Traum Webseite<br />
-              Musterstraße 1<br />
-              12345 Musterstadt<br />
+              QK Marketing Group<br />
+              Muad Amar <br />
+              Rheinallee 88 /Gebäude 23<br />
+              55120 Mainz<br />
               Deutschland
             </p>
             <p>
-              Telefon: +49 123 456 789<br />
-              E-Mail: info@meinetraumwebseite.de
+              Telefon: +49 6131 30 765 00<br />
+              E-Mail: info@meine-traum-webseite.de
             </p>
             <p>
               Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen 
