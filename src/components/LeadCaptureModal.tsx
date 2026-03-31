@@ -260,7 +260,7 @@ const LeadCaptureModal = () => {
                       <Loader2 size={18} className="animate-spin" /> Wird gesendet...
                     </>
                   ) : (
-                    "Jetzt kostenlos herunterladen"
+                    "Jetzt kostenlos herunterladen und direkt starten"
                   )}
                 </Button>
               </form>
