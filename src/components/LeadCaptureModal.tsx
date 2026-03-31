@@ -214,7 +214,7 @@ const LeadCaptureModal = () => {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full text-base py-6 bg-green-600 hover:bg-green-700 text-white font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
+                  className="w-full text-base py-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
                 >
                   Jetzt kostenlos herunterladen
                 </Button>
