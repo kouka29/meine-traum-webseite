@@ -10,7 +10,7 @@ import {
   Lock, Trash2, RefreshCw, Mail, Phone, User, Calendar, Loader2,
   Building2, BarChart3, Users, Eye, TrendingUp, Monitor, Smartphone,
   Tablet, Globe, Clock, FileDown, ArrowUpRight, Image, Plus, Pencil,
-  ChevronUp, ChevronDown, EyeOff, FolderOpen
+  ChevronUp, ChevronDown, EyeOff, FolderOpen, Star, MessageSquare
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
