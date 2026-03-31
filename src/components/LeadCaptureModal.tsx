@@ -71,10 +71,10 @@ const LeadCaptureModal = () => {
   if (!open) return null;
 
   const bullets = [
-    { icon: Zap, text: "Die 3 größten Fehler, die dich aktuell blockieren" },
-    { icon: TrendingUp, text: "Eine einfache Schritt-für-Schritt Methode" },
-    { icon: Sparkles, text: "Sofort umsetzbare Strategien ohne Vorkenntnisse" },
-    { icon: ShieldCheck, text: "Insider-Tipps, die sonst nur Experten kennen" },
+    { icon: Zap, text: "7 erprobte Schritte zur Webseite, die Kunden gewinnt" },
+    { icon: TrendingUp, text: "Warum die meisten Webseiten scheitern – und wie du es besser machst" },
+    { icon: Sparkles, text: "Sofort umsetzbar – auch ohne Technikkenntnisse" },
+    { icon: ShieldCheck, text: "Bonus: Die perfekte Webseiten-Checkliste zum Abhaken" },
   ];
 
   return (
