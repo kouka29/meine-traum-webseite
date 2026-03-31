@@ -9,6 +9,7 @@ import CookieBanner from "@/components/CookieBanner";
 import LeadCaptureModal from "@/components/LeadCaptureModal";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
+import StructuredData from "@/components/StructuredData";
 import PageTracker from "@/components/PageTracker";
 import Index from "./pages/Index.tsx";
 import Services from "./pages/Services.tsx";
@@ -42,6 +43,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <PageMeta />
+        <StructuredData />
         <PageTracker />
         <Navbar />
         <Routes>
