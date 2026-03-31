@@ -116,6 +116,22 @@
 }
 
 @layer utilities {
+  @keyframes cta-pulse-soft {
+    0%, 100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.02);
+    }
+  }
+
+  .animate-cta-pulse {
+    animation: cta-pulse-soft 7s ease-in-out infinite;
+    transform-origin: center;
+    will-change: transform;
+  }
+
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-hero);
