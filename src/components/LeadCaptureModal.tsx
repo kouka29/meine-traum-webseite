@@ -53,6 +53,7 @@ const LeadCaptureModal = () => {
     setLoading(true);
     const { error } = await supabase.from("leads").insert({
       first_name: firstName.trim(),
+      company_name: companyName.trim(),
       email: email.trim(),
       phone: phone.trim(),
     });
