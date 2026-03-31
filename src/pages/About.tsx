@@ -27,15 +27,15 @@ const About = () => (
         <AnimatedSection>
           <div className="max-w-2xl mx-auto text-center mb-20">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              Über uns
+              Über unsere Webdesign Agentur
             </span>
             <h1 className="mb-5 text-balance">
-              Wir machen aus Websites{" "}
-              <span className="gradient-text">Verkaufsinstrumente</span>
+              Ihre Webdesign Agentur, die Websites zu{" "}
+              <span className="gradient-text">Verkaufsinstrumenten</span> macht
             </h1>
             <p className="text-muted-foreground text-lg">
               Meine Traum Webseite ist keine gewöhnliche Webdesign-Agentur.
-              Wir bauen Websites, die aktiv Kunden gewinnen – für Selbstständige, Handwerker, Coaches und KMUs.
+              Wir erstellen moderne Websites für Unternehmen, die aktiv Kunden gewinnen – für Selbstständige, Handwerker, Coaches und KMUs.
             </p>
           </div>
         </AnimatedSection>
@@ -44,7 +44,7 @@ const About = () => (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-24">
             <div>
               <h2 className="text-2xl md:text-3xl mb-5">
-                Warum wir anders sind
+                Warum unsere Webdesign Agentur anders ist
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Die meisten Agenturen liefern eine schöne Website – und das war's.
@@ -63,11 +63,14 @@ const About = () => (
                   </div>
                 ))}
               </div>
-              <div className="mt-10">
+              <div className="mt-10 flex flex-col sm:flex-row gap-4">
                 <Button variant="gradient" asChild>
                   <Link to="/kontakt">
                     Kostenlose Vorschau anfordern <ArrowRight size={18} />
                   </Link>
+                </Button>
+                <Button variant="outline-primary" asChild>
+                  <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten</Link>
                 </Button>
               </div>
             </div>
@@ -83,7 +86,7 @@ const About = () => (
 
         <AnimatedSection>
           <h2 className="text-center mb-16 text-balance">
-            Wofür wir stehen
+            Wofür wir als Webdesign Agentur stehen
           </h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

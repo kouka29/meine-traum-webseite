@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import { Link } from "react-router-dom";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,12 +37,12 @@ const Contact = () => {
                 Kostenlose Beratung
               </span>
               <h1 className="mb-5 text-balance">
-                Sichern Sie sich Ihre{" "}
-                <span className="gradient-text">kostenlose Website-Vorschau</span>
+                Kostenlose Website-Vorschau sichern –{" "}
+                <span className="gradient-text">in 48 Stunden fertig</span>
               </h1>
               <p className="text-muted-foreground text-lg">
                 Sehen Sie in 48 Stunden, wie Ihre neue Website aussehen könnte –
-                komplett kostenlos und ohne Verpflichtung.
+                komplett kostenlos und ohne Verpflichtung. Jetzt Kontakt aufnehmen und Website erstellen lassen.
               </p>
               <div className="flex flex-wrap justify-center gap-5 mt-8">
                 {[
@@ -107,9 +108,9 @@ const Contact = () => {
             <AnimatedSection className="lg:col-span-2" delay={0.2}>
               <div className="space-y-10">
                 <div className="p-8 rounded-2xl gradient-hero-bg">
-                  <h4 className="font-heading font-semibold text-primary-foreground mb-4 text-lg">
-                    So funktioniert's:
-                  </h4>
+                  <h2 className="font-heading font-semibold text-primary-foreground mb-4 text-lg">
+                    So funktioniert's – Website erstellen lassen
+                  </h2>
                   <ol className="space-y-4 text-sm text-primary-foreground/75">
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">1.</span>
@@ -127,7 +128,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-heading font-semibold mb-5 text-lg">Das bekommen Sie:</h3>
+                  <h3 className="font-heading font-semibold mb-5 text-lg">Das bekommen Sie</h3>
                   <div className="space-y-3.5">
                     {trustPoints.map((t) => (
                       <div key={t} className="flex items-center gap-3">
@@ -142,8 +143,8 @@ const Contact = () => {
                   <h3 className="font-heading font-semibold mb-5 text-lg">Direkter Kontakt</h3>
                   <div className="space-y-4">
                     {[
-                      { icon: Phone, text: "+49 123 456 789", label: "Rufen Sie uns an" },
-                      { icon: Mail, text: "info@meinetraumwebseite.de", label: "Schreiben Sie uns" },
+                      { icon: Phone, text: "+49 123 456 789", label: "Jetzt anrufen" },
+                      { icon: Mail, text: "info@meinetraumwebseite.de", label: "E-Mail schreiben" },
                       { icon: MapPin, text: "Deutschland", label: "Standort" },
                     ].map((item) => (
                       <div key={item.text} className="flex items-center gap-4">
@@ -156,6 +157,14 @@ const Contact = () => {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </div>
+
+                <div className="text-sm text-muted-foreground">
+                  <p>Weitere Optionen:</p>
+                  <div className="flex flex-wrap gap-3 mt-2">
+                    <Link to="/kostenloser-website-check" className="text-primary hover:underline">Kostenloser Website-Check</Link>
+                    <Link to="/webdesign-preise" className="text-primary hover:underline">Webdesign Preise</Link>
                   </div>
                 </div>
               </div>
