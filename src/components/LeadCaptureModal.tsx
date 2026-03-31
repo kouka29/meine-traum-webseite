@@ -13,12 +13,13 @@ const DELAY_MS = 8000;
 const LeadCaptureModal = () => {
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [dsgvoAccepted, setDsgvoAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ firstName?: string; email?: string; phone?: string; dsgvo?: string }>({});
+  const [errors, setErrors] = useState<{ firstName?: string; companyName?: string; email?: string; phone?: string; dsgvo?: string }>({});
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(STORAGE_KEY);
