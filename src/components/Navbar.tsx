@@ -20,8 +20,9 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       <div className="container-narrow flex items-center justify-between h-[72px] px-4">
-        <Link to="/" className="font-heading text-xl font-bold gradient-text tracking-tight">
-          Meine Traum Webseite
+        <Link to="/" className="flex items-center gap-2.5">
+          <img src={logo} alt="Meine Traum Webseite Logo" width={36} height={36} className="h-9 w-9" />
+          <span className="font-heading text-xl font-bold gradient-text tracking-tight">Meine Traum Webseite</span>
         </Link>
 
         {/* Desktop */}
