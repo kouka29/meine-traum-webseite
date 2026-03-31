@@ -103,7 +103,7 @@ const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials">("dashboard");
 
   // Portfolio state
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
