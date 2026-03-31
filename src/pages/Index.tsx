@@ -5,6 +5,9 @@ import CTABanner from "@/components/CTABanner";
 import PainPoints from "@/components/PainPoints";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
 import SocialProofBar from "@/components/SocialProofBar";
+import techstartImg from "@/assets/portfolio/techstart.jpg";
+import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
+import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
 import {
   ArrowRight,
   Users,
