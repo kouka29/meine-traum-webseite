@@ -116,6 +116,16 @@ const AdminLeads = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [savingProject, setSavingProject] = useState(false);
 
+  // Testimonials state
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(false);
+  const [showTestimonialDialog, setShowTestimonialDialog] = useState(false);
+  const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
+  const [testimonialForm, setTestimonialForm] = useState({
+    name: "", role: "", text: "", result: "", is_visible: true,
+  });
+  const [savingTestimonial, setSavingTestimonial] = useState(false);
+
   const fetchLeads = useCallback(async (pw?: string) => {
     setLoading(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
