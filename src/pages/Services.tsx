@@ -4,6 +4,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
 import { Monitor, TrendingUp, Palette, Search, Settings, ArrowRight, CheckCircle } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
   {
@@ -12,6 +13,7 @@ const services = [
     desc: "Keine gewöhnliche Website – sondern ein Verkaufsinstrument. Wir gestalten jede Seite so, dass Besucher zu Kunden werden.",
     features: ["Verkaufspsychologischer Aufbau", "Mobile First", "Unter 3 Sek. Ladezeit", "CMS für einfache Pflege"],
     result: "Ø 3x mehr Anfragen nach Relaunch",
+    link: "/webdesign-agentur",
   },
   {
     icon: TrendingUp,
@@ -19,6 +21,7 @@ const services = [
     desc: "Ihre Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
     features: ["Conversion-Analyse", "Optimierte Landingpages", "A/B Testing", "Tracking & Analytics"],
     result: "Bis zu 400% mehr Conversions",
+    link: "/conversion-optimierung",
   },
   {
     icon: Palette,
@@ -26,6 +29,7 @@ const services = [
     desc: "Design, das nicht nur gut aussieht – sondern verkauft. Jedes Element hat einen Zweck: Vertrauen schaffen und zum Handeln motivieren.",
     features: ["Nutzerforschung", "Wireframing & Prototyping", "Visuelles Storytelling", "Usability Testing"],
     result: "Nachweisbar höhere Verweildauer",
+    link: "/leistungen",
   },
   {
     icon: Search,
@@ -33,6 +37,7 @@ const services = [
     desc: "Gefunden werden, wenn Kunden suchen. Wir sorgen dafür, dass Ihre Website bei Google sichtbar wird – von Anfang an.",
     features: ["On-Page Optimierung", "Technisches SEO", "Lokale Sichtbarkeit", "Google-konforme Struktur"],
     result: "Top-Platzierungen bei relevanten Suchbegriffen",
+    link: "/leistungen",
   },
   {
     icon: Settings,
@@ -40,7 +45,14 @@ const services = [
     desc: "Buchungssysteme, Anbindungen, Automatisierungen – wir setzen um, was Ihr Business braucht. Maßgeschneidert und zukunftssicher.",
     features: ["API-Integrationen", "Buchungssysteme", "Automatisierungen", "Individuelle Beratung"],
     result: "Zeitersparnis durch Automatisierung",
+    link: "/kontakt",
   },
+];
+
+const faqs = [
+  { q: "Welche Leistungen bietet eure Webdesign Agentur?", a: "Wir bieten Conversion-Webdesign, UX/UI Design, SEO-Optimierung, Landingpage-Erstellung, Website Relaunch und Conversion-Optimierung – alles aus einer Hand." },
+  { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Sie können jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten Sie gerne, welche Kombination für Ihre Ziele am sinnvollsten ist." },
+  { q: "Erstellt ihr auch Landingpages?", a: "Ja, wir erstellen hochkonvertierende Landingpages für Google Ads, Social Media Kampagnen und Lead-Generierung. Mehr dazu auf unserer Landingpage-Seite." },
 ];
 
 const Services = () => (
@@ -53,12 +65,12 @@ const Services = () => (
               Unsere Leistungen
             </span>
             <h1 className="mb-5 text-balance">
-              Alles, was Sie brauchen, um{" "}
-              <span className="gradient-text">online Kunden zu gewinnen</span>
+              Webdesign, Conversion & SEO –{" "}
+              <span className="gradient-text">alles für Ihren Online-Erfolg</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Keine Standard-Websites. Sondern Verkaufsinstrumente, die sich bezahlt machen –
-              für Handwerker, Coaches, Berater und lokale Unternehmen.
+              Wir erstellen keine Standard-Websites, sondern Verkaufsinstrumente, die sich bezahlt machen –
+              für Handwerker, Coaches, Berater und kleine Unternehmen.
             </p>
           </div>
         </AnimatedSection>
@@ -66,7 +78,7 @@ const Services = () => (
         <div className="space-y-6">
           {services.map((s, i) => (
             <AnimatedSection key={s.title} delay={i * 0.08}>
-              <div className="flex flex-col md:flex-row gap-7 p-8 md:p-10 rounded-2xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
+              <Link to={s.link} className="flex flex-col md:flex-row gap-7 p-8 md:p-10 rounded-2xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background block">
                 <div className="w-14 h-14 rounded-xl gradient-bg flex items-center justify-center shrink-0">
                   <s.icon size={26} className="text-primary-foreground" />
                 </div>
@@ -87,7 +99,7 @@ const Services = () => (
                     ))}
                   </div>
                 </div>
-              </div>
+              </Link>
             </AnimatedSection>
           ))}
         </div>
@@ -99,6 +111,22 @@ const Services = () => (
             </Link>
           </Button>
         </div>
+
+        <AnimatedSection>
+          <div className="mt-20">
+            <h2 className="text-center mb-10 text-balance">Häufige Fragen zu unseren Leistungen</h2>
+            <div className="max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="space-y-3">
+                {faqs.map((faq, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+                    <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </AnimatedSection>
       </div>
     </section>
 

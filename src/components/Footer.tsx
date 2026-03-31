@@ -10,15 +10,27 @@ const Footer = () => (
         <p className="font-heading text-2xl font-semibold text-background mb-5 text-balance">
           Verlieren Sie keine Kunden mehr an Ihre Konkurrenz.
         </p>
-        <Button
-          size="sm"
-          className="bg-primary-foreground text-foreground hover:bg-primary-foreground/90"
-          asChild
-        >
-          <Link to="/kontakt">
-            Kostenlose Vorschau sichern <ArrowRight size={14} />
-          </Link>
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Button
+            size="sm"
+            className="bg-primary-foreground text-foreground hover:bg-primary-foreground/90"
+            asChild
+          >
+            <Link to="/kontakt">
+              Kostenlose Vorschau sichern <ArrowRight size={14} />
+            </Link>
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="border-background/30 text-background hover:bg-background/10"
+            asChild
+          >
+            <Link to="/kostenloser-website-check">
+              Kostenlosen Website-Check starten
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-14 mb-16">
@@ -27,19 +39,20 @@ const Footer = () => (
             Meine Traum Webseite
           </h3>
           <p className="text-sm leading-relaxed">
-            Wir erstellen Websites, die aktiv Kunden gewinnen – für Selbstständige,
-            Handwerker, Coaches und KMUs im gesamten DACH-Raum.
+            Professionelle Webdesign Agentur – wir erstellen Websites, die aktiv Kunden gewinnen.
+            Für Selbstständige, Handwerker, Coaches und KMUs im DACH-Raum.
           </p>
         </div>
         <div>
-          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Navigation</h4>
+          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Leistungen</h4>
           <ul className="space-y-3 text-sm">
             {[
-              ["Startseite", "/"],
-              ["Leistungen", "/leistungen"],
-              ["Über uns", "/ueber-uns"],
-              ["Referenzen", "/portfolio"],
-              ["Kontakt", "/kontakt"],
+              ["Webdesign Agentur", "/webdesign-agentur"],
+              ["Website erstellen lassen", "/website-erstellen-lassen"],
+              ["Landingpage erstellen", "/landingpage-erstellen-lassen"],
+              ["Website Relaunch", "/website-relaunch"],
+              ["Conversion Optimierung", "/conversion-optimierung"],
+              ["Webdesign Preise", "/webdesign-preise"],
             ].map(([label, path]) => (
               <li key={path}>
                 <Link to={path} className="hover:text-background transition-colors">
@@ -50,18 +63,22 @@ const Footer = () => (
           </ul>
         </div>
         <div>
-          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Rechtliches</h4>
+          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Navigation</h4>
           <ul className="space-y-3 text-sm">
-            <li>
-              <Link to="/impressum" className="hover:text-background transition-colors">
-                Impressum
-              </Link>
-            </li>
-            <li>
-              <Link to="/datenschutz" className="hover:text-background transition-colors">
-                Datenschutzerklärung
-              </Link>
-            </li>
+            {[
+              ["Startseite", "/"],
+              ["Alle Leistungen", "/leistungen"],
+              ["Über uns", "/ueber-uns"],
+              ["Referenzen", "/portfolio"],
+              ["Kontakt", "/kontakt"],
+              ["Kostenloser Website-Check", "/kostenloser-website-check"],
+            ].map(([label, path]) => (
+              <li key={path}>
+                <Link to={path} className="hover:text-background transition-colors">
+                  {label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div>
@@ -70,13 +87,22 @@ const Footer = () => (
             info@meinetraumwebseite.de<br />
             +49 123 456 789
           </p>
-          <p className="text-xs text-background/40">
+          <p className="text-xs text-background/40 mb-6">
             Mo–Fr: 9:00 – 18:00 Uhr
           </p>
+          <h4 className="font-heading font-semibold text-background mb-3 text-sm tracking-wide uppercase">Rechtliches</h4>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <Link to="/impressum" className="hover:text-background transition-colors">Impressum</Link>
+            </li>
+            <li>
+              <Link to="/datenschutz" className="hover:text-background transition-colors">Datenschutzerklärung</Link>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="border-t border-background/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-background/40">
-        <span>© {new Date().getFullYear()} Meine Traum Webseite. Alle Rechte vorbehalten.</span>
+        <span>© {new Date().getFullYear()} Meine Traum Webseite – Webdesign Agentur. Alle Rechte vorbehalten.</span>
         <div className="flex gap-4">
           <Link to="/impressum" className="hover:text-background transition-colors">Impressum</Link>
           <Link to="/datenschutz" className="hover:text-background transition-colors">Datenschutz</Link>

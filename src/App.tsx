@@ -18,6 +18,13 @@ import Datenschutz from "./pages/Datenschutz.tsx";
 import Impressum from "./pages/Impressum.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import AdminLeads from "./pages/AdminLeads.tsx";
+import WebdesignAgentur from "./pages/WebdesignAgentur.tsx";
+import WebsiteErstellenLassen from "./pages/WebsiteErstellenLassen.tsx";
+import LandingpageErstellen from "./pages/LandingpageErstellen.tsx";
+import WebsiteRelaunch from "./pages/WebsiteRelaunch.tsx";
+import ConversionOptimierung from "./pages/ConversionOptimierung.tsx";
+import KostenloserWebsiteCheck from "./pages/KostenloserWebsiteCheck.tsx";
+import WebdesignPreise from "./pages/WebdesignPreise.tsx";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +43,13 @@ const App = () => (
           <Route path="/ueber-uns" element={<About />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/kontakt" element={<Contact />} />
+          <Route path="/webdesign-agentur" element={<WebdesignAgentur />} />
+          <Route path="/website-erstellen-lassen" element={<WebsiteErstellenLassen />} />
+          <Route path="/landingpage-erstellen-lassen" element={<LandingpageErstellen />} />
+          <Route path="/website-relaunch" element={<WebsiteRelaunch />} />
+          <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
+          <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
+          <Route path="/webdesign-preise" element={<WebdesignPreise />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/admin" element={<AdminLeads />} />
