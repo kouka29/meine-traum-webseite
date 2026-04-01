@@ -172,7 +172,7 @@
 
 @layer components {
   .section-padding {
-    @apply py-24 md:py-32 px-4;
+    @apply py-16 md:py-24 lg:py-32 px-4;
   }
 
   .container-narrow {

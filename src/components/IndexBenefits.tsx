@@ -14,7 +14,7 @@ const IndexBenefits = () => (
   <section className="section-padding gradient-subtle-bg">
     <div className="container-narrow px-4">
       <AnimatedSection>
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <h2 className="mb-5 text-balance">
             Warum Unternehmen sich für unsere Webdesign Agentur entscheiden
           </h2>
