@@ -776,6 +776,11 @@ const AdminLeads = () => {
                       <Button variant="ghost" size="icon" onClick={() => openEditProject(p)} className="h-8 w-8">
                         <Pencil size={14} />
                       </Button>
+                      {p.external_url && (
+                        <Button variant="ghost" size="icon" onClick={() => generateMockup(p)} disabled={generatingMockup} className="h-8 w-8" title="Mockup generieren">
+                          {generatingMockup ? <Loader2 size={14} className="animate-spin" /> : <Monitor size={14} />}
+                        </Button>
+                      )}
                       <Button variant="ghost" size="icon" onClick={() => deleteProject(p.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
                         <Trash2 size={14} />
                       </Button>
