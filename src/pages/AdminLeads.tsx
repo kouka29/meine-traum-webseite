@@ -288,6 +288,29 @@ const AdminLeads = () => {
     fetchPortfolio();
   };
 
+  const generateMockup = async (project: PortfolioProject) => {
+    if (!project.external_url) {
+      toast.error("Bitte zuerst einen externen Link eingeben");
+      return;
+    }
+    setGeneratingMockup(true);
+    toast.info("Mockup wird generiert... Das kann einige Sekunden dauern.");
+    const { data, error } = await supabase.functions.invoke("generate-mockup", {
+      body: { password, url: project.external_url, projectId: project.id },
+    });
+    setGeneratingMockup(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler bei der Mockup-Generierung");
+      return;
+    }
+    toast.success("Mockup erfolgreich generiert!");
+    setProjects(prev => prev.map(p => p.id === project.id ? {
+      ...p,
+      mockup_desktop_url: data.mockup_desktop_url,
+      mockup_mobile_url: data.mockup_mobile_url,
+    } : p));
+  };
+
   const deleteProject = async (id: string) => {
     if (!confirm("Projekt wirklich löschen?")) return;
     const { data, error } = await supabase.functions.invoke("admin-leads", {
