@@ -50,6 +50,7 @@ interface PortfolioProject {
   description: string;
   result: string;
   image_url: string;
+  external_url: string;
   sort_order: number;
   is_visible: boolean;
   created_at: string;
