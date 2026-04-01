@@ -27,7 +27,7 @@ const IndexPortfolio = () => {
     const fetch = async () => {
       const { data } = await supabase
         .from("portfolio_projects")
-        .select("id, title, category, result, image_url")
+        .select("id, title, category, result, image_url, external_url")
         .eq("is_visible", true)
         .order("sort_order", { ascending: true })
         .limit(3);
