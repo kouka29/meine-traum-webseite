@@ -39,7 +39,17 @@ const IndexTestimonials = () => {
     load();
   }, []);
 
-  const visibleCount = 3;
+  const [visibleCount, setVisibleCount] = useState(1);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setVisibleCount(w >= 1024 ? 3 : w >= 640 ? 2 : 1);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
   const maxIndex = Math.max(0, testimonials.length - visibleCount);
 
   const next = useCallback(() => {
