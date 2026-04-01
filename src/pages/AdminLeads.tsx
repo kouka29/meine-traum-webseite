@@ -50,6 +50,7 @@ interface PortfolioProject {
   description: string;
   result: string;
   image_url: string;
+  external_url: string;
   sort_order: number;
   is_visible: boolean;
   created_at: string;
@@ -111,7 +112,7 @@ const AdminLeads = () => {
   const [showProjectDialog, setShowProjectDialog] = useState(false);
   const [editingProject, setEditingProject] = useState<PortfolioProject | null>(null);
   const [projectForm, setProjectForm] = useState({
-    title: "", category: "", description: "", result: "", is_visible: true,
+    title: "", category: "", description: "", result: "", external_url: "", is_visible: true,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [savingProject, setSavingProject] = useState(false);
@@ -224,7 +225,7 @@ const AdminLeads = () => {
   // Portfolio actions
   const openNewProject = () => {
     setEditingProject(null);
-    setProjectForm({ title: "", category: "", description: "", result: "", is_visible: true });
+    setProjectForm({ title: "", category: "", description: "", result: "", external_url: "", is_visible: true });
     setImageFile(null);
     setShowProjectDialog(true);
   };
@@ -233,7 +234,7 @@ const AdminLeads = () => {
     setEditingProject(p);
     setProjectForm({
       title: p.title, category: p.category, description: p.description,
-      result: p.result, is_visible: p.is_visible,
+      result: p.result, external_url: p.external_url || "", is_visible: p.is_visible,
     });
     setImageFile(null);
     setShowProjectDialog(true);
@@ -844,6 +845,10 @@ const AdminLeads = () => {
             <div>
               <Label htmlFor="proj-desc">Beschreibung</Label>
               <Textarea id="proj-desc" value={projectForm.description} onChange={e => setProjectForm(f => ({ ...f, description: e.target.value }))} placeholder="Kurze Projektbeschreibung..." rows={3} />
+            </div>
+            <div>
+              <Label htmlFor="proj-url">Externer Link (URL)</Label>
+              <Input id="proj-url" value={projectForm.external_url} onChange={e => setProjectForm(f => ({ ...f, external_url: e.target.value }))} placeholder="https://beispiel.de" />
             </div>
             <div>
               <Label htmlFor="proj-image">Bild</Label>

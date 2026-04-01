@@ -79,6 +79,7 @@ export type Database = {
           category: string
           created_at: string
           description: string
+          external_url: string
           id: string
           image_url: string
           is_visible: boolean
@@ -90,6 +91,7 @@ export type Database = {
           category?: string
           created_at?: string
           description?: string
+          external_url?: string
           id?: string
           image_url?: string
           is_visible?: boolean
@@ -101,6 +103,7 @@ export type Database = {
           category?: string
           created_at?: string
           description?: string
+          external_url?: string
           id?: string
           image_url?: string
           is_visible?: boolean
