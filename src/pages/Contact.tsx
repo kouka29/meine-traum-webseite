@@ -143,9 +143,9 @@ const Contact = () => {
                   <h3 className="font-heading font-semibold mb-5 text-lg">Direkter Kontakt</h3>
                   <div className="space-y-4">
                     {[
-                      { icon: Phone, text: "+49 123 456 789", label: "Jetzt anrufen" },
-                      { icon: Mail, text: "info@meinetraumwebseite.de", label: "E-Mail schreiben" },
-                      { icon: MapPin, text: "Deutschland", label: "Standort" },
+                      { icon: Phone, text: "06131/30 765 00", label: "Jetzt anrufen" },
+                      { icon: Mail, text: "info@meine-traum-webseite.de", label: "E-Mail schreiben" },
+                      { icon: MapPin, text: "Rheinallee 88, 55120 Mainz", label: "Standort" },
                     ].map((item) => (
                       <div key={item.text} className="flex items-center gap-4">
                         <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
