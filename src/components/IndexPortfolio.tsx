@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
+import DeviceMockup from "./DeviceMockup";
 import { supabase } from "@/integrations/supabase/client";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
@@ -15,9 +16,9 @@ const FALLBACK_IMAGES: Record<string, string> = {
 };
 
 const fallbackItems = [
-  { id: "1", title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", image_url: techstartImg, external_url: "" },
-  { id: "2", title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", image_url: yogastudioImg, external_url: "" },
-  { id: "3", title: "DigitalBoost", category: "E-Commerce", result: "+180% Umsatz", image_url: digitalboostImg, external_url: "" },
+  { id: "1", title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", image_url: techstartImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "2", title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", image_url: yogastudioImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "3", title: "DigitalBoost", category: "E-Commerce", result: "+180% Umsatz", image_url: digitalboostImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
 ];
 
 const IndexPortfolio = () => {
@@ -27,7 +28,7 @@ const IndexPortfolio = () => {
     const fetch = async () => {
       const { data } = await supabase
         .from("portfolio_projects")
-        .select("id, title, category, result, image_url, external_url")
+        .select("id, title, category, result, image_url, external_url, mockup_desktop_url, mockup_mobile_url")
         .eq("is_visible", true)
         .order("sort_order", { ascending: true })
         .limit(3);
@@ -36,6 +37,8 @@ const IndexPortfolio = () => {
           ...p,
           image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
           external_url: (p as any).external_url || "",
+          mockup_desktop_url: (p as any).mockup_desktop_url || "",
+          mockup_mobile_url: (p as any).mockup_mobile_url || "",
         })));
       }
     };
@@ -57,10 +60,14 @@ const IndexPortfolio = () => {
             <AnimatedSection key={p.id} delay={i * 0.1}>
               {p.external_url ? (
                 <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block group cursor-pointer">
-                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden">
-                    {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
+                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
+                    {p.mockup_desktop_url ? (
+                      <DeviceMockup desktopUrl={p.mockup_desktop_url} mobileUrl={p.mockup_mobile_url} title={p.title} />
+                    ) : p.image_url ? (
+                      <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                    ) : null}
                     {p.result && (
-                      <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
+                      <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm z-10">
                         {p.result}
                       </span>
                     )}
@@ -70,10 +77,14 @@ const IndexPortfolio = () => {
                 </a>
               ) : (
                 <div className="group">
-                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden">
-                    {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
+                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
+                    {p.mockup_desktop_url ? (
+                      <DeviceMockup desktopUrl={p.mockup_desktop_url} mobileUrl={p.mockup_mobile_url} title={p.title} />
+                    ) : p.image_url ? (
+                      <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                    ) : null}
                     {p.result && (
-                      <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
+                      <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm z-10">
                         {p.result}
                       </span>
                     )}

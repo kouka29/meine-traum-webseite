@@ -51,6 +51,8 @@ interface PortfolioProject {
   result: string;
   image_url: string;
   external_url: string;
+  mockup_desktop_url: string;
+  mockup_mobile_url: string;
   sort_order: number;
   is_visible: boolean;
   created_at: string;
@@ -116,6 +118,7 @@ const AdminLeads = () => {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [savingProject, setSavingProject] = useState(false);
+  const [generatingMockup, setGeneratingMockup] = useState(false);
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -283,6 +286,29 @@ const AdminLeads = () => {
     toast.success(editingProject ? "Projekt aktualisiert" : "Projekt erstellt");
     setShowProjectDialog(false);
     fetchPortfolio();
+  };
+
+  const generateMockup = async (project: PortfolioProject) => {
+    if (!project.external_url) {
+      toast.error("Bitte zuerst einen externen Link eingeben");
+      return;
+    }
+    setGeneratingMockup(true);
+    toast.info("Mockup wird generiert... Das kann einige Sekunden dauern.");
+    const { data, error } = await supabase.functions.invoke("generate-mockup", {
+      body: { password, url: project.external_url, projectId: project.id },
+    });
+    setGeneratingMockup(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler bei der Mockup-Generierung");
+      return;
+    }
+    toast.success("Mockup erfolgreich generiert!");
+    setProjects(prev => prev.map(p => p.id === project.id ? {
+      ...p,
+      mockup_desktop_url: data.mockup_desktop_url,
+      mockup_mobile_url: data.mockup_mobile_url,
+    } : p));
   };
 
   const deleteProject = async (id: string) => {
@@ -750,6 +776,11 @@ const AdminLeads = () => {
                       <Button variant="ghost" size="icon" onClick={() => openEditProject(p)} className="h-8 w-8">
                         <Pencil size={14} />
                       </Button>
+                      {p.external_url && (
+                        <Button variant="ghost" size="icon" onClick={() => generateMockup(p)} disabled={generatingMockup} className="h-8 w-8" title="Mockup generieren">
+                          {generatingMockup ? <Loader2 size={14} className="animate-spin" /> : <Monitor size={14} />}
+                        </Button>
+                      )}
                       <Button variant="ghost" size="icon" onClick={() => deleteProject(p.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
                         <Trash2 size={14} />
                       </Button>

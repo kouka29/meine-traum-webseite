@@ -83,6 +83,8 @@ export type Database = {
           id: string
           image_url: string
           is_visible: boolean
+          mockup_desktop_url: string
+          mockup_mobile_url: string
           result: string
           sort_order: number
           title: string
@@ -95,6 +97,8 @@ export type Database = {
           id?: string
           image_url?: string
           is_visible?: boolean
+          mockup_desktop_url?: string
+          mockup_mobile_url?: string
           result?: string
           sort_order?: number
           title: string
@@ -107,6 +111,8 @@ export type Database = {
           id?: string
           image_url?: string
           is_visible?: boolean
+          mockup_desktop_url?: string
+          mockup_mobile_url?: string
           result?: string
           sort_order?: number
           title?: string
