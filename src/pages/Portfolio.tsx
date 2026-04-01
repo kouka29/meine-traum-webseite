@@ -88,13 +88,17 @@ const Portfolio = () => {
                   {p.external_url ? (
                     <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block">
                       <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
-                        <div className="aspect-[4/3] relative overflow-hidden">
-                          {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
-                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/15 transition-colors flex items-center justify-center">
-                            <ExternalLink size={24} className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
+                          {p.mockup_desktop_url ? (
+                            <DeviceMockup desktopUrl={p.mockup_desktop_url} mobileUrl={p.mockup_mobile_url} title={p.title} />
+                          ) : p.image_url ? (
+                            <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                          ) : null}
+                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
+                            <ExternalLink size={24} className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
                           </div>
                           {p.result && (
-                            <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
+                            <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5 z-10">
                               <TrendingUp size={12} /> {p.result}
                             </span>
                           )}
@@ -108,8 +112,12 @@ const Portfolio = () => {
                     </a>
                   ) : (
                     <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
-                      <div className="aspect-[4/3] relative overflow-hidden">
-                        {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
+                      <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
+                        {p.mockup_desktop_url ? (
+                          <DeviceMockup desktopUrl={p.mockup_desktop_url} mobileUrl={p.mockup_mobile_url} title={p.title} />
+                        ) : p.image_url ? (
+                          <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                        ) : null}
                         {p.result && (
                           <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
                             <TrendingUp size={12} /> {p.result}
