@@ -52,6 +52,8 @@ const Portfolio = () => {
           result: p.result,
           image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
           external_url: (p as any).external_url || "",
+          mockup_desktop_url: (p as any).mockup_desktop_url || "",
+          mockup_mobile_url: (p as any).mockup_mobile_url || "",
         })));
       }
       setLoading(false);
