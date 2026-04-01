@@ -163,7 +163,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "portfolio-create") {
-      const { title, category, description, result, is_visible, image_base64, image_name } = body;
+      const { title, category, description, result, is_visible, image_base64, image_name, external_url } = body;
       if (!title) {
         return new Response(JSON.stringify({ error: "Titel ist erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
