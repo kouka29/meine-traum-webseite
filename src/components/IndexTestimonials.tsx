@@ -127,7 +127,7 @@ const IndexTestimonials = () => {
             <>
               <button
                 onClick={prev}
-                className="absolute -left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
+                className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
                 aria-label="Vorherige Referenz"
               >
                 <ChevronLeft size={18} className="text-foreground" />
