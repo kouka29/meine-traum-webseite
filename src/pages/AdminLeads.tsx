@@ -847,6 +847,10 @@ const AdminLeads = () => {
               <Textarea id="proj-desc" value={projectForm.description} onChange={e => setProjectForm(f => ({ ...f, description: e.target.value }))} placeholder="Kurze Projektbeschreibung..." rows={3} />
             </div>
             <div>
+              <Label htmlFor="proj-url">Externer Link (URL)</Label>
+              <Input id="proj-url" value={projectForm.external_url} onChange={e => setProjectForm(f => ({ ...f, external_url: e.target.value }))} placeholder="https://beispiel.de" />
+            </div>
+            <div>
               <Label htmlFor="proj-image">Bild</Label>
               <Input id="proj-image" type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} />
               {editingProject?.image_url && !imageFile && (

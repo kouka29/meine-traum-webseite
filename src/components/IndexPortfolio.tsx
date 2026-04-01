@@ -55,18 +55,33 @@ const IndexPortfolio = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {items.map((p, i) => (
             <AnimatedSection key={p.id} delay={i * 0.1}>
-              <div className="group cursor-pointer">
-                <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden">
-                  {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
-                  {p.result && (
-                    <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
-                      {p.result}
-                    </span>
-                  )}
+              {p.external_url ? (
+                <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block group cursor-pointer">
+                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden">
+                    {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
+                    {p.result && (
+                      <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
+                        {p.result}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-heading text-lg font-semibold">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground">{p.category}</p>
+                </a>
+              ) : (
+                <div className="group">
+                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden">
+                    {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
+                    {p.result && (
+                      <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
+                        {p.result}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-heading text-lg font-semibold">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground">{p.category}</p>
                 </div>
-                <h3 className="font-heading text-lg font-semibold">{p.title}</h3>
-                <p className="text-sm text-muted-foreground">{p.category}</p>
-              </div>
+              )}
             </AnimatedSection>
           ))}
         </div>

@@ -82,24 +82,44 @@ const Portfolio = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {projects.map((p, i) => (
                 <AnimatedSection key={p.id} delay={i * 0.08}>
-                  <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
-                    <div className="aspect-[4/3] relative overflow-hidden">
-                      {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
-                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/15 transition-colors flex items-center justify-center">
-                        <ExternalLink size={24} className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {p.external_url ? (
+                    <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block">
+                      <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
+                        <div className="aspect-[4/3] relative overflow-hidden">
+                          {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
+                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/15 transition-colors flex items-center justify-center">
+                            <ExternalLink size={24} className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                          {p.result && (
+                            <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
+                              <TrendingUp size={12} /> {p.result}
+                            </span>
+                          )}
+                        </div>
+                        <div className="p-6">
+                          <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
+                          <h2 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h2>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                        </div>
                       </div>
-                      {p.result && (
-                        <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
-                          <TrendingUp size={12} /> {p.result}
-                        </span>
-                      )}
+                    </a>
+                  ) : (
+                    <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
+                      <div className="aspect-[4/3] relative overflow-hidden">
+                        {p.image_url && <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover" />}
+                        {p.result && (
+                          <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
+                            <TrendingUp size={12} /> {p.result}
+                          </span>
+                        )}
+                      </div>
+                      <div className="p-6">
+                        <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
+                        <h2 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h2>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                      </div>
                     </div>
-                    <div className="p-6">
-                      <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
-                      <h2 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h2>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
-                    </div>
-                  </div>
+                  )}
                 </AnimatedSection>
               ))}
             </div>
