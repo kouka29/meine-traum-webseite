@@ -51,6 +51,8 @@ interface PortfolioProject {
   result: string;
   image_url: string;
   external_url: string;
+  mockup_desktop_url: string;
+  mockup_mobile_url: string;
   sort_order: number;
   is_visible: boolean;
   created_at: string;
