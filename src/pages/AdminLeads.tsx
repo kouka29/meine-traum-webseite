@@ -118,6 +118,7 @@ const AdminLeads = () => {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [savingProject, setSavingProject] = useState(false);
+  const [generatingMockup, setGeneratingMockup] = useState(false);
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
