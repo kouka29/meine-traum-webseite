@@ -1,41 +1,30 @@
 
 
-# Plan: Portfolio-Verwaltung im Admin-Bereich
+# Plan: Externer Link für Portfolio-Projekte
 
-## Aktueller Stand
-Portfolio-Projekte sind hardcoded in `Portfolio.tsx` und `IndexPortfolio.tsx` mit statischen Bildern aus `/src/assets/portfolio/`. Es gibt keine Möglichkeit, diese über den Admin-Bereich zu verwalten.
+## Übersicht
+Portfolio-Projekte sollen einen optionalen externen Link (`external_url`) erhalten. Klickt ein Besucher auf ein Projekt, öffnet sich der Link in einem neuen Tab.
 
-## Umsetzung
+## Schritte
 
-### 1. Datenbank: `portfolio_projects` Tabelle erstellen
-- Felder: id, title, category, description, result, image_url, sort_order, is_visible, created_at
-- RLS: Nur INSERT/SELECT für anon (öffentlich lesbar), Verwaltung über Edge Function mit service_role
-- Storage Bucket `portfolio-images` für Bild-Uploads erstellen
+### 1. Datenbank: Spalte `external_url` hinzufügen
+- Migration: `ALTER TABLE portfolio_projects ADD COLUMN external_url text DEFAULT '';`
 
-### 2. Edge Function erweitern (`admin-leads`)
-Neue Actions hinzufügen:
-- `portfolio-list` -- alle Projekte laden
-- `portfolio-create` -- neues Projekt anlegen (mit Bild-Upload als Base64)
-- `portfolio-update` -- bestehendes Projekt bearbeiten
-- `portfolio-delete` -- Projekt löschen
-- `portfolio-reorder` -- Reihenfolge ändern
+### 2. Edge Function aktualisieren (`admin-leads/index.ts`)
+- `portfolio-create`: `external_url` Feld beim Insert berücksichtigen
+- `portfolio-update`: `external_url` in die Updates aufnehmen
 
-### 3. Admin-Seite: Portfolio-Tab hinzufügen
-- Neuer Tab "Portfolio" neben Dashboard und Leads
-- Tabelle mit allen Projekten (Titel, Kategorie, Ergebnis, sichtbar/unsichtbar)
-- "Neues Projekt" Button mit Formular-Dialog (Titel, Kategorie, Beschreibung, Ergebnis, Bild-Upload)
-- Bearbeiten- und Löschen-Buttons pro Eintrag
-- Sichtbarkeit per Toggle ein/ausschalten
-- Drag & Drop oder Pfeile für Reihenfolge
+### 3. Admin-Bereich (`AdminLeads.tsx`)
+- `PortfolioProject` Interface um `external_url` erweitern
+- Im Portfolio-Formular (Create/Edit Dialog) ein neues Input-Feld "Externer Link (URL)" hinzufügen
+- Beim Speichern/Aktualisieren `external_url` mitsenden
 
-### 4. Portfolio-Seite und Index-Komponente aktualisieren
-- `Portfolio.tsx` und `IndexPortfolio.tsx` laden Daten aus der Datenbank statt hardcoded
-- Fallback auf bestehende hardcoded Daten falls DB leer
-- IndexPortfolio zeigt die ersten 3 sichtbaren Projekte
+### 4. Portfolio-Seite (`Portfolio.tsx`)
+- `external_url` aus der DB laden (bereits `select("*")`)
+- Projekt-Karte in einen `<a href={p.external_url} target="_blank" rel="noopener noreferrer">` wrappen (nur wenn URL vorhanden)
+- Ohne URL bleibt die Karte nicht klickbar (oder ohne Link)
 
-### Technische Details
-- Bilder werden als Base64 an die Edge Function geschickt und dort in den Storage Bucket hochgeladen
-- Die Edge Function gibt die öffentliche URL zurück
-- SELECT-Policy auf `portfolio_projects` erlaubt öffentliches Lesen (für die Website)
-- Alle Admin-Operationen laufen über die Edge Function mit Passwort-Schutz
+### 5. Index-Portfolio (`IndexPortfolio.tsx`)
+- `external_url` im Select hinzufügen
+- Gleiche Link-Logik wie auf der Portfolio-Seite
 
