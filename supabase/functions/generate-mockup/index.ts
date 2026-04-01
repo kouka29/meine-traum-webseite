@@ -6,6 +6,45 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+async function fetchScreenshot(url: string, viewport: { width: number; height: number }): Promise<ArrayBuffer> {
+  // Use microlink.io screenshot API (free, no key needed)
+  const apiUrl = new URL("https://api.microlink.io");
+  apiUrl.searchParams.set("url", url);
+  apiUrl.searchParams.set("screenshot", "true");
+  apiUrl.searchParams.set("meta", "false");
+  apiUrl.searchParams.set("embed", "screenshot.url");
+  apiUrl.searchParams.set("viewport.width", String(viewport.width));
+  apiUrl.searchParams.set("viewport.height", String(viewport.height));
+  apiUrl.searchParams.set("viewport.deviceScaleFactor", "1");
+
+  const res = await fetch(apiUrl.toString(), {
+    headers: { "Accept": "image/png" },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Screenshot API error: ${res.status} ${res.statusText}`);
+  }
+
+  // microlink with embed returns the image directly
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.startsWith("image/")) {
+    return res.arrayBuffer();
+  }
+
+  // If JSON response, extract screenshot URL and fetch image
+  const data = await res.json();
+  const screenshotUrl = data?.data?.screenshot?.url;
+  if (!screenshotUrl) {
+    throw new Error("No screenshot URL in API response");
+  }
+
+  const imgRes = await fetch(screenshotUrl);
+  if (!imgRes.ok) {
+    throw new Error(`Failed to fetch screenshot image: ${imgRes.status}`);
+  }
+  return imgRes.arrayBuffer();
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -43,24 +82,10 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Fetch desktop screenshot (1280px wide)
-    const desktopScreenshotUrl = `https://image.thum.io/get/width/1280/crop/800/noanimate/${url}`;
-    const mobileScreenshotUrl = `https://image.thum.io/get/width/375/crop/812/viewportWidth/375/noanimate/${url}`;
-
-    const [desktopRes, mobileRes] = await Promise.all([
-      fetch(desktopScreenshotUrl),
-      fetch(mobileScreenshotUrl),
-    ]);
-
-    if (!desktopRes.ok || !mobileRes.ok) {
-      return new Response(JSON.stringify({ error: "Screenshot-Dienst nicht erreichbar" }), {
-        status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
+    // Fetch desktop and mobile screenshots in parallel
     const [desktopBlob, mobileBlob] = await Promise.all([
-      desktopRes.arrayBuffer(),
-      mobileRes.arrayBuffer(),
+      fetchScreenshot(url, { width: 1280, height: 800 }),
+      fetchScreenshot(url, { width: 375, height: 812 }),
     ]);
 
     const desktopPath = `${projectId}/desktop-${Date.now()}.png`;
@@ -81,7 +106,6 @@ Deno.serve(async (req) => {
     const { data: desktopUrlData } = supabase.storage.from("mockups").getPublicUrl(desktopPath);
     const { data: mobileUrlData } = supabase.storage.from("mockups").getPublicUrl(mobilePath);
 
-    // Update portfolio project with mockup URLs
     const { error: updateError } = await supabase
       .from("portfolio_projects")
       .update({
