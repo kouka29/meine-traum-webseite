@@ -39,7 +39,17 @@ const IndexTestimonials = () => {
     load();
   }, []);
 
-  const visibleCount = 3;
+  const [visibleCount, setVisibleCount] = useState(1);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setVisibleCount(w >= 1024 ? 3 : w >= 640 ? 2 : 1);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
   const maxIndex = Math.max(0, testimonials.length - visibleCount);
 
   const next = useCallback(() => {
@@ -62,7 +72,7 @@ const IndexTestimonials = () => {
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 md:mb-20">
             <h2 className="mb-5 text-balance">
               Echte Ergebnisse unserer Webdesign-Kunden
             </h2>
@@ -117,14 +127,14 @@ const IndexTestimonials = () => {
             <>
               <button
                 onClick={prev}
-                className="absolute -left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
+                className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
                 aria-label="Vorherige Referenz"
               >
                 <ChevronLeft size={18} className="text-foreground" />
               </button>
               <button
                 onClick={next}
-                className="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
+                className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
                 aria-label="Nächste Referenz"
               >
                 <ChevronRight size={18} className="text-foreground" />

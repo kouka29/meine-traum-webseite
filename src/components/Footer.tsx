@@ -33,7 +33,7 @@ const Footer = () => (
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-14 mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-14 mb-16">
         <div>
           <h3 className="font-heading text-xl font-bold text-background mb-4 tracking-tight">
             Meine Traum Webseite

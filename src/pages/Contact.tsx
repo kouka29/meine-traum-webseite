@@ -32,7 +32,7 @@ const Contact = () => {
       <section className="section-padding">
         <div className="container-narrow px-4">
           <AnimatedSection>
-            <div className="text-center mb-20 max-w-2xl mx-auto">
+            <div className="text-center mb-12 md:mb-20 max-w-2xl mx-auto">
               <span className="badge-label bg-primary/10 text-primary mb-5">
                 Kostenlose Beratung
               </span>
