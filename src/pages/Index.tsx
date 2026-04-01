@@ -24,36 +24,36 @@ const Index = () => (
       <div className="absolute inset-0">
         <img src={heroBg} alt="Webdesign Agentur – moderne Website erstellen lassen" width={1920} height={1080} className="w-full h-full object-cover" fetchPriority="high" />
       </div>
-      <div className="container-narrow px-4 relative z-10">
+      <div className="container-narrow px-4 relative z-10 overflow-hidden">
         <AnimatedSection>
           <div className="max-w-3xl">
-            <span className="badge-label bg-destructive/10 text-destructive mb-8">
+            <span className="badge-label bg-destructive/10 text-destructive mb-6 sm:mb-8 text-[10px] sm:text-xs">
               Ihre Website bringt keine Kunden? Das ändern wir.
             </span>
-            <h1 className="mb-6 text-balance">
+            <h1 className="mb-4 sm:mb-6 text-balance">
               Webdesign Agentur für moderne Webseiten, die{" "}
               <span className="gradient-text">aktiv Kunden gewinnen</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-5 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-5 leading-relaxed">
               Sie möchten eine <strong className="text-foreground">Website erstellen lassen</strong>, die nicht nur gut aussieht, sondern aktiv Neukunden generiert?
               Wir erstellen conversion-optimierte Webseiten für Selbstständige, Handwerker, Coaches und KMUs –
               strategisch durchdacht für <strong className="text-foreground">planbar mehr Anfragen</strong>.
             </p>
-            <div className="flex items-center gap-5 mb-10 flex-wrap">
+            <div className="flex items-center gap-3 sm:gap-5 mb-8 sm:mb-10 flex-wrap">
               {["Kostenlose Vorschau", "Keine Verpflichtung", "In 48h fertig"].map((t) => (
-                <div key={t} className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckCircle size={15} className="text-primary" />
+                <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
+                  <CheckCircle size={14} className="text-primary shrink-0" />
                   <span>{t}</span>
                 </div>
               ))}
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="gradient" size="lg" className="text-base py-6 px-8 animate-cta-pulse" asChild>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 animate-cta-pulse w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  Kostenlose Website-Vorschau sichern <ArrowRight size={18} />
+                  Kostenlose Vorschau sichern <ArrowRight size={18} />
                 </Link>
               </Button>
-              <Button variant="outline-primary" size="lg" className="text-base py-6" asChild>
+              <Button variant="outline-primary" size="lg" className="text-sm sm:text-base py-5 sm:py-6 w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
                   <PhoneCall size={18} /> Rückruf vereinbaren
                 </Link>
