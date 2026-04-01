@@ -7,37 +7,41 @@ const corsHeaders = {
 };
 
 async function fetchScreenshot(url: string, viewport: { width: number; height: number }): Promise<ArrayBuffer> {
-  // Use microlink.io screenshot API (free, no key needed)
-  const apiUrl = new URL("https://api.microlink.io");
-  apiUrl.searchParams.set("url", url);
-  apiUrl.searchParams.set("screenshot", "true");
-  apiUrl.searchParams.set("meta", "false");
-  apiUrl.searchParams.set("embed", "screenshot.url");
-  apiUrl.searchParams.set("viewport.width", String(viewport.width));
-  apiUrl.searchParams.set("viewport.height", String(viewport.height));
-  apiUrl.searchParams.set("viewport.deviceScaleFactor", "1");
+  const apiUrl = `https://api.microlink.io?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=${viewport.width}&viewport.height=${viewport.height}&viewport.deviceScaleFactor=1`;
 
-  const res = await fetch(apiUrl.toString(), {
+  const res = await fetch(apiUrl, {
     headers: { "Accept": "image/png" },
   });
 
   if (!res.ok) {
-    throw new Error(`Screenshot API error: ${res.status} ${res.statusText}`);
+    // Try without embed to get JSON response
+    const fallbackUrl = `https://api.microlink.io?url=${encodeURIComponent(url)}&screenshot=true&meta=false&viewport.width=${viewport.width}&viewport.height=${viewport.height}&viewport.deviceScaleFactor=1`;
+    const fallbackRes = await fetch(fallbackUrl);
+    if (!fallbackRes.ok) {
+      throw new Error(`Screenshot API error: ${fallbackRes.status} ${fallbackRes.statusText}`);
+    }
+    const data = await fallbackRes.json();
+    const screenshotUrl = data?.data?.screenshot?.url;
+    if (!screenshotUrl) {
+      throw new Error("No screenshot URL in API response");
+    }
+    const imgRes = await fetch(screenshotUrl);
+    if (!imgRes.ok) {
+      throw new Error(`Failed to fetch screenshot image: ${imgRes.status}`);
+    }
+    return imgRes.arrayBuffer();
   }
 
-  // microlink with embed returns the image directly
   const contentType = res.headers.get("content-type") || "";
   if (contentType.startsWith("image/")) {
     return res.arrayBuffer();
   }
 
-  // If JSON response, extract screenshot URL and fetch image
   const data = await res.json();
   const screenshotUrl = data?.data?.screenshot?.url;
   if (!screenshotUrl) {
     throw new Error("No screenshot URL in API response");
   }
-
   const imgRes = await fetch(screenshotUrl);
   if (!imgRes.ok) {
     throw new Error(`Failed to fetch screenshot image: ${imgRes.status}`);
