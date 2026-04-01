@@ -35,9 +35,9 @@ const DeviceMockup = ({ desktopUrl, mobileUrl, title }: DeviceMockupProps) => {
 
       {/* iPhone */}
       {mobileUrl && (
-        <div className="absolute bottom-0 right-0 w-[30%] z-10">
-          <div className="bg-[#1a1a1a] rounded-[14px] p-[4px] shadow-elevated border border-[#333]">
-            <div className="bg-background rounded-[11px] overflow-hidden relative">
+        <div className="absolute bottom-0 right-0 w-[28%] z-10" style={{ height: '85%' }}>
+          <div className="bg-[#1a1a1a] rounded-[16px] p-[4px] shadow-elevated border border-[#333] h-full flex flex-col">
+            <div className="bg-background rounded-[13px] overflow-hidden relative flex-1 min-h-0">
               {/* Dynamic Island */}
               <div className="absolute top-[4px] left-1/2 -translate-x-1/2 w-[35%] h-[10px] bg-[#1a1a1a] rounded-full z-10" />
               {/* Screen content */}
@@ -45,7 +45,7 @@ const DeviceMockup = ({ desktopUrl, mobileUrl, title }: DeviceMockupProps) => {
                 src={mobileUrl}
                 alt={`${title} – iPhone Ansicht`}
                 loading="lazy"
-                className="w-full h-auto block"
+                className="w-full h-full object-cover object-top block"
               />
               {/* Home indicator */}
               <div className="absolute bottom-[3px] left-1/2 -translate-x-1/2 w-[30%] h-[3px] bg-foreground/30 rounded-full" />

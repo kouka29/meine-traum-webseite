@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
 
     // Fetch desktop screenshot (1280px wide)
     const desktopScreenshotUrl = `https://image.thum.io/get/width/1280/crop/800/noanimate/${url}`;
-    const mobileScreenshotUrl = `https://image.thum.io/get/width/375/crop/667/noanimate/${url}`;
+    const mobileScreenshotUrl = `https://image.thum.io/get/width/375/crop/812/viewportWidth/375/noanimate/${url}`;
 
     const [desktopRes, mobileRes] = await Promise.all([
       fetch(desktopScreenshotUrl),
