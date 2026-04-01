@@ -112,7 +112,7 @@ const AdminLeads = () => {
   const [showProjectDialog, setShowProjectDialog] = useState(false);
   const [editingProject, setEditingProject] = useState<PortfolioProject | null>(null);
   const [projectForm, setProjectForm] = useState({
-    title: "", category: "", description: "", result: "", is_visible: true,
+    title: "", category: "", description: "", result: "", external_url: "", is_visible: true,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [savingProject, setSavingProject] = useState(false);
