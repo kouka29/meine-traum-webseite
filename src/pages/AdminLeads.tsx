@@ -234,7 +234,7 @@ const AdminLeads = () => {
     setEditingProject(p);
     setProjectForm({
       title: p.title, category: p.category, description: p.description,
-      result: p.result, is_visible: p.is_visible,
+      result: p.result, external_url: p.external_url || "", is_visible: p.is_visible,
     });
     setImageFile(null);
     setShowProjectDialog(true);
