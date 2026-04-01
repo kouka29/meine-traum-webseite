@@ -193,7 +193,7 @@ Deno.serve(async (req) => {
       const { data, error } = await supabase.from("portfolio_projects").insert({
         title, category: category || "", description: description || "",
         result: result || "", image_url, sort_order: nextOrder,
-        is_visible: is_visible !== false,
+        is_visible: is_visible !== false, external_url: external_url || "",
       }).select().single();
       if (error) throw error;
 
