@@ -21,10 +21,10 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
             <p className="text-primary-foreground/50 text-sm mb-10">
               Kein Risiko. Keine Verpflichtung. Keine versteckten Kosten.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold shadow-elevated animate-cta-pulse"
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold shadow-elevated animate-cta-pulse w-full sm:w-auto text-sm sm:text-base"
                 asChild
               >
                 <Link to="/kontakt">
@@ -34,7 +34,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
               <Button
                 variant="outline"
                 size="lg"
-                className="border-primary-foreground/50 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-all duration-300"
+                className="border-primary-foreground/50 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-all duration-300 w-full sm:w-auto text-sm sm:text-base"
                 asChild
               >
                 <Link to="/kontakt">

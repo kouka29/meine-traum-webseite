@@ -85,18 +85,25 @@ const IndexTestimonials = () => {
         <div className="relative">
           <div className="overflow-hidden">
             <div
-              className="flex transition-transform duration-500 ease-in-out gap-6"
+              className="flex transition-transform duration-500 ease-in-out"
               style={{
-                transform: `translateX(calc(-${current} * (100% / ${visibleCount} + 0.5rem)))`,
+                gap: visibleCount === 1 ? '0px' : '1.5rem',
+                transform: visibleCount === 1
+                  ? `translateX(-${current * 100}%)`
+                  : `translateX(calc(-${current} * (100% / ${visibleCount} + ${1.5 / visibleCount}rem)))`,
               }}
             >
               {testimonials.map((t) => (
                 <div
                   key={t.id}
                   className="min-w-0 shrink-0 grow-0"
-                  style={{ flexBasis: `calc((100% - ${(visibleCount - 1) * 1.5}rem) / ${visibleCount})` }}
+                  style={{
+                    flexBasis: visibleCount === 1
+                      ? '100%'
+                      : `calc((100% - ${(visibleCount - 1) * 1.5}rem) / ${visibleCount})`,
+                  }}
                 >
-                  <div className="bg-card rounded-2xl p-7 shadow-card h-full flex flex-col border border-border">
+                  <div className="bg-card rounded-2xl p-6 sm:p-7 shadow-card h-full flex flex-col border border-border">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, j) => (
                         <Star key={j} size={15} className="text-primary fill-primary" />
@@ -109,7 +116,7 @@ const IndexTestimonials = () => {
                       „{t.text}"
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
                         <Users size={16} className="text-primary-foreground" />
                       </div>
                       <div>
