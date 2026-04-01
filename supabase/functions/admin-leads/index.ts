@@ -216,6 +216,7 @@ Deno.serve(async (req) => {
       if (description !== undefined) updates.description = description;
       if (result !== undefined) updates.result = result;
       if (is_visible !== undefined) updates.is_visible = is_visible;
+      if (external_url !== undefined) updates.external_url = external_url;
 
       if (image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
