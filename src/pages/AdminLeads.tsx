@@ -225,7 +225,7 @@ const AdminLeads = () => {
   // Portfolio actions
   const openNewProject = () => {
     setEditingProject(null);
-    setProjectForm({ title: "", category: "", description: "", result: "", is_visible: true });
+    setProjectForm({ title: "", category: "", description: "", result: "", external_url: "", is_visible: true });
     setImageFile(null);
     setShowProjectDialog(true);
   };
