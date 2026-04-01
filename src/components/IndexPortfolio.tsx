@@ -35,6 +35,7 @@ const IndexPortfolio = () => {
         setItems(data.map(p => ({
           ...p,
           image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+          external_url: (p as any).external_url || "",
         })));
       }
     };
