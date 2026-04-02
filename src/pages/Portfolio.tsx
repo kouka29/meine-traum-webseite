@@ -90,7 +90,7 @@ const Portfolio = () => {
                       <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
                         <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                           {p.mockup_desktop_url ? (
-                            <DeviceMockup desktopUrl={p.mockup_desktop_url} mobileUrl={p.mockup_mobile_url} title={p.title} />
+                            <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                           ) : p.image_url ? (
                             <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
                           ) : null}
@@ -114,7 +114,7 @@ const Portfolio = () => {
                     <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
                       <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                         {p.mockup_desktop_url ? (
-                          <DeviceMockup desktopUrl={p.mockup_desktop_url} mobileUrl={p.mockup_mobile_url} title={p.title} />
+                          <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                         ) : p.image_url ? (
                           <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
                         ) : null}
