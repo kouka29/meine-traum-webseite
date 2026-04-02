@@ -130,15 +130,31 @@ const AdminLeads = () => {
   });
   const [savingTestimonial, setSavingTestimonial] = useState(false);
 
+  const parseInvokeError = async (error: any, data: any): Promise<string | null> => {
+    if (data?.error) return data.error;
+    if (error) {
+      try {
+        if (error.context?.body) {
+          const text = await new Response(error.context.body).text();
+          const parsed = JSON.parse(text);
+          return parsed.error || error.message;
+        }
+      } catch {}
+      return error.message || "Unbekannter Fehler";
+    }
+    return null;
+  };
+
   const fetchLeads = useCallback(async (pw?: string) => {
     setLoading(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
       body: { password: pw || password, action: "list" },
     });
     setLoading(false);
-    if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden der Leads");
-      if (data?.error === "Ungültiges Passwort") setAuthenticated(false);
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
+      if (errMsg === "Ungültiges Passwort") setAuthenticated(false);
       return;
     }
     setLeads(data.leads || []);
@@ -149,8 +165,9 @@ const AdminLeads = () => {
     const { data, error } = await supabase.functions.invoke("admin-leads", {
       body: { password: pw || password, action: "analytics" },
     });
-    if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden der Analytics");
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
       return;
     }
     setAnalytics(data.analytics);
@@ -162,8 +179,9 @@ const AdminLeads = () => {
       body: { password: pw || password, action: "portfolio-list" },
     });
     setPortfolioLoading(false);
-    if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden der Projekte");
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
       return;
     }
     setProjects(data.projects || []);
@@ -175,8 +193,9 @@ const AdminLeads = () => {
       body: { password: pw || password, action: "testimonials-list" },
     });
     setTestimonialsLoading(false);
-    if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden der Referenzen");
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
       return;
     }
     setTestimonials(data.testimonials || []);
