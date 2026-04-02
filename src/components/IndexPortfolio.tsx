@@ -61,10 +61,10 @@ const IndexPortfolio = () => {
               {p.external_url ? (
                 <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block group cursor-pointer">
                   <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
-                    {p.mockup_desktop_url ? (
-                      <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                    ) : p.image_url ? (
+                    {p.image_url ? (
                       <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                    ) : p.mockup_desktop_url ? (
+                      <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                     ) : null}
                     {p.result && (
                       <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm z-10">
@@ -78,10 +78,10 @@ const IndexPortfolio = () => {
               ) : (
                 <div className="group">
                   <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
-                    {p.mockup_desktop_url ? (
-                      <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                    ) : p.image_url ? (
+                    {p.image_url ? (
                       <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                    ) : p.mockup_desktop_url ? (
+                      <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                     ) : null}
                     {p.result && (
                       <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm z-10">
