@@ -165,8 +165,9 @@ const AdminLeads = () => {
     const { data, error } = await supabase.functions.invoke("admin-leads", {
       body: { password: pw || password, action: "analytics" },
     });
-    if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden der Analytics");
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
       return;
     }
     setAnalytics(data.analytics);
@@ -178,8 +179,9 @@ const AdminLeads = () => {
       body: { password: pw || password, action: "portfolio-list" },
     });
     setPortfolioLoading(false);
-    if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden der Projekte");
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
       return;
     }
     setProjects(data.projects || []);
@@ -191,8 +193,9 @@ const AdminLeads = () => {
       body: { password: pw || password, action: "testimonials-list" },
     });
     setTestimonialsLoading(false);
-    if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden der Referenzen");
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
       return;
     }
     setTestimonials(data.testimonials || []);
