@@ -80,6 +80,7 @@ const App = () => (
             <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="/impressum" element={<Impressum />} />
             <Route path="/admin" element={<AdminLeads />} />
+            <Route path="/original" element={<IndexOriginal />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
