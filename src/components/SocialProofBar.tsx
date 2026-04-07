@@ -1,10 +1,10 @@
 import AnimatedSection from "./AnimatedSection";
 
 const stats = [
-  { value: "150+", label: "Zufriedene Kunden" },
-  { value: "3x", label: "Mehr Anfragen im Schnitt" },
+  { value: "150+", label: "Webseiten umgesetzt" },
+  { value: "2–5x", label: "Mehr Anfragen nach Relaunch" },
   { value: "98%", label: "Weiterempfehlungsrate" },
-  { value: "<3 Sek.", label: "Ladezeit garantiert" },
+  { value: "48h", label: "Erstes Konzept steht" },
 ];
 
 const SocialProofBar = () => (

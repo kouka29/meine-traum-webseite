@@ -4,23 +4,23 @@ import { AlertTriangle, TrendingDown, EyeOff, XCircle } from "lucide-react";
 const painPoints = [
   {
     icon: TrendingDown,
-    problem: "Sie bekommen keine Anfragen über Ihre Website?",
-    detail: "Jeden Tag verlieren Sie potenzielle Kunden an Ihre Konkurrenz – weil Ihre Website nicht überzeugt.",
+    problem: "Schickes Design – null Anfragen?",
+    detail: "Ihre Website sieht gut aus, aber es meldet sich niemand. Das liegt nicht am Markt – sondern an fehlender Verkaufsstruktur.",
   },
   {
     icon: EyeOff,
-    problem: "Ihre Website sieht veraltet aus?",
-    detail: "Ein unprofessioneller Auftritt kostet Vertrauen – und damit bares Geld.",
+    problem: "Besucher scrollen – und gehen wieder?",
+    detail: "Ohne klare Nutzerführung wissen Besucher nicht, was sie tun sollen. Sie verlassen die Seite – und rufen bei Ihrem Wettbewerber an.",
   },
   {
     icon: AlertTriangle,
-    problem: "Ihre Konkurrenz wirkt online deutlich professioneller?",
-    detail: "Kunden vergleichen – und entscheiden sich für den, der online am besten auftritt.",
+    problem: "Die falschen Leute fühlen sich angesprochen?",
+    detail: "Wenn Ihre Texte alle ansprechen, überzeugen sie niemanden. Ihre Zielgruppe muss sich sofort wiedererkennen.",
   },
   {
     icon: XCircle,
-    problem: "Ihre Website konvertiert nicht?",
-    detail: "Besucher kommen – aber niemand ruft an, schreibt oder kauft. Das muss nicht so bleiben.",
+    problem: "Kein klarer nächster Schritt?",
+    detail: "Ohne eine eindeutige Handlungsaufforderung verlieren Sie jeden zweiten Interessenten – obwohl er bereit wäre, Kontakt aufzunehmen.",
   },
 ];
 
@@ -30,10 +30,10 @@ const PainPoints = () => (
       <AnimatedSection>
         <div className="text-center mb-16">
           <h2 className="text-background mb-5 text-balance">
-            Kommt Ihnen das bekannt vor?
+            Warum die meisten Webseiten keine Kunden bringen
           </h2>
           <p className="text-background/50 max-w-xl mx-auto text-lg">
-            Die meisten Unternehmen verschenken täglich Umsatz – weil ihre Website nicht als Verkaufsinstrument funktioniert.
+            Es liegt selten am Traffic. Es liegt fast immer an diesen vier Fehlern – und jeder einzelne kostet Sie bares Geld.
           </p>
         </div>
       </AnimatedSection>

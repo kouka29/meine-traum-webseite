@@ -12,14 +12,14 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.06),transparent_60%)]" />
           <div className="relative z-10">
             <h2 className="text-primary-foreground mb-4 text-balance">
-              Bereit, mehr Kunden über Ihre Website zu gewinnen?
+              Jetzt kostenlose Strategie-Vorschau sichern
             </h2>
             <p className="text-primary-foreground/70 max-w-xl mx-auto mb-5 text-lg">
-              Sichern Sie sich jetzt Ihre kostenlose Website-Vorschau – und sehen Sie,
-              wie Ihre neue Website aussehen könnte.
+              Sehen Sie schwarz auf weiß, wie Ihre neue Website aussehen kann –
+              und welche Ergebnisse sie bringen wird.
             </p>
             <p className="text-primary-foreground/50 text-sm mb-10">
-              Kein Risiko. Keine Verpflichtung. Keine versteckten Kosten.
+              Unverbindlich. Schnell. Klar.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Button
@@ -28,7 +28,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
                 asChild
               >
                 <Link to="/kontakt">
-                  Kostenlose Vorschau sichern <ArrowRight size={18} />
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} />
                 </Link>
               </Button>
               <Button

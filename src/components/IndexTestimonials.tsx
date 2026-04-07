@@ -14,9 +14,9 @@ interface Testimonial {
 }
 
 const FALLBACK_TESTIMONIALS: Omit<Testimonial, "id" | "sort_order" | "is_visible">[] = [
-  { name: "Thomas M.", role: "Geschäftsführer, TechStart GmbH", text: "Seit dem Relaunch hat sich unsere Anfragequote verdreifacht. Die Investition hat sich innerhalb von 6 Wochen bezahlt gemacht.", result: "3x mehr Anfragen" },
-  { name: "Sarah K.", role: "Inhaberin, Yoga Studio Flow", text: "Vorher hatte ich 2-3 Anfragen im Monat. Jetzt sind es 15-20. Die Website arbeitet rund um die Uhr für mich.", result: "7x mehr Neukunden" },
-  { name: "Michael R.", role: "CEO, DigitalBoost", text: "Endlich eine Agentur, die versteht, dass eine Website ein Verkaufsinstrument ist – nicht nur eine digitale Visitenkarte.", result: "+180% Umsatz" },
+  { name: "Thomas M.", role: "Geschäftsführer, TechStart GmbH", text: "Seit dem Relaunch bekommen wir 3x so viele Anfragen – und die Qualität der Leads ist deutlich besser. Die Investition hat sich in 6 Wochen bezahlt gemacht.", result: "3x mehr Anfragen" },
+  { name: "Sarah K.", role: "Inhaberin, Yoga Studio Flow", text: "Vorher kamen 2-3 Anfragen im Monat. Jetzt sind es 15-20. Ich muss keine Kaltakquise mehr machen – die Website übernimmt das für mich.", result: "7x mehr Neukunden" },
+  { name: "Michael R.", role: "CEO, DigitalBoost", text: "Zum ersten Mal verstehen Besucher sofort, was wir machen. Die Abschlussquote nach Website-Anfragen liegt jetzt bei über 40%.", result: "+40% Abschlussquote" },
 ];
 
 const IndexTestimonials = () => {
@@ -74,10 +74,10 @@ const IndexTestimonials = () => {
         <AnimatedSection>
           <div className="text-center mb-12 md:mb-20">
             <h2 className="mb-5 text-balance">
-              Echte Ergebnisse unserer Webdesign-Kunden
+              Was unsere Kunden sagen – und was sich verändert hat
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Keine leeren Versprechen – sondern nachweisbare Resultate von Unternehmen, die ihre Website erstellen lassen haben.
+              Keine leeren Worte. Echte Unternehmer berichten, wie sich ihre Anfragenzahl nach dem Website-Relaunch entwickelt hat.
             </p>
           </div>
         </AnimatedSection>
