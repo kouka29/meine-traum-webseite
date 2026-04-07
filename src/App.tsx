@@ -37,6 +37,7 @@ const WebdesignHandwerker = lazy(() => import("./pages/WebdesignHandwerker.tsx")
 const WebdesignAerzte = lazy(() => import("./pages/WebdesignAerzte.tsx"));
 const WebdesignImmobilienmakler = lazy(() => import("./pages/WebdesignImmobilienmakler.tsx"));
 const WebdesignCoaches = lazy(() => import("./pages/WebdesignCoaches.tsx"));
+const IndexOriginal = lazy(() => import("./pages/IndexOriginal.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -79,6 +80,7 @@ const App = () => (
             <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="/impressum" element={<Impressum />} />
             <Route path="/admin" element={<AdminLeads />} />
+            <Route path="/original" element={<IndexOriginal />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

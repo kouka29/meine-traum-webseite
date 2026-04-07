@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
-import { ArrowRight, Gift, Shield, Clock } from "lucide-react";
+import { ArrowRight, FileText, MessageSquare, ShieldCheck } from "lucide-react";
 
-const trustBadges = [
-  { icon: Gift, text: "100% kostenlos" },
-  { icon: Shield, text: "Unverbindlich" },
-  { icon: Clock, text: "In 48h fertig" },
+const steps = [
+  { icon: FileText, text: "Wir analysieren Ihre aktuelle Situation" },
+  { icon: MessageSquare, text: "Sie erhalten ein konkretes Konzept mit Struktur & Textideen" },
+  { icon: ShieldCheck, text: "Kein Risiko – Sie entscheiden danach frei" },
 ];
 
 const FreePreviewCTA = () => (
@@ -17,22 +17,20 @@ const FreePreviewCTA = () => (
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.08),transparent_60%)]" />
           <div className="relative z-10">
             <span className="badge-label bg-primary-foreground/15 text-primary-foreground mb-8">
-              Risikofreies Angebot
+              Ihr nächster Schritt
             </span>
             <h2 className="text-primary-foreground mb-5 text-balance">
-              Kostenlose Website-Vorschau
-              <br className="hidden md:block" />
-              <span className="text-primary-foreground/85">für Ihr Unternehmen</span>
+              Ihre kostenlose Website-Strategie
             </h2>
-            <p className="text-primary-foreground/70 max-w-2xl mx-auto mb-8 text-lg leading-relaxed">
-              Wir erstellen Ihnen eine individuelle Vorschau – damit Sie sehen, wie Ihre neue Website aussehen könnte.
-              Ohne Risiko. Ohne Verpflichtung. Ohne Kosten.
+            <p className="text-primary-foreground/70 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
+              Sie erhalten ein individuelles Konzept für Ihre neue Website – mit konkreten Ideen für Struktur, Texte und Aufbau.
+              Kein Verkaufsgespräch. Kein Kleingedrucktes. Sie entscheiden danach in Ruhe.
             </p>
-            <div className="flex flex-wrap justify-center gap-8 mb-10">
-              {trustBadges.map((b) => (
-                <div key={b.text} className="flex items-center gap-2.5 text-sm text-primary-foreground/70">
-                  <b.icon size={16} />
-                  <span>{b.text}</span>
+            <div className="flex flex-col gap-4 max-w-md mx-auto mb-10 text-left">
+              {steps.map((s) => (
+                <div key={s.text} className="flex items-start gap-3 text-sm text-primary-foreground/80">
+                  <s.icon size={18} className="shrink-0 mt-0.5" />
+                  <span>{s.text}</span>
                 </div>
               ))}
             </div>
@@ -42,11 +40,11 @@ const FreePreviewCTA = () => (
               asChild
             >
               <Link to="/kontakt">
-                Kostenlose Vorschau sichern <ArrowRight size={18} />
+                Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} />
               </Link>
             </Button>
             <p className="text-xs text-primary-foreground/40 mt-6">
-              Bereits über 150+ Unternehmen vertrauen uns
+              Unverbindlich. Schnell. Klar.
             </p>
           </div>
         </div>

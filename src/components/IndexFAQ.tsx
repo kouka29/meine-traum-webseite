@@ -8,28 +8,28 @@ import {
 
 const faqs = [
   {
-    q: "Was kostet es, eine Website erstellen zu lassen?",
-    a: "Die Kosten hängen vom Umfang ab. Unsere Webdesign-Projekte starten ab 1.500 € für eine conversion-optimierte Website. Wir bieten transparente Preise ohne versteckte Kosten. Fordern Sie ein unverbindliches Angebot an.",
+    q: "Was kostet eine conversion-optimierte Website?",
+    a: "Unsere Projekte starten ab 1.500 €. Der genaue Preis hängt vom Umfang ab – aber Sie sehen vorher im kostenlosen Konzept genau, was Sie bekommen. Keine Überraschungen.",
   },
   {
-    q: "Wie lange dauert es, eine professionelle Website zu erstellen?",
-    a: "Eine typische Website ist in 2–4 Wochen fertig. Innerhalb von 48 Stunden erhalten Sie bereits eine kostenlose Vorschau, damit Sie sehen, wie Ihre neue Website aussehen könnte.",
+    q: "Wie schnell kann meine neue Website live gehen?",
+    a: "Die meisten Projekte sind in 2–4 Wochen fertig. Das erste Konzept mit Struktur und Textideen erhalten Sie bereits innerhalb von 48 Stunden – kostenlos und unverbindlich.",
   },
   {
-    q: "Was unterscheidet eure Webdesign Agentur von anderen?",
-    a: "Wir erstellen keine digitalen Visitenkarten, sondern Verkaufsinstrumente. Jede Website wird conversion-optimiert gestaltet – mit verkaufspsychologischem Aufbau, schnellen Ladezeiten und messbaren Ergebnissen.",
+    q: "Was ist der Unterschied zu einer normalen Webdesign-Agentur?",
+    a: "Die meisten Agenturen bauen Webseiten, die gut aussehen. Wir bauen Webseiten, die Anfragen generieren. Jedes Element – vom ersten Satz bis zum letzten Button – ist darauf ausgelegt, Besucher in Kunden zu verwandeln.",
   },
   {
-    q: "Ist die kostenlose Website-Vorschau wirklich kostenlos?",
-    a: "Ja, 100% kostenlos und unverbindlich. Wir erstellen Ihnen eine individuelle Vorschau Ihrer neuen Website – ohne Verpflichtung und ohne versteckte Kosten.",
+    q: "Ist das kostenlose Konzept wirklich ohne Haken?",
+    a: "Ja. Sie erhalten ein individuelles Konzept für Ihre Website – Struktur, Textideen, Empfehlungen. Wenn es Ihnen gefällt, können wir loslegen. Wenn nicht, behalten Sie die Ideen trotzdem. Kein Druck.",
   },
   {
-    q: "Für wen eignet sich euer Webdesign?",
-    a: "Unser Webdesign richtet sich an Selbstständige, Handwerker, Coaches, Berater und kleine bis mittlere Unternehmen (KMUs), die über ihre Website planbar Kunden gewinnen möchten.",
+    q: "Für wen funktioniert das am besten?",
+    a: "Für Selbstständige und Unternehmen, die über ihre Website Kunden gewinnen wollen – nicht nur eine Visitenkarte im Netz brauchen. Besonders gut funktioniert unser Ansatz für Dienstleister, Handwerker, Berater und Coaches.",
   },
   {
-    q: "Bietet ihr auch einen Website Relaunch an?",
-    a: "Ja, wir sind spezialisiert auf Website Relaunches. Wir analysieren Ihre bestehende Seite, identifizieren Optimierungspotenziale und erstellen eine moderne, conversion-optimierte Neuauflage.",
+    q: "Kann ich meine bestehende Website überarbeiten lassen?",
+    a: "Absolut. Viele unserer Kunden kommen mit einer bestehenden Website, die nicht performt. Wir analysieren sie, zeigen Ihnen die Schwachstellen und erstellen ein Relaunch-Konzept – auf Wunsch komplett kostenlos.",
   },
 ];
 
@@ -38,9 +38,9 @@ const IndexFAQ = () => (
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="text-center mb-16">
-          <h2 className="mb-5 text-balance">Häufig gestellte Fragen zum Webdesign</h2>
+          <h2 className="mb-5 text-balance">Häufige Fragen – ehrlich beantwortet</h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Antworten auf die wichtigsten Fragen rund um Website erstellen lassen, Kosten und unseren Prozess.
+            Kein Fachchinesisch. Klare Antworten auf die Fragen, die uns am häufigsten gestellt werden.
           </p>
         </div>
       </AnimatedSection>

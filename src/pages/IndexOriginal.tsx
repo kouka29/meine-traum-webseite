@@ -22,7 +22,7 @@ const Index = () => (
     {/* Hero */}
     <section className="relative min-h-[92vh] flex items-center section-padding pt-28 sm:pt-36 overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Webdesign das Kunden bringt" width={1920} height={1080} className="w-full h-full object-cover" fetchPriority="high" />
+        <img src={heroBg} alt="Webdesign Agentur – moderne Website erstellen lassen" width={1920} height={1080} className="w-full h-full object-cover" fetchPriority="high" />
       </div>
       <div className="container-narrow px-4 relative z-10 overflow-hidden">
         <AnimatedSection>
@@ -31,15 +31,16 @@ const Index = () => (
               Ihre Website bringt keine Kunden? Das ändern wir.
             </span>
             <h1 className="mb-4 sm:mb-6 text-balance">
-              Webseiten, die planbar Kundenanfragen bringen –{" "}
-              <span className="gradient-text">nicht nur gut aussehen</span>
+              Webdesign Agentur für moderne Webseiten, die{" "}
+              <span className="gradient-text">aktiv Kunden gewinnen</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-5 leading-relaxed">
-              Wir entwickeln strategische, conversion-optimierte Webseiten für Selbstständige und Unternehmen –
-              damit aus Besuchern <strong className="text-foreground">zuverlässig neue Kunden</strong> werden.
+              Sie möchten eine <strong className="text-foreground">Website erstellen lassen</strong>, die nicht nur gut aussieht, sondern aktiv Neukunden generiert?
+              Wir erstellen conversion-optimierte Webseiten für Selbstständige, Handwerker, Coaches und KMUs –
+              strategisch durchdacht für <strong className="text-foreground">planbar mehr Anfragen</strong>.
             </p>
             <div className="flex items-center gap-3 sm:gap-5 mb-8 sm:mb-10 flex-wrap">
-              {["Kostenloses Konzept", "Keine Verpflichtung", "Umsetzung in 48h möglich"].map((t) => (
+              {["Kostenlose Vorschau", "Keine Verpflichtung", "In 48h fertig"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
                   <CheckCircle size={14} className="text-primary shrink-0" />
                   <span>{t}</span>
@@ -49,7 +50,7 @@ const Index = () => (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 animate-cta-pulse w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} />
+                  Kostenlose Vorschau sichern <ArrowRight size={18} />
                 </Link>
               </Button>
               <Button variant="outline-primary" size="lg" className="text-sm sm:text-base py-5 sm:py-6 w-full sm:w-auto" asChild>

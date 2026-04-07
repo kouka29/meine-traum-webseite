@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
-import { Monitor, TrendingUp, Palette, Search } from "lucide-react";
+import { Target, Layers, PenTool, MousePointerClick } from "lucide-react";
 
-const services = [
-  { icon: Monitor, title: "Webdesign", desc: "Maßgeschneiderte Websites, die verkaufen – modern, schnell und conversion-optimiert.", link: "/webdesign-agentur" },
-  { icon: TrendingUp, title: "Conversion-Optimierung", desc: "Besucher systematisch zu Kunden machen – mit datengetriebener Optimierung.", link: "/conversion-optimierung" },
-  { icon: Palette, title: "UX/UI Design", desc: "Intuitiv. Überzeugend. Nutzerzentriert – für maximale Verweildauer.", link: "/leistungen" },
-  { icon: Search, title: "SEO-Grundlagen", desc: "Gefunden werden – von den richtigen Kunden zur richtigen Zeit.", link: "/leistungen" },
+const steps = [
+  { icon: Target, title: "Strategie & Zielgruppenanalyse", desc: "Wir finden heraus, wen Sie erreichen wollen – und was diese Menschen brauchen, um Vertrauen aufzubauen und anzufragen.", link: "/leistungen" },
+  { icon: Layers, title: "Conversion-orientierter Aufbau", desc: "Jede Seite folgt einer klaren Struktur: Problem → Lösung → Beweis → Handlungsaufforderung. Kein Rätselraten für Ihre Besucher.", link: "/conversion-optimierung" },
+  { icon: PenTool, title: "Psychologisch optimierte Texte", desc: "Texte, die nicht beschreiben, sondern überzeugen. Geschrieben für Menschen, die eine Entscheidung treffen wollen.", link: "/leistungen" },
+  { icon: MousePointerClick, title: "Klare Handlungsaufforderungen", desc: "Jeder Besucher weiß sofort, was der nächste Schritt ist – und warum er ihn gehen sollte. Kein Suchen, kein Zögern.", link: "/leistungen" },
 ];
 
 const IndexServices = () => (
@@ -15,18 +15,18 @@ const IndexServices = () => (
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="text-center mb-12 md:mb-20">
-          <span className="badge-label bg-primary/10 text-primary mb-5">Unsere Leistungen</span>
+          <span className="badge-label bg-primary/10 text-primary mb-5">Unser Ansatz</span>
           <h2 className="mb-5 text-balance">
-            So machen wir Ihre Website zum{" "}
-            <span className="gradient-text">Kundenmagnet</span>
+            So machen wir aus Ihrer Website einen{" "}
+            <span className="gradient-text">Kundenmagneten</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Wir kombinieren verkaufspsychologisches Design mit modernster Technik – für Websites, die messbar Ergebnisse liefern.
+            Kein Technik-Vortrag. Wir zeigen Ihnen, welche vier Hebel Ihre Website braucht, damit Besucher zu Kunden werden.
           </p>
         </div>
       </AnimatedSection>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {services.map((s, i) => (
+        {steps.map((s, i) => (
           <AnimatedSection key={s.title} delay={i * 0.1}>
             <Link to={s.link} className="bg-background rounded-2xl p-7 shadow-card hover:shadow-elevated transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-primary/10 h-full flex flex-col block">
               <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
