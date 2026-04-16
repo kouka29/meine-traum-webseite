@@ -6,6 +6,47 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// In-memory brute-force protection (per isolate). Tracks failed admin password
+// attempts per IP and applies exponential back-off after repeated failures.
+const failedAttempts = new Map<string, { count: number; lockedUntil: number }>();
+const MAX_ATTEMPTS = 5;
+const WINDOW_MS = 60_000;
+
+function getClientIp(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0].trim();
+  return req.headers.get("cf-connecting-ip") || "unknown";
+}
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const entry = failedAttempts.get(ip);
+  if (entry && entry.lockedUntil > now) {
+    return { allowed: false, retryAfter: Math.ceil((entry.lockedUntil - now) / 1000) };
+  }
+  return { allowed: true };
+}
+
+function recordFailure(ip: string) {
+  const now = Date.now();
+  const entry = failedAttempts.get(ip);
+  if (!entry || entry.lockedUntil < now - WINDOW_MS) {
+    failedAttempts.set(ip, { count: 1, lockedUntil: 0 });
+    return;
+  }
+  entry.count += 1;
+  if (entry.count >= MAX_ATTEMPTS) {
+    // Exponential back-off: 60s, 120s, 240s, ...
+    const backoff = WINDOW_MS * Math.pow(2, entry.count - MAX_ATTEMPTS);
+    entry.lockedUntil = now + backoff;
+  }
+  failedAttempts.set(ip, entry);
+}
+
+function recordSuccess(ip: string) {
+  failedAttempts.delete(ip);
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -28,16 +69,34 @@ Deno.serve(async (req) => {
     });
   }
 
+  const ip = getClientIp(req);
+  const rate = checkRateLimit(ip);
+  if (!rate.allowed) {
+    return new Response(
+      JSON.stringify({ error: "Zu viele Fehlversuche. Bitte später erneut versuchen." }),
+      {
+        status: 429,
+        headers: {
+          ...corsHeaders,
+          "Content-Type": "application/json",
+          "Retry-After": String(rate.retryAfter ?? 60),
+        },
+      },
+    );
+  }
+
   try {
     const body = await req.json();
     const { password, action, leadId } = body;
 
     if (!password || password !== ADMIN_PASSWORD) {
+      recordFailure(ip);
       return new Response(JSON.stringify({ error: "Ungültiges Passwort" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    recordSuccess(ip);
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
