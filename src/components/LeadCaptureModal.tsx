@@ -51,7 +51,9 @@ const LeadCaptureModal = () => {
     if (!validate()) return;
 
     setLoading(true);
+    const leadId = crypto.randomUUID();
     const { error } = await supabase.from("leads").insert({
+      id: leadId,
       first_name: firstName.trim(),
       company_name: companyName.trim(),
       email: email.trim(),
@@ -63,6 +65,22 @@ const LeadCaptureModal = () => {
       toast.error("Es ist ein Fehler aufgetreten. Bitte versuche es erneut.");
       return;
     }
+
+    // Fire-and-forget: notify admin of new lead
+    supabase.functions.invoke("send-transactional-email", {
+      body: {
+        templateName: "lead-notification",
+        idempotencyKey: `lead-modal-${leadId}`,
+        templateData: {
+          source: "Pop-up Lead-Magnet (7 Schritte Leitfaden)",
+          firstName: firstName.trim(),
+          companyName: companyName.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          submittedAt: new Date().toLocaleString("de-DE"),
+        },
+      },
+    });
 
     setSubmitted(true);
     sessionStorage.setItem(STORAGE_KEY, "1");

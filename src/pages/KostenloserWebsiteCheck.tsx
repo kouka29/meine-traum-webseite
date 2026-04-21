@@ -27,14 +27,37 @@ const KostenloserWebsiteCheck = () => {
     const formData = new FormData(form);
 
     try {
+      const leadId = crypto.randomUUID();
+      const name = formData.get("name") as string;
+      const email = formData.get("email") as string;
+      const phone = (formData.get("phone") as string) || "";
+      const website = (formData.get("website") as string) || "";
+
       const { error } = await supabase.from("leads").insert({
-        first_name: formData.get("name") as string,
-        email: formData.get("email") as string,
-        phone: formData.get("phone") as string || "",
-        company_name: formData.get("website") as string || "",
+        id: leadId,
+        first_name: name,
+        email: email,
+        phone: phone,
+        company_name: website,
       });
 
       if (error) throw error;
+
+      supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "lead-notification",
+          idempotencyKey: `website-check-${leadId}`,
+          templateData: {
+            source: "Kostenloser Website-Check",
+            firstName: name,
+            email: email,
+            phone: phone,
+            website: website,
+            submittedAt: new Date().toLocaleString("de-DE"),
+          },
+        },
+      });
+
       toast.success("Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden mit Ihrer Website-Analyse.");
       form.reset();
     } catch {
