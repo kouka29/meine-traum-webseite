@@ -38,8 +38,8 @@ const IndexBenefits = () => (
           </AnimatedSection>
         ))}
       </div>
-      <div className="text-center mt-12">
-        <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
+      <div className="text-center mt-12 px-4">
+        <Button variant="gradient" size="lg" className="animate-cta-pulse text-xs sm:text-base px-4 sm:px-8 h-auto min-h-12 py-3 w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
           <Link to="/kontakt">
             Kostenlose Strategie-Vorschau anfordern <ArrowRight size={18} />
           </Link>

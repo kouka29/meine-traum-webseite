@@ -47,12 +47,12 @@ const Index = () => (
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 animate-cta-pulse w-full sm:w-auto" asChild>
+              <Button variant="gradient" size="lg" className="text-xs sm:text-base py-5 sm:py-6 px-4 sm:px-8 h-auto min-h-12 animate-cta-pulse w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
                 <Link to="/kontakt">
                   Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} />
                 </Link>
               </Button>
-              <Button variant="outline-primary" size="lg" className="text-sm sm:text-base py-5 sm:py-6 w-full sm:w-auto" asChild>
+              <Button variant="outline-primary" size="lg" className="text-xs sm:text-base py-5 sm:py-6 px-4 sm:px-8 h-auto min-h-12 w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
                 <Link to="/kontakt">
                   <PhoneCall size={18} /> Rückruf vereinbaren
                 </Link>
