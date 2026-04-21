@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Send, CheckCircle, Shield, Gift, Clock } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const trustPoints = [
   "Kostenlose Website-Vorschau",
@@ -17,14 +18,51 @@ const trustPoints = [
 const Contact = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    const form = e.target as HTMLFormElement;
+    const inputs = form.querySelectorAll("input, textarea");
+    const v = Array.from(inputs).map(
+      (el) => (el as HTMLInputElement | HTMLTextAreaElement).value.trim()
+    );
+    const [name, email, phone, website, company, message] = v;
+
+    try {
+      const leadId = crypto.randomUUID();
+      const { error } = await supabase.from("leads").insert({
+        id: leadId,
+        first_name: name || "Unbekannt",
+        email: email,
+        phone: phone || "n/a",
+        company_name: company || website || "",
+      });
+      if (error) throw error;
+
+      supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "lead-notification",
+          idempotencyKey: `contact-${leadId}`,
+          templateData: {
+            source: "Kontaktformular",
+            firstName: name,
+            companyName: company,
+            email,
+            phone,
+            website,
+            message,
+            submittedAt: new Date().toLocaleString("de-DE"),
+          },
+        },
+      });
+
       toast.success("Nachricht gesendet! Wir melden uns innerhalb von 24 Stunden.");
-      (e.target as HTMLFormElement).reset();
-    }, 1000);
+      form.reset();
+    } catch {
+      toast.error("Fehler beim Senden. Bitte versuchen Sie es erneut.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
