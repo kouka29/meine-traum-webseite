@@ -39,6 +39,7 @@ const WebdesignImmobilienmakler = lazy(() => import("./pages/WebdesignImmobilien
 const WebdesignCoaches = lazy(() => import("./pages/WebdesignCoaches.tsx"));
 const IndividuelleSoftware = lazy(() => import("./pages/IndividuelleSoftware.tsx"));
 const IndexOriginal = lazy(() => import("./pages/IndexOriginal.tsx"));
+const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -83,6 +84,7 @@ const App = () => (
             <Route path="/impressum" element={<Impressum />} />
             <Route path="/admin" element={<AdminLeads />} />
             <Route path="/original" element={<IndexOriginal />} />
+            <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
