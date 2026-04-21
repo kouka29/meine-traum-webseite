@@ -36,7 +36,7 @@ const FreePreviewCTA = () => (
             </div>
             <Button
               size="lg"
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 shadow-elevated animate-cta-pulse w-full sm:w-auto"
+              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold text-xs sm:text-base px-4 sm:px-8 py-5 sm:py-6 h-auto min-h-12 shadow-elevated animate-cta-pulse w-full sm:w-auto whitespace-normal text-center leading-tight"
               asChild
             >
               <Link to="/kontakt">
