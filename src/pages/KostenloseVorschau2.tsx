@@ -850,6 +850,11 @@ const KostenloseVorschau2 = () => {
               </div>
             ))}
           </div>
+          <div className="text-center mt-10">
+            <Button size="lg" onClick={scrollToForm} className="shadow-md">
+              Jetzt kostenlose Vorschau sichern <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </div>
         </div>
       </section>
       )}
