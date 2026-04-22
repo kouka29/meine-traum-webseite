@@ -806,6 +806,7 @@ const KostenloseVorschau2 = () => {
       </section>
 
       {/* PAIN POINTS */}
+      {(settings?.show_pain_points ?? true) && (
       <section className="py-16 sm:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
@@ -824,8 +825,10 @@ const KostenloseVorschau2 = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* PROCESS */}
+      {(settings?.show_process ?? true) && (
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
@@ -852,13 +855,14 @@ const KostenloseVorschau2 = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* FORM */}
       <section id="formular" className="py-16 sm:py-20 bg-secondary/30 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold mb-3">Jetzt deinen Platz sichern</h2>
-            <SlotPill />
+            {(settings?.show_slots ?? true) && <SlotPill total={totalSlots} taken={takenSlots} />}
           </div>
           <div className="max-w-2xl mx-auto">
             <MultiStepForm />
