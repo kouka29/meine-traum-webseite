@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import {
   Loader2, Save, Plus, Pencil, Trash2, ChevronUp, ChevronDown,
   Eye, EyeOff, Image as ImageIcon, Sparkles, Clock, Users,
-  HelpCircle, Phone, MessageSquare,
+  HelpCircle, Phone, MessageSquare, Briefcase, Link2,
 } from "lucide-react";
 
 type Settings = {
@@ -50,6 +50,7 @@ type Demo = {
   image_url: string;
   sort_order: number;
   is_visible: boolean;
+  portfolio_project_id?: string | null;
 };
 
 type Faq = {
@@ -58,6 +59,18 @@ type Faq = {
   answer: string;
   sort_order: number;
   is_visible: boolean;
+};
+
+type PortfolioProject = {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  image_url: string;
+  mockup_desktop_url: string;
+  external_url: string;
+  is_visible: boolean;
+  sort_order: number;
 };
 
 const fileToBase64 = (file: File): Promise<string> =>
@@ -90,11 +103,12 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [demos, setDemos] = useState<Demo[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
+  const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);
 
   // Demo dialog
   const [showDemoDialog, setShowDemoDialog] = useState(false);
   const [editingDemo, setEditingDemo] = useState<Demo | null>(null);
-  const [demoForm, setDemoForm] = useState({ trade: "", company: "", description: "", is_visible: true });
+  const [demoForm, setDemoForm] = useState({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" as string });
   const [demoImageFile, setDemoImageFile] = useState<File | null>(null);
   const [savingDemo, setSavingDemo] = useState(false);
 
@@ -131,6 +145,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     setSettings(data.settings);
     setDemos(data.demos || []);
     setFaqs(data.faqs || []);
+    setPortfolio(data.portfolio || []);
   };
 
   useEffect(() => {
@@ -164,13 +179,13 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   // ===== Demo actions =====
   const openNewDemo = () => {
     setEditingDemo(null);
-    setDemoForm({ trade: "", company: "", description: "", is_visible: true });
+    setDemoForm({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" });
     setDemoImageFile(null);
     setShowDemoDialog(true);
   };
   const openEditDemo = (d: Demo) => {
     setEditingDemo(d);
-    setDemoForm({ trade: d.trade, company: d.company, description: d.description, is_visible: d.is_visible });
+    setDemoForm({ trade: d.trade, company: d.company, description: d.description, is_visible: d.is_visible, portfolio_project_id: d.portfolio_project_id || "" });
     setDemoImageFile(null);
     setShowDemoDialog(true);
   };
@@ -192,6 +207,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         password, action,
         ...(editingDemo ? { demoId: editingDemo.id } : {}),
         ...demoForm,
+        portfolio_project_id: demoForm.portfolio_project_id || null,
         ...(image_base64 ? { image_base64, image_name } : {}),
       },
     });
@@ -234,6 +250,32 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         demos: arr.map(d => ({ id: d.id, sort_order: d.sort_order })),
       },
     });
+  };
+
+  // Quick-Add/Remove eines Portfolio-Projekts als Demo
+  const togglePortfolioDemo = async (p: PortfolioProject, currentlyUsed: Demo | undefined) => {
+    if (currentlyUsed) {
+      const { error } = await supabase.functions.invoke("admin-leads", {
+        body: { password, action: "vorschau-demo-delete", demoId: currentlyUsed.id },
+      });
+      if (error) { toast.error("Fehler beim Entfernen"); return; }
+      setDemos(prev => prev.filter(d => d.id !== currentlyUsed.id));
+      toast.success("Aus Demos entfernt");
+    } else {
+      const { data, error } = await supabase.functions.invoke("admin-leads", {
+        body: {
+          password, action: "vorschau-demo-create",
+          trade: p.category || "",
+          company: p.title,
+          description: p.description || "",
+          is_visible: true,
+          portfolio_project_id: p.id,
+        },
+      });
+      if (error || data?.error) { toast.error(data?.error || "Fehler beim Hinzufügen"); return; }
+      if (data?.demo) setDemos(prev => [...prev, data.demo]);
+      toast.success("Als Demo hinzugefügt");
+    }
   };
 
   // ===== FAQ actions =====
@@ -563,6 +605,51 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         </CardContent>
       </Card>
 
+      {/* PORTFOLIO QUICK-LINK */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base font-semibold flex items-center gap-2">
+            <Briefcase size={16} className="text-primary" /> Portfolio-Projekte als Demos verwenden
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {portfolio.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-6">
+              Keine Portfolio-Projekte vorhanden. Lege erst Projekte im Portfolio-Tab an.
+            </p>
+          ) : (
+            <div className="grid gap-2">
+              {portfolio.map(p => {
+                const usedDemo = demos.find(d => d.portfolio_project_id === p.id);
+                const used = !!usedDemo;
+                return (
+                  <div key={p.id} className="flex items-center gap-3 rounded-lg border border-border p-3">
+                    <div className="w-14 h-10 rounded-md overflow-hidden bg-muted shrink-0">
+                      {(p.mockup_desktop_url || p.image_url) ? (
+                        <img src={p.mockup_desktop_url || p.image_url} alt={p.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><ImageIcon size={14} className="text-muted-foreground" /></div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-semibold truncate">{p.title}</h4>
+                        {used && <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">In Vorschau</span>}
+                      </div>
+                      <p className="text-xs text-muted-foreground truncate">{p.category}{p.description && ` · ${p.description}`}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Switch checked={used} onCheckedChange={() => togglePortfolioDemo(p, usedDemo)} />
+                      <span className="text-xs text-muted-foreground">{used ? "An" : "Aus"}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* FAQS */}
       <Card>
         <CardHeader className="pb-3 flex-row items-center justify-between">
@@ -611,6 +698,34 @@ export default function AdminVorschauTab({ password }: { password: string }) {
             <DialogTitle>{editingDemo ? "Demo bearbeiten" : "Neue Demo"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
+            <div>
+              <Label className="flex items-center gap-2"><Link2 size={14} /> Aus Portfolio übernehmen (optional)</Label>
+              <select
+                value={demoForm.portfolio_project_id}
+                onChange={e => {
+                  const pid = e.target.value;
+                  const p = portfolio.find(x => x.id === pid);
+                  setDemoForm(f => ({
+                    ...f,
+                    portfolio_project_id: pid,
+                    ...(p ? {
+                      trade: f.trade || p.category || "",
+                      company: f.company || p.title || "",
+                      description: f.description || p.description || "",
+                    } : {}),
+                  }));
+                }}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              >
+                <option value="">— Kein Portfolio-Projekt verlinkt —</option>
+                {portfolio.map(p => (
+                  <option key={p.id} value={p.id}>{p.title}{p.category ? ` (${p.category})` : ""}</option>
+                ))}
+              </select>
+              <p className="text-xs text-muted-foreground mt-1">
+                Wenn verlinkt, werden Bild und Daten des Portfolio-Projekts in der Vorschau-Demo verwendet (falls hier nichts überschrieben wird).
+              </p>
+            </div>
             <div>
               <Label>Branche / Badge</Label>
               <Input value={demoForm.trade} onChange={e => setDemoForm(f => ({ ...f, trade: e.target.value }))} placeholder="z.B. Elektriker" />

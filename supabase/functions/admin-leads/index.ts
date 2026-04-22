@@ -429,12 +429,13 @@ Deno.serve(async (req) => {
 
     // =================== VORSCHAU SETTINGS ===================
     if (action === "vorschau-get") {
-      const [{ data: settings }, { data: demos }, { data: faqs }] = await Promise.all([
+      const [{ data: settings }, { data: demos }, { data: faqs }, { data: portfolio }] = await Promise.all([
         supabase.from("vorschau_settings").select("*").eq("id", 1).single(),
         supabase.from("vorschau_demos").select("*").order("sort_order", { ascending: true }),
         supabase.from("vorschau_faqs").select("*").order("sort_order", { ascending: true }),
+        supabase.from("portfolio_projects").select("id,title,category,description,image_url,mockup_desktop_url,external_url,is_visible,sort_order").order("sort_order", { ascending: true }),
       ]);
-      return new Response(JSON.stringify({ settings, demos: demos || [], faqs: faqs || [] }), {
+      return new Response(JSON.stringify({ settings, demos: demos || [], faqs: faqs || [], portfolio: portfolio || [] }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -472,7 +473,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "vorschau-demo-create") {
-      const { trade, company, description, is_visible, image_base64, image_name } = body;
+      const { trade, company, description, is_visible, image_base64, image_name, portfolio_project_id } = body;
       if (!company) {
         return new Response(JSON.stringify({ error: "company ist erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -499,6 +500,7 @@ Deno.serve(async (req) => {
       const { data, error } = await supabase.from("vorschau_demos").insert({
         trade: trade || "", company, description: description || "",
         image_url, sort_order: nextOrder, is_visible: is_visible !== false,
+        portfolio_project_id: portfolio_project_id || null,
       }).select().single();
       if (error) throw error;
       return new Response(JSON.stringify({ demo: data }), {
@@ -507,7 +509,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "vorschau-demo-update") {
-      const { demoId, trade, company, description, is_visible, image_base64, image_name } = body;
+      const { demoId, trade, company, description, is_visible, image_base64, image_name, portfolio_project_id } = body;
       if (!demoId) {
         return new Response(JSON.stringify({ error: "demoId fehlt" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -518,6 +520,7 @@ Deno.serve(async (req) => {
       if (company !== undefined) updates.company = company;
       if (description !== undefined) updates.description = description;
       if (is_visible !== undefined) updates.is_visible = is_visible;
+      if (portfolio_project_id !== undefined) updates.portfolio_project_id = portfolio_project_id || null;
       if (image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
