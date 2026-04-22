@@ -605,6 +605,51 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         </CardContent>
       </Card>
 
+      {/* PORTFOLIO QUICK-LINK */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base font-semibold flex items-center gap-2">
+            <Briefcase size={16} className="text-primary" /> Portfolio-Projekte als Demos verwenden
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {portfolio.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-6">
+              Keine Portfolio-Projekte vorhanden. Lege erst Projekte im Portfolio-Tab an.
+            </p>
+          ) : (
+            <div className="grid gap-2">
+              {portfolio.map(p => {
+                const usedDemo = demos.find(d => d.portfolio_project_id === p.id);
+                const used = !!usedDemo;
+                return (
+                  <div key={p.id} className="flex items-center gap-3 rounded-lg border border-border p-3">
+                    <div className="w-14 h-10 rounded-md overflow-hidden bg-muted shrink-0">
+                      {(p.mockup_desktop_url || p.image_url) ? (
+                        <img src={p.mockup_desktop_url || p.image_url} alt={p.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><ImageIcon size={14} className="text-muted-foreground" /></div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-semibold truncate">{p.title}</h4>
+                        {used && <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">In Vorschau</span>}
+                      </div>
+                      <p className="text-xs text-muted-foreground truncate">{p.category}{p.description && ` · ${p.description}`}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Switch checked={used} onCheckedChange={() => togglePortfolioDemo(p, usedDemo)} />
+                      <span className="text-xs text-muted-foreground">{used ? "An" : "Aus"}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* FAQS */}
       <Card>
         <CardHeader className="pb-3 flex-row items-center justify-between">
