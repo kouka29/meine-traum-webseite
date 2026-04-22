@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import {
   Loader2, Save, Plus, Pencil, Trash2, ChevronUp, ChevronDown,
   Eye, EyeOff, Image as ImageIcon, Sparkles, Clock, Users,
-  HelpCircle, Phone, MessageSquare,
+  HelpCircle, Phone, MessageSquare, Briefcase, Link2,
 } from "lucide-react";
 
 type Settings = {
@@ -50,6 +50,7 @@ type Demo = {
   image_url: string;
   sort_order: number;
   is_visible: boolean;
+  portfolio_project_id?: string | null;
 };
 
 type Faq = {
@@ -58,6 +59,18 @@ type Faq = {
   answer: string;
   sort_order: number;
   is_visible: boolean;
+};
+
+type PortfolioProject = {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  image_url: string;
+  mockup_desktop_url: string;
+  external_url: string;
+  is_visible: boolean;
+  sort_order: number;
 };
 
 const fileToBase64 = (file: File): Promise<string> =>
@@ -90,11 +103,12 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [demos, setDemos] = useState<Demo[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
+  const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);
 
   // Demo dialog
   const [showDemoDialog, setShowDemoDialog] = useState(false);
   const [editingDemo, setEditingDemo] = useState<Demo | null>(null);
-  const [demoForm, setDemoForm] = useState({ trade: "", company: "", description: "", is_visible: true });
+  const [demoForm, setDemoForm] = useState({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" as string });
   const [demoImageFile, setDemoImageFile] = useState<File | null>(null);
   const [savingDemo, setSavingDemo] = useState(false);
 
@@ -131,6 +145,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     setSettings(data.settings);
     setDemos(data.demos || []);
     setFaqs(data.faqs || []);
+    setPortfolio(data.portfolio || []);
   };
 
   useEffect(() => {
@@ -164,13 +179,13 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   // ===== Demo actions =====
   const openNewDemo = () => {
     setEditingDemo(null);
-    setDemoForm({ trade: "", company: "", description: "", is_visible: true });
+    setDemoForm({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" });
     setDemoImageFile(null);
     setShowDemoDialog(true);
   };
   const openEditDemo = (d: Demo) => {
     setEditingDemo(d);
-    setDemoForm({ trade: d.trade, company: d.company, description: d.description, is_visible: d.is_visible });
+    setDemoForm({ trade: d.trade, company: d.company, description: d.description, is_visible: d.is_visible, portfolio_project_id: d.portfolio_project_id || "" });
     setDemoImageFile(null);
     setShowDemoDialog(true);
   };
@@ -192,6 +207,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         password, action,
         ...(editingDemo ? { demoId: editingDemo.id } : {}),
         ...demoForm,
+        portfolio_project_id: demoForm.portfolio_project_id || null,
         ...(image_base64 ? { image_base64, image_name } : {}),
       },
     });
