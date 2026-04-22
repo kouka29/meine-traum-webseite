@@ -984,24 +984,44 @@ const KostenloseVorschau2 = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
             Was Handwerker über ihre Vorschau sagen
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {testimonials.map((t) => (
-              <div key={t.name} className="bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col">
-                <div className="flex items-center gap-1 text-amber-500 mb-3">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
-                  ))}
-                </div>
-                <blockquote className="text-foreground/90 mb-4 flex-1">
-                  „{t.quote}"
-                </blockquote>
-                <div>
-                  <div className="font-bold">{t.name}</div>
-                  <div className="text-sm text-muted-foreground">{t.role}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Carousel
+            opts={{ align: "start", loop: activeTestimonials.length > 3 }}
+            className="max-w-6xl mx-auto"
+          >
+            <CarouselContent className="-ml-4">
+              {activeTestimonials.map((t, idx) => (
+                <CarouselItem key={`${t.name}-${idx}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                  <div className="h-full bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col">
+                    <div className="flex items-center gap-1 text-amber-500 mb-3">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-current" />
+                      ))}
+                    </div>
+                    <blockquote className="text-foreground/90 mb-4 flex-1">
+                      „{t.quote}"
+                    </blockquote>
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <div className="font-bold">{t.name}</div>
+                        <div className="text-sm text-muted-foreground">{t.role}</div>
+                      </div>
+                      {t.result && (
+                        <span className="shrink-0 inline-flex items-center rounded-full bg-primary/10 text-primary px-2.5 py-1 text-xs font-semibold">
+                          {t.result}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            {activeTestimonials.length > 1 && (
+              <>
+                <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-12" />
+                <CarouselNext className="hidden sm:flex -right-4 lg:-right-12" />
+              </>
+            )}
+          </Carousel>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
               Jetzt meine kostenlose Vorschau anfordern <ArrowRight className="ml-2 w-5 h-5" />
