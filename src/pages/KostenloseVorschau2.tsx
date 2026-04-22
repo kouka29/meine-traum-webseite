@@ -378,18 +378,10 @@ const MultiStepForm = () => {
       const { data: leadData, error: leadError } = await supabase
         .from("leads")
         .insert({
-          name: state.firstName,
+          first_name: state.firstName,
           email: state.email,
-          phone: state.phone || null,
-          company: state.company || null,
-          message: `Multi-Step Vorschau-Anfrage`,
-          source: "kostenlose-vorschau2",
-          metadata: {
-            trade: state.trade,
-            hasWebsite: state.hasWebsite,
-            goals: state.goals,
-            urgency: state.urgency,
-          },
+          phone: state.phone || "",
+          company_name: state.company || "",
         })
         .select("id")
         .single();
