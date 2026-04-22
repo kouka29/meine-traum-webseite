@@ -263,6 +263,147 @@ export type Database = {
         }
         Relationships: []
       }
+      vorschau_demos: {
+        Row: {
+          company: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string
+          is_visible: boolean
+          sort_order: number
+          trade: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          is_visible?: boolean
+          sort_order?: number
+          trade?: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          is_visible?: boolean
+          sort_order?: number
+          trade?: string
+        }
+        Relationships: []
+      }
+      vorschau_faqs: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          is_visible: boolean
+          question: string
+          sort_order: number
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          question: string
+          sort_order?: number
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          question?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      vorschau_settings: {
+        Row: {
+          countdown_label: string
+          countdown_mode: string
+          countdown_target: string | null
+          final_cta_button: string
+          final_cta_headline: string
+          final_cta_subtext: string
+          hero_badge_text: string
+          hero_cta_label: string
+          hero_h1_line1: string
+          hero_h1_line2: string
+          hero_h1_line3: string
+          hero_subheadline: string
+          id: number
+          phone_number: string
+          show_countdown: boolean
+          show_demos: boolean
+          show_faq: boolean
+          show_pain_points: boolean
+          show_process: boolean
+          show_slots: boolean
+          show_testimonials: boolean
+          taken_slots: number
+          total_slots: number
+          updated_at: string
+        }
+        Insert: {
+          countdown_label?: string
+          countdown_mode?: string
+          countdown_target?: string | null
+          final_cta_button?: string
+          final_cta_headline?: string
+          final_cta_subtext?: string
+          hero_badge_text?: string
+          hero_cta_label?: string
+          hero_h1_line1?: string
+          hero_h1_line2?: string
+          hero_h1_line3?: string
+          hero_subheadline?: string
+          id?: number
+          phone_number?: string
+          show_countdown?: boolean
+          show_demos?: boolean
+          show_faq?: boolean
+          show_pain_points?: boolean
+          show_process?: boolean
+          show_slots?: boolean
+          show_testimonials?: boolean
+          taken_slots?: number
+          total_slots?: number
+          updated_at?: string
+        }
+        Update: {
+          countdown_label?: string
+          countdown_mode?: string
+          countdown_target?: string | null
+          final_cta_button?: string
+          final_cta_headline?: string
+          final_cta_subtext?: string
+          hero_badge_text?: string
+          hero_cta_label?: string
+          hero_h1_line1?: string
+          hero_h1_line2?: string
+          hero_h1_line3?: string
+          hero_subheadline?: string
+          id?: number
+          phone_number?: string
+          show_countdown?: boolean
+          show_demos?: boolean
+          show_faq?: boolean
+          show_pain_points?: boolean
+          show_process?: boolean
+          show_slots?: boolean
+          show_testimonials?: boolean
+          taken_slots?: number
+          total_slots?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
