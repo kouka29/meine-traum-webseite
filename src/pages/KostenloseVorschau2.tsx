@@ -806,6 +806,15 @@ const KostenloseVorschau2 = () => {
               {settings?.hero_cta_label ?? "Jetzt kostenlose Vorschau sichern"} <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 
+            {/* Social Proof: 150+ Webseiten */}
+            <div className="mt-6 inline-flex items-center gap-3 rounded-full bg-card border border-border px-4 py-2 text-sm font-medium shadow-sm">
+              <Award className="w-4 h-4 text-primary" />
+              <span>
+                <strong className="text-foreground">Über 150 Webseiten</strong>{" "}
+                <span className="text-muted-foreground">erfolgreich umgesetzt</span>
+              </span>
+            </div>
+
             {/* Trust icons */}
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto">
               {[
