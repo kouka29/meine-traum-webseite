@@ -10,7 +10,7 @@ import {
   Lock, Trash2, RefreshCw, Mail, Phone, User, Calendar, Loader2,
   Building2, BarChart3, Users, Eye, TrendingUp, Monitor, Smartphone,
   Tablet, Globe, Clock, FileDown, ArrowUpRight, Image, Plus, Pencil,
-  ChevronUp, ChevronDown, EyeOff, FolderOpen, Star, MessageSquare
+  ChevronUp, ChevronDown, EyeOff, FolderOpen, Star, MessageSquare, Sparkles
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -20,6 +20,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, LineChart, Line, CartesianGrid
 } from "recharts";
+import AdminVorschauTab from "@/components/admin/AdminVorschauTab";
 
 interface Lead {
   id: string;
@@ -106,7 +107,7 @@ const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "vorschau">("dashboard");
 
   // Portfolio state
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
