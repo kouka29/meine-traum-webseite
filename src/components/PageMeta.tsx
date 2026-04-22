@@ -46,6 +46,10 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: "Kostenloser Website-Check – Website Analyse gratis | Meine Traum Webseite",
     description: "Kostenlose Website-Analyse: Performance, SEO, Mobile-Optimierung und Conversion-Potenzial. Erhalten Sie konkrete Handlungsempfehlungen in 48h.",
   },
+  "/kostenlose-vorschau": {
+    title: "Kostenlose Webseiten-Vorschau in 48h für Handwerker | Meine Traum Webseite",
+    description: "Handwerksbetrieb? Erhalte in 48 Stunden eine kostenlose Vorschau deiner neuen Webseite. Ohne Risiko, ohne Kosten, ohne Verpflichtung. Jetzt anfordern.",
+  },
   "/webdesign-preise": {
     title: "Webdesign Preise – Was kostet eine Website? | Meine Traum Webseite",
     description: "Transparente Webdesign Preise ab 1.500 €. Website erstellen lassen Kosten im Überblick. Faire Festpreise ohne versteckte Kosten.",
