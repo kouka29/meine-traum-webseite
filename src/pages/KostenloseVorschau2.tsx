@@ -894,44 +894,57 @@ const KostenloseVorschau2 = () => {
             <h2 className="text-3xl sm:text-4xl font-bold mb-3">So könnte deine Webseite aussehen</h2>
             <p className="text-muted-foreground">Echte Vorschauen – in 48 Stunden erstellt.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {activeDemos.map((d) => (
-              <div key={d.company} className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
-                {/* Mockup */}
-                <div className="bg-gradient-to-br from-primary/10 to-accent/10 p-5">
-                  <div className="bg-card rounded-lg shadow-md overflow-hidden border border-border">
-                    <div className="bg-muted h-6 flex items-center gap-1.5 px-2.5">
-                      <span className="w-2 h-2 rounded-full bg-rose-400" />
-                      <span className="w-2 h-2 rounded-full bg-amber-400" />
-                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                    </div>
-                    {d.image_url ? (
-                      <img src={d.image_url} alt={d.company} className="aspect-video w-full object-cover" />
-                    ) : (
-                      <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
-                        <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
-                        <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
-                        <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
+          <Carousel
+            opts={{ align: "start", loop: activeDemos.length > 3 }}
+            className="max-w-6xl mx-auto"
+          >
+            <CarouselContent className="-ml-4">
+              {activeDemos.map((d, idx) => (
+                <CarouselItem key={`${d.company}-${idx}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                  <div className="h-full bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
+                    {/* Mockup */}
+                    <div className="bg-gradient-to-br from-primary/10 to-accent/10 p-5">
+                      <div className="bg-card rounded-lg shadow-md overflow-hidden border border-border">
+                        <div className="bg-muted h-6 flex items-center gap-1.5 px-2.5">
+                          <span className="w-2 h-2 rounded-full bg-rose-400" />
+                          <span className="w-2 h-2 rounded-full bg-amber-400" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                        </div>
+                        {d.image_url ? (
+                          <img src={d.image_url} alt={d.company} className="aspect-video w-full object-cover" loading="lazy" />
+                        ) : (
+                          <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+                            <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
+                            <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
+                            <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
+                    <div className="p-5 flex-1 flex flex-col">
+                      {d.trade && <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
+                        {d.trade}
+                      </span>}
+                      <h3 className="font-bold mb-1">{d.company}</h3>
+                      <p className="text-sm text-muted-foreground mb-3 flex-1">{(d as any).desc ?? (d as any).description}</p>
+                      <div className="flex items-center gap-1 text-amber-500 text-sm">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-current" />
+                        ))}
+                        <span className="ml-1 text-muted-foreground">Kunde ist begeistert</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="p-5 flex-1 flex flex-col">
-                  {d.trade && <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
-                    {d.trade}
-                  </span>}
-                  <h3 className="font-bold mb-1">{d.company}</h3>
-                  <p className="text-sm text-muted-foreground mb-3 flex-1">{(d as any).desc ?? (d as any).description}</p>
-                  <div className="flex items-center gap-1 text-amber-500 text-sm">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                    <span className="ml-1 text-muted-foreground">Kunde ist begeistert</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            {activeDemos.length > 1 && (
+              <>
+                <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-12" />
+                <CarouselNext className="hidden sm:flex -right-4 lg:-right-12" />
+              </>
+            )}
+          </Carousel>
         </div>
       </section>
       )}
