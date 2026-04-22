@@ -47,12 +47,12 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description: "Kostenlose Website-Analyse: Performance, SEO, Mobile-Optimierung und Conversion-Potenzial. Erhalten Sie konkrete Handlungsempfehlungen in 48h.",
   },
   "/kostenlose-vorschau": {
-    title: "Kostenlose Webseiten-Vorschau in 48h für Handwerker | Meine Traum Webseite",
-    description: "Handwerksbetrieb? Erhalte in 48 Stunden eine kostenlose Vorschau deiner neuen Webseite. Ohne Risiko, ohne Kosten, ohne Verpflichtung. Jetzt anfordern.",
-  },
-  "/kostenlose-vorschau2": {
     title: "Kostenlose Webseiten-Vorschau in 48h – Nur 5 Plätze/Monat | Meine Traum Webseite",
     description: "Handwerker: Sichere dir einen von 5 Plätzen pro Monat. Kostenlose Webseiten-Vorschau in 48h. In 2 Minuten Formular ausfüllen, ohne Risiko und Verpflichtung.",
+  },
+  "/kostenlose-vorschau2": {
+    title: "Kostenlose Webseiten-Vorschau in 48h für Handwerker | Meine Traum Webseite",
+    description: "Handwerksbetrieb? Erhalte in 48 Stunden eine kostenlose Vorschau deiner neuen Webseite. Ohne Risiko, ohne Kosten, ohne Verpflichtung. Jetzt anfordern.",
   },
   "/webdesign-preise": {
     title: "Webdesign Preise – Was kostet eine Website? | Meine Traum Webseite",
