@@ -102,7 +102,7 @@ const DeviceIcon = ({ type }: { type: string }) => {
 };
 
 const AdminLeads = () => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(() => sessionStorage.getItem("admin_pw") || "");
   const [authenticated, setAuthenticated] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
