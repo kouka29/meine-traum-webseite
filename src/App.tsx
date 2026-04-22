@@ -41,6 +41,7 @@ const IndividuelleSoftware = lazy(() => import("./pages/IndividuelleSoftware.tsx
 const IndexOriginal = lazy(() => import("./pages/IndexOriginal.tsx"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
 const KostenloseVorschau = lazy(() => import("./pages/KostenloseVorschau.tsx"));
+const KostenloseVorschau2 = lazy(() => import("./pages/KostenloseVorschau2.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -75,6 +76,7 @@ const App = () => (
             <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
             <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
             <Route path="/kostenlose-vorschau" element={<KostenloseVorschau />} />
+            <Route path="/kostenlose-vorschau2" element={<KostenloseVorschau2 />} />
             <Route path="/webdesign-preise" element={<WebdesignPreise />} />
             <Route path="/webdesign-shk" element={<WebdesignSHK />} />
             <Route path="/webdesign-handwerker" element={<WebdesignHandwerker />} />
