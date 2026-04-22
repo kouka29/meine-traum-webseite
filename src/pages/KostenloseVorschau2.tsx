@@ -174,8 +174,14 @@ function getEndOfMonth(): Date {
   return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 0, 0);
 }
 
-function useCountdown() {
-  const target = useMemo(() => getEndOfMonth(), []);
+function useCountdown(targetISO?: string | null, mode: string = "end_of_month") {
+  const target = useMemo(() => {
+    if (mode === "fixed_date" && targetISO) {
+      const d = new Date(targetISO);
+      if (!isNaN(d.getTime())) return d;
+    }
+    return getEndOfMonth();
+  }, [targetISO, mode]);
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
