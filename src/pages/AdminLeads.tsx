@@ -205,6 +205,7 @@ const AdminLeads = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    sessionStorage.setItem("admin_pw", password);
     await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio(), fetchTestimonials()]);
     setLoading(false);
   };
