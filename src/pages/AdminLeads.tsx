@@ -102,7 +102,7 @@ const DeviceIcon = ({ type }: { type: string }) => {
 };
 
 const AdminLeads = () => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(() => sessionStorage.getItem("admin_pw") || "");
   const [authenticated, setAuthenticated] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
@@ -205,6 +205,7 @@ const AdminLeads = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    sessionStorage.setItem("admin_pw", password);
     await Promise.all([fetchLeads(), fetchAnalytics(), fetchPortfolio(), fetchTestimonials()]);
     setLoading(false);
   };
