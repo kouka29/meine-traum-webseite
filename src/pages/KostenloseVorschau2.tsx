@@ -691,7 +691,7 @@ const MultiStepForm = () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const KostenloseVorschau2 = () => {
-  const { settings, demos: dbDemos, faqs: dbFaqs, portfolio } = useVorschauSettings();
+  const { settings, demos: dbDemos, faqs: dbFaqs, portfolio, testimonials: dbTestimonials } = useVorschauSettings();
   const totalSlots = settings?.total_slots ?? 5;
   const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
   const remainingSlots = Math.max(0, totalSlots - takenSlots);
@@ -713,8 +713,10 @@ const KostenloseVorschau2 = () => {
         };
       })
     : demos.map(d => ({ ...d, image_url: "" }));
-  // Referenz-Projekte aus dem Portfolio (für die Referenzen-Sektion)
-  const referencePortfolio = portfolio.slice(0, 3);
+  // Bewertungen aus DB (Fallback: hardcoded testimonials)
+  const activeTestimonials = dbTestimonials.length > 0
+    ? dbTestimonials.map(t => ({ quote: t.text, name: t.name, role: t.role, result: t.result }))
+    : testimonials.map(t => ({ ...t, result: "" }));
   const activeFaqs = dbFaqs.length > 0
     ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
     : faqs;
