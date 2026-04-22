@@ -44,14 +44,12 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useVorschauSettings, type VorschauSettings, type VorschauDemo, type VorschauFaq } from "@/hooks/useVorschauSettings";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Static data
 // ─────────────────────────────────────────────────────────────────────────────
 
-const TOTAL_SLOTS = 5;
-const TAKEN_SLOTS = 3; // 3 von 5 vergeben → noch 2 übrig
-const REMAINING_SLOTS = TOTAL_SLOTS - TAKEN_SLOTS;
 const STORAGE_KEY = "kostenlose-vorschau2-form";
 
 const tradeOptions = [
