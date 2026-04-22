@@ -684,11 +684,27 @@ const MultiStepForm = () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const KostenloseVorschau2 = () => {
-  const slotPct = (TAKEN_SLOTS / TOTAL_SLOTS) * 100;
+  const { settings, demos: dbDemos, faqs: dbFaqs } = useVorschauSettings();
+  const totalSlots = settings?.total_slots ?? 5;
+  const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
+  const remainingSlots = Math.max(0, totalSlots - takenSlots);
+  const slotPct = totalSlots > 0 ? (takenSlots / totalSlots) * 100 : 0;
   const monatName = useMemo(
     () => new Date().toLocaleDateString("de-DE", { month: "long" }),
     [],
   );
+  // Fallbacks: wenn DB-Listen leer, nutze hardcoded Defaults
+  const activeDemos = dbDemos.length > 0
+    ? dbDemos.map(d => ({ trade: d.trade, company: d.company, desc: d.description, image_url: d.image_url }))
+    : demos.map(d => ({ ...d, image_url: "" }));
+  const activeFaqs = dbFaqs.length > 0
+    ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
+    : faqs;
+  const heroBadge = (settings?.hero_badge_text ?? "Nur noch {remaining} von {total} Plätzen im {month} verfügbar")
+    .replace("{remaining}", String(remainingSlots))
+    .replace("{total}", String(totalSlots))
+    .replace("{taken}", String(takenSlots))
+    .replace("{month}", monatName);
 
   const scrollToForm = () => {
     document.getElementById("formular")?.scrollIntoView({ behavior: "smooth" });
@@ -708,11 +724,11 @@ const KostenloseVorschau2 = () => {
             </span>
           </Link>
           <a
-            href="tel:+491701234567"
+            href={`tel:${(settings?.phone_number ?? "+49 170 123 45 67").replace(/\s/g, "")}`}
             className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors"
           >
             <Phone className="w-4 h-4" />
-            <span className="hidden sm:inline">+49 170 123 45 67</span>
+            <span className="hidden sm:inline">{settings?.phone_number ?? "+49 170 123 45 67"}</span>
             <span className="sm:hidden">Anrufen</span>
           </a>
         </div>
