@@ -59,11 +59,20 @@ export type VorschauPortfolioProject = {
   result: string;
 };
 
+export type VorschauTestimonial = {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  result: string;
+};
+
 export type VorschauData = {
   settings: VorschauSettings | null;
   demos: VorschauDemo[];
   faqs: VorschauFaq[];
   portfolio: VorschauPortfolioProject[];
+  testimonials: VorschauTestimonial[];
   loading: boolean;
 };
 
@@ -73,17 +82,19 @@ export function useVorschauSettings(): VorschauData {
     demos: [],
     faqs: [],
     portfolio: [],
+    testimonials: [],
     loading: true,
   });
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      const [settingsRes, demosRes, faqsRes, portfolioRes] = await Promise.all([
+      const [settingsRes, demosRes, faqsRes, portfolioRes, testimonialsRes] = await Promise.all([
         supabase.from("vorschau_settings").select("*").eq("id", 1).maybeSingle(),
         supabase.from("vorschau_demos").select("*").eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("vorschau_faqs").select("*").eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("portfolio_projects").select("id,title,category,description,image_url,mockup_desktop_url,mockup_mobile_url,external_url,result").eq("is_visible", true).order("sort_order", { ascending: true }),
+        supabase.from("testimonials").select("id,name,role,text,result").eq("is_visible", true).order("sort_order", { ascending: true }),
       ]);
       if (cancelled) return;
       setData({
@@ -91,6 +102,7 @@ export function useVorschauSettings(): VorschauData {
         demos: (demosRes.data as VorschauDemo[] | null) ?? [],
         faqs: (faqsRes.data as VorschauFaq[] | null) ?? [],
         portfolio: (portfolioRes.data as VorschauPortfolioProject[] | null) ?? [],
+        testimonials: (testimonialsRes.data as VorschauTestimonial[] | null) ?? [],
         loading: false,
       });
     };
@@ -103,6 +115,7 @@ export function useVorschauSettings(): VorschauData {
       .on("postgres_changes", { event: "*", schema: "public", table: "vorschau_demos" }, load)
       .on("postgres_changes", { event: "*", schema: "public", table: "vorschau_faqs" }, load)
       .on("postgres_changes", { event: "*", schema: "public", table: "portfolio_projects" }, load)
+      .on("postgres_changes", { event: "*", schema: "public", table: "testimonials" }, load)
       .subscribe();
 
     return () => {
