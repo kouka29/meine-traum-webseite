@@ -105,13 +105,27 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [savingFaq, setSavingFaq] = useState(false);
 
   const load = async () => {
+    if (!password) {
+      setLoading(false);
+      toast.error("Nicht angemeldet — bitte Seite neu laden und erneut anmelden.");
+      return;
+    }
     setLoading(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
       body: { password, action: "vorschau-get" },
     });
     setLoading(false);
     if (error || data?.error) {
-      toast.error(data?.error || "Fehler beim Laden");
+      let msg = data?.error || "Fehler beim Laden";
+      // Extract real error body from FunctionsHttpError
+      if (error && (error as any).context?.body) {
+        try {
+          const text = await new Response((error as any).context.body).text();
+          const parsed = JSON.parse(text);
+          msg = parsed.error || msg;
+        } catch {}
+      }
+      toast.error(msg);
       return;
     }
     setSettings(data.settings);
