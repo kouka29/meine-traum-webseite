@@ -134,9 +134,9 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   };
 
   useEffect(() => {
-    load();
+    if (password) load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [password]);
 
   const updateSettings = (patch: Partial<Settings>) => {
     setSettings(s => (s ? { ...s, ...patch } : s));
