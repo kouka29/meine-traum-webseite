@@ -7,6 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const FALLBACK_IMAGES: Record<string, string> = {
   "TechStart GmbH": techstartImg,
@@ -30,8 +37,7 @@ const IndexPortfolio = () => {
         .from("portfolio_projects")
         .select("id, title, category, result, image_url, external_url, mockup_desktop_url, mockup_mobile_url")
         .eq("is_visible", true)
-        .order("sort_order", { ascending: true })
-        .limit(3);
+        .order("sort_order", { ascending: true });
       if (data && data.length > 0) {
         setItems(data.map(p => ({
           ...p,
@@ -55,11 +61,14 @@ const IndexPortfolio = () => {
             </h2>
           </div>
         </AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {items.map((p, i) => (
-            <AnimatedSection key={p.id} delay={i * 0.1}>
-              {p.external_url ? (
-                <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block group cursor-pointer">
+        <Carousel
+          opts={{ align: "start", loop: items.length > 3 }}
+          className="max-w-6xl mx-auto"
+        >
+          <CarouselContent className="-ml-6">
+            {items.map((p, i) => {
+              const Inner = (
+                <>
                   <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
                     {p.image_url ? (
                       <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
@@ -74,28 +83,30 @@ const IndexPortfolio = () => {
                   </div>
                   <h3 className="font-heading text-lg font-semibold">{p.title}</h3>
                   <p className="text-sm text-muted-foreground">{p.category}</p>
-                </a>
-              ) : (
-                <div className="group">
-                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
-                    {p.image_url ? (
-                      <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
-                    ) : p.mockup_desktop_url ? (
-                      <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                    ) : null}
-                    {p.result && (
-                      <span className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm z-10">
-                        {p.result}
-                      </span>
+                </>
+              );
+              return (
+                <CarouselItem key={p.id} className="pl-6 basis-full sm:basis-1/2 lg:basis-1/3">
+                  <AnimatedSection delay={i * 0.05}>
+                    {p.external_url ? (
+                      <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block group cursor-pointer">
+                        {Inner}
+                      </a>
+                    ) : (
+                      <div className="group">{Inner}</div>
                     )}
-                  </div>
-                  <h3 className="font-heading text-lg font-semibold">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground">{p.category}</p>
-                </div>
-              )}
-            </AnimatedSection>
-          ))}
-        </div>
+                  </AnimatedSection>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+          {items.length > 1 && (
+            <>
+              <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-12" />
+              <CarouselNext className="hidden sm:flex -right-4 lg:-right-12" />
+            </>
+          )}
+        </Carousel>
         <div className="text-center mt-12">
           <Button variant="outline-primary" asChild>
             <Link to="/portfolio">Alle Projekte ansehen</Link>
