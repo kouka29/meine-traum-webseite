@@ -211,8 +211,16 @@ const CountdownBox = ({ value, label }: { value: number; label: string }) => (
   </div>
 );
 
-const Countdown = ({ inverse = false }: { inverse?: boolean }) => {
-  const { days, hours, minutes, seconds } = useCountdown();
+const Countdown = ({
+  inverse = false,
+  targetISO,
+  mode,
+}: {
+  inverse?: boolean;
+  targetISO?: string | null;
+  mode?: string;
+}) => {
+  const { days, hours, minutes, seconds } = useCountdown(targetISO, mode);
   if (inverse) {
     return (
       <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
@@ -317,7 +325,15 @@ const TileButton = ({
   );
 };
 
-const SlotPill = ({ inverse = false }: { inverse?: boolean }) => (
+const SlotPill = ({
+  inverse = false,
+  total,
+  taken,
+}: {
+  inverse?: boolean;
+  total: number;
+  taken: number;
+}) => (
   <span
     className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs sm:text-sm font-semibold ${
       inverse
@@ -326,7 +342,7 @@ const SlotPill = ({ inverse = false }: { inverse?: boolean }) => (
     }`}
   >
     <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-    Noch {REMAINING_SLOTS} von {TOTAL_SLOTS} Plätzen verfügbar
+    Noch {Math.max(0, total - taken)} von {total} Plätzen verfügbar
   </span>
 );
 
