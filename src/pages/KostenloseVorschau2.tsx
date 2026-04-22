@@ -742,46 +742,50 @@ const KostenloseVorschau2 = () => {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 px-4 py-1.5 text-xs sm:text-sm font-semibold mb-6">
               <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-              Nur noch {REMAINING_SLOTS} von {TOTAL_SLOTS} Plätzen im {monatName} verfügbar
+              {heroBadge}
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
-              Dein Handwerksbetrieb.
+              {settings?.hero_h1_line1 ?? "Dein Handwerksbetrieb."}
               <br />
-              Eine neue Webseite.
+              {settings?.hero_h1_line2 ?? "Eine neue Webseite."}
               <br />
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Kostenlos in 48h.
+                {settings?.hero_h1_line3 ?? "Kostenlos in 48h."}
               </span>
             </h1>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              Ich zeige dir, wie dein Betrieb online aussehen könnte – ohne Risiko, ohne Kosten, ohne Verpflichtung.
+              {settings?.hero_subheadline ?? "Ich zeige dir, wie dein Betrieb online aussehen könnte – ohne Risiko, ohne Kosten, ohne Verpflichtung."}
             </p>
 
             {/* Countdown */}
-            <div className="mb-8">
-              <div className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
-                Aktion endet in:
+            {(settings?.show_countdown ?? true) && (
+              <div className="mb-8">
+                <div className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
+                  {settings?.countdown_label ?? "Aktion endet in:"}
+                </div>
+                <Countdown targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
               </div>
-              <Countdown />
-            </div>
+            )}
 
             {/* Slot progress */}
-            <div className="max-w-md mx-auto mb-8">
-              <div className="flex items-center justify-between text-sm font-medium mb-2">
-                <span>{TAKEN_SLOTS} von {TOTAL_SLOTS} Plätzen bereits vergeben</span>
-                <span className="text-rose-600">{REMAINING_SLOTS} frei</span>
+            {(settings?.show_slots ?? true) && (
+              <div className="max-w-md mx-auto mb-8">
+                <div className="flex items-center justify-between text-sm font-medium mb-2">
+                  <span>{takenSlots} von {totalSlots} Plätzen bereits vergeben</span>
+                  <span className="text-rose-600">{remainingSlots} frei</span>
+                </div>
+                <Progress value={slotPct} className="h-3" />
               </div>
-              <Progress value={slotPct} className="h-3" />
-            </div>
+            )}
 
             <Button
               size="lg"
               onClick={scrollToForm}
               className="text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-lg hover:shadow-xl transition-shadow"
             >
-              Jetzt kostenlose Vorschau sichern <ArrowRight className="ml-2 w-5 h-5" />
+              {settings?.hero_cta_label ?? "Jetzt kostenlose Vorschau sichern"} <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 
             {/* Trust icons */}
