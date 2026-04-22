@@ -511,6 +511,7 @@ const AdminLeads = () => {
             { key: "leads" as const, icon: Users, label: `Leads (${leads.length})` },
             { key: "portfolio" as const, icon: FolderOpen, label: `Portfolio (${projects.length})` },
             { key: "testimonials" as const, icon: MessageSquare, label: `Referenzen (${testimonials.length})` },
+            { key: "vorschau" as const, icon: Sparkles, label: "Kostenlose Vorschau" },
           ]).map(tab => (
             <button
               key={tab.key}
