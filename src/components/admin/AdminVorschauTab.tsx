@@ -628,6 +628,34 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           </DialogHeader>
           <div className="space-y-4">
             <div>
+              <Label className="flex items-center gap-2"><Link2 size={14} /> Aus Portfolio übernehmen (optional)</Label>
+              <select
+                value={demoForm.portfolio_project_id}
+                onChange={e => {
+                  const pid = e.target.value;
+                  const p = portfolio.find(x => x.id === pid);
+                  setDemoForm(f => ({
+                    ...f,
+                    portfolio_project_id: pid,
+                    ...(p ? {
+                      trade: f.trade || p.category || "",
+                      company: f.company || p.title || "",
+                      description: f.description || p.description || "",
+                    } : {}),
+                  }));
+                }}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              >
+                <option value="">— Kein Portfolio-Projekt verlinkt —</option>
+                {portfolio.map(p => (
+                  <option key={p.id} value={p.id}>{p.title}{p.category ? ` (${p.category})` : ""}</option>
+                ))}
+              </select>
+              <p className="text-xs text-muted-foreground mt-1">
+                Wenn verlinkt, werden Bild und Daten des Portfolio-Projekts in der Vorschau-Demo verwendet (falls hier nichts überschrieben wird).
+              </p>
+            </div>
+            <div>
               <Label>Branche / Badge</Label>
               <Input value={demoForm.trade} onChange={e => setDemoForm(f => ({ ...f, trade: e.target.value }))} placeholder="z.B. Elektriker" />
             </div>
