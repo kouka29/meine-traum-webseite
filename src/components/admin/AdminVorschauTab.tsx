@@ -252,6 +252,32 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     });
   };
 
+  // Quick-Add/Remove eines Portfolio-Projekts als Demo
+  const togglePortfolioDemo = async (p: PortfolioProject, currentlyUsed: Demo | undefined) => {
+    if (currentlyUsed) {
+      const { error } = await supabase.functions.invoke("admin-leads", {
+        body: { password, action: "vorschau-demo-delete", demoId: currentlyUsed.id },
+      });
+      if (error) { toast.error("Fehler beim Entfernen"); return; }
+      setDemos(prev => prev.filter(d => d.id !== currentlyUsed.id));
+      toast.success("Aus Demos entfernt");
+    } else {
+      const { data, error } = await supabase.functions.invoke("admin-leads", {
+        body: {
+          password, action: "vorschau-demo-create",
+          trade: p.category || "",
+          company: p.title,
+          description: p.description || "",
+          is_visible: true,
+          portfolio_project_id: p.id,
+        },
+      });
+      if (error || data?.error) { toast.error(data?.error || "Fehler beim Hinzufügen"); return; }
+      if (data?.demo) setDemos(prev => [...prev, data.demo]);
+      toast.success("Als Demo hinzugefügt");
+    }
+  };
+
   // ===== FAQ actions =====
   const openNewFaq = () => {
     setEditingFaq(null);
