@@ -966,6 +966,75 @@ const KostenloseVorschau2 = () => {
               </>
             )}
           </Carousel>
+          <div className="text-center mt-10">
+            <Button size="lg" onClick={scrollToForm} className="shadow-md">
+              So eine Vorschau für meinen Betrieb <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+      )}
+
+      {/* REFERENZEN – echte Portfolio-Projekte */}
+      {referencePortfolio.length > 0 && (
+      <section className="py-16 sm:py-20 bg-secondary/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10 max-w-2xl mx-auto">
+            <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold mb-4">
+              <Award className="w-3.5 h-3.5" /> Über 150 erfolgreiche Webseiten
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              Referenzen, die für sich sprechen
+            </h2>
+            <p className="text-muted-foreground">
+              Ein kleiner Auszug aus unseren bisherigen Projekten – mit messbaren Ergebnissen.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {referencePortfolio.map((p) => {
+              const img = p.image_url || p.mockup_desktop_url;
+              const Inner = (
+                <div className="group h-full bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
+                  <div className="aspect-[4/3] bg-muted/30 p-3 relative overflow-hidden">
+                    {img ? (
+                      <img
+                        src={img}
+                        alt={`${p.title} – ${p.category}`}
+                        loading="lazy"
+                        className="w-full h-full object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full rounded-lg bg-gradient-to-br from-primary/15 to-accent/10" />
+                    )}
+                    {p.result && (
+                      <span className="absolute bottom-5 left-5 px-3 py-1.5 rounded-full text-xs font-semibold bg-background/90 text-foreground backdrop-blur-sm border border-border">
+                        {p.result}
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-bold text-lg mb-1">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground">{p.category}</p>
+                  </div>
+                </div>
+              );
+              return p.external_url ? (
+                <a key={p.id} href={p.external_url} target="_blank" rel="noopener noreferrer" className="block">
+                  {Inner}
+                </a>
+              ) : (
+                <div key={p.id}>{Inner}</div>
+              );
+            })}
+          </div>
+          <div className="text-center mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Button size="lg" onClick={scrollToForm} className="shadow-md">
+              Auch ich will so eine Webseite <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link to="/portfolio">Alle Referenzen ansehen</Link>
+            </Button>
+          </div>
         </div>
       </section>
       )}
