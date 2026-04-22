@@ -427,6 +427,213 @@ Deno.serve(async (req) => {
       });
     }
 
+    // =================== VORSCHAU SETTINGS ===================
+    if (action === "vorschau-get") {
+      const [{ data: settings }, { data: demos }, { data: faqs }] = await Promise.all([
+        supabase.from("vorschau_settings").select("*").eq("id", 1).single(),
+        supabase.from("vorschau_demos").select("*").order("sort_order", { ascending: true }),
+        supabase.from("vorschau_faqs").select("*").order("sort_order", { ascending: true }),
+      ]);
+      return new Response(JSON.stringify({ settings, demos: demos || [], faqs: faqs || [] }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-update-settings") {
+      const { settings } = body;
+      if (!settings || typeof settings !== "object") {
+        return new Response(JSON.stringify({ error: "settings fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      // Whitelist erlaubter Felder
+      const allowed = [
+        "total_slots", "taken_slots", "countdown_target", "countdown_mode",
+        "hero_badge_text", "hero_h1_line1", "hero_h1_line2", "hero_h1_line3",
+        "hero_subheadline", "hero_cta_label", "countdown_label",
+        "final_cta_headline", "final_cta_subtext", "final_cta_button",
+        "phone_number", "show_countdown", "show_slots", "show_testimonials",
+        "show_demos", "show_faq", "show_pain_points", "show_process",
+      ];
+      const updates: Record<string, unknown> = {};
+      for (const k of allowed) {
+        if (settings[k] !== undefined) updates[k] = settings[k];
+      }
+      const { data, error } = await supabase
+        .from("vorschau_settings")
+        .update(updates)
+        .eq("id", 1)
+        .select()
+        .single();
+      if (error) throw error;
+      return new Response(JSON.stringify({ settings: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-demo-create") {
+      const { trade, company, description, is_visible, image_base64, image_name } = body;
+      if (!company) {
+        return new Response(JSON.stringify({ error: "company ist erforderlich" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data: existing } = await supabase
+        .from("vorschau_demos").select("sort_order")
+        .order("sort_order", { ascending: false }).limit(1);
+      const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
+
+      let image_url = "";
+      if (image_base64 && image_name) {
+        const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
+        const ext = image_name.split(".").pop() || "jpg";
+        const filePath = `${crypto.randomUUID()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("vorschau-demos")
+          .upload(filePath, bytes, { contentType: `image/${ext === "jpg" ? "jpeg" : ext}` });
+        if (uploadError) throw uploadError;
+        const { data: urlData } = supabase.storage.from("vorschau-demos").getPublicUrl(filePath);
+        image_url = urlData.publicUrl;
+      }
+
+      const { data, error } = await supabase.from("vorschau_demos").insert({
+        trade: trade || "", company, description: description || "",
+        image_url, sort_order: nextOrder, is_visible: is_visible !== false,
+      }).select().single();
+      if (error) throw error;
+      return new Response(JSON.stringify({ demo: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-demo-update") {
+      const { demoId, trade, company, description, is_visible, image_base64, image_name } = body;
+      if (!demoId) {
+        return new Response(JSON.stringify({ error: "demoId fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const updates: Record<string, unknown> = {};
+      if (trade !== undefined) updates.trade = trade;
+      if (company !== undefined) updates.company = company;
+      if (description !== undefined) updates.description = description;
+      if (is_visible !== undefined) updates.is_visible = is_visible;
+      if (image_base64 && image_name) {
+        const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
+        const ext = image_name.split(".").pop() || "jpg";
+        const filePath = `${crypto.randomUUID()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("vorschau-demos")
+          .upload(filePath, bytes, { contentType: `image/${ext === "jpg" ? "jpeg" : ext}` });
+        if (uploadError) throw uploadError;
+        const { data: urlData } = supabase.storage.from("vorschau-demos").getPublicUrl(filePath);
+        updates.image_url = urlData.publicUrl;
+      }
+      const { data, error } = await supabase.from("vorschau_demos")
+        .update(updates).eq("id", demoId).select().single();
+      if (error) throw error;
+      return new Response(JSON.stringify({ demo: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-demo-delete") {
+      const { demoId } = body;
+      if (!demoId) {
+        return new Response(JSON.stringify({ error: "demoId fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase.from("vorschau_demos").delete().eq("id", demoId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-demo-reorder") {
+      const { demos } = body;
+      if (!Array.isArray(demos)) {
+        return new Response(JSON.stringify({ error: "demos-Array fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      for (const d of demos) {
+        await supabase.from("vorschau_demos").update({ sort_order: d.sort_order }).eq("id", d.id);
+      }
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-faq-create") {
+      const { question, answer, is_visible } = body;
+      if (!question || !answer) {
+        return new Response(JSON.stringify({ error: "question und answer erforderlich" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data: existing } = await supabase
+        .from("vorschau_faqs").select("sort_order")
+        .order("sort_order", { ascending: false }).limit(1);
+      const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
+      const { data, error } = await supabase.from("vorschau_faqs").insert({
+        question, answer, sort_order: nextOrder, is_visible: is_visible !== false,
+      }).select().single();
+      if (error) throw error;
+      return new Response(JSON.stringify({ faq: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-faq-update") {
+      const { faqId, question, answer, is_visible } = body;
+      if (!faqId) {
+        return new Response(JSON.stringify({ error: "faqId fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const updates: Record<string, unknown> = {};
+      if (question !== undefined) updates.question = question;
+      if (answer !== undefined) updates.answer = answer;
+      if (is_visible !== undefined) updates.is_visible = is_visible;
+      const { data, error } = await supabase.from("vorschau_faqs")
+        .update(updates).eq("id", faqId).select().single();
+      if (error) throw error;
+      return new Response(JSON.stringify({ faq: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-faq-delete") {
+      const { faqId } = body;
+      if (!faqId) {
+        return new Response(JSON.stringify({ error: "faqId fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase.from("vorschau_faqs").delete().eq("id", faqId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "vorschau-faq-reorder") {
+      const { faqs } = body;
+      if (!Array.isArray(faqs)) {
+        return new Response(JSON.stringify({ error: "faqs-Array fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      for (const f of faqs) {
+        await supabase.from("vorschau_faqs").update({ sort_order: f.sort_order }).eq("id", f.id);
+      }
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Ungültige Aktion" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
