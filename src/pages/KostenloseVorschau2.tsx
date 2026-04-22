@@ -885,6 +885,11 @@ const KostenloseVorschau2 = () => {
               </div>
             ))}
           </div>
+          <div className="text-center mt-10">
+            <Button size="lg" onClick={scrollToForm} className="shadow-md">
+              Schritt 1 starten – Formular ausfüllen <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </div>
         </div>
       </section>
       )}
