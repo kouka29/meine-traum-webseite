@@ -50,6 +50,10 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: "Kostenlose Webseiten-Vorschau in 48h für Handwerker | Meine Traum Webseite",
     description: "Handwerksbetrieb? Erhalte in 48 Stunden eine kostenlose Vorschau deiner neuen Webseite. Ohne Risiko, ohne Kosten, ohne Verpflichtung. Jetzt anfordern.",
   },
+  "/kostenlose-vorschau2": {
+    title: "Kostenlose Webseiten-Vorschau in 48h – Nur 5 Plätze/Monat | Meine Traum Webseite",
+    description: "Handwerker: Sichere dir einen von 5 Plätzen pro Monat. Kostenlose Webseiten-Vorschau in 48h. In 2 Minuten Formular ausfüllen, ohne Risiko und Verpflichtung.",
+  },
   "/webdesign-preise": {
     title: "Webdesign Preise – Was kostet eine Website? | Meine Traum Webseite",
     description: "Transparente Webdesign Preise ab 1.500 €. Website erstellen lassen Kosten im Überblick. Faire Festpreise ohne versteckte Kosten.",
