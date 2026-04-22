@@ -271,6 +271,7 @@ export type Database = {
           id: string
           image_url: string
           is_visible: boolean
+          portfolio_project_id: string | null
           sort_order: number
           trade: string
         }
@@ -281,6 +282,7 @@ export type Database = {
           id?: string
           image_url?: string
           is_visible?: boolean
+          portfolio_project_id?: string | null
           sort_order?: number
           trade?: string
         }
@@ -291,10 +293,19 @@ export type Database = {
           id?: string
           image_url?: string
           is_visible?: boolean
+          portfolio_project_id?: string | null
           sort_order?: number
           trade?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vorschau_demos_portfolio_project_id_fkey"
+            columns: ["portfolio_project_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       vorschau_faqs: {
         Row: {
