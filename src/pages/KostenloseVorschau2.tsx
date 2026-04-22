@@ -713,6 +713,8 @@ const KostenloseVorschau2 = () => {
         };
       })
     : demos.map(d => ({ ...d, image_url: "" }));
+  // Referenz-Projekte aus dem Portfolio (für die Referenzen-Sektion)
+  const referencePortfolio = portfolio.slice(0, 3);
   const activeFaqs = dbFaqs.length > 0
     ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
     : faqs;
