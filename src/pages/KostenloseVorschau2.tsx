@@ -45,6 +45,13 @@ import {
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useVorschauSettings, type VorschauSettings, type VorschauDemo, type VorschauFaq } from "@/hooks/useVorschauSettings";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Static data
@@ -684,7 +691,7 @@ const MultiStepForm = () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const KostenloseVorschau2 = () => {
-  const { settings, demos: dbDemos, faqs: dbFaqs } = useVorschauSettings();
+  const { settings, demos: dbDemos, faqs: dbFaqs, portfolio } = useVorschauSettings();
   const totalSlots = settings?.total_slots ?? 5;
   const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
   const remainingSlots = Math.max(0, totalSlots - takenSlots);
@@ -695,7 +702,16 @@ const KostenloseVorschau2 = () => {
   );
   // Fallbacks: wenn DB-Listen leer, nutze hardcoded Defaults
   const activeDemos = dbDemos.length > 0
-    ? dbDemos.map(d => ({ trade: d.trade, company: d.company, desc: d.description, image_url: d.image_url }))
+    ? dbDemos.map(d => {
+        // Merge: wenn mit Portfolio-Projekt verknüpft, fülle leere Felder aus Portfolio
+        const linked = d.portfolio_project_id ? portfolio.find(p => p.id === d.portfolio_project_id) : undefined;
+        return {
+          trade: d.trade || linked?.category || "",
+          company: d.company || linked?.title || "",
+          desc: d.description || linked?.description || "",
+          image_url: d.image_url || linked?.mockup_desktop_url || linked?.image_url || "",
+        };
+      })
     : demos.map(d => ({ ...d, image_url: "" }));
   const activeFaqs = dbFaqs.length > 0
     ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
