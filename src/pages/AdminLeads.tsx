@@ -873,6 +873,11 @@ const AdminLeads = () => {
             )}
           </div>
         )}
+
+        {/* Kostenlose Vorschau Tab */}
+        {activeTab === "vorschau" && (
+          <AdminVorschauTab password={password} />
+        )}
       </div>
 
       {/* Project Dialog */}
