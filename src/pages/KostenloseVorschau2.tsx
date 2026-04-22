@@ -871,6 +871,7 @@ const KostenloseVorschau2 = () => {
       </section>
 
       {/* DEMOS */}
+      {(settings?.show_demos ?? true) && activeDemos.length > 0 && (
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
@@ -878,7 +879,7 @@ const KostenloseVorschau2 = () => {
             <p className="text-muted-foreground">Echte Vorschauen – in 48 Stunden erstellt.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {demos.map((d) => (
+            {activeDemos.map((d) => (
               <div key={d.company} className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
                 {/* Mockup */}
                 <div className="bg-gradient-to-br from-primary/10 to-accent/10 p-5">
@@ -888,19 +889,23 @@ const KostenloseVorschau2 = () => {
                       <span className="w-2 h-2 rounded-full bg-amber-400" />
                       <span className="w-2 h-2 rounded-full bg-emerald-400" />
                     </div>
-                    <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
-                      <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
-                      <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
-                      <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
-                    </div>
+                    {d.image_url ? (
+                      <img src={d.image_url} alt={d.company} className="aspect-video w-full object-cover" />
+                    ) : (
+                      <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+                        <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
+                        <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
+                        <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="p-5 flex-1 flex flex-col">
-                  <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
+                  {d.trade && <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
                     {d.trade}
-                  </span>
+                  </span>}
                   <h3 className="font-bold mb-1">{d.company}</h3>
-                  <p className="text-sm text-muted-foreground mb-3 flex-1">{d.desc}</p>
+                  <p className="text-sm text-muted-foreground mb-3 flex-1">{(d as any).desc ?? (d as any).description}</p>
                   <div className="flex items-center gap-1 text-amber-500 text-sm">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-current" />
@@ -913,8 +918,10 @@ const KostenloseVorschau2 = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* TESTIMONIALS */}
+      {(settings?.show_testimonials ?? true) && (
       <section className="py-16 sm:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
@@ -940,13 +947,15 @@ const KostenloseVorschau2 = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* FAQ */}
+      {(settings?.show_faq ?? true) && activeFaqs.length > 0 && (
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10">Häufige Fragen</h2>
           <Accordion type="single" collapsible className="bg-card rounded-2xl border border-border px-5 shadow-sm">
-            {faqs.map((f, i) => (
+            {activeFaqs.map((f, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b last:border-b-0">
                 <AccordionTrigger className="text-left text-base sm:text-lg font-semibold">
                   {f.q}
@@ -959,22 +968,27 @@ const KostenloseVorschau2 = () => {
           </Accordion>
         </div>
       </section>
+      )}
 
       {/* FINAL CTA */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-primary via-primary to-accent text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <div className="mb-6">
-              <Countdown inverse />
-            </div>
-            <div className="mb-6 flex justify-center">
-              <SlotPill inverse />
-            </div>
+            {(settings?.show_countdown ?? true) && (
+              <div className="mb-6">
+                <Countdown inverse targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
+              </div>
+            )}
+            {(settings?.show_slots ?? true) && (
+              <div className="mb-6 flex justify-center">
+                <SlotPill inverse total={totalSlots} taken={takenSlots} />
+              </div>
+            )}
             <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight">
-              Warte nicht, bis es dein Mitbewerber tut.
+              {settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut."}
             </h2>
             <p className="text-base sm:text-xl text-primary-foreground/85 mb-8">
-              Deine kostenlose Webseiten-Vorschau wartet.
+              {settings?.final_cta_subtext ?? "Deine kostenlose Webseiten-Vorschau wartet."}
             </p>
             <Button
               size="lg"
@@ -982,7 +996,7 @@ const KostenloseVorschau2 = () => {
               onClick={scrollToForm}
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-xl"
             >
-              Jetzt letzten Platz sichern <ArrowRight className="ml-2 w-5 h-5" />
+              {settings?.final_cta_button ?? "Jetzt letzten Platz sichern"} <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </div>
         </div>
