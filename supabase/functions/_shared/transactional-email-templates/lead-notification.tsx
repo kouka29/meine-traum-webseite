@@ -27,6 +27,10 @@ interface LeadNotificationProps {
   bookingDate?: string
   bookingTime?: string
   contactMethod?: string
+  trade?: string
+  hasWebsite?: string
+  goals?: string
+  urgency?: string
 }
 
 const LeadNotificationEmail = ({
@@ -41,6 +45,10 @@ const LeadNotificationEmail = ({
   bookingDate,
   bookingTime,
   contactMethod,
+  trade,
+  hasWebsite,
+  goals,
+  urgency,
 }: LeadNotificationProps) => (
   <Html lang="de" dir="ltr">
     <Head />
@@ -73,6 +81,10 @@ const LeadNotificationEmail = ({
           {website && (
             <Row label="Website" value={website} />
           )}
+          {trade && <Row label="Branche" value={trade} />}
+          {hasWebsite && <Row label="Webseite-Status" value={hasWebsite} />}
+          {goals && <Row label="Ziele" value={goals} />}
+          {urgency && <Row label="Dringlichkeit" value={urgency} />}
           {message && (
             <>
               <Hr style={hr} />
