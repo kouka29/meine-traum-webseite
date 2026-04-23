@@ -1124,7 +1124,8 @@ const MultiStepForm = () => {
                 </span>
               </label>
               <Input
-                type="url"
+                type="text"
+                inputMode="url"
                 value={state.currentWebsite}
                 onChange={(e) => update({ currentWebsite: e.target.value })}
                 placeholder="https://deine-webseite.de"
