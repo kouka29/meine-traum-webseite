@@ -1084,26 +1084,6 @@ const KostenloseVorschau2 = () => {
         </div>
       </section>
 
-      {/* Mini-Footer */}
-      <footer className="border-t border-border py-8 bg-background">
-        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-bold text-xs">
-              W
-            </div>
-            <span className="font-semibold text-foreground">Meine Traum Webseite</span>
-          </Link>
-          <div className="flex items-center gap-5">
-            <Link to="/impressum" className="hover:text-foreground transition-colors">
-              Impressum
-            </Link>
-            <Link to="/datenschutz" className="hover:text-foreground transition-colors">
-              Datenschutz
-            </Link>
-            <span>© 2025</span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
