@@ -695,6 +695,36 @@ const MultiStepForm = () => {
                 placeholder="+49 ..."
               />
             </div>
+            <div className="sm:col-span-2">
+              <label className="text-sm font-medium mb-1.5 block">
+                Aktuelle Webseite{" "}
+                <span className="text-muted-foreground font-normal">
+                  (optional – falls vorhanden)
+                </span>
+              </label>
+              <Input
+                type="url"
+                value={state.currentWebsite}
+                onChange={(e) => update({ currentWebsite: e.target.value })}
+                placeholder="https://deine-webseite.de"
+                maxLength={300}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="text-sm font-medium mb-1.5 block">
+                Sonstige wichtige Infos{" "}
+                <span className="text-muted-foreground font-normal">
+                  (optional)
+                </span>
+              </label>
+              <Textarea
+                value={state.notes}
+                onChange={(e) => update({ notes: e.target.value })}
+                placeholder="Was sollten wir noch wissen, um die beste Vorschau für dich zu bauen? (z. B. Lieblingsfarben, Vorbilder, besondere Leistungen ...)"
+                maxLength={1000}
+                rows={4}
+              />
+            </div>
           </div>
           <Button type="submit" size="lg" className="w-full" disabled={submitting}>
             {submitting ? "Wird gesendet..." : (
