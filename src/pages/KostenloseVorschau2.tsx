@@ -938,6 +938,14 @@ const MultiStepForm = () => {
         firstName={state.firstName}
         email={state.email}
         company={state.company}
+        phone={state.phone}
+        trade={state.trade}
+        tradeOther={state.tradeOther}
+        hasWebsite={state.hasWebsite}
+        goals={state.goals}
+        urgency={state.urgency}
+        currentWebsite={state.currentWebsite}
+        notes={state.notes}
         leadId={leadId}
         bookingMode={bookingMode}
         setBookingMode={setBookingMode}
