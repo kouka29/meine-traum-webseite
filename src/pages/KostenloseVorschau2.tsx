@@ -42,6 +42,7 @@ import {
   Eye,
   Share2,
 } from "lucide-react";
+import { Calendar as CalendarIcon, PhoneCall, Video, MessageCircle } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
