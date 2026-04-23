@@ -29,6 +29,9 @@ interface Lead {
   email: string;
   phone: string;
   created_at: string;
+  booking_date: string | null;
+  booking_time: string | null;
+  contact_method: string | null;
 }
 
 interface Analytics {
