@@ -605,10 +605,42 @@ const SuccessScreen = ({
             </div>
           )}
 
+          {bookingDate && bookingTime && (
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+              <label className="text-sm font-medium mb-2 block">
+                Wie möchtest du das Gespräch führen?
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setContactMethod("phone")}
+                  className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+                    contactMethod === "phone"
+                      ? "border-primary bg-primary text-primary-foreground shadow-md"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  <PhoneCall className="w-4 h-4" /> Telefonat
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setContactMethod("online")}
+                  className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+                    contactMethod === "online"
+                      ? "border-primary bg-primary text-primary-foreground shadow-md"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  <Video className="w-4 h-4" /> Online-Meeting
+                </button>
+              </div>
+            </div>
+          )}
+
           <Button
             type="button"
             size="lg"
-            disabled={!bookingDate || !bookingTime || bookingSubmitting}
+            disabled={!bookingDate || !bookingTime || !contactMethod || bookingSubmitting}
             onClick={confirmBooking}
             className="w-full"
           >
