@@ -478,42 +478,20 @@ const MultiStepForm = () => {
   };
 
   if (done) {
-    const shareText = encodeURIComponent(
-      "Schau mal: kostenlose Webseiten-Vorschau in 48h für Handwerker → https://meinetraumwebseite.de/kostenlose-vorschau2",
-    );
     return (
-      <div className="text-center py-10 px-4">
-        <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
-        </div>
-        <h3 className="text-2xl sm:text-3xl font-bold mb-3">
-          Perfekt, {state.firstName}! Dein Platz ist gesichert.
-        </h3>
-        <p className="text-muted-foreground max-w-md mx-auto mb-2">
-          Ich melde mich innerhalb von 24 Stunden bei dir und starte sofort mit deiner Vorschau.
-        </p>
-        <p className="text-sm text-muted-foreground mb-8">
-          📧 Schau auch in deinen Spam-Ordner.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href={`https://wa.me/?text=${shareText}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 font-semibold transition-colors"
-          >
-            <Share2 className="w-4 h-4" /> Per WhatsApp teilen
-          </a>
-          <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=https://meinetraumwebseite.de/kostenlose-vorschau2`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1877f2] hover:bg-[#155fc7] text-white px-5 py-3 font-semibold transition-colors"
-          >
-            <Share2 className="w-4 h-4" /> Auf Facebook teilen
-          </a>
-        </div>
-      </div>
+      <SuccessScreen
+        firstName={state.firstName}
+        email={state.email}
+        company={state.company}
+        bookingMode={bookingMode}
+        setBookingMode={setBookingMode}
+        bookingDate={bookingDate}
+        setBookingDate={setBookingDate}
+        bookingTime={bookingTime}
+        setBookingTime={setBookingTime}
+        bookingConfirmed={bookingConfirmed}
+        setBookingConfirmed={setBookingConfirmed}
+      />
     );
   }
 
