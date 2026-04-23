@@ -112,6 +112,8 @@ export type Database = {
           first_name: string
           id: string
           phone: string
+          slot_reserved: boolean
+          status: string
         }
         Insert: {
           booking_date?: string | null
@@ -123,6 +125,8 @@ export type Database = {
           first_name: string
           id?: string
           phone: string
+          slot_reserved?: boolean
+          status?: string
         }
         Update: {
           booking_date?: string | null
@@ -134,6 +138,8 @@ export type Database = {
           first_name?: string
           id?: string
           phone?: string
+          slot_reserved?: boolean
+          status?: string
         }
         Relationships: []
       }
@@ -429,6 +435,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      decrement_taken_slot: { Args: never; Returns: undefined }
       delete_email: {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
@@ -437,6 +444,7 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
+      increment_taken_slot: { Args: never; Returns: undefined }
       move_to_dlq: {
         Args: {
           dlq_name: string
