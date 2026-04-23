@@ -699,9 +699,40 @@ const SuccessScreen = ({
               <span>Innerhalb von <strong className="text-foreground">48 Stunden</strong> bekommst du deine fertige Vorschau – kostenlos.</span>
             </li>
           </ol>
-          <p className="text-xs text-muted-foreground bg-secondary/40 rounded-lg px-3 py-2 mt-auto">
-            💡 Halte dein Handy bereit – meistens melde ich mich noch am gleichen Tag.
-          </p>
+          <div className="bg-secondary/40 rounded-lg px-3 py-3 mt-auto space-y-2">
+            <p className="text-xs font-semibold text-foreground">
+              Wie sollen wir uns melden?
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setContactMethod("phone")}
+                className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  contactMethod === "phone"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card hover:border-primary/40"
+                }`}
+              >
+                <PhoneCall className="w-3 h-3" /> Telefonat
+              </button>
+              <button
+                type="button"
+                onClick={() => setContactMethod("online")}
+                className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  contactMethod === "online"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card hover:border-primary/40"
+                }`}
+              >
+                <Video className="w-3 h-3" /> Online-Meeting
+              </button>
+            </div>
+            {contactMethod && (
+              <p className="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1 pt-1">
+                <CheckCircle2 className="w-3 h-3" /> Notiert – wir melden uns wie gewünscht.
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Option 2: Termin direkt buchen */}
