@@ -396,6 +396,14 @@ type SuccessScreenProps = {
   firstName: string;
   email: string;
   company: string;
+  phone: string;
+  trade: string;
+  tradeOther: string;
+  hasWebsite: string;
+  goals: string[];
+  urgency: string;
+  currentWebsite: string;
+  notes: string;
   leadId: string | null;
   bookingMode: boolean;
   setBookingMode: (v: boolean) => void;
@@ -413,6 +421,14 @@ const SuccessScreen = ({
   firstName,
   email,
   company,
+  phone,
+  trade,
+  tradeOther,
+  hasWebsite,
+  goals,
+  urgency,
+  currentWebsite,
+  notes,
   leadId,
   bookingMode,
   setBookingMode,
