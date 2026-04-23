@@ -396,6 +396,14 @@ type SuccessScreenProps = {
   firstName: string;
   email: string;
   company: string;
+  phone: string;
+  trade: string;
+  tradeOther: string;
+  hasWebsite: string;
+  goals: string[];
+  urgency: string;
+  currentWebsite: string;
+  notes: string;
   leadId: string | null;
   bookingMode: boolean;
   setBookingMode: (v: boolean) => void;
@@ -413,6 +421,14 @@ const SuccessScreen = ({
   firstName,
   email,
   company,
+  phone,
+  trade,
+  tradeOther,
+  hasWebsite,
+  goals,
+  urgency,
+  currentWebsite,
+  notes,
   leadId,
   bookingMode,
   setBookingMode,
@@ -439,21 +455,20 @@ const SuccessScreen = ({
 
     // 1. Buchung im Lead-Record speichern
     if (leadId) {
-      try {
-        await supabase
-          .from("leads")
-          .update({
-            booking_date: bookingDate,
-            booking_time: bookingTime,
-            contact_method: contactMethod,
-          })
-          .eq("id", leadId);
-      } catch (err) {
-        console.error("Lead-Update fehlgeschlagen", err);
+      const { error: updateError } = await supabase
+        .from("leads")
+        .update({
+          booking_date: bookingDate,
+          booking_time: bookingTime,
+          contact_method: contactMethod,
+        })
+        .eq("id", leadId);
+      if (updateError) {
+        console.error("Lead-Update fehlgeschlagen", updateError);
       }
     }
 
-    // 2. Admin-Benachrichtigung mit Termin-Details
+    // 2. Admin-Benachrichtigung mit ALLEN Lead-Details + Termin
     try {
       await supabase.functions.invoke("send-transactional-email", {
         body: {
@@ -464,7 +479,13 @@ const SuccessScreen = ({
             firstName,
             companyName: company,
             email,
-            phone: "—",
+            phone: phone || "—",
+            website: currentWebsite || "Nicht angegeben",
+            trade: trade === "Sonstiges" && tradeOther ? `Sonstiges: ${tradeOther}` : trade,
+            hasWebsite,
+            goals: goals.join(", "),
+            urgency,
+            message: notes || "",
             bookingDate: dateLabel,
             bookingTime,
             contactMethod,
@@ -860,7 +881,7 @@ const MultiStepForm = () => {
             templateData: {
               source: "Kostenlose Vorschau 2 (Multi-Step)",
               firstName: state.firstName,
-              company: state.company,
+              companyName: state.company,
               email: state.email,
               phone: state.phone,
               trade: state.trade === "Sonstiges" && state.tradeOther
@@ -869,8 +890,8 @@ const MultiStepForm = () => {
               hasWebsite: state.hasWebsite,
               goals: state.goals.join(", "),
               urgency: state.urgency,
-              currentWebsite: state.currentWebsite || "Nicht angegeben",
-              notes: state.notes || "Keine Angabe",
+              website: state.currentWebsite || "Nicht angegeben",
+              message: state.notes || "",
               submittedAt: new Date().toLocaleString("de-DE"),
             },
           },
@@ -922,6 +943,14 @@ const MultiStepForm = () => {
         firstName={state.firstName}
         email={state.email}
         company={state.company}
+        phone={state.phone}
+        trade={state.trade}
+        tradeOther={state.tradeOther}
+        hasWebsite={state.hasWebsite}
+        goals={state.goals}
+        urgency={state.urgency}
+        currentWebsite={state.currentWebsite}
+        notes={state.notes}
         leadId={leadId}
         bookingMode={bookingMode}
         setBookingMode={setBookingMode}
