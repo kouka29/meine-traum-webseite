@@ -832,7 +832,7 @@ const MultiStepForm = () => {
           id: newLeadId,
           first_name: state.firstName,
           email: state.email,
-          phone: state.phone && state.phone.trim().length >= 3 ? state.phone.trim() : "n/a",
+          phone: state.phone.trim(),
           company_name: state.company || "",
         });
 
@@ -1104,13 +1104,12 @@ const MultiStepForm = () => {
             </div>
             <div className="sm:col-span-2">
               <label className="text-sm font-medium mb-1.5 block">
-                Telefonnummer{" "}
-                <span className="text-muted-foreground font-normal">
-                  (optional – für schnellere Rückmeldung)
-                </span>
+                Telefonnummer *
               </label>
               <Input
+                required
                 type="tel"
+                minLength={3}
                 value={state.phone}
                 onChange={(e) => update({ phone: e.target.value })}
                 placeholder="+49 ..."
