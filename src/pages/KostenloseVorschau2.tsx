@@ -830,7 +830,7 @@ const MultiStepForm = () => {
         .insert({
           first_name: state.firstName,
           email: state.email,
-          phone: state.phone || "",
+          phone: state.phone && state.phone.trim().length >= 3 ? state.phone.trim() : "n/a",
           company_name: state.company || "",
         })
         .select("id")
