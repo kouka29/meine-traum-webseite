@@ -755,11 +755,50 @@ const AdminLeads = () => {
                 <FileDown size={14} /> CSV Export
               </Button>
             </div>
+            {/* Status-Filter */}
+            <div className="flex flex-wrap gap-2 mb-5">
+              {([
+                { key: "all", label: "Alle" },
+                { key: "new", label: "Neu" },
+                { key: "qualified", label: "Qualifiziert" },
+                { key: "rejected", label: "Abgelehnt" },
+                { key: "customer", label: "Kunden" },
+              ] as const).map((f) => {
+                const count = f.key === "all"
+                  ? leads.length
+                  : leads.filter((l) => (l.status || "new") === f.key).length;
+                return (
+                  <button
+                    key={f.key}
+                    onClick={() => setLeadStatusFilter(f.key)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                      leadStatusFilter === f.key
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-card border-border text-muted-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    {f.label} <span className="opacity-70">({count})</span>
+                  </button>
+                );
+              })}
+            </div>
             {leads.length === 0 ? (
               <div className="text-center py-20 text-muted-foreground"><p className="text-lg">Noch keine Leads vorhanden.</p></div>
             ) : (
               <div className="grid gap-4">
-                {leads.map((lead) => (
+                {leads
+                  .filter((l) => leadStatusFilter === "all" || (l.status || "new") === leadStatusFilter)
+                  .map((lead) => {
+                  const status = lead.status || "new";
+                  const statusMeta: Record<string, { label: string; cls: string }> = {
+                    new: { label: "Neu", cls: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20" },
+                    qualified: { label: "Qualifiziert", cls: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20" },
+                    rejected: { label: "Abgelehnt", cls: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20" },
+                    customer: { label: "Kunde", cls: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20" },
+                  };
+                  const meta = statusMeta[status];
+                  const isUpdating = updatingLeadId === lead.id;
+                  return (
                   <div key={lead.id} className="bg-card rounded-xl border border-border p-5 hover:shadow-card transition-shadow flex flex-col gap-3">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 grid grid-cols-1 sm:grid-cols-5 gap-3">
@@ -770,6 +809,53 @@ const AdminLeads = () => {
                         <div className="flex items-center gap-2"><Calendar size={15} className="text-muted-foreground shrink-0" /><span className="text-sm text-muted-foreground">{new Date(lead.created_at).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span></div>
                       </div>
                       <Button variant="ghost" size="icon" onClick={() => deleteLead(lead.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10 shrink-0"><Trash2 size={16} /></Button>
+                    </div>
+                    {/* Status & Aktionen */}
+                    <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
+                      <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${meta.cls}`}>
+                        ● {meta.label}
+                      </span>
+                      {lead.slot_reserved && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
+                          <CheckCircle2 size={11} /> Platz reserviert
+                        </span>
+                      )}
+                      <div className="ml-auto flex flex-wrap gap-1.5">
+                        {status === "new" && (
+                          <>
+                            <Button size="sm" variant="default" disabled={isUpdating}
+                              onClick={() => updateLeadStatus(lead.id, "qualified", true)}>
+                              {isUpdating ? <Loader2 size={12} className="animate-spin" /> : "Platz reservieren + Mail"}
+                            </Button>
+                            <Button size="sm" variant="outline" disabled={isUpdating}
+                              onClick={() => updateLeadStatus(lead.id, "qualified", false)}>
+                              Nur reservieren
+                            </Button>
+                            <Button size="sm" variant="ghost" disabled={isUpdating}
+                              onClick={() => updateLeadStatus(lead.id, "rejected")}>
+                              Ablehnen
+                            </Button>
+                          </>
+                        )}
+                        {status === "qualified" && (
+                          <>
+                            <Button size="sm" variant="default" disabled={isUpdating}
+                              onClick={() => updateLeadStatus(lead.id, "customer")}>
+                              Zu Kunde machen
+                            </Button>
+                            <Button size="sm" variant="ghost" disabled={isUpdating}
+                              onClick={() => updateLeadStatus(lead.id, "rejected")}>
+                              Doch ablehnen
+                            </Button>
+                          </>
+                        )}
+                        {(status === "rejected" || status === "customer") && (
+                          <Button size="sm" variant="ghost" disabled={isUpdating}
+                            onClick={() => updateLeadStatus(lead.id, "new")}>
+                            Zurück zu „Neu"
+                          </Button>
+                        )}
+                      </div>
                     </div>
                     {(lead.booking_date || lead.booking_time || lead.contact_method) ? (
                       <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
@@ -800,7 +886,8 @@ const AdminLeads = () => {
                       </div>
                     )}
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
