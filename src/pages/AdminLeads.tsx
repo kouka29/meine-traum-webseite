@@ -33,6 +33,8 @@ interface Lead {
   booking_date: string | null;
   booking_time: string | null;
   contact_method: string | null;
+  status: "new" | "qualified" | "rejected" | "customer";
+  slot_reserved: boolean;
 }
 
 interface Analytics {
@@ -112,6 +114,8 @@ const AdminLeads = () => {
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "vorschau">("dashboard");
+  const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer">("all");
+  const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
 
   // Portfolio state
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
@@ -225,6 +229,33 @@ const AdminLeads = () => {
     }
     toast.success("Lead gelöscht");
     setLeads((prev) => prev.filter((l) => l.id !== leadId));
+  };
+
+  const updateLeadStatus = async (
+    leadId: string,
+    newStatus: "new" | "qualified" | "rejected" | "customer",
+    sendEmail = false,
+  ) => {
+    setUpdatingLeadId(leadId);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "update-lead-status", leadId, newStatus, sendEmail },
+    });
+    setUpdatingLeadId(null);
+    const errMsg = await parseInvokeError(error, data);
+    if (errMsg) {
+      toast.error(errMsg);
+      return;
+    }
+    setLeads((prev) => prev.map((l) => (l.id === leadId ? { ...l, ...data.lead } : l)));
+    if (newStatus === "qualified") {
+      toast.success(sendEmail ? "Platz reserviert & Bestätigung gesendet" : "Platz reserviert");
+    } else if (newStatus === "rejected") {
+      toast.success("Lead abgelehnt – Platz freigegeben");
+    } else if (newStatus === "customer") {
+      toast.success("Als Kunde markiert");
+    } else {
+      toast.success("Status zurückgesetzt");
+    }
   };
 
   const exportCSV = () => {
