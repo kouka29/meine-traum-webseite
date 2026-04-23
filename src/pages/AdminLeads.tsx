@@ -728,15 +728,45 @@ const AdminLeads = () => {
             ) : (
               <div className="grid gap-4">
                 {leads.map((lead) => (
-                  <div key={lead.id} className="bg-card rounded-xl border border-border p-5 hover:shadow-card transition-shadow flex flex-col sm:flex-row sm:items-center gap-4">
-                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-5 gap-3">
-                      <div className="flex items-center gap-2"><User size={15} className="text-primary shrink-0" /><span className="font-medium text-foreground truncate">{lead.first_name}</span></div>
-                      <div className="flex items-center gap-2"><Building2 size={15} className="text-primary shrink-0" /><span className="text-sm text-muted-foreground truncate">{lead.company_name || "–"}</span></div>
-                      <div className="flex items-center gap-2"><Mail size={15} className="text-primary shrink-0" /><a href={`mailto:${lead.email}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.email}</a></div>
-                      <div className="flex items-center gap-2"><Phone size={15} className="text-primary shrink-0" /><a href={`tel:${lead.phone}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.phone}</a></div>
-                      <div className="flex items-center gap-2"><Calendar size={15} className="text-muted-foreground shrink-0" /><span className="text-sm text-muted-foreground">{new Date(lead.created_at).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span></div>
+                  <div key={lead.id} className="bg-card rounded-xl border border-border p-5 hover:shadow-card transition-shadow flex flex-col gap-3">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 grid grid-cols-1 sm:grid-cols-5 gap-3">
+                        <div className="flex items-center gap-2"><User size={15} className="text-primary shrink-0" /><span className="font-medium text-foreground truncate">{lead.first_name}</span></div>
+                        <div className="flex items-center gap-2"><Building2 size={15} className="text-primary shrink-0" /><span className="text-sm text-muted-foreground truncate">{lead.company_name || "–"}</span></div>
+                        <div className="flex items-center gap-2"><Mail size={15} className="text-primary shrink-0" /><a href={`mailto:${lead.email}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.email}</a></div>
+                        <div className="flex items-center gap-2"><Phone size={15} className="text-primary shrink-0" /><a href={`tel:${lead.phone}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.phone}</a></div>
+                        <div className="flex items-center gap-2"><Calendar size={15} className="text-muted-foreground shrink-0" /><span className="text-sm text-muted-foreground">{new Date(lead.created_at).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span></div>
+                      </div>
+                      <Button variant="ghost" size="icon" onClick={() => deleteLead(lead.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10 shrink-0"><Trash2 size={16} /></Button>
                     </div>
-                    <Button variant="ghost" size="icon" onClick={() => deleteLead(lead.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10 shrink-0"><Trash2 size={16} /></Button>
+                    {(lead.booking_date || lead.booking_time || lead.contact_method) ? (
+                      <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 text-xs font-semibold">
+                          <CheckCircle2 size={12} /> Termin gebucht
+                        </span>
+                        {lead.booking_date && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
+                            <Calendar size={12} /> {new Date(lead.booking_date).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}
+                          </span>
+                        )}
+                        {lead.booking_time && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
+                            <Clock size={12} /> {lead.booking_time} Uhr
+                          </span>
+                        )}
+                        {lead.contact_method && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 text-accent border border-accent/20 px-2.5 py-1 text-xs font-medium">
+                            {lead.contact_method === "online" ? (<><Monitor size={12} /> Online-Meeting</>) : (<><Phone size={12} /> Telefonat</>)}
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="pt-3 border-t border-border">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-muted text-muted-foreground border border-border px-2.5 py-1 text-xs">
+                          <Clock size={12} /> Kein Termin gebucht
+                        </span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
