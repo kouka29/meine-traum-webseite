@@ -229,6 +229,21 @@ const ctaSection = {
   margin: '16px 0',
 }
 
+const bookingCard = {
+  backgroundColor: '#ecfdf5',
+  border: '1px solid #a7f3d0',
+  borderRadius: '12px',
+  padding: '16px 24px',
+  margin: '16px 0',
+}
+
+const bookingHeader = {
+  fontSize: '15px',
+  fontWeight: 'bold' as const,
+  color: '#065f46',
+  margin: '0 0 10px',
+}
+
 const ctaText = {
   fontSize: '14px',
   color: '#78350f',
