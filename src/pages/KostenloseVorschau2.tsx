@@ -778,9 +778,8 @@ const MultiStepForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [bookingMode, setBookingMode] = useState(false);
-  const [bookingDate, setBookingDate] = useState("");
-  const [bookingTime, setBookingTime] = useState("");
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   // Hydrate from localStorage
   useEffect(() => {
@@ -838,6 +837,7 @@ const MultiStepForm = () => {
         .single();
 
       if (leadError) throw leadError;
+      if (leadData?.id) setLeadId(leadData.id);
 
       // Webhook-Platzhalter (silently fail)
       try {
@@ -889,18 +889,48 @@ const MultiStepForm = () => {
     }
   };
 
+  // Wrapper für die SuccessScreen: speichert den Wert sowohl in den Form-State (Persistenz)
+  // als auch direkt im Lead-Datensatz, sobald gewählt.
+  const updateContactMethod = useCallback(
+    (method: "phone" | "online") => {
+      setState((s) => ({ ...s, contactMethod: method }));
+      if (leadId) {
+        supabase
+          .from("leads")
+          .update({ contact_method: method })
+          .eq("id", leadId)
+          .then(({ error }) => {
+            if (error) console.error("contact_method update failed", error);
+          });
+      }
+    },
+    [leadId],
+  );
+
+  const setBookingDate = useCallback(
+    (v: string) => setState((s) => ({ ...s, bookingDate: v })),
+    [],
+  );
+  const setBookingTime = useCallback(
+    (v: string) => setState((s) => ({ ...s, bookingTime: v })),
+    [],
+  );
+
   if (done) {
     return (
       <SuccessScreen
         firstName={state.firstName}
         email={state.email}
         company={state.company}
+        leadId={leadId}
         bookingMode={bookingMode}
         setBookingMode={setBookingMode}
-        bookingDate={bookingDate}
+        bookingDate={state.bookingDate}
         setBookingDate={setBookingDate}
-        bookingTime={bookingTime}
+        bookingTime={state.bookingTime}
         setBookingTime={setBookingTime}
+        contactMethod={state.contactMethod}
+        setContactMethod={updateContactMethod}
         bookingConfirmed={bookingConfirmed}
         setBookingConfirmed={setBookingConfirmed}
       />
