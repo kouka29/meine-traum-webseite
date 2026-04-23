@@ -103,7 +103,10 @@ export type Database = {
       }
       leads: {
         Row: {
+          booking_date: string | null
+          booking_time: string | null
           company_name: string
+          contact_method: string | null
           created_at: string
           email: string
           first_name: string
@@ -111,7 +114,10 @@ export type Database = {
           phone: string
         }
         Insert: {
+          booking_date?: string | null
+          booking_time?: string | null
           company_name?: string
+          contact_method?: string | null
           created_at?: string
           email: string
           first_name: string
@@ -119,7 +125,10 @@ export type Database = {
           phone: string
         }
         Update: {
+          booking_date?: string | null
+          booking_time?: string | null
           company_name?: string
+          contact_method?: string | null
           created_at?: string
           email?: string
           first_name?: string
