@@ -455,21 +455,20 @@ const SuccessScreen = ({
 
     // 1. Buchung im Lead-Record speichern
     if (leadId) {
-      try {
-        await supabase
-          .from("leads")
-          .update({
-            booking_date: bookingDate,
-            booking_time: bookingTime,
-            contact_method: contactMethod,
-          })
-          .eq("id", leadId);
-      } catch (err) {
-        console.error("Lead-Update fehlgeschlagen", err);
+      const { error: updateError } = await supabase
+        .from("leads")
+        .update({
+          booking_date: bookingDate,
+          booking_time: bookingTime,
+          contact_method: contactMethod,
+        })
+        .eq("id", leadId);
+      if (updateError) {
+        console.error("Lead-Update fehlgeschlagen", updateError);
       }
     }
 
-    // 2. Admin-Benachrichtigung mit Termin-Details
+    // 2. Admin-Benachrichtigung mit ALLEN Lead-Details + Termin
     try {
       await supabase.functions.invoke("send-transactional-email", {
         body: {
@@ -480,7 +479,13 @@ const SuccessScreen = ({
             firstName,
             companyName: company,
             email,
-            phone: "—",
+            phone: phone || "—",
+            website: currentWebsite || "Nicht angegeben",
+            trade: trade === "Sonstiges" && tradeOther ? `Sonstiges: ${tradeOther}` : trade,
+            hasWebsite,
+            goals: goals.join(", "),
+            urgency,
+            message: notes || "",
             bookingDate: dateLabel,
             bookingTime,
             contactMethod,
