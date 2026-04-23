@@ -280,6 +280,9 @@ type FormState = {
   phone: string;
   currentWebsite: string;
   notes: string;
+  bookingDate: string;
+  bookingTime: string;
+  contactMethod: "phone" | "online" | "";
 };
 
 const initialState: FormState = {
@@ -295,6 +298,9 @@ const initialState: FormState = {
   phone: "",
   currentWebsite: "",
   notes: "",
+  bookingDate: "",
+  bookingTime: "",
+  contactMethod: "",
 };
 
 const TileButton = ({
