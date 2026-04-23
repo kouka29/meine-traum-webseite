@@ -881,7 +881,7 @@ const MultiStepForm = () => {
             templateData: {
               source: "Kostenlose Vorschau 2 (Multi-Step)",
               firstName: state.firstName,
-              company: state.company,
+              companyName: state.company,
               email: state.email,
               phone: state.phone,
               trade: state.trade === "Sonstiges" && state.tradeOther
@@ -890,8 +890,8 @@ const MultiStepForm = () => {
               hasWebsite: state.hasWebsite,
               goals: state.goals.join(", "),
               urgency: state.urgency,
-              currentWebsite: state.currentWebsite || "Nicht angegeben",
-              notes: state.notes || "Keine Angabe",
+              website: state.currentWebsite || "Nicht angegeben",
+              message: state.notes || "",
               submittedAt: new Date().toLocaleString("de-DE"),
             },
           },
