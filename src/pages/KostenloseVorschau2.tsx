@@ -269,6 +269,7 @@ const Countdown = ({
 type FormState = {
   step: number;
   trade: string;
+  tradeOther: string;
   hasWebsite: string;
   goals: string[];
   urgency: string;
@@ -276,11 +277,14 @@ type FormState = {
   company: string;
   email: string;
   phone: string;
+  currentWebsite: string;
+  notes: string;
 };
 
 const initialState: FormState = {
   step: 1,
   trade: "",
+  tradeOther: "",
   hasWebsite: "",
   goals: [],
   urgency: "",
@@ -288,6 +292,8 @@ const initialState: FormState = {
   company: "",
   email: "",
   phone: "",
+  currentWebsite: "",
+  notes: "",
 };
 
 const TileButton = ({
@@ -358,6 +364,10 @@ const MultiStepForm = () => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [bookingMode, setBookingMode] = useState(false);
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingTime, setBookingTime] = useState("");
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
   // Hydrate from localStorage
   useEffect(() => {
