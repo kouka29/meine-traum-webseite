@@ -24,6 +24,9 @@ interface LeadNotificationProps {
   website?: string
   message?: string
   submittedAt?: string
+  bookingDate?: string
+  bookingTime?: string
+  contactMethod?: string
 }
 
 const LeadNotificationEmail = ({
@@ -35,6 +38,9 @@ const LeadNotificationEmail = ({
   website,
   message,
   submittedAt,
+  bookingDate,
+  bookingTime,
+  contactMethod,
 }: LeadNotificationProps) => (
   <Html lang="de" dir="ltr">
     <Head />
@@ -75,6 +81,20 @@ const LeadNotificationEmail = ({
             </>
           )}
         </Section>
+
+        {(bookingDate || bookingTime || contactMethod) && (
+          <Section style={bookingCard}>
+            <Text style={bookingHeader}>📅 Termin gebucht</Text>
+            {bookingDate && <Row label="Datum" value={bookingDate} />}
+            {bookingTime && <Row label="Uhrzeit" value={`${bookingTime} Uhr`} />}
+            {contactMethod && (
+              <Row
+                label="Kontaktweg"
+                value={contactMethod === 'online' ? 'Online-Meeting' : 'Telefonat'}
+              />
+            )}
+          </Section>
+        )}
 
         <Section style={ctaSection}>
           <Text style={ctaText}>
@@ -207,6 +227,21 @@ const ctaSection = {
   borderRadius: '10px',
   padding: '14px 18px',
   margin: '16px 0',
+}
+
+const bookingCard = {
+  backgroundColor: '#ecfdf5',
+  border: '1px solid #a7f3d0',
+  borderRadius: '12px',
+  padding: '16px 24px',
+  margin: '16px 0',
+}
+
+const bookingHeader = {
+  fontSize: '15px',
+  fontWeight: 'bold' as const,
+  color: '#065f46',
+  margin: '0 0 10px',
 }
 
 const ctaText = {

@@ -280,6 +280,9 @@ type FormState = {
   phone: string;
   currentWebsite: string;
   notes: string;
+  bookingDate: string;
+  bookingTime: string;
+  contactMethod: "phone" | "online" | "";
 };
 
 const initialState: FormState = {
@@ -295,6 +298,9 @@ const initialState: FormState = {
   phone: "",
   currentWebsite: "",
   notes: "",
+  bookingDate: "",
+  bookingTime: "",
+  contactMethod: "",
 };
 
 const TileButton = ({
@@ -390,12 +396,15 @@ type SuccessScreenProps = {
   firstName: string;
   email: string;
   company: string;
+  leadId: string | null;
   bookingMode: boolean;
   setBookingMode: (v: boolean) => void;
   bookingDate: string;
   setBookingDate: (v: string) => void;
   bookingTime: string;
   setBookingTime: (v: string) => void;
+  contactMethod: "phone" | "online" | "";
+  setContactMethod: (v: "phone" | "online") => void;
   bookingConfirmed: boolean;
   setBookingConfirmed: (v: boolean) => void;
 };
@@ -404,12 +413,15 @@ const SuccessScreen = ({
   firstName,
   email,
   company,
+  leadId,
   bookingMode,
   setBookingMode,
   bookingDate,
   setBookingDate,
   bookingTime,
   setBookingTime,
+  contactMethod,
+  setContactMethod,
   bookingConfirmed,
   setBookingConfirmed,
 }: SuccessScreenProps) => {
@@ -417,25 +429,45 @@ const SuccessScreen = ({
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
 
   const confirmBooking = async () => {
-    if (!bookingDate || !bookingTime) {
-      toast.error("Bitte wähle Datum und Uhrzeit.");
+    if (!bookingDate || !bookingTime || !contactMethod) {
+      toast.error("Bitte wähle Datum, Uhrzeit und Kontaktweg.");
       return;
     }
     setBookingSubmitting(true);
     const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
+    const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
+
+    // 1. Buchung im Lead-Record speichern
+    if (leadId) {
+      try {
+        await supabase
+          .from("leads")
+          .update({
+            booking_date: bookingDate,
+            booking_time: bookingTime,
+            contact_method: contactMethod,
+          })
+          .eq("id", leadId);
+      } catch (err) {
+        console.error("Lead-Update fehlgeschlagen", err);
+      }
+    }
+
+    // 2. Admin-Benachrichtigung mit Termin-Details
     try {
       await supabase.functions.invoke("send-transactional-email", {
         body: {
           templateName: "lead-notification",
-          idempotencyKey: `vorschau2-booking-${email}-${bookingDate}-${bookingTime}`,
+          idempotencyKey: `vorschau2-booking-admin-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
           templateData: {
             source: "Termin-Direktbuchung (Kostenlose Vorschau)",
             firstName,
-            company,
+            companyName: company,
             email,
             phone: "—",
             bookingDate: dateLabel,
             bookingTime,
+            contactMethod,
             submittedAt: new Date().toLocaleString("de-DE"),
           },
         },
@@ -443,13 +475,35 @@ const SuccessScreen = ({
     } catch {
       /* ignore */
     }
+
+    // 3. Bestätigungs-Mail an den Kunden
+    try {
+      await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "booking-confirmation",
+          recipientEmail: email,
+          idempotencyKey: `vorschau2-booking-customer-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
+          templateData: {
+            firstName,
+            bookingDate: dateLabel,
+            bookingTime,
+            contactMethod,
+          },
+        },
+      });
+    } catch {
+      /* ignore */
+    }
+
     setBookingConfirmed(true);
     setBookingSubmitting(false);
+    toast.success(`Termin gebucht: ${dateLabel} um ${bookingTime} (${methodLabel})`);
   };
 
   // Booking bestätigt → Thank-You mit Ablauf-Erklärung
   if (bookingConfirmed) {
     const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
+    const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
     return (
       <div className="text-center py-8 px-2 sm:px-4">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
@@ -458,12 +512,15 @@ const SuccessScreen = ({
         <h3 className="text-2xl sm:text-3xl font-bold mb-3">
           Danke {firstName}! Dein Termin steht.
         </h3>
-        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
+        <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
           <CalendarIcon className="w-4 h-4" />
           {dateLabel} · {bookingTime} Uhr
+          <span className="opacity-60">·</span>
+          {contactMethod === "online" ? <Video className="w-4 h-4" /> : <PhoneCall className="w-4 h-4" />}
+          {methodLabel}
         </div>
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
-          Du bekommst gleich eine Bestätigung per E-Mail an <strong>{email}</strong>.
+          Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.
         </p>
         <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
           <p className="font-bold mb-4 text-center">So geht's weiter:</p>
@@ -548,10 +605,42 @@ const SuccessScreen = ({
             </div>
           )}
 
+          {bookingDate && bookingTime && (
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+              <label className="text-sm font-medium mb-2 block">
+                Wie möchtest du das Gespräch führen?
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setContactMethod("phone")}
+                  className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+                    contactMethod === "phone"
+                      ? "border-primary bg-primary text-primary-foreground shadow-md"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  <PhoneCall className="w-4 h-4" /> Telefonat
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setContactMethod("online")}
+                  className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+                    contactMethod === "online"
+                      ? "border-primary bg-primary text-primary-foreground shadow-md"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  <Video className="w-4 h-4" /> Online-Meeting
+                </button>
+              </div>
+            </div>
+          )}
+
           <Button
             type="button"
             size="lg"
-            disabled={!bookingDate || !bookingTime || bookingSubmitting}
+            disabled={!bookingDate || !bookingTime || !contactMethod || bookingSubmitting}
             onClick={confirmBooking}
             className="w-full"
           >
@@ -610,9 +699,40 @@ const SuccessScreen = ({
               <span>Innerhalb von <strong className="text-foreground">48 Stunden</strong> bekommst du deine fertige Vorschau – kostenlos.</span>
             </li>
           </ol>
-          <p className="text-xs text-muted-foreground bg-secondary/40 rounded-lg px-3 py-2 mt-auto">
-            💡 Halte dein Handy bereit – meistens melde ich mich noch am gleichen Tag.
-          </p>
+          <div className="bg-secondary/40 rounded-lg px-3 py-3 mt-auto space-y-2">
+            <p className="text-xs font-semibold text-foreground">
+              Wie sollen wir uns melden?
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setContactMethod("phone")}
+                className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  contactMethod === "phone"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card hover:border-primary/40"
+                }`}
+              >
+                <PhoneCall className="w-3 h-3" /> Telefonat
+              </button>
+              <button
+                type="button"
+                onClick={() => setContactMethod("online")}
+                className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  contactMethod === "online"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card hover:border-primary/40"
+                }`}
+              >
+                <Video className="w-3 h-3" /> Online-Meeting
+              </button>
+            </div>
+            {contactMethod && (
+              <p className="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1 pt-1">
+                <CheckCircle2 className="w-3 h-3" /> Notiert – wir melden uns wie gewünscht.
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Option 2: Termin direkt buchen */}
@@ -658,9 +778,8 @@ const MultiStepForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [bookingMode, setBookingMode] = useState(false);
-  const [bookingDate, setBookingDate] = useState("");
-  const [bookingTime, setBookingTime] = useState("");
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   // Hydrate from localStorage
   useEffect(() => {
@@ -718,6 +837,7 @@ const MultiStepForm = () => {
         .single();
 
       if (leadError) throw leadError;
+      if (leadData?.id) setLeadId(leadData.id);
 
       // Webhook-Platzhalter (silently fail)
       try {
@@ -769,18 +889,48 @@ const MultiStepForm = () => {
     }
   };
 
+  // Wrapper für die SuccessScreen: speichert den Wert sowohl in den Form-State (Persistenz)
+  // als auch direkt im Lead-Datensatz, sobald gewählt.
+  const updateContactMethod = useCallback(
+    (method: "phone" | "online") => {
+      setState((s) => ({ ...s, contactMethod: method }));
+      if (leadId) {
+        supabase
+          .from("leads")
+          .update({ contact_method: method })
+          .eq("id", leadId)
+          .then(({ error }) => {
+            if (error) console.error("contact_method update failed", error);
+          });
+      }
+    },
+    [leadId],
+  );
+
+  const setBookingDate = useCallback(
+    (v: string) => setState((s) => ({ ...s, bookingDate: v })),
+    [],
+  );
+  const setBookingTime = useCallback(
+    (v: string) => setState((s) => ({ ...s, bookingTime: v })),
+    [],
+  );
+
   if (done) {
     return (
       <SuccessScreen
         firstName={state.firstName}
         email={state.email}
         company={state.company}
+        leadId={leadId}
         bookingMode={bookingMode}
         setBookingMode={setBookingMode}
-        bookingDate={bookingDate}
+        bookingDate={state.bookingDate}
         setBookingDate={setBookingDate}
-        bookingTime={bookingTime}
+        bookingTime={state.bookingTime}
         setBookingTime={setBookingTime}
+        contactMethod={state.contactMethod}
+        setContactMethod={updateContactMethod}
         bookingConfirmed={bookingConfirmed}
         setBookingConfirmed={setBookingConfirmed}
       />
