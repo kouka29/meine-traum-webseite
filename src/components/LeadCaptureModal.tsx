@@ -3,14 +3,18 @@ import { X, CheckCircle, Sparkles, TrendingUp, Zap, Gift, ShieldCheck, Loader2, 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const STORAGE_KEY = "lead-modal-dismissed";
 const DELAY_MS = 8000;
 
+// Routen, auf denen das Pop-up NICHT erscheinen soll (eigener Funnel/Lead-Magnet vorhanden)
+const EXCLUDED_PATHS = ["/kostenlose-vorschau", "/kostenlose-vorschau-2"];
+
 const LeadCaptureModal = () => {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -22,11 +26,16 @@ const LeadCaptureModal = () => {
   const [errors, setErrors] = useState<{ firstName?: string; companyName?: string; email?: string; phone?: string; dsgvo?: string }>({});
 
   useEffect(() => {
+    // Auf ausgeschlossenen Routen niemals anzeigen
+    if (EXCLUDED_PATHS.some((p) => location.pathname.startsWith(p))) {
+      setOpen(false);
+      return;
+    }
     const dismissed = sessionStorage.getItem(STORAGE_KEY);
     if (dismissed) return;
     const timer = setTimeout(() => setOpen(true), DELAY_MS);
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.pathname]);
 
   const close = () => {
     setOpen(false);
