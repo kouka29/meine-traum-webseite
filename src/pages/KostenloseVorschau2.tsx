@@ -825,19 +825,19 @@ const MultiStepForm = () => {
     }
     setSubmitting(true);
     try {
+      const newLeadId = crypto.randomUUID();
       const { data: leadData, error: leadError } = await supabase
         .from("leads")
         .insert({
+          id: newLeadId,
           first_name: state.firstName,
           email: state.email,
           phone: state.phone && state.phone.trim().length >= 3 ? state.phone.trim() : "n/a",
           company_name: state.company || "",
-        })
-        .select("id")
-        .single();
+        });
 
       if (leadError) throw leadError;
-      if (leadData?.id) setLeadId(leadData.id);
+      setLeadId(newLeadId);
 
       // Webhook-Platzhalter (silently fail)
       try {
@@ -856,7 +856,7 @@ const MultiStepForm = () => {
         await supabase.functions.invoke("send-transactional-email", {
           body: {
             templateName: "lead-notification",
-            idempotencyKey: `vorschau2-${leadData?.id ?? Date.now()}`,
+            idempotencyKey: `vorschau2-${newLeadId}`,
             templateData: {
               source: "Kostenlose Vorschau 2 (Multi-Step)",
               firstName: state.firstName,
