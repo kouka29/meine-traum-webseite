@@ -450,10 +450,14 @@ const MultiStepForm = () => {
               company: state.company,
               email: state.email,
               phone: state.phone,
-              trade: state.trade,
+              trade: state.trade === "Sonstiges" && state.tradeOther
+                ? `Sonstiges: ${state.tradeOther}`
+                : state.trade,
               hasWebsite: state.hasWebsite,
               goals: state.goals.join(", "),
               urgency: state.urgency,
+              currentWebsite: state.currentWebsite || "Nicht angegeben",
+              notes: state.notes || "Keine Angabe",
               submittedAt: new Date().toLocaleString("de-DE"),
             },
           },
@@ -538,11 +542,36 @@ const MultiStepForm = () => {
                 selected={state.trade === opt.value}
                 onClick={() => {
                   update({ trade: opt.value });
-                  setTimeout(next, 200);
+                  if (opt.value !== "Sonstiges") {
+                    setTimeout(next, 200);
+                  }
                 }}
               />
             ))}
           </div>
+          {state.trade === "Sonstiges" && (
+            <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <label className="text-sm font-medium block">
+                Beschreibe kurz, was du beruflich machst *
+              </label>
+              <Input
+                value={state.tradeOther}
+                onChange={(e) => update({ tradeOther: e.target.value })}
+                placeholder="z. B. Bodenleger, Fliesenleger, Fensterbauer ..."
+                maxLength={120}
+                autoFocus
+              />
+              <Button
+                type="button"
+                size="lg"
+                disabled={state.tradeOther.trim().length < 2}
+                onClick={next}
+                className="w-full sm:w-auto"
+              >
+                Weiter <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
