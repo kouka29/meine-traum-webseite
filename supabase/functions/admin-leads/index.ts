@@ -120,6 +120,70 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Lead-Status setzen / Platz reservieren / freigeben + optionale Bestätigungsmail
+    if (action === "update-lead-status" && leadId) {
+      const { newStatus, sendEmail } = body as {
+        newStatus?: "new" | "qualified" | "rejected" | "customer";
+        sendEmail?: boolean;
+      };
+      if (!newStatus || !["new", "qualified", "rejected", "customer"].includes(newStatus)) {
+        return new Response(JSON.stringify({ error: "Ungültiger Status" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { data: existing, error: fetchErr } = await supabase
+        .from("leads")
+        .select("id, first_name, email, status, slot_reserved")
+        .eq("id", leadId)
+        .maybeSingle();
+      if (fetchErr || !existing) {
+        return new Response(JSON.stringify({ error: "Lead nicht gefunden" }), {
+          status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const updates: Record<string, unknown> = { status: newStatus };
+      const wasReserved = !!existing.slot_reserved;
+      const shouldReserve = newStatus === "qualified" || newStatus === "customer";
+
+      if (shouldReserve && !wasReserved) {
+        updates.slot_reserved = true;
+        await supabase.rpc("increment_taken_slot");
+      } else if (!shouldReserve && wasReserved) {
+        updates.slot_reserved = false;
+        await supabase.rpc("decrement_taken_slot");
+      }
+
+      const { data: updated, error: updateErr } = await supabase
+        .from("leads")
+        .update(updates)
+        .eq("id", leadId)
+        .select()
+        .single();
+      if (updateErr) throw updateErr;
+
+      // Optionale Bestätigungsmail bei Qualifizierung
+      if (sendEmail && newStatus === "qualified" && existing.email) {
+        try {
+          await supabase.functions.invoke("send-transactional-email", {
+            body: {
+              templateName: "lead-qualified",
+              recipientEmail: existing.email,
+              idempotencyKey: `lead-qualified-${leadId}`,
+              templateData: { firstName: existing.first_name },
+            },
+          });
+        } catch (e) {
+          console.error("Fehler beim Versand der Qualifizierungs-Mail", e);
+        }
+      }
+
+      return new Response(JSON.stringify({ lead: updated }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     if (action === "analytics") {
       const { data: pageViews, error: pvError } = await supabase
         .from("page_views")
