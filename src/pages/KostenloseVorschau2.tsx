@@ -42,6 +42,8 @@ import {
   Eye,
   Share2,
 } from "lucide-react";
+import { Calendar as CalendarIcon, PhoneCall, Video, MessageCircle } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useVorschauSettings, type VorschauSettings, type VorschauDemo, type VorschauFaq } from "@/hooks/useVorschauSettings";
@@ -268,6 +270,7 @@ const Countdown = ({
 type FormState = {
   step: number;
   trade: string;
+  tradeOther: string;
   hasWebsite: string;
   goals: string[];
   urgency: string;
@@ -275,11 +278,14 @@ type FormState = {
   company: string;
   email: string;
   phone: string;
+  currentWebsite: string;
+  notes: string;
 };
 
 const initialState: FormState = {
   step: 1,
   trade: "",
+  tradeOther: "",
   hasWebsite: "",
   goals: [],
   urgency: "",
@@ -287,6 +293,8 @@ const initialState: FormState = {
   company: "",
   email: "",
   phone: "",
+  currentWebsite: "",
+  notes: "",
 };
 
 const TileButton = ({
@@ -353,10 +361,306 @@ const SlotPill = ({
   </span>
 );
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Success Screen mit zwei Optionen: Anruf abwarten ODER Termin direkt buchen
+// ─────────────────────────────────────────────────────────────────────────────
+
+function getNextWeekdays(count: number): { iso: string; label: string }[] {
+  const out: { iso: string; label: string }[] = [];
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  while (out.length < count) {
+    d.setDate(d.getDate() + 1);
+    const day = d.getDay();
+    if (day === 0 || day === 6) continue; // skip Sa/So
+    const iso = d.toISOString().slice(0, 10);
+    const label = d.toLocaleDateString("de-DE", {
+      weekday: "short",
+      day: "2-digit",
+      month: "2-digit",
+    });
+    out.push({ iso, label });
+  }
+  return out;
+}
+
+const TIME_SLOTS = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+
+type SuccessScreenProps = {
+  firstName: string;
+  email: string;
+  company: string;
+  bookingMode: boolean;
+  setBookingMode: (v: boolean) => void;
+  bookingDate: string;
+  setBookingDate: (v: string) => void;
+  bookingTime: string;
+  setBookingTime: (v: string) => void;
+  bookingConfirmed: boolean;
+  setBookingConfirmed: (v: boolean) => void;
+};
+
+const SuccessScreen = ({
+  firstName,
+  email,
+  company,
+  bookingMode,
+  setBookingMode,
+  bookingDate,
+  setBookingDate,
+  bookingTime,
+  setBookingTime,
+  bookingConfirmed,
+  setBookingConfirmed,
+}: SuccessScreenProps) => {
+  const dates = useMemo(() => getNextWeekdays(7), []);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
+
+  const confirmBooking = async () => {
+    if (!bookingDate || !bookingTime) {
+      toast.error("Bitte wähle Datum und Uhrzeit.");
+      return;
+    }
+    setBookingSubmitting(true);
+    const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
+    try {
+      await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "lead-notification",
+          idempotencyKey: `vorschau2-booking-${email}-${bookingDate}-${bookingTime}`,
+          templateData: {
+            source: "Termin-Direktbuchung (Kostenlose Vorschau)",
+            firstName,
+            company,
+            email,
+            phone: "—",
+            bookingDate: dateLabel,
+            bookingTime,
+            submittedAt: new Date().toLocaleString("de-DE"),
+          },
+        },
+      });
+    } catch {
+      /* ignore */
+    }
+    setBookingConfirmed(true);
+    setBookingSubmitting(false);
+  };
+
+  // Booking bestätigt → Thank-You mit Ablauf-Erklärung
+  if (bookingConfirmed) {
+    const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
+    return (
+      <div className="text-center py-8 px-2 sm:px-4">
+        <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
+          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
+        </div>
+        <h3 className="text-2xl sm:text-3xl font-bold mb-3">
+          Danke {firstName}! Dein Termin steht.
+        </h3>
+        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
+          <CalendarIcon className="w-4 h-4" />
+          {dateLabel} · {bookingTime} Uhr
+        </div>
+        <p className="text-muted-foreground max-w-md mx-auto mb-6">
+          Du bekommst gleich eine Bestätigung per E-Mail an <strong>{email}</strong>.
+        </p>
+        <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
+          <p className="font-bold mb-4 text-center">So geht's weiter:</p>
+          <ol className="space-y-3 text-sm">
+            <li className="flex gap-3">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">1</span>
+              <span><strong>Kurzes Gespräch (5–10 Min.)</strong> – telefonisch oder per Online-Meeting. Ich stelle dir ein paar Fragen, damit deine Vorschau perfekt zu deinem Betrieb passt.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">2</span>
+              <span><strong>Ich baue deine Vorschau (kostenlos, 48h)</strong> – maßgeschneidert für deinen Betrieb.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">3</span>
+              <span><strong>Wir schauen sie gemeinsam an</strong> – du entscheidest in Ruhe, ob du weitermachen willst. Ohne Druck, ohne Verpflichtung.</span>
+            </li>
+          </ol>
+        </div>
+        <p className="text-xs text-muted-foreground mt-6">
+          📧 Falls du keine E-Mail bekommst, schau bitte in deinen Spam-Ordner.
+        </p>
+      </div>
+    );
+  }
+
+  // Booking-Modus: Datum + Uhrzeit auswählen
+  if (bookingMode) {
+    return (
+      <div className="py-2 px-1 sm:px-2">
+        <div className="text-center mb-6">
+          <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+            <CalendarIcon className="w-7 h-7 text-primary" />
+          </div>
+          <h3 className="text-xl sm:text-2xl font-bold mb-2">
+            Wann passt es dir am besten?
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Wähle Datum & Uhrzeit – das Gespräch dauert nur 5–10 Minuten.
+          </p>
+        </div>
+
+        <div className="space-y-5">
+          <div>
+            <label className="text-sm font-medium mb-2 block">Datum auswählen</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {dates.map((d) => (
+                <button
+                  key={d.iso}
+                  type="button"
+                  onClick={() => setBookingDate(d.iso)}
+                  className={`rounded-xl border-2 px-3 py-3 text-sm font-semibold transition-all ${
+                    bookingDate === d.iso
+                      ? "border-primary bg-primary text-primary-foreground shadow-md"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  {d.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {bookingDate && (
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+              <label className="text-sm font-medium mb-2 block">Uhrzeit auswählen</label>
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                {TIME_SLOTS.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setBookingTime(t)}
+                    className={`rounded-xl border-2 px-3 py-2.5 text-sm font-semibold transition-all ${
+                      bookingTime === t
+                        ? "border-primary bg-primary text-primary-foreground shadow-md"
+                        : "border-border bg-card hover:border-primary/40"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <Button
+            type="button"
+            size="lg"
+            disabled={!bookingDate || !bookingTime || bookingSubmitting}
+            onClick={confirmBooking}
+            className="w-full"
+          >
+            {bookingSubmitting ? "Wird gebucht..." : (
+              <>Termin verbindlich sichern <ArrowRight className="ml-2 w-4 h-4" /></>
+            )}
+          </Button>
+
+          <button
+            type="button"
+            onClick={() => setBookingMode(false)}
+            className="w-full text-sm text-muted-foreground hover:text-foreground inline-flex items-center justify-center gap-1 underline-offset-4 hover:underline"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" /> Zurück zur Übersicht
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Standard-Erfolgs-Screen mit beiden Optionen
+  return (
+    <div className="py-6 px-2 sm:px-4">
+      <div className="text-center mb-8">
+        <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-5 animate-in zoom-in duration-500">
+          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
+        </div>
+        <h3 className="text-2xl sm:text-3xl font-bold mb-2">
+          Perfekt {firstName}, dein Platz ist gesichert! 🎉
+        </h3>
+        <p className="text-muted-foreground max-w-md mx-auto">
+          Eine Bestätigung wurde an <strong>{email}</strong> geschickt.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Option 1: Was passiert jetzt */}
+        <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6 flex flex-col">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <PhoneCall className="w-5 h-5 text-primary" />
+            </div>
+            <h4 className="font-bold text-base sm:text-lg">Was jetzt passiert</h4>
+          </div>
+          <ol className="space-y-2.5 text-sm text-muted-foreground mb-4 flex-1">
+            <li className="flex gap-2">
+              <span className="text-primary font-bold shrink-0">1.</span>
+              <span>Ich melde mich <strong className="text-foreground">innerhalb von 24 Stunden</strong> bei dir.</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-primary font-bold shrink-0">2.</span>
+              <span>Wir führen ein <strong className="text-foreground">5–10 Min. Telefonat</strong>, in dem ich kurz ein paar Fragen stelle, damit deine Vorschau zu 100 % zu deinem Betrieb passt.</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="text-primary font-bold shrink-0">3.</span>
+              <span>Innerhalb von <strong className="text-foreground">48 Stunden</strong> bekommst du deine fertige Vorschau – kostenlos.</span>
+            </li>
+          </ol>
+          <p className="text-xs text-muted-foreground bg-secondary/40 rounded-lg px-3 py-2 mt-auto">
+            💡 Halte dein Handy bereit – meistens melde ich mich noch am gleichen Tag.
+          </p>
+        </div>
+
+        {/* Option 2: Termin direkt buchen */}
+        <div className="rounded-2xl border-2 border-primary bg-gradient-to-br from-primary/5 to-accent/5 p-5 sm:p-6 flex flex-col relative">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full shadow-md whitespace-nowrap">
+            ⚡ Schneller geht's nicht
+          </div>
+          <div className="flex items-center gap-3 mb-3 mt-2">
+            <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+              <CalendarIcon className="w-5 h-5 text-primary" />
+            </div>
+            <h4 className="font-bold text-base sm:text-lg">Lieber direkt Termin buchen?</h4>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4 flex-1">
+            Wähle direkt Datum und Uhrzeit für dein 5–10 Min. Gespräch – telefonisch oder per Online-Meeting. Du sparst dir das Hin und Her.
+          </p>
+          <Button
+            type="button"
+            size="lg"
+            onClick={() => setBookingMode(true)}
+            className="w-full shadow-md"
+          >
+            <CalendarIcon className="mr-2 w-4 h-4" />
+            Termin jetzt auswählen
+          </Button>
+          <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1"><PhoneCall className="w-3 h-3" /> Telefon</span>
+            <span className="inline-flex items-center gap-1"><Video className="w-3 h-3" /> oder Online</span>
+          </div>
+        </div>
+      </div>
+
+      <p className="text-xs text-muted-foreground text-center mt-6 flex items-center justify-center gap-1.5">
+        <MessageCircle className="w-3.5 h-3.5" />
+        Schau auch in deinen Spam-Ordner – manchmal landet die Bestätigung dort.
+      </p>
+    </div>
+  );
+};
+
 const MultiStepForm = () => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [bookingMode, setBookingMode] = useState(false);
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingTime, setBookingTime] = useState("");
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
   // Hydrate from localStorage
   useEffect(() => {
@@ -439,10 +743,14 @@ const MultiStepForm = () => {
               company: state.company,
               email: state.email,
               phone: state.phone,
-              trade: state.trade,
+              trade: state.trade === "Sonstiges" && state.tradeOther
+                ? `Sonstiges: ${state.tradeOther}`
+                : state.trade,
               hasWebsite: state.hasWebsite,
               goals: state.goals.join(", "),
               urgency: state.urgency,
+              currentWebsite: state.currentWebsite || "Nicht angegeben",
+              notes: state.notes || "Keine Angabe",
               submittedAt: new Date().toLocaleString("de-DE"),
             },
           },
@@ -462,42 +770,20 @@ const MultiStepForm = () => {
   };
 
   if (done) {
-    const shareText = encodeURIComponent(
-      "Schau mal: kostenlose Webseiten-Vorschau in 48h für Handwerker → https://meinetraumwebseite.de/kostenlose-vorschau2",
-    );
     return (
-      <div className="text-center py-10 px-4">
-        <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
-        </div>
-        <h3 className="text-2xl sm:text-3xl font-bold mb-3">
-          Perfekt, {state.firstName}! Dein Platz ist gesichert.
-        </h3>
-        <p className="text-muted-foreground max-w-md mx-auto mb-2">
-          Ich melde mich innerhalb von 24 Stunden bei dir und starte sofort mit deiner Vorschau.
-        </p>
-        <p className="text-sm text-muted-foreground mb-8">
-          📧 Schau auch in deinen Spam-Ordner.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href={`https://wa.me/?text=${shareText}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 font-semibold transition-colors"
-          >
-            <Share2 className="w-4 h-4" /> Per WhatsApp teilen
-          </a>
-          <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=https://meinetraumwebseite.de/kostenlose-vorschau2`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1877f2] hover:bg-[#155fc7] text-white px-5 py-3 font-semibold transition-colors"
-          >
-            <Share2 className="w-4 h-4" /> Auf Facebook teilen
-          </a>
-        </div>
-      </div>
+      <SuccessScreen
+        firstName={state.firstName}
+        email={state.email}
+        company={state.company}
+        bookingMode={bookingMode}
+        setBookingMode={setBookingMode}
+        bookingDate={bookingDate}
+        setBookingDate={setBookingDate}
+        bookingTime={bookingTime}
+        setBookingTime={setBookingTime}
+        bookingConfirmed={bookingConfirmed}
+        setBookingConfirmed={setBookingConfirmed}
+      />
     );
   }
 
@@ -527,11 +813,36 @@ const MultiStepForm = () => {
                 selected={state.trade === opt.value}
                 onClick={() => {
                   update({ trade: opt.value });
-                  setTimeout(next, 200);
+                  if (opt.value !== "Sonstiges") {
+                    setTimeout(next, 200);
+                  }
                 }}
               />
             ))}
           </div>
+          {state.trade === "Sonstiges" && (
+            <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <label className="text-sm font-medium block">
+                Beschreibe kurz, was du beruflich machst *
+              </label>
+              <Input
+                value={state.tradeOther}
+                onChange={(e) => update({ tradeOther: e.target.value })}
+                placeholder="z. B. Bodenleger, Fliesenleger, Fensterbauer ..."
+                maxLength={120}
+                autoFocus
+              />
+              <Button
+                type="button"
+                size="lg"
+                disabled={state.tradeOther.trim().length < 2}
+                onClick={next}
+                className="w-full sm:w-auto"
+              >
+                Weiter <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
@@ -653,6 +964,36 @@ const MultiStepForm = () => {
                 value={state.phone}
                 onChange={(e) => update({ phone: e.target.value })}
                 placeholder="+49 ..."
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="text-sm font-medium mb-1.5 block">
+                Aktuelle Webseite{" "}
+                <span className="text-muted-foreground font-normal">
+                  (optional – falls vorhanden)
+                </span>
+              </label>
+              <Input
+                type="url"
+                value={state.currentWebsite}
+                onChange={(e) => update({ currentWebsite: e.target.value })}
+                placeholder="https://deine-webseite.de"
+                maxLength={300}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="text-sm font-medium mb-1.5 block">
+                Sonstige wichtige Infos{" "}
+                <span className="text-muted-foreground font-normal">
+                  (optional)
+                </span>
+              </label>
+              <Textarea
+                value={state.notes}
+                onChange={(e) => update({ notes: e.target.value })}
+                placeholder="Was sollten wir noch wissen, um die beste Vorschau für dich zu bauen? (z. B. Lieblingsfarben, Vorbilder, besondere Leistungen ...)"
+                maxLength={1000}
+                rows={4}
               />
             </div>
           </div>
