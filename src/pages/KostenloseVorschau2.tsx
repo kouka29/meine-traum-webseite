@@ -453,9 +453,9 @@ const SuccessScreen = ({
     const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
     const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
 
-    // 1. Buchung im Lead-Record speichern
+    // 1. Buchung im Lead-Record speichern (im Hintergrund, UI nicht blockieren)
     if (leadId) {
-      const { error: updateError } = await supabase
+      void supabase
         .from("leads")
         .update({
           booking_date: bookingDate,
@@ -464,65 +464,55 @@ const SuccessScreen = ({
           status: "qualified",
           slot_reserved: true,
         })
-        .eq("id", leadId);
-      if (updateError) {
-        console.error("Lead-Update fehlgeschlagen", updateError);
-      }
-      // Platz im Counter automatisch reservieren
-      try {
-        await supabase.rpc("increment_taken_slot");
-      } catch (e) {
-        console.error("Slot-Increment fehlgeschlagen", e);
-      }
+        .eq("id", leadId)
+        .then(({ error }) => {
+          if (error) console.error("Lead-Update fehlgeschlagen", error);
+        });
+      // Platz im Counter automatisch reservieren (Hintergrund)
+      void supabase.rpc("increment_taken_slot").then(({ error }) => {
+        if (error) console.error("Slot-Increment fehlgeschlagen", error);
+      });
     }
 
-    // 2. Admin-Benachrichtigung mit ALLEN Lead-Details + Termin
-    try {
-      await supabase.functions.invoke("send-transactional-email", {
-        body: {
-          templateName: "lead-notification",
-          idempotencyKey: `vorschau2-booking-admin-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
-          templateData: {
-            source: "Termin-Direktbuchung (Kostenlose Vorschau)",
-            firstName,
-            companyName: company,
-            email,
-            phone: phone || "—",
-            website: currentWebsite || "Nicht angegeben",
-            trade: trade === "Sonstiges" && tradeOther ? `Sonstiges: ${tradeOther}` : trade,
-            hasWebsite,
-            goals: goals.join(", "),
-            urgency,
-            message: notes || "",
-            bookingDate: dateLabel,
-            bookingTime,
-            contactMethod,
-            submittedAt: new Date().toLocaleString("de-DE"),
-          },
+    // 2. Admin-Benachrichtigung mit ALLEN Lead-Details + Termin (Hintergrund)
+    void supabase.functions.invoke("send-transactional-email", {
+      body: {
+        templateName: "lead-notification",
+        idempotencyKey: `vorschau2-booking-admin-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
+        templateData: {
+          source: "Termin-Direktbuchung (Kostenlose Vorschau)",
+          firstName,
+          companyName: company,
+          email,
+          phone: phone || "—",
+          website: currentWebsite || "Nicht angegeben",
+          trade: trade === "Sonstiges" && tradeOther ? `Sonstiges: ${tradeOther}` : trade,
+          hasWebsite,
+          goals: goals.join(", "),
+          urgency,
+          message: notes || "",
+          bookingDate: dateLabel,
+          bookingTime,
+          contactMethod,
+          submittedAt: new Date().toLocaleString("de-DE"),
         },
-      });
-    } catch {
-      /* ignore */
-    }
+      },
+    }).catch(() => {});
 
-    // 3. Bestätigungs-Mail an den Kunden
-    try {
-      await supabase.functions.invoke("send-transactional-email", {
-        body: {
-          templateName: "booking-confirmation",
-          recipientEmail: email,
-          idempotencyKey: `vorschau2-booking-customer-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
-          templateData: {
-            firstName,
-            bookingDate: dateLabel,
-            bookingTime,
-            contactMethod,
-          },
+    // 3. Bestätigungs-Mail an den Kunden (Hintergrund)
+    void supabase.functions.invoke("send-transactional-email", {
+      body: {
+        templateName: "booking-confirmation",
+        recipientEmail: email,
+        idempotencyKey: `vorschau2-booking-customer-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
+        templateData: {
+          firstName,
+          bookingDate: dateLabel,
+          bookingTime,
+          contactMethod,
         },
-      });
-    } catch {
-      /* ignore */
-    }
+      },
+    }).catch(() => {});
 
     setBookingConfirmed(true);
     setBookingSubmitting(false);
@@ -718,7 +708,7 @@ const SuccessScreen = ({
           <ol className="space-y-2.5 text-sm text-muted-foreground mb-4 flex-1">
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">1.</span>
-              <span>Ich melde mich <strong className="text-foreground">innerhalb von 24 Stunden</strong> bei dir.</span>
+              <span>Ich melde mich <strong className="text-foreground">am nächsten Werktag</strong> bei dir.</span>
             </li>
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">2.</span>
@@ -869,45 +859,36 @@ const MultiStepForm = () => {
       if (leadError) throw leadError;
       setLeadId(newLeadId);
 
-      // Webhook-Platzhalter (silently fail)
-      try {
-        await fetch("https://webhook.site/placeholder", {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(state),
-        });
-      } catch {
-        /* ignore */
-      }
+      // Webhook + E-Mail-Benachrichtigung im Hintergrund (UI nicht blockieren)
+      void fetch("https://webhook.site/placeholder", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(state),
+      }).catch(() => {});
 
-      // E-Mail-Benachrichtigung
-      try {
-        await supabase.functions.invoke("send-transactional-email", {
-          body: {
-            templateName: "lead-notification",
-            idempotencyKey: `vorschau2-${newLeadId}`,
-            templateData: {
-              source: "Kostenlose Vorschau 2 (Multi-Step)",
-              firstName: state.firstName,
-              companyName: state.company,
-              email: state.email,
-              phone: state.phone,
-              trade: state.trade === "Sonstiges" && state.tradeOther
-                ? `Sonstiges: ${state.tradeOther}`
-                : state.trade,
-              hasWebsite: state.hasWebsite,
-              goals: state.goals.join(", "),
-              urgency: state.urgency,
-              website: state.currentWebsite || "Nicht angegeben",
-              message: state.notes || "",
-              submittedAt: new Date().toLocaleString("de-DE"),
-            },
+      void supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "lead-notification",
+          idempotencyKey: `vorschau2-${newLeadId}`,
+          templateData: {
+            source: "Kostenlose Vorschau 2 (Multi-Step)",
+            firstName: state.firstName,
+            companyName: state.company,
+            email: state.email,
+            phone: state.phone,
+            trade: state.trade === "Sonstiges" && state.tradeOther
+              ? `Sonstiges: ${state.tradeOther}`
+              : state.trade,
+            hasWebsite: state.hasWebsite,
+            goals: state.goals.join(", "),
+            urgency: state.urgency,
+            website: state.currentWebsite || "Nicht angegeben",
+            message: state.notes || "",
+            submittedAt: new Date().toLocaleString("de-DE"),
           },
-        });
-      } catch {
-        /* ignore */
-      }
+        },
+      }).catch(() => {});
 
       localStorage.removeItem(STORAGE_KEY);
       setDone(true);
