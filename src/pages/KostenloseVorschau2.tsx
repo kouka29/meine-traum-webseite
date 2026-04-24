@@ -549,7 +549,7 @@ const SuccessScreen = ({
     const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
     const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
     return (
-      <div className="text-center py-8 px-2 sm:px-4">
+      <div ref={screenRef} className="text-center py-8 px-2 sm:px-4 scroll-mt-20">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
         </div>
@@ -593,7 +593,7 @@ const SuccessScreen = ({
   // Booking-Modus: Datum + Uhrzeit auswählen
   if (bookingMode) {
     return (
-      <div className="py-2 px-1 sm:px-2">
+      <div ref={screenRef} className="py-2 px-1 sm:px-2 scroll-mt-20">
         <div className="text-center mb-6">
           <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
             <CalendarIcon className="w-7 h-7 text-primary" />
@@ -707,7 +707,7 @@ const SuccessScreen = ({
 
   // Standard-Erfolgs-Screen mit beiden Optionen
   return (
-    <div className="py-6 px-2 sm:px-4">
+    <div ref={screenRef} className="py-6 px-2 sm:px-4 scroll-mt-20">
       <div className="text-center mb-8">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-5 animate-in zoom-in duration-500">
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
