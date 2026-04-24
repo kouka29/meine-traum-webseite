@@ -1277,6 +1277,13 @@ const KostenloseVorschau2 = () => {
     () => new Date().toLocaleDateString("de-DE", { month: "long" }),
     [],
   );
+  const nextMonthLabel = useMemo(() => {
+    const d = new Date();
+    d.setDate(1);
+    d.setMonth(d.getMonth() + 1);
+    return d.toLocaleDateString("de-DE", { month: "long" });
+  }, []);
+  const isWaitlist = remainingSlots <= 0;
   // Fallbacks: wenn DB-Listen leer, nutze hardcoded Defaults
   const activeDemos = dbDemos.length > 0
     ? dbDemos.map(d => {
@@ -1297,11 +1304,13 @@ const KostenloseVorschau2 = () => {
   const activeFaqs = dbFaqs.length > 0
     ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
     : faqs;
-  const heroBadge = (settings?.hero_badge_text ?? "Nur noch {remaining} von {total} Plätzen im {month} verfügbar")
-    .replace("{remaining}", String(remainingSlots))
-    .replace("{total}", String(totalSlots))
-    .replace("{taken}", String(takenSlots))
-    .replace("{month}", monatName);
+  const heroBadge = isWaitlist
+    ? `Alle Plätze im ${monatName} vergeben – sichere dir jetzt einen Platz für ${nextMonthLabel}`
+    : (settings?.hero_badge_text ?? "Nur noch {remaining} von {total} Plätzen im {month} verfügbar")
+        .replace("{remaining}", String(remainingSlots))
+        .replace("{total}", String(totalSlots))
+        .replace("{taken}", String(takenSlots))
+        .replace("{month}", monatName);
 
   const scrollToForm = () => {
     document.getElementById("formular")?.scrollIntoView({ behavior: "smooth" });
