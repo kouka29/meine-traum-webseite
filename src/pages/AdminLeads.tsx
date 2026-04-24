@@ -267,11 +267,26 @@ const AdminLeads = () => {
 
   const exportCSV = () => {
     if (leads.length === 0) return;
-    const headers = ["Name", "Firma", "E-Mail", "Telefon", "Datum"];
+    const headers = [
+      "Name", "Firma", "E-Mail", "Telefon", "Datum",
+      "Branche", "Aktuelle Webseite vorhanden?", "Ziele", "Dringlichkeit",
+      "Webseiten-URL", "Anmerkungen", "Termin-Datum", "Termin-Zeit", "Kontaktweg", "Status",
+    ];
+    const esc = (v: string) => `"${(v || "").replace(/"/g, '""').replace(/\r?\n/g, " ")}"`;
     const rows = leads.map(l => [
       l.first_name, l.company_name || "", l.email, l.phone,
       new Date(l.created_at).toLocaleDateString("de-DE"),
-    ]);
+      l.trade === "Sonstiges" && l.trade_other ? `Sonstiges: ${l.trade_other}` : (l.trade || ""),
+      l.has_website || "",
+      (l.goals || []).join(", "),
+      l.urgency || "",
+      l.current_website || "",
+      l.notes || "",
+      l.booking_date || "",
+      l.booking_time || "",
+      l.contact_method || "",
+      l.status || "new",
+    ].map(esc));
     const csv = [headers.join(";"), ...rows.map(r => r.join(";"))].join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
