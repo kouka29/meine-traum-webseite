@@ -819,7 +819,12 @@ const SuccessScreen = ({
   );
 };
 
-const MultiStepForm = () => {
+type MultiStepFormProps = {
+  isWaitlist: boolean;
+  nextMonthLabel: string;
+};
+
+const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -905,6 +910,7 @@ const MultiStepForm = () => {
           urgency: state.urgency || null,
           current_website: state.currentWebsite || null,
           notes: state.notes || null,
+          is_waitlist: isWaitlist,
         });
 
       if (leadError) throw leadError;
@@ -1008,6 +1014,8 @@ const MultiStepForm = () => {
         setContactMethod={updateContactMethod}
         bookingConfirmed={bookingConfirmed}
         setBookingConfirmed={setBookingConfirmed}
+        isWaitlist={isWaitlist}
+        nextMonthLabel={nextMonthLabel}
       />
     );
   }
