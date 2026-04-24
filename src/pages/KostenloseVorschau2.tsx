@@ -443,6 +443,18 @@ const SuccessScreen = ({
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
+  const screenRef = useRef<HTMLDivElement | null>(null);
+
+  // Whenever the success screen mounts or switches sub-state (booking
+  // selector, confirmation), pull the user back up so they see the new
+  // headline instead of being stuck mid-page on mobile.
+  useEffect(() => {
+    const el = screenRef.current;
+    if (!el) return;
+    const headerOffset = 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  }, [bookingMode, bookingConfirmed]);
 
   const confirmBooking = async () => {
     if (!bookingDate || !bookingTime || !contactMethod) {
