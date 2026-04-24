@@ -456,6 +456,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      attach_booking_to_lead: {
+        Args: {
+          p_booking_date: string
+          p_booking_time: string
+          p_contact_method: string
+          p_current_website?: string
+          p_goals?: string[]
+          p_has_website?: string
+          p_lead_id: string
+          p_notes?: string
+          p_trade?: string
+          p_trade_other?: string
+          p_urgency?: string
+        }
+        Returns: boolean
+      }
       decrement_taken_slot: { Args: never; Returns: undefined }
       delete_email: {
         Args: { message_id: number; queue_name: string }

@@ -456,25 +456,27 @@ const SuccessScreen = ({
     try {
       // 1. Buchung + alle Funnel-Daten verlässlich speichern, bevor die Bestätigung gezeigt wird
       if (leadId) {
-        const { error: updateError } = await supabase
-          .from("leads")
-          .update({
-            booking_date: bookingDate,
-            booking_time: bookingTime,
-            contact_method: contactMethod,
-            status: "qualified",
-            slot_reserved: true,
-            trade: trade || null,
-            trade_other: tradeOther || null,
-            has_website: hasWebsite || null,
-            goals: goals.length > 0 ? goals : null,
-            urgency: urgency || null,
-            current_website: currentWebsite || null,
-            notes: notes || null,
-          })
-          .eq("id", leadId);
+        const { data: attached, error: updateError } = await supabase.rpc(
+          "attach_booking_to_lead",
+          {
+            p_lead_id: leadId,
+            p_booking_date: bookingDate,
+            p_booking_time: bookingTime,
+            p_contact_method: contactMethod,
+            p_trade: trade || null,
+            p_trade_other: tradeOther || null,
+            p_has_website: hasWebsite || null,
+            p_goals: goals.length > 0 ? goals : null,
+            p_urgency: urgency || null,
+            p_current_website: currentWebsite || null,
+            p_notes: notes || null,
+          }
+        );
 
         if (updateError) throw updateError;
+        if (attached === false) {
+          throw new Error("Für diesen Lead existiert bereits eine Buchung.");
+        }
 
         const { error: slotError } = await supabase.rpc("increment_taken_slot");
         if (slotError) throw slotError;
