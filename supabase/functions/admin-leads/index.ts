@@ -100,6 +100,38 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    // =================== SIGNED UPLOAD URL ===================
+    // Liefert eine signierte URL, mit der der Browser direkt in den
+    // Storage-Bucket hochladen kann. Das vermeidet, dass große Bilder
+    // als Base64 durch die Edge Function laufen (Memory-Limit / 546).
+    if (action === "get-upload-url") {
+      const { bucket, fileName } = body as { bucket?: string; fileName?: string };
+      const allowedBuckets = ["portfolio-images", "vorschau-demos"];
+      if (!bucket || !allowedBuckets.includes(bucket)) {
+        return new Response(JSON.stringify({ error: "Ungültiger Bucket" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const safeName = (fileName || "upload").replace(/[^a-zA-Z0-9._-]/g, "_");
+      const ext = safeName.includes(".") ? safeName.split(".").pop() : "jpg";
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { data: signed, error: signErr } = await supabase.storage
+        .from(bucket)
+        .createSignedUploadURL(path);
+      if (signErr || !signed) {
+        return new Response(JSON.stringify({ error: signErr?.message || "Upload-URL konnte nicht erstellt werden" }), {
+          status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data: publicData } = supabase.storage.from(bucket).getPublicUrl(path);
+      return new Response(JSON.stringify({
+        path,
+        token: signed.token,
+        signedUrl: signed.signedUrl,
+        publicUrl: publicData.publicUrl,
+      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+
     // =================== LEADS ===================
     if (action === "list") {
       const { data, error } = await supabase
@@ -291,7 +323,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "portfolio-create") {
-      const { title, category, description, result, is_visible, image_base64, image_name, external_url } = body;
+      const { title, category, description, result, is_visible, image_base64, image_name, external_url, image_url: providedImageUrl } = body;
       if (!title) {
         return new Response(JSON.stringify({ error: "Titel ist erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -305,8 +337,8 @@ Deno.serve(async (req) => {
         .limit(1);
       const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
 
-      let image_url = "";
-      if (image_base64 && image_name) {
+      let image_url = typeof providedImageUrl === "string" ? providedImageUrl : "";
+      if (!image_url && image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;
@@ -331,7 +363,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "portfolio-update") {
-      const { projectId, title, category, description, result, is_visible, image_base64, image_name, external_url } = body;
+      const { projectId, title, category, description, result, is_visible, image_base64, image_name, external_url, image_url: providedImageUrl } = body;
       if (!projectId) {
         return new Response(JSON.stringify({ error: "Projekt-ID fehlt" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -346,7 +378,9 @@ Deno.serve(async (req) => {
       if (is_visible !== undefined) updates.is_visible = is_visible;
       if (external_url !== undefined) updates.external_url = external_url;
 
-      if (image_base64 && image_name) {
+      if (typeof providedImageUrl === "string" && providedImageUrl) {
+        updates.image_url = providedImageUrl;
+      } else if (image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;
@@ -542,7 +576,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "vorschau-demo-create") {
-      const { trade, company, description, is_visible, image_base64, image_name, portfolio_project_id } = body;
+      const { trade, company, description, is_visible, image_base64, image_name, portfolio_project_id, image_url: providedImageUrl } = body;
       if (!company) {
         return new Response(JSON.stringify({ error: "company ist erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -553,8 +587,8 @@ Deno.serve(async (req) => {
         .order("sort_order", { ascending: false }).limit(1);
       const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
 
-      let image_url = "";
-      if (image_base64 && image_name) {
+      let image_url = typeof providedImageUrl === "string" ? providedImageUrl : "";
+      if (!image_url && image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;
@@ -578,7 +612,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "vorschau-demo-update") {
-      const { demoId, trade, company, description, is_visible, image_base64, image_name, portfolio_project_id } = body;
+      const { demoId, trade, company, description, is_visible, image_base64, image_name, portfolio_project_id, image_url: providedImageUrl } = body;
       if (!demoId) {
         return new Response(JSON.stringify({ error: "demoId fehlt" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -590,7 +624,9 @@ Deno.serve(async (req) => {
       if (description !== undefined) updates.description = description;
       if (is_visible !== undefined) updates.is_visible = is_visible;
       if (portfolio_project_id !== undefined) updates.portfolio_project_id = portfolio_project_id || null;
-      if (image_base64 && image_name) {
+      if (typeof providedImageUrl === "string" && providedImageUrl) {
+        updates.image_url = providedImageUrl;
+      } else if (image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;

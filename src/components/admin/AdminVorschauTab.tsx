@@ -73,13 +73,29 @@ type PortfolioProject = {
   sort_order: number;
 };
 
-const fileToBase64 = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve((reader.result as string).split(",")[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+// Lädt eine Datei direkt in den Storage-Bucket (signierte URL).
+// Vermeidet, dass große Bilder als Base64 durch die Edge Function laufen.
+const uploadFileToBucket = async (
+  password: string,
+  file: File,
+  bucket: "portfolio-images" | "vorschau-demos",
+): Promise<string> => {
+  const { data, error } = await supabase.functions.invoke("admin-leads", {
+    body: { password, action: "get-upload-url", bucket, fileName: file.name },
   });
+  if (error || !data?.signedUrl) {
+    throw new Error(data?.error || "Upload-URL konnte nicht erstellt werden");
+  }
+  const uploadRes = await fetch(data.signedUrl, {
+    method: "PUT",
+    headers: { "Content-Type": file.type || "application/octet-stream" },
+    body: file,
+  });
+  if (!uploadRes.ok) {
+    throw new Error(`Upload fehlgeschlagen (${uploadRes.status})`);
+  }
+  return data.publicUrl as string;
+};
 
 // Datetime-local helper (keeps local timezone)
 const isoToLocal = (iso: string | null | undefined): string => {
@@ -195,11 +211,15 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       return;
     }
     setSavingDemo(true);
-    let image_base64: string | undefined;
-    let image_name: string | undefined;
+    let uploadedImageUrl: string | undefined;
     if (demoImageFile) {
-      image_base64 = await fileToBase64(demoImageFile);
-      image_name = demoImageFile.name;
+      try {
+        uploadedImageUrl = await uploadFileToBucket(password, demoImageFile, "vorschau-demos");
+      } catch (e) {
+        setSavingDemo(false);
+        toast.error(e instanceof Error ? e.message : "Bild-Upload fehlgeschlagen");
+        return;
+      }
     }
     const action = editingDemo ? "vorschau-demo-update" : "vorschau-demo-create";
     const { data, error } = await supabase.functions.invoke("admin-leads", {
@@ -208,7 +228,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         ...(editingDemo ? { demoId: editingDemo.id } : {}),
         ...demoForm,
         portfolio_project_id: demoForm.portfolio_project_id || null,
-        ...(image_base64 ? { image_base64, image_name } : {}),
+        ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
       },
     });
     setSavingDemo(false);
