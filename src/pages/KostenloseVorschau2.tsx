@@ -1486,11 +1486,20 @@ const KostenloseVorschau2 = () => {
       <section id="formular" className="py-16 sm:py-20 bg-secondary/30 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">Jetzt deinen Platz sichern</h2>
-            {(settings?.show_slots ?? true) && <SlotPill total={totalSlots} taken={takenSlots} />}
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              {isWaitlist ? `Jetzt für ${nextMonthLabel} vormerken lassen` : "Jetzt deinen Platz sichern"}
+            </h2>
+            {isWaitlist ? (
+              <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 px-4 py-1.5 text-sm font-semibold">
+                <CalendarClock className="w-4 h-4" />
+                {monatName} ist ausgebucht – Warteliste für {nextMonthLabel}
+              </div>
+            ) : (
+              (settings?.show_slots ?? true) && <SlotPill total={totalSlots} taken={takenSlots} />
+            )}
           </div>
           <div className="max-w-2xl mx-auto">
-            <MultiStepForm />
+            <MultiStepForm isWaitlist={isWaitlist} nextMonthLabel={nextMonthLabel} />
           </div>
         </div>
       </section>
