@@ -117,7 +117,7 @@ Deno.serve(async (req) => {
       const path = `${crypto.randomUUID()}.${ext}`;
       const { data: signed, error: signErr } = await supabase.storage
         .from(bucket)
-        .createSignedUploadURL(path);
+        .createSignedUploadUrl(path);
       if (signErr || !signed) {
         return new Response(JSON.stringify({ error: signErr?.message || "Upload-URL konnte nicht erstellt werden" }), {
           status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
