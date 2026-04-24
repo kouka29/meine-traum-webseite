@@ -813,6 +813,24 @@ const MultiStepForm = () => {
   const [bookingMode, setBookingMode] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [leadId, setLeadId] = useState<string | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const isFirstRender = useRef(true);
+
+  // Smoothly scroll the form card to a comfortable position below the sticky
+  // header whenever the active step or sub-screen changes (mobile especially
+  // landed too far down because the card grew/shrank while the scroll
+  // position stayed put).
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const el = cardRef.current;
+    if (!el) return;
+    const headerOffset = 80; // sticky header (h-16) + small breathing room
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  }, [state.step, done, bookingMode, bookingConfirmed]);
 
   // Hydrate from localStorage
   useEffect(() => {
@@ -984,7 +1002,10 @@ const MultiStepForm = () => {
   const progressPct = (state.step / 5) * 100;
 
   return (
-    <div className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8">
+    <div
+      ref={cardRef}
+      className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8 scroll-mt-20"
+    >
       {/* Progress */}
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-medium mb-2">
