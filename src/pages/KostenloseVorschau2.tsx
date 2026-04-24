@@ -1665,10 +1665,14 @@ const KostenloseVorschau2 = () => {
               </div>
             )}
             <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight">
-              {settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut."}
+              {isWaitlist
+                ? `${monatName} ist ausgebucht – sichere dir ${nextMonthLabel}.`
+                : (settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut.")}
             </h2>
             <p className="text-base sm:text-xl text-primary-foreground/85 mb-8">
-              {settings?.final_cta_subtext ?? "Deine kostenlose Webseiten-Vorschau wartet."}
+              {isWaitlist
+                ? `Lass dich auf die Warteliste setzen – sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir.`
+                : (settings?.final_cta_subtext ?? "Deine kostenlose Webseiten-Vorschau wartet.")}
             </p>
             <Button
               size="lg"
@@ -1676,7 +1680,10 @@ const KostenloseVorschau2 = () => {
               onClick={scrollToForm}
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-xl"
             >
-              {settings?.final_cta_button ?? "Jetzt letzten Platz sichern"} <ArrowRight className="ml-2 w-5 h-5" />
+              {isWaitlist
+                ? `Auf die ${nextMonthLabel}-Warteliste`
+                : (settings?.final_cta_button ?? "Jetzt letzten Platz sichern")}
+              {" "}<ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </div>
         </div>
