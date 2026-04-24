@@ -869,45 +869,36 @@ const MultiStepForm = () => {
       if (leadError) throw leadError;
       setLeadId(newLeadId);
 
-      // Webhook-Platzhalter (silently fail)
-      try {
-        await fetch("https://webhook.site/placeholder", {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(state),
-        });
-      } catch {
-        /* ignore */
-      }
+      // Webhook + E-Mail-Benachrichtigung im Hintergrund (UI nicht blockieren)
+      void fetch("https://webhook.site/placeholder", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(state),
+      }).catch(() => {});
 
-      // E-Mail-Benachrichtigung
-      try {
-        await supabase.functions.invoke("send-transactional-email", {
-          body: {
-            templateName: "lead-notification",
-            idempotencyKey: `vorschau2-${newLeadId}`,
-            templateData: {
-              source: "Kostenlose Vorschau 2 (Multi-Step)",
-              firstName: state.firstName,
-              companyName: state.company,
-              email: state.email,
-              phone: state.phone,
-              trade: state.trade === "Sonstiges" && state.tradeOther
-                ? `Sonstiges: ${state.tradeOther}`
-                : state.trade,
-              hasWebsite: state.hasWebsite,
-              goals: state.goals.join(", "),
-              urgency: state.urgency,
-              website: state.currentWebsite || "Nicht angegeben",
-              message: state.notes || "",
-              submittedAt: new Date().toLocaleString("de-DE"),
-            },
+      void supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "lead-notification",
+          idempotencyKey: `vorschau2-${newLeadId}`,
+          templateData: {
+            source: "Kostenlose Vorschau 2 (Multi-Step)",
+            firstName: state.firstName,
+            companyName: state.company,
+            email: state.email,
+            phone: state.phone,
+            trade: state.trade === "Sonstiges" && state.tradeOther
+              ? `Sonstiges: ${state.tradeOther}`
+              : state.trade,
+            hasWebsite: state.hasWebsite,
+            goals: state.goals.join(", "),
+            urgency: state.urgency,
+            website: state.currentWebsite || "Nicht angegeben",
+            message: state.notes || "",
+            submittedAt: new Date().toLocaleString("de-DE"),
           },
-        });
-      } catch {
-        /* ignore */
-      }
+        },
+      }).catch(() => {});
 
       localStorage.removeItem(STORAGE_KEY);
       setDone(true);
