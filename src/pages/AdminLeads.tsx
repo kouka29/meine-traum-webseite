@@ -11,7 +11,7 @@ import {
   Building2, BarChart3, Users, Eye, TrendingUp, Monitor, Smartphone,
   Tablet, Globe, Clock, FileDown, ArrowUpRight, Image, Plus, Pencil,
   ChevronUp, ChevronDown, EyeOff, FolderOpen, Star, MessageSquare, Sparkles,
-  CheckCircle2
+  CheckCircle2, Briefcase, Target, Flame, Link as LinkIcon, FileText
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
