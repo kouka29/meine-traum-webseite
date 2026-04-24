@@ -108,12 +108,19 @@ export type Database = {
           company_name: string
           contact_method: string | null
           created_at: string
+          current_website: string | null
           email: string
           first_name: string
+          goals: string[] | null
+          has_website: string | null
           id: string
+          notes: string | null
           phone: string
           slot_reserved: boolean
           status: string
+          trade: string | null
+          trade_other: string | null
+          urgency: string | null
         }
         Insert: {
           booking_date?: string | null
@@ -121,12 +128,19 @@ export type Database = {
           company_name?: string
           contact_method?: string | null
           created_at?: string
+          current_website?: string | null
           email: string
           first_name: string
+          goals?: string[] | null
+          has_website?: string | null
           id?: string
+          notes?: string | null
           phone: string
           slot_reserved?: boolean
           status?: string
+          trade?: string | null
+          trade_other?: string | null
+          urgency?: string | null
         }
         Update: {
           booking_date?: string | null
@@ -134,12 +148,19 @@ export type Database = {
           company_name?: string
           contact_method?: string | null
           created_at?: string
+          current_website?: string | null
           email?: string
           first_name?: string
+          goals?: string[] | null
+          has_website?: string | null
           id?: string
+          notes?: string | null
           phone?: string
           slot_reserved?: boolean
           status?: string
+          trade?: string | null
+          trade_other?: string | null
+          urgency?: string | null
         }
         Relationships: []
       }

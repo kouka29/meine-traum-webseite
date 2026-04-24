@@ -854,6 +854,13 @@ const MultiStepForm = () => {
           email: state.email,
           phone: state.phone.trim(),
           company_name: state.company || "",
+          trade: state.trade || null,
+          trade_other: state.tradeOther || null,
+          has_website: state.hasWebsite || null,
+          goals: state.goals.length > 0 ? state.goals : null,
+          urgency: state.urgency || null,
+          current_website: state.currentWebsite || null,
+          notes: state.notes || null,
         });
 
       if (leadError) throw leadError;
