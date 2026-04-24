@@ -35,6 +35,13 @@ interface Lead {
   contact_method: string | null;
   status: "new" | "qualified" | "rejected" | "customer";
   slot_reserved: boolean;
+  trade: string | null;
+  trade_other: string | null;
+  has_website: string | null;
+  goals: string[] | null;
+  urgency: string | null;
+  current_website: string | null;
+  notes: string | null;
 }
 
 interface Analytics {
