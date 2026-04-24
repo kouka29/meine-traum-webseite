@@ -323,7 +323,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "portfolio-create") {
-      const { title, category, description, result, is_visible, image_base64, image_name, external_url } = body;
+      const { title, category, description, result, is_visible, image_base64, image_name, external_url, image_url: providedImageUrl } = body;
       if (!title) {
         return new Response(JSON.stringify({ error: "Titel ist erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -337,8 +337,8 @@ Deno.serve(async (req) => {
         .limit(1);
       const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
 
-      let image_url = "";
-      if (image_base64 && image_name) {
+      let image_url = typeof providedImageUrl === "string" ? providedImageUrl : "";
+      if (!image_url && image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;
@@ -363,7 +363,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "portfolio-update") {
-      const { projectId, title, category, description, result, is_visible, image_base64, image_name, external_url } = body;
+      const { projectId, title, category, description, result, is_visible, image_base64, image_name, external_url, image_url: providedImageUrl } = body;
       if (!projectId) {
         return new Response(JSON.stringify({ error: "Projekt-ID fehlt" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -378,7 +378,9 @@ Deno.serve(async (req) => {
       if (is_visible !== undefined) updates.is_visible = is_visible;
       if (external_url !== undefined) updates.external_url = external_url;
 
-      if (image_base64 && image_name) {
+      if (typeof providedImageUrl === "string" && providedImageUrl) {
+        updates.image_url = providedImageUrl;
+      } else if (image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;
