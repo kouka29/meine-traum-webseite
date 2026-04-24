@@ -35,6 +35,7 @@ interface Lead {
   contact_method: string | null;
   status: "new" | "qualified" | "rejected" | "customer";
   slot_reserved: boolean;
+  is_waitlist?: boolean;
   trade: string | null;
   trade_other: string | null;
   has_website: string | null;
