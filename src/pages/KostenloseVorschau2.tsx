@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, FormEvent, useCallback } from "react";
+import { useEffect, useState, useMemo, FormEvent, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -443,6 +443,18 @@ const SuccessScreen = ({
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
+  const screenRef = useRef<HTMLDivElement | null>(null);
+
+  // Whenever the success screen mounts or switches sub-state (booking
+  // selector, confirmation), pull the user back up so they see the new
+  // headline instead of being stuck mid-page on mobile.
+  useEffect(() => {
+    const el = screenRef.current;
+    if (!el) return;
+    const headerOffset = 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  }, [bookingMode, bookingConfirmed]);
 
   const confirmBooking = async () => {
     if (!bookingDate || !bookingTime || !contactMethod) {
@@ -537,7 +549,7 @@ const SuccessScreen = ({
     const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
     const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
     return (
-      <div className="text-center py-8 px-2 sm:px-4">
+      <div ref={screenRef} className="text-center py-8 px-2 sm:px-4 scroll-mt-20">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
         </div>
@@ -581,7 +593,7 @@ const SuccessScreen = ({
   // Booking-Modus: Datum + Uhrzeit auswählen
   if (bookingMode) {
     return (
-      <div className="py-2 px-1 sm:px-2">
+      <div ref={screenRef} className="py-2 px-1 sm:px-2 scroll-mt-20">
         <div className="text-center mb-6">
           <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
             <CalendarIcon className="w-7 h-7 text-primary" />
@@ -695,7 +707,7 @@ const SuccessScreen = ({
 
   // Standard-Erfolgs-Screen mit beiden Optionen
   return (
-    <div className="py-6 px-2 sm:px-4">
+    <div ref={screenRef} className="py-6 px-2 sm:px-4 scroll-mt-20">
       <div className="text-center mb-8">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-5 animate-in zoom-in duration-500">
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
@@ -813,6 +825,24 @@ const MultiStepForm = () => {
   const [bookingMode, setBookingMode] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [leadId, setLeadId] = useState<string | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const isFirstRender = useRef(true);
+
+  // Smoothly scroll the form card to a comfortable position below the sticky
+  // header whenever the active step or sub-screen changes (mobile especially
+  // landed too far down because the card grew/shrank while the scroll
+  // position stayed put).
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const el = cardRef.current;
+    if (!el) return;
+    const headerOffset = 80; // sticky header (h-16) + small breathing room
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  }, [state.step, done, bookingMode, bookingConfirmed]);
 
   // Hydrate from localStorage
   useEffect(() => {
@@ -984,7 +1014,10 @@ const MultiStepForm = () => {
   const progressPct = (state.step / 5) * 100;
 
   return (
-    <div className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8">
+    <div
+      ref={cardRef}
+      className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8 scroll-mt-20"
+    >
       {/* Progress */}
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-medium mb-2">
