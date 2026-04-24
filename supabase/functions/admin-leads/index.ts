@@ -100,6 +100,38 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    // =================== SIGNED UPLOAD URL ===================
+    // Liefert eine signierte URL, mit der der Browser direkt in den
+    // Storage-Bucket hochladen kann. Das vermeidet, dass große Bilder
+    // als Base64 durch die Edge Function laufen (Memory-Limit / 546).
+    if (action === "get-upload-url") {
+      const { bucket, fileName } = body as { bucket?: string; fileName?: string };
+      const allowedBuckets = ["portfolio-images", "vorschau-demos"];
+      if (!bucket || !allowedBuckets.includes(bucket)) {
+        return new Response(JSON.stringify({ error: "Ungültiger Bucket" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const safeName = (fileName || "upload").replace(/[^a-zA-Z0-9._-]/g, "_");
+      const ext = safeName.includes(".") ? safeName.split(".").pop() : "jpg";
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { data: signed, error: signErr } = await supabase.storage
+        .from(bucket)
+        .createSignedUploadURL(path);
+      if (signErr || !signed) {
+        return new Response(JSON.stringify({ error: signErr?.message || "Upload-URL konnte nicht erstellt werden" }), {
+          status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data: publicData } = supabase.storage.from(bucket).getPublicUrl(path);
+      return new Response(JSON.stringify({
+        path,
+        token: signed.token,
+        signedUrl: signed.signedUrl,
+        publicUrl: publicData.publicUrl,
+      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+
     // =================== LEADS ===================
     if (action === "list") {
       const { data, error } = await supabase
