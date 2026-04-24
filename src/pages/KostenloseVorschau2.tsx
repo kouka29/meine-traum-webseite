@@ -719,11 +719,16 @@ const SuccessScreen = ({
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-2">
-          Danke {firstName}! Deine Anfrage ist da. 🙌
+          {isWaitlist
+            ? `Danke ${firstName}! Du stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
+            : `Danke ${firstName}! Deine Anfrage ist da. 🙌`}
         </h3>
         <p className="text-muted-foreground max-w-md mx-auto">
-          Wir melden uns kurz telefonisch, um zu schauen, ob es passt –
-          dann sichern wir deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.
+          {isWaitlist ? (
+            <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei dir. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+          ) : (
+            <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+          )}
         </p>
       </div>
 
