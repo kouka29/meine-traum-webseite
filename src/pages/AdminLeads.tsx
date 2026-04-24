@@ -321,16 +321,28 @@ const AdminLeads = () => {
     setShowProjectDialog(true);
   };
 
-  const fileToBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        resolve(result.split(",")[1]);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+  // Lädt eine Datei direkt in den Storage-Bucket über eine signierte
+  // Upload-URL. Das umgeht den Edge-Function-Memory (sonst 546-Fehler).
+  const uploadFileToBucket = async (
+    file: File,
+    bucket: "portfolio-images" | "vorschau-demos",
+  ): Promise<string> => {
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "get-upload-url", bucket, fileName: file.name },
     });
+    if (error || !data?.signedUrl) {
+      throw new Error(data?.error || "Upload-URL konnte nicht erstellt werden");
+    }
+    const uploadRes = await fetch(data.signedUrl, {
+      method: "PUT",
+      headers: { "Content-Type": file.type || "application/octet-stream" },
+      body: file,
+    });
+    if (!uploadRes.ok) {
+      throw new Error(`Upload fehlgeschlagen (${uploadRes.status})`);
+    }
+    return data.publicUrl as string;
+  };
 
   const saveProject = async () => {
     if (!projectForm.title.trim()) {
@@ -339,11 +351,15 @@ const AdminLeads = () => {
     }
     setSavingProject(true);
 
-    let image_base64: string | undefined;
-    let image_name: string | undefined;
+    let uploadedImageUrl: string | undefined;
     if (imageFile) {
-      image_base64 = await fileToBase64(imageFile);
-      image_name = imageFile.name;
+      try {
+        uploadedImageUrl = await uploadFileToBucket(imageFile, "portfolio-images");
+      } catch (e) {
+        setSavingProject(false);
+        toast.error(e instanceof Error ? e.message : "Bild-Upload fehlgeschlagen");
+        return;
+      }
     }
 
     const action = editingProject ? "portfolio-update" : "portfolio-create";
@@ -352,7 +368,7 @@ const AdminLeads = () => {
         password, action,
         ...(editingProject ? { projectId: editingProject.id } : {}),
         ...projectForm,
-        ...(image_base64 ? { image_base64, image_name } : {}),
+        ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
       },
     });
 
