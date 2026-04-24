@@ -880,78 +880,76 @@ const AdminLeads = () => {
                       </div>
                     </div>
                     {/* Funnel-Antworten: Branche, Webseite, Ziele, Dringlichkeit, Notizen */}
-                    {(lead.trade || lead.has_website || (lead.goals && lead.goals.length > 0) || lead.urgency || lead.current_website || lead.notes) && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-3 border-t border-border text-sm">
-                        {lead.trade && (
-                          <div className="flex items-start gap-2">
-                            <Briefcase size={14} className="text-primary mt-0.5 shrink-0" />
-                            <div>
-                              <div className="text-xs text-muted-foreground uppercase tracking-wide">Branche</div>
-                              <div className="text-foreground">
-                                {lead.trade === "Sonstiges" && lead.trade_other ? `Sonstiges: ${lead.trade_other}` : lead.trade}
-                              </div>
-                            </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-3 border-t border-border text-sm">
+                      <div className="flex items-start gap-2">
+                        <Briefcase size={14} className="text-primary mt-0.5 shrink-0" />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Branche</div>
+                          <div className="text-foreground">
+                            {lead.trade
+                              ? lead.trade === "Sonstiges" && lead.trade_other
+                                ? `Sonstiges: ${lead.trade_other}`
+                                : lead.trade
+                              : "Nicht angegeben"}
                           </div>
-                        )}
-                        {lead.has_website && (
-                          <div className="flex items-start gap-2">
-                            <Globe size={14} className="text-primary mt-0.5 shrink-0" />
-                            <div>
-                              <div className="text-xs text-muted-foreground uppercase tracking-wide">Aktuelle Webseite</div>
-                              <div className="text-foreground">{lead.has_website}</div>
-                            </div>
-                          </div>
-                        )}
-                        {lead.goals && lead.goals.length > 0 && (
-                          <div className="flex items-start gap-2">
-                            <Target size={14} className="text-primary mt-0.5 shrink-0" />
-                            <div>
-                              <div className="text-xs text-muted-foreground uppercase tracking-wide">Wichtigste Ziele</div>
-                              <div className="flex flex-wrap gap-1 mt-0.5">
-                                {lead.goals.map((g) => (
-                                  <span key={g} className="inline-flex items-center rounded-full bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 text-xs">
-                                    {g}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                        {lead.urgency && (
-                          <div className="flex items-start gap-2">
-                            <Flame size={14} className="text-primary mt-0.5 shrink-0" />
-                            <div>
-                              <div className="text-xs text-muted-foreground uppercase tracking-wide">Dringlichkeit</div>
-                              <div className="text-foreground">{lead.urgency}</div>
-                            </div>
-                          </div>
-                        )}
-                        {lead.current_website && (
-                          <div className="flex items-start gap-2 md:col-span-2">
-                            <LinkIcon size={14} className="text-primary mt-0.5 shrink-0" />
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs text-muted-foreground uppercase tracking-wide">Webseiten-URL</div>
-                              <a
-                                href={lead.current_website.startsWith("http") ? lead.current_website : `https://${lead.current_website}`}
-                                target="_blank" rel="noopener noreferrer"
-                                className="text-primary hover:underline break-all"
-                              >
-                                {lead.current_website}
-                              </a>
-                            </div>
-                          </div>
-                        )}
-                        {lead.notes && (
-                          <div className="flex items-start gap-2 md:col-span-2">
-                            <FileText size={14} className="text-primary mt-0.5 shrink-0" />
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs text-muted-foreground uppercase tracking-wide">Sonstige Anmerkungen</div>
-                              <div className="text-foreground whitespace-pre-wrap break-words">{lead.notes}</div>
-                            </div>
-                          </div>
-                        )}
+                        </div>
                       </div>
-                    )}
+                      <div className="flex items-start gap-2">
+                        <Globe size={14} className="text-primary mt-0.5 shrink-0" />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Aktuelle Webseite</div>
+                          <div className="text-foreground">{lead.has_website || "Nicht angegeben"}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Target size={14} className="text-primary mt-0.5 shrink-0" />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Wichtigste Ziele</div>
+                          {lead.goals && lead.goals.length > 0 ? (
+                            <div className="flex flex-wrap gap-1 mt-0.5">
+                              {lead.goals.map((g) => (
+                                <span key={g} className="inline-flex items-center rounded-full bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 text-xs">
+                                  {g}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="text-foreground">Nicht angegeben</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Flame size={14} className="text-primary mt-0.5 shrink-0" />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Dringlichkeit</div>
+                          <div className="text-foreground">{lead.urgency || "Nicht angegeben"}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2 md:col-span-2">
+                        <LinkIcon size={14} className="text-primary mt-0.5 shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Webseiten-URL</div>
+                          {lead.current_website ? (
+                            <a
+                              href={lead.current_website.startsWith("http") ? lead.current_website : `https://${lead.current_website}`}
+                              target="_blank" rel="noopener noreferrer"
+                              className="text-primary hover:underline break-all"
+                            >
+                              {lead.current_website}
+                            </a>
+                          ) : (
+                            <div className="text-foreground">Nicht angegeben</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2 md:col-span-2">
+                        <FileText size={14} className="text-primary mt-0.5 shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Sonstige Anmerkungen</div>
+                          <div className="text-foreground whitespace-pre-wrap break-words">{lead.notes || "Nicht angegeben"}</div>
+                        </div>
+                      </div>
+                    </div>
                     {(lead.booking_date || lead.booking_time || lead.contact_method) ? (
                       <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 text-xs font-semibold">
