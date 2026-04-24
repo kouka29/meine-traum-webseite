@@ -35,6 +35,7 @@ interface Lead {
   contact_method: string | null;
   status: "new" | "qualified" | "rejected" | "customer";
   slot_reserved: boolean;
+  is_waitlist?: boolean;
   trade: string | null;
   trade_other: string | null;
   has_website: string | null;
@@ -121,7 +122,7 @@ const AdminLeads = () => {
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "vorschau">("dashboard");
-  const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer">("all");
+  const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer" | "waitlist">("all");
   const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
 
   // Portfolio state
@@ -798,13 +799,16 @@ const AdminLeads = () => {
               {([
                 { key: "all", label: "Alle" },
                 { key: "new", label: "Neu" },
+                { key: "waitlist", label: "Warteliste" },
                 { key: "qualified", label: "Qualifiziert" },
                 { key: "rejected", label: "Abgelehnt" },
                 { key: "customer", label: "Kunden" },
               ] as const).map((f) => {
                 const count = f.key === "all"
                   ? leads.length
-                  : leads.filter((l) => (l.status || "new") === f.key).length;
+                  : f.key === "waitlist"
+                    ? leads.filter((l) => l.is_waitlist).length
+                    : leads.filter((l) => (l.status || "new") === f.key).length;
                 return (
                   <button
                     key={f.key}
@@ -825,7 +829,11 @@ const AdminLeads = () => {
             ) : (
               <div className="grid gap-4">
                 {leads
-                  .filter((l) => leadStatusFilter === "all" || (l.status || "new") === leadStatusFilter)
+                  .filter((l) => {
+                    if (leadStatusFilter === "all") return true;
+                    if (leadStatusFilter === "waitlist") return !!l.is_waitlist;
+                    return (l.status || "new") === leadStatusFilter;
+                  })
                   .map((lead) => {
                   const status = lead.status || "new";
                   const statusMeta: Record<string, { label: string; cls: string }> = {
@@ -853,6 +861,11 @@ const AdminLeads = () => {
                       <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${meta.cls}`}>
                         ● {meta.label}
                       </span>
+                      {lead.is_waitlist && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 px-2.5 py-1 text-xs font-medium">
+                          📋 Warteliste – nächster Monat
+                        </span>
+                      )}
                       {lead.slot_reserved && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
                           <CheckCircle2 size={11} /> Platz reserviert

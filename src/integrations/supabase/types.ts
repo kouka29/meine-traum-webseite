@@ -114,6 +114,7 @@ export type Database = {
           goals: string[] | null
           has_website: string | null
           id: string
+          is_waitlist: boolean
           notes: string | null
           phone: string
           slot_reserved: boolean
@@ -134,6 +135,7 @@ export type Database = {
           goals?: string[] | null
           has_website?: string | null
           id?: string
+          is_waitlist?: boolean
           notes?: string | null
           phone: string
           slot_reserved?: boolean
@@ -154,6 +156,7 @@ export type Database = {
           goals?: string[] | null
           has_website?: string | null
           id?: string
+          is_waitlist?: boolean
           notes?: string | null
           phone?: string
           slot_reserved?: boolean

@@ -415,6 +415,8 @@ type SuccessScreenProps = {
   setContactMethod: (v: "phone" | "online") => void;
   bookingConfirmed: boolean;
   setBookingConfirmed: (v: boolean) => void;
+  isWaitlist: boolean;
+  nextMonthLabel: string;
 };
 
 const SuccessScreen = ({
@@ -440,6 +442,8 @@ const SuccessScreen = ({
   setContactMethod,
   bookingConfirmed,
   setBookingConfirmed,
+  isWaitlist,
+  nextMonthLabel,
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
@@ -551,7 +555,9 @@ const SuccessScreen = ({
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-3">
-          Danke {firstName}! Dein Termin steht – Platz vorgemerkt.
+          {isWaitlist
+            ? `Danke ${firstName}! Dein Wunschtermin ist auf der ${nextMonthLabel}-Warteliste.`
+            : `Danke ${firstName}! Dein Termin steht – Platz vorgemerkt.`}
         </h3>
         <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
           <CalendarIcon className="w-4 h-4" />
@@ -561,7 +567,10 @@ const SuccessScreen = ({
           {methodLabel}
         </div>
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
-          Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>. Dein Platz ist für dich vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner.
+          Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.{" "}
+          {isWaitlist
+            ? `Sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir, um den Termin zu bestätigen.`
+            : "Dein Platz ist für dich vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
         </p>
         <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
           <p className="font-bold mb-4 text-center">So geht's weiter:</p>
@@ -710,11 +719,16 @@ const SuccessScreen = ({
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-2">
-          Danke {firstName}! Deine Anfrage ist da. 🙌
+          {isWaitlist
+            ? `Danke ${firstName}! Du stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
+            : `Danke ${firstName}! Deine Anfrage ist da. 🙌`}
         </h3>
         <p className="text-muted-foreground max-w-md mx-auto">
-          Wir melden uns kurz telefonisch, um zu schauen, ob es passt –
-          dann sichern wir deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.
+          {isWaitlist ? (
+            <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei dir. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+          ) : (
+            <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+          )}
         </p>
       </div>
 
@@ -815,7 +829,12 @@ const SuccessScreen = ({
   );
 };
 
-const MultiStepForm = () => {
+type MultiStepFormProps = {
+  isWaitlist: boolean;
+  nextMonthLabel: string;
+};
+
+const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -901,6 +920,7 @@ const MultiStepForm = () => {
           urgency: state.urgency || null,
           current_website: state.currentWebsite || null,
           notes: state.notes || null,
+          is_waitlist: isWaitlist,
         });
 
       if (leadError) throw leadError;
@@ -1004,6 +1024,8 @@ const MultiStepForm = () => {
         setContactMethod={updateContactMethod}
         bookingConfirmed={bookingConfirmed}
         setBookingConfirmed={setBookingConfirmed}
+        isWaitlist={isWaitlist}
+        nextMonthLabel={nextMonthLabel}
       />
     );
   }
@@ -1265,6 +1287,13 @@ const KostenloseVorschau2 = () => {
     () => new Date().toLocaleDateString("de-DE", { month: "long" }),
     [],
   );
+  const nextMonthLabel = useMemo(() => {
+    const d = new Date();
+    d.setDate(1);
+    d.setMonth(d.getMonth() + 1);
+    return d.toLocaleDateString("de-DE", { month: "long" });
+  }, []);
+  const isWaitlist = remainingSlots <= 0;
   // Fallbacks: wenn DB-Listen leer, nutze hardcoded Defaults
   const activeDemos = dbDemos.length > 0
     ? dbDemos.map(d => {
@@ -1285,11 +1314,13 @@ const KostenloseVorschau2 = () => {
   const activeFaqs = dbFaqs.length > 0
     ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
     : faqs;
-  const heroBadge = (settings?.hero_badge_text ?? "Nur noch {remaining} von {total} Plätzen im {month} verfügbar")
-    .replace("{remaining}", String(remainingSlots))
-    .replace("{total}", String(totalSlots))
-    .replace("{taken}", String(takenSlots))
-    .replace("{month}", monatName);
+  const heroBadge = isWaitlist
+    ? `Alle Plätze im ${monatName} vergeben – sichere dir jetzt einen Platz für ${nextMonthLabel}`
+    : (settings?.hero_badge_text ?? "Nur noch {remaining} von {total} Plätzen im {month} verfügbar")
+        .replace("{remaining}", String(remainingSlots))
+        .replace("{total}", String(totalSlots))
+        .replace("{taken}", String(takenSlots))
+        .replace("{month}", monatName);
 
   const scrollToForm = () => {
     document.getElementById("formular")?.scrollIntoView({ behavior: "smooth" });
@@ -1370,7 +1401,10 @@ const KostenloseVorschau2 = () => {
               onClick={scrollToForm}
               className="text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-lg hover:shadow-xl transition-shadow"
             >
-              {settings?.hero_cta_label ?? "Jetzt kostenlose Vorschau sichern"} <ArrowRight className="ml-2 w-5 h-5" />
+              {isWaitlist
+                ? `Jetzt für ${nextMonthLabel} vormerken lassen`
+                : (settings?.hero_cta_label ?? "Jetzt kostenlose Vorschau sichern")}
+              {" "}<ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 
             {/* Social Proof: 150+ Webseiten */}
@@ -1465,11 +1499,20 @@ const KostenloseVorschau2 = () => {
       <section id="formular" className="py-16 sm:py-20 bg-secondary/30 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">Jetzt deinen Platz sichern</h2>
-            {(settings?.show_slots ?? true) && <SlotPill total={totalSlots} taken={takenSlots} />}
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              {isWaitlist ? `Jetzt für ${nextMonthLabel} vormerken lassen` : "Jetzt deinen Platz sichern"}
+            </h2>
+            {isWaitlist ? (
+              <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 px-4 py-1.5 text-sm font-semibold">
+                <CalendarClock className="w-4 h-4" />
+                {monatName} ist ausgebucht – Warteliste für {nextMonthLabel}
+              </div>
+            ) : (
+              (settings?.show_slots ?? true) && <SlotPill total={totalSlots} taken={takenSlots} />
+            )}
           </div>
           <div className="max-w-2xl mx-auto">
-            <MultiStepForm />
+            <MultiStepForm isWaitlist={isWaitlist} nextMonthLabel={nextMonthLabel} />
           </div>
         </div>
       </section>
@@ -1632,10 +1675,14 @@ const KostenloseVorschau2 = () => {
               </div>
             )}
             <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight">
-              {settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut."}
+              {isWaitlist
+                ? `${monatName} ist ausgebucht – sichere dir ${nextMonthLabel}.`
+                : (settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut.")}
             </h2>
             <p className="text-base sm:text-xl text-primary-foreground/85 mb-8">
-              {settings?.final_cta_subtext ?? "Deine kostenlose Webseiten-Vorschau wartet."}
+              {isWaitlist
+                ? `Lass dich auf die Warteliste setzen – sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir.`
+                : (settings?.final_cta_subtext ?? "Deine kostenlose Webseiten-Vorschau wartet.")}
             </p>
             <Button
               size="lg"
@@ -1643,7 +1690,10 @@ const KostenloseVorschau2 = () => {
               onClick={scrollToForm}
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-xl"
             >
-              {settings?.final_cta_button ?? "Jetzt letzten Platz sichern"} <ArrowRight className="ml-2 w-5 h-5" />
+              {isWaitlist
+                ? `Auf die ${nextMonthLabel}-Warteliste`
+                : (settings?.final_cta_button ?? "Jetzt letzten Platz sichern")}
+              {" "}<ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </div>
         </div>
