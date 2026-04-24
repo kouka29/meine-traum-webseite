@@ -105,7 +105,8 @@ Deno.serve(async (req) => {
       const { data, error } = await supabase
         .from("leads")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .limit(500);
       if (error) throw error;
       return new Response(JSON.stringify({ leads: data }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
