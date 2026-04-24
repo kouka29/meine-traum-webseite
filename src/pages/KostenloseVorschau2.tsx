@@ -453,70 +453,81 @@ const SuccessScreen = ({
     const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
     const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
 
-    // 1. Buchung im Lead-Record speichern (im Hintergrund, UI nicht blockieren)
-    if (leadId) {
-      void supabase
-        .from("leads")
-        .update({
-          booking_date: bookingDate,
-          booking_time: bookingTime,
-          contact_method: contactMethod,
-          status: "qualified",
-          slot_reserved: true,
-        })
-        .eq("id", leadId)
-        .then(({ error }) => {
-          if (error) console.error("Lead-Update fehlgeschlagen", error);
-        });
-      // Platz im Counter automatisch reservieren (Hintergrund)
-      void supabase.rpc("increment_taken_slot").then(({ error }) => {
-        if (error) console.error("Slot-Increment fehlgeschlagen", error);
-      });
+    try {
+      // 1. Buchung + alle Funnel-Daten verlässlich speichern, bevor die Bestätigung gezeigt wird
+      if (leadId) {
+        const { error: updateError } = await supabase
+          .from("leads")
+          .update({
+            booking_date: bookingDate,
+            booking_time: bookingTime,
+            contact_method: contactMethod,
+            status: "qualified",
+            slot_reserved: true,
+            trade: trade || null,
+            trade_other: tradeOther || null,
+            has_website: hasWebsite || null,
+            goals: goals.length > 0 ? goals : null,
+            urgency: urgency || null,
+            current_website: currentWebsite || null,
+            notes: notes || null,
+          })
+          .eq("id", leadId);
+
+        if (updateError) throw updateError;
+
+        const { error: slotError } = await supabase.rpc("increment_taken_slot");
+        if (slotError) throw slotError;
+      }
+
+      // 2. Admin-Benachrichtigung mit ALLEN Lead-Details + Termin (Hintergrund)
+      void supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "lead-notification",
+          idempotencyKey: `vorschau2-booking-admin-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
+          templateData: {
+            source: "Termin-Direktbuchung (Kostenlose Vorschau)",
+            firstName,
+            companyName: company,
+            email,
+            phone: phone || "—",
+            website: currentWebsite || "Nicht angegeben",
+            trade: trade === "Sonstiges" && tradeOther ? `Sonstiges: ${tradeOther}` : trade,
+            hasWebsite,
+            goals: goals.join(", "),
+            urgency,
+            message: notes || "",
+            bookingDate: dateLabel,
+            bookingTime,
+            contactMethod,
+            submittedAt: new Date().toLocaleString("de-DE"),
+          },
+        },
+      }).catch(() => {});
+
+      // 3. Bestätigungs-Mail an den Kunden (Hintergrund)
+      void supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "booking-confirmation",
+          recipientEmail: email,
+          idempotencyKey: `vorschau2-booking-customer-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
+          templateData: {
+            firstName,
+            bookingDate: dateLabel,
+            bookingTime,
+            contactMethod,
+          },
+        },
+      }).catch(() => {});
+
+      setBookingConfirmed(true);
+      toast.success(`Termin gebucht: ${dateLabel} um ${bookingTime} (${methodLabel})`);
+    } catch (error) {
+      console.error("Booking konnte nicht gespeichert werden", error);
+      toast.error("Der Termin konnte nicht gespeichert werden. Bitte versuche es erneut.");
+    } finally {
+      setBookingSubmitting(false);
     }
-
-    // 2. Admin-Benachrichtigung mit ALLEN Lead-Details + Termin (Hintergrund)
-    void supabase.functions.invoke("send-transactional-email", {
-      body: {
-        templateName: "lead-notification",
-        idempotencyKey: `vorschau2-booking-admin-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
-        templateData: {
-          source: "Termin-Direktbuchung (Kostenlose Vorschau)",
-          firstName,
-          companyName: company,
-          email,
-          phone: phone || "—",
-          website: currentWebsite || "Nicht angegeben",
-          trade: trade === "Sonstiges" && tradeOther ? `Sonstiges: ${tradeOther}` : trade,
-          hasWebsite,
-          goals: goals.join(", "),
-          urgency,
-          message: notes || "",
-          bookingDate: dateLabel,
-          bookingTime,
-          contactMethod,
-          submittedAt: new Date().toLocaleString("de-DE"),
-        },
-      },
-    }).catch(() => {});
-
-    // 3. Bestätigungs-Mail an den Kunden (Hintergrund)
-    void supabase.functions.invoke("send-transactional-email", {
-      body: {
-        templateName: "booking-confirmation",
-        recipientEmail: email,
-        idempotencyKey: `vorschau2-booking-customer-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
-        templateData: {
-          firstName,
-          bookingDate: dateLabel,
-          bookingTime,
-          contactMethod,
-        },
-      },
-    }).catch(() => {});
-
-    setBookingConfirmed(true);
-    setBookingSubmitting(false);
-    toast.success(`Termin gebucht: ${dateLabel} um ${bookingTime} (${methodLabel})`);
   };
 
   // Booking bestätigt → Thank-You mit Ablauf-Erklärung
@@ -912,17 +923,8 @@ const MultiStepForm = () => {
   const updateContactMethod = useCallback(
     (method: "phone" | "online") => {
       setState((s) => ({ ...s, contactMethod: method }));
-      if (leadId) {
-        supabase
-          .from("leads")
-          .update({ contact_method: method })
-          .eq("id", leadId)
-          .then(({ error }) => {
-            if (error) console.error("contact_method update failed", error);
-          });
-      }
     },
-    [leadId],
+    [],
   );
 
   const setBookingDate = useCallback(
