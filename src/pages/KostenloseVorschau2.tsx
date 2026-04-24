@@ -489,9 +489,6 @@ const SuccessScreen = ({
         if (attached === false) {
           throw new Error("Für diesen Lead existiert bereits eine Buchung.");
         }
-
-        const { error: slotError } = await supabase.rpc("increment_taken_slot");
-        if (slotError) throw slotError;
       }
 
       // 2. Admin-Benachrichtigung mit ALLEN Lead-Details + Termin (Hintergrund)
