@@ -185,10 +185,14 @@ Deno.serve(async (req) => {
     }
 
     if (action === "analytics") {
+      // Nur die wirklich benötigten Spalten laden – user_agent (bis 1KB pro Zeile)
+      // wird hier nicht ausgewertet und kann den Worker-Speicher sprengen.
+      // Hartes Limit zusätzlich als Sicherheitsnetz.
       const { data: pageViews, error: pvError } = await supabase
         .from("page_views")
-        .select("*")
-        .order("created_at", { ascending: false });
+        .select("page_path, referrer, device_type, timezone, created_at")
+        .order("created_at", { ascending: false })
+        .limit(5000);
       if (pvError) throw pvError;
 
       const { count: leadsCount, error: lcError } = await supabase
