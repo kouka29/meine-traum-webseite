@@ -1391,7 +1391,10 @@ const KostenloseVorschau2 = () => {
               onClick={scrollToForm}
               className="text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-lg hover:shadow-xl transition-shadow"
             >
-              {settings?.hero_cta_label ?? "Jetzt kostenlose Vorschau sichern"} <ArrowRight className="ml-2 w-5 h-5" />
+              {isWaitlist
+                ? `Jetzt für ${nextMonthLabel} vormerken lassen`
+                : (settings?.hero_cta_label ?? "Jetzt kostenlose Vorschau sichern")}
+              {" "}<ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 
             {/* Social Proof: 150+ Webseiten */}
