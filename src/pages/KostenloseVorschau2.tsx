@@ -555,7 +555,9 @@ const SuccessScreen = ({
           <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-3">
-          Danke {firstName}! Dein Termin steht – Platz vorgemerkt.
+          {isWaitlist
+            ? `Danke ${firstName}! Dein Wunschtermin ist auf der ${nextMonthLabel}-Warteliste.`
+            : `Danke ${firstName}! Dein Termin steht – Platz vorgemerkt.`}
         </h3>
         <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
           <CalendarIcon className="w-4 h-4" />
@@ -565,7 +567,10 @@ const SuccessScreen = ({
           {methodLabel}
         </div>
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
-          Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>. Dein Platz ist für dich vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner.
+          Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.{" "}
+          {isWaitlist
+            ? `Sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir, um den Termin zu bestätigen.`
+            : "Dein Platz ist für dich vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
         </p>
         <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
           <p className="font-bold mb-4 text-center">So geht's weiter:</p>
