@@ -925,8 +925,22 @@ const MultiStepForm = () => {
   const updateContactMethod = useCallback(
     (method: "phone" | "online") => {
       setState((s) => ({ ...s, contactMethod: method }));
+      // Auch ohne verbindliche Buchung den gewünschten Kontaktweg im Lead speichern,
+      // damit er im Admin-Bereich sichtbar ist (Fire-and-forget, blockiert UI nicht).
+      if (leadId) {
+        void supabase
+          .rpc("set_lead_contact_method", {
+            p_lead_id: leadId,
+            p_contact_method: method,
+          })
+          .then(({ error }) => {
+            if (error) {
+              console.warn("Kontaktweg konnte nicht gespeichert werden", error);
+            }
+          });
+      }
     },
-    [],
+    [leadId],
   );
 
   const setBookingDate = useCallback(

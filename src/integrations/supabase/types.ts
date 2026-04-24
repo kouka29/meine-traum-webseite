@@ -499,6 +499,10 @@ export type Database = {
           read_ct: number
         }[]
       }
+      set_lead_contact_method: {
+        Args: { p_contact_method: string; p_lead_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
