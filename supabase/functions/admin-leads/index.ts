@@ -576,7 +576,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "vorschau-demo-create") {
-      const { trade, company, description, is_visible, image_base64, image_name, portfolio_project_id } = body;
+      const { trade, company, description, is_visible, image_base64, image_name, portfolio_project_id, image_url: providedImageUrl } = body;
       if (!company) {
         return new Response(JSON.stringify({ error: "company ist erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -587,8 +587,8 @@ Deno.serve(async (req) => {
         .order("sort_order", { ascending: false }).limit(1);
       const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
 
-      let image_url = "";
-      if (image_base64 && image_name) {
+      let image_url = typeof providedImageUrl === "string" ? providedImageUrl : "";
+      if (!image_url && image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;
@@ -612,7 +612,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "vorschau-demo-update") {
-      const { demoId, trade, company, description, is_visible, image_base64, image_name, portfolio_project_id } = body;
+      const { demoId, trade, company, description, is_visible, image_base64, image_name, portfolio_project_id, image_url: providedImageUrl } = body;
       if (!demoId) {
         return new Response(JSON.stringify({ error: "demoId fehlt" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -624,7 +624,9 @@ Deno.serve(async (req) => {
       if (description !== undefined) updates.description = description;
       if (is_visible !== undefined) updates.is_visible = is_visible;
       if (portfolio_project_id !== undefined) updates.portfolio_project_id = portfolio_project_id || null;
-      if (image_base64 && image_name) {
+      if (typeof providedImageUrl === "string" && providedImageUrl) {
+        updates.image_url = providedImageUrl;
+      } else if (image_base64 && image_name) {
         const bytes = Uint8Array.from(atob(image_base64), c => c.charCodeAt(0));
         const ext = image_name.split(".").pop() || "jpg";
         const filePath = `${crypto.randomUUID()}.${ext}`;
