@@ -220,6 +220,10 @@ const KostenloseVorschau = () => {
         company_name: companyName,
         email,
         phone: phone || "—",
+        trade,
+        has_website: hasWebsite,
+        urgency,
+        goals: selectedGoals.length > 0 ? selectedGoals : null,
       });
       if (error) throw error;
 
