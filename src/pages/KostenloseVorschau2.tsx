@@ -718,7 +718,7 @@ const SuccessScreen = ({
           <ol className="space-y-2.5 text-sm text-muted-foreground mb-4 flex-1">
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">1.</span>
-              <span>Ich melde mich <strong className="text-foreground">innerhalb von 24 Stunden</strong> bei dir.</span>
+              <span>Ich melde mich <strong className="text-foreground">am nächsten Werktag</strong> bei dir.</span>
             </li>
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">2.</span>
