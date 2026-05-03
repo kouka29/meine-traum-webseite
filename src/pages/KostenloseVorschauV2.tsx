@@ -1260,22 +1260,14 @@ const KostenloseVorschauV2 = () => {
   }, []);
   const isWaitlist = remainingSlots <= 0;
   // Fallbacks: wenn DB-Listen leer, nutze hardcoded Defaults
-  const activeDemos = dbDemos.length > 0
-    ? dbDemos.map(d => {
-        // Merge: wenn mit Portfolio-Projekt verknüpft, fülle leere Felder aus Portfolio
-        const linked = d.portfolio_project_id ? portfolio.find(p => p.id === d.portfolio_project_id) : undefined;
-        return {
-          trade: d.trade || linked?.category || "",
-          company: d.company || linked?.title || "",
-          desc: d.description || linked?.description || "",
-          image_url: d.image_url || linked?.mockup_desktop_url || linked?.image_url || "",
-        };
-      })
-    : demos.map(d => ({ ...d, image_url: "" }));
-  // Bewertungen aus DB (Fallback: hardcoded testimonials)
-  const activeTestimonials = dbTestimonials.length > 0
-    ? dbTestimonials.map(t => ({ quote: t.text, name: t.name, role: t.role, result: t.result }))
-    : testimonials.map(t => ({ ...t, result: "" }));
+  // V2: feste Handwerker-Demos & Testimonials, unabhängig von DB-Inhalten
+  const activeDemos = demos.map(d => ({ ...d, image_url: "" }));
+  const activeTestimonials = testimonials.map(t => ({
+    quote: t.quote,
+    name: t.name,
+    role: t.role,
+    result: t.result,
+  }));
   const activeFaqs = dbFaqs.length > 0
     ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
     : faqs;
