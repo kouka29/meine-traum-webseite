@@ -181,8 +181,8 @@ const faqs = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 function getEndOfMonth(): Date {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 0, 0);
+  // V2: Countdown immer 47h 59min ab Mount-Zeitpunkt (dynamisch laufend).
+  return new Date(Date.now() + (47 * 60 + 59) * 60 * 1000);
 }
 
 function useCountdown(targetISO?: string | null, mode: string = "end_of_month") {
