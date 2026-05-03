@@ -59,7 +59,7 @@ import {
 // Static data
 // ─────────────────────────────────────────────────────────────────────────────
 
-const STORAGE_KEY = "kostenlose-vorschau2-form";
+const STORAGE_KEY = "kostenlose-vorschau-v2-form";
 
 const tradeOptions = [
   { value: "Elektriker", icon: Zap },
@@ -88,7 +88,6 @@ const goalOptions = [
 const urgencyOptions = [
   { value: "Sofort – ich brauche das jetzt", icon: Flame },
   { value: "In den nächsten 1–3 Monaten", icon: CalendarClock },
-  { value: "Ich schaue mich erstmal um", icon: Eye },
 ];
 
 const painPoints = [
@@ -128,26 +127,29 @@ const processSteps = [
 ];
 
 const demos = [
-  { trade: "Elektriker", company: "Elektro Mustermann GmbH", desc: "Modern, klar, mit Online-Anfrage in 60 Sekunden." },
-  { trade: "Maler", company: "Malerbetrieb Schmidt", desc: "Bildstark, hochwertig, mit Galerie und Bewertungen." },
-  { trade: "Sanitär", company: "Heizung & Bad Müller", desc: "Notdienst-Hotline prominent, schnelle Terminbuchung." },
+  { trade: "Malerbetrieb", company: "Maler Müller – Köln", desc: "Hochwertige Bildgalerie, klare Leistungen, einfache Online-Anfrage." },
+  { trade: "Elektriker", company: "Elektro Bauer – München", desc: "Modern, klar strukturiert, mit Online-Anfrage in 60 Sekunden." },
+  { trade: "Sanitär & Heizung", company: "Sanitär Schmidt – Hamburg", desc: "Notdienst-Hotline prominent, schnelle Terminbuchung." },
 ];
 
 const testimonials = [
   {
-    quote: "Ich hab nicht erwartet, dass das so professionell aussieht. Bin direkt Kunde geworden.",
-    name: "Thomas K.",
-    role: "Elektriker, München",
+    quote: "Vorher hatte ich kaum Anfragen über das Internet. Seit der neuen Website melden sich jede Woche neue Kunden – ohne dass ich was tun muss.",
+    name: "Klaus B.",
+    role: "Malerbetrieb Bergmann, Köln",
+    result: "+9 Anfragen/Monat",
   },
   {
-    quote: "In 48 Stunden hatte ich eine Webseite vor mir, die ich so nie erwartet hätte. Einfach top.",
-    name: "Stefan M.",
-    role: "Maler, Wien",
+    quote: "Ich war skeptisch, weil ich sowas noch nie gemacht habe. Aber die Vorschau war kostenlos, hat mir sofort gefallen und der Preis war fair. Kann ich nur empfehlen.",
+    name: "Markus H.",
+    role: "Elektro Huber, München",
+    result: "Kunde seit 3 Monaten",
   },
   {
-    quote: "Kein Risiko, kein Druck – und das Ergebnis hat mich überzeugt.",
-    name: "Andreas B.",
-    role: "Dachdecker, Zürich",
+    quote: "Meine Konkurrenten haben alle bessere Websites gehabt als ich. Das ist jetzt vorbei. Bekomme sogar Anfragen von Leuten die mich vorher gar nicht kannten.",
+    name: "Stefan R.",
+    role: "Sanitär & Heizung Richter, Hamburg",
+    result: "3x mehr Anfragen",
   },
 ];
 
