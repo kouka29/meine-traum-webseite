@@ -39,7 +39,6 @@ import {
   Award,
   Flame,
   CalendarClock,
-  Eye,
   Share2,
 } from "lucide-react";
 import { Calendar as CalendarIcon, PhoneCall, Video, MessageCircle } from "lucide-react";
