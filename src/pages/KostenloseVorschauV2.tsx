@@ -1338,7 +1338,7 @@ const KostenloseVorschauV2 = () => {
                 <div className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
                   {settings?.countdown_label ?? "Aktion endet in:"}
                 </div>
-                <Countdown targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
+                <Countdown mode="end_of_month" />
               </div>
             )}
 
@@ -1627,7 +1627,7 @@ const KostenloseVorschauV2 = () => {
           <div className="max-w-3xl mx-auto">
             {(settings?.show_countdown ?? true) && (
               <div className="mb-6">
-                <Countdown inverse targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
+                <Countdown inverse mode="end_of_month" />
               </div>
             )}
             {(settings?.show_slots ?? true) && (
