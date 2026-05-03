@@ -1374,7 +1374,7 @@ const KostenloseVorschau2 = () => {
             </h1>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              {settings?.hero_subheadline ?? "Ich zeige dir, wie dein Betrieb online aussehen könnte – ohne Risiko, ohne Kosten, ohne Verpflichtung."}
+              Ich zeige dir in 48 Stunden, wie dein Betrieb online wirkt – speziell für Handwerksbetriebe. Kostenlos. Unverbindlich. Ohne Risiko.
             </p>
 
             {/* Countdown */}
@@ -1409,12 +1409,16 @@ const KostenloseVorschau2 = () => {
               {" "}<ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 
-            {/* Social Proof: 150+ Webseiten */}
+            <p className="mt-3 text-xs sm:text-sm text-muted-foreground text-center max-w-md mx-auto">
+              Nach deiner Vorschau: Fertige Website ab 49€/Monat – kein Vertrag, monatlich kündbar.
+            </p>
+
+            {/* Social Proof */}
             <div className="mt-6 inline-flex items-center gap-3 rounded-full bg-card border border-border px-4 py-2 text-sm font-medium shadow-sm">
               <Award className="w-4 h-4 text-primary" />
               <span>
-                <strong className="text-foreground">Über 150 Webseiten</strong>{" "}
-                <span className="text-muted-foreground">erfolgreich umgesetzt</span>
+                <strong className="text-foreground">Bereits 12 Handwerksbetriebe</strong>{" "}
+                <span className="text-muted-foreground">vertrauen uns</span>
               </span>
             </div>
 
