@@ -1175,9 +1175,9 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {state.step === 5 && (
         <form onSubmit={handleSubmit} className="space-y-5">
           <h3 className="text-xl sm:text-2xl font-bold">
-            Fast geschafft! Wo soll ich die Vorschau hinschicken?
+            Fast geschafft! Wie kann ich dich erreichen?
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div>
               <label className="text-sm font-medium mb-1.5 block">Vorname *</label>
               <Input
@@ -1188,25 +1188,6 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
               />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1.5 block">Betriebsname *</label>
-              <Input
-                required
-                value={state.company}
-                onChange={(e) => update({ company: e.target.value })}
-                placeholder="Mustermann GmbH"
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="text-sm font-medium mb-1.5 block">E-Mail-Adresse *</label>
-              <Input
-                required
-                type="email"
-                value={state.email}
-                onChange={(e) => update({ email: e.target.value })}
-                placeholder="max@mustermann.de"
-              />
-            </div>
-            <div className="sm:col-span-2">
               <label className="text-sm font-medium mb-1.5 block">
                 Telefonnummer *
               </label>
@@ -1219,35 +1200,13 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 placeholder="+49 ..."
               />
             </div>
-            <div className="sm:col-span-2">
-              <label className="text-sm font-medium mb-1.5 block">
-                Aktuelle Webseite{" "}
-                <span className="text-muted-foreground font-normal">
-                  (optional – falls vorhanden)
-                </span>
-              </label>
+            <div>
+              <label className="text-sm font-medium mb-1.5 block">Betriebsname *</label>
               <Input
-                type="text"
-                inputMode="url"
-                value={state.currentWebsite}
-                onChange={(e) => update({ currentWebsite: e.target.value })}
-                placeholder="https://deine-webseite.de"
-                maxLength={300}
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="text-sm font-medium mb-1.5 block">
-                Sonstige wichtige Infos{" "}
-                <span className="text-muted-foreground font-normal">
-                  (optional)
-                </span>
-              </label>
-              <Textarea
-                value={state.notes}
-                onChange={(e) => update({ notes: e.target.value })}
-                placeholder="Was sollten wir noch wissen, um die beste Vorschau für dich zu bauen? (z. B. Lieblingsfarben, Vorbilder, besondere Leistungen ...)"
-                maxLength={1000}
-                rows={4}
+                required
+                value={state.company}
+                onChange={(e) => update({ company: e.target.value })}
+                placeholder="Mustermann GmbH"
               />
             </div>
           </div>
