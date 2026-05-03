@@ -947,10 +947,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           templateName: "lead-notification",
           idempotencyKey: `vorschau2-${newLeadId}`,
           templateData: {
-            source: "Kostenlose Vorschau 2 (Multi-Step)",
+            source: "Kostenlose Vorschau V2 (Handwerker)",
             firstName: state.firstName,
             companyName: state.company,
-            email: state.email,
+            email: submissionEmail,
             phone: state.phone,
             trade: state.trade === "Sonstiges" && state.tradeOther
               ? `Sonstiges: ${state.tradeOther}`
