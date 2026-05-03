@@ -43,7 +43,6 @@ import {
   Share2,
 } from "lucide-react";
 import { Calendar as CalendarIcon, PhoneCall, Video, MessageCircle } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useVorschauSettings, type VorschauSettings, type VorschauDemo, type VorschauFaq } from "@/hooks/useVorschauSettings";
@@ -1244,7 +1243,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
 // Page
 // ─────────────────────────────────────────────────────────────────────────────
 
-const KostenloseVorschau2 = () => {
+const KostenloseVorschauV2 = () => {
   const { settings, demos: dbDemos, faqs: dbFaqs, portfolio, testimonials: dbTestimonials } = useVorschauSettings();
   const totalSlots = settings?.total_slots ?? 5;
   const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
@@ -1674,4 +1673,4 @@ const KostenloseVorschau2 = () => {
   );
 };
 
-export default KostenloseVorschau2;
+export default KostenloseVorschauV2;
