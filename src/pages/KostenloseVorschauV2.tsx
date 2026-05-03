@@ -900,19 +900,25 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!state.firstName || !state.company || !state.email) {
+    if (!state.firstName || !state.company || !state.phone) {
       toast.error("Bitte fülle die Pflichtfelder aus.");
       return;
     }
     setSubmitting(true);
     try {
       const newLeadId = crypto.randomUUID();
+      // V2 erfasst keine E-Mail mehr – wir generieren einen Platzhalter,
+      // damit das DB-Schema (email NOT NULL + Format-Check) erfüllt bleibt.
+      const submissionEmail =
+        state.email && state.email.includes("@")
+          ? state.email
+          : `lead-${newLeadId}@vorschau-v2.local`;
       const { data: leadData, error: leadError } = await supabase
         .from("leads")
         .insert({
           id: newLeadId,
           first_name: state.firstName,
-          email: state.email,
+          email: submissionEmail,
           phone: state.phone.trim(),
           company_name: state.company || "",
           trade: state.trade || null,
