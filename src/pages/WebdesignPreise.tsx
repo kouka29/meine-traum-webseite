@@ -507,7 +507,6 @@ const WebdesignPreise = () => (
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-muted-foreground">{buyEnterprise.footnote}</p>
                 </div>
                 <div className="md:w-auto">
                   <Button variant="outline" size="lg" asChild>
