@@ -409,7 +409,7 @@ const WebdesignPreise = () => {
 
   useEffect(() => {
     const ctaButtons = Array.from(
-      document.querySelectorAll<HTMLElement>('a[href="#formular"]')
+      document.querySelectorAll<HTMLElement>('[data-pricing-cta="true"]')
     );
     if (ctaButtons.length === 0) return;
 
