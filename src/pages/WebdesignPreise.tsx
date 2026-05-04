@@ -76,56 +76,89 @@ const rentPackages: Pkg[] = [
   },
 ];
 
-const buyPackages: Pkg[] = [
+type BuyPkg = {
+  name: string;
+  price: string;
+  highlights?: string[];
+  compare?: string;
+  features: string[];
+  footnote?: string;
+  popular?: boolean;
+  cta: string;
+};
+
+const buyPackages: BuyPkg[] = [
   {
     name: "Starter",
     price: "990 € einmalig",
-    subPrice: "≈ 41 €/Monat über 2 Jahre",
+    highlights: [
+      "✓ Günstiger als Miete ab Monat 21",
+      "≈ nur 41 €/Monat über 2 Jahre",
+    ],
+    compare: "Miete Starter: 49 € × 24 = 1.176 € — hier sparst du 186 €",
     features: [
       "One-Pager (1 Seite)",
-      "Mobil-optimiert, SSL, Kontaktformular",
+      "Mobil-optimiert",
+      "Kontaktformular",
+      "SSL-Zertifikat",
       "Fertig in 7 Werktagen",
     ],
-    cta: "Kostenlose Demo anfordern",
+    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    cta: "Jetzt kaufen & starten",
   },
   {
     name: "Pro",
     price: "1.900 € einmalig",
-    subPrice: "≈ 158 €/Monat im ersten Jahr",
+    highlights: [
+      "✓ Günstiger als Miete ab Monat 20",
+      "≈ nur 79 €/Monat über 2 Jahre",
+    ],
+    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 476 €",
     features: [
       "2–5 Seiten",
-      "SEO-Grundlagen",
+      "SEO-Grundlagen (Google findet dich)",
       "Google Business Einrichtung",
-      "30 Tage Support",
+      "30 Tage Support nach Start",
+      "Website gehört dir – kein Vertrag",
     ],
+    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
     popular: true,
-    cta: "Kostenlose Demo anfordern",
+    cta: "Jetzt kaufen & starten",
   },
   {
     name: "Premium",
     price: "3.500 € einmalig",
-    subPrice: "≈ 291 €/Monat im ersten Jahr",
+    highlights: [
+      "✓ Günstiger als Miete ab Monat 23",
+      "≈ nur 146 €/Monat über 2 Jahre",
+    ],
+    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 316 €",
     features: [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
-      "Conversion-optimiertes Design",
+      "Design das mehr Anfragen bringt",
       "60 Tage Priority Support",
+      "Website gehört dir – kein Vertrag",
     ],
-    cta: "Kostenlose Demo anfordern",
-  },
-  {
-    name: "Enterprise",
-    price: "Auf Anfrage",
-    features: [
-      "Onlineshop",
-      "Unbegrenzte Seiten",
-      "SEO-Strategie + Google Ads",
-      "Individuelle Umsetzung",
-    ],
-    enterprise: true,
-    cta: "Jetzt anfragen",
+    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    cta: "Jetzt kaufen & starten",
   },
 ];
+
+const buyEnterprise = {
+  name: "Enterprise",
+  subtitle: "Für Betriebe mit besonderen Anforderungen",
+  price: "Auf Anfrage – meist unter 300 €/Monat",
+  features: [
+    "Onlineshop möglich",
+    "Unbegrenzte Seiten",
+    "SEO-Strategie",
+    "Google Ads Setup",
+    "Persönlicher Ansprechpartner",
+  ],
+  footnote: "+ Monatliche Betreuung inklusive – Preis nach Gespräch",
+  cta: "Beratung anfragen",
+};
 
 const faqs = [
   { q: "Was kostet eine Website erstellen lassen?", a: "Unsere Webdesign-Preise starten ab 49 €/Monat (Miete) oder 990 € einmalig. Der genaue Preis richtet sich nach Umfang, Funktionalität und individuellen Anforderungen. Wir erstellen dir ein transparentes Angebot nach dem Erstgespräch." },
