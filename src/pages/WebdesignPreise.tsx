@@ -30,7 +30,7 @@ const rentPackages: Pkg[] = [
       "SSL-Zertifikat",
       "Online in 7 Tagen",
       "Wartung & Updates inklusive",
-      "Technischer Support inklusive",
+      "Support per WhatsApp & E-Mail inklusive",
     ],
     cta: "Jetzt starten",
     upgradeHint: "↑ Jederzeit Upgrade auf Pro möglich",
@@ -44,7 +44,7 @@ const rentPackages: Pkg[] = [
       "SEO-Grundlagen (Google findet dich)",
       "Google Business Einrichtung",
       "1x kostenlose Anpassung pro Monat",
-      "__hint__Änderungen einfach per WhatsApp oder E-Mail anfragen",
+      "Änderungen per WhatsApp & E-Mail anfragen",
       "30 Tage Support nach Start",
       "Wartung & Updates inklusive",
     ],
@@ -60,7 +60,7 @@ const rentPackages: Pkg[] = [
       "SEO-Grundlagen + Seitenstruktur",
       "Design das mehr Anfragen bringt",
       "2x kostenlose Anpassungen pro Monat",
-      "__hint__Änderungen einfach per WhatsApp oder E-Mail anfragen",
+      "Änderungen per WhatsApp & E-Mail anfragen",
       "Schneller Support – Antwort in 24h",
       "Wartung & Updates inklusive",
     ],
@@ -111,7 +111,7 @@ const buyPackages: BuyPkg[] = [
       "Fertig in 7 Werktagen",
     ],
     footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Wartung: 990 € einmalig. Mit Wartung Jahr 1: ca. 1.338 €.",
+    comparison: "Ohne Sorglos-Paket: 990 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 1.338 €.",
     cta: "Jetzt kaufen & starten",
   },
   {
@@ -130,7 +130,7 @@ const buyPackages: BuyPkg[] = [
       "Website gehört dir – kein Vertrag",
     ],
     footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Wartung: 1.900 € einmalig. Mit Wartung Jahr 1: ca. 2.248 €.",
+    comparison: "Ohne Sorglos-Paket: 1.900 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 2.248 €.",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
@@ -150,7 +150,7 @@ const buyPackages: BuyPkg[] = [
       "Website gehört dir – kein Vertrag",
     ],
     footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Wartung: 3.500 € einmalig. Mit Wartung Jahr 1: ca. 3.848 €.",
+    comparison: "Ohne Sorglos-Paket: 3.500 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 3.848 €.",
     cta: "Jetzt kaufen & starten",
   },
 ];
@@ -300,12 +300,24 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
         ))}
       </div>
       {pkg.footnote && (
-        <p className="text-xs text-muted-foreground mb-3 whitespace-pre-line">{pkg.footnote}</p>
+        <div className="mb-3">
+          <p className="text-xs font-semibold text-muted-foreground mb-2">
+            + Website-Sorglos-Paket ab 29 €/Monat zubuchbar:
+          </p>
+          <ul className="space-y-1">
+            {["Hosting & SSL", "Updates & Wartung", "Änderungswünsche", "Support – monatlich kündbar"].map((b) => (
+              <li key={b} className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
       {pkg.comparison && (
         <>
           <div className="border-t border-border my-3" />
-          <p className="text-[11px] text-muted-foreground italic mb-5">{pkg.comparison}</p>
+          <p className="text-sm text-foreground/80 mb-5 whitespace-pre-line">{pkg.comparison}</p>
         </>
       )}
       <Button
@@ -355,7 +367,7 @@ const WebdesignPreise = () => (
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6">
+              <Button variant="ghost" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-[#F3F4F6] text-[#1F2937] hover:bg-[#E5E7EB] hover:text-[#1F2937] shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
                 <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
@@ -403,7 +415,7 @@ const WebdesignPreise = () => (
               {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6">
+              <Button variant="ghost" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-[#F3F4F6] text-[#1F2937] hover:bg-[#E5E7EB] hover:text-[#1F2937] shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
                 <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
