@@ -1694,7 +1694,12 @@ const KostenloseVorschauV2 = () => {
       {(settings?.show_faq ?? true) && activeFaqs.length > 0 && (
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10">Häufige Fragen</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3">
+            Das fragen Handwerker am häufigsten
+          </h2>
+          <p className="text-center text-muted-foreground mb-10">
+            Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.
+          </p>
           <Accordion type="single" collapsible className="bg-card rounded-2xl border border-border px-5 shadow-sm">
             {activeFaqs.map((f, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b last:border-b-0">
