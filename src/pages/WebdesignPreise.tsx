@@ -15,21 +15,23 @@ type Pkg = {
   popular?: boolean;
   enterprise?: boolean;
   cta: string;
+  upgradeHint?: string;
 };
 
 const rentPackages: Pkg[] = [
   {
     name: "Starter",
     price: "49 €/Monat",
-    desc: "Mindestlaufzeit: 24 Monate, danach monatlich kündbar",
+    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
       "SSL-Zertifikat",
-      "Fertig in 7 Werktagen",
+      "Online in 7 Tagen",
     ],
-    cta: "Kostenlose Demo anfordern",
+    cta: "Jetzt starten",
+    upgradeHint: "↑ Jederzeit Upgrade auf Pro möglich",
   },
   {
     name: "Pro",
@@ -39,11 +41,11 @@ const rentPackages: Pkg[] = [
       "2–5 Seiten",
       "SEO-Grundlagen (Google findet dich)",
       "Google Business Einrichtung",
-      "1x Änderung pro Monat",
-      "30 Tage Support nach Launch",
+      "1x kostenlose Anpassung pro Monat",
+      "30 Tage Support nach Start",
     ],
     popular: true,
-    cta: "Kostenlose Demo anfordern",
+    cta: "Jetzt starten",
   },
   {
     name: "Premium",
@@ -52,16 +54,16 @@ const rentPackages: Pkg[] = [
     features: [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
-      "Conversion-optimiertes Design",
-      "2x Änderungen pro Monat",
-      "Priority Support (Antwort in 24h)",
+      "Design das mehr Anfragen bringt",
+      "2x kostenlose Anpassungen pro Monat",
+      "Schneller Support – Antwort in 24h",
     ],
-    cta: "Kostenlose Demo anfordern",
+    cta: "Jetzt starten",
   },
   {
     name: "Enterprise",
     price: "Auf Anfrage",
-    desc: "Für Betriebe mit besonderen Anforderungen",
+    desc: "Für Betriebe mit besonderen Anforderungen\nMeist unter 300 €/Monat – Preis nach individuellem Gespräch.",
     features: [
       "Onlineshop möglich",
       "Unbegrenzte Seiten",
@@ -70,7 +72,7 @@ const rentPackages: Pkg[] = [
       "Persönlicher Ansprechpartner",
     ],
     enterprise: true,
-    cta: "Jetzt anfragen",
+    cta: "Beratung anfragen",
   },
 ];
 
@@ -155,7 +157,7 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
       )}
       {pkg.desc && (
-        <p className="text-sm text-muted-foreground mb-5">{pkg.desc}</p>
+        <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
       )}
       <div className="space-y-3 flex-1 mb-8 mt-2">
         {pkg.features.map((f) => (
@@ -165,13 +167,16 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
           </div>
         ))}
       </div>
+      {pkg.upgradeHint && (
+        <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
+      )}
       <Button
         variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
         size="lg"
         className="w-full"
         asChild
       >
-        <Link to="/kontakt#formular">
+        <Link to="#formular">
           {pkg.cta} <ArrowRight size={16} />
         </Link>
       </Button>
@@ -206,9 +211,46 @@ const WebdesignPreise = () => (
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-primary/10 text-primary border-primary/20">
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {rentPackages.map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
+            <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Ein verlorener Auftrag kostet dich im Schnitt 800 €.<br />
+              Deine neue Website kostet dich ab 49 €/Monat.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
+            <div className="flex justify-center my-8">
+              <Button variant="outline" size="lg" asChild>
+                <Link to="#formular">
+                  Nicht sicher welches Paket passt? Kostenlos beraten lassen <ArrowRight size={16} />
+                </Link>
+              </Button>
+            </div>
+            {rentPackages.filter(p => p.enterprise).map((pkg) => (
+              <AnimatedSection key={pkg.name} delay={0.1}>
+                <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
+                  <div className="flex-1">
+                    <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+                    <p className="font-heading text-3xl font-bold gradient-text mb-2">{pkg.price}</p>
+                    {pkg.desc && (
+                      <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
+                    )}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {pkg.features.map((f) => (
+                        <div key={f} className="flex items-start gap-2.5">
+                          <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                          <span className="text-sm">{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="md:w-auto">
+                    <Button variant="gradient" size="lg" asChild>
+                      <Link to="#formular">{pkg.cta} <ArrowRight size={16} /></Link>
+                    </Button>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
           </TabsContent>
 
           <TabsContent value="kauf">
@@ -230,19 +272,19 @@ const WebdesignPreise = () => (
               Nicht sicher? Ich berate dich kurz und kostenlos.
             </p>
             <Button variant="gradient" size="lg" asChild>
-              <Link to="/kontakt#formular">Kostenlos beraten lassen <ArrowRight size={18} /></Link>
+              <Link to="#formular">Kostenlos beraten lassen <ArrowRight size={18} /></Link>
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20 bg-muted/40 rounded-2xl p-6 md:p-8">
             {[
               { Icon: Lock, label: "Keine versteckten Kosten" },
               { Icon: FileText, label: "Kein Kleingedrucktes" },
               { Icon: Target, label: "Erst Demo – dann Entscheidung" },
             ].map(({ Icon, label }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-2 p-4 rounded-xl border border-border bg-background">
-                <Icon className="text-primary" size={22} />
-                <span className="text-sm font-medium">{label}</span>
+              <div key={label} className="flex flex-col items-center text-center gap-3 p-8 rounded-xl border border-border bg-background">
+                <Icon className="text-primary" size={30} />
+                <span className="text-base font-medium">{label}</span>
               </div>
             ))}
           </div>
