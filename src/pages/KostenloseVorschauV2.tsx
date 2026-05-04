@@ -1649,6 +1649,7 @@ const KostenloseVorschauV2 = () => {
           </h2>
           <Carousel
             opts={{ align: "start", loop: activeTestimonials.length > 3 }}
+            setApi={setTestimonialsApi}
             className="max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4">
@@ -1685,6 +1686,7 @@ const KostenloseVorschauV2 = () => {
               </>
             )}
           </Carousel>
+          <CarouselDots api={testimonialsApi} count={activeTestimonials.length} />
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
               Jetzt meine kostenlose Vorschau anfordern <ArrowRight className="ml-2 w-5 h-5" />
