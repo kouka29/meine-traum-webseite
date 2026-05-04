@@ -89,6 +89,7 @@ type BuyPkg = {
   compare?: string;
   features: string[];
   footnote?: string;
+  comparison?: string;
   popular?: boolean;
   cta: string;
 };
@@ -109,7 +110,8 @@ const buyPackages: BuyPkg[] = [
       "SSL-Zertifikat",
       "Fertig in 7 Werktagen",
     ],
-    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
+    comparison: "Ohne Wartung: 990 € einmalig. Mit Wartung Jahr 1: ca. 1.338 €.",
     cta: "Jetzt kaufen & starten",
   },
   {
@@ -127,7 +129,8 @@ const buyPackages: BuyPkg[] = [
       "30 Tage Support nach Start",
       "Website gehört dir – kein Vertrag",
     ],
-    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
+    comparison: "Ohne Wartung: 1.900 € einmalig. Mit Wartung Jahr 1: ca. 2.248 €.",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
@@ -146,7 +149,8 @@ const buyPackages: BuyPkg[] = [
       "60 Tage Priority Support",
       "Website gehört dir – kein Vertrag",
     ],
-    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
+    comparison: "Ohne Wartung: 3.500 € einmalig. Mit Wartung Jahr 1: ca. 3.848 €.",
     cta: "Jetzt kaufen & starten",
   },
 ];
