@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
-import { ArrowRight, CheckCircle, Star, Lock, FileText, Target } from "lucide-react";
+import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -161,11 +161,38 @@ const buyEnterprise = {
 };
 
 const faqs = [
-  { q: "Was kostet eine Website erstellen lassen?", a: "Unsere Webdesign-Preise starten ab 49 €/Monat (Miete) oder 990 € einmalig. Der genaue Preis richtet sich nach Umfang, Funktionalität und individuellen Anforderungen. Wir erstellen dir ein transparentes Angebot nach dem Erstgespräch." },
-  { q: "Gibt es versteckte Kosten?", a: "Nein! Wir arbeiten mit transparenten Festpreisen. Was im Angebot steht, gilt – ohne Überraschungen." },
-  { q: "Welches Paket passt zu mir?", a: "Starter eignet sich für einfache Unternehmensseiten. Pro ist ideal, wenn du aktiv Kunden über Google gewinnen möchtest. Premium ist perfekt für conversion-optimierte Websites mit mehr Inhalten." },
-  { q: "Kann ich später upgraden?", a: "Ja! Du kannst jederzeit Funktionen hinzufügen oder ein Upgrade auf ein größeres Paket vornehmen." },
-  { q: "Sind laufende Kosten enthalten?", a: "Bei Miete sind Hosting, Wartung und SSL inklusive. Beim Einmalkauf können Hosting und Domain auf Wunsch von uns eingerichtet werden." },
+  {
+    q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
+    a: "Ja – und zwar schneller als du denkst. Ein einziger neuer Auftrag über deine Website deckt oft die kompletten Jahreskosten. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+  },
+  {
+    q: "Was passiert wenn mir die Vorschau nicht gefällt?",
+    a: "Gar nichts. Du zahlst keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige dir die Vorschau – gefällt sie dir nicht, war es das. Kein unangenehmes Gespräch danach.",
+  },
+  {
+    q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
+    a: "Nein. Du füllst einmal ein 2-Minuten-Formular aus und lehnst dich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst deine fertige Website – ohne einen einzigen technischen Handgriff.",
+  },
+  {
+    q: "Welches Paket ist das Richtige für mich?",
+    a: "Kurze Faustregel:\n→ Du willst erstmal professionell online sein: Starter\n→ Du willst bei Google gefunden werden und mehr Anfragen: Pro\n→ Du willst dauerhaft mehr Aufträge und deine Konkurrenz klar schlagen: Premium\n→ Du hast einen Onlineshop oder besondere Anforderungen: Enterprise\n\nNicht sicher? Ich berate dich kostenlos und sage dir ehrlich was Sinn macht.",
+  },
+  {
+    q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
+    a: "Nach den 12 Monaten wird nichts automatisch verlängert oder teurer. Du kannst monatlich kündigen – mit einer Frist von 30 Tagen. Kein neuer Vertrag, kein versteckter Preisanstieg, keine Überraschungen.",
+  },
+  {
+    q: "Sind Hosting, Domain und SSL inklusive?",
+    a: "Bei der Miete: Ja. Alles inklusive. Hosting, SSL-Zertifikat, Wartung und Updates – du zahlst deinen Monatsbeitrag, der Rest ist meine Aufgabe.\n\nBeim Einmalkauf: Hosting und Domain richten wir auf Wunsch ein. Kosten dafür: ca. 80–120 € pro Jahr je nach Anbieter – du entscheidest selbst.",
+  },
+  {
+    q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
+    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von deiner Region und deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+  },
+  {
+    q: "Macht ihr das auch für meinen Bereich?",
+    a: "Ja. Wir haben bereits Websites gebaut für:\nElektriker · Maler · Sanitär & Heizung · Dachdecker · Schreiner · KFZ-Betriebe · Garten & Landschaft · Gebäudereinigung\n\nDein Gewerk ist nicht dabei? Meld dich trotzdem – wir finden eine Lösung.",
+  },
 ];
 
 const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
@@ -405,16 +432,41 @@ const WebdesignPreise = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-10 text-balance">Häufige Fragen zu Webdesign Preisen</h2>
-          <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10 max-w-3xl mx-auto">
+            <h2 className="mb-3 text-balance">Das fragen Handwerker am häufigsten</h2>
+            <p className="text-muted-foreground">Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.</p>
+          </div>
+          <div className="max-w-3xl mx-auto mb-12">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
                 <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5 whitespace-pre-line">{faq.a}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
+          </div>
+
+          <div className="bg-primary/10 rounded-2xl p-10 md:p-14 text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/20 text-primary mb-5">
+              <Phone size={26} />
+            </div>
+            <h3 className="font-heading text-2xl md:text-3xl font-bold mb-3">Noch eine Frage die hier nicht steht?</h3>
+            <p className="text-muted-foreground mb-7 leading-relaxed">
+              Ruf mich kurz an – ich beantworte alles in 5 Minuten.<br />
+              Kein Verkaufsgespräch. Versprochen.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+              <Button variant="gradient" size="lg" asChild>
+                <a href="tel:+4915123456789">📞 Jetzt anrufen</a>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link to="#formular">Kostenlose Demo sichern <ArrowRight size={16} /></Link>
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Oder schreib uns – wir antworten meist innerhalb von 2 Stunden.
+            </p>
           </div>
         </AnimatedSection>
       </div>
