@@ -1332,11 +1332,30 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
               />
             </div>
           </div>
+          {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+          <input
+            type="text"
+            name="_gotcha"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ display: "none" }}
+            aria-hidden="true"
+          />
           <Button type="submit" size="lg" className="w-full" disabled={submitting}>
             {submitting ? "Wird gesendet..." : (
               <>Kostenlose Vorschau jetzt anfordern <ArrowRight className="ml-2 w-4 h-4" /></>
             )}
           </Button>
+          {submitError && (
+            <p className="text-sm text-destructive text-center">
+              Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+              <a href="tel:+4915123456789" className="font-semibold underline">
+                +49 151 23456789
+              </a>
+            </p>
+          )}
           <p className="text-xs text-muted-foreground flex items-start gap-2">
             <Lock className="w-3.5 h-3.5 mt-0.5 shrink-0" />
             <span>
