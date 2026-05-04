@@ -99,6 +99,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
   // Snapshot of submitted data for the success view (form state gets reset)
   const [successData, setSuccessData] = useState<{ firstName: string; emailProvided: boolean }>({
     firstName: "",
@@ -123,6 +125,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     if (open) {
       setSubmitted(false);
       setErrors({});
+      setSubmitError(null);
+      setHoneypot("");
     }
   }, [open]);
 
@@ -201,11 +205,49 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    // Honeypot: Bots füllen das unsichtbare Feld aus → still verwerfen.
+    if (honeypot) return;
     setLoading(true);
+    setSubmitError(null);
 
     const leadId = crypto.randomUUID();
     const finalEmail = email.trim() || `noemail+${leadId}@popup.local`;
 
+    // Primär: an Formspree senden (bestimmt Erfolg/Fehler des Submits).
+    let formspreeOk = false;
+    try {
+      const res = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: firstName.trim(),
+          phone: phone.trim(),
+          company: companyName.trim(),
+          email: email.trim(),
+          _subject: `🔔 Neue Preisanfrage: ${badge} - ${companyName.trim()}`,
+          _replyto: email.trim(),
+          _gotcha: honeypot,
+          paket: badge,
+          seite: "preise",
+        }),
+      });
+      formspreeOk = res.ok;
+    } catch {
+      formspreeOk = false;
+    }
+
+    if (!formspreeOk) {
+      setLoading(false);
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+      );
+      return;
+    }
+
+    // Backup für das Admin-Backend – Fehler hier blockieren die Erfolgs-Ansicht nicht.
     const { error } = await supabase.from("leads").insert({
       id: leadId,
       first_name: firstName.trim(),
@@ -214,11 +256,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
       email: finalEmail,
       notes: `Pop-up Anfrage von Preisseite – Paket: ${badge}`,
     });
-
     if (error) {
-      setLoading(false);
-      toast.error("Es ist ein Fehler aufgetreten. Bitte versuche es erneut.");
-      return;
+      console.warn("Lead konnte nicht in der DB gespeichert werden", error);
     }
 
     supabase.functions.invoke("send-transactional-email", {
