@@ -253,12 +253,21 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-      <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-      <p className="text-xs text-muted-foreground mb-3">
-        {pkg.price.toLowerCase().includes("anfrage") ? "zzgl. MwSt." : "zzgl. 19 % MwSt."}
-      </p>
-      {pkg.subPrice && (
-        <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
+      {pkg.price.toLowerCase().includes("anfrage") ? (
+        <>
+          <p className="text-sm text-muted-foreground mb-1">
+            {pkg.subPrice ? `${pkg.price} – ${pkg.subPrice}` : pkg.price}
+          </p>
+          <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+        </>
+      ) : (
+        <>
+          <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
+          <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+          {pkg.subPrice && (
+            <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
+          )}
+        </>
       )}
       {pkg.desc && (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
