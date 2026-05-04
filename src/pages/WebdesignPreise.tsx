@@ -29,6 +29,8 @@ const rentPackages: Pkg[] = [
       "Kontaktformular",
       "SSL-Zertifikat",
       "Online in 7 Tagen",
+      "Wartung & Updates inklusive",
+      "Technischer Support inklusive",
     ],
     cta: "Jetzt starten",
     upgradeHint: "↑ Jederzeit Upgrade auf Pro möglich",
@@ -42,7 +44,9 @@ const rentPackages: Pkg[] = [
       "SEO-Grundlagen (Google findet dich)",
       "Google Business Einrichtung",
       "1x kostenlose Anpassung pro Monat",
+      "__hint__Änderungen einfach per WhatsApp oder E-Mail anfragen",
       "30 Tage Support nach Start",
+      "Wartung & Updates inklusive",
     ],
     popular: true,
     cta: "Jetzt starten",
@@ -56,7 +60,9 @@ const rentPackages: Pkg[] = [
       "SEO-Grundlagen + Seitenstruktur",
       "Design das mehr Anfragen bringt",
       "2x kostenlose Anpassungen pro Monat",
+      "__hint__Änderungen einfach per WhatsApp oder E-Mail anfragen",
       "Schneller Support – Antwort in 24h",
+      "Wartung & Updates inklusive",
     ],
     cta: "Jetzt starten",
   },
@@ -83,6 +89,7 @@ type BuyPkg = {
   compare?: string;
   features: string[];
   footnote?: string;
+  comparison?: string;
   popular?: boolean;
   cta: string;
 };
@@ -103,7 +110,8 @@ const buyPackages: BuyPkg[] = [
       "SSL-Zertifikat",
       "Fertig in 7 Werktagen",
     ],
-    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
+    comparison: "Ohne Wartung: 990 € einmalig. Mit Wartung Jahr 1: ca. 1.338 €.",
     cta: "Jetzt kaufen & starten",
   },
   {
@@ -121,7 +129,8 @@ const buyPackages: BuyPkg[] = [
       "30 Tage Support nach Start",
       "Website gehört dir – kein Vertrag",
     ],
-    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
+    comparison: "Ohne Wartung: 1.900 € einmalig. Mit Wartung Jahr 1: ca. 2.248 €.",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
@@ -140,7 +149,8 @@ const buyPackages: BuyPkg[] = [
       "60 Tage Priority Support",
       "Website gehört dir – kein Vertrag",
     ],
-    footnote: "+ Monatliche Betreuung ab 29 €/Monat optional buchbar",
+    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
+    comparison: "Ohne Wartung: 3.500 € einmalig. Mit Wartung Jahr 1: ca. 3.848 €.",
     cta: "Jetzt kaufen & starten",
   },
 ];
@@ -223,12 +233,21 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
       )}
       <div className="space-y-3 flex-1 mb-8 mt-2">
-        {pkg.features.map((f) => (
-          <div key={f} className="flex items-start gap-2.5">
-            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
-            <span className="text-sm">{f}</span>
-          </div>
-        ))}
+        {pkg.features.map((f) => {
+          if (f.startsWith("__hint__")) {
+            return (
+              <p key={f} className="text-xs text-muted-foreground pl-[22px] -mt-2">
+                {f.replace("__hint__", "")}
+              </p>
+            );
+          }
+          return (
+            <div key={f} className="flex items-start gap-2.5">
+              <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+              <span className="text-sm">{f}</span>
+            </div>
+          );
+        })}
       </div>
       {pkg.upgradeHint && (
         <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
@@ -281,7 +300,13 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
         ))}
       </div>
       {pkg.footnote && (
-        <p className="text-xs text-muted-foreground mb-5">{pkg.footnote}</p>
+        <p className="text-xs text-muted-foreground mb-3 whitespace-pre-line">{pkg.footnote}</p>
+      )}
+      {pkg.comparison && (
+        <>
+          <div className="border-t border-border my-3" />
+          <p className="text-[11px] text-muted-foreground italic mb-5">{pkg.comparison}</p>
+        </>
       )}
       <Button
         variant={pkg.popular ? "gradient" : "outline-primary"}
