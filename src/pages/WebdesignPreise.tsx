@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import CTABanner from "@/components/CTABanner";
 import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -53,7 +53,7 @@ const rentPackages: Pkg[] = [
       "Google Business Einrichtung",
       "Mobil-optimiert & SSL",
       "Hosting & Domain inklusive",
-      "Online in 14 Tagen",
+      "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
     ],
     popular: true,
     cta: "Jetzt starten",
@@ -76,7 +76,7 @@ const rentPackages: Pkg[] = [
       "Design das mehr Anfragen bringt",
       "Google Business Einrichtung",
       "Hosting & Domain inklusive",
-      "Schneller Support – Antwort in 24h",
+      "Individuelle Umsetzung – Timing nach Absprache",
     ],
     cta: "Jetzt starten",
     growth: {
@@ -164,7 +164,7 @@ const buyPackages: BuyPkg[] = [
       "Google Business Einrichtung",
       "30 Tage Support nach Start",
       "Mobil-optimiert & SSL",
-      "Online in 14 Tagen",
+      "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
       "Website gehört dir – kein Vertrag",
     ],
     growth: {
@@ -193,6 +193,7 @@ const buyPackages: BuyPkg[] = [
       "Design das mehr Anfragen bringt",
       "60 Tage Priority Support",
       "Mobil-optimiert & SSL",
+      "Individuelle Umsetzung – Timing nach Absprache",
       "Website gehört dir – kein Vertrag",
     ],
     growth: {
@@ -391,7 +392,23 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
   </AnimatedSection>
 );
 
-const WebdesignPreise = () => (
+const WebdesignPreise = () => {
+  const [showFloating, setShowFloating] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const formEl = document.getElementById("formular");
+      if (!formEl) return;
+      const rect = formEl.getBoundingClientRect();
+      // Hide once user has scrolled the form into view
+      setShowFloating(rect.top > window.innerHeight * 0.3);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
   <main className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
@@ -526,15 +543,15 @@ const WebdesignPreise = () => (
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20 bg-muted/40 rounded-2xl p-6 md:p-8">
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-4xl mx-auto mb-20">
             {[
               { Icon: Lock, label: "Keine versteckten Kosten" },
               { Icon: FileText, label: "Kein Kleingedrucktes" },
               { Icon: Target, label: "Erst Demo – dann Entscheidung" },
             ].map(({ Icon, label }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-3 p-8 rounded-xl border border-border bg-background">
-                <Icon className="text-primary" size={30} />
-                <span className="text-base font-medium">{label}</span>
+              <div key={label} className="flex flex-col items-center text-center gap-2 px-2">
+                <Icon className="text-primary" size={24} />
+                <span className="text-[12px] sm:text-sm font-medium leading-tight">{label}</span>
               </div>
             ))}
           </div>
@@ -582,8 +599,16 @@ const WebdesignPreise = () => (
       </div>
     </section>
 
-    <CTABanner />
+    {showFloating && (
+      <a
+        href="#formular"
+        className="md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+      >
+        Kostenlose Demo sichern →
+      </a>
+    )}
   </main>
-);
+  );
+};
 
 export default WebdesignPreise;
