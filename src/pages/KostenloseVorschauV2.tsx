@@ -1363,6 +1363,13 @@ const KostenloseVorschauV2 = () => {
               {" "}<ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 
+            <p className="mt-3 text-xs text-muted-foreground text-center">
+              Bereits überzeugt?{" "}
+              <Link to="/preise" className="underline hover:text-foreground">
+                Preise direkt ansehen →
+              </Link>
+            </p>
+
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground text-center max-w-md mx-auto">
               Nach deiner Vorschau: Fertige Website ab 49€/Monat – kein Vertrag, monatlich kündbar.
             </p>
