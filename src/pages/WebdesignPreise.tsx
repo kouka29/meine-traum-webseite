@@ -324,6 +324,7 @@ const PackageCard = ({ pkg, i, onOpen }: { pkg: Pkg; i: number; onOpen: (badge: 
         size="lg"
         className="w-full"
         onClick={() => onOpen(pkg.badge ?? pkg.name)}
+        data-pricing-cta="true"
       >
         {pkg.cta} <ArrowRight size={16} />
       </Button>
@@ -391,6 +392,7 @@ const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: s
         size="lg"
         className="w-full"
         onClick={() => onOpen(pkg.badge ?? pkg.name)}
+        data-pricing-cta="true"
       >
         {pkg.cta} <ArrowRight size={16} />
       </Button>
@@ -468,7 +470,7 @@ const WebdesignPreise = () => {
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
@@ -495,7 +497,7 @@ const WebdesignPreise = () => {
                     </div>
                   </div>
                   <div className="md:w-auto">
-                    <Button variant="gradient" size="lg" onClick={() => openPopup(pkg.badge ?? "Enterprise – Auf Anfrage")}>
+                    <Button variant="gradient" size="lg" onClick={() => openPopup(pkg.badge ?? "Enterprise – Auf Anfrage")} data-pricing-cta="true">
                       {pkg.cta} <ArrowRight size={16} />
                     </Button>
                   </div>
@@ -516,7 +518,7 @@ const WebdesignPreise = () => {
               {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
@@ -540,7 +542,7 @@ const WebdesignPreise = () => {
                   </div>
                 </div>
                 <div className="md:w-auto">
-                  <Button variant="outline" size="lg" onClick={() => openPopup(buyEnterprise.badge)}>
+                  <Button variant="outline" size="lg" onClick={() => openPopup(buyEnterprise.badge)} data-pricing-cta="true">
                     {buyEnterprise.cta} <ArrowRight size={16} />
                   </Button>
                 </div>
@@ -557,7 +559,7 @@ const WebdesignPreise = () => {
               Einmalkauf = einmal zahlen, Website gehört dir, langfristig günstiger.<br />
               Nicht sicher? Ich berate dich kurz und kostenlos.
             </p>
-            <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+            <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
               Kostenlos beraten lassen <ArrowRight size={18} />
             </Button>
           </div>
@@ -606,7 +608,7 @@ const WebdesignPreise = () => {
           Kein Risiko. Keine Verpflichtung.<br />
           Gefällt sie dir nicht – du zahlst nichts.
         </p>
-        <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")}>
+        <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
           Jetzt kostenlose Demo sichern <ArrowRight size={18} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
