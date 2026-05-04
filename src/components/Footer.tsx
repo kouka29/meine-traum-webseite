@@ -5,34 +5,6 @@ import { Button } from "@/components/ui/button";
 const Footer = () => (
   <footer className="bg-foreground text-background/70 section-padding">
     <div className="container-narrow px-4">
-      {/* Mini CTA */}
-      <div className="text-center mb-16 pb-16 border-b border-background/8">
-        <p className="font-heading text-2xl font-semibold text-background mb-5 text-balance">
-          Verlieren Sie keine Kunden mehr an Ihre Konkurrenz.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button
-            size="sm"
-            className="bg-primary-foreground text-foreground hover:bg-primary-foreground/90"
-            asChild
-          >
-            <Link to="/kontakt">
-              Kostenlose Vorschau sichern <ArrowRight size={14} />
-            </Link>
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className="border-background/60 text-background bg-background/10 hover:bg-background/20"
-            asChild
-          >
-            <Link to="/kostenloser-website-check">
-              Kostenlosen Website-Check starten
-            </Link>
-          </Button>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-14 mb-16">
         <div>
           <h3 className="font-heading text-xl font-bold text-background mb-4 tracking-tight">
@@ -40,7 +12,7 @@ const Footer = () => (
           </h3>
           <p className="text-sm leading-relaxed">
             Professionelle Webdesign Agentur – wir erstellen Websites, die aktiv Kunden gewinnen.
-            Für Selbstständige, Handwerker, Coaches und KMUs im DACH-Raum.
+            Spezialisiert auf Handwerksbetriebe im DACH-Raum.
           </p>
         </div>
         <div>
