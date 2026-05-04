@@ -247,7 +247,7 @@ const faqs = [
   },
 ];
 
-const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
+const PackageCard = ({ pkg, i, onOpen }: { pkg: Pkg; i: number; onOpen: (badge: string) => void }) => (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
@@ -323,17 +323,15 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
         size="lg"
         className="w-full"
-        asChild
+        onClick={() => onOpen(pkg.badge ?? pkg.name)}
       >
-        <Link to="#formular">
-          {pkg.cta} <ArrowRight size={16} />
-        </Link>
+        {pkg.cta} <ArrowRight size={16} />
       </Button>
     </div>
   </AnimatedSection>
 );
 
-const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
+const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: string) => void }) => (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
@@ -392,9 +390,9 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
         variant={pkg.popular ? "gradient" : "outline-primary"}
         size="lg"
         className="w-full"
-        asChild
+        onClick={() => onOpen(pkg.badge ?? pkg.name)}
       >
-        <Link to="#formular">{pkg.cta} <ArrowRight size={16} /></Link>
+        {pkg.cta} <ArrowRight size={16} />
       </Button>
     </div>
   </AnimatedSection>
