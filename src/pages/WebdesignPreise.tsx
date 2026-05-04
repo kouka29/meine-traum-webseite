@@ -592,6 +592,25 @@ const WebdesignPreise = () => (
       </div>
     </section>
 
+    <section className="bg-primary/10 py-[60px]">
+      <div className="container-narrow px-4 text-center">
+        <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
+          Bereit für deine neue Website?
+        </h2>
+        <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
+          Kostenlose Design-Demo in 48 Stunden.<br />
+          Kein Risiko. Keine Verpflichtung.<br />
+          Gefällt sie dir nicht – du zahlst nichts.
+        </p>
+        <Button variant="gradient" size="lg" asChild>
+          <Link to="#formular">Jetzt kostenlose Demo sichern <ArrowRight size={18} /></Link>
+        </Button>
+        <p className="text-sm text-muted-foreground mt-5">
+          Bereits 12 Handwerksbetriebe vertrauen uns
+        </p>
+      </div>
+    </section>
+
     <CTABanner />
   </main>
 );
