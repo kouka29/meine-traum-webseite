@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type VorschauSettings = {
   id: number;
+  page_key: string;
   total_slots: number;
   taken_slots: number;
   countdown_target: string | null;
@@ -30,6 +31,7 @@ export type VorschauSettings = {
 
 export type VorschauDemo = {
   id: string;
+  page_key?: string;
   trade: string;
   company: string;
   description: string;
@@ -41,6 +43,7 @@ export type VorschauDemo = {
 
 export type VorschauFaq = {
   id: string;
+  page_key?: string;
   question: string;
   answer: string;
   sort_order: number;
@@ -76,7 +79,7 @@ export type VorschauData = {
   loading: boolean;
 };
 
-export function useVorschauSettings(): VorschauData {
+export function useVorschauSettings(pageKey: string = "v1"): VorschauData {
   const [data, setData] = useState<VorschauData>({
     settings: null,
     demos: [],
@@ -90,9 +93,9 @@ export function useVorschauSettings(): VorschauData {
     let cancelled = false;
     const load = async () => {
       const [settingsRes, demosRes, faqsRes, portfolioRes, testimonialsRes] = await Promise.all([
-        supabase.from("vorschau_settings").select("*").eq("id", 1).maybeSingle(),
-        supabase.from("vorschau_demos").select("*").eq("is_visible", true).order("sort_order", { ascending: true }),
-        supabase.from("vorschau_faqs").select("*").eq("is_visible", true).order("sort_order", { ascending: true }),
+        supabase.from("vorschau_settings").select("*").eq("page_key", pageKey).maybeSingle(),
+        supabase.from("vorschau_demos").select("*").eq("page_key", pageKey).eq("is_visible", true).order("sort_order", { ascending: true }),
+        supabase.from("vorschau_faqs").select("*").eq("page_key", pageKey).eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("portfolio_projects").select("id,title,category,description,image_url,mockup_desktop_url,mockup_mobile_url,external_url,result").eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("testimonials").select("id,name,role,text,result").eq("is_visible", true).order("sort_order", { ascending: true }),
       ]);
@@ -110,7 +113,7 @@ export function useVorschauSettings(): VorschauData {
 
     // Realtime updates
     const ch = supabase
-      .channel("vorschau-live")
+      .channel(`vorschau-live-${pageKey}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "vorschau_settings" }, load)
       .on("postgres_changes", { event: "*", schema: "public", table: "vorschau_demos" }, load)
       .on("postgres_changes", { event: "*", schema: "public", table: "vorschau_faqs" }, load)
@@ -122,7 +125,7 @@ export function useVorschauSettings(): VorschauData {
       cancelled = true;
       supabase.removeChannel(ch);
     };
-  }, []);
+  }, [pageKey]);
 
   return data;
 }
