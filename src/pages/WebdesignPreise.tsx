@@ -442,7 +442,7 @@ const WebdesignPreise = () => (
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="ghost" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-[#F3F4F6] text-[#1F2937] hover:bg-[#E5E7EB] hover:text-[#1F2937] shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
+              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
@@ -491,7 +491,7 @@ const WebdesignPreise = () => (
               {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="ghost" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-[#F3F4F6] text-[#1F2937] hover:bg-[#E5E7EB] hover:text-[#1F2937] shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
+              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
