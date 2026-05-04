@@ -1580,6 +1580,7 @@ const KostenloseVorschauV2 = () => {
           </div>
           <Carousel
             opts={{ align: "start", loop: activeDemos.length > 3 }}
+            setApi={setDemosApi}
             className="max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4">
@@ -1629,6 +1630,7 @@ const KostenloseVorschauV2 = () => {
               </>
             )}
           </Carousel>
+          <CarouselDots api={demosApi} count={activeDemos.length} />
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
               So eine Vorschau für meinen Betrieb <ArrowRight className="ml-2 w-5 h-5" />
