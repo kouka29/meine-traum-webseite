@@ -125,10 +125,6 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Starter",
     price: "990 € einmalig",
-    highlights: [
-      "✓ Günstiger als Miete ab Monat 17",
-      "≈ nur 41 €/Monat über 2 Jahre",
-    ],
     compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 €",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -147,16 +143,12 @@ const buyPackages: BuyPkg[] = [
         "Support per WhatsApp",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
     cta: "Jetzt kaufen & starten",
   },
   {
     name: "Pro",
     price: "1.900 € einmalig",
-    highlights: [
-      "✓ Günstiger als Miete ab Monat 20",
-      "≈ nur 79 €/Monat über 2 Jahre",
-    ],
     compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 476 €",
     features: [
       "2–5 Seiten",
@@ -175,17 +167,13 @@ const buyPackages: BuyPkg[] = [
         "Priority Support per WhatsApp",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.488 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.488 € (= 207 €/Monat)",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
   {
     name: "Premium",
     price: "3.500 € einmalig",
-    highlights: [
-      "✓ Günstiger als Miete ab Monat 23",
-      "≈ nur 146 €/Monat über 2 Jahre",
-    ],
     compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 316 €",
     features: [
       "Bis zu 10 Seiten",
@@ -205,7 +193,7 @@ const buyPackages: BuyPkg[] = [
         "Monatlicher Performance-Check",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.448 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.448 € (= 370 €/Monat)",
     cta: "Jetzt kaufen & starten",
   },
 ];
@@ -265,12 +253,21 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-      <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-      <p className="text-xs text-muted-foreground mb-3">
-        {pkg.price.toLowerCase().includes("anfrage") ? "zzgl. MwSt." : "zzgl. 19 % MwSt."}
-      </p>
-      {pkg.subPrice && (
-        <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
+      {pkg.price.toLowerCase().includes("anfrage") ? (
+        <>
+          <p className="text-sm text-muted-foreground mb-1">
+            {pkg.subPrice ? `${pkg.price} – ${pkg.subPrice}` : pkg.price}
+          </p>
+          <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+        </>
+      ) : (
+        <>
+          <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
+          <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+          {pkg.subPrice && (
+            <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
+          )}
+        </>
       )}
       {pkg.desc && (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
@@ -396,16 +393,24 @@ const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const formEl = document.getElementById("formular");
-      if (!formEl) return;
-      const rect = formEl.getBoundingClientRect();
-      // Hide once user has scrolled the form into view
-      setShowFloating(rect.top > window.innerHeight * 0.3);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const ctaButtons = Array.from(
+      document.querySelectorAll<HTMLElement>('a[href="#formular"]')
+    );
+    if (ctaButtons.length === 0) return;
+
+    const visible = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        });
+        setShowFloating(visible.size === 0);
+      },
+      { threshold: 0.1 }
+    );
+    ctaButtons.forEach((b) => observer.observe(b));
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -460,8 +465,7 @@ const WebdesignPreise = () => {
                 <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
                     <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-                    <p className="text-sm font-medium text-foreground/80 mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
-                    <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
+                    <p className="text-sm text-muted-foreground mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
                     <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
                     {pkg.desc && (
                       <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
@@ -543,15 +547,15 @@ const WebdesignPreise = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-4xl mx-auto mb-20">
+          <div className="grid grid-cols-3 gap-5 sm:gap-6 max-w-4xl mx-auto mb-20">
             {[
               { Icon: Lock, label: "Keine versteckten Kosten" },
               { Icon: FileText, label: "Kein Kleingedrucktes" },
               { Icon: Target, label: "Erst Demo – dann Entscheidung" },
             ].map(({ Icon, label }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-2 px-2">
-                <Icon className="text-primary" size={24} />
-                <span className="text-[12px] sm:text-sm font-medium leading-tight">{label}</span>
+              <div key={label} className="flex flex-col items-center text-center gap-3 px-2">
+                <Icon className="text-primary w-8 h-8 sm:w-6 sm:h-6" />
+                <span className="text-[13px] sm:text-sm font-medium leading-[1.5]">{label}</span>
               </div>
             ))}
           </div>
@@ -599,14 +603,15 @@ const WebdesignPreise = () => {
       </div>
     </section>
 
-    {showFloating && (
-      <a
-        href="#formular"
-        className="md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
-      >
-        Kostenlose Demo sichern →
-      </a>
-    )}
+    <a
+      href="#formular"
+      aria-hidden={!showFloating}
+      className={`md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-opacity duration-200 ${
+        showFloating ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      Kostenlose Demo sichern →
+    </a>
   </main>
   );
 };
