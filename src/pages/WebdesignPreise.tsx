@@ -157,7 +157,7 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
       )}
       {pkg.desc && (
-        <p className="text-sm text-muted-foreground mb-5">{pkg.desc}</p>
+        <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
       )}
       <div className="space-y-3 flex-1 mb-8 mt-2">
         {pkg.features.map((f) => (
@@ -167,13 +167,16 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
           </div>
         ))}
       </div>
+      {pkg.upgradeHint && (
+        <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
+      )}
       <Button
         variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
         size="lg"
         className="w-full"
         asChild
       >
-        <Link to="/kontakt#formular">
+        <Link to="#formular">
           {pkg.cta} <ArrowRight size={16} />
         </Link>
       </Button>
