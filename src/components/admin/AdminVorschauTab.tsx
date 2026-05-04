@@ -18,6 +18,7 @@ import {
 
 type Settings = {
   id: number;
+  page_key: string;
   total_slots: number;
   taken_slots: number;
   countdown_target: string | null;
@@ -116,6 +117,7 @@ const localToISO = (local: string): string | null => {
 export default function AdminVorschauTab({ password }: { password: string }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [pageKey, setPageKey] = useState<"v1" | "v2">("v1");
   const [settings, setSettings] = useState<Settings | null>(null);
   const [demos, setDemos] = useState<Demo[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
@@ -142,7 +144,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     }
     setLoading(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
-      body: { password, action: "vorschau-get" },
+      body: { password, action: "vorschau-get", pageKey },
     });
     setLoading(false);
     if (error || data?.error) {
@@ -167,7 +169,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   useEffect(() => {
     if (password) load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [password]);
+  }, [password, pageKey]);
 
   const updateSettings = (patch: Partial<Settings>) => {
     setSettings(s => (s ? { ...s, ...patch } : s));
@@ -181,7 +183,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     }
     setSaving(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
-      body: { password, action: "vorschau-update-settings", settings },
+      body: { password, action: "vorschau-update-settings", settings, pageKey },
     });
     setSaving(false);
     if (error || data?.error) {
