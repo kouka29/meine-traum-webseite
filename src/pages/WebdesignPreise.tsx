@@ -21,15 +21,16 @@ const rentPackages: Pkg[] = [
   {
     name: "Starter",
     price: "49 €/Monat",
-    desc: "Mindestlaufzeit: 24 Monate, danach monatlich kündbar",
+    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
       "SSL-Zertifikat",
-      "Fertig in 7 Werktagen",
+      "Online in 7 Tagen",
     ],
-    cta: "Kostenlose Demo anfordern",
+    cta: "Jetzt starten",
+    upgradeHint: "↑ Jederzeit Upgrade auf Pro möglich",
   },
   {
     name: "Pro",
@@ -39,11 +40,11 @@ const rentPackages: Pkg[] = [
       "2–5 Seiten",
       "SEO-Grundlagen (Google findet dich)",
       "Google Business Einrichtung",
-      "1x Änderung pro Monat",
-      "30 Tage Support nach Launch",
+      "1x kostenlose Anpassung pro Monat",
+      "30 Tage Support nach Start",
     ],
     popular: true,
-    cta: "Kostenlose Demo anfordern",
+    cta: "Jetzt starten",
   },
   {
     name: "Premium",
@@ -52,16 +53,16 @@ const rentPackages: Pkg[] = [
     features: [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
-      "Conversion-optimiertes Design",
-      "2x Änderungen pro Monat",
-      "Priority Support (Antwort in 24h)",
+      "Design das mehr Anfragen bringt",
+      "2x kostenlose Anpassungen pro Monat",
+      "Schneller Support – Antwort in 24h",
     ],
-    cta: "Kostenlose Demo anfordern",
+    cta: "Jetzt starten",
   },
   {
     name: "Enterprise",
     price: "Auf Anfrage",
-    desc: "Für Betriebe mit besonderen Anforderungen",
+    desc: "Für Betriebe mit besonderen Anforderungen\nMeist unter 300 €/Monat – Preis nach individuellem Gespräch.",
     features: [
       "Onlineshop möglich",
       "Unbegrenzte Seiten",
@@ -70,7 +71,7 @@ const rentPackages: Pkg[] = [
       "Persönlicher Ansprechpartner",
     ],
     enterprise: true,
-    cta: "Jetzt anfragen",
+    cta: "Beratung anfragen",
   },
 ];
 
