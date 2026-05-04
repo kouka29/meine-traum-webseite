@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import PricingLeadPopup from "@/components/PricingLeadPopup";
 
 type Pkg = {
   name: string;
@@ -17,12 +17,14 @@ type Pkg = {
   cta: string;
   upgradeHint?: string;
   growth?: { price: string; items: string[] };
+  badge?: string;
 };
 
 const rentPackages: Pkg[] = [
   {
     name: "Starter",
     price: "59 €/Monat",
+    badge: "Starter Miete – 59€/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -46,6 +48,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Pro",
     price: "99 €/Monat",
+    badge: "Pro Miete – 99€/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "2–5 Seiten",
@@ -69,6 +72,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Premium",
     price: "159 €/Monat",
+    badge: "Premium Miete – 159€/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Bis zu 10 Seiten",
@@ -93,6 +97,7 @@ const rentPackages: Pkg[] = [
     name: "Enterprise",
     price: "Auf Anfrage",
     subPrice: "meist unter 300 €/Monat",
+    badge: "Enterprise – Auf Anfrage",
     desc: "Für Betriebe mit besonderen Anforderungen",
     features: [
       "Onlineshop möglich",
@@ -119,12 +124,14 @@ type BuyPkg = {
   popular?: boolean;
   cta: string;
   growth?: { price: string; items: string[] };
+  badge?: string;
 };
 
 const buyPackages: BuyPkg[] = [
   {
     name: "Starter",
     price: "990 € einmalig",
+    badge: "Starter Kauf – 990€",
     compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 €",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -149,6 +156,7 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Pro",
     price: "1.900 € einmalig",
+    badge: "Pro Kauf – 1.900€",
     compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 476 €",
     features: [
       "2–5 Seiten",
@@ -174,6 +182,7 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Premium",
     price: "3.500 € einmalig",
+    badge: "Premium Kauf – 3.500€",
     compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 316 €",
     features: [
       "Bis zu 10 Seiten",
@@ -211,6 +220,7 @@ const buyEnterprise = {
     "Individuelle Umsetzung",
   ],
   cta: "Beratung anfragen",
+  badge: "Enterprise – Auf Anfrage",
 };
 
 const faqs = [
@@ -236,7 +246,7 @@ const faqs = [
   },
 ];
 
-const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
+const PackageCard = ({ pkg, i, onOpen }: { pkg: Pkg; i: number; onOpen: (badge: string) => void }) => (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
@@ -312,17 +322,16 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
         size="lg"
         className="w-full"
-        asChild
+        onClick={() => onOpen(pkg.badge ?? pkg.name)}
+        data-pricing-cta="true"
       >
-        <Link to="#formular">
-          {pkg.cta} <ArrowRight size={16} />
-        </Link>
+        {pkg.cta} <ArrowRight size={16} />
       </Button>
     </div>
   </AnimatedSection>
 );
 
-const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
+const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: string) => void }) => (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
@@ -381,9 +390,10 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
         variant={pkg.popular ? "gradient" : "outline-primary"}
         size="lg"
         className="w-full"
-        asChild
+        onClick={() => onOpen(pkg.badge ?? pkg.name)}
+        data-pricing-cta="true"
       >
-        <Link to="#formular">{pkg.cta} <ArrowRight size={16} /></Link>
+        {pkg.cta} <ArrowRight size={16} />
       </Button>
     </div>
   </AnimatedSection>
@@ -391,10 +401,16 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
 
 const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
+  const openPopup = (badge: string) => {
+    setPopupBadge(badge);
+    setPopupOpen(true);
+  };
 
   useEffect(() => {
     const ctaButtons = Array.from(
-      document.querySelectorAll<HTMLElement>('a[href="#formular"]')
+      document.querySelectorAll<HTMLElement>('[data-pricing-cta="true"]')
     );
     if (ctaButtons.length === 0) return;
 
@@ -450,14 +466,14 @@ const WebdesignPreise = () => {
               Deine neue Website kostet dich ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
+              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-                <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
+              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+                <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
-                </Link>
+                </span>
               </Button>
             </div>
             {rentPackages.filter(p => p.enterprise).map((pkg) => (
@@ -480,8 +496,8 @@ const WebdesignPreise = () => {
                     </div>
                   </div>
                   <div className="md:w-auto">
-                    <Button variant="gradient" size="lg" asChild>
-                      <Link to="#formular">{pkg.cta} <ArrowRight size={16} /></Link>
+                    <Button variant="gradient" size="lg" onClick={() => openPopup(pkg.badge ?? "Enterprise – Auf Anfrage")} data-pricing-cta="true">
+                      {pkg.cta} <ArrowRight size={16} />
                     </Button>
                   </div>
                 </div>
@@ -498,14 +514,14 @@ const WebdesignPreise = () => {
               Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} />)}
+              {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-                <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
+              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+                <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
-                </Link>
+                </span>
               </Button>
             </div>
             <AnimatedSection delay={0.1}>
@@ -525,8 +541,8 @@ const WebdesignPreise = () => {
                   </div>
                 </div>
                 <div className="md:w-auto">
-                  <Button variant="outline" size="lg" asChild>
-                    <Link to="#formular">{buyEnterprise.cta} <ArrowRight size={16} /></Link>
+                  <Button variant="outline" size="lg" onClick={() => openPopup(buyEnterprise.badge)} data-pricing-cta="true">
+                    {buyEnterprise.cta} <ArrowRight size={16} />
                   </Button>
                 </div>
               </div>
@@ -542,8 +558,8 @@ const WebdesignPreise = () => {
               Einmalkauf = einmal zahlen, Website gehört dir, langfristig günstiger.<br />
               Nicht sicher? Ich berate dich kurz und kostenlos.
             </p>
-            <Button variant="outline" size="lg" asChild className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-              <Link to="#formular">Kostenlos beraten lassen <ArrowRight size={18} /></Link>
+            <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+              Kostenlos beraten lassen <ArrowRight size={18} />
             </Button>
           </div>
 
@@ -591,8 +607,8 @@ const WebdesignPreise = () => {
           Kein Risiko. Keine Verpflichtung.<br />
           Gefällt sie dir nicht – du zahlst nichts.
         </p>
-        <Button variant="gradient" size="lg" asChild>
-          <Link to="#formular">Jetzt kostenlose Demo sichern <ArrowRight size={18} /></Link>
+        <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
+          Jetzt kostenlose Demo sichern <ArrowRight size={18} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
           Fragen? Einfach anrufen: <a href="tel:+4915123456789" className="underline hover:text-foreground">+49 151 23456789</a>
@@ -603,15 +619,18 @@ const WebdesignPreise = () => {
       </div>
     </section>
 
-    <a
-      href="#formular"
+    <button
+      type="button"
+      onClick={() => openPopup("Kostenlose Beratung")}
       aria-hidden={!showFloating}
       className={`md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-opacity duration-200 ${
         showFloating ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
       Kostenlose Demo sichern →
-    </a>
+    </button>
+
+    <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
   </main>
   );
 };
