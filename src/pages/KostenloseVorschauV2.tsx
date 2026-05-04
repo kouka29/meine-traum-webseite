@@ -368,6 +368,43 @@ const SlotPill = ({
   </span>
 );
 
+// Punkte-Navigation für Carousels (Portfolio & Testimonials)
+const CarouselDots = ({ api, count }: { api: CarouselApi | undefined; count: number }) => {
+  const [selected, setSelected] = useState(0);
+  useEffect(() => {
+    if (!api) return;
+    const onSelect = () => setSelected(api.selectedScrollSnap());
+    onSelect();
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api]);
+  if (count <= 1) return null;
+  return (
+    <div className="flex items-center justify-center gap-2 mt-6">
+      {Array.from({ length: count }).map((_, i) => {
+        const active = i === selected;
+        return (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Zu Karte ${i + 1} wechseln`}
+            onClick={() => api?.scrollTo(i)}
+            className={`rounded-full transition-all ${
+              active
+                ? "bg-primary w-3 h-3"
+                : "bg-muted-foreground/30 hover:bg-muted-foreground/50 w-2 h-2"
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Success Screen mit zwei Optionen: Anruf abwarten ODER Termin direkt buchen
 // ─────────────────────────────────────────────────────────────────────────────
