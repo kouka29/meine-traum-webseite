@@ -472,6 +472,17 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   autoComplete="email"
                   maxLength={255}
                 />
+                {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  style={{ display: "none" }}
+                  aria-hidden="true"
+                />
               </div>
             </div>
 
@@ -500,6 +511,15 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   <>{ctaLabel} <ArrowRight size={18} /></>
                 )}
               </Button>
+
+              {submitError && (
+                <p className="text-center text-sm text-destructive mt-2">
+                  Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+                  <a href="tel:+4915123456789" className="font-semibold underline">
+                    +49 151 23456789
+                  </a>
+                </p>
+              )}
 
               <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1.5">
                 <ShieldCheck size={13} />
