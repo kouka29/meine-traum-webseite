@@ -58,7 +58,7 @@ const rentPackages: Pkg[] = [
     popular: true,
     cta: "Jetzt starten",
     growth: {
-      price: "+39 €/Monat zubuchbar",
+      price: "+49 €/Monat zubuchbar",
       items: [
         "Bis zu 3 Änderungen pro Monat inklusive",
         "Updates & Wartung",
@@ -80,7 +80,7 @@ const rentPackages: Pkg[] = [
     ],
     cta: "Jetzt starten",
     growth: {
-      price: "+49 €/Monat zubuchbar",
+      price: "+79 €/Monat zubuchbar",
       items: [
         "Bis zu 5 Änderungen pro Monat inklusive",
         "Updates & Wartung",
@@ -167,14 +167,14 @@ const buyPackages: BuyPkg[] = [
       "Website gehört dir – kein Vertrag",
     ],
     growth: {
-      price: "+39 €/Monat zubuchbar",
+      price: "+49 €/Monat zubuchbar",
       items: [
         "Bis zu 3 Änderungen pro Monat inklusive",
         "Updates & Wartung",
         "Priority Support per WhatsApp",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.368 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.488 €",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
@@ -195,7 +195,7 @@ const buyPackages: BuyPkg[] = [
       "Website gehört dir – kein Vertrag",
     ],
     growth: {
-      price: "+49 €/Monat zubuchbar",
+      price: "+79 €/Monat zubuchbar",
       items: [
         "Bis zu 5 Änderungen pro Monat inklusive",
         "Updates & Wartung",
@@ -203,7 +203,7 @@ const buyPackages: BuyPkg[] = [
         "Monatlicher Performance-Check",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.088 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.448 €",
     cta: "Jetzt kaufen & starten",
   },
 ];
