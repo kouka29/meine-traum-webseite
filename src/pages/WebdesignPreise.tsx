@@ -4,27 +4,84 @@ import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import { ArrowRight, CheckCircle, Star } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const packages = [
+const rentPackages = [
   {
     name: "Starter",
-    price: "ab 1.500 €",
-    desc: "Perfekt für Selbstständige und kleine Unternehmen, die eine professionelle Online-Präsenz benötigen.",
-    features: ["Bis zu 5 Seiten", "Responsive Design", "Kontaktformular", "SEO-Grundlagen", "SSL-Zertifikat", "1 Korrekturschleife"],
+    price: "79 €/Monat",
+    desc: "Perfekt für den Start – professionell online in wenigen Tagen.",
+    features: [
+      "1–5 Seiten",
+      "Mobiloptimiertes Design",
+      "Kontaktformular",
+      "SSL-Zertifikat",
+      "Mindestlaufzeit 12 Monate, danach monatlich kündbar",
+    ],
     popular: false,
   },
   {
-    name: "Professional",
-    price: "ab 3.000 €",
-    desc: "Die beste Wahl für KMUs, die über ihre Website aktiv Kunden gewinnen möchten.",
-    features: ["Bis zu 10 Seiten", "Conversion-optimiertes Design", "Kontaktformular & CTA-Elemente", "SEO-Optimierung", "CMS-Integration", "Analytics & Tracking", "3 Korrekturschleifen", "30 Tage Support"],
+    name: "Pro",
+    price: "129 €/Monat",
+    desc: "Für Betriebe die regelmäßig neue Kunden über Google wollen.",
+    features: [
+      "Bis zu 10 Seiten",
+      "SEO-Grundlagen",
+      "Google Business Einrichtung",
+      "1x monatliche Anpassung",
+      "Mindestlaufzeit 12 Monate, danach monatlich kündbar",
+    ],
     popular: true,
   },
   {
     name: "Premium",
-    price: "ab 5.000 €",
-    desc: "Für Unternehmen, die eine maßgeschneiderte Lösung mit maximaler Wirkung benötigen.",
-    features: ["Unbegrenzte Seiten", "Verkaufspsychologischer Aufbau", "Individuelle Funktionen", "Erweiterte SEO-Strategie", "A/B Testing", "Buchungssystem / Shop", "Laufende Optimierung", "Persönlicher Ansprechpartner", "60 Tage Priority Support"],
+    price: "199 €/Monat",
+    desc: "Für Betriebe die dauerhaft mehr Aufträge und volle Kontrolle wollen.",
+    features: [
+      "Alles aus Pro",
+      "Google Ads Betreuung",
+      "Monatlicher Performance-Report",
+      "Priority Support",
+      "Mindestlaufzeit 12 Monate, danach monatlich kündbar",
+    ],
+    popular: false,
+  },
+];
+
+const buyPackages = [
+  {
+    name: "Starter",
+    price: "990 €",
+    desc: "Perfekt für den Start – professionell online in wenigen Tagen.",
+    features: [
+      "1–5 Seiten",
+      "Fertig in 5 Werktagen",
+      "Mobiloptimiert, SSL, Kontaktformular",
+    ],
+    popular: false,
+  },
+  {
+    name: "Pro",
+    price: "1.900 €",
+    desc: "Für Betriebe die regelmäßig neue Kunden über Google wollen.",
+    features: [
+      "Bis zu 10 Seiten",
+      "SEO-Grundlagen",
+      "Google Business Einrichtung",
+      "30 Tage Support nach Fertigstellung",
+    ],
+    popular: true,
+  },
+  {
+    name: "Premium",
+    price: "3.500 €",
+    desc: "Für Betriebe die dauerhaft mehr Aufträge und volle Kontrolle wollen.",
+    features: [
+      "Individuelles Design",
+      "Unbegrenzte Seiten",
+      "SEO + Google Ads Setup",
+      "90 Tage Priority Support",
+    ],
     popular: false,
   },
 ];
@@ -55,35 +112,60 @@ const WebdesignPreise = () => (
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-          {packages.map((pkg, i) => (
-            <AnimatedSection key={pkg.name} delay={i * 0.1}>
-              <div className={`rounded-2xl p-8 h-full flex flex-col border ${pkg.popular ? "border-primary shadow-elevated relative" : "border-border"} bg-background`}>
-                {pkg.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1">
-                    <Star size={12} /> Beliebteste Wahl
-                  </span>
-                )}
-                <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-                <p className="font-heading text-3xl font-bold gradient-text mb-3">{pkg.price}</p>
-                <p className="text-sm text-muted-foreground mb-6">{pkg.desc}</p>
-                <div className="space-y-3 flex-1 mb-8">
-                  {pkg.features.map((f) => (
-                    <div key={f} className="flex items-center gap-2.5">
-                      <CheckCircle size={15} className="text-primary shrink-0" />
-                      <span className="text-sm">{f}</span>
+        <Tabs defaultValue="miete" className="mb-12">
+          <TabsList className="mx-auto flex w-full max-w-sm mb-10">
+            <TabsTrigger value="miete" className="flex-1">Miete</TabsTrigger>
+            <TabsTrigger value="kauf" className="flex-1">Einmalkauf</TabsTrigger>
+          </TabsList>
+
+          {[
+            { value: "miete", data: rentPackages },
+            { value: "kauf", data: buyPackages },
+          ].map((tab) => (
+            <TabsContent key={tab.value} value={tab.value}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {tab.data.map((pkg, i) => (
+                  <AnimatedSection key={pkg.name} delay={i * 0.1}>
+                    <div className={`rounded-2xl p-8 h-full flex flex-col border ${pkg.popular ? "border-primary shadow-elevated relative" : "border-border"} bg-background`}>
+                      {pkg.popular && (
+                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1">
+                          <Star size={12} /> Beliebteste Wahl
+                        </span>
+                      )}
+                      <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+                      <p className="font-heading text-3xl font-bold gradient-text mb-3">{pkg.price}</p>
+                      <p className="text-sm text-muted-foreground mb-6">{pkg.desc}</p>
+                      <div className="space-y-3 flex-1 mb-8">
+                        {pkg.features.map((f) => (
+                          <div key={f} className="flex items-start gap-2.5">
+                            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                            <span className="text-sm">{f}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <Button variant={pkg.popular ? "gradient" : "outline-primary"} size="lg" className="w-full" asChild>
+                        <Link to="/kontakt">
+                          Kostenlose Demo anfordern <ArrowRight size={16} />
+                        </Link>
+                      </Button>
                     </div>
-                  ))}
-                </div>
-                <Button variant={pkg.popular ? "gradient" : "outline-primary"} size="lg" className="w-full" asChild>
-                  <Link to="/kontakt">
-                    Angebot anfordern <ArrowRight size={16} />
-                  </Link>
-                </Button>
+                  </AnimatedSection>
+                ))}
               </div>
-            </AnimatedSection>
+            </TabsContent>
           ))}
-        </div>
+        </Tabs>
+
+        <AnimatedSection>
+          <div className="bg-card rounded-2xl p-8 border border-border text-center max-w-2xl mx-auto mb-20">
+            <h3 className="font-heading text-lg font-bold mb-3">Miete oder kaufen?</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Miete = maximale Flexibilität.<br />
+              Einmalkauf = günstiger ab Jahr 2.<br />
+              Wir helfen dir gerne bei der Entscheidung.
+            </p>
+          </div>
+        </AnimatedSection>
 
         <AnimatedSection>
           <div className="bg-card rounded-2xl p-10 border border-border text-center mb-20">
