@@ -165,6 +165,7 @@ const buyPackages: BuyPkg[] = [
       "30 Tage Support nach Start",
       "Mobil-optimiert & SSL",
       "Website gehört dir – kein Vertrag",
+      "Online in 14 Tagen",
     ],
     growth: {
       price: "+49 €/Monat zubuchbar",
