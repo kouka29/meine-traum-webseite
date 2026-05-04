@@ -237,24 +237,12 @@ const faqs = [
     a: "Nein. Du füllst einmal ein 2-Minuten-Formular aus und lehnst dich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst deine fertige Website – ohne einen einzigen technischen Handgriff.",
   },
   {
-    q: "Welches Paket ist das Richtige für mich?",
-    a: "Kurze Faustregel:\n→ Du willst erstmal professionell online sein: Starter\n→ Du willst bei Google gefunden werden und mehr Anfragen: Pro\n→ Du willst dauerhaft mehr Aufträge und deine Konkurrenz klar schlagen: Premium\n→ Du hast einen Onlineshop oder besondere Anforderungen: Enterprise\n\nNicht sicher? Ich berate dich kostenlos und sage dir ehrlich was Sinn macht.",
-  },
-  {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
     a: "Nach den 12 Monaten läuft dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\nDu kannst aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
-    q: "Sind Hosting, Domain und SSL inklusive?",
-    a: "Bei der Miete: Ja. Alles inklusive. Hosting, SSL-Zertifikat, Wartung und Updates – du zahlst deinen Monatsbeitrag, der Rest ist meine Aufgabe.\n\nBeim Einmalkauf: Hosting und Domain richten wir auf Wunsch ein. Kosten dafür: ca. 80–120 € pro Jahr je nach Anbieter – du entscheidest selbst.",
-  },
-  {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
     a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von deiner Region und deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
-  },
-  {
-    q: "Macht ihr das auch für meinen Bereich?",
-    a: "Ja. Wir haben bereits Websites gebaut für:\nElektriker · Maler · Sanitär & Heizung · Dachdecker · Schreiner · KFZ-Betriebe · Garten & Landschaft · Gebäudereinigung\n\nDein Gewerk ist nicht dabei? Meld dich trotzdem – wir finden eine Lösung.",
   },
 ];
 
@@ -567,27 +555,6 @@ const WebdesignPreise = () => (
             </Accordion>
           </div>
 
-          <div className="bg-primary/10 rounded-2xl p-10 md:p-14 text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/20 text-primary mb-5">
-              <Phone size={26} />
-            </div>
-            <h3 className="font-heading text-2xl md:text-3xl font-bold mb-3">Noch eine Frage die hier nicht steht?</h3>
-            <p className="text-muted-foreground mb-7 leading-relaxed">
-              Ruf mich kurz an – ich beantworte alles in 5 Minuten.<br />
-              Kein Verkaufsgespräch. Versprochen.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
-              <Button variant="gradient" size="lg" asChild>
-                <a href="tel:+4915123456789">📞 Jetzt anrufen</a>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="#formular">Kostenlose Demo sichern <ArrowRight size={16} /></Link>
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Oder schreib uns – wir antworten meist innerhalb von 2 Stunden.
-            </p>
-          </div>
         </AnimatedSection>
       </div>
     </section>
@@ -605,6 +572,9 @@ const WebdesignPreise = () => (
         <Button variant="gradient" size="lg" asChild>
           <Link to="#formular">Jetzt kostenlose Demo sichern <ArrowRight size={18} /></Link>
         </Button>
+        <p className="text-sm text-muted-foreground mt-5">
+          Fragen? Einfach anrufen: <a href="tel:+4915123456789" className="underline hover:text-foreground">+49 151 23456789</a>
+        </p>
         <p className="text-sm text-muted-foreground mt-5">
           Bereits 12 Handwerksbetriebe vertrauen uns
         </p>
