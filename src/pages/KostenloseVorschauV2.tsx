@@ -51,6 +51,7 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 
 // ─────────────────────────────────────────────────────────────────────────────
