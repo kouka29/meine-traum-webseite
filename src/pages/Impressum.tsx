@@ -21,8 +21,13 @@ const Impressum = () => (
             </div>
 
             <div>
+              <h2 className="text-lg font-heading font-semibold text-foreground mb-3">Berufsbezeichnung</h2>
+              <p>Webdesign & Online-Marketing</p>
+            </div>
+
+            <div>
               <h2 className="text-lg font-heading font-semibold text-foreground mb-3">Umsatzsteuer-ID</h2>
-              <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />wird nachgereicht</p>
+              <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />DE458070108</p>
             </div>
 
             <div>
