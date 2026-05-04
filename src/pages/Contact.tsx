@@ -186,7 +186,7 @@ const Contact = () => {
                 {submitError && (
                   <p className="text-sm text-destructive">
                     Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
-                    <a href="tel:+49613130765 00" className="font-semibold underline">
+                    <a href="tel:+4961313076500" className="font-semibold underline">
                       06131/30 765 00
                     </a>
                   </p>
