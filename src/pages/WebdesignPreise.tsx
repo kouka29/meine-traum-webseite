@@ -125,10 +125,6 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Starter",
     price: "990 € einmalig",
-    highlights: [
-      "✓ Günstiger als Miete ab Monat 17",
-      "≈ nur 41 €/Monat über 2 Jahre",
-    ],
     compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 €",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -147,16 +143,12 @@ const buyPackages: BuyPkg[] = [
         "Support per WhatsApp",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
     cta: "Jetzt kaufen & starten",
   },
   {
     name: "Pro",
     price: "1.900 € einmalig",
-    highlights: [
-      "✓ Günstiger als Miete ab Monat 20",
-      "≈ nur 79 €/Monat über 2 Jahre",
-    ],
     compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 476 €",
     features: [
       "2–5 Seiten",
@@ -175,17 +167,13 @@ const buyPackages: BuyPkg[] = [
         "Priority Support per WhatsApp",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.488 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.488 € (= 207 €/Monat)",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
   {
     name: "Premium",
     price: "3.500 € einmalig",
-    highlights: [
-      "✓ Günstiger als Miete ab Monat 23",
-      "≈ nur 146 €/Monat über 2 Jahre",
-    ],
     compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 316 €",
     features: [
       "Bis zu 10 Seiten",
@@ -205,7 +193,7 @@ const buyPackages: BuyPkg[] = [
         "Monatlicher Performance-Check",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.448 €",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.448 € (= 370 €/Monat)",
     cta: "Jetzt kaufen & starten",
   },
 ];
