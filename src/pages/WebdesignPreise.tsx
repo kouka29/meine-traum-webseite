@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone, Gift } from "lucide-react";
+import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
