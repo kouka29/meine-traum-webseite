@@ -875,6 +875,8 @@ type MultiStepFormProps = {
 const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
   const [done, setDone] = useState(false);
   const [bookingMode, setBookingMode] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
@@ -943,7 +945,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       toast.error("Bitte fülle die Pflichtfelder aus.");
       return;
     }
+    // Honeypot: Bots füllen dieses unsichtbare Feld aus → still verwerfen.
+    if (honeypot) return;
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const newLeadId = crypto.randomUUID();
       // V2 erfasst keine E-Mail mehr – wir generieren einen Platzhalter,
@@ -952,6 +957,37 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         state.email && state.email.includes("@")
           ? state.email
           : `lead-${newLeadId}@vorschau-v2.local`;
+
+      // Primär: an Formspree senden (bestimmt Erfolg/Fehler des Submits).
+      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: state.firstName,
+          phone: state.phone.trim(),
+          company: state.company,
+          email: state.email || "",
+          _subject: `🔔 Neue Demo-Anfrage: ${state.company}`,
+          _replyto: state.email || "",
+          _next: window.location.href,
+          _gotcha: honeypot,
+          gewerk:
+            state.trade === "Sonstiges" && state.tradeOther
+              ? `Sonstiges: ${state.tradeOther}`
+              : state.trade,
+          hat_website: state.hasWebsite,
+          ziel: state.goals.join(", "),
+          dringlichkeit: state.urgency,
+          seite: "kostenlose-vorschau-v2",
+        }),
+      });
+      if (!formspreeRes.ok) {
+        throw new Error(`Formspree error ${formspreeRes.status}`);
+      }
+
       const { data: leadData, error: leadError } = await supabase
         .from("leads")
         .insert({
@@ -1008,6 +1044,9 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       setDone(true);
     } catch (err) {
       console.error(err);
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+      );
       toast.error("Etwas ist schiefgelaufen. Bitte versuche es erneut.");
     } finally {
       setSubmitting(false);
