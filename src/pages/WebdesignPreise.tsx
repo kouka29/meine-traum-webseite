@@ -300,7 +300,13 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
         ))}
       </div>
       {pkg.footnote && (
-        <p className="text-xs text-muted-foreground mb-5">{pkg.footnote}</p>
+        <p className="text-xs text-muted-foreground mb-3 whitespace-pre-line">{pkg.footnote}</p>
+      )}
+      {pkg.comparison && (
+        <>
+          <div className="border-t border-border my-3" />
+          <p className="text-[11px] text-muted-foreground italic mb-5">{pkg.comparison}</p>
+        </>
       )}
       <Button
         variant={pkg.popular ? "gradient" : "outline-primary"}
