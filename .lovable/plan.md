@@ -1,58 +1,46 @@
-## Ziel
+# Admin-Steuerung für /kostenlose-vorschau-v2
 
-Rechtlich saubere und vertrauensbildende MwSt.-Kennzeichnung auf der Preisseite – ohne den visuellen Fluss der Cards zu stören.
+Aktuell teilen sich `/kostenlose-vorschau` und `/kostenlose-vorschau-v2` dieselbe Einstellungs-Zeile (`vorschau_settings.id = 1`) sowie dieselben Demos/FAQs. Damit du V2 unabhängig pflegen kannst (Countdown, Plätze, Hero-Texte, Sichtbarkeit, Demos, FAQs, Testimonials-Auswahl etc.), führen wir einen **Page-Key** ein und einen **Seiten-Umschalter** im Admin-Tab.
 
-## Experten-Empfehlung: 3-Ebenen-Ansatz
+## Datenbank (Migration)
 
-Statt nur stumpf "zzgl. 19% MwSt." unter jeden Preis zu kleben, arbeite ich mit **drei Ebenen**, die zusammen professionell wirken:
+Neue Spalte `page_key text not null default 'v1'` zu:
+- `vorschau_settings` – plus zweite Zeile mit `page_key='v2'` (Kopie der aktuellen V1-Werte als Startpunkt). Unique-Index auf `page_key`.
+- `vorschau_demos` – jede Demo gehört zu einer Seite. Bestehende Zeilen bleiben `'v1'`; V2 startet leer (oder optional kopiert).
+- `vorschau_faqs` – analog.
 
-### Ebene 1: Direkt unter jedem Preis (sehr klein, grau)
+`testimonials` und `portfolio_projects` bleiben global. Welche davon auf V2 erscheinen, wird über zwei neue Tabellen `vorschau_page_testimonials(page_key, testimonial_id, sort_order)` und `vorschau_page_portfolio(page_key, portfolio_id, sort_order)` gesteuert (nur die verknüpften werden auf der jeweiligen Seite angezeigt; ist nichts verknüpft → Fallback alle sichtbaren, damit nichts kaputt geht).
 
-Direkt unter dem großen Preis in jeder Card – kleinste sinnvolle Größe (`text-xs`), gedämpfte Farbe (`text-muted-foreground`), kein Fettdruck. So nimmt es keine Aufmerksamkeit vom Preis weg, ist aber für jeden sichtbar der hinschaut.
+RPCs `increment_taken_slot` / `decrement_taken_slot` bekommen Parameter `p_page_key text default 'v1'`.
 
-Format: `zzgl. 19 % MwSt.`
+## Hook
 
-Gilt für:
-- Alle 3 Miete-Cards (Starter, Pro, Premium) → `zzgl. 19 % MwSt.`
-- Enterprise-Card Miete → `zzgl. 19 % MwSt.`
-- Alle 3 Einmalkauf-Cards → `zzgl. 19 % MwSt.`
-- Enterprise-Card Einmalkauf → `zzgl. 19 % MwSt.`
+`useVorschauSettings(pageKey: 'v1' | 'v2' = 'v1')`:
+- Lädt `vorschau_settings`, `vorschau_demos`, `vorschau_faqs` gefiltert nach `page_key`.
+- Lädt Testimonials/Portfolio über die Verknüpfungstabellen (mit Fallback).
+- Realtime-Channel pro pageKey.
 
-### Ebene 2: Bei "monatliche Äquivalenz" im Einmalkauf
+## Seiten
 
-Beim Einmalkauf wird "≈ nur 41 €/Monat über 2 Jahre" angezeigt. Hier MwSt.-Hinweis weglassen (wäre doppelt-gemoppelt), da die Zeile darüber schon den Hauptpreis netto deklariert hat.
+- `KostenloseVorschau.tsx` → `useVorschauSettings('v1')` (Default, keine Änderung im Verhalten).
+- `KostenloseVorschauV2.tsx` → `useVorschauSettings('v2')`. Slot-Reservierungs-RPCs mit `p_page_key='v2'`.
 
-### Ebene 3: Globaler Hinweis am Ende der Tabs
+## Admin (`AdminVorschauTab.tsx`)
 
-Ein dezenter, zentrierter Satz unterhalb der Preis-Cards (vor dem "Mieten oder kaufen"-Vergleichsblock):
+Ganz oben ein Tab- bzw. Select-Umschalter **„Seite: V1 / V2"**. Der gesamte bestehende UI-Block (Countdown, Plätze, Hero, Final-CTA, Sichtbarkeits-Switches, Demos, FAQs) wird einfach für die gewählte `page_key` gerendert – gleicher Code, anderer Datensatz.
 
-> _Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer. Für Gewerbetreibende voll absetzbar._
+Zusätzlich pro Seite:
+- **Testimonials-Auswahl**: Multi-Select aus globalen `testimonials`, speichert in `vorschau_page_testimonials`.
+- **Portfolio-Auswahl**: analog für `vorschau_page_portfolio`.
 
-Der Zusatz **"Für Gewerbetreibende voll absetzbar"** ist der Verkaufspsychologie-Trick: Handwerker (Zielgruppe) sind Gewerbetreibende → MwSt. ist für sie ein Durchlaufposten. Diese Erinnerung relativiert den "Mehrpreis" sofort und entschärft Preis-Einwände.
+## Technische Details
 
-## Warum diese Lösung?
+- Migration ist additiv und rückwärtskompatibel (Default `'v1'`, V1 verhält sich unverändert).
+- RLS: bestehende Policies erweitern wir auf die neuen Tabellen (öffentliches Read für sichtbare Inhalte, Admin schreibt über Service-Role wie heute).
+- TypeScript-Typen in `useVorschauSettings.ts` und im Admin-Tab um `page_key` ergänzen.
+- Realtime-Subscriptions in `useVorschauSettings` filtern serverseitig per `filter: page_key=eq.v2`.
 
-- **Rechtssicher**: PAngV-konform, B2B-typische Netto-Auszeichnung sauber gekennzeichnet
-- **Nicht aufdringlich**: Der große Preis bleibt der Held der Card
-- **Vertrauensbildend**: Transparenz statt versteckter Kosten – passt zum bestehenden "Keine versteckten Kosten"-Trust-Element
-- **Verkaufsförderlich**: Der "voll absetzbar"-Hinweis macht aus einer Pflichtangabe einen subtilen Verkaufsbooster
+## Was du danach im Admin kannst
 
-## Technische Umsetzung
-
-Datei: `src/pages/WebdesignPreise.tsx`
-
-1. In `PackageCard`: Unter dem `<p>` mit `pkg.price` ein neues `<p className="text-xs text-muted-foreground -mt-1 mb-2">zzgl. 19 % MwSt.</p>` einfügen (bei Enterprise mit "Auf Anfrage" weglassen oder anders formulieren → `zzgl. MwSt.`).
-2. In `BuyCard`: Identisch unter `pkg.price`.
-3. In den beiden Enterprise-Inline-Blöcken (Miete + Einmalkauf): Gleicher kleiner Hinweis unter dem Preis.
-4. Globaler Hinweis als zentrierter `<p className="text-xs text-muted-foreground text-center mt-8 italic">` direkt nach dem `</Tabs>`-Schließtag, vor dem "Mieten oder kaufen"-Vergleichsblock.
-
-## Ergebnis (Beispiel Card)
-
-```text
-Pro
-99 €/Monat
-zzgl. 19 % MwSt.
-Mindestlaufzeit: 12 Monate, …
-```
-
-Klein, sauber, professionell – wie bei Stripe, Personio oder anderen B2B-Profis.
+Für V1 **und** V2 getrennt:
+Plätze (total/taken), Countdown-Modus & -Ziel, Hero-Badge/H1/Sub/CTA, Final-CTA, alle Sichtbarkeits-Switches, Telefonnummer, Demo-Liste, FAQ-Liste, ausgewählte Testimonials und Portfolio-Projekte.

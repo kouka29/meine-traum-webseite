@@ -18,6 +18,7 @@ import {
 
 type Settings = {
   id: number;
+  page_key: string;
   total_slots: number;
   taken_slots: number;
   countdown_target: string | null;
@@ -116,6 +117,7 @@ const localToISO = (local: string): string | null => {
 export default function AdminVorschauTab({ password }: { password: string }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [pageKey, setPageKey] = useState<"v1" | "v2">("v1");
   const [settings, setSettings] = useState<Settings | null>(null);
   const [demos, setDemos] = useState<Demo[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
@@ -142,7 +144,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     }
     setLoading(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
-      body: { password, action: "vorschau-get" },
+      body: { password, action: "vorschau-get", pageKey },
     });
     setLoading(false);
     if (error || data?.error) {
@@ -167,7 +169,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   useEffect(() => {
     if (password) load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [password]);
+  }, [password, pageKey]);
 
   const updateSettings = (patch: Partial<Settings>) => {
     setSettings(s => (s ? { ...s, ...patch } : s));
@@ -181,7 +183,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     }
     setSaving(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
-      body: { password, action: "vorschau-update-settings", settings },
+      body: { password, action: "vorschau-update-settings", settings, pageKey },
     });
     setSaving(false);
     if (error || data?.error) {
@@ -229,6 +231,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         ...demoForm,
         portfolio_project_id: demoForm.portfolio_project_id || null,
         ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
+        pageKey,
       },
     });
     setSavingDemo(false);
@@ -290,6 +293,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           description: p.description || "",
           is_visible: true,
           portfolio_project_id: p.id,
+          pageKey,
         },
       });
       if (error || data?.error) { toast.error(data?.error || "Fehler beim Hinzufügen"); return; }
@@ -321,6 +325,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         password, action,
         ...(editingFaq ? { faqId: editingFaq.id } : {}),
         ...faqForm,
+        pageKey,
       },
     });
     setSavingFaq(false);
@@ -377,6 +382,24 @@ export default function AdminVorschauTab({ password }: { password: string }) {
 
   return (
     <div className="space-y-6">
+      {/* Page switcher */}
+      <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-center gap-2">
+        <span className="text-sm font-medium mr-2">Seite:</span>
+        {([
+          { key: "v1" as const, label: "/kostenlose-vorschau", path: "/kostenlose-vorschau" },
+          { key: "v2" as const, label: "/kostenlose-vorschau-v2", path: "/kostenlose-vorschau-v2" },
+        ]).map(p => (
+          <Button
+            key={p.key}
+            variant={pageKey === p.key ? "gradient" : "outline"}
+            size="sm"
+            onClick={() => setPageKey(p.key)}
+          >
+            {p.label}
+          </Button>
+        ))}
+      </div>
+
       {/* Hint banner */}
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 flex items-start gap-3">
         <Sparkles className="text-primary shrink-0 mt-0.5" size={18} />
@@ -384,8 +407,8 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           <p className="font-medium text-foreground">Live-Vorschau aktiv</p>
           <p className="text-muted-foreground">
             Alle Änderungen werden nach dem Speichern sofort auf{" "}
-            <a href="/kostenlose-vorschau" target="_blank" rel="noreferrer" className="text-primary underline">
-              /kostenlose-vorschau
+            <a href={pageKey === "v2" ? "/kostenlose-vorschau-v2" : "/kostenlose-vorschau"} target="_blank" rel="noreferrer" className="text-primary underline">
+              {pageKey === "v2" ? "/kostenlose-vorschau-v2" : "/kostenlose-vorschau"}
             </a>{" "}
             sichtbar.
           </p>
