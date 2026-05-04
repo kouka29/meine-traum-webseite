@@ -10,6 +10,7 @@ const navItems = [
   { label: "Leistungen", path: "/leistungen" },
   { label: "Über uns", path: "/ueber-uns" },
   { label: "Portfolio", path: "/portfolio" },
+  { label: "Preise", path: "/preise" },
   { label: "Kontakt", path: "/kontakt" },
 ];
 
