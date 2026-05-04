@@ -1461,9 +1461,16 @@ const KostenloseVorschauV2 = () => {
     return d.toLocaleDateString("de-DE", { month: "long" });
   }, []);
   const isWaitlist = remainingSlots <= 0;
-  // Fallbacks: wenn DB-Listen leer, nutze hardcoded Defaults
-  // V2: feste Handwerker-Demos & Testimonials, unabhängig von DB-Inhalten
-  const activeDemos = demos.map(d => ({ ...d, image_url: "" }));
+  // Demos: bevorzugt aus der DB (Admin → Vorschau-Tab, Seite V2),
+  // mit Fallback auf die hardcoded Handwerker-Demos, damit nie leer.
+  const activeDemos = (dbDemos && dbDemos.length > 0)
+    ? dbDemos.map(d => ({
+        trade: d.trade,
+        company: d.company,
+        desc: d.description,
+        image_url: d.image_url ?? "",
+      }))
+    : demos.map(d => ({ ...d, image_url: "" }));
   const activeTestimonials = testimonials.map(t => ({
     quote: t.quote,
     name: t.name,
