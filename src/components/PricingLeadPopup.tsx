@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X, CheckCircle2, ShieldCheck, Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface PricingLeadPopupProps {
   open: boolean;
@@ -11,13 +11,107 @@ interface PricingLeadPopupProps {
   onClose: () => void;
 }
 
+// Map badge to CTA button label
+const getCtaLabel = (badge: string) => {
+  const b = badge.toLowerCase();
+  if (b.includes("enterprise")) return "Beratung anfragen";
+  if (b.includes("kauf")) return "Jetzt verbindlich anfragen";
+  if (b.includes("miete")) return "Kostenlose Demo anfordern";
+  // Beratung / Demo / sonstige
+  return "Rückruf anfragen";
+};
+
+type FloatingFieldProps = {
+  id: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (v: string) => void;
+  error?: string;
+  required?: boolean;
+  autoComplete?: string;
+  maxLength?: number;
+  inputRef?: React.RefObject<HTMLInputElement>;
+};
+
+const FloatingField = ({
+  id,
+  label,
+  type = "text",
+  value,
+  onChange,
+  error,
+  required,
+  autoComplete,
+  maxLength,
+  inputRef,
+}: FloatingFieldProps) => {
+  const [focused, setFocused] = useState(false);
+  const floated = focused || value.length > 0;
+
+  return (
+    <div>
+      <div className="relative">
+        <input
+          id={id}
+          ref={inputRef}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          autoComplete={autoComplete}
+          maxLength={maxLength}
+          placeholder=" "
+          className={cn(
+            "peer w-full h-14 rounded-lg border-[1.5px] bg-background px-3 pt-5 pb-1.5 text-base text-foreground placeholder-transparent",
+            "focus:outline-none focus:ring-0 transition-colors",
+            error
+              ? "border-2 border-[#EF4444] focus:border-[#EF4444]"
+              : "border-input focus:border-primary",
+          )}
+        />
+        <label
+          htmlFor={id}
+          className={cn(
+            "pointer-events-none absolute left-3 transition-all duration-150",
+            floated
+              ? "top-1.5 text-[11px] text-muted-foreground"
+              : "top-1/2 -translate-y-1/2 text-base text-muted-foreground/80",
+            error && floated && "text-[#EF4444]",
+          )}
+        >
+          {label}
+          {!required && floated && (
+            <span className="ml-1 text-muted-foreground/60">(optional)</span>
+          )}
+        </label>
+      </div>
+      {error && (
+        <p className="text-xs text-[#EF4444] mt-1 ml-1">{error}</p>
+      )}
+    </div>
+  );
+};
+
 const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
   const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<{ firstName?: string; phone?: string; companyName?: string }>({});
+  const [errors, setErrors] = useState<{
+    firstName?: string;
+    phone?: string;
+    companyName?: string;
+  }>({});
+
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const companyRef = useRef<HTMLInputElement>(null);
+
+  const ctaLabel = getCtaLabel(badge);
 
   // Reset on open
   useEffect(() => {
@@ -27,14 +121,13 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     }
   }, [open]);
 
-  // ESC to close
+  // ESC + scroll lock
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    // lock scroll
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
@@ -52,10 +145,24 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
 
   const validate = () => {
     const errs: typeof errors = {};
-    if (!firstName.trim()) errs.firstName = "Bitte Vornamen eingeben";
-    if (!phone.trim() || phone.trim().length < 6) errs.phone = "Bitte gültige Telefonnummer eingeben";
-    if (!companyName.trim()) errs.companyName = "Bitte Betriebsnamen eingeben";
+    if (!firstName.trim()) errs.firstName = "Bitte fülle dieses Feld aus.";
+    if (!phone.trim() || phone.trim().length < 6)
+      errs.phone = "Bitte fülle dieses Feld aus.";
+    if (!companyName.trim()) errs.companyName = "Bitte fülle dieses Feld aus.";
     setErrors(errs);
+
+    // Scroll to first invalid
+    if (errs.firstName) {
+      firstNameRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      firstNameRef.current?.focus();
+    } else if (errs.phone) {
+      phoneRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      phoneRef.current?.focus();
+    } else if (errs.companyName) {
+      companyRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      companyRef.current?.focus();
+    }
+
     return Object.keys(errs).length === 0;
   };
 
@@ -65,14 +172,14 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     setLoading(true);
 
     const leadId = crypto.randomUUID();
-    const placeholderEmail = `noemail+${leadId}@popup.local`;
+    const finalEmail = email.trim() || `noemail+${leadId}@popup.local`;
 
     const { error } = await supabase.from("leads").insert({
       id: leadId,
       first_name: firstName.trim(),
       company_name: companyName.trim(),
       phone: phone.trim(),
-      email: placeholderEmail,
+      email: finalEmail,
       notes: `Pop-up Anfrage von Preisseite – Paket: ${badge}`,
     });
 
@@ -82,7 +189,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
       return;
     }
 
-    // Fire-and-forget admin notification
     supabase.functions.invoke("send-transactional-email", {
       body: {
         templateName: "lead-notification",
@@ -91,7 +197,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
           source: `Preisseite Pop-up (${badge})`,
           firstName: firstName.trim(),
           companyName: companyName.trim(),
-          email: "(keine E-Mail – nur Telefon)",
+          email: email.trim() || "(keine E-Mail – nur Telefon)",
           phone: phone.trim(),
           submittedAt: new Date().toLocaleString("de-DE"),
         },
@@ -103,6 +209,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     setFirstName("");
     setPhone("");
     setCompanyName("");
+    setEmail("");
   };
 
   if (!open) return null;
@@ -114,40 +221,50 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+      <div className="absolute inset-0 bg-black/75 backdrop-blur-[2px]" />
 
       <div
-        className="relative w-full sm:max-w-[480px] sm:w-[95vw] bg-background rounded-t-2xl sm:rounded-2xl shadow-elevated overflow-hidden animate-in slide-in-from-bottom-4 sm:slide-in-from-bottom-0 sm:zoom-in-95 fade-in duration-200 max-h-[95vh] overflow-y-auto"
+        className={cn(
+          "relative bg-background shadow-elevated overflow-hidden",
+          "animate-in fade-in duration-200",
+          // Mobile: bottom sheet, fast 95vh, slide-up
+          "w-full max-h-[95vh] rounded-t-2xl slide-in-from-bottom-4",
+          // Desktop: centered card, fade+zoom
+          "sm:max-w-[480px] sm:w-[95vw] sm:max-h-[90vh] sm:rounded-2xl sm:zoom-in-95 sm:slide-in-from-bottom-0",
+          // Mobile uses flex column so the CTA can be pinned to the bottom
+          "flex flex-col",
+        )}
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted flex items-center justify-center transition-colors"
+          className="absolute top-3 right-3 z-20 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted flex items-center justify-center transition-colors"
           aria-label="Schließen"
         >
           <X size={20} className="text-muted-foreground" />
         </button>
 
-        <div className="p-6 sm:p-8">
-          {submitted ? (
-            <div className="text-center py-6">
-              <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 size={32} className="text-green-600" />
-              </div>
-              <h3 className="font-heading text-2xl font-bold mb-3 text-foreground">
-                Danke{firstName ? `, ${firstName}` : ""}!
-              </h3>
-              <p className="text-muted-foreground leading-relaxed mb-3">
-                Ich habe deine Anfrage erhalten.<br />
-                Du bekommst in Kürze deine kostenlose Design-Demo.<br />
-                Ich melde mich innerhalb von 2 Stunden bei dir.
-              </p>
-              <p className="text-xs text-muted-foreground/70">
-                Schau auch in deinen Spam-Ordner.
-              </p>
+        {submitted ? (
+          <div className="p-6 sm:p-8 text-center py-10">
+            <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 size={32} className="text-green-600" />
             </div>
-          ) : (
-            <>
+            <h3 className="font-heading text-2xl font-bold mb-3 text-foreground">
+              Danke{firstName ? `, ${firstName}` : ""}!
+            </h3>
+            <p className="text-muted-foreground leading-relaxed mb-3">
+              Ich habe deine Anfrage erhalten.<br />
+              Du bekommst in Kürze deine kostenlose Design-Demo.<br />
+              Ich melde mich innerhalb von 2 Stunden bei dir.
+            </p>
+            <p className="text-xs text-muted-foreground/70">
+              Schau auch in deinen Spam-Ordner.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto p-6 sm:p-8 pb-3 sm:pb-6">
               <span className="inline-block badge-label bg-primary/10 text-primary mb-4 mt-1">
                 {badge}
               </span>
@@ -159,81 +276,90 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 Ich melde mich innerhalb von 2 Stunden bei dir.
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <div>
-                  <Input
-                    placeholder="Max"
-                    value={firstName}
-                    onChange={(e) => {
-                      setFirstName(e.target.value);
-                      if (errors.firstName) setErrors((p) => ({ ...p, firstName: undefined }));
-                    }}
-                    className={`h-12 text-base rounded-lg border-[1.5px] ${errors.firstName ? "border-destructive" : ""}`}
-                    maxLength={100}
-                    autoComplete="given-name"
-                  />
-                  {errors.firstName && (
-                    <p className="text-xs text-destructive mt-1">{errors.firstName}</p>
-                  )}
-                </div>
-                <div>
-                  <Input
-                    type="tel"
-                    placeholder="+49 ..."
-                    value={phone}
-                    onChange={(e) => {
-                      setPhone(e.target.value);
-                      if (errors.phone) setErrors((p) => ({ ...p, phone: undefined }));
-                    }}
-                    className={`h-12 text-base rounded-lg border-[1.5px] ${errors.phone ? "border-destructive" : ""}`}
-                    maxLength={30}
-                    autoComplete="tel"
-                  />
-                  {errors.phone && (
-                    <p className="text-xs text-destructive mt-1">{errors.phone}</p>
-                  )}
-                </div>
-                <div>
-                  <Input
-                    placeholder="Mustermann GmbH"
-                    value={companyName}
-                    onChange={(e) => {
-                      setCompanyName(e.target.value);
-                      if (errors.companyName) setErrors((p) => ({ ...p, companyName: undefined }));
-                    }}
-                    className={`h-12 text-base rounded-lg border-[1.5px] ${errors.companyName ? "border-destructive" : ""}`}
-                    maxLength={200}
-                    autoComplete="organization"
-                  />
-                  {errors.companyName && (
-                    <p className="text-xs text-destructive mt-1">{errors.companyName}</p>
-                  )}
-                </div>
+              <div className="space-y-3">
+                <FloatingField
+                  id="popup-firstname"
+                  label="Dein Vorname"
+                  value={firstName}
+                  onChange={(v) => {
+                    setFirstName(v);
+                    if (errors.firstName) setErrors((p) => ({ ...p, firstName: undefined }));
+                  }}
+                  error={errors.firstName}
+                  required
+                  autoComplete="given-name"
+                  maxLength={100}
+                  inputRef={firstNameRef}
+                />
+                <FloatingField
+                  id="popup-phone"
+                  label="Telefonnummer"
+                  type="tel"
+                  value={phone}
+                  onChange={(v) => {
+                    setPhone(v);
+                    if (errors.phone) setErrors((p) => ({ ...p, phone: undefined }));
+                  }}
+                  error={errors.phone}
+                  required
+                  autoComplete="tel"
+                  maxLength={30}
+                  inputRef={phoneRef}
+                />
+                <FloatingField
+                  id="popup-company"
+                  label="Betriebsname"
+                  value={companyName}
+                  onChange={(v) => {
+                    setCompanyName(v);
+                    if (errors.companyName) setErrors((p) => ({ ...p, companyName: undefined }));
+                  }}
+                  error={errors.companyName}
+                  required
+                  autoComplete="organization"
+                  maxLength={200}
+                  inputRef={companyRef}
+                />
+                <FloatingField
+                  id="popup-email"
+                  label="E-Mail"
+                  type="email"
+                  value={email}
+                  onChange={setEmail}
+                  autoComplete="email"
+                  maxLength={255}
+                />
+              </div>
+            </div>
 
-                <Button
-                  type="submit"
-                  variant="gradient"
-                  size="lg"
-                  disabled={loading}
-                  className="w-full text-base py-6 font-bold mt-2"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 size={18} className="animate-spin" /> Wird gesendet...
-                    </>
-                  ) : (
-                    <>Kostenlose Demo anfordern <ArrowRight size={18} /></>
-                  )}
-                </Button>
-              </form>
+            {/* CTA footer — fixed on mobile (sticky bottom of sheet), inline on desktop */}
+            <div className="shrink-0 px-6 sm:px-8 pt-3 pb-5 sm:pb-7 bg-background border-t border-border/40 sm:border-t-0">
+              <Button
+                type="submit"
+                variant="gradient"
+                size="lg"
+                disabled={loading}
+                className="w-full text-base py-6 font-bold"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" /> Wird gesendet...
+                  </>
+                ) : (
+                  <>{ctaLabel} <ArrowRight size={18} /></>
+                )}
+              </Button>
 
-              <p className="text-center text-xs text-muted-foreground mt-4 flex items-center justify-center gap-1.5">
+              <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1.5">
                 <ShieldCheck size={13} />
                 Kostenlos & unverbindlich – kein Spam, keine Verpflichtung
               </p>
-            </>
-          )}
-        </div>
+              <p className="text-center text-xs text-muted-foreground/80 mt-1.5">
+                ⭐ Bereits 12 Handwerksbetriebe vertrauen uns
+              </p>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
