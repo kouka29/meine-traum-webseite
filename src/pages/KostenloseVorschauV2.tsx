@@ -1461,7 +1461,7 @@ const KostenloseVorschauV2 = () => {
             <div className="mt-6 inline-flex items-center gap-3 rounded-full bg-card border border-border px-4 py-2 text-sm font-medium shadow-sm">
               <Award className="w-4 h-4 text-primary" />
               <span>
-                <strong className="text-foreground">Bereits 12 Handwerksbetriebe</strong>{" "}
+                <strong className="text-foreground">Über 130 Betriebe</strong>{" "}
                 <span className="text-muted-foreground">vertrauen uns</span>
               </span>
             </div>
