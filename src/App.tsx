@@ -80,6 +80,7 @@ const App = () => (
             <Route path="/kostenlose-vorschau-v2" element={<KostenloseVorschauV2 />} />
             <Route path="/kostenlose-vorschau2" element={<KostenloseVorschau />} />
             <Route path="/webdesign-preise" element={<WebdesignPreise />} />
+            <Route path="/preise" element={<WebdesignPreise />} />
             <Route path="/webdesign-shk" element={<WebdesignSHK />} />
             <Route path="/webdesign-handwerker" element={<WebdesignHandwerker />} />
             <Route path="/webdesign-aerzte" element={<WebdesignAerzte />} />
