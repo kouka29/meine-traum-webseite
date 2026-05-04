@@ -1687,9 +1687,14 @@ const KostenloseVorschauV2 = () => {
             )}
           </Carousel>
           <CarouselDots api={testimonialsApi} count={activeTestimonials.length} />
-          <div className="text-center mt-10">
-            <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              Jetzt meine kostenlose Vorschau anfordern <ArrowRight className="ml-2 w-5 h-5" />
+          <div className="mt-10 flex justify-center px-4">
+            <Button
+              size="lg"
+              onClick={scrollToForm}
+              className="shadow-md w-full sm:w-auto max-w-full whitespace-normal text-center h-auto min-h-12 py-3"
+            >
+              <span className="flex-1">Jetzt meine kostenlose Vorschau anfordern</span>
+              <ArrowRight className="ml-2 w-5 h-5 shrink-0" />
             </Button>
           </div>
         </div>
