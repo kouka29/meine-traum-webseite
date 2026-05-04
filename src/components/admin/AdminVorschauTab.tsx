@@ -231,6 +231,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         ...demoForm,
         portfolio_project_id: demoForm.portfolio_project_id || null,
         ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
+        pageKey,
       },
     });
     setSavingDemo(false);
@@ -292,6 +293,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           description: p.description || "",
           is_visible: true,
           portfolio_project_id: p.id,
+          pageKey,
         },
       });
       if (error || data?.error) { toast.error(data?.error || "Fehler beim Hinzufügen"); return; }
@@ -323,6 +325,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         password, action,
         ...(editingFaq ? { faqId: editingFaq.id } : {}),
         ...faqForm,
+        pageKey,
       },
     });
     setSavingFaq(false);
