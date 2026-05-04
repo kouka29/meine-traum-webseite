@@ -147,7 +147,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     const t = setTimeout(() => {
       onClose();
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 6000);
+    }, 9000);
     return () => clearTimeout(t);
   }, [submitted, onClose]);
 
@@ -357,7 +357,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               <div
                 className="absolute inset-y-0 left-0 w-full bg-primary origin-left"
                 style={{
-                  animation: "pricing-popup-progress 6000ms linear forwards",
+                  animation: "pricing-popup-progress 9000ms linear forwards",
                 }}
               />
             </div>
