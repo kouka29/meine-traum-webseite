@@ -305,6 +305,22 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
       {pkg.upgradeHint && (
         <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
       )}
+      {pkg.growth && (
+        <div className="mb-5 rounded-xl bg-muted/50 border border-border/60 p-4">
+          <p className="text-xs font-semibold text-foreground/80 mb-2">
+            🚀 Wachstumspaket: {pkg.growth.price}
+          </p>
+          <ul className="space-y-1 mb-2">
+            {pkg.growth.items.map((g) => (
+              <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
+                <span>{g}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
+        </div>
+      )}
       <Button
         variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
         size="lg"
@@ -352,19 +368,20 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
           </div>
         ))}
       </div>
-      {pkg.footnote && (
-        <div className="mb-3">
-          <p className="text-xs font-semibold text-muted-foreground mb-2">
-            + Website-Sorglos-Paket ab 29 €/Monat zubuchbar:
+      {pkg.growth && (
+        <div className="mb-3 rounded-xl bg-muted/50 border border-border/60 p-4">
+          <p className="text-xs font-semibold text-foreground/80 mb-2">
+            🚀 Wachstumspaket: {pkg.growth.price}
           </p>
-          <ul className="space-y-1">
-            {["Hosting & SSL", "Updates & Wartung", "Änderungswünsche", "Support – monatlich kündbar"].map((b) => (
-              <li key={b} className="flex items-start gap-2 text-xs text-muted-foreground">
+          <ul className="space-y-1 mb-2">
+            {pkg.growth.items.map((g) => (
+              <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
-                <span>{b}</span>
+                <span>{g}</span>
               </li>
             ))}
           </ul>
+          <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
         </div>
       )}
       {pkg.comparison && (
