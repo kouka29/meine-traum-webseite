@@ -1452,7 +1452,7 @@ const KostenloseVorschauV2 = () => {
             </p>
 
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground text-center max-w-md mx-auto">
-              Nach deiner Vorschau: Fertige Website ab 49€/Monat – kein Vertrag, monatlich kündbar.
+              Nach deiner Vorschau: Fertige Website ab 59€/Monat – kein Vertrag, monatlich kündbar.
             </p>
 
             {/* Social Proof */}
