@@ -25,7 +25,7 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
-      "Perfekt für den ersten Schritt online",
+      "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
@@ -131,7 +131,7 @@ const buyPackages: BuyPkg[] = [
     ],
     compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 €",
     features: [
-      "Perfekt für den ersten Schritt online",
+      "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
@@ -425,6 +425,11 @@ const WebdesignPreise = () => (
             <TabsTrigger value="kauf" className="flex-1">Einmalkauf</TabsTrigger>
           </TabsList>
 
+          <p className="text-xs text-muted-foreground text-center italic -mt-4 mb-6 max-w-2xl mx-auto">
+            Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
+            Für Gewerbetreibende voll absetzbar.
+          </p>
+
           <TabsContent value="miete">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-primary/10 text-primary border-primary/20">
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
@@ -437,7 +442,7 @@ const WebdesignPreise = () => (
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="ghost" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-[#F3F4F6] text-[#1F2937] hover:bg-[#E5E7EB] hover:text-[#1F2937] shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
+              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
@@ -449,8 +454,9 @@ const WebdesignPreise = () => (
                 <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
                     <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+                    <p className="text-sm font-medium text-foreground/80 mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
                     <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-                    <p className="text-xs text-muted-foreground mb-3">zzgl. MwSt.</p>
+                    <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
                     {pkg.desc && (
                       <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
                     )}
@@ -475,7 +481,7 @@ const WebdesignPreise = () => (
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer dein. Ab Monat 21 günstiger als Miete.
+              💡 Einmal zahlen. Für immer dein. Langfristig günstiger als Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
               Du hast Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
@@ -485,7 +491,7 @@ const WebdesignPreise = () => (
               {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="ghost" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-[#F3F4F6] text-[#1F2937] hover:bg-[#E5E7EB] hover:text-[#1F2937] shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
+              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
@@ -518,11 +524,6 @@ const WebdesignPreise = () => (
           </TabsContent>
         </Tabs>
 
-        <p className="text-xs text-muted-foreground text-center italic mt-2 mb-10 max-w-2xl mx-auto">
-          Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
-          Für Gewerbetreibende voll absetzbar.
-        </p>
-
         <AnimatedSection>
           <div className="bg-card rounded-2xl p-8 md:p-10 border border-border text-center max-w-3xl mx-auto mb-10">
             <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu dir?</h3>
@@ -531,7 +532,7 @@ const WebdesignPreise = () => (
               Einmalkauf = einmal zahlen, Website gehört dir, langfristig günstiger.<br />
               Nicht sicher? Ich berate dich kurz und kostenlos.
             </p>
-            <Button variant="gradient" size="lg" asChild>
+            <Button variant="outline" size="lg" asChild className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
               <Link to="#formular">Kostenlos beraten lassen <ArrowRight size={18} /></Link>
             </Button>
           </div>
@@ -588,6 +589,25 @@ const WebdesignPreise = () => (
             </p>
           </div>
         </AnimatedSection>
+      </div>
+    </section>
+
+    <section className="bg-primary/10 py-[60px]">
+      <div className="container-narrow px-4 text-center">
+        <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
+          Bereit für deine neue Website?
+        </h2>
+        <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
+          Kostenlose Design-Demo in 48 Stunden.<br />
+          Kein Risiko. Keine Verpflichtung.<br />
+          Gefällt sie dir nicht – du zahlst nichts.
+        </p>
+        <Button variant="gradient" size="lg" asChild>
+          <Link to="#formular">Jetzt kostenlose Demo sichern <ArrowRight size={18} /></Link>
+        </Button>
+        <p className="text-sm text-muted-foreground mt-5">
+          Bereits 12 Handwerksbetriebe vertrauen uns
+        </p>
       </div>
     </section>
 
