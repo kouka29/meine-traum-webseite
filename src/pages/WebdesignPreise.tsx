@@ -524,11 +524,6 @@ const WebdesignPreise = () => (
           </TabsContent>
         </Tabs>
 
-        <p className="text-xs text-muted-foreground text-center italic mt-2 mb-10 max-w-2xl mx-auto">
-          Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
-          Für Gewerbetreibende voll absetzbar.
-        </p>
-
         <AnimatedSection>
           <div className="bg-card rounded-2xl p-8 md:p-10 border border-border text-center max-w-3xl mx-auto mb-10">
             <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu dir?</h3>
@@ -537,7 +532,7 @@ const WebdesignPreise = () => (
               Einmalkauf = einmal zahlen, Website gehört dir, langfristig günstiger.<br />
               Nicht sicher? Ich berate dich kurz und kostenlos.
             </p>
-            <Button variant="gradient" size="lg" asChild>
+            <Button variant="outline" size="lg" asChild className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
               <Link to="#formular">Kostenlos beraten lassen <ArrowRight size={18} /></Link>
             </Button>
           </div>
