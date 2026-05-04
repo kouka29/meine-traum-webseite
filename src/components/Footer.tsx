@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const Footer = () => (
   <footer className="bg-foreground text-background/70 section-padding">
