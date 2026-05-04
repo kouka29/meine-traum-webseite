@@ -217,6 +217,53 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
   </AnimatedSection>
 );
 
+const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
+  <AnimatedSection delay={i * 0.08}>
+    <div
+      className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
+        pkg.popular ? "border-primary shadow-elevated" : "border-border"
+      }`}
+    >
+      {pkg.popular && (
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
+          <Star size={12} /> Beliebteste Wahl
+        </span>
+      )}
+      <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+      <p className="font-heading text-3xl font-bold gradient-text mb-3">{pkg.price}</p>
+      {pkg.highlights && (
+        <div className="space-y-1 mb-3">
+          {pkg.highlights.map((h) => (
+            <p key={h} className="text-sm font-medium text-[hsl(142,71%,29%)]">{h}</p>
+          ))}
+        </div>
+      )}
+      {pkg.compare && (
+        <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
+      )}
+      <div className="space-y-3 flex-1 mb-4 mt-2">
+        {pkg.features.map((f) => (
+          <div key={f} className="flex items-start gap-2.5">
+            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+            <span className="text-sm">{f}</span>
+          </div>
+        ))}
+      </div>
+      {pkg.footnote && (
+        <p className="text-xs text-muted-foreground mb-5">{pkg.footnote}</p>
+      )}
+      <Button
+        variant={pkg.popular ? "gradient" : "outline-primary"}
+        size="lg"
+        className="w-full"
+        asChild
+      >
+        <Link to="#formular">{pkg.cta} <ArrowRight size={16} /></Link>
+      </Button>
+    </div>
+  </AnimatedSection>
+);
+
 const WebdesignPreise = () => (
   <main className="pt-20">
     <section className="section-padding">
@@ -287,12 +334,46 @@ const WebdesignPreise = () => (
           </TabsContent>
 
           <TabsContent value="kauf">
-            <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-muted text-muted-foreground border-border">
-              💡 Einmalkauf = günstiger ab Monat 20. Die Website gehört dir.
+            <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
+              💡 Einmal zahlen. Für immer dein. Ab Monat 21 günstiger als Miete.
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {buyPackages.map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
+            <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Du hast Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
+              Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
+            <div className="flex justify-center my-8">
+              <Button variant="outline" size="lg" asChild>
+                <Link to="#formular">
+                  Nicht sicher welches Paket passt? Kostenlos beraten lassen <ArrowRight size={16} />
+                </Link>
+              </Button>
+            </div>
+            <AnimatedSection delay={0.1}>
+              <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
+                <div className="flex-1">
+                  <h3 className="font-heading text-xl font-bold mb-1">{buyEnterprise.name}</h3>
+                  <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
+                  <p className="font-heading text-2xl font-bold gradient-text mb-5">{buyEnterprise.price}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                    {buyEnterprise.features.map((f) => (
+                      <div key={f} className="flex items-start gap-2.5">
+                        <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                        <span className="text-sm">{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{buyEnterprise.footnote}</p>
+                </div>
+                <div className="md:w-auto">
+                  <Button variant="outline" size="lg" asChild>
+                    <Link to="#formular">{buyEnterprise.cta} <ArrowRight size={16} /></Link>
+                  </Button>
+                </div>
+              </div>
+            </AnimatedSection>
           </TabsContent>
         </Tabs>
 
