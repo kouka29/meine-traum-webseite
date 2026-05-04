@@ -393,16 +393,24 @@ const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const formEl = document.getElementById("formular");
-      if (!formEl) return;
-      const rect = formEl.getBoundingClientRect();
-      // Hide once user has scrolled the form into view
-      setShowFloating(rect.top > window.innerHeight * 0.3);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const ctaButtons = Array.from(
+      document.querySelectorAll<HTMLElement>('a[href="#formular"]')
+    );
+    if (ctaButtons.length === 0) return;
+
+    const visible = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        });
+        setShowFloating(visible.size === 0);
+      },
+      { threshold: 0.1 }
+    );
+    ctaButtons.forEach((b) => observer.observe(b));
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -595,14 +603,15 @@ const WebdesignPreise = () => {
       </div>
     </section>
 
-    {showFloating && (
-      <a
-        href="#formular"
-        className="md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
-      >
-        Kostenlose Demo sichern →
-      </a>
-    )}
+    <a
+      href="#formular"
+      aria-hidden={!showFloating}
+      className={`md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-opacity duration-200 ${
+        showFloating ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      Kostenlose Demo sichern →
+    </a>
   </main>
   );
 };
