@@ -300,12 +300,24 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
         ))}
       </div>
       {pkg.footnote && (
-        <p className="text-xs text-muted-foreground mb-3 whitespace-pre-line">{pkg.footnote}</p>
+        <div className="mb-3">
+          <p className="text-xs font-semibold text-muted-foreground mb-2">
+            + Website-Sorglos-Paket ab 29 €/Monat zubuchbar:
+          </p>
+          <ul className="space-y-1">
+            {["Hosting & SSL", "Updates & Wartung", "Änderungswünsche", "Support – monatlich kündbar"].map((b) => (
+              <li key={b} className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
       {pkg.comparison && (
         <>
           <div className="border-t border-border my-3" />
-          <p className="text-[11px] text-muted-foreground italic mb-5">{pkg.comparison}</p>
+          <p className="text-sm text-foreground/80 mb-5 whitespace-pre-line">{pkg.comparison}</p>
         </>
       )}
       <Button
