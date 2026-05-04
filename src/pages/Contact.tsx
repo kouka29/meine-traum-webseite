@@ -17,19 +17,51 @@ const trustPoints = [
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitError(null);
     setLoading(true);
     const form = e.target as HTMLFormElement;
-    const inputs = form.querySelectorAll("input, textarea");
+    const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+      "input:not([name='_gotcha']), textarea",
+    );
     const v = Array.from(inputs).map(
       (el) => (el as HTMLInputElement | HTMLTextAreaElement).value.trim()
     );
     const [name, email, phone, website, company, message] = v;
+    const honeypot = (form.querySelector("input[name='_gotcha']") as HTMLInputElement | null)?.value || "";
+    if (honeypot) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const leadId = crypto.randomUUID();
+
+      // Primär: an Formspree senden
+      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          company: company || website || "",
+          email,
+          _subject: `🔔 Neue Kontaktanfrage: ${company || name}`,
+          _replyto: email,
+          _gotcha: honeypot,
+          website: website || "",
+          nachricht: message || "",
+          seite: "kontakt",
+        }),
+      });
+      if (!formspreeRes.ok) throw new Error(`Formspree ${formspreeRes.status}`);
+
       const { error } = await supabase.from("leads").insert({
         id: leadId,
         first_name: name || "Unbekannt",
@@ -37,7 +69,9 @@ const Contact = () => {
         phone: phone || "n/a",
         company_name: company || website || "",
       });
-      if (error) throw error;
+      if (error) {
+        console.warn("Lead konnte nicht in der DB gespeichert werden", error);
+      }
 
       supabase.functions.invoke("send-transactional-email", {
         body: {
@@ -59,6 +93,9 @@ const Contact = () => {
       toast.success("Nachricht gesendet! Wir melden uns innerhalb von 24 Stunden.");
       form.reset();
     } catch {
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131/30 765 00",
+      );
       toast.error("Fehler beim Senden. Bitte versuchen Sie es erneut.");
     } finally {
       setLoading(false);
@@ -137,6 +174,23 @@ const Contact = () => {
                     <>Kostenlose Vorschau anfordern <Send size={18} /></>
                   )}
                 </Button>
+                {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  style={{ display: "none" }}
+                  aria-hidden="true"
+                />
+                {submitError && (
+                  <p className="text-sm text-destructive">
+                    Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+                    <a href="tel:+4961313076500" className="font-semibold underline">
+                      06131/30 765 00
+                    </a>
+                  </p>
+                )}
                 <p className="text-xs text-muted-foreground">
                   Kein Spam. Keine versteckten Kosten. Wir melden uns persönlich bei Ihnen.
                 </p>

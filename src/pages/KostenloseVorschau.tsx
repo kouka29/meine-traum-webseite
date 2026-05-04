@@ -173,6 +173,7 @@ const KostenloseVorschau = () => {
   const [hasWebsite, setHasWebsite] = useState("");
   const [urgency, setUrgency] = useState("");
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const toggleGoal = (g: string) => {
     setSelectedGoals((prev) =>
@@ -186,6 +187,7 @@ const KostenloseVorschau = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitError(null);
     const form = e.currentTarget;
     const fd = new FormData(form);
 
@@ -193,6 +195,8 @@ const KostenloseVorschau = () => {
     const companyName = (fd.get("companyName") as string)?.trim();
     const email = (fd.get("email") as string)?.trim();
     const phone = ((fd.get("phone") as string) || "").trim();
+    const honeypot = ((fd.get("_gotcha") as string) || "").trim();
+    if (honeypot) return;
 
     if (!firstName || !companyName || !email) {
       toast.error("Bitte fülle alle Pflichtfelder aus.");
@@ -214,6 +218,31 @@ const KostenloseVorschau = () => {
     setLoading(true);
     try {
       const leadId = crypto.randomUUID();
+
+      // Primär: an Formspree senden
+      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: firstName,
+          phone: phone || "",
+          company: companyName,
+          email,
+          _subject: `🔔 Neue Vorschau-Anfrage: ${companyName}`,
+          _replyto: email,
+          _gotcha: honeypot,
+          gewerk: trade,
+          hat_website: hasWebsite,
+          ziel: selectedGoals.join(", "),
+          dringlichkeit: urgency,
+          seite: "kostenlose-vorschau2",
+        }),
+      });
+      if (!formspreeRes.ok) throw new Error(`Formspree ${formspreeRes.status}`);
+
       const { error } = await supabase.from("leads").insert({
         id: leadId,
         first_name: firstName,
@@ -225,7 +254,9 @@ const KostenloseVorschau = () => {
         urgency,
         goals: selectedGoals.length > 0 ? selectedGoals : null,
       });
-      if (error) throw error;
+      if (error) {
+        console.warn("Lead konnte nicht in der DB gespeichert werden", error);
+      }
 
       supabase.functions.invoke("send-transactional-email", {
         body: {
@@ -253,6 +284,9 @@ const KostenloseVorschau = () => {
       setUrgency("");
       setSelectedGoals([]);
     } catch {
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131/30 765 00",
+      );
       toast.error("Fehler beim Senden. Bitte versuche es erneut.");
     } finally {
       setLoading(false);
@@ -659,6 +693,23 @@ const KostenloseVorschau = () => {
                       </>
                     )}
                   </Button>
+                  {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+                  <input
+                    type="text"
+                    name="_gotcha"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    style={{ display: "none" }}
+                    aria-hidden="true"
+                  />
+                  {submitError && (
+                    <p className="text-sm text-destructive text-center">
+                      Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+                      <a href="tel:+4961313076500" className="font-semibold underline">
+                        06131/30 765 00
+                      </a>
+                    </p>
+                  )}
 
                   <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1.5">
                     <Lock size={12} />

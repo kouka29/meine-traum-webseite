@@ -841,6 +841,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
   const [bookingMode, setBookingMode] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [leadId, setLeadId] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
   const cardRef = useRef<HTMLDivElement | null>(null);
   const isFirstRender = useRef(true);
 
@@ -902,9 +904,43 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       toast.error("Bitte fülle die Pflichtfelder aus.");
       return;
     }
+    if (honeypot) return;
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const newLeadId = crypto.randomUUID();
+
+      // Primär: an Formspree senden
+      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: state.firstName,
+          phone: state.phone.trim(),
+          company: state.company,
+          email: state.email,
+          _subject: `🔔 Neue Vorschau-Anfrage: ${state.company}`,
+          _replyto: state.email,
+          _gotcha: honeypot,
+          gewerk:
+            state.trade === "Sonstiges" && state.tradeOther
+              ? `Sonstiges: ${state.tradeOther}`
+              : state.trade,
+          hat_website: state.hasWebsite,
+          ziel: state.goals.join(", "),
+          dringlichkeit: state.urgency,
+          aktuelle_website: state.currentWebsite || "",
+          notizen: state.notes || "",
+          seite: "kostenlose-vorschau",
+        }),
+      });
+      if (!formspreeRes.ok) {
+        throw new Error(`Formspree ${formspreeRes.status}`);
+      }
+
       const { data: leadData, error: leadError } = await supabase
         .from("leads")
         .insert({
@@ -923,8 +959,11 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           is_waitlist: isWaitlist,
         });
 
-      if (leadError) throw leadError;
-      setLeadId(newLeadId);
+      if (leadError) {
+        console.warn("Lead konnte nicht in der DB gespeichert werden", leadError);
+      } else {
+        setLeadId(newLeadId);
+      }
 
       // Webhook + E-Mail-Benachrichtigung im Hintergrund (UI nicht blockieren)
       void fetch("https://webhook.site/placeholder", {
@@ -961,6 +1000,9 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       setDone(true);
     } catch (err) {
       console.error(err);
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131/30 765 00",
+      );
       toast.error("Etwas ist schiefgelaufen. Bitte versuche es erneut.");
     } finally {
       setSubmitting(false);
@@ -1248,6 +1290,25 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
               <>Kostenlose Vorschau jetzt anfordern <ArrowRight className="ml-2 w-4 h-4" /></>
             )}
           </Button>
+          {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+          <input
+            type="text"
+            name="_gotcha"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ display: "none" }}
+            aria-hidden="true"
+          />
+          {submitError && (
+            <p className="text-sm text-destructive text-center">
+              Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+              <a href="tel:+4961313076500" className="font-semibold underline">
+                06131/30 765 00
+              </a>
+            </p>
+          )}
           <p className="text-xs text-muted-foreground flex items-start gap-2">
             <Lock className="w-3.5 h-3.5 mt-0.5 shrink-0" />
             <span>
