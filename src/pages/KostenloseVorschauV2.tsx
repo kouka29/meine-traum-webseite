@@ -1006,8 +1006,12 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           is_waitlist: isWaitlist,
         });
 
-      if (leadError) throw leadError;
-      setLeadId(newLeadId);
+      if (leadError) {
+        // Formspree war erfolgreich – DB-Speicherung ist nur fürs Admin-Backup.
+        console.warn("Lead konnte nicht in der DB gespeichert werden", leadError);
+      } else {
+        setLeadId(newLeadId);
+      }
 
       // Webhook + E-Mail-Benachrichtigung im Hintergrund (UI nicht blockieren)
       void fetch("https://webhook.site/placeholder", {
