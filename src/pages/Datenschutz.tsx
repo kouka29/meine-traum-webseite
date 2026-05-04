@@ -71,6 +71,28 @@ const Datenschutz = () => (
               Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher 
               Maßnahmen erforderlich ist.
             </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">Formspree (Kontaktformular-Dienstleister)</h3>
+            <p>
+              Zur Verarbeitung von Kontaktanfragen nutzen wir den Dienst Formspree (Formspree Inc., 2025 Shattuck Ave, Berkeley, CA 94704, USA).
+            </p>
+            <p>
+              Wenn Sie das Kontaktformular auf unserer Website ausfüllen, werden Ihre eingegebenen Daten (Name, Telefonnummer, E-Mail, Betriebsname sowie weitere Angaben) an die Server von Formspree in den USA übertragen und dort verarbeitet.
+            </p>
+            <p>
+              Formspree ist nach dem EU-US Data Privacy Framework zertifiziert. Die Übertragung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung).
+            </p>
+            <p>
+              Datenschutzerklärung von Formspree:{" "}
+              <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                formspree.io/legal/privacy-policy
+              </a>
+            </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">Aufbewahrungsdauer</h3>
+            <p>
+              Ihre über das Kontaktformular übermittelten Daten werden gelöscht, sobald sie für den Zweck der Erhebung nicht mehr erforderlich sind. Dies ist in der Regel nach Abschluss oder Ablehnung der Zusammenarbeit der Fall, spätestens jedoch nach 24 Monaten.
+            </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.25}>
@@ -91,14 +113,32 @@ const Datenschutz = () => (
           <AnimatedSection delay={0.3}>
             <h2 className="text-xl font-semibold text-foreground">5. Hosting</h2>
             <p>
-              Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die personenbezogenen Daten, 
-              die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann 
-              es sich v.a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten, 
-              Kontaktdaten, Namen, Webseitenzugriffe und sonstige Daten handeln.
+              Diese Website nutzt zwei Dienste für Bereitstellung und Betrieb:
+            </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">Frontend-Entwicklung: Lovable</h3>
+            <p>
+              Diese Website wurde mit Lovable (Lovable Ltd.) entwickelt und bereitgestellt. Lovable verarbeitet dabei technische Daten wie IP-Adressen im Rahmen der Bereitstellung des Dienstes.
             </p>
             <p>
-              Der Einsatz des Hosters erfolgt im Interesse einer sicheren, schnellen und effizienten Bereitstellung 
-              unseres Online-Angebots (Art. 6 Abs. 1 lit. f DSGVO).
+              Datenschutzerklärung:{" "}
+              <a href="https://lovable.dev/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                lovable.dev/privacy-policy
+              </a>
+            </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">Domain & Hosting: STRATO</h3>
+            <p>
+              Die Domain dieser Website wird über STRATO AG, Otto-Ostrowski-Straße 7, 10249 Berlin, Deutschland gehostet. STRATO verarbeitet dabei personenbezogene Daten wie IP-Adressen und Zugriffsdaten auf ihren Servern in Deutschland.
+            </p>
+            <p>
+              Der Einsatz dieser Dienste erfolgt im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots gemäß Art. 6 Abs. 1 lit. f DSGVO.
+            </p>
+            <p>
+              Datenschutzerklärung STRATO:{" "}
+              <a href="https://www.strato.de/datenschutz" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                strato.de/datenschutz
+              </a>
             </p>
           </AnimatedSection>
 
