@@ -532,10 +532,11 @@ Deno.serve(async (req) => {
 
     // =================== VORSCHAU SETTINGS ===================
     if (action === "vorschau-get") {
+      const pageKey = (body as { pageKey?: string }).pageKey === "v2" ? "v2" : "v1";
       const [{ data: settings }, { data: demos }, { data: faqs }, { data: portfolio }] = await Promise.all([
-        supabase.from("vorschau_settings").select("*").eq("id", 1).single(),
-        supabase.from("vorschau_demos").select("*").order("sort_order", { ascending: true }),
-        supabase.from("vorschau_faqs").select("*").order("sort_order", { ascending: true }),
+        supabase.from("vorschau_settings").select("*").eq("page_key", pageKey).maybeSingle(),
+        supabase.from("vorschau_demos").select("*").eq("page_key", pageKey).order("sort_order", { ascending: true }),
+        supabase.from("vorschau_faqs").select("*").eq("page_key", pageKey).order("sort_order", { ascending: true }),
         supabase.from("portfolio_projects").select("id,title,category,description,image_url,mockup_desktop_url,external_url,is_visible,sort_order").order("sort_order", { ascending: true }),
       ]);
       return new Response(JSON.stringify({ settings, demos: demos || [], faqs: faqs || [], portfolio: portfolio || [] }), {
@@ -545,6 +546,7 @@ Deno.serve(async (req) => {
 
     if (action === "vorschau-update-settings") {
       const { settings } = body;
+      const pageKey = (body as { pageKey?: string }).pageKey === "v2" ? "v2" : "v1";
       if (!settings || typeof settings !== "object") {
         return new Response(JSON.stringify({ error: "settings fehlt" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -566,7 +568,7 @@ Deno.serve(async (req) => {
       const { data, error } = await supabase
         .from("vorschau_settings")
         .update(updates)
-        .eq("id", 1)
+        .eq("page_key", pageKey)
         .select()
         .single();
       if (error) throw error;
@@ -577,13 +579,14 @@ Deno.serve(async (req) => {
 
     if (action === "vorschau-demo-create") {
       const { trade, company, description, is_visible, image_base64, image_name, portfolio_project_id, image_url: providedImageUrl } = body;
+      const pageKey = (body as { pageKey?: string }).pageKey === "v2" ? "v2" : "v1";
       if (!company) {
         return new Response(JSON.stringify({ error: "company ist erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       const { data: existing } = await supabase
-        .from("vorschau_demos").select("sort_order")
+        .from("vorschau_demos").select("sort_order").eq("page_key", pageKey)
         .order("sort_order", { ascending: false }).limit(1);
       const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
 
@@ -604,6 +607,7 @@ Deno.serve(async (req) => {
         trade: trade || "", company, description: description || "",
         image_url, sort_order: nextOrder, is_visible: is_visible !== false,
         portfolio_project_id: portfolio_project_id || null,
+        page_key: pageKey,
       }).select().single();
       if (error) throw error;
       return new Response(JSON.stringify({ demo: data }), {
@@ -676,17 +680,18 @@ Deno.serve(async (req) => {
 
     if (action === "vorschau-faq-create") {
       const { question, answer, is_visible } = body;
+      const pageKey = (body as { pageKey?: string }).pageKey === "v2" ? "v2" : "v1";
       if (!question || !answer) {
         return new Response(JSON.stringify({ error: "question und answer erforderlich" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       const { data: existing } = await supabase
-        .from("vorschau_faqs").select("sort_order")
+        .from("vorschau_faqs").select("sort_order").eq("page_key", pageKey)
         .order("sort_order", { ascending: false }).limit(1);
       const nextOrder = (existing?.[0]?.sort_order ?? -1) + 1;
       const { data, error } = await supabase.from("vorschau_faqs").insert({
-        question, answer, sort_order: nextOrder, is_visible: is_visible !== false,
+        question, answer, sort_order: nextOrder, is_visible: is_visible !== false, page_key: pageKey,
       }).select().single();
       if (error) throw error;
       return new Response(JSON.stringify({ faq: data }), {
