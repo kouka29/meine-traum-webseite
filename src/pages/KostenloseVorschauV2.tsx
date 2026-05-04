@@ -1224,6 +1224,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 value={state.firstName}
                 onChange={(e) => update({ firstName: e.target.value })}
                 placeholder="Max"
+                autoComplete="given-name"
               />
             </div>
             <div>
@@ -1237,6 +1238,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 value={state.phone}
                 onChange={(e) => update({ phone: e.target.value })}
                 placeholder="+49 ..."
+                autoComplete="tel"
               />
             </div>
             <div>
@@ -1246,6 +1248,17 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 value={state.company}
                 onChange={(e) => update({ company: e.target.value })}
                 placeholder="Mustermann GmbH"
+                autoComplete="organization"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium mb-1.5 block">E-Mail (optional)</label>
+              <Input
+                type="email"
+                value={state.email}
+                onChange={(e) => update({ email: e.target.value })}
+                placeholder="max@mustermann.de"
+                autoComplete="email"
               />
             </div>
           </div>
