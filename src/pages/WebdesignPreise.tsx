@@ -25,7 +25,7 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
-      "Perfekt für den ersten Schritt online",
+      "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
@@ -131,7 +131,7 @@ const buyPackages: BuyPkg[] = [
     ],
     compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 €",
     features: [
-      "Perfekt für den ersten Schritt online",
+      "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
