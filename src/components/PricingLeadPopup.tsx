@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, CheckCircle2, ShieldCheck, Loader2, ArrowRight } from "lucide-react";
+import { X, CheckCircle2, ShieldCheck, Loader2, ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -64,7 +64,7 @@ const FloatingField = ({
           maxLength={maxLength}
           placeholder=" "
           className={cn(
-            "peer w-full h-14 rounded-lg border-[1.5px] bg-background px-3 pt-5 pb-1.5 text-base text-foreground placeholder-transparent",
+            "peer w-full h-12 sm:h-14 rounded-lg border-[1.5px] bg-background px-3 pt-4 sm:pt-5 pb-1 sm:pb-1.5 text-base text-foreground placeholder-transparent",
             "focus:outline-none focus:ring-0 transition-colors",
             error
               ? "border-2 border-[#EF4444] focus:border-[#EF4444]"
@@ -108,6 +108,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [showScrollHint, setShowScrollHint] = useState(false);
 
   const ctaLabel = getCtaLabel(badge);
 
@@ -140,6 +142,30 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     const t = setTimeout(() => onClose(), 4000);
     return () => clearTimeout(t);
   }, [submitted, onClose]);
+
+  // Show scroll-hint only when content is actually scrollable and user is not at the bottom
+  useEffect(() => {
+    if (!open || submitted) return;
+    const el = scrollAreaRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const scrollable = el.scrollHeight - el.clientHeight > 8;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8;
+      setShowScrollHint(scrollable && !atBottom);
+    };
+
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [open, submitted]);
 
   const validate = () => {
     const errs: typeof errors = {};
@@ -262,22 +288,22 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
             {/* Scrollable content */}
-            <div className="flex-1 overflow-y-auto p-6 sm:p-8 pb-3 sm:pb-6">
-              <span className="inline-block badge-label bg-primary/10 text-primary mb-4 mt-1">
+            <div ref={scrollAreaRef} className="relative flex-1 overflow-y-auto px-5 pt-5 pb-3 sm:p-8 sm:pb-6">
+              <span className="inline-block badge-label bg-primary/10 text-primary mb-3 sm:mb-4 mt-1">
                 {badge}
               </span>
 
-              <h2 className="font-heading text-2xl sm:text-3xl font-bold leading-tight mb-2 text-foreground">
+              <h2 className="font-heading text-xl sm:text-3xl font-bold leading-tight mb-1 sm:mb-2 text-foreground">
                 🚀 Fast geschafft!
               </h2>
-              <p className="text-muted-foreground text-sm sm:text-base mb-2 leading-relaxed">
+              <p className="text-muted-foreground text-[13px] sm:text-base mb-1.5 sm:mb-2 leading-relaxed">
                 Ich melde mich innerhalb von 2 Stunden bei dir.
               </p>
-              <p className="text-xs text-center text-green-600 font-medium mb-5">
+              <p className="text-[11px] sm:text-xs text-center text-green-600 font-medium mb-3 sm:mb-5">
                 ✓ Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
               </p>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <FloatingField
                   id="popup-firstname"
                   label="Dein Vorname"
@@ -332,6 +358,14 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 />
               </div>
             </div>
+
+            {/* Mobile-only scroll indicator — appears when fields overflow */}
+            {showScrollHint && (
+              <div className="sm:hidden pointer-events-none absolute left-0 right-0 bottom-[88px] flex flex-col items-center gap-0.5 animate-in fade-in duration-200">
+                <span className="text-[11px] text-muted-foreground/80">Noch ein Feld</span>
+                <ChevronDown size={14} className="text-muted-foreground/70 animate-bounce" />
+              </div>
+            )}
 
             {/* CTA footer — sticky on mobile, inline on desktop */}
             <div className="sticky bottom-0 sm:static shrink-0 px-4 sm:px-8 py-4 sm:pt-3 sm:pb-7 bg-background border-t border-border/40 sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] sm:shadow-none">
