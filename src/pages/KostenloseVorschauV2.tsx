@@ -904,7 +904,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw) as Partial<FormState>;
-        setState((prev) => ({ ...prev, ...parsed }));
+        // Schritt nie aus dem Storage übernehmen – Formular startet immer bei 1.
+        // Schritt 5 darf nur nach Abschluss von 1–4 erreicht werden.
+        const { step: _ignoredStep, ...rest } = parsed;
+        setState((prev) => ({ ...prev, ...rest, step: 1 }));
       }
     } catch {
       /* ignore */
