@@ -431,7 +431,7 @@ const WebdesignPreise = () => (
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
               Ein verlorener Auftrag kostet dich im Schnitt 800 €.<br />
-              Deine neue Website kostet dich ab 49 €/Monat.
+              Deine neue Website kostet dich ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
