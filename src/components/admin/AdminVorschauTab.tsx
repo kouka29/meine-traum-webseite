@@ -382,6 +382,24 @@ export default function AdminVorschauTab({ password }: { password: string }) {
 
   return (
     <div className="space-y-6">
+      {/* Page switcher */}
+      <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-center gap-2">
+        <span className="text-sm font-medium mr-2">Seite:</span>
+        {([
+          { key: "v1" as const, label: "/kostenlose-vorschau", path: "/kostenlose-vorschau" },
+          { key: "v2" as const, label: "/kostenlose-vorschau-v2", path: "/kostenlose-vorschau-v2" },
+        ]).map(p => (
+          <Button
+            key={p.key}
+            variant={pageKey === p.key ? "gradient" : "outline"}
+            size="sm"
+            onClick={() => setPageKey(p.key)}
+          >
+            {p.label}
+          </Button>
+        ))}
+      </div>
+
       {/* Hint banner */}
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 flex items-start gap-3">
         <Sparkles className="text-primary shrink-0 mt-0.5" size={18} />
@@ -389,8 +407,8 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           <p className="font-medium text-foreground">Live-Vorschau aktiv</p>
           <p className="text-muted-foreground">
             Alle Änderungen werden nach dem Speichern sofort auf{" "}
-            <a href="/kostenlose-vorschau" target="_blank" rel="noreferrer" className="text-primary underline">
-              /kostenlose-vorschau
+            <a href={pageKey === "v2" ? "/kostenlose-vorschau-v2" : "/kostenlose-vorschau"} target="_blank" rel="noreferrer" className="text-primary underline">
+              {pageKey === "v2" ? "/kostenlose-vorschau-v2" : "/kostenlose-vorschau"}
             </a>{" "}
             sichtbar.
           </p>
