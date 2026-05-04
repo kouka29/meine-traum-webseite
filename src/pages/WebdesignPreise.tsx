@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -53,7 +54,7 @@ const rentPackages: Pkg[] = [
       "Google Business Einrichtung",
       "Mobil-optimiert & SSL",
       "Hosting & Domain inklusive",
-      "Online in 14 Tagen",
+      "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
     ],
     popular: true,
     cta: "Jetzt starten",
@@ -76,7 +77,7 @@ const rentPackages: Pkg[] = [
       "Design das mehr Anfragen bringt",
       "Google Business Einrichtung",
       "Hosting & Domain inklusive",
-      "Schneller Support – Antwort in 24h",
+      "Individuelle Umsetzung – Timing nach Absprache",
     ],
     cta: "Jetzt starten",
     growth: {
@@ -164,7 +165,7 @@ const buyPackages: BuyPkg[] = [
       "Google Business Einrichtung",
       "30 Tage Support nach Start",
       "Mobil-optimiert & SSL",
-      "Online in 14 Tagen",
+      "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
       "Website gehört dir – kein Vertrag",
     ],
     growth: {
@@ -193,6 +194,7 @@ const buyPackages: BuyPkg[] = [
       "Design das mehr Anfragen bringt",
       "60 Tage Priority Support",
       "Mobil-optimiert & SSL",
+      "Individuelle Umsetzung – Timing nach Absprache",
       "Website gehört dir – kein Vertrag",
     ],
     growth: {
