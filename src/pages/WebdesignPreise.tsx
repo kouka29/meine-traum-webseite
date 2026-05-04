@@ -164,8 +164,8 @@ const buyPackages: BuyPkg[] = [
       "Google Business Einrichtung",
       "30 Tage Support nach Start",
       "Mobil-optimiert & SSL",
-      "Website gehört dir – kein Vertrag",
       "Online in 14 Tagen",
+      "Website gehört dir – kein Vertrag",
     ],
     growth: {
       price: "+49 €/Monat zubuchbar",
