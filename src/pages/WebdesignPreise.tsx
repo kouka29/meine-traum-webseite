@@ -431,6 +431,23 @@ const WebdesignPreise = () => {
 
   return (
   <main className="pt-20">
+    {/* Dezenter Demo-Banner ganz oben */}
+    <div
+      className="w-full border-b text-center px-4 py-2.5 text-sm"
+      style={{ backgroundColor: "#F0F9FF", borderColor: "#BAE6FD" }}
+    >
+      <span className="text-foreground/80">
+        🎁 Noch keine Demo gesehen? Starte kostenlos —{" "}
+      </span>
+      <button
+        type="button"
+        onClick={() => openPopup("Kostenlose Demo")}
+        className="font-semibold text-primary hover:underline inline-flex items-center gap-1"
+      >
+        Kostenlose Demo anfordern <ArrowRight size={14} />
+      </button>
+    </div>
+
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
