@@ -480,7 +480,7 @@ const WebdesignPreise = () => (
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer dein. Ab Monat 21 günstiger als Miete.
+              💡 Einmal zahlen. Für immer dein. Langfristig günstiger als Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
               Du hast Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
