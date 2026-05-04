@@ -19,12 +19,19 @@ const checkPoints = [
 
 const KostenloserWebsiteCheck = () => {
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitError(null);
     setLoading(true);
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
+    const honeypot = (formData.get("_gotcha") as string) || "";
+    if (honeypot) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const leadId = crypto.randomUUID();
@@ -33,6 +40,27 @@ const KostenloserWebsiteCheck = () => {
       const phone = (formData.get("phone") as string) || "";
       const website = (formData.get("website") as string) || "";
 
+      // Primär: an Formspree senden
+      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          company: website,
+          email,
+          _subject: `🔔 Neuer Website-Check: ${website || name}`,
+          _replyto: email,
+          _gotcha: honeypot,
+          website,
+          seite: "kostenloser-website-check",
+        }),
+      });
+      if (!formspreeRes.ok) throw new Error(`Formspree ${formspreeRes.status}`);
+
       const { error } = await supabase.from("leads").insert({
         id: leadId,
         first_name: name,
@@ -40,8 +68,9 @@ const KostenloserWebsiteCheck = () => {
         phone: phone,
         company_name: website,
       });
-
-      if (error) throw error;
+      if (error) {
+        console.warn("Lead konnte nicht in der DB gespeichert werden", error);
+      }
 
       supabase.functions.invoke("send-transactional-email", {
         body: {
@@ -61,6 +90,9 @@ const KostenloserWebsiteCheck = () => {
       toast.success("Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden mit Ihrer Website-Analyse.");
       form.reset();
     } catch {
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131/30 765 00",
+      );
       toast.error("Fehler beim Senden. Bitte versuchen Sie es erneut.");
     } finally {
       setLoading(false);
@@ -122,6 +154,23 @@ const KostenloserWebsiteCheck = () => {
                   <Button variant="gradient" size="lg" type="submit" disabled={loading} className="w-full text-base py-6">
                     {loading ? "Wird gesendet..." : <>Kostenlosen Check anfordern <Send size={18} /></>}
                   </Button>
+                  {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+                  <input
+                    type="text"
+                    name="_gotcha"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    style={{ display: "none" }}
+                    aria-hidden="true"
+                  />
+                  {submitError && (
+                    <p className="text-sm text-destructive text-center">
+                      Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+                      <a href="tel:+4961313076500" className="font-semibold underline">
+                        06131/30 765 00
+                      </a>
+                    </p>
+                  )}
                   <p className="text-xs text-muted-foreground text-center">
                     Kein Spam. Keine versteckten Kosten. Wir melden uns persönlich bei Ihnen.
                   </p>
