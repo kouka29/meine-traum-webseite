@@ -1325,6 +1325,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
 
 const KostenloseVorschauV2 = () => {
   const { settings, demos: dbDemos, faqs: dbFaqs, portfolio, testimonials: dbTestimonials } = useVorschauSettings();
+  const [demosApi, setDemosApi] = useState<CarouselApi>();
+  const [testimonialsApi, setTestimonialsApi] = useState<CarouselApi>();
   const totalSlots = settings?.total_slots ?? 5;
   const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
   const remainingSlots = Math.max(0, totalSlots - takenSlots);
