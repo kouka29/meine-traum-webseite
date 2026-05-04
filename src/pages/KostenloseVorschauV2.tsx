@@ -1544,7 +1544,7 @@ const KostenloseVorschauV2 = () => {
       )}
 
       {/* FORM */}
-      <section id="formular" className="py-16 sm:py-20 bg-secondary/30 scroll-mt-20">
+      <section id="formular" className="py-16 sm:py-20 pb-[60px] sm:pb-[60px] bg-secondary/30 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold mb-3">
