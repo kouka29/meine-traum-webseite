@@ -53,7 +53,7 @@ const rentPackages: Pkg[] = [
       "Google Business Einrichtung",
       "Mobil-optimiert & SSL",
       "Hosting & Domain inklusive",
-      "Online in 10 Tagen",
+      "Online in 14 Tagen",
     ],
     popular: true,
     cta: "Jetzt starten",
