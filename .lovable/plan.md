@@ -1,58 +1,58 @@
-# Warteliste-Modus, wenn alle Plätze vergeben sind
+## Ziel
 
-Ja, genau – wenn `taken_slots >= total_slots`, soll der Funnel **nicht geschlossen** werden. Stattdessen läuft derselbe Flow weiter, aber visuell + textlich als **Warteliste für den nächsten Monat** umgelabelt. Der Lead wird mit einem Marker `is_waitlist = true` gespeichert, blockiert keinen Platz und du siehst ihn im Admin separat.
+Rechtlich saubere und vertrauensbildende MwSt.-Kennzeichnung auf der Preisseite – ohne den visuellen Fluss der Cards zu stören.
 
-## Was sich für den Besucher ändert (nur wenn ausgebucht)
+## Experten-Empfehlung: 3-Ebenen-Ansatz
 
-| Element | Normal (Plätze frei) | Ausgebucht (Warteliste-Modus) |
-|---|---|---|
-| Hero-Badge | "Nur noch 1 von 5 Plätzen im April verfügbar" | "Alle Plätze im April vergeben – sichere dir jetzt einen Platz für Mai" |
-| Hero-CTA | "Jetzt kostenlose Vorschau sichern" | "Jetzt für Mai vormerken lassen" |
-| Slot-Anzeige im Funnel | "1 frei" | "Warteliste – Mai" Badge |
-| Termin-Schritt | Buchung für aktuellen Monat | Hinweis: "Termin im Mai – wir melden uns sobald die Plätze freigeschaltet sind" |
-| Final-CTA | "Jetzt letzten Platz sichern" | "Jetzt auf die Mai-Warteliste" |
-| Bestätigungs-Screen | "Danke {name}, wir melden uns telefonisch…" | "Danke {name}, du stehst auf der Warteliste für Mai. Sobald die Plätze freigeschaltet sind, melden wir uns zuerst bei dir." |
+Statt nur stumpf "zzgl. 19% MwSt." unter jeden Preis zu kleben, arbeite ich mit **drei Ebenen**, die zusammen professionell wirken:
 
-Funktional bleibt alles gleich – Felder, Reihenfolge, Termin-Auswahl. Nur Texte + ein Banner oben am Funnel-Container, plus ein Flag im Lead.
+### Ebene 1: Direkt unter jedem Preis (sehr klein, grau)
 
-## Was sich im Admin ändert
+Direkt unter dem großen Preis in jeder Card – kleinste sinnvolle Größe (`text-xs`), gedämpfte Farbe (`text-muted-foreground`), kein Fettdruck. So nimmt es keine Aufmerksamkeit vom Preis weg, ist aber für jeden sichtbar der hinschaut.
 
-- Neue Spalte/Filter: **Warteliste** (zusätzlich zu Neu / Qualifiziert / Abgelehnt / Kunde)
-- Lead-Karte zeigt deutlich Badge "📋 Warteliste – nächster Monat"
-- Im Filter "Warteliste" siehst du alle Vormerkungen, die du am Monatsanfang abarbeiten kannst
-- Beim manuellen Qualifizieren eines Warteliste-Leads wird – wie bisher – `taken_slots` erhöht und `is_waitlist` auf `false` gesetzt (Platz wird "echt" vergeben)
+Format: `zzgl. 19 % MwSt.`
 
-## Datenbank
+Gilt für:
+- Alle 3 Miete-Cards (Starter, Pro, Premium) → `zzgl. 19 % MwSt.`
+- Enterprise-Card Miete → `zzgl. 19 % MwSt.`
+- Alle 3 Einmalkauf-Cards → `zzgl. 19 % MwSt.`
+- Enterprise-Card Einmalkauf → `zzgl. 19 % MwSt.`
 
-```sql
-ALTER TABLE leads
-  ADD COLUMN is_waitlist boolean NOT NULL DEFAULT false;
+### Ebene 2: Bei "monatliche Äquivalenz" im Einmalkauf
+
+Beim Einmalkauf wird "≈ nur 41 €/Monat über 2 Jahre" angezeigt. Hier MwSt.-Hinweis weglassen (wäre doppelt-gemoppelt), da die Zeile darüber schon den Hauptpreis netto deklariert hat.
+
+### Ebene 3: Globaler Hinweis am Ende der Tabs
+
+Ein dezenter, zentrierter Satz unterhalb der Preis-Cards (vor dem "Mieten oder kaufen"-Vergleichsblock):
+
+> _Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer. Für Gewerbetreibende voll absetzbar._
+
+Der Zusatz **"Für Gewerbetreibende voll absetzbar"** ist der Verkaufspsychologie-Trick: Handwerker (Zielgruppe) sind Gewerbetreibende → MwSt. ist für sie ein Durchlaufposten. Diese Erinnerung relativiert den "Mehrpreis" sofort und entschärft Preis-Einwände.
+
+## Warum diese Lösung?
+
+- **Rechtssicher**: PAngV-konform, B2B-typische Netto-Auszeichnung sauber gekennzeichnet
+- **Nicht aufdringlich**: Der große Preis bleibt der Held der Card
+- **Vertrauensbildend**: Transparenz statt versteckter Kosten – passt zum bestehenden "Keine versteckten Kosten"-Trust-Element
+- **Verkaufsförderlich**: Der "voll absetzbar"-Hinweis macht aus einer Pflichtangabe einen subtilen Verkaufsbooster
+
+## Technische Umsetzung
+
+Datei: `src/pages/WebdesignPreise.tsx`
+
+1. In `PackageCard`: Unter dem `<p>` mit `pkg.price` ein neues `<p className="text-xs text-muted-foreground -mt-1 mb-2">zzgl. 19 % MwSt.</p>` einfügen (bei Enterprise mit "Auf Anfrage" weglassen oder anders formulieren → `zzgl. MwSt.`).
+2. In `BuyCard`: Identisch unter `pkg.price`.
+3. In den beiden Enterprise-Inline-Blöcken (Miete + Einmalkauf): Gleicher kleiner Hinweis unter dem Preis.
+4. Globaler Hinweis als zentrierter `<p className="text-xs text-muted-foreground text-center mt-8 italic">` direkt nach dem `</Tabs>`-Schließtag, vor dem "Mieten oder kaufen"-Vergleichsblock.
+
+## Ergebnis (Beispiel Card)
+
+```text
+Pro
+99 €/Monat
+zzgl. 19 % MwSt.
+Mindestlaufzeit: 12 Monate, …
 ```
 
-Der nächste Monat wird **clientseitig berechnet** (kein extra Schema nötig): aktueller Monat + 1 in Deutsch (z. B. "Mai"). Falls du später einen festen "Nächster-Monat-Label" pflegen willst, können wir das in `vorschau_settings` als `next_month_label` ergänzen – ich würde aber erstmal mit der automatischen Berechnung starten.
-
-## Code-Änderungen
-
-**`src/pages/KostenloseVorschau2.tsx`**
-- `const isWaitlistMode = remainingSlots <= 0;` ableiten
-- Hero-Badge / CTA-Label / Final-CTA / Funnel-Header / Erfolgsbildschirm konditional rendern
-- Beim Lead-Insert: wenn `isWaitlistMode` → `is_waitlist: true` mitschicken
-- Banner oben im Funnel: "🗓️ April ist ausgebucht – du sicherst dir jetzt einen Platz für **{nächster Monat}**"
-
-**`src/pages/AdminLeads.tsx`**
-- Filter-Tab "Warteliste" hinzufügen
-- Badge auf Lead-Karte
-- "Platz reservieren"-Button setzt `is_waitlist = false` zusätzlich zu Status `qualified` und Slot-Increment
-
-**`supabase/functions/admin-leads/index.ts`**
-- `update-status`-Action erweitern, sodass `is_waitlist` mitgesetzt werden kann
-
-**RLS**
-- Bestehende Insert-Policy auf `leads` erlaubt zusätzliche Spalten ohne Änderung. Kein Update nötig.
-
-## Was du danach hast
-
-1. Funnel funktioniert auch bei "ausgebucht" weiter und sammelt qualifizierte Vormerkungen statt Besucher zu verlieren
-2. Klare ehrliche Kommunikation: niemand glaubt, er bekomme noch im April einen Platz
-3. Du behältst volle Kontrolle: Warteliste-Leads blockieren nichts, du qualifizierst am Monatsanfang manuell
-4. Optionaler nächster Schritt (auf Wunsch): Auto-Mail "Du bist auf der Warteliste für Mai" beim Eintrag
+Klein, sauber, professionell – wie bei Stripe, Personio oder anderen B2B-Profis.

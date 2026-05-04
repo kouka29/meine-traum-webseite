@@ -212,7 +212,10 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-      <p className="font-heading text-3xl font-bold gradient-text mb-2">{pkg.price}</p>
+      <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
+      <p className="text-xs text-muted-foreground mb-3">
+        {pkg.price.toLowerCase().includes("anfrage") ? "zzgl. MwSt." : "zzgl. 19 % MwSt."}
+      </p>
       {pkg.subPrice && (
         <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
       )}
@@ -257,7 +260,8 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-      <p className="font-heading text-3xl font-bold gradient-text mb-3">{pkg.price}</p>
+      <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
+      <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
           {pkg.highlights.map((h) => (
@@ -338,7 +342,8 @@ const WebdesignPreise = () => (
                 <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
                     <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-                    <p className="font-heading text-3xl font-bold gradient-text mb-2">{pkg.price}</p>
+                    <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
+                    <p className="text-xs text-muted-foreground mb-3">zzgl. MwSt.</p>
                     {pkg.desc && (
                       <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
                     )}
@@ -385,7 +390,8 @@ const WebdesignPreise = () => (
                 <div className="flex-1">
                   <h3 className="font-heading text-xl font-bold mb-1">{buyEnterprise.name}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
-                  <p className="font-heading text-2xl font-bold gradient-text mb-5">{buyEnterprise.price}</p>
+                  <p className="font-heading text-2xl font-bold gradient-text mb-1">{buyEnterprise.price}</p>
+                  <p className="text-xs text-muted-foreground mb-5">zzgl. MwSt.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {buyEnterprise.features.map((f) => (
                       <div key={f} className="flex items-start gap-2.5">
@@ -405,6 +411,11 @@ const WebdesignPreise = () => (
             </AnimatedSection>
           </TabsContent>
         </Tabs>
+
+        <p className="text-xs text-muted-foreground text-center italic mt-2 mb-10 max-w-2xl mx-auto">
+          Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
+          Für Gewerbetreibende voll absetzbar.
+        </p>
 
         <AnimatedSection>
           <div className="bg-card rounded-2xl p-8 md:p-10 border border-border text-center max-w-3xl mx-auto mb-10">
