@@ -153,24 +153,24 @@ const testimonials = [
 
 const faqs = [
   {
-    q: "Was kostet mich die Vorschau wirklich?",
-    a: "Gar nichts. Weder jetzt noch später, wenn es dir nicht gefällt.",
+    q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
+    a: "Ja – und zwar schneller als du denkst. Ein einziger neuer Auftrag über deine Website deckt oft die kompletten Jahreskosten. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
-    q: "Bin ich nach der Vorschau zu irgendetwas verpflichtet?",
-    a: "Nein. Absolut nicht.",
+    q: "Was passiert wenn mir die Vorschau nicht gefällt?",
+    a: "Gar nichts. Du zahlst keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige dir die Vorschau – gefällt sie dir nicht, war es das. Kein unangenehmes Gespräch danach.",
   },
   {
-    q: "Wie sieht die Vorschau konkret aus?",
-    a: "Du bekommst eine echte, klickbare Webseite mit deinem Firmennamen – kein PDF, kein Screenshot.",
+    q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
+    a: "Nein. Du füllst einmal ein 2-Minuten-Formular aus und lehnst dich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst deine fertige Website – ohne einen einzigen technischen Handgriff.",
   },
   {
-    q: "Warum machst du das kostenlos?",
-    a: "Weil ich überzeugt bin, dass die Qualität meiner Arbeit für sich spricht. Erst sehen, dann entscheiden.",
+    q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
+    a: "Nach den 12 Monaten läuft dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\nDu kannst aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
-    q: "Was passiert, wenn alle 5 Plätze weg sind?",
-    a: "Du kannst dich auf die Warteliste setzen lassen und bekommst im nächsten Monat Priorität.",
+    q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
+    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von deiner Region und deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
 ];
 
