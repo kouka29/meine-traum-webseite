@@ -1153,11 +1153,38 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 selected={state.hasWebsite === opt.value}
                 onClick={() => {
                   update({ hasWebsite: opt.value });
-                  setTimeout(next, 200);
+                  // Bei "Ja, und ich bin zufrieden" zeigen wir einen Hinweis
+                  // und lassen den Nutzer manuell auf "Weiter" klicken.
+                  if (opt.value !== "Ja, und ich bin zufrieden") {
+                    setTimeout(next, 200);
+                  }
                 }}
               />
             ))}
           </div>
+          {state.hasWebsite === "Ja, und ich bin zufrieden" && (
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-4">
+              <div
+                className="rounded-lg p-3 text-sm border"
+                style={{ backgroundColor: "#F0FFF4", borderColor: "#C6F6D5" }}
+              >
+                <p className="text-emerald-800 leading-relaxed">
+                  💡 Gut! Wusstest du dass man auch eine bestehende Website noch
+                  deutlich mehr Kunden bringen kann?
+                  <br />
+                  Wir zeigen dir kostenlos was möglich ist.
+                </p>
+              </div>
+              <Button
+                type="button"
+                size="lg"
+                onClick={next}
+                className="w-full sm:w-auto"
+              >
+                Weiter <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
