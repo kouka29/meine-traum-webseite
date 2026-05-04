@@ -1090,6 +1090,35 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
   const updateContactMethod = useCallback(
     (method: "phone" | "online") => {
       setState((s) => ({ ...s, contactMethod: method }));
+      const methodLabel = method === "online" ? "Online-Meeting" : "Telefonat";
+      // Formspree-Benachrichtigung über gewählten Kontaktweg (fire-and-forget)
+      void fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: state.firstName,
+          phone: state.phone || "",
+          company: state.company,
+          email: state.email || "",
+          _subject: `📞 Kontaktweg gewählt: ${state.company} – ${methodLabel}`,
+          _replyto: state.email || "",
+          ereignis: "Kontaktweg gewählt",
+          kontaktweg: methodLabel,
+          gewerk:
+            state.trade === "Sonstiges" && state.tradeOther
+              ? `Sonstiges: ${state.tradeOther}`
+              : state.trade,
+          hat_website: state.hasWebsite,
+          ziel: state.goals.join(", "),
+          dringlichkeit: state.urgency,
+          aktuelle_website: state.currentWebsite || "",
+          notizen: state.notes || "",
+          seite: "kostenlose-vorschau-v2",
+        }),
+      }).catch(() => {});
       // Auch ohne verbindliche Buchung den gewünschten Kontaktweg im Lead speichern,
       // damit er im Admin-Bereich sichtbar ist (Fire-and-forget, blockiert UI nicht).
       if (leadId) {
@@ -1105,7 +1134,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           });
       }
     },
-    [leadId],
+    [leadId, state],
   );
 
   const setBookingDate = useCallback(
