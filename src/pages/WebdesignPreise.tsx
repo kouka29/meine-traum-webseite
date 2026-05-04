@@ -15,6 +15,7 @@ type Pkg = {
   popular?: boolean;
   enterprise?: boolean;
   cta: string;
+  upgradeHint?: string;
 };
 
 const rentPackages: Pkg[] = [
