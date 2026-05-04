@@ -24,6 +24,8 @@ const LeadCaptureModal = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ firstName?: string; companyName?: string; email?: string; phone?: string; dsgvo?: string }>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
     // Auf ausgeschlossenen Routen niemals anzeigen
@@ -58,9 +60,47 @@ const LeadCaptureModal = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    if (honeypot) return;
 
     setLoading(true);
+    setSubmitError(null);
     const leadId = crypto.randomUUID();
+
+    // Primär: an Formspree senden
+    let formspreeOk = false;
+    try {
+      const res = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: firstName.trim(),
+          phone: phone.trim(),
+          company: companyName.trim(),
+          email: email.trim(),
+          _subject: `🔔 Neuer Lead (Pop-up Leitfaden): ${companyName.trim()}`,
+          _replyto: email.trim(),
+          _gotcha: honeypot,
+          quelle: "Pop-up Lead-Magnet (7 Schritte Leitfaden)",
+          seite: location.pathname,
+        }),
+      });
+      formspreeOk = res.ok;
+    } catch {
+      formspreeOk = false;
+    }
+
+    if (!formspreeOk) {
+      setLoading(false);
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+      );
+      return;
+    }
+
+    // Backup für Admin-Backend – Fehler hier blockieren die Erfolgs-Ansicht nicht.
     const { error } = await supabase.from("leads").insert({
       id: leadId,
       first_name: firstName.trim(),
@@ -69,10 +109,8 @@ const LeadCaptureModal = () => {
       phone: phone.trim(),
     });
     setLoading(false);
-
     if (error) {
-      toast.error("Es ist ein Fehler aufgetreten. Bitte versuche es erneut.");
-      return;
+      console.warn("Lead konnte nicht in der DB gespeichert werden", error);
     }
 
     // Fire-and-forget: notify admin of new lead
@@ -290,6 +328,25 @@ const LeadCaptureModal = () => {
                     "Jetzt kostenlos herunterladen und direkt starten"
                   )}
                 </Button>
+                {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  style={{ display: "none" }}
+                  aria-hidden="true"
+                />
+                {submitError && (
+                  <p className="text-center text-sm text-destructive">
+                    Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+                    <a href="tel:+4915123456789" className="font-semibold underline">
+                      +49 151 23456789
+                    </a>
+                  </p>
+                )}
               </form>
 
               <p className="text-center text-xs text-muted-foreground mt-4 flex items-center justify-center gap-1.5">
