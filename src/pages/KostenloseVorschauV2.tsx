@@ -51,6 +51,7 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -366,6 +367,43 @@ const SlotPill = ({
     Noch {Math.max(0, total - taken)} von {total} Plätzen verfügbar
   </span>
 );
+
+// Punkte-Navigation für Carousels (Portfolio & Testimonials)
+const CarouselDots = ({ api, count }: { api: CarouselApi | undefined; count: number }) => {
+  const [selected, setSelected] = useState(0);
+  useEffect(() => {
+    if (!api) return;
+    const onSelect = () => setSelected(api.selectedScrollSnap());
+    onSelect();
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api]);
+  if (count <= 1) return null;
+  return (
+    <div className="flex items-center justify-center gap-2 mt-6">
+      {Array.from({ length: count }).map((_, i) => {
+        const active = i === selected;
+        return (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Zu Karte ${i + 1} wechseln`}
+            onClick={() => api?.scrollTo(i)}
+            className={`rounded-full transition-all ${
+              active
+                ? "bg-primary w-3 h-3"
+                : "bg-muted-foreground/30 hover:bg-muted-foreground/50 w-2 h-2"
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Success Screen mit zwei Optionen: Anruf abwarten ODER Termin direkt buchen
@@ -866,7 +904,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw) as Partial<FormState>;
-        setState((prev) => ({ ...prev, ...parsed }));
+        // Schritt nie aus dem Storage übernehmen – Formular startet immer bei 1.
+        // Schritt 5 darf nur nach Abschluss von 1–4 erreicht werden.
+        const { step: _ignoredStep, ...rest } = parsed;
+        setState((prev) => ({ ...prev, ...rest, step: 1 }));
       }
     } catch {
       /* ignore */
@@ -1112,11 +1153,38 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 selected={state.hasWebsite === opt.value}
                 onClick={() => {
                   update({ hasWebsite: opt.value });
-                  setTimeout(next, 200);
+                  // Bei "Ja, und ich bin zufrieden" zeigen wir einen Hinweis
+                  // und lassen den Nutzer manuell auf "Weiter" klicken.
+                  if (opt.value !== "Ja, und ich bin zufrieden") {
+                    setTimeout(next, 200);
+                  }
                 }}
               />
             ))}
           </div>
+          {state.hasWebsite === "Ja, und ich bin zufrieden" && (
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-4">
+              <div
+                className="rounded-lg p-3 text-sm border"
+                style={{ backgroundColor: "#F0FFF4", borderColor: "#C6F6D5" }}
+              >
+                <p className="text-emerald-800 leading-relaxed">
+                  💡 Gut! Wusstest du dass man auch eine bestehende Website noch
+                  deutlich mehr Kunden bringen kann?
+                  <br />
+                  Wir zeigen dir kostenlos was möglich ist.
+                </p>
+              </div>
+              <Button
+                type="button"
+                size="lg"
+                onClick={next}
+                className="w-full sm:w-auto"
+              >
+                Weiter <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
@@ -1183,6 +1251,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 value={state.firstName}
                 onChange={(e) => update({ firstName: e.target.value })}
                 placeholder="Max"
+                autoComplete="given-name"
               />
             </div>
             <div>
@@ -1196,6 +1265,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 value={state.phone}
                 onChange={(e) => update({ phone: e.target.value })}
                 placeholder="+49 ..."
+                autoComplete="tel"
               />
             </div>
             <div>
@@ -1205,6 +1275,17 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 value={state.company}
                 onChange={(e) => update({ company: e.target.value })}
                 placeholder="Mustermann GmbH"
+                autoComplete="organization"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium mb-1.5 block">E-Mail (optional)</label>
+              <Input
+                type="email"
+                value={state.email}
+                onChange={(e) => update({ email: e.target.value })}
+                placeholder="max@mustermann.de"
+                autoComplete="email"
               />
             </div>
           </div>
@@ -1244,6 +1325,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
 
 const KostenloseVorschauV2 = () => {
   const { settings, demos: dbDemos, faqs: dbFaqs, portfolio, testimonials: dbTestimonials } = useVorschauSettings();
+  const [demosApi, setDemosApi] = useState<CarouselApi>();
+  const [testimonialsApi, setTestimonialsApi] = useState<CarouselApi>();
   const totalSlots = settings?.total_slots ?? 5;
   const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
   const remainingSlots = Math.max(0, totalSlots - takenSlots);
@@ -1371,7 +1454,7 @@ const KostenloseVorschauV2 = () => {
             </p>
 
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground text-center max-w-md mx-auto">
-              Nach deiner Vorschau: Fertige Website ab 49€/Monat – kein Vertrag, monatlich kündbar.
+              Nach deiner Vorschau: Fertige Website ab 59€/Monat – kein Vertrag, monatlich kündbar.
             </p>
 
             {/* Social Proof */}
@@ -1463,7 +1546,10 @@ const KostenloseVorschauV2 = () => {
       )}
 
       {/* FORM */}
-      <section id="formular" className="py-16 sm:py-20 bg-secondary/30 scroll-mt-20">
+      <section
+        id="formular"
+        className="pt-16 sm:pt-20 pb-[60px] bg-secondary/30 scroll-mt-20"
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold mb-3">
@@ -1494,6 +1580,7 @@ const KostenloseVorschauV2 = () => {
           </div>
           <Carousel
             opts={{ align: "start", loop: activeDemos.length > 3 }}
+            setApi={setDemosApi}
             className="max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4">
@@ -1543,6 +1630,7 @@ const KostenloseVorschauV2 = () => {
               </>
             )}
           </Carousel>
+          <CarouselDots api={demosApi} count={activeDemos.length} />
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
               So eine Vorschau für meinen Betrieb <ArrowRight className="ml-2 w-5 h-5" />
@@ -1561,6 +1649,7 @@ const KostenloseVorschauV2 = () => {
           </h2>
           <Carousel
             opts={{ align: "start", loop: activeTestimonials.length > 3 }}
+            setApi={setTestimonialsApi}
             className="max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4">
@@ -1597,6 +1686,7 @@ const KostenloseVorschauV2 = () => {
               </>
             )}
           </Carousel>
+          <CarouselDots api={testimonialsApi} count={activeTestimonials.length} />
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
               Jetzt meine kostenlose Vorschau anfordern <ArrowRight className="ml-2 w-5 h-5" />
@@ -1610,7 +1700,12 @@ const KostenloseVorschauV2 = () => {
       {(settings?.show_faq ?? true) && activeFaqs.length > 0 && (
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10">Häufige Fragen</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3">
+            Das fragen Handwerker am häufigsten
+          </h2>
+          <p className="text-center text-muted-foreground mb-10">
+            Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.
+          </p>
           <Accordion type="single" collapsible className="bg-card rounded-2xl border border-border px-5 shadow-sm">
             {activeFaqs.map((f, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b last:border-b-0">
