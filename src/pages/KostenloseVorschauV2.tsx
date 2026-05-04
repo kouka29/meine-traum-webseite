@@ -1268,9 +1268,8 @@ const KostenloseVorschauV2 = () => {
     role: t.role,
     result: t.result,
   }));
-  const activeFaqs = dbFaqs.length > 0
-    ? dbFaqs.map(f => ({ q: f.question, a: f.answer }))
-    : faqs;
+  // Identische FAQs wie auf /preise – DB-FAQs hier bewusst nicht überschreiben lassen.
+  const activeFaqs = faqs;
   const heroBadge = isWaitlist
     ? `Alle Plätze im ${monatName} vergeben – sichere dir jetzt einen Platz für ${nextMonthLabel}`
     : (settings?.hero_badge_text ?? "Nur noch {remaining} von {total} Plätzen im {month} verfügbar")
@@ -1611,7 +1610,7 @@ const KostenloseVorschauV2 = () => {
                 <AccordionTrigger className="text-left text-base sm:text-lg font-semibold">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-base">
+                <AccordionContent className="text-muted-foreground text-base whitespace-pre-line">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
