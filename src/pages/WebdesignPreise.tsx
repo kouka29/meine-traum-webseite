@@ -326,9 +326,10 @@ const WebdesignPreise = () => (
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild>
-                <Link to="#formular">
-                  Nicht sicher welches Paket passt? Kostenlos beraten lassen <ArrowRight size={16} />
+              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6">
+                <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
+                  <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
+                  <ArrowRight size={16} className="shrink-0" />
                 </Link>
               </Button>
             </div>
@@ -372,9 +373,10 @@ const WebdesignPreise = () => (
               {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild>
-                <Link to="#formular">
-                  Nicht sicher welches Paket passt? Kostenlos beraten lassen <ArrowRight size={16} />
+              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6">
+                <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
+                  <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
+                  <ArrowRight size={16} className="shrink-0" />
                 </Link>
               </Button>
             </div>
