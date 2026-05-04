@@ -16,24 +16,32 @@ type Pkg = {
   enterprise?: boolean;
   cta: string;
   upgradeHint?: string;
+  growth?: { price: string; items: string[] };
 };
 
 const rentPackages: Pkg[] = [
   {
     name: "Starter",
-    price: "49 €/Monat",
+    price: "59 €/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
+      "Perfekt für den ersten Schritt online",
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
-      "SSL-Zertifikat",
+      "SSL-Zertifikat & Hosting inklusive",
       "Online in 7 Tagen",
-      "Wartung & Updates inklusive",
-      "Support per WhatsApp & E-Mail inklusive",
     ],
     cta: "Jetzt starten",
-    upgradeHint: "↑ Jederzeit Upgrade auf Pro möglich",
+    upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
+    growth: {
+      price: "+29 €/Monat zubuchbar",
+      items: [
+        "1 Änderung pro Monat inklusive",
+        "Updates & Wartung",
+        "Support per WhatsApp",
+      ],
+    },
   },
   {
     name: "Pro",
@@ -43,13 +51,20 @@ const rentPackages: Pkg[] = [
       "2–5 Seiten",
       "SEO-Grundlagen (Google findet dich)",
       "Google Business Einrichtung",
-      "1x kostenlose Anpassung pro Monat",
-      "Änderungen per WhatsApp & E-Mail anfragen",
-      "30 Tage Support nach Start",
-      "Wartung & Updates inklusive",
+      "Mobil-optimiert & SSL",
+      "Hosting & Domain inklusive",
+      "Online in 10 Tagen",
     ],
     popular: true,
     cta: "Jetzt starten",
+    growth: {
+      price: "+39 €/Monat zubuchbar",
+      items: [
+        "Bis zu 3 Änderungen pro Monat inklusive",
+        "Updates & Wartung",
+        "Priority Support per WhatsApp",
+      ],
+    },
   },
   {
     name: "Premium",
@@ -59,23 +74,34 @@ const rentPackages: Pkg[] = [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
       "Design das mehr Anfragen bringt",
-      "2x kostenlose Anpassungen pro Monat",
-      "Änderungen per WhatsApp & E-Mail anfragen",
+      "Google Business Einrichtung",
+      "Hosting & Domain inklusive",
       "Schneller Support – Antwort in 24h",
-      "Wartung & Updates inklusive",
     ],
     cta: "Jetzt starten",
+    growth: {
+      price: "+49 €/Monat zubuchbar",
+      items: [
+        "Bis zu 5 Änderungen pro Monat inklusive",
+        "Updates & Wartung",
+        "Priority Support per WhatsApp",
+        "Monatlicher Performance-Check",
+      ],
+    },
   },
   {
     name: "Enterprise",
     price: "Auf Anfrage",
-    desc: "Für Betriebe mit besonderen Anforderungen\nMeist unter 300 €/Monat – Preis nach individuellem Gespräch.",
+    subPrice: "meist unter 300 €/Monat",
+    desc: "Für Betriebe mit besonderen Anforderungen",
     features: [
       "Onlineshop möglich",
       "Unbegrenzte Seiten",
       "SEO-Strategie",
       "Google Ads Setup",
       "Persönlicher Ansprechpartner",
+      "3 Änderungen/Monat inklusive",
+      "Wartung & Updates inklusive",
     ],
     enterprise: true,
     cta: "Beratung anfragen",
@@ -92,6 +118,7 @@ type BuyPkg = {
   comparison?: string;
   popular?: boolean;
   cta: string;
+  growth?: { price: string; items: string[] };
 };
 
 const buyPackages: BuyPkg[] = [
@@ -99,19 +126,28 @@ const buyPackages: BuyPkg[] = [
     name: "Starter",
     price: "990 € einmalig",
     highlights: [
-      "✓ Günstiger als Miete ab Monat 21",
+      "✓ Günstiger als Miete ab Monat 17",
       "≈ nur 41 €/Monat über 2 Jahre",
     ],
-    compare: "Miete Starter: 49 € × 24 = 1.176 € — hier sparst du 186 €",
+    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 €",
     features: [
+      "Perfekt für den ersten Schritt online",
       "One-Pager (1 Seite)",
       "Mobil-optimiert",
       "Kontaktformular",
       "SSL-Zertifikat",
-      "Fertig in 7 Werktagen",
+      "Online in 7 Tagen",
+      "Website gehört dir – kein Vertrag",
     ],
-    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Sorglos-Paket: 990 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 1.338 €.",
+    growth: {
+      price: "+29 €/Monat zubuchbar",
+      items: [
+        "1 Änderung pro Monat inklusive",
+        "Updates & Wartung",
+        "Support per WhatsApp",
+      ],
+    },
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 €",
     cta: "Jetzt kaufen & starten",
   },
   {
@@ -127,10 +163,18 @@ const buyPackages: BuyPkg[] = [
       "SEO-Grundlagen (Google findet dich)",
       "Google Business Einrichtung",
       "30 Tage Support nach Start",
+      "Mobil-optimiert & SSL",
       "Website gehört dir – kein Vertrag",
     ],
-    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Sorglos-Paket: 1.900 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 2.248 €.",
+    growth: {
+      price: "+39 €/Monat zubuchbar",
+      items: [
+        "Bis zu 3 Änderungen pro Monat inklusive",
+        "Updates & Wartung",
+        "Priority Support per WhatsApp",
+      ],
+    },
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.368 €",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
@@ -147,10 +191,19 @@ const buyPackages: BuyPkg[] = [
       "SEO-Grundlagen + Seitenstruktur",
       "Design das mehr Anfragen bringt",
       "60 Tage Priority Support",
+      "Mobil-optimiert & SSL",
       "Website gehört dir – kein Vertrag",
     ],
-    footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Sorglos-Paket: 3.500 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 3.848 €.",
+    growth: {
+      price: "+49 €/Monat zubuchbar",
+      items: [
+        "Bis zu 5 Änderungen pro Monat inklusive",
+        "Updates & Wartung",
+        "Priority Support per WhatsApp",
+        "Monatlicher Performance-Check",
+      ],
+    },
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.088 €",
     cta: "Jetzt kaufen & starten",
   },
 ];
@@ -162,11 +215,11 @@ const buyEnterprise = {
   features: [
     "Onlineshop möglich",
     "Unbegrenzte Seiten",
-    "SEO-Strategie",
-    "Google Ads Setup",
+    "SEO-Strategie + Google Ads",
     "Persönlicher Ansprechpartner",
+    "Wartung & Support inklusive",
+    "Individuelle Umsetzung",
   ],
-  footnote: "+ Monatliche Betreuung inklusive – Preis nach Gespräch",
   cta: "Beratung anfragen",
 };
 
@@ -252,6 +305,22 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
       {pkg.upgradeHint && (
         <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
       )}
+      {pkg.growth && (
+        <div className="mb-5 rounded-xl bg-muted/50 border border-border/60 p-4">
+          <p className="text-xs font-semibold text-foreground/80 mb-2">
+            🚀 Wachstumspaket: {pkg.growth.price}
+          </p>
+          <ul className="space-y-1 mb-2">
+            {pkg.growth.items.map((g) => (
+              <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
+                <span>{g}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
+        </div>
+      )}
       <Button
         variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
         size="lg"
@@ -299,19 +368,20 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
           </div>
         ))}
       </div>
-      {pkg.footnote && (
-        <div className="mb-3">
-          <p className="text-xs font-semibold text-muted-foreground mb-2">
-            + Website-Sorglos-Paket ab 29 €/Monat zubuchbar:
+      {pkg.growth && (
+        <div className="mb-3 rounded-xl bg-muted/50 border border-border/60 p-4">
+          <p className="text-xs font-semibold text-foreground/80 mb-2">
+            🚀 Wachstumspaket: {pkg.growth.price}
           </p>
-          <ul className="space-y-1">
-            {["Hosting & SSL", "Updates & Wartung", "Änderungswünsche", "Support – monatlich kündbar"].map((b) => (
-              <li key={b} className="flex items-start gap-2 text-xs text-muted-foreground">
+          <ul className="space-y-1 mb-2">
+            {pkg.growth.items.map((g) => (
+              <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
-                <span>{b}</span>
+                <span>{g}</span>
               </li>
             ))}
           </ul>
+          <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
         </div>
       )}
       {pkg.comparison && (
@@ -437,7 +507,6 @@ const WebdesignPreise = () => (
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-muted-foreground">{buyEnterprise.footnote}</p>
                 </div>
                 <div className="md:w-auto">
                   <Button variant="outline" size="lg" asChild>
