@@ -528,15 +528,15 @@ const WebdesignPreise = () => (
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20 bg-muted/40 rounded-2xl p-6 md:p-8">
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-4xl mx-auto mb-20">
             {[
               { Icon: Lock, label: "Keine versteckten Kosten" },
               { Icon: FileText, label: "Kein Kleingedrucktes" },
               { Icon: Target, label: "Erst Demo – dann Entscheidung" },
             ].map(({ Icon, label }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-3 p-8 rounded-xl border border-border bg-background">
-                <Icon className="text-primary" size={30} />
-                <span className="text-base font-medium">{label}</span>
+              <div key={label} className="flex flex-col items-center text-center gap-2 px-2">
+                <Icon className="text-primary" size={24} />
+                <span className="text-[12px] sm:text-sm font-medium leading-tight">{label}</span>
               </div>
             ))}
           </div>
