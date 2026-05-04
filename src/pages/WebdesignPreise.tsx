@@ -425,6 +425,11 @@ const WebdesignPreise = () => (
             <TabsTrigger value="kauf" className="flex-1">Einmalkauf</TabsTrigger>
           </TabsList>
 
+          <p className="text-xs text-muted-foreground text-center italic -mt-4 mb-6 max-w-2xl mx-auto">
+            Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
+            Für Gewerbetreibende voll absetzbar.
+          </p>
+
           <TabsContent value="miete">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-primary/10 text-primary border-primary/20">
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
