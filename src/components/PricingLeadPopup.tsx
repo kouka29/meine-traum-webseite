@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, CheckCircle2, ShieldCheck, Loader2, ArrowRight, ChevronDown } from "lucide-react";
+import { X, CheckCircle2, ShieldCheck, Loader2, ArrowRight, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -99,6 +99,11 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  // Snapshot of submitted data for the success view (form state gets reset)
+  const [successData, setSuccessData] = useState<{ firstName: string; emailProvided: boolean }>({
+    firstName: "",
+    emailProvided: false,
+  });
   const [errors, setErrors] = useState<{
     firstName?: string;
     phone?: string;
@@ -136,10 +141,13 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     };
   }, [open, onClose]);
 
-  // Auto-close after success
+  // Auto-close after success (6s) + smooth scroll to top
   useEffect(() => {
     if (!submitted) return;
-    const t = setTimeout(() => onClose(), 4000);
+    const t = setTimeout(() => {
+      onClose();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 6000);
     return () => clearTimeout(t);
   }, [submitted, onClose]);
 
@@ -229,11 +237,22 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     });
 
     setLoading(false);
+    setSuccessData({
+      firstName: firstName.trim(),
+      emailProvided: email.trim().length > 0,
+    });
     setSubmitted(true);
     setFirstName("");
     setPhone("");
     setCompanyName("");
     setEmail("");
+  };
+
+  const handleManualClose = () => {
+    onClose();
+    if (submitted) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   if (!open) return null;
@@ -261,7 +280,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          onClick={onClose}
+          onClick={handleManualClose}
           className="absolute top-3 right-3 z-20 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted flex items-center justify-center transition-colors"
           aria-label="Schließen"
         >
@@ -269,22 +288,80 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         </button>
 
         {submitted ? (
-          <div className="p-6 sm:p-8 text-center py-10">
-            <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 size={32} className="text-green-600" />
+          <>
+            <style>{`
+              @keyframes pricing-popup-success-pop {
+                0%   { transform: scale(0.5); opacity: 0; }
+                60%  { transform: scale(1.1); opacity: 1; }
+                100% { transform: scale(1);   opacity: 1; }
+              }
+              @keyframes pricing-popup-progress {
+                from { transform: scaleX(0); }
+                to   { transform: scaleX(1); }
+              }
+            `}</style>
+            <div className="relative flex-1 overflow-y-auto px-6 pt-8 pb-6 sm:p-8 sm:pb-8 text-center animate-in fade-in duration-200">
+              <div
+                className="mx-auto mb-5 flex items-center justify-center"
+                style={{
+                  width: 64,
+                  height: 64,
+                  animation: "pricing-popup-success-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
+                }}
+              >
+                <CheckCircle2 size={64} strokeWidth={2.2} style={{ color: "#22C55E" }} />
+              </div>
+
+              <h3 className="font-heading text-xl sm:text-3xl font-bold leading-tight mb-3 text-foreground">
+                Danke{successData.firstName ? `, ${successData.firstName}` : ""}! 🎉
+              </h3>
+
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">
+                Deine Anfrage ist angekommen.<br />
+                Ich melde mich innerhalb von 2 Stunden persönlich bei dir.
+              </p>
+
+              <div className="my-4 rounded-xl bg-[#F9FAFB] p-4 text-left space-y-2">
+                {[
+                  "Schritt 1: Ich rufe dich kurz an",
+                  "Schritt 2: Wir klären was du brauchst",
+                  "Schritt 3: Deine Demo ist in 48h fertig",
+                ].map((step) => (
+                  <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
+                    <CheckCircle2 size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" />
+                    <span>{step}</span>
+                  </div>
+                ))}
+              </div>
+
+              {successData.emailProvided && (
+                <p className="text-xs text-muted-foreground/80 leading-relaxed mb-3">
+                  Schau auch kurz in deinen Spam-Ordner — manchmal landet unsere Mail dort.
+                </p>
+              )}
+
+              <div className="mt-3">
+                <p className="text-xs text-muted-foreground mb-1">Oder ruf mich direkt an:</p>
+                <a
+                  href="tel:+4915123456789"
+                  className="inline-flex items-center gap-1.5 text-primary font-bold text-sm sm:text-base hover:underline"
+                >
+                  <Phone size={14} />
+                  +49 151 23456789
+                </a>
+              </div>
             </div>
-            <h3 className="font-heading text-2xl font-bold mb-3 text-foreground">
-              Danke{firstName ? `, ${firstName}` : ""}!
-            </h3>
-            <p className="text-muted-foreground leading-relaxed mb-3">
-              Ich habe deine Anfrage erhalten.<br />
-              Du bekommst in Kürze deine kostenlose Design-Demo.<br />
-              Ich melde mich innerhalb von 2 Stunden bei dir.
-            </p>
-            <p className="text-xs text-muted-foreground/70">
-              Schau auch in deinen Spam-Ordner.
-            </p>
-          </div>
+
+            {/* Auto-close progress bar */}
+            <div className="relative h-1 w-full bg-muted/50 overflow-hidden">
+              <div
+                className="absolute inset-y-0 left-0 w-full bg-primary origin-left"
+                style={{
+                  animation: "pricing-popup-progress 6000ms linear forwards",
+                }}
+              />
+            </div>
+          </>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
             {/* Scrollable content */}
