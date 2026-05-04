@@ -179,7 +179,7 @@ const faqs = [
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten wird nichts automatisch verlängert oder teurer. Du kannst monatlich kündigen – mit einer Frist von 30 Tagen. Kein neuer Vertrag, kein versteckter Preisanstieg, keine Überraschungen.",
+    a: "Nach den 12 Monaten läuft dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\n\nDu kannst aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\n\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\n\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Sind Hosting, Domain und SSL inklusive?",
