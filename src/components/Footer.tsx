@@ -17,11 +17,11 @@ const Footer = () => (
           <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Leistungen</h4>
           <ul className="space-y-3 text-sm">
             {[
-              ["Webdesign Agentur", "/webdesign-agentur"],
-              ["Website erstellen lassen", "/website-erstellen-lassen"],
-              ["Landingpage erstellen", "/landingpage-erstellen-lassen"],
-              ["Website Relaunch", "/website-relaunch"],
-              ["Conversion Optimierung", "/conversion-optimierung"],
+              ["Website für Handwerksbetriebe", "/webdesign-handwerker"],
+              ["Website für Elektriker", "/webdesign-handwerker"],
+              ["Website für Maler", "/webdesign-handwerker"],
+              ["Website für Sanitärbetriebe", "/webdesign-shk"],
+              ["Kostenlose Website-Vorschau", "/kostenloser-website-check"],
               ["Webdesign Preise", "/webdesign-preise"],
             ].map(([label, path]) => (
               <li key={path}>
