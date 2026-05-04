@@ -875,6 +875,8 @@ type MultiStepFormProps = {
 const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
   const [done, setDone] = useState(false);
   const [bookingMode, setBookingMode] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
@@ -943,7 +945,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       toast.error("Bitte fülle die Pflichtfelder aus.");
       return;
     }
+    // Honeypot: Bots füllen dieses unsichtbare Feld aus → still verwerfen.
+    if (honeypot) return;
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const newLeadId = crypto.randomUUID();
       // V2 erfasst keine E-Mail mehr – wir generieren einen Platzhalter,
@@ -952,6 +957,37 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         state.email && state.email.includes("@")
           ? state.email
           : `lead-${newLeadId}@vorschau-v2.local`;
+
+      // Primär: an Formspree senden (bestimmt Erfolg/Fehler des Submits).
+      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: state.firstName,
+          phone: state.phone.trim(),
+          company: state.company,
+          email: state.email || "",
+          _subject: `🔔 Neue Demo-Anfrage: ${state.company}`,
+          _replyto: state.email || "",
+          _next: window.location.href,
+          _gotcha: honeypot,
+          gewerk:
+            state.trade === "Sonstiges" && state.tradeOther
+              ? `Sonstiges: ${state.tradeOther}`
+              : state.trade,
+          hat_website: state.hasWebsite,
+          ziel: state.goals.join(", "),
+          dringlichkeit: state.urgency,
+          seite: "kostenlose-vorschau-v2",
+        }),
+      });
+      if (!formspreeRes.ok) {
+        throw new Error(`Formspree error ${formspreeRes.status}`);
+      }
+
       const { data: leadData, error: leadError } = await supabase
         .from("leads")
         .insert({
@@ -970,8 +1006,12 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           is_waitlist: isWaitlist,
         });
 
-      if (leadError) throw leadError;
-      setLeadId(newLeadId);
+      if (leadError) {
+        // Formspree war erfolgreich – DB-Speicherung ist nur fürs Admin-Backup.
+        console.warn("Lead konnte nicht in der DB gespeichert werden", leadError);
+      } else {
+        setLeadId(newLeadId);
+      }
 
       // Webhook + E-Mail-Benachrichtigung im Hintergrund (UI nicht blockieren)
       void fetch("https://webhook.site/placeholder", {
@@ -1008,6 +1048,9 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       setDone(true);
     } catch (err) {
       console.error(err);
+      setSubmitError(
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+      );
       toast.error("Etwas ist schiefgelaufen. Bitte versuche es erneut.");
     } finally {
       setSubmitting(false);
@@ -1289,11 +1332,30 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
               />
             </div>
           </div>
+          {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
+          <input
+            type="text"
+            name="_gotcha"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ display: "none" }}
+            aria-hidden="true"
+          />
           <Button type="submit" size="lg" className="w-full" disabled={submitting}>
             {submitting ? "Wird gesendet..." : (
               <>Kostenlose Vorschau jetzt anfordern <ArrowRight className="ml-2 w-4 h-4" /></>
             )}
           </Button>
+          {submitError && (
+            <p className="text-sm text-destructive text-center">
+              Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
+              <a href="tel:+4915123456789" className="font-semibold underline">
+                +49 151 23456789
+              </a>
+            </p>
+          )}
           <p className="text-xs text-muted-foreground flex items-start gap-2">
             <Lock className="w-3.5 h-3.5 mt-0.5 shrink-0" />
             <span>
