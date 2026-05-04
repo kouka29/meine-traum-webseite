@@ -310,6 +310,7 @@ export type Database = {
           id: string
           image_url: string
           is_visible: boolean
+          page_key: string
           portfolio_project_id: string | null
           sort_order: number
           trade: string
@@ -321,6 +322,7 @@ export type Database = {
           id?: string
           image_url?: string
           is_visible?: boolean
+          page_key?: string
           portfolio_project_id?: string | null
           sort_order?: number
           trade?: string
@@ -332,6 +334,7 @@ export type Database = {
           id?: string
           image_url?: string
           is_visible?: boolean
+          page_key?: string
           portfolio_project_id?: string | null
           sort_order?: number
           trade?: string
@@ -352,6 +355,7 @@ export type Database = {
           created_at: string
           id: string
           is_visible: boolean
+          page_key: string
           question: string
           sort_order: number
         }
@@ -360,6 +364,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_visible?: boolean
+          page_key?: string
           question: string
           sort_order?: number
         }
@@ -368,6 +373,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_visible?: boolean
+          page_key?: string
           question?: string
           sort_order?: number
         }
@@ -388,6 +394,7 @@ export type Database = {
           hero_h1_line3: string
           hero_subheadline: string
           id: number
+          page_key: string
           phone_number: string
           show_countdown: boolean
           show_demos: boolean
@@ -414,6 +421,7 @@ export type Database = {
           hero_h1_line3?: string
           hero_subheadline?: string
           id?: number
+          page_key?: string
           phone_number?: string
           show_countdown?: boolean
           show_demos?: boolean
@@ -440,6 +448,7 @@ export type Database = {
           hero_h1_line3?: string
           hero_subheadline?: string
           id?: number
+          page_key?: string
           phone_number?: string
           show_countdown?: boolean
           show_demos?: boolean
@@ -475,7 +484,9 @@ export type Database = {
         }
         Returns: boolean
       }
-      decrement_taken_slot: { Args: never; Returns: undefined }
+      decrement_taken_slot:
+        | { Args: never; Returns: undefined }
+        | { Args: { p_page_key?: string }; Returns: undefined }
       delete_email: {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
@@ -484,7 +495,9 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
-      increment_taken_slot: { Args: never; Returns: undefined }
+      increment_taken_slot:
+        | { Args: never; Returns: undefined }
+        | { Args: { p_page_key?: string }; Returns: undefined }
       move_to_dlq: {
         Args: {
           dlq_name: string
