@@ -400,6 +400,12 @@ const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: s
 
 const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
+  const openPopup = (badge: string) => {
+    setPopupBadge(badge);
+    setPopupOpen(true);
+  };
 
   useEffect(() => {
     const ctaButtons = Array.from(
@@ -459,14 +465,14 @@ const WebdesignPreise = () => {
               Deine neue Website kostet dich ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} />)}
+              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-                <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
+              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+                <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
-                </Link>
+                </span>
               </Button>
             </div>
             {rentPackages.filter(p => p.enterprise).map((pkg) => (
@@ -489,8 +495,8 @@ const WebdesignPreise = () => {
                     </div>
                   </div>
                   <div className="md:w-auto">
-                    <Button variant="gradient" size="lg" asChild>
-                      <Link to="#formular">{pkg.cta} <ArrowRight size={16} /></Link>
+                    <Button variant="gradient" size="lg" onClick={() => openPopup(pkg.badge ?? "Enterprise – Auf Anfrage")}>
+                      {pkg.cta} <ArrowRight size={16} />
                     </Button>
                   </div>
                 </div>
@@ -507,14 +513,14 @@ const WebdesignPreise = () => {
               Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} />)}
+              {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
             </div>
             <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" asChild className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-                <Link to="#formular" className="flex items-center justify-center gap-2 leading-snug">
+              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+                <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
                   <ArrowRight size={16} className="shrink-0" />
-                </Link>
+                </span>
               </Button>
             </div>
             <AnimatedSection delay={0.1}>
@@ -534,8 +540,8 @@ const WebdesignPreise = () => {
                   </div>
                 </div>
                 <div className="md:w-auto">
-                  <Button variant="outline" size="lg" asChild>
-                    <Link to="#formular">{buyEnterprise.cta} <ArrowRight size={16} /></Link>
+                  <Button variant="outline" size="lg" onClick={() => openPopup(buyEnterprise.badge)}>
+                    {buyEnterprise.cta} <ArrowRight size={16} />
                   </Button>
                 </div>
               </div>
@@ -551,8 +557,8 @@ const WebdesignPreise = () => {
               Einmalkauf = einmal zahlen, Website gehört dir, langfristig günstiger.<br />
               Nicht sicher? Ich berate dich kurz und kostenlos.
             </p>
-            <Button variant="outline" size="lg" asChild className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-              <Link to="#formular">Kostenlos beraten lassen <ArrowRight size={18} /></Link>
+            <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
+              Kostenlos beraten lassen <ArrowRight size={18} />
             </Button>
           </div>
 
@@ -600,8 +606,8 @@ const WebdesignPreise = () => {
           Kein Risiko. Keine Verpflichtung.<br />
           Gefällt sie dir nicht – du zahlst nichts.
         </p>
-        <Button variant="gradient" size="lg" asChild>
-          <Link to="#formular">Jetzt kostenlose Demo sichern <ArrowRight size={18} /></Link>
+        <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")}>
+          Jetzt kostenlose Demo sichern <ArrowRight size={18} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
           Fragen? Einfach anrufen: <a href="tel:+4915123456789" className="underline hover:text-foreground">+49 151 23456789</a>
@@ -612,15 +618,18 @@ const WebdesignPreise = () => {
       </div>
     </section>
 
-    <a
-      href="#formular"
+    <button
+      type="button"
+      onClick={() => openPopup("Kostenlose Beratung")}
       aria-hidden={!showFloating}
       className={`md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-opacity duration-200 ${
         showFloating ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
       Kostenlose Demo sichern →
-    </a>
+    </button>
+
+    <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
   </main>
   );
 };
