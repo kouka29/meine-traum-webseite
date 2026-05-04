@@ -229,12 +229,21 @@ const PackageCard = ({ pkg, i }: { pkg: Pkg; i: number }) => (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
       )}
       <div className="space-y-3 flex-1 mb-8 mt-2">
-        {pkg.features.map((f) => (
-          <div key={f} className="flex items-start gap-2.5">
-            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
-            <span className="text-sm">{f}</span>
-          </div>
-        ))}
+        {pkg.features.map((f) => {
+          if (f.startsWith("__hint__")) {
+            return (
+              <p key={f} className="text-xs text-muted-foreground pl-[22px] -mt-2">
+                {f.replace("__hint__", "")}
+              </p>
+            );
+          }
+          return (
+            <div key={f} className="flex items-start gap-2.5">
+              <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+              <span className="text-sm">{f}</span>
+            </div>
+          );
+        })}
       </div>
       {pkg.upgradeHint && (
         <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
