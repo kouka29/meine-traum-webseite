@@ -573,6 +573,34 @@ const SuccessScreen = ({
         },
       }).catch(() => {});
 
+      // 4. Formspree: Termin-Buchung als separate Nachricht senden
+      void fetch("https://formspree.io/f/xojrerqe", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: firstName,
+          phone: phone || "",
+          company,
+          email: email || "",
+          _subject: `📅 Termin gebucht: ${company} – ${dateLabel} ${bookingTime}`,
+          _replyto: email || "",
+          ereignis: "Terminbuchung",
+          termin_datum: dateLabel,
+          termin_uhrzeit: bookingTime,
+          kontaktweg: methodLabel,
+          gewerk: trade === "Sonstiges" && tradeOther ? `Sonstiges: ${tradeOther}` : trade,
+          hat_website: hasWebsite,
+          ziel: goals.join(", "),
+          dringlichkeit: urgency,
+          aktuelle_website: currentWebsite || "",
+          notizen: notes || "",
+          seite: "kostenlose-vorschau-v2",
+        }),
+      }).catch(() => {});
+
       setBookingConfirmed(true);
       toast.success(`Termin gebucht: ${dateLabel} um ${bookingTime} (${methodLabel})`);
     } catch (error) {
