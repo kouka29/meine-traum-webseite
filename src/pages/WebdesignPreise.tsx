@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import CTABanner from "@/components/CTABanner";
 import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -393,7 +392,23 @@ const BuyCard = ({ pkg, i }: { pkg: BuyPkg; i: number }) => (
   </AnimatedSection>
 );
 
-const WebdesignPreise = () => (
+const WebdesignPreise = () => {
+  const [showFloating, setShowFloating] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const formEl = document.getElementById("formular");
+      if (!formEl) return;
+      const rect = formEl.getBoundingClientRect();
+      // Hide once user has scrolled the form into view
+      setShowFloating(rect.top > window.innerHeight * 0.3);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
   <main className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
@@ -584,8 +599,16 @@ const WebdesignPreise = () => (
       </div>
     </section>
 
-    <CTABanner />
+    {showFloating && (
+      <a
+        href="#formular"
+        className="md:hidden fixed bottom-5 left-4 right-4 z-50 bg-primary text-primary-foreground font-bold text-center py-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+      >
+        Kostenlose Demo sichern →
+      </a>
+    )}
   </main>
-);
+  );
+};
 
 export default WebdesignPreise;
