@@ -111,7 +111,7 @@ const buyPackages: BuyPkg[] = [
       "Fertig in 7 Werktagen",
     ],
     footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Wartung: 990 € einmalig. Mit Wartung Jahr 1: ca. 1.338 €.",
+    comparison: "Ohne Sorglos-Paket: 990 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 1.338 €.",
     cta: "Jetzt kaufen & starten",
   },
   {
@@ -130,7 +130,7 @@ const buyPackages: BuyPkg[] = [
       "Website gehört dir – kein Vertrag",
     ],
     footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Wartung: 1.900 € einmalig. Mit Wartung Jahr 1: ca. 2.248 €.",
+    comparison: "Ohne Sorglos-Paket: 1.900 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 2.248 €.",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
@@ -150,7 +150,7 @@ const buyPackages: BuyPkg[] = [
       "Website gehört dir – kein Vertrag",
     ],
     footnote: "Optional zubuchbar: Wartungspaket ab 29 €/Monat\nInklusive: Hosting, SSL, Updates, Änderungswünsche, technischer Support – monatlich kündbar.",
-    comparison: "Ohne Wartung: 3.500 € einmalig. Mit Wartung Jahr 1: ca. 3.848 €.",
+    comparison: "Ohne Sorglos-Paket: 3.500 € einmalig.\nMit Sorglos-Paket Jahr 1: ca. 3.848 €.",
     cta: "Jetzt kaufen & starten",
   },
 ];
