@@ -78,13 +78,11 @@ const FloatingField = ({
             floated
               ? "top-1.5 text-[11px] text-muted-foreground"
               : "top-1/2 -translate-y-1/2 text-base text-muted-foreground/80",
+            floated && !error && "text-primary",
             error && floated && "text-[#EF4444]",
           )}
         >
           {label}
-          {!required && floated && (
-            <span className="ml-1 text-muted-foreground/60">(optional)</span>
-          )}
         </label>
       </div>
       {error && (
@@ -272,8 +270,11 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               <h2 className="font-heading text-2xl sm:text-3xl font-bold leading-tight mb-2 text-foreground">
                 🚀 Fast geschafft!
               </h2>
-              <p className="text-muted-foreground text-sm sm:text-base mb-5 leading-relaxed">
+              <p className="text-muted-foreground text-sm sm:text-base mb-2 leading-relaxed">
                 Ich melde mich innerhalb von 2 Stunden bei dir.
+              </p>
+              <p className="text-xs text-center text-green-600 font-medium mb-5">
+                ✓ Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
               </p>
 
               <div className="space-y-3">
@@ -322,7 +323,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 />
                 <FloatingField
                   id="popup-email"
-                  label="E-Mail"
+                  label="E-Mail (optional)"
                   type="email"
                   value={email}
                   onChange={setEmail}
@@ -332,8 +333,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               </div>
             </div>
 
-            {/* CTA footer — fixed on mobile (sticky bottom of sheet), inline on desktop */}
-            <div className="shrink-0 px-6 sm:px-8 pt-3 pb-5 sm:pb-7 bg-background border-t border-border/40 sm:border-t-0">
+            {/* CTA footer — sticky on mobile, inline on desktop */}
+            <div className="sticky bottom-0 sm:static shrink-0 px-4 sm:px-8 py-4 sm:pt-3 sm:pb-7 bg-background border-t border-border/40 sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] sm:shadow-none">
               <Button
                 type="submit"
                 variant="gradient"
