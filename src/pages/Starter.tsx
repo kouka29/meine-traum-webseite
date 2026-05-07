@@ -415,16 +415,19 @@ const Starter = () => (
                   <span className="badge-label bg-primary-foreground/15 text-primary-foreground mb-4">
                     Starter Paket
                   </span>
-                  <div className="flex items-baseline justify-center gap-2 mb-2">
+                  <div className="flex items-baseline justify-center gap-2 mb-2 flex-wrap">
                     <span className="text-sm sm:text-base text-primary-foreground/80">
                       ab
                     </span>
                     <span className="text-5xl sm:text-6xl font-heading font-bold">
-                      800 €
+                      990 €
+                    </span>
+                    <span className="text-base sm:text-lg text-primary-foreground/90 font-semibold">
+                      einmalig
                     </span>
                   </div>
                   <p className="text-sm text-primary-foreground/80">
-                    Fixpreis · inkl. MwSt.
+                    Festpreis · zzgl. 19 % MwSt. · oder als Miete ab 59 €/Monat
                   </p>
                 </div>
               </div>
