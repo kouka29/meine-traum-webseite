@@ -356,15 +356,15 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               </h3>
 
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">
-                Deine Anfrage ist angekommen.<br />
-                Ich melde mich innerhalb von 2 Stunden persönlich bei dir.
+                Ihre Anfrage ist angekommen.<br />
+                Ich melde mich innerhalb von 2 Stunden persönlich bei Ihnen.
               </p>
 
               <div className="my-4 rounded-xl bg-[#F9FAFB] p-4 text-left space-y-2">
                 {[
-                  "Schritt 1: Ich rufe dich kurz an",
-                  "Schritt 2: Wir klären was du brauchst",
-                  "Schritt 3: Deine Demo ist in 48h fertig",
+                  "Schritt 1: Ich rufe Sie kurz an",
+                  "Schritt 2: Wir klären was Sie brauchen",
+                  "Schritt 3: Ihre Demo ist in 48h fertig",
                 ].map((step) => (
                   <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
                     <CheckCircle2 size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" />
@@ -375,7 +375,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
 
               {successData.emailProvided && (
                 <p className="text-xs text-muted-foreground/80 leading-relaxed mb-3">
-                  Schau auch kurz in deinen Spam-Ordner — manchmal landet unsere Mail dort.
+                  Schau auch kurz in Ihren Spam-Ordner — manchmal landet unsere Mail dort.
                 </p>
               )}
 
@@ -413,16 +413,16 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 🚀 Fast geschafft!
               </h2>
               <p className="text-muted-foreground text-[13px] sm:text-base mb-1.5 sm:mb-2 leading-relaxed">
-                Ich melde mich innerhalb von 2 Stunden bei dir.
+                Ich melde mich innerhalb von 2 Stunden bei Ihnen.
               </p>
               <p className="text-[11px] sm:text-xs text-center text-green-600 font-medium mb-3 sm:mb-5">
-                ✓ Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
+                ✓ Sie bekommen Ihre kostenlose Design-Demo innerhalb von 48 Stunden.
               </p>
 
               <div className="space-y-2 sm:space-y-3">
                 <FloatingField
                   id="popup-firstname"
-                  label="Dein Vorname"
+                  label="Ihr Vorname"
                   value={firstName}
                   onChange={(v) => {
                     setFirstName(v);

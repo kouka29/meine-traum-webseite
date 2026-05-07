@@ -38,7 +38,7 @@ const cards = [
     icon: Sparkles,
     badge: "Ich brauche eine neue Website",
     title: "Null zu Online — mit System",
-    text: "Keine Website ist kein Problem. Wir bauen dir eine, die vom ersten Tag an Besucher in Anfragen verwandelt. Kein Baukastensystem. Keine Templates. Strategie first.",
+    text: "Keine Website ist kein Problem. Wir bauen Ihnen eine, die vom ersten Tag an Besucher in Anfragen verwandelt. Kein Baukastensystem. Keine Templates. Strategie first.",
     bullets: [
       "Konzept + Struktur inklusive",
       "Fertig in 2–4 Wochen",
@@ -49,10 +49,10 @@ const cards = [
     icon: TrendingUp,
     badge: "Meine Website bringt keine Anfragen",
     title: "Relaunch mit messbarem Ergebnis",
-    text: "Schickes Design reicht nicht. Wir analysieren was fehlt und bauen deine Website so um, dass Besucher zu Kunden werden. Unsere Kunden berichten von 2–5x mehr Anfragen.",
+    text: "Schickes Design reicht nicht. Wir analysieren was fehlt und bauen Ihre Website so um, dass Besucher zu Kunden werden. Unsere Kunden berichten von 2–5x mehr Anfragen.",
     bullets: [
       "Website-Analyse inklusive",
-      "Keine Arbeit für dich — wir übernehmen alles",
+      "Keine Arbeit für Sie — wir übernehmen alles",
       "Ergebnisse messbar ab Tag 1",
     ],
   },
@@ -72,7 +72,7 @@ const trust = [
   {
     icon: Zap,
     title: "48h Konzept — kostenlos",
-    text: "Du siehst, wie deine Website aussehen könnte, bevor du einen Euro ausgibst.",
+    text: "Sie sehen, wie Ihre Website aussehen könnte, bevor Sie einen Euro ausgibst.",
   },
 ];
 
@@ -87,19 +87,19 @@ const faqs = [
   },
   {
     q: "Was muss ich selbst vorbereiten?",
-    a: "Wenig. Logo, Infos zum Business, Wunschfotos — wir führen dich durch alles.",
+    a: "Wenig. Logo, Infos zum Business, Wunschfotos — wir führen Sie durch alles.",
   },
   {
     q: "Was, wenn ich noch unsicher bin, ob ich überhaupt eine Website brauche?",
-    a: "Genau dafür ist das Gespräch da. Wir sagen dir ehrlich, ob sich eine neue/überarbeitete Website für dich lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das auch.",
+    a: "Genau dafür ist das Gespräch da. Wir sagen Ihnen ehrlich, ob sich eine neue/überarbeitete Website für Sie lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das auch.",
   },
   {
     q: "Geht das Gespräch auch per WhatsApp oder Telefon?",
-    a: "Ja. Du wählst, was dir lieber ist: Videocall, Telefon oder WhatsApp-Sprachnachrichten. Wir passen uns deinem Alltag an, nicht umgekehrt.",
+    a: "Ja. Sie wählen, was Ihnen lieber ist: Videocall, Telefon oder WhatsApp-Sprachnachrichten. Wir passen uns Ihrem Alltag an, nicht umgekehrt.",
   },
   {
     q: "Was passiert nach dem Gespräch?",
-    a: "Innerhalb von 48 Stunden bekommst du ein kostenloses, individuelles Konzept — Struktur, Textideen, visuelle Richtung. Du entscheidest dann komplett frei, ob du mit uns weitermachen willst. Kein Druck, kein Folgeanruf.",
+    a: "Innerhalb von 48 Stunden bekommen Sie ein kostenloses, individuelles Konzept — Struktur, Textideen, visuelle Richtung. Sie entscheiden dann komplett frei, ob Sie mit uns weitermachen wollen. Kein Druck, kein Folgeanruf.",
   },
 ];
 
@@ -113,28 +113,28 @@ const stats = [
 const agenda = [
   {
     icon: MessageSquare,
-    title: "Deine Situation verstehen",
-    text: "Wir hören zu: Wo stehst du, was hast du probiert, was funktioniert nicht?",
+    title: "Ihre Situation verstehen",
+    text: "Wir hören zu: Wo stehst Sie, was haben Sie probiert, was funktioniert nicht?",
   },
   {
     icon: Target,
     title: "Zielgruppe & Positionierung schärfen",
-    text: "Wer soll bei dir anfragen — und warum genau bei dir, nicht beim Wettbewerb?",
+    text: "Wer soll bei Ihnen anfragen — und warum genau bei Ihnen, nicht beim Wettbewerb?",
   },
   {
     icon: Lightbulb,
     title: "Konkrete Lösungswege",
-    text: "Du bekommst 1–2 konkrete Vorschläge, wie deine Website Anfragen bringen kann.",
+    text: "Sie bekommen 1–2 konkrete Vorschläge, wie Ihre Website Anfragen bringen kann.",
   },
   {
     icon: FileText,
     title: "Investitions-Rahmen",
-    text: "Du bekommst eine ehrliche Einschätzung, was eine passende Lösung kostet.",
+    text: "Sie bekommen eine ehrliche Einschätzung, was eine passende Lösung kostet.",
   },
   {
     icon: Calendar,
     title: "Klarer nächster Schritt",
-    text: "Du gehst aus dem Gespräch mit Klarheit raus — ob mit uns, oder ohne.",
+    text: "Sie gehen aus dem Gespräch mit Klarheit raus — ob mit uns, oder ohne.",
   },
 ];
 
@@ -143,11 +143,11 @@ const notThis = [
   "Kein Standard-Pauschal-Angebot",
   "Kein Druck, kein „heute oder nie\"",
   "Kein verstecktes Kleingedrucktes",
-  "Keine Folgeanrufe, wenn du nicht willst",
+  "Keine Folgeanrufe, wenn Sie nicht wollen",
 ];
 
 const yesThis = [
-  "Ehrliche Analyse deiner aktuellen Situation",
+  "Ehrliche Analyse Ihrer aktuellen Situation",
   "Konkrete, umsetzbare Empfehlungen",
   "Transparente Preisorientierung",
   "Persönliches Gespräch auf Augenhöhe",
@@ -169,14 +169,14 @@ const Erstgespraech = () => (
               Persönliches Erstgespräch
             </span>
             <h1 className="mb-6 text-balance">
-              Du hast dich gemeldet. Gut.{" "}
+              Sie haben sich gemeldet. Gut.{" "}
               <span className="gradient-text">
                 Lass uns schauen, ob wir zusammenpassen.
               </span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
-              Egal ob du noch gar keine Website hast oder deine bestehende endlich
-              Anfragen bringen soll — in 15 Minuten wissen wir, was dein nächster
+              Egal ob Sie noch gar keine Website haben oder Ihre bestehende endlich
+              Anfragen bringen soll — in 15 Minuten wissen wir, was Ihr nächster
               Schritt ist.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -299,7 +299,7 @@ const Erstgespraech = () => (
       </div>
     </section>
 
-    {/* 3.5 Was du im Erstgespräch bekommst */}
+    {/* 3.5 Was Sie im Erstgespräch bekommen */}
     <section className="section-padding bg-card/50 border-y border-border/50">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -308,10 +308,10 @@ const Erstgespraech = () => (
               Konkrete Agenda · 15–20 Min
             </span>
             <h2 className="mb-4 text-balance">
-              Was du im Erstgespräch konkret bekommst
+              Was Sie im Erstgespräch konkret bekommen
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Damit du weißt, worauf du dich einlässt — hier ist der genaue Ablauf.
+              Damit Sie wissen, worauf Sie sich einlässt — hier ist der genaue Ablauf.
             </p>
           </div>
         </AnimatedSection>
@@ -380,7 +380,7 @@ const Erstgespraech = () => (
               Klare Erwartungen — von Anfang an
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Damit du genau weißt, was dich erwartet — und was nicht.
+              Damit Sie genau wissen, was Sie erwartet — und was nicht.
             </p>
           </div>
         </AnimatedSection>
@@ -465,8 +465,8 @@ const Erstgespraech = () => (
                 15 Minuten. Kein Verkaufsgespräch.
               </h2>
               <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8 text-base sm:text-lg">
-                Wir schauen gemeinsam auf deine Situation und zeigen dir konkret,
-                was möglich ist. Danach entscheidest du in Ruhe.
+                Wir schauen gemeinsam auf Ihre Situation und zeigen Ihnen konkret,
+                was möglich ist. Danach entscheiden Sie in Ruhe.
               </p>
               <Button
                 size="lg"

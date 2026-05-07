@@ -152,7 +152,7 @@ const LeadCaptureModal = () => {
 
   const bullets = [
     { icon: Zap, text: "7 erprobte Schritte zur Webseite, die Kunden gewinnt" },
-    { icon: TrendingUp, text: "Warum die meisten Webseiten scheitern – und wie du es besser machst" },
+    { icon: TrendingUp, text: "Warum die meisten Webseiten scheitern – und wie Sie es besser machen" },
     { icon: Sparkles, text: "Sofort umsetzbar – auch ohne Technikkenntnisse" },
     { icon: ShieldCheck, text: "Bonus: Die perfekte Webseiten-Checkliste zum Abhaken" },
   ];
@@ -188,10 +188,10 @@ const LeadCaptureModal = () => {
                 Fast geschafft! 🎉
               </h3>
               <p className="text-muted-foreground mb-2">
-                Prüfe jetzt dein E-Mail-Postfach und bestätige deine Adresse.
+                Prüfe jetzt Ihr E-Mail-Postfach und bestätige Ihre Adresse.
               </p>
               <p className="text-sm text-muted-foreground">
-                Dein kostenloser Leitfaden wartet auf dich.
+                Ihr kostenloser Leitfaden wartet auf Sie.
               </p>
               <Button variant="gradient" className="mt-6" onClick={close}>
                 Fenster schließen
@@ -210,11 +210,11 @@ const LeadCaptureModal = () => {
               </div>
 
               <h2 className="font-heading text-xl sm:text-2xl font-bold leading-tight mb-3 text-foreground">
-                Die 7 geheimen Schritte zu deiner Traum-Webseite, die Kunden gewinnt
+                Die 7 geheimen Schritte zu Ihrer Traum-Webseite, die Kunden gewinnt
               </h2>
 
               <p className="text-muted-foreground text-sm sm:text-base mb-5 leading-relaxed">
-                Warum die meisten Webseiten keine Kunden bringen – und wie du es in wenigen Tagen besser machst. Auch ohne Technikkenntnisse.
+                Warum die meisten Webseiten keine Kunden bringen – und wie Sie es in wenigen Tagen besser machen. Auch ohne Technikkenntnisse.
               </p>
 
               <div className="space-y-2.5 mb-5">
@@ -229,7 +229,7 @@ const LeadCaptureModal = () => {
               </div>
 
               <p className="text-sm italic text-muted-foreground border-l-2 border-primary/30 pl-4 mb-5">
-                „Stell dir vor, deine Webseite bringt dir täglich Anfragen – automatisch und ohne Stress."
+                „Stell Ihnen vor, Ihre Webseite bringt Ihnen täglich Anfragen – automatisch und ohne Stress."
               </p>
 
               <div className="flex items-center gap-2 bg-primary/5 border border-primary/15 rounded-lg px-4 py-2.5 mb-5">
@@ -246,7 +246,7 @@ const LeadCaptureModal = () => {
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
                   <Input
-                    placeholder="Dein Vorname *"
+                    placeholder="Ihr Vorname *"
                     value={firstName}
                     onChange={(e) => {
                       setFirstName(e.target.value);
@@ -261,7 +261,7 @@ const LeadCaptureModal = () => {
                 </div>
                 <div>
                   <Input
-                    placeholder="Dein Firmenname *"
+                    placeholder="Ihr Firmenname *"
                     value={companyName}
                     onChange={(e) => {
                       setCompanyName(e.target.value);
@@ -277,7 +277,7 @@ const LeadCaptureModal = () => {
                 <div>
                   <Input
                     type="email"
-                    placeholder="Deine E-Mail-Adresse *"
+                    placeholder="Ihre E-Mail-Adresse *"
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -293,7 +293,7 @@ const LeadCaptureModal = () => {
                 <div>
                   <Input
                     type="tel"
-                    placeholder="Deine Telefonnummer *"
+                    placeholder="Ihre Telefonnummer *"
                     value={phone}
                     onChange={(e) => {
                       setPhone(e.target.value);

@@ -51,32 +51,32 @@ const testimonials = [
 ];
 
 const fitYes = [
-  "Du planbar neue Anfragen willst statt zufällige",
-  "Deine Website aktuell kaum oder keine Leads bringt",
-  "Du in Selbstständigkeit, KMU oder Handwerk tätig bist",
-  "Du eine Entscheidung treffen willst, nicht 6 Monate warten",
+  "Sie planbar neue Anfragen wollen statt zufällige",
+  "Ihre Website aktuell kaum oder keine Leads bringt",
+  "Sie in Selbstständigkeit, KMU oder Handwerk tätig sind",
+  "Sie eine Entscheidung treffen wollen, nicht 6 Monate warten",
 ];
 
 const fitNo = [
-  "Du nur eine \"hübsche\" Website willst ohne Strategie",
-  "Du noch keine klare Zielgruppe kennst",
-  "Du Budget unter 1.500€ eingeplant hast",
+  "Sie nur eine \"hübsche\" Website wollen ohne Strategie",
+  "Sie noch keine klare Zielgruppe kennst",
+  "Sie Budget unter 1.500€ eingeplant haben",
 ];
 
 const steps = [
   {
     icon: MessageSquare,
     title: "Kostenloses Erstgespräch",
-    text: "15–20 Min, wir analysieren deine Situation",
+    text: "15–20 Min, wir analysieren Ihre Situation",
   },
   {
     icon: FileText,
     title: "Konzept in 48h",
-    text: "Du erhältst eine konkrete Struktur & Textideen",
+    text: "Sie erhalten eine konkrete Struktur & Textideen",
   },
   {
     icon: Calendar,
-    title: "Du entscheidest frei",
+    title: "Sie entscheiden frei",
     text: "Kein Druck, kein Kleingedrucktes",
   },
 ];
@@ -90,35 +90,35 @@ const empfehlerBenefits = [
   {
     icon: Gift,
     title: "Konzept-Bonus gratis",
-    text: "Du erhältst dein persönliches Website-Konzept (Wert 490 €) ohne Aufpreis dazu.",
+    text: "Sie erhalten Ihr persönliches Website-Konzept (Wert 490 €) ohne Aufpreis dazu.",
   },
   {
     icon: Shield,
     title: "Vertrauensvorschuss",
-    text: "Keine Verkaufsmasche, keine Standard-Pitches — wir behandeln dich wie wir auch deine:n Empfehler:in behandelt haben.",
+    text: "Keine Verkaufsmasche, keine Standard-Pitches — wir behandeln Sie wie wir auch Ihre:n Empfehler:in behandelt haben.",
   },
 ];
 
 const objections = [
   {
     q: "Ich weiß noch nicht, ob ich überhaupt eine neue Website brauche.",
-    a: "Genau dafür ist das Erstgespräch da. In 15 Minuten sehen wir gemeinsam, ob ein Relaunch sich für dich lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das ehrlich.",
+    a: "Genau dafür ist das Erstgespräch da. In 15 Minuten sehen wir gemeinsam, ob ein Relaunch sich für Sie lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das ehrlich.",
   },
   {
     q: "Wie viel kostet das Ganze ungefähr?",
-    a: "Unsere Projekte starten ab 1.500 € für eine Landingpage und liegen meist zwischen 3.500–8.000 € für eine vollständige Website. Den exakten Preis nennen wir erst nach dem Konzept — damit du weißt, wofür du bezahlst.",
+    a: "Unsere Projekte starten ab 1.500 € für eine Landingpage und liegen meist zwischen 3.500–8.000 € für eine vollständige Website. Den exakten Preis nennen wir erst nach dem Konzept — damit Sie wissen, wofür Sie bezahlst.",
   },
   {
     q: "Wie lange dauert die Umsetzung?",
-    a: "Eine Landingpage in 48 Stunden, eine vollständige Website in 2–4 Wochen. Express-Umsetzung möglich, falls du Druck hast.",
+    a: "Eine Landingpage in 48 Stunden, eine vollständige Website in 2–4 Wochen. Express-Umsetzung möglich, falls Sie Druck haben.",
   },
   {
     q: "Was, wenn mir das Konzept nicht gefällt?",
-    a: "Dann zahlst du nichts. Das Konzept ist kostenlos und unverbindlich — du entscheidest danach völlig frei, ob wir weitermachen.",
+    a: "Dann zahlen Sie nichts. Das Konzept ist kostenlos und unverbindlich — Sie entscheiden danach völlig frei, ob wir weitermachen.",
   },
   {
     q: "Bekomme ich auch Texte und Bilder?",
-    a: "Ja. Wir übernehmen Copywriting, KI-Bildgenerierung und visuelle Konzeption komplett — du musst kein Wort selbst schreiben, wenn du nicht willst.",
+    a: "Ja. Wir übernehmen Copywriting, KI-Bildgenerierung und visuelle Konzeption komplett — Sie müssen kein Wort selbst schreiben, wenn Sie nicht wollen.",
   },
   {
     q: "Was unterscheidet euch von anderen Agenturen?",
@@ -127,7 +127,7 @@ const objections = [
 ];
 
 const guarantees = [
-  "Konzept kostenlos & unverbindlich — du zahlst erst, wenn du überzeugt bist",
+  "Konzept kostenlos & unverbindlich — Sie zahlen erst, wenn Sie überzeugt sind",
   "Festpreis vor Projektstart — keine versteckten Kosten",
   "30-Tage-Zufriedenheitsgarantie nach Launch",
   "Persönlicher Ansprechpartner — keine Ticketsysteme, kein Outsourcing",
@@ -144,13 +144,13 @@ const Empfehlung = () => (
               Persönliche Empfehlung
             </span>
             <h1 className="mb-6 text-balance">
-              Jemand aus deinem Netzwerk hat uns empfohlen.{" "}
+              Jemand aus Ihrem Netzwerk hat uns empfohlen.{" "}
               <span className="gradient-text">Kein Zufall.</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
               98% unserer Kunden empfehlen uns aktiv weiter — weil ihre Website
               nach dem Relaunch endlich Anfragen bringt.{" "}
-              <strong className="text-foreground">Jetzt bist du dran.</strong>
+              <strong className="text-foreground">Jetzt sind Sie dran.</strong>
             </p>
             <Button
               variant="gradient"
@@ -217,29 +217,29 @@ const Empfehlung = () => (
                       Persönliche Nachricht
                     </p>
                     <h2 className="text-2xl sm:text-3xl font-heading font-bold">
-                      Warum du auf dieser Seite bist
+                      Warum Sie auf dieser Seite sind
                     </h2>
                   </div>
                 </div>
                 <div className="space-y-4 text-foreground/90 leading-relaxed text-base sm:text-lg">
                   <p>
-                    Du bist hier, weil dich jemand empfohlen hat — jemand, dem wir
+                    Sie sind hier, weil Sie jemand empfohlen hat — jemand, dem wir
                     geholfen haben, mit seiner Website wirklich Kunden zu gewinnen.
                   </p>
                   <p>
                     Empfehlungen sind das Wertvollste, das wir bekommen können. Sie
-                    bedeuten: Vertrauen wurde übertragen. Genau deshalb verdienst du
+                    bedeuten: Vertrauen wurde übertragen. Genau deshalb verdienen Sie
                     keine Standard-Behandlung — sondern eine, die diesem Vertrauen
                     gerecht wird.
                   </p>
                   <p className="font-semibold text-foreground">
-                    Drei Dinge, die wir dir versprechen:
+                    Drei Dinge, die wir Ihnen versprechen:
                   </p>
                   <ul className="space-y-3">
                     {[
                       "Kein Verkaufsgespräch — sondern ein ehrliches Strategiegespräch.",
-                      "Keine Pauschal-Pitches — sondern ein individuelles Konzept für deine Situation.",
-                      "Keine Ausreden, falls wir nicht passen — wir empfehlen dir dann jemand anderen.",
+                      "Keine Pauschal-Pitches — sondern ein individuelles Konzept für Ihre Situation.",
+                      "Keine Ausreden, falls wir nicht passen — wir empfehlen Ihnen dann jemand anderen.",
                     ].map((p) => (
                       <li key={p} className="flex items-start gap-3">
                         <Check size={20} className="text-primary shrink-0 mt-1" />
@@ -261,10 +261,10 @@ const Empfehlung = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              <Sparkles size={12} className="inline mr-1" /> Dein Empfehlungs-Bonus
+              <Sparkles size={12} className="inline mr-1" /> Ihr Empfehlungs-Bonus
             </span>
             <h2 className="mb-4 text-balance">
-              3 Vorteile, die du nur als Empfehlung bekommst
+              3 Vorteile, die Sie nur als Empfehlung bekommen
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Wer von einem unserer Kunden weiterempfohlen wird, startet nicht bei null —
@@ -351,7 +351,7 @@ const Empfehlung = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Sind wir der richtige Partner für dich?</h2>
+            <h2 className="mb-4 text-balance">Sind wir der richtige Partner für Sie?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Ehrliche Einschätzung — bevor wir miteinander sprechen.
             </p>
@@ -362,7 +362,7 @@ const Empfehlung = () => (
             <Card className="h-full border-primary/30">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-primary">
-                  Für dich, wenn …
+                  Für Sie, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitYes.map((item) => (
@@ -379,7 +379,7 @@ const Empfehlung = () => (
             <Card className="h-full border-destructive/20">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-muted-foreground">
-                  Nicht für dich, wenn …
+                  Nicht für Sie, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitNo.map((item) => (
@@ -403,7 +403,7 @@ const Empfehlung = () => (
           <div className="text-center mb-12">
             <h2 className="mb-4">Was passiert als nächstes?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              In drei einfachen Schritten zu deiner neuen Website.
+              In drei einfachen Schritten zu Ihrer neuen Website.
             </p>
           </div>
         </AnimatedSection>
@@ -436,10 +436,10 @@ const Empfehlung = () => (
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
               <Shield size={26} />
             </div>
-            <h2 className="mb-4 text-balance">Du gehst null Risiko ein</h2>
+            <h2 className="mb-4 text-balance">Sie gehen null Risiko ein</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Vertrauen muss verdient werden. Deshalb übernehmen wir das Risiko —
-              nicht du.
+              nicht Sie.
             </p>
           </div>
         </AnimatedSection>
@@ -471,7 +471,7 @@ const Empfehlung = () => (
           <div className="text-center mb-12">
             <h2 className="mb-4 text-balance">Die häufigsten Fragen — ehrlich beantwortet</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Falls du dieselben Gedanken hast wie viele vor dir.
+              Falls Sie dieselben Gedanken haben wie viele vor Ihnen.
             </p>
           </div>
         </AnimatedSection>
@@ -509,7 +509,7 @@ const Empfehlung = () => (
                 Bereit? Dann lass uns kurz sprechen.
               </h2>
               <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8 text-base sm:text-lg">
-                15 Minuten reichen — danach weißt du, ob und wie wir dir helfen können.
+                15 Minuten reichen — danach wissen Sie, ob und wie wir Ihnen helfen können.
               </p>
               <Button
                 size="lg"

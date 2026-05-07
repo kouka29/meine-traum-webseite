@@ -61,7 +61,7 @@ const LeadNotificationEmail = ({
         <Section style={headerBar}>
           <Heading style={h1}>🎯 Neuer Lead eingegangen</Heading>
           <Text style={subtitle}>
-            {source ? `Quelle: ${source}` : 'Eine neue Anfrage über deine Website'}
+            {source ? `Quelle: ${source}` : 'Eine neue Anfrage über Ihre Website'}
           </Text>
         </Section>
 
@@ -110,7 +110,7 @@ const LeadNotificationEmail = ({
 
         <Section style={ctaSection}>
           <Text style={ctaText}>
-            ⚡ <strong>Tipp:</strong> Melde dich innerhalb der nächsten 60 Minuten zurück
+            ⚡ <strong>Tipp:</strong> Melde Sie innerhalb der nächsten 60 Minuten zurück
             – das erhöht die Abschlussquote deutlich.
           </Text>
         </Section>

@@ -52,7 +52,7 @@ const rentPackages: Pkg[] = [
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "2–5 Seiten",
-      "SEO-Grundlagen (Google findet dich)",
+      "SEO-Grundlagen (Google findet Sie)",
       "Google Business Einrichtung",
       "Mobil-optimiert & SSL",
       "Hosting & Domain inklusive",
@@ -132,7 +132,7 @@ const buyPackages: BuyPkg[] = [
     name: "Starter",
     price: "990 € einmalig",
     badge: "Starter Kauf – 990€",
-    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 €",
+    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparen Sie 426 €",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
@@ -140,7 +140,7 @@ const buyPackages: BuyPkg[] = [
       "Kontaktformular",
       "SSL-Zertifikat",
       "Online in 7 Tagen",
-      "Website gehört dir – kein Vertrag",
+      "Website gehört Ihnen – kein Vertrag",
     ],
     growth: {
       price: "+29 €/Monat zubuchbar",
@@ -157,15 +157,15 @@ const buyPackages: BuyPkg[] = [
     name: "Pro",
     price: "1.900 € einmalig",
     badge: "Pro Kauf – 1.900€",
-    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 476 €",
+    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 476 €",
     features: [
       "2–5 Seiten",
-      "SEO-Grundlagen (Google findet dich)",
+      "SEO-Grundlagen (Google findet Sie)",
       "Google Business Einrichtung",
       "30 Tage Support nach Start",
       "Mobil-optimiert & SSL",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
-      "Website gehört dir – kein Vertrag",
+      "Website gehört Ihnen – kein Vertrag",
     ],
     growth: {
       price: "+49 €/Monat zubuchbar",
@@ -183,7 +183,7 @@ const buyPackages: BuyPkg[] = [
     name: "Premium",
     price: "3.500 € einmalig",
     badge: "Premium Kauf – 3.500€",
-    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 316 €",
+    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 316 €",
     features: [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
@@ -191,7 +191,7 @@ const buyPackages: BuyPkg[] = [
       "60 Tage Priority Support",
       "Mobil-optimiert & SSL",
       "Individuelle Umsetzung – Timing nach Absprache",
-      "Website gehört dir – kein Vertrag",
+      "Website gehört Ihnen – kein Vertrag",
     ],
     growth: {
       price: "+79 €/Monat zubuchbar",
@@ -226,23 +226,23 @@ const buyEnterprise = {
 const faqs = [
   {
     q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als du denkst. Ein einziger neuer Auftrag über deine Website deckt oft die kompletten Jahreskosten. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    a: "Ja – und zwar schneller als Sie denken. Ein einziger neuer Auftrag über Ihre Website deckt oft die kompletten Jahreskosten. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
     q: "Was passiert wenn mir die Vorschau nicht gefällt?",
-    a: "Gar nichts. Du zahlst keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige dir die Vorschau – gefällt sie dir nicht, war es das. Kein unangenehmes Gespräch danach.",
+    a: "Gar nichts. Sie zahlen keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige Ihnen die Vorschau – gefällt sie Ihnen nicht, war es das. Kein unangenehmes Gespräch danach.",
   },
   {
     q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
-    a: "Nein. Du füllst einmal ein 2-Minuten-Formular aus und lehnst dich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst deine fertige Website – ohne einen einzigen technischen Handgriff.",
+    a: "Nein. Sie füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Sie bekommen Ihre fertige Website – ohne einen einzigen technischen Handgriff.",
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\nDu kannst aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nDu können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
-    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von deiner Region und deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
 ];
 
@@ -454,11 +454,11 @@ const WebdesignPreise = () => {
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
-              Was kostet deine{" "}
+              Was kostet Ihre{" "}
               <span className="gradient-text">neue Website?</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Mieten oder kaufen – du entscheidest. Keine versteckten Kosten.
+              Mieten oder kaufen – Sie entscheiden. Keine versteckten Kosten.
             </p>
           </div>
         </AnimatedSection>
@@ -479,8 +479,8 @@ const WebdesignPreise = () => {
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Ein verlorener Auftrag kostet dich im Schnitt 800 €.<br />
-              Deine neue Website kostet dich ab 59 €/Monat.
+              Ein verlorener Auftrag kostet Sie im Schnitt 800 €.<br />
+              Ihre neue Website kostet Sie ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
@@ -524,10 +524,10 @@ const WebdesignPreise = () => {
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer dein. Langfristig günstiger als Miete.
+              💡 Einmal zahlen. Für immer Ihr. Langfristig günstiger als Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Du hast Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
+              Sie haben Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
               Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -569,11 +569,11 @@ const WebdesignPreise = () => {
 
         <AnimatedSection>
           <div className="bg-card rounded-2xl p-8 md:p-10 border border-border text-center max-w-3xl mx-auto mb-10">
-            <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu dir?</h3>
+            <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu Ihnen?</h3>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Miete = sofort starten, kein großes Investment, maximale Flexibilität.<br />
-              Einmalkauf = einmal zahlen, Website gehört dir, langfristig günstiger.<br />
-              Nicht sicher? Ich berate dich kurz und kostenlos.
+              Einmalkauf = einmal zahlen, Website gehört Ihnen, langfristig günstiger.<br />
+              Nicht sicher? Ich berate Sie kurz und kostenlos.
             </p>
             <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
               Kostenlos beraten lassen <ArrowRight size={18} />
@@ -617,12 +617,12 @@ const WebdesignPreise = () => {
     <section className="bg-primary/10 py-[60px]">
       <div className="container-narrow px-4 text-center">
         <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
-          Bereit für deine neue Website?
+          Bereit für Ihre neue Website?
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
           Kostenlose Design-Demo in 48 Stunden.<br />
           Kein Risiko. Keine Verpflichtung.<br />
-          Gefällt sie dir nicht – du zahlst nichts.
+          Gefällt sie Ihnen nicht – Sie zahlen nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
           Jetzt kostenlose Demo sichern <ArrowRight size={18} />
