@@ -34,20 +34,20 @@ const BookingConfirmationEmail = ({
     <Html lang="de" dir="ltr">
       <Head />
       <Preview>
-        Dein Termin ist bestätigt
+        Ihr Termin ist bestätigt
         {bookingDate ? ` – ${bookingDate}` : ''}
       </Preview>
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>
-            ✅ {firstName ? `${firstName}, dein` : 'Dein'} Termin steht!
+            ✅ {firstName ? `${firstName}, Ihr` : 'Ihr'} Termin steht!
           </Heading>
           <Text style={text}>
-            Vielen Dank für deine Buchung. Wir freuen uns auf das Gespräch.
+            Vielen Dank für Ihre Buchung. Wir freuen uns auf das Gespräch.
           </Text>
 
           <Section style={card}>
-            <Text style={cardTitle}>📅 Deine Termin-Details</Text>
+            <Text style={cardTitle}>📅 Ihre Termin-Details</Text>
             {bookingDate && (
               <Text style={rowText}>
                 <span style={rowLabel}>Datum:</span>{' '}
@@ -69,20 +69,20 @@ const BookingConfirmationEmail = ({
           <Text style={textBold}>So geht's weiter:</Text>
           <Text style={text}>
             1. Wir telefonieren bzw. treffen uns online (5–10 Minuten) und
-            klären ein paar Fragen zu deinem Betrieb.
+            klären ein paar Fragen zu Ihrem Betrieb.
           </Text>
           <Text style={text}>
-            2. Innerhalb von 48 Stunden bauen wir deine kostenlose Webseiten-Vorschau.
+            2. Innerhalb von 48 Stunden bauen wir Ihre kostenlose Webseiten-Vorschau.
           </Text>
           <Text style={text}>
-            3. Wir schauen sie gemeinsam an – du entscheidest in Ruhe, ob es
-            für dich passt. Ohne Druck, ohne Verpflichtung.
+            3. Wir schauen sie gemeinsam an – Sie entscheiden in Ruhe, ob es
+            für Sie passt. Ohne Druck, ohne Verpflichtung.
           </Text>
 
           <Hr style={hr} />
           <Text style={footer}>
-            Solltest du den Termin verschieben müssen, antworte einfach kurz
-            auf diese E-Mail. — Dein Team von {SITE_NAME}
+            Solltest Sie den Termin verschieben müssen, antworte einfach kurz
+            auf diese E-Mail. — Ihr Team von {SITE_NAME}
           </Text>
         </Container>
       </Body>
@@ -94,7 +94,7 @@ export const template = {
   component: BookingConfirmationEmail,
   subject: (data: Record<string, any>) => {
     const date = data?.bookingDate ? ` (${data.bookingDate})` : ''
-    return `✅ Dein Termin ist bestätigt${date}`
+    return `✅ Ihr Termin ist bestätigt${date}`
   },
   displayName: 'Termin-Bestätigung (Kunde)',
   previewData: {

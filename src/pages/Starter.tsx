@@ -50,7 +50,7 @@ const cards = [
     icon: TrendingUp,
     badge: "Meine Website wirkt veraltet",
     title: "Frischer Look, gleiches Business",
-    text: "Wir geben deinem Auftritt ein modernes Update — gleiche Inhalte, neues Vertrauen. Sichtbar besser in 7 Tagen.",
+    text: "Wir geben Ihrem Auftritt ein modernes Update — gleiche Inhalte, neues Vertrauen. Sichtbar besser in 7 Tagen.",
     cta: "Das passt zu mir",
   },
 ];
@@ -92,22 +92,22 @@ const trust = [
 const painPoints = [
   {
     icon: AlertCircle,
-    title: "Du hast (noch) gar keine Website",
-    text: "Kunden googeln dich — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
+    title: "Sie haben (noch) gar keine Website",
+    text: "Kunden googeln Sie — und finden nichts. Jeden Tag verlieren Sie Anfragen, die nie bei Ihnen ankommen.",
   },
   {
     icon: Smartphone,
-    title: "Deine Website wirkt wie aus 2015",
-    text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was du anbietest.",
+    title: "Ihre Website wirkt wie aus 2015",
+    text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was Sie anbietest.",
   },
   {
     icon: Search,
-    title: "Du wirst bei Google nicht gefunden",
-    text: "Keine SEO-Grundlagen, kein Standortbezug. Selbst wer dich sucht, landet bei der Konkurrenz.",
+    title: "Sie werden bei Google nicht gefunden",
+    text: "Keine SEO-Grundlagen, kein Standortbezug. Selbst wer Sie sucht, landet bei der Konkurrenz.",
   },
   {
     icon: X,
-    title: "Du bekommst keine Anfragen",
+    title: "Sie bekommen keine Anfragen",
     text: "Die Seite ist „nur eine Visitenkarte\". Aber eine Website soll arbeiten — nicht nur existieren.",
   },
 ];
@@ -121,7 +121,7 @@ const comparison = [
       "20–80 Stunden eigene Arbeit",
       "Sieht am Ende oft nach Baukasten aus",
       "Keine Strategie, keine Conversion-Optimierung",
-      "Du wirst zum Webdesigner — nicht zum Unternehmer",
+      "Sie werden zum Webdesigner — nicht zum Unternehmer",
     ],
   },
   {
@@ -144,7 +144,7 @@ const comparison = [
       "Festpreis ab 990 € einmalig — keine Nachberechnung",
       "Online in 7 Tagen statt 2 Monate",
       "Konzept in 48h — kostenlos",
-      "Wir machen alles. Du sagst nur, ob es passt.",
+      "Wir machen alles. Sie sagen nur, ob es passt.",
     ],
   },
 ];
@@ -153,19 +153,19 @@ const process = [
   {
     icon: Phone,
     title: "Erstgespräch (15 Min)",
-    text: "Wir verstehen deine Situation, Branche und Ziele. Kostenlos, unverbindlich.",
+    text: "Wir verstehen Ihre Situation, Branche und Ziele. Kostenlos, unverbindlich.",
     duration: "Tag 1",
   },
   {
     icon: Lightbulb,
     title: "Konzept in 48h",
-    text: "Du bekommst Struktur, Textideen und visuelle Richtung — bevor du einen Euro zahlst.",
+    text: "Sie bekommen Struktur, Textideen und visuelle Richtung — bevor Sie einen Euro zahlen.",
     duration: "Tag 1–3",
   },
   {
     icon: Rocket,
     title: "Umsetzung & Feinschliff",
-    text: "Wir bauen, du gibst Feedback in 1–2 Runden. Kein Pingpong, klare Prozesse.",
+    text: "Wir bauen, Sie geben Feedback in 1–2 Runden. Kein Pingpong, klare Prozesse.",
     duration: "Tag 4–6",
   },
   {
@@ -177,24 +177,24 @@ const process = [
 ];
 
 const fitYes = [
-  "Du willst endlich online sein — ohne Monate-lange Projekte",
-  "Du brauchst eine starke Seite, keine 20-seitige Website",
-  "Du willst einen Festpreis, keine Stundenabrechnung",
-  "Du willst, dass jemand anderes die Arbeit macht",
+  "Sie wollen endlich online sein — ohne Monate-lange Projekte",
+  "Sie brauchen eine starke Seite, keine 20-seitige Website",
+  "Sie wollen einen Festpreis, keine Stundenabrechnung",
+  "Sie wollen, dass jemand anderes die Arbeit macht",
 ];
 
 const fitNo = [
-  "Du brauchst einen Online-Shop mit hunderten Produkten",
-  "Du willst alles selber machen und nur „Beratung\"",
-  "Du suchst die billigste Lösung um jeden Preis",
-  "Du erwartest 50 Korrekturschleifen über 6 Monate",
+  "Sie brauchen einen Online-Shop mit hunderten Produkten",
+  "Sie wollen alles selber machen und nur „Beratung\"",
+  "Sie suchst die billigste Lösung um jeden Preis",
+  "Sie erwartest 50 Korrekturschleifen über 6 Monate",
 ];
 
 const guarantees = [
   {
     icon: Shield,
     title: "Konzept kostenlos",
-    text: "Du zahlst erst, wenn dich das Konzept überzeugt. Keine Vorkasse.",
+    text: "Sie zahlen erst, wenn Sie das Konzept überzeugt. Keine Vorkasse.",
   },
   {
     icon: Lock,
@@ -235,15 +235,15 @@ const moreTestimonials = [
 const faqs = [
   {
     q: "Was bekomme ich konkret für 990 €?",
-    a: "Eine vollständige, professionelle One-Page-Website: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, SSL-Zertifikat, Hosting, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit. Einmalzahlung, dann gehört dir die Seite dauerhaft.",
+    a: "Eine vollständige, professionelle One-Page-Website: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, SSL-Zertifikat, Hosting, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit. Einmalzahlung, dann gehört Ihnen die Seite dauerhaft.",
   },
   {
     q: "Wo ist der Unterschied zu den teureren Paketen?",
-    a: "Das Starter Paket ist eine starke einzelne Seite. Wenn du mehrere Unterseiten, einen Blog, einen Shop oder spezielle Funktionen brauchst, sprechen wir über ein größeres Paket — immer als Fixpreis.",
+    a: "Das Starter Paket ist eine starke einzelne Seite. Wenn Sie mehrere Unterseiten, einen Blog, einen Shop oder spezielle Funktionen brauchen, sprechen wir über ein größeres Paket — immer als Fixpreis.",
   },
   {
     q: "Was muss ich selbst vorbereiten?",
-    a: "Wenig. Wenn du Logo, ein paar Infos zum Business und eigene Fotos hast — super. Falls nicht, übernehmen wir Bildauswahl/KI-Bilder, Texte und Konzept komplett.",
+    a: "Wenig. Wenn Sie Logo, ein paar Infos zum Business und eigene Fotos haben — super. Falls nicht, übernehmen wir Bildauswahl/KI-Bilder, Texte und Konzept komplett.",
   },
   {
     q: "Kann ich später erweitern?",
@@ -255,15 +255,15 @@ const faqs = [
   },
   {
     q: "Bin ich nach Launch auf euch angewiesen?",
-    a: "Nein. Du bekommst alle Zugänge und bist Eigentümer. Wenn du später Änderungen willst, kannst du sie selbst, mit uns oder mit jeder anderen Agentur machen.",
+    a: "Nein. Sie bekommen alle Zugänge und sind Eigentümer. Wenn Sie später Änderungen wollen, können Sie sie selbst, mit uns oder mit jeder anderen Agentur machen.",
   },
   {
     q: "Was, wenn mir das Konzept nicht gefällt?",
-    a: "Dann zahlst du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48h-Konzept kostenlos: damit du sehen kannst, was du bekommst — bevor du dich bindest.",
+    a: "Dann zahlen Sie nichts und wir gehen freundlich auseinander. Genau dafür ist das 48h-Konzept kostenlos: damit Sie sehen können, was Sie bekommen — bevor Sie sich binden.",
   },
   {
     q: "Macht ihr auch Texte und Bilder?",
-    a: "Ja, beides ist im Paket inklusive. Wir schreiben verkaufsstarke Texte und nutzen passende Stockfotos oder KI-Bilder. Eigene Fotos kannst du natürlich auch liefern.",
+    a: "Ja, beides ist im Paket inklusive. Wir schreiben verkaufsstarke Texte und nutzen passende Stockfotos oder KI-Bilder. Eigene Fotos können Sie natürlich auch liefern.",
   },
 ];
 
@@ -282,7 +282,7 @@ const Starter = () => (
               <span className="gradient-text">Beides lösbar — in 7 Tagen.</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
-              Wir bauen dir eine moderne, professionelle Website, die Besucher
+              Wir bauen Ihnen eine moderne, professionelle Website, die Besucher
               sofort überzeugt — zu einem Fixpreis ohne Überraschungen.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -315,9 +315,9 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Wo stehst du gerade?</h2>
+            <h2 className="mb-4 text-balance">Wo stehst Sie gerade?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Beide Wege führen zu einer Website, die für dich arbeitet.
+              Beide Wege führen zu einer Website, die für Sie arbeitet.
             </p>
           </div>
         </AnimatedSection>
@@ -361,10 +361,10 @@ const Starter = () => (
               Klingt bekannt?
             </span>
             <h2 className="mb-4 text-balance">
-              Was dich gerade Anfragen kostet — jeden Tag
+              Was Sie gerade Anfragen kostet — jeden Tag
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Wenn dich auch nur einer dieser Punkte trifft, verlierst du gerade
+              Wenn Sie auch nur einer dieser Punkte trifft, verlieren Sie gerade
               Geld. Die gute Nachricht: jeder davon ist in 7 Tagen lösbar.
             </p>
           </div>
@@ -446,9 +446,9 @@ const Starter = () => (
                 </div>
                 <div className="border-t border-border pt-6 text-center">
                   <p className="text-sm text-muted-foreground mb-6">
-                    Brauchst du mehr Seiten, einen Shop oder spezielle Funktionen?{" "}
+                    Brauchen Sie mehr Seiten, einen Shop oder spezielle Funktionen?{" "}
                     <strong className="text-foreground">
-                      Wir erstellen dir ein individuelles Angebot.
+                      Wir erstellen Ihnen ein individuelles Angebot.
                     </strong>
                   </p>
                   <Button
@@ -478,8 +478,8 @@ const Starter = () => (
               Warum Starter — und nicht Selbstbau oder klassische Agentur?
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Drei Wege zu einer Website. Nur einer davon kostet dich nicht
-              Wochen deiner Lebenszeit oder tausende Euro extra.
+              Drei Wege zu einer Website. Nur einer davon kostet Sie nicht
+              Wochen Ihrer Lebenszeit oder tausende Euro extra.
             </p>
           </div>
         </AnimatedSection>
@@ -544,10 +544,10 @@ const Starter = () => (
               <Clock size={12} className="inline mr-1" /> 14 Tage von Null zu Online
             </span>
             <h2 className="mb-4 text-balance">
-              Dein Weg zur fertigen Website — Schritt für Schritt
+              Ihr Weg zur fertigen Website — Schritt für Schritt
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Klare Phasen, klare Erwartungen. Du weißt jederzeit, wo wir stehen.
+              Klare Phasen, klare Erwartungen. Sie wissen jederzeit, wo wir stehen.
             </p>
           </div>
         </AnimatedSection>
@@ -651,7 +651,7 @@ const Starter = () => (
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
               <Shield size={26} />
             </div>
-            <h2 className="mb-4 text-balance">3 Garantien — du gehst null Risiko</h2>
+            <h2 className="mb-4 text-balance">3 Garantien — Sie gehen null Risiko</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Vertrauen bekommen wir nicht durch Versprechen — sondern dadurch,
               dass wir das Risiko übernehmen.
@@ -683,9 +683,9 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Ist Starter das Richtige für dich?</h2>
+            <h2 className="mb-4 text-balance">Ist Starter das Richtige für Sie?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Wir verkaufen lieber ehrlich als überall. Hier siehst du, ob es passt.
+              Wir verkaufen lieber ehrlich als überall. Hier sehen Sie, ob es passt.
             </p>
           </div>
         </AnimatedSection>
@@ -722,8 +722,8 @@ const Starter = () => (
                   ))}
                 </ul>
                 <p className="mt-6 text-xs text-muted-foreground italic">
-                  Falls du dich hier wiederfindest: kein Problem — wir empfehlen
-                  dir gern eine andere Lösung oder ein größeres Paket.
+                  Falls Sie sich hier wiederfindest: kein Problem — wir empfehlen
+                  Ihnen gern eine andere Lösung oder ein größeres Paket.
                 </p>
               </CardContent>
             </Card>
@@ -796,7 +796,7 @@ const Starter = () => (
                 Starte jetzt — ohne Risiko.
               </h2>
               <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8 text-base sm:text-lg">
-                Kostenloses Erstgespräch, Konzept in 48h, du entscheidest danach
+                Kostenloses Erstgespräch, Konzept in 48h, Sie entscheiden danach
                 frei.
               </p>
               <Button

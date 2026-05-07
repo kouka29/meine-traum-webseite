@@ -61,17 +61,17 @@ const painPoints = [
   {
     icon: AlertTriangle,
     title: "Veraltete Webseite",
-    text: "Deine Webseite wirkt veraltet – und du verlierst dadurch jeden Monat Aufträge an die Konkurrenz.",
+    text: "Ihre Webseite wirkt veraltet – und Sie verlieren dadurch jeden Monat Aufträge an die Konkurrenz.",
   },
   {
     icon: Clock,
     title: "Keine Zeit dafür",
-    text: "Du steckst auf der Baustelle. Für deine Online-Präsenz bleibt am Ende des Tages einfach keine Zeit.",
+    text: "Sie steckst auf der Baustelle. Für Ihre Online-Präsenz bleibt am Ende des Tages einfach keine Zeit.",
   },
   {
     icon: Trophy,
     title: "Konkurrenz zieht vorbei",
-    text: "Andere Betriebe in deiner Region sind online besser aufgestellt – und kassieren die Anfragen, die dir zustehen.",
+    text: "Andere Betriebe in Ihrer Region sind online besser aufgestellt – und kassieren die Anfragen, die Ihnen zustehen.",
   },
 ];
 
@@ -80,19 +80,19 @@ const steps = [
     icon: ClipboardList,
     title: "Formular ausfüllen",
     duration: "2 Minuten",
-    text: "Sag mir kurz, was dein Betrieb macht – das war's auch schon.",
+    text: "Sag mir kurz, was Ihr Betrieb macht – das war's auch schon.",
   },
   {
     icon: Wand2,
-    title: "Ich baue deine Vorschau",
+    title: "Ich baue Ihre Vorschau",
     duration: "48 Stunden",
-    text: "Du lehnst dich zurück, ich arbeite. Du bekommst eine maßgeschneiderte Vorschau für deinen Betrieb.",
+    text: "Sie lehnen sich zurück, ich arbeite. Sie bekommen eine maßgeschneiderte Vorschau für Ihren Betrieb.",
   },
   {
     icon: Sparkles,
-    title: "Du entscheidest",
+    title: "Sie entscheiden",
     duration: "Ohne Druck",
-    text: "Gefällt sie dir? Dann reden wir. Wenn nicht, kostet dich das Ganze keinen Cent.",
+    text: "Gefällt sie Ihnen? Dann reden wir. Wenn nicht, kostet Sie das Ganze keinen Cent.",
   },
 ];
 
@@ -145,19 +145,19 @@ const faqs = [
   },
   {
     q: "Bin ich zu irgendwas verpflichtet?",
-    a: "Nein. Du bekommst die Vorschau, schaust sie dir in Ruhe an und entscheidest selbst, ob du weitermachen willst. Wenn nicht, ist die Sache für dich erledigt.",
+    a: "Nein. Sie bekommen die Vorschau, schaust sie Ihnen in Ruhe an und entscheiden selbst, ob Sie weitermachen wollen. Wenn nicht, ist die Sache für Sie erledigt.",
   },
   {
     q: "Wie sieht die Vorschau genau aus?",
-    a: "Du bekommst einen echten Entwurf deiner zukünftigen Webseite – keine Powerpoint, kein Mockup-Bildchen, sondern eine klickbare Vorschau, die zeigt, wie dein Betrieb online aussehen könnte.",
+    a: "Sie bekommen einen echten Entwurf Ihrer zukünftigen Webseite – keine Powerpoint, kein Mockup-Bildchen, sondern eine klickbare Vorschau, die zeigt, wie Ihr Betrieb online aussehen könnte.",
   },
   {
     q: "Was passiert nach der Vorschau?",
-    a: "Wenn sie dir gefällt, besprechen wir gemeinsam die nächsten Schritte: Inhalte, Bilder, Veröffentlichung. Wenn nicht, hörst du einfach nichts mehr von mir – versprochen.",
+    a: "Wenn sie Ihnen gefällt, besprechen wir gemeinsam die nächsten Schritte: Inhalte, Bilder, Veröffentlichung. Wenn nicht, hörst Sie einfach nichts mehr von mir – versprochen.",
   },
   {
     q: "Wie schnell geht das wirklich?",
-    a: "48 Stunden ab Eingang deines Formulars. Solltest du an einem Freitag absenden, kann es bis Montag dauern. Aber mehr als 48 Werktagsstunden brauche ich nicht.",
+    a: "48 Stunden ab Eingang Ihres Formulars. Solltest Sie an einem Freitag absenden, kann es bis Montag dauern. Aber mehr als 48 Werktagsstunden brauche ich nicht.",
   },
 ];
 
@@ -203,11 +203,11 @@ const KostenloseVorschau = () => {
       return;
     }
     if (!trade) {
-      toast.error("Bitte wähle dein Gewerk aus.");
+      toast.error("Bitte wähle Ihr Gewerk aus.");
       return;
     }
     if (!hasWebsite) {
-      toast.error("Bitte gib an, ob du aktuell eine Webseite hast.");
+      toast.error("Bitte gib an, ob Sie aktuell eine Webseite haben.");
       return;
     }
     if (!urgency) {
@@ -277,7 +277,7 @@ const KostenloseVorschau = () => {
         },
       });
 
-      toast.success("Anfrage gesendet! Ich melde mich innerhalb von 24 Stunden bei dir.");
+      toast.success("Anfrage gesendet! Ich melde mich innerhalb von 24 Stunden bei Ihnen.");
       form.reset();
       setTrade("");
       setHasWebsite("");
@@ -305,11 +305,11 @@ const KostenloseVorschau = () => {
                 Kampagne für Handwerksbetriebe
               </span>
               <h1 className="mb-5 text-balance">
-                Dein Handwerksbetrieb. Eine neue Webseite.{" "}
+                Ihr Handwerksbetrieb. Eine neue Webseite.{" "}
                 <span className="gradient-text">Kostenlos in 48h.</span>
               </h1>
               <p className="text-muted-foreground text-lg mb-8 text-balance">
-                Ich zeige dir, wie dein Betrieb online aussehen könnte – ohne Risiko, ohne Kosten,
+                Ich zeige Ihnen, wie Ihr Betrieb online aussehen könnte – ohne Risiko, ohne Kosten,
                 ohne Verpflichtung.
               </p>
               <Button
@@ -345,9 +345,9 @@ const KostenloseVorschau = () => {
         <div className="container-narrow px-4">
           <AnimatedSection>
             <div className="text-center mb-12 max-w-2xl mx-auto">
-              <h2 className="mb-3 text-balance">Erkennst du dich wieder?</h2>
+              <h2 className="mb-3 text-balance">Erkennen Sie sich wieder?</h2>
               <p className="text-muted-foreground">
-                Wenn dir auch nur einer dieser Punkte bekannt vorkommt, lohnt sich eine kostenlose
+                Wenn Ihnen auch nur einer dieser Punkte bekannt vorkommt, lohnt sich eine kostenlose
                 Vorschau – ohne wenn und aber.
               </p>
             </div>
@@ -376,9 +376,9 @@ const KostenloseVorschau = () => {
               <span className="badge-label bg-primary/10 text-primary mb-4 inline-block">
                 So funktioniert's
               </span>
-              <h2 className="mb-3 text-balance">In 3 Schritten zu deiner Vorschau</h2>
+              <h2 className="mb-3 text-balance">In 3 Schritten zu Ihrer Vorschau</h2>
               <p className="text-muted-foreground">
-                Schnell, ehrlich, ohne Schnickschnack – und vor allem ohne Risiko für dich.
+                Schnell, ehrlich, ohne Schnickschnack – und vor allem ohne Risiko für Sie.
               </p>
             </div>
           </AnimatedSection>
@@ -412,7 +412,7 @@ const KostenloseVorschau = () => {
         <div className="container-narrow px-4">
           <AnimatedSection>
             <div className="text-center mb-12 max-w-2xl mx-auto">
-              <h2 className="mb-3 text-balance">So könnte deine Webseite aussehen</h2>
+              <h2 className="mb-3 text-balance">So könnte Ihre Webseite aussehen</h2>
               <p className="text-muted-foreground">
                 Drei Beispiele, wie eine moderne Handwerker-Webseite heute wirklich aussieht – klar,
                 vertrauenswürdig, mobil optimiert.
@@ -471,7 +471,7 @@ const KostenloseVorschau = () => {
             <div className="text-center mb-12 max-w-2xl mx-auto">
               <h2 className="mb-3 text-balance">Warum Handwerker mir vertrauen</h2>
               <p className="text-muted-foreground">
-                Ehrliche Worte von Betrieben, die genau dort standen, wo du jetzt vielleicht stehst.
+                Ehrliche Worte von Betrieben, die genau dort standen, wo Sie jetzt vielleicht stehst.
               </p>
             </div>
           </AnimatedSection>
@@ -522,7 +522,7 @@ const KostenloseVorschau = () => {
                 </span>
                 <h2 className="mb-3 text-balance">Jetzt kostenlose Vorschau anfordern</h2>
                 <p className="text-muted-foreground">
-                  Nur 2 Minuten – ich melde mich innerhalb von 24 Stunden bei dir.
+                  Nur 2 Minuten – ich melde mich innerhalb von 24 Stunden bei Ihnen.
                 </p>
               </div>
             </AnimatedSection>
@@ -536,7 +536,7 @@ const KostenloseVorschau = () => {
                       <Input
                         required
                         name="firstName"
-                        placeholder="Dein Vorname"
+                        placeholder="Ihr Vorname"
                         className="h-12"
                         maxLength={100}
                       />
@@ -546,7 +546,7 @@ const KostenloseVorschau = () => {
                       <Input
                         required
                         name="companyName"
-                        placeholder="Name deines Betriebs"
+                        placeholder="Name Ihres Betriebs"
                         className="h-12"
                         maxLength={200}
                       />
@@ -571,7 +571,7 @@ const KostenloseVorschau = () => {
 
                   <div>
                     <label className="text-sm font-medium mb-3 block">
-                      Hast du aktuell eine Webseite? *
+                      Haben Sie aktuell eine Webseite? *
                     </label>
                     <RadioGroup
                       value={hasWebsite}
@@ -596,7 +596,7 @@ const KostenloseVorschau = () => {
 
                   <div>
                     <label className="text-sm font-medium mb-3 block">
-                      Was ist dein wichtigstes Ziel? (Mehrfachauswahl)
+                      Was ist Ihr wichtigstes Ziel? (Mehrfachauswahl)
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {goals.map((g) => {
@@ -713,10 +713,10 @@ const KostenloseVorschau = () => {
 
                   <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1.5">
                     <Lock size={12} />
-                    Deine Daten sind sicher. Kein Spam. Keine Verpflichtung.
+                    Ihre Daten sind sicher. Kein Spam. Keine Verpflichtung.
                   </p>
                   <p className="text-xs text-muted-foreground/80 text-center">
-                    Mit dem Absenden akzeptierst du unsere{" "}
+                    Mit dem Absenden akzeptierst Sie unsere{" "}
                     <Link to="/datenschutz" className="underline hover:text-primary">
                       Datenschutzbestimmungen
                     </Link>
@@ -781,10 +781,10 @@ const KostenloseVorschau = () => {
                   </span>
                 </div>
                 <h2 className="text-primary-foreground mb-4 text-balance">
-                  Warte nicht, bis es dein Mitbewerber tut.
+                  Warte nicht, bis es Ihr Mitbewerber tut.
                 </h2>
                 <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8 text-base sm:text-lg">
-                  Deine kostenlose Webseiten-Vorschau wartet.
+                  Ihre kostenlose Webseiten-Vorschau wartet.
                 </p>
                 <Button
                   size="lg"

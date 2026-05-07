@@ -13,35 +13,35 @@ interface LeadQualifiedProps {
 const LeadQualifiedEmail = ({ firstName }: LeadQualifiedProps) => (
   <Html lang="de" dir="ltr">
     <Head />
-    <Preview>Dein Platz für die kostenlose Webseiten-Vorschau ist jetzt offiziell gesichert</Preview>
+    <Preview>Ihr Platz für die kostenlose Webseiten-Vorschau ist jetzt offiziell gesichert</Preview>
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>
-          {firstName ? `${firstName}, dein Platz ist gesichert!` : 'Dein Platz ist gesichert!'}
+          {firstName ? `${firstName}, Ihr Platz ist gesichert!` : 'Ihr Platz ist gesichert!'}
         </Heading>
         <Text style={text}>
-          Gute Nachrichten – wir haben deine Anfrage geprüft und du gehörst jetzt
+          Gute Nachrichten – wir haben Ihre Anfrage geprüft und Sie gehörst jetzt
           fest zu den Betrieben, für die wir diesen Monat eine kostenlose
           Webseiten-Vorschau erstellen.
         </Text>
         <Section style={highlight}>
           <Text style={highlightText}>
-            ✅ Dein Platz ist offiziell für dich reserviert
+            ✅ Ihr Platz ist offiziell für Sie reserviert
           </Text>
         </Section>
         <Heading as="h2" style={h2}>So geht's weiter</Heading>
         <Text style={text}>
           <strong>1.</strong> Wir melden uns in Kürze für ein kurzes 5–10 Min. Gespräch,
-          damit deine Vorschau perfekt zu deinem Betrieb passt.
+          damit Ihre Vorschau perfekt zu Ihrem Betrieb passt.
         </Text>
         <Text style={text}>
-          <strong>2.</strong> Innerhalb von 48 Stunden bauen wir dir deine kostenlose Vorschau.
+          <strong>2.</strong> Innerhalb von 48 Stunden bauen wir Ihnen Ihre kostenlose Vorschau.
         </Text>
         <Text style={text}>
           <strong>3.</strong> Wir schauen sie gemeinsam an – ohne Druck, ohne Verpflichtung.
         </Text>
         <Text style={footer}>
-          Liebe Grüße,<br />Dein Team von {SITE_NAME}
+          Liebe Grüße,<br />Ihr Team von {SITE_NAME}
         </Text>
       </Container>
     </Body>
@@ -50,7 +50,7 @@ const LeadQualifiedEmail = ({ firstName }: LeadQualifiedProps) => (
 
 export const template = {
   component: LeadQualifiedEmail,
-  subject: 'Dein Platz für die kostenlose Webseiten-Vorschau ist gesichert ✅',
+  subject: 'Ihr Platz für die kostenlose Webseiten-Vorschau ist gesichert ✅',
   displayName: 'Lead qualifiziert – Platz gesichert',
   previewData: { firstName: 'Max' },
 } satisfies TemplateEntry

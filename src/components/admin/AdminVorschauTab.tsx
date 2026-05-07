@@ -258,7 +258,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     });
     setDemos(prev => prev.map(x => x.id === d.id ? { ...x, is_visible: !x.is_visible } : x));
   };
-  const moveDemo = async (i: number, dir: "up" | "down") => {
+  const moveDemo = async (i: number, Ihnen: "up" | "down") => {
     const arr = [...demos];
     const j = dir === "up" ? i - 1 : i + 1;
     if (j < 0 || j >= arr.length) return;
@@ -352,7 +352,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     });
     setFaqs(prev => prev.map(x => x.id === f.id ? { ...x, is_visible: !x.is_visible } : x));
   };
-  const moveFaq = async (i: number, dir: "up" | "down") => {
+  const moveFaq = async (i: number, Ihnen: "up" | "down") => {
     const arr = [...faqs];
     const j = dir === "up" ? i - 1 : i + 1;
     if (j < 0 || j >= arr.length) return;
@@ -581,8 +581,8 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             {([
-              { key: "show_pain_points" as const, label: "„Erkennst du dich wieder?" },
-              { key: "show_process" as const, label: "„In 3 Schritten zu deiner Vorschau" },
+              { key: "show_pain_points" as const, label: "„Erkennen Sie sich wieder?" },
+              { key: "show_process" as const, label: "„In 3 Schritten zu Ihrer Vorschau" },
               { key: "show_demos" as const, label: "Demo-Beispiele" },
               { key: "show_testimonials" as const, label: "Testimonials" },
               { key: "show_faq" as const, label: "FAQ" },
