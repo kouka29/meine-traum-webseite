@@ -17,7 +17,7 @@ const features = [
 const faqs = [
   { q: "Was macht eine gute Webdesign Agentur aus?", a: "Eine gute Webdesign Agentur erstellt nicht nur schöne Websites, sondern Verkaufsinstrumente. Bei Meine Traum Webseite kombinieren wir verkaufspsychologisches Design mit modernster Technik für messbare Ergebnisse." },
   { q: "Wie viel kostet professionelles Webdesign?", a: "Unsere Webdesign-Projekte starten ab 1.500 €. Der genaue Preis hängt vom Umfang Ihres Projekts ab. Wir bieten transparente Preise und eine kostenlose Erstberatung." },
-  { q: "Wie lange dauert die Erstellung einer Website?", a: "In der Regel 2–4 Wochen. Eine kostenlose Vorschau erhalten Sie bereits innerhalb von 48 Stunden nach Erstgespräch." },
+  { q: "Wie lange dauert die Erstellung einer Website?", a: "In der Regel 2–4 Wochen. Eine kostenlose Vorschau erhalten Sie bereits innerhalb von 48 Stunden nach dem Erstgespräch." },
   { q: "Bietet ihr auch Webdesign für kleine Unternehmen an?", a: "Ja! Wir sind spezialisiert auf Webdesign für kleine Unternehmen, Selbstständige, Handwerker und KMUs im DACH-Raum." },
 ];
 

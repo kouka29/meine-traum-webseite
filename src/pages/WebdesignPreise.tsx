@@ -238,7 +238,7 @@ const faqs = [
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nDu können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
