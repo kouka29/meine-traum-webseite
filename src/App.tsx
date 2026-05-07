@@ -44,6 +44,7 @@ const KostenloseVorschau = lazy(() => import("./pages/KostenloseVorschau.tsx"));
 const KostenloseVorschau2 = lazy(() => import("./pages/KostenloseVorschau2.tsx"));
 const KostenloseVorschauV2 = lazy(() => import("./pages/KostenloseVorschauV2.tsx"));
 const Empfehlung = lazy(() => import("./pages/Empfehlung.tsx"));
+const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -94,6 +95,7 @@ const App = () => (
             <Route path="/original" element={<IndexOriginal />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="/empfehlung" element={<Empfehlung />} />
+            <Route path="/erstgespraech" element={<Erstgespraech />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
