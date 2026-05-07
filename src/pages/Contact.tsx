@@ -111,7 +111,7 @@ const Contact = () => {
               <span className="badge-label bg-primary/10 text-primary mb-5">
                 Kostenloses Erstgespräch
               </span>
-              <h1 className="mb-5 text-balance">
+              <h1 className="mb-5 text-balance leading-[1.2] md:leading-[1.25]">
                 Ihr kostenloses Erstgespräch –{" "}
                 <span className="gradient-text">in 15 Minuten zur Klarheit</span>
               </h1>
