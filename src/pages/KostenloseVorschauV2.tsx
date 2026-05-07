@@ -1464,12 +1464,15 @@ const KostenloseVorschauV2 = () => {
   // Demos: bevorzugt aus der DB (Admin → Vorschau-Tab, Seite V2),
   // mit Fallback auf die hardcoded Handwerker-Demos, damit nie leer.
   const activeDemos = (dbDemos && dbDemos.length > 0)
-    ? dbDemos.map(d => ({
-        trade: d.trade,
-        company: d.company,
-        desc: d.description,
-        image_url: d.image_url ?? "",
-      }))
+    ? dbDemos.map(d => {
+        const linked = d.portfolio_project_id ? portfolio.find(p => p.id === d.portfolio_project_id) : undefined;
+        return {
+          trade: d.trade || linked?.category || "",
+          company: d.company || linked?.title || "",
+          desc: d.description || linked?.description || "",
+          image_url: d.image_url || linked?.mockup_desktop_url || linked?.image_url || "",
+        };
+      })
     : demos.map(d => ({ ...d, image_url: "" }));
   const activeTestimonials = testimonials.map(t => ({
     quote: t.quote,
