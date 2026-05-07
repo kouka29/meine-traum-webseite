@@ -50,7 +50,7 @@ const cards = [
     icon: TrendingUp,
     badge: "Meine Website wirkt veraltet",
     title: "Frischer Look, gleiches Business",
-    text: "Wir geben deinem Auftritt ein modernes Update — gleiche Inhalte, neues Vertrauen. Sichtbar besser in 2 Wochen.",
+    text: "Wir geben deinem Auftritt ein modernes Update — gleiche Inhalte, neues Vertrauen. Sichtbar besser in 7 Tagen.",
     cta: "Das passt zu mir",
   },
 ];
@@ -67,7 +67,7 @@ const includedRight = [
   "Google-ready (SEO-Grundlagen)",
   "Logo, Farben & Fotos eingebaut",
   "Konzept in 48h — kostenlos",
-  "Launch in 2 Wochen",
+  "Online in 7 Tagen",
   "30 Tage Support nach Launch",
 ];
 
@@ -80,7 +80,7 @@ const trust = [
   {
     icon: Zap,
     title: "Schnell & unkompliziert",
-    text: "Effizienter Prozess, keine endlosen Abstimmungen. Launch in 2 Wochen.",
+    text: "Effizienter Prozess, keine endlosen Abstimmungen. Online in 7 Tagen.",
   },
   {
     icon: Award,
@@ -141,8 +141,8 @@ const comparison = [
     tone: "primary",
     highlight: true,
     points: [
-      "Festpreis ab 800 € — keine Nachberechnung",
-      "Launch in 2 Wochen statt 2 Monate",
+      "Festpreis ab 990 € einmalig — keine Nachberechnung",
+      "Online in 7 Tagen statt 2 Monate",
       "Konzept in 48h — kostenlos",
       "Wir machen alles. Du sagst nur, ob es passt.",
     ],
@@ -166,13 +166,13 @@ const process = [
     icon: Rocket,
     title: "Umsetzung & Feinschliff",
     text: "Wir bauen, du gibst Feedback in 1–2 Runden. Kein Pingpong, klare Prozesse.",
-    duration: "Tag 4–12",
+    duration: "Tag 4–6",
   },
   {
     icon: HeartHandshake,
     title: "Launch & 30 Tage Support",
     text: "Online-Gehen, Google-Setup, Einweisung — und wir bleiben für Anpassungen erreichbar.",
-    duration: "Tag 14",
+    duration: "Tag 7",
   },
 ];
 
@@ -203,7 +203,7 @@ const guarantees = [
   },
   {
     icon: Calendar,
-    title: "2-Wochen-Launch-Garantie",
+    title: "7-Tage-Launch-Garantie",
     text: "Bei Verzug durch uns: 10 % Rabatt auf den Endpreis.",
   },
 ];
@@ -225,7 +225,7 @@ const moreTestimonials = [
   },
   {
     quote:
-      "Ich hätte nie gedacht, dass eine 800€-Website so professionell aussehen kann. Kunden sprechen mich aktiv darauf an.",
+      "Ich hätte nie gedacht, dass eine Website unter 1.000 € so professionell aussehen kann. Kunden sprechen mich aktiv darauf an.",
     name: "Lisa F.",
     role: "Heilpraktikerin",
     badge: "Sieht aus wie 5.000 €",
@@ -234,8 +234,8 @@ const moreTestimonials = [
 
 const faqs = [
   {
-    q: "Was bekomme ich konkret für 800€?",
-    a: "Eine vollständige, professionelle Landingpage: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit.",
+    q: "Was bekomme ich konkret für 990 €?",
+    a: "Eine vollständige, professionelle One-Page-Website: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, SSL-Zertifikat, Hosting, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit. Einmalzahlung, dann gehört dir die Seite dauerhaft.",
   },
   {
     q: "Wo ist der Unterschied zu den teureren Paketen?",
@@ -251,7 +251,7 @@ const faqs = [
   },
   {
     q: "Wie läuft die Bezahlung ab?",
-    a: "50 % bei Projektstart nach Konzept-Freigabe, 50 % nach Launch. Per Überweisung. Rechnung mit ausgewiesener MwSt. — alles transparent.",
+    a: "50 % bei Projektstart nach Konzept-Freigabe, 50 % nach Launch. Per Überweisung. Rechnung mit ausgewiesener 19 % MwSt. — alles transparent. Auf Wunsch auch als Miete ab 59 €/Monat verfügbar (siehe /preise).",
   },
   {
     q: "Bin ich nach Launch auf euch angewiesen?",
@@ -275,11 +275,11 @@ const Starter = () => (
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center">
             <span className="badge-label bg-primary/10 text-primary mb-6 sm:mb-8">
-              <Zap size={12} className="inline mr-1" /> Starter Paket ab 800 €
+              <Zap size={12} className="inline mr-1" /> Starter Paket ab 990 € einmalig
             </span>
             <h1 className="mb-6 text-balance">
               Keine Website? Veraltete Website?{" "}
-              <span className="gradient-text">Beides lösbar — in 2 Wochen.</span>
+              <span className="gradient-text">Beides lösbar — in 7 Tagen.</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
               Wir bauen dir eine moderne, professionelle Website, die Besucher
@@ -365,7 +365,7 @@ const Starter = () => (
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Wenn dich auch nur einer dieser Punkte trifft, verlierst du gerade
-              Geld. Die gute Nachricht: jeder davon ist in 2 Wochen lösbar.
+              Geld. Die gute Nachricht: jeder davon ist in 7 Tagen lösbar.
             </p>
           </div>
         </AnimatedSection>
@@ -415,16 +415,19 @@ const Starter = () => (
                   <span className="badge-label bg-primary-foreground/15 text-primary-foreground mb-4">
                     Starter Paket
                   </span>
-                  <div className="flex items-baseline justify-center gap-2 mb-2">
+                  <div className="flex items-baseline justify-center gap-2 mb-2 flex-wrap">
                     <span className="text-sm sm:text-base text-primary-foreground/80">
                       ab
                     </span>
                     <span className="text-5xl sm:text-6xl font-heading font-bold">
-                      800 €
+                      990 €
+                    </span>
+                    <span className="text-base sm:text-lg text-primary-foreground/90 font-semibold">
+                      einmalig
                     </span>
                   </div>
                   <p className="text-sm text-primary-foreground/80">
-                    Fixpreis · inkl. MwSt.
+                    Festpreis · zzgl. 19 % MwSt. · oder als Miete ab 59 €/Monat
                   </p>
                 </div>
               </div>
