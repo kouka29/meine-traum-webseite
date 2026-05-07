@@ -108,7 +108,7 @@ const painPoints = [
   {
     icon: X,
     title: "Du bekommst keine Anfragen",
-    text: "Die Seite ist „nur eine Visitenkarte". Aber eine Website soll arbeiten — nicht nur existieren.",
+    text: "Die Seite ist „nur eine Visitenkarte\". Aber eine Website soll arbeiten — nicht nur existieren.",
   },
 ];
 
@@ -185,7 +185,7 @@ const fitYes = [
 
 const fitNo = [
   "Du brauchst einen Online-Shop mit hunderten Produkten",
-  "Du willst alles selber machen und nur „Beratung"",
+  "Du willst alles selber machen und nur „Beratung\"",
   "Du suchst die billigste Lösung um jeden Preis",
   "Du erwartest 50 Korrekturschleifen über 6 Monate",
 ];
