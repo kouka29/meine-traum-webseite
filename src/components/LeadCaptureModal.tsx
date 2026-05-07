@@ -39,6 +39,17 @@ const LeadCaptureModal = () => {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
+  // Globales Event: jeder Button kann das Pop-up auslösen.
+  // Nach Klick wird die Session-Sperre ignoriert, damit es trotz „dismissed" öffnet.
+  useEffect(() => {
+    const handler = () => {
+      setSubmitted(false);
+      setOpen(true);
+    };
+    window.addEventListener("open-lead-modal", handler);
+    return () => window.removeEventListener("open-lead-modal", handler);
+  }, []);
+
   const close = () => {
     setOpen(false);
     sessionStorage.setItem(STORAGE_KEY, "1");
