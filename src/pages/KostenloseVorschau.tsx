@@ -129,7 +129,7 @@ const testimonials = [
   {
     name: "Stefan B.",
     trade: "Malermeister, Bayern",
-    text: "Endlich jemand, der versteht, dass wir Handwerker keine Zeit für Marketing-Geschwätz haben. 2 Minuten Formular, 48h später lag die Vorschau im Postfach.",
+    text: "Endlich jemand, der versteht, dass wir Handwerker keine Zeit für Marketing-Geschwätz haben. 2 Minuten Formular, 48 h später lag die Vorschau im Postfach.",
   },
   {
     name: "Markus L.",
@@ -306,7 +306,7 @@ const KostenloseVorschau = () => {
               </span>
               <h1 className="mb-5 text-balance">
                 Ihr Handwerksbetrieb. Eine neue Webseite.{" "}
-                <span className="gradient-text">Kostenlos in 48h.</span>
+                <span className="gradient-text">Kostenlos in 48 h.</span>
               </h1>
               <p className="text-muted-foreground text-lg mb-8 text-balance">
                 Ich zeige Ihnen, wie Ihr Betrieb online aussehen könnte – ohne Risiko, ohne Kosten,
@@ -777,7 +777,7 @@ const KostenloseVorschau = () => {
                 <div className="inline-flex items-center gap-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-full px-4 py-1.5 mb-5">
                   <CheckCircle2 size={14} className="text-primary-foreground" />
                   <span className="text-xs font-semibold text-primary-foreground">
-                    100% kostenlos · 0 € · 0 Risiko
+                    100 % kostenlos · 0 € · 0 Risiko
                   </span>
                 </div>
                 <h2 className="text-primary-foreground mb-4 text-balance">

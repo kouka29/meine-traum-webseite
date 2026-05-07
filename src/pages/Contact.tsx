@@ -160,17 +160,17 @@ const Contact = () => {
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Unternehmen / Branche</label>
-                  <Input placeholder="z.B. Malerbetrieb, Coaching, Steuerberatung..." className="bg-card h-12" />
+                  <Input placeholder="z. B. Malerbetrieb, Coaching, Steuerberatung..." className="bg-card h-12" />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Wann passt es Ihnen am besten? (optional)</label>
-                  <Input placeholder="z.B. Mo–Fr vormittags, oder Di nachmittag" className="bg-card h-12" />
+                  <Input placeholder="z. B. Mo–Fr vormittags, oder Di nachmittag" className="bg-card h-12" />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Worum soll es im Gespräch gehen? (optional)</label>
                   <Textarea
                     rows={4}
-                    placeholder="z.B. Neue Website, Relaunch, mehr Anfragen, Preise klären..."
+                    placeholder="z. B. Neue Website, Relaunch, mehr Anfragen, Preise klären..."
                     className="bg-card resize-none"
                   />
                 </div>
@@ -215,7 +215,7 @@ const Contact = () => {
                     </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">2.</span>
-                      Wir melden uns in 24h mit Terminvorschlägen
+                      Wir melden uns in 24 h mit Terminvorschlägen
                     </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">3.</span>

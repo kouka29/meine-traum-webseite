@@ -60,7 +60,7 @@ const fitYes = [
 const fitNo = [
   "Sie nur eine \"hübsche\" Website wollen ohne Strategie",
   "Sie noch keine klare Zielgruppe kennst",
-  "Sie Budget unter 1.500€ eingeplant haben",
+  "Sie Budget unter 1.500 € eingeplant haben",
 ];
 
 const steps = [
@@ -71,7 +71,7 @@ const steps = [
   },
   {
     icon: FileText,
-    title: "Konzept in 48h",
+    title: "Konzept in 48 h",
     text: "Sie erhalten eine konkrete Struktur & Textideen",
   },
   {

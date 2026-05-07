@@ -364,7 +364,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 {[
                   "Schritt 1: Ich rufe Sie kurz an",
                   "Schritt 2: Wir klären was Sie brauchen",
-                  "Schritt 3: Ihre Demo ist in 48h fertig",
+                  "Schritt 3: Ihre Demo ist in 48 h fertig",
                 ].map((step) => (
                   <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
                     <CheckCircle2 size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" />

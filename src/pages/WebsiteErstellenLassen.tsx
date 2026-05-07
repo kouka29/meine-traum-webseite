@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const steps = [
   { step: "1", title: "Kostenloses Erstgespräch", desc: "Wir besprechen Ihre Ziele, Zielgruppe und Anforderungen – telefonisch oder per Video." },
-  { step: "2", title: "Kostenlose Vorschau in 48h", desc: "Sie erhalten eine individuelle Vorschau Ihrer neuen Website – komplett unverbindlich." },
+  { step: "2", title: "Kostenlose Vorschau in 48 h", desc: "Sie erhalten eine individuelle Vorschau Ihrer neuen Website – komplett unverbindlich." },
   { step: "3", title: "Professionelle Umsetzung", desc: "Nach Ihrer Freigabe setzen wir das Projekt in 2–4 Wochen um – mit laufendem Feedback." },
   { step: "4", title: "Launch & Support", desc: "Go-Live, Einweisung und optionaler Support – damit Ihre Website langfristig performt." },
 ];
@@ -48,7 +48,7 @@ const WebsiteErstellenLassen = () => (
               {[
                 { icon: Gift, text: "Kostenlose Vorschau" },
                 { icon: Shield, text: "Unverbindlich" },
-                { icon: Clock, text: "In 48h fertig" },
+                { icon: Clock, text: "In 48 h fertig" },
               ].map((b) => (
                 <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <b.icon size={16} className="text-primary" />

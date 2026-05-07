@@ -39,7 +39,7 @@ const Index = () => (
               strategisch durchdacht für <strong className="text-foreground">planbar mehr Anfragen</strong>.
             </p>
             <div className="flex items-center gap-3 sm:gap-5 mb-8 sm:mb-10 flex-wrap">
-              {["Kostenlose Vorschau", "Keine Verpflichtung", "In 48h fertig"].map((t) => (
+              {["Kostenlose Vorschau", "Keine Verpflichtung", "In 48 h fertig"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
                   <CheckCircle size={14} className="text-primary shrink-0" />
                   <span>{t}</span>

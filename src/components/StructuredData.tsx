@@ -31,7 +31,7 @@ const faqsByPage: Record<string, FaqItem[]> = {
     { q: "Wie lange dauert es, eine Homepage erstellen zu lassen?", a: "Eine typische Website ist in 2–4 Wochen fertig. Einfache Landingpages können schneller umgesetzt werden. Sie erhalten bereits nach 48 Stunden eine kostenlose Vorschau." },
   ],
   "/landingpage-erstellen-lassen": [
-    { q: "Was ist eine Landingpage und wofür brauche ich sie?", a: "Eine Landingpage ist eine eigenständige Seite mit einem einzigen Conversion-Ziel – z.B. Anfrage, Terminbuchung oder Lead-Generierung. Sie ist perfekt für Werbekampagnen, da sie Besucher gezielt zum Handeln führt." },
+    { q: "Was ist eine Landingpage und wofür brauche ich sie?", a: "Eine Landingpage ist eine eigenständige Seite mit einem einzigen Conversion-Ziel – z. B. Anfrage, Terminbuchung oder Lead-Generierung. Sie ist perfekt für Werbekampagnen, da sie Besucher gezielt zum Handeln führt." },
     { q: "Was kostet eine Landingpage erstellen lassen?", a: "Eine professionelle Landingpage kostet ab 800 €. Der Preis variiert je nach Umfang, Integration und Komplexität. Wir erstellen Ihnen ein individuelles Angebot." },
     { q: "Wie schnell kann eine Landingpage erstellt werden?", a: "Eine Landingpage kann in 1–2 Wochen erstellt werden. Für eilige Projekte bieten wir auch Express-Umsetzungen an." },
   ],

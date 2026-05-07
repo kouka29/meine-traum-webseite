@@ -109,7 +109,7 @@ const CookieBanner = () => {
               />
               <div>
                 <span className="text-sm font-medium">Analyse-Cookies</span>
-                <p className="text-xs text-muted-foreground">Helfen uns zu verstehen, wie Besucher unsere Website nutzen (z.B. Seitenaufrufe, Verweildauer).</p>
+                <p className="text-xs text-muted-foreground">Helfen uns zu verstehen, wie Besucher unsere Website nutzen (z. B. Seitenaufrufe, Verweildauer).</p>
               </div>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">

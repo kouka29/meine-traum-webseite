@@ -42,7 +42,7 @@ const cards = [
     bullets: [
       "Konzept + Struktur inklusive",
       "Fertig in 2–4 Wochen",
-      "Erstes Konzept in 48h kostenlos",
+      "Erstes Konzept in 48 h kostenlos",
     ],
   },
   {
@@ -71,7 +71,7 @@ const trust = [
   },
   {
     icon: Zap,
-    title: "48h Konzept — kostenlos",
+    title: "48 h Konzept — kostenlos",
     text: "Sie sehen, wie Ihre Website aussehen könnte, bevor Sie einen Euro ausgibst.",
   },
 ];
@@ -79,11 +79,11 @@ const trust = [
 const faqs = [
   {
     q: "Was kostet das ungefähr?",
-    a: "Landingpage ab 1.500€, Corporate Website ab 2.500€. Im Erstgespräch konkrete Einschätzung — ohne Überraschungen.",
+    a: "Landingpage ab 1.500 €, Corporate Website ab 2.500 €. Im Erstgespräch konkrete Einschätzung — ohne Überraschungen.",
   },
   {
     q: "Wie lange dauert die Umsetzung?",
-    a: "2–4 Wochen von Konzept bis Launch. Erstes Konzept in 48h kostenlos.",
+    a: "2–4 Wochen von Konzept bis Launch. Erstes Konzept in 48 h kostenlos.",
   },
   {
     q: "Was muss ich selbst vorbereiten?",

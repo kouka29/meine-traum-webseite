@@ -23,7 +23,7 @@ const features = [
 
 const faqs = [
   { q: "Warum brauche ich als Coach eine professionelle Website?", a: "Ihre Website ist Ihr digitales Aushängeschild. Potenzielle Klienten prüfen Ihre Online-Präsenz, bevor sie Kontakt aufnehmen. Eine professionelle Website schafft Vertrauen und positioniert Sie als Experte." },
-  { q: "Was kostet eine Coach-Website?", a: "Unsere Websites für Coaches und Berater starten ab 1.500 €. Inkl. persönlichem Branding, SEO und Conversion-Optimierung. Kostenlose Vorschau in 48h." },
+  { q: "Was kostet eine Coach-Website?", a: "Unsere Websites für Coaches und Berater starten ab 1.500 €. Inkl. persönlichem Branding, SEO und Conversion-Optimierung. Kostenlose Vorschau in 48 h." },
   { q: "Kann ich Testimonials und Erfolgsgeschichten selbst einpflegen?", a: "Ja, wir richten Ihre Website so ein, dass Sie Inhalte wie Testimonials, Blog-Beiträge und Angebote einfach selbst aktualisieren können." },
   { q: "Bietet ihr auch Landingpages für einzelne Angebote an?", a: "Ja! Für Webinare, Online-Kurse oder spezielle Programme erstellen wir gezielte Landingpages, die Teilnehmer und Klienten gewinnen." },
 ];
@@ -93,7 +93,7 @@ const WebdesignCoaches = () => (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
               {[
                 { value: "+250%", label: "Mehr Anfragen" },
-                { value: "48h", label: "Bis zur Vorschau" },
+                { value: "48 h", label: "Bis zur Vorschau" },
                 { value: "24/7", label: "Automatische Terminbuchung" },
               ].map((s) => (
                 <div key={s.label} className="text-center">
