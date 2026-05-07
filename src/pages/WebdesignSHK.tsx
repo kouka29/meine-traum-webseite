@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import CTABanner from "@/components/CTABanner";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
 import { ArrowRight, CheckCircle, Flame, Droplets, ThermometerSun, Phone, Search, TrendingUp } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -153,7 +152,6 @@ const WebdesignSHK = () => (
     </section>
 
     <FreePreviewCTA />
-    <CTABanner />
   </main>
 );
 

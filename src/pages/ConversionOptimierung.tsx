@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import CTABanner from "@/components/CTABanner";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
 import { ArrowRight, CheckCircle, TrendingUp, BarChart3, MousePointer, Target } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -94,7 +93,6 @@ const ConversionOptimierung = () => (
     </section>
 
     <FreePreviewCTA />
-    <CTABanner />
   </main>
 );
 

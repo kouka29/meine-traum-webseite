@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import CTABanner from "@/components/CTABanner";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
 import { ArrowRight, CheckCircle, Lightbulb, Search, Users, Smartphone, TrendingUp, Target } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -145,7 +144,6 @@ const WebdesignCoaches = () => (
     </section>
 
     <FreePreviewCTA />
-    <CTABanner />
   </main>
 );
 

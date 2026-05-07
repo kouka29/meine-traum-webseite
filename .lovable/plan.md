@@ -1,33 +1,54 @@
-## Neue Seite: `/erstgespraech`
+## Was passiert aktuell
 
-Empfangsseite für warme Leads aus dem Netzwerk, die per WhatsApp/Telefon Interesse gezeigt haben. Spricht zwei Szenarien an: **Neubau** und **Relaunch**. Ziel: Vertrauensaufbau + Terminbuchung mit niedriger Hürde.
+Auf 11 Unterseiten (Index, Services, Conversion, WebsiteRelaunch, WebsiteErstellenLassen, alle 6 Branchenseiten, IndexOriginal) werden zwei optisch fast identische CTA-Module direkt nacheinander gerendert:
 
-### Dateien
+```text
+[ FreePreviewCTA  ] – lila Gradient-Box, Headline "Ihre kostenlose Website-Strategie",
+                      Button → /kontakt
+[ CTABanner       ] – lila Gradient-Box, Headline "Jetzt kostenlose Strategie-Vorschau
+                      sichern", Button → /kontakt + Rückruf-Button
+```
 
-- **Neu:** `src/pages/Erstgespraech.tsx`
-- **Edit:** `src/App.tsx` — Lazy-Import + Route `/erstgespraech` hinzufügen (kein Navbar-Eintrag, taucht damit nicht im Hauptmenü auf)
+Beide nutzen `gradient-hero-bg`, dasselbe Versprechen, denselben Ziel-Link. Aus Sicht der vier Rollen:
 
-### Sections (in Reihenfolge)
+- **UX-Designer:** Doppelung wirkt wie ein Bug. Nutzer scrollen zweimal an „derselben" Box vorbei → CTA-Blindheit, Vertrauensverlust.
+- **Conversion-Texter:** Zwei identische Versprechen direkt hintereinander schwächen den Call-to-Action statt ihn zu verstärken. Eine starke Schlussbotschaft konvertiert besser als zwei mittelmäßige.
+- **Brand/Visual:** Zwei lila Gradient-Blöcke nebeneinander erschlagen den Rhythmus der Seite – es fehlt visueller Wechsel.
+- **Frontend-Engineer:** Zwei Komponenten mit nahezu identischer Markup-Struktur = doppelter Maintenance-Aufwand, doppelte Bundle-Bytes.
 
-1. **Hero** — Headline, Subline, zwei CTAs (Primär `gradient` → `#termin-buchen`, Sekundär `outline-primary` → smooth-scroll auf Section #weiter via `onClick → scrollIntoView({behavior:'smooth'})`)
-2. **Zwei-Wege-Section** (`id="weiter"`) — Zwei gleichwertige Cards (Neubau ✦ / Relaunch ↗) mit Icons aus `lucide-react` (`Sparkles`, `TrendingUp`), Headline, Text, 3 Bullets. Gleiche Border, gleiches Padding — kein bevorzugter Stil.
-3. **Vertrauens-Section** — 3 Punkte horizontal (`grid md:grid-cols-3`) mit Icon + Titel + Text. Icons: `Target`, `BarChart3`, `Zap`.
-4. **Mini-Portfolio** — Wiederverwendung von `IndexPortfolio` Komponente (zeigt bereits 3–4 DB/Fallback-Projekte mit Carousel und „Alle Projekte ansehen"-Link auf `/portfolio`). Eigene Überschrift davor optional — `IndexPortfolio` bringt eigene Headline mit, daher Reuse 1:1.
-5. **Pullquote** — Großformatig zentriert, ohne Card-Stil. Großes `Quote`-Icon, Zitat in `text-2xl sm:text-3xl`, Name + Badge „5x mehr Anfragen" darunter. Viel `py`-Spacing.
-6. **FAQ Accordion** — `<Accordion type="single" collapsible>` (eine Antwort gleichzeitig), 3 Fragen wie spezifiziert.
-7. **Abschluss-CTA** — Section mit `gradient-hero-bg` (entspricht Brand-Lila inkl. #5B3DC8 ≈ hsl(250,56%,48%)), Headline, Subline, Button → `#termin-buchen`, Telefon `06131/30 765 00` als `tel:+4961313076500`-Link, Kleintext „Mo–Fr 9–18 Uhr · Auch per WhatsApp erreichbar".
+Einstimmiges Urteil: **eines reicht. Es muss konsolidiert werden.**
 
-### Design-System-Konformität
+## Lösung
 
-- Alle bestehenden Tokens: `gradient-text`, `gradient-bg`, `gradient-hero-bg`, `badge-label`, `section-padding`, `container-narrow`, `shadow-elevated`
-- Komponenten: `Button` (Varianten `gradient`, `outline-primary`), `Card`/`CardContent`, `Accordion*`, `AnimatedSection`
-- Keine neuen Fonts, keine neuen Farben, keine neuen Dependencies
-- Header (`Navbar`) und Footer kommen automatisch über `App.tsx` Layout
-- Mobile-first responsive (gleiches Pattern wie `Empfehlung.tsx`)
+Die beiden Module zu **einem finalen CTA** zusammenführen, das die Stärken beider kombiniert:
 
-### Technische Details
+- **Headline + Hauptbenefit** aus `FreePreviewCTA` (klares Versprechen „Ihre kostenlose Website-Strategie")
+- **3-Schritte-Trust-Liste** aus `FreePreviewCTA` beibehalten
+- **Zweiter Rückruf-Button** aus `CTABanner` übernehmen (Wahlmöglichkeit erhöht Conversion bei Telefon-affinen Zielgruppen wie Handwerk/SHK/Ärzte)
+- **Trust-Zeile** „Unverbindlich. Schnell. Klar." nur einmal
 
-- Smooth-Scroll: `document.getElementById('weiter')?.scrollIntoView({behavior:'smooth'})` auf dem Sekundär-Button
-- Telefon-Link: `<a href="tel:+4961313076500">06131/30 765 00</a>`
-- Termin-Platzhalter: alle Buttons referenzieren `#termin-buchen` als `href`
-- Kein Eintrag in `Navbar.tsx` — Route ist nur direkt erreichbar
+Ergebnis: ein einziger, stärkerer Schluss-CTA pro Seite.
+
+## Umsetzung
+
+1. **`src/components/FreePreviewCTA.tsx`** erweitern:
+   - Bestehende Struktur (Badge, Headline, Beschreibung, 3-Schritte-Liste) bleibt
+   - Button-Bereich bekommt zusätzlich den Outline-„Rückruf vereinbaren"-Button aus `CTABanner`
+   - Beide Buttons in `flex-col sm:flex-row gap-3` Layout
+   - Trust-Zeile „Unverbindlich. Schnell. Klar." bleibt einmal darunter
+
+2. **`<CTABanner />` aus den Doppel-Seiten entfernen** (und Imports):
+   - Index.tsx, IndexOriginal.tsx, Services.tsx, ConversionOptimierung.tsx, WebsiteRelaunch.tsx, WebsiteErstellenLassen.tsx
+   - WebdesignAerzte, WebdesignAgentur, WebdesignCoaches, WebdesignHandwerker, WebdesignImmobilienmakler, WebdesignSHK
+
+3. **`CTABanner` behalten** für Seiten, die *nur* `CTABanner` nutzen (About, Portfolio, KostenloserWebsiteCheck, LandingpageErstellen) – dort gibt es keine Doppelung, also kein Eingriff.
+
+4. **Refs prüfen:** `CTABanner` ist `forwardRef` – kurz checken, ob eine der entfernten Seiten den Ref nutzt; falls ja, Ref auf `FreePreviewCTA` umbiegen oder Trigger anders lösen.
+
+Keine Änderungen an Routing, Backend, Forms oder Texten der übrigen Seitenmodule.
+
+## Ergebnis nach Umsetzung
+
+- Jede Unterseite endet mit **einem** klaren, vollwertigen CTA-Block
+- Visuell ruhigerer Seitenrhythmus, kein „Déjà-vu"-Effekt
+- Eine einzige Quelle der Wahrheit für den finalen CTA → einfacher A/B-zu-testen

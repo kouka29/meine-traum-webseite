@@ -258,7 +258,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     });
     setDemos(prev => prev.map(x => x.id === d.id ? { ...x, is_visible: !x.is_visible } : x));
   };
-  const moveDemo = async (i: number, Ihnen: "up" | "down") => {
+  const moveDemo = async (i: number, dir: "up" | "down") => {
     const arr = [...demos];
     const j = dir === "up" ? i - 1 : i + 1;
     if (j < 0 || j >= arr.length) return;
@@ -352,7 +352,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     });
     setFaqs(prev => prev.map(x => x.id === f.id ? { ...x, is_visible: !x.is_visible } : x));
   };
-  const moveFaq = async (i: number, Ihnen: "up" | "down") => {
+  const moveFaq = async (i: number, dir: "up" | "down") => {
     const arr = [...faqs];
     const j = dir === "up" ? i - 1 : i + 1;
     if (j < 0 || j >= arr.length) return;

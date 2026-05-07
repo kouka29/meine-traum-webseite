@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
-import { ArrowRight, FileText, MessageSquare, ShieldCheck } from "lucide-react";
+import { ArrowRight, FileText, MessageSquare, ShieldCheck, PhoneCall } from "lucide-react";
 
 const steps = [
   { icon: FileText, text: "Wir analysieren Ihre aktuelle Situation" },
@@ -34,15 +34,27 @@ const FreePreviewCTA = () => (
                 </div>
               ))}
             </div>
-            <Button
-              size="lg"
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold text-xs sm:text-base px-4 sm:px-8 py-5 sm:py-6 h-auto min-h-12 shadow-elevated animate-cta-pulse w-full sm:w-auto whitespace-normal text-center leading-tight"
-              asChild
-            >
-              <Link to="/kontakt">
-                Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} />
-              </Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-xl mx-auto">
+              <Button
+                size="lg"
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold shadow-elevated animate-cta-pulse w-full sm:w-auto text-xs sm:text-base px-4 sm:px-8 h-auto min-h-12 py-3 whitespace-normal text-center leading-tight"
+                asChild
+              >
+                <Link to="/kontakt">
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-primary-foreground/50 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-all duration-300 w-full sm:w-auto text-xs sm:text-base px-4 sm:px-8 h-auto min-h-12 py-3 whitespace-normal text-center leading-tight"
+                asChild
+              >
+                <Link to="/kontakt">
+                  <PhoneCall size={18} /> Rückruf vereinbaren
+                </Link>
+              </Button>
+            </div>
             <p className="text-xs text-primary-foreground/40 mt-6">
               Unverbindlich. Schnell. Klar.
             </p>
