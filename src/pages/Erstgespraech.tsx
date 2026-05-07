@@ -141,7 +141,7 @@ const agenda = [
 const notThis = [
   "Kein Pitch-Marathon mit Folien",
   "Kein Standard-Pauschal-Angebot",
-  "Kein Druck, kein „heute oder nie"",
+  "Kein Druck, kein „heute oder nie\"",
   "Kein verstecktes Kleingedrucktes",
   "Keine Folgeanrufe, wenn du nicht willst",
 ];
