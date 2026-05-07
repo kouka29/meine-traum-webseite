@@ -4,15 +4,15 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, CheckCircle, Shield, Gift, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, Shield, Clock, CalendarCheck, PhoneCall, Target } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 const trustPoints = [
-  "Kostenlose Website-Vorschau",
-  "Keine Verpflichtung",
-  "Antwort innerhalb von 24 Stunden",
-  "Persönlicher Ansprechpartner",
+  "15 Minuten Klarheit – kein Verkaufsgespräch",
+  "Konkrete Empfehlung für Ihr Projekt",
+  "Transparente Preisinfo direkt im Call",
+  "Persönlicher Ansprechpartner – kein Callcenter",
 ];
 
 const Contact = () => {
@@ -52,12 +52,12 @@ const Contact = () => {
           phone,
           company: company || website || "",
           email,
-          _subject: `🔔 Neue Kontaktanfrage: ${company || name}`,
+          _subject: `📞 Erstgespräch-Anfrage: ${company || name}`,
           _replyto: email,
           _gotcha: honeypot,
           website: website || "",
           nachricht: message || "",
-          seite: "kontakt",
+          seite: "erstgespraech-kontakt",
         }),
       });
       if (!formspreeRes.ok) throw new Error(`Formspree ${formspreeRes.status}`);
@@ -90,7 +90,7 @@ const Contact = () => {
         },
       });
 
-      toast.success("Nachricht gesendet! Wir melden uns innerhalb von 24 Stunden.");
+      toast.success("Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden mit Terminvorschlägen.");
       form.reset();
     } catch {
       setSubmitError(
@@ -109,21 +109,22 @@ const Contact = () => {
           <AnimatedSection>
             <div className="text-center mb-12 md:mb-20 max-w-2xl mx-auto">
               <span className="badge-label bg-primary/10 text-primary mb-5">
-                Kostenlose Beratung
+                Kostenloses Erstgespräch
               </span>
               <h1 className="mb-5 text-balance">
-                Kostenlose Website-Vorschau sichern –{" "}
-                <span className="gradient-text">in 48 Stunden fertig</span>
+                Ihr kostenloses Erstgespräch –{" "}
+                <span className="gradient-text">in 15 Minuten zur Klarheit</span>
               </h1>
               <p className="text-muted-foreground text-lg">
-                Sehen Sie in 48 Stunden, wie Ihre neue Website aussehen könnte –
-                komplett kostenlos und ohne Verpflichtung. Jetzt Kontakt aufnehmen und Website erstellen lassen.
+                Sie haben sich für ein persönliches Erstgespräch entschieden. Perfekt. In 15 Minuten besprechen
+                wir Ihr Projekt, klären Ihre Ziele und Sie erhalten eine konkrete Empfehlung – ohne Verkaufsdruck,
+                ohne Verpflichtung.
               </p>
               <div className="flex flex-wrap justify-center gap-5 mt-8">
                 {[
-                  { icon: Gift, text: "Kostenlos" },
+                  { icon: Clock, text: "15 Minuten" },
                   { icon: Shield, text: "Unverbindlich" },
-                  { icon: Clock, text: "In 48h fertig" },
+                  { icon: PhoneCall, text: "Persönlich am Telefon" },
                 ].map((b) => (
                   <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
                     <b.icon size={16} className="text-primary" />
@@ -162,16 +163,20 @@ const Contact = () => {
                   <Input placeholder="z.B. Malerbetrieb, Coaching, Steuerberatung..." className="bg-card h-12" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Was ist Ihr größtes Problem mit Ihrer aktuellen Website?</label>
+                  <label className="text-sm font-medium mb-2 block">Wann passt es Ihnen am besten? (optional)</label>
+                  <Input placeholder="z.B. Mo–Fr vormittags, oder Di nachmittag" className="bg-card h-12" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Worum soll es im Gespräch gehen? (optional)</label>
                   <Textarea
                     rows={4}
-                    placeholder="z.B. Keine Anfragen, veraltetes Design, schlechte Sichtbarkeit..."
+                    placeholder="z.B. Neue Website, Relaunch, mehr Anfragen, Preise klären..."
                     className="bg-card resize-none"
                   />
                 </div>
                 <Button variant="gradient" size="lg" type="submit" disabled={loading} className="w-full sm:w-auto text-base py-6 px-8">
                   {loading ? "Wird gesendet..." : (
-                    <>Kostenlose Vorschau anfordern <Send size={18} /></>
+                    <>Erstgespräch anfragen <Send size={18} /></>
                   )}
                 </Button>
                 {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
@@ -192,7 +197,7 @@ const Contact = () => {
                   </p>
                 )}
                 <p className="text-xs text-muted-foreground">
-                  Kein Spam. Keine versteckten Kosten. Wir melden uns persönlich bei Ihnen.
+                  Kein Verkaufsgespräch. Keine versteckten Kosten. Wir melden uns persönlich bei Ihnen.
                 </p>
               </form>
             </AnimatedSection>
@@ -201,7 +206,7 @@ const Contact = () => {
               <div className="space-y-10">
                 <div className="p-8 rounded-2xl gradient-hero-bg">
                   <h2 className="font-heading font-semibold text-primary-foreground mb-4 text-lg">
-                    So funktioniert's – Website erstellen lassen
+                    So läuft Ihr Erstgespräch ab
                   </h2>
                   <ol className="space-y-4 text-sm text-primary-foreground/75">
                     <li className="flex gap-3">
@@ -210,11 +215,11 @@ const Contact = () => {
                     </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">2.</span>
-                      Wir erstellen eine individuelle Vorschau (48h)
+                      Wir melden uns in 24h mit Terminvorschlägen
                     </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">3.</span>
-                      Sie entscheiden – ohne Druck, ohne Verpflichtung
+                      15-Minuten-Call: Klarheit, Empfehlung, Preisinfo
                     </li>
                   </ol>
                 </div>
