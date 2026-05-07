@@ -19,6 +19,16 @@ import {
   Quote,
   Phone,
   Check,
+  X,
+  Star,
+  Users,
+  Clock,
+  Award,
+  Calendar,
+  FileText,
+  MessageSquare,
+  Lightbulb,
+  ShieldCheck,
 } from "lucide-react";
 
 const TERMIN_LINK = "#termin-buchen";
@@ -79,6 +89,69 @@ const faqs = [
     q: "Was muss ich selbst vorbereiten?",
     a: "Wenig. Logo, Infos zum Business, Wunschfotos — wir führen dich durch alles.",
   },
+  {
+    q: "Was, wenn ich noch unsicher bin, ob ich überhaupt eine Website brauche?",
+    a: "Genau dafür ist das Gespräch da. Wir sagen dir ehrlich, ob sich eine neue/überarbeitete Website für dich lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das auch.",
+  },
+  {
+    q: "Geht das Gespräch auch per WhatsApp oder Telefon?",
+    a: "Ja. Du wählst, was dir lieber ist: Videocall, Telefon oder WhatsApp-Sprachnachrichten. Wir passen uns deinem Alltag an, nicht umgekehrt.",
+  },
+  {
+    q: "Was passiert nach dem Gespräch?",
+    a: "Innerhalb von 48 Stunden bekommst du ein kostenloses, individuelles Konzept — Struktur, Textideen, visuelle Richtung. Du entscheidest dann komplett frei, ob du mit uns weitermachen willst. Kein Druck, kein Folgeanruf.",
+  },
+];
+
+const stats = [
+  { value: "150+", label: "umgesetzte Projekte", icon: Award },
+  { value: "98 %", label: "Weiterempfehlungsrate", icon: Users },
+  { value: "4,9 ★", label: "Kundenbewertung", icon: Star },
+  { value: "48 h", label: "bis zum Konzept", icon: Clock },
+];
+
+const agenda = [
+  {
+    icon: MessageSquare,
+    title: "Deine Situation verstehen",
+    text: "Wir hören zu: Wo stehst du, was hast du probiert, was funktioniert nicht?",
+  },
+  {
+    icon: Target,
+    title: "Zielgruppe & Positionierung schärfen",
+    text: "Wer soll bei dir anfragen — und warum genau bei dir, nicht beim Wettbewerb?",
+  },
+  {
+    icon: Lightbulb,
+    title: "Konkrete Lösungswege",
+    text: "Du bekommst 1–2 konkrete Vorschläge, wie deine Website Anfragen bringen kann.",
+  },
+  {
+    icon: FileText,
+    title: "Investitions-Rahmen",
+    text: "Du bekommst eine ehrliche Einschätzung, was eine passende Lösung kostet.",
+  },
+  {
+    icon: Calendar,
+    title: "Klarer nächster Schritt",
+    text: "Du gehst aus dem Gespräch mit Klarheit raus — ob mit uns, oder ohne.",
+  },
+];
+
+const notThis = [
+  "Kein Pitch-Marathon mit Folien",
+  "Kein Standard-Pauschal-Angebot",
+  "Kein Druck, kein „heute oder nie"",
+  "Kein verstecktes Kleingedrucktes",
+  "Keine Folgeanrufe, wenn du nicht willst",
+];
+
+const yesThis = [
+  "Ehrliche Analyse deiner aktuellen Situation",
+  "Konkrete, umsetzbare Empfehlungen",
+  "Transparente Preisorientierung",
+  "Persönliches Gespräch auf Augenhöhe",
+  "Volle Entscheidungsfreiheit danach",
 ];
 
 const scrollToWeiter = () => {
@@ -128,6 +201,27 @@ const Erstgespraech = () => (
             </div>
           </div>
         </AnimatedSection>
+      </div>
+    </section>
+
+    {/* 1.5 Stat-Bar */}
+    <section className="py-8 sm:py-12 border-y border-border/50 bg-card/50">
+      <div className="container-narrow px-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          {stats.map((s, i) => (
+            <AnimatedSection key={s.label} delay={i * 0.05}>
+              <div className="text-center">
+                <s.icon size={20} className="text-primary mx-auto mb-2" />
+                <p className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold gradient-text leading-none mb-2">
+                  {s.value}
+                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  {s.label}
+                </p>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
       </div>
     </section>
 
@@ -205,6 +299,49 @@ const Erstgespraech = () => (
       </div>
     </section>
 
+    {/* 3.5 Was du im Erstgespräch bekommst */}
+    <section className="section-padding bg-card/50 border-y border-border/50">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <span className="badge-label bg-primary/10 text-primary mb-5">
+              Konkrete Agenda · 15–20 Min
+            </span>
+            <h2 className="mb-4 text-balance">
+              Was du im Erstgespräch konkret bekommst
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Damit du weißt, worauf du dich einlässt — hier ist der genaue Ablauf.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div className="max-w-3xl mx-auto space-y-4">
+          {agenda.map((a, i) => (
+            <AnimatedSection key={a.title} delay={i * 0.05}>
+              <div className="flex items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-xl bg-background border border-border hover:shadow-elevated transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center text-primary-foreground shrink-0">
+                  <a.icon size={22} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-3 mb-1.5 flex-wrap">
+                    <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                      Schritt {i + 1}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-heading font-bold">
+                      {a.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    {a.text}
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+
     {/* 4. Mini-Portfolio */}
     <IndexPortfolio />
 
@@ -228,6 +365,61 @@ const Erstgespraech = () => (
             </div>
           </div>
         </AnimatedSection>
+      </div>
+    </section>
+
+    {/* 5.5 Was das Gespräch ist — und was nicht */}
+    <section className="section-padding bg-card/50 border-y border-border/50">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
+              <ShieldCheck size={26} />
+            </div>
+            <h2 className="mb-4 text-balance">
+              Klare Erwartungen — von Anfang an
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Damit du genau weißt, was dich erwartet — und was nicht.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <AnimatedSection>
+            <Card className="h-full border-primary/30">
+              <CardContent className="p-6 sm:p-8">
+                <h3 className="text-xl font-heading font-bold mb-6 text-primary flex items-center gap-2">
+                  <Check size={22} /> Was es ist
+                </h3>
+                <ul className="space-y-4">
+                  {yesThis.map((y) => (
+                    <li key={y} className="flex items-start gap-3">
+                      <Check size={18} className="text-primary shrink-0 mt-1" />
+                      <span className="text-foreground/90">{y}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <Card className="h-full border-destructive/20">
+              <CardContent className="p-6 sm:p-8">
+                <h3 className="text-xl font-heading font-bold mb-6 text-muted-foreground flex items-center gap-2">
+                  <X size={22} /> Was es nicht ist
+                </h3>
+                <ul className="space-y-4">
+                  {notThis.map((n) => (
+                    <li key={n} className="flex items-start gap-3">
+                      <X size={18} className="text-destructive shrink-0 mt-1" />
+                      <span className="text-muted-foreground">{n}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        </div>
       </div>
     </section>
 
