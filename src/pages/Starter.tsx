@@ -19,6 +19,18 @@ import {
   Zap,
   Lock,
   Award,
+  X,
+  AlertCircle,
+  Smartphone,
+  Search,
+  Shield,
+  Calendar,
+  Lightbulb,
+  Rocket,
+  HeartHandshake,
+  Star,
+  Clock,
+  Users,
 } from "lucide-react";
 
 const TERMIN_LINK = "#termin-buchen";
@@ -77,6 +89,149 @@ const trust = [
   },
 ];
 
+const painPoints = [
+  {
+    icon: AlertCircle,
+    title: "Du hast (noch) gar keine Website",
+    text: "Kunden googeln dich — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
+  },
+  {
+    icon: Smartphone,
+    title: "Deine Website wirkt wie aus 2015",
+    text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was du anbietest.",
+  },
+  {
+    icon: Search,
+    title: "Du wirst bei Google nicht gefunden",
+    text: "Keine SEO-Grundlagen, kein Standortbezug. Selbst wer dich sucht, landet bei der Konkurrenz.",
+  },
+  {
+    icon: X,
+    title: "Du bekommst keine Anfragen",
+    text: "Die Seite ist „nur eine Visitenkarte". Aber eine Website soll arbeiten — nicht nur existieren.",
+  },
+];
+
+const comparison = [
+  {
+    label: "Selber bauen (Wix, Jimdo, WordPress)",
+    icon: X,
+    tone: "muted",
+    points: [
+      "20–80 Stunden eigene Arbeit",
+      "Sieht am Ende oft nach Baukasten aus",
+      "Keine Strategie, keine Conversion-Optimierung",
+      "Du wirst zum Webdesigner — nicht zum Unternehmer",
+    ],
+  },
+  {
+    label: "Klassische Agentur",
+    icon: X,
+    tone: "muted",
+    points: [
+      "3.000–8.000 € für eine einfache Seite",
+      "8–12 Wochen Projektlaufzeit",
+      "Stundensätze, Nachberechnung, Folgekosten",
+      "Briefings, Meetings, Schleifen ohne Ende",
+    ],
+  },
+  {
+    label: "Starter Paket",
+    icon: Check,
+    tone: "primary",
+    highlight: true,
+    points: [
+      "Festpreis ab 800 € — keine Nachberechnung",
+      "Launch in 2 Wochen statt 2 Monate",
+      "Konzept in 48h — kostenlos",
+      "Wir machen alles. Du sagst nur, ob es passt.",
+    ],
+  },
+];
+
+const process = [
+  {
+    icon: Phone,
+    title: "Erstgespräch (15 Min)",
+    text: "Wir verstehen deine Situation, Branche und Ziele. Kostenlos, unverbindlich.",
+    duration: "Tag 1",
+  },
+  {
+    icon: Lightbulb,
+    title: "Konzept in 48h",
+    text: "Du bekommst Struktur, Textideen und visuelle Richtung — bevor du einen Euro zahlst.",
+    duration: "Tag 1–3",
+  },
+  {
+    icon: Rocket,
+    title: "Umsetzung & Feinschliff",
+    text: "Wir bauen, du gibst Feedback in 1–2 Runden. Kein Pingpong, klare Prozesse.",
+    duration: "Tag 4–12",
+  },
+  {
+    icon: HeartHandshake,
+    title: "Launch & 30 Tage Support",
+    text: "Online-Gehen, Google-Setup, Einweisung — und wir bleiben für Anpassungen erreichbar.",
+    duration: "Tag 14",
+  },
+];
+
+const fitYes = [
+  "Du willst endlich online sein — ohne Monate-lange Projekte",
+  "Du brauchst eine starke Seite, keine 20-seitige Website",
+  "Du willst einen Festpreis, keine Stundenabrechnung",
+  "Du willst, dass jemand anderes die Arbeit macht",
+];
+
+const fitNo = [
+  "Du brauchst einen Online-Shop mit hunderten Produkten",
+  "Du willst alles selber machen und nur „Beratung"",
+  "Du suchst die billigste Lösung um jeden Preis",
+  "Du erwartest 50 Korrekturschleifen über 6 Monate",
+];
+
+const guarantees = [
+  {
+    icon: Shield,
+    title: "Konzept kostenlos",
+    text: "Du zahlst erst, wenn dich das Konzept überzeugt. Keine Vorkasse.",
+  },
+  {
+    icon: Lock,
+    title: "Festpreis-Garantie",
+    text: "Was im Angebot steht, wird abgerechnet. Keine versteckten Kosten.",
+  },
+  {
+    icon: Calendar,
+    title: "2-Wochen-Launch-Garantie",
+    text: "Bei Verzug durch uns: 10 % Rabatt auf den Endpreis.",
+  },
+];
+
+const moreTestimonials = [
+  {
+    quote:
+      "In 12 Tagen war meine Seite online. Innerhalb der ersten 4 Wochen 8 Anfragen — vorher hatte ich gar keine Website.",
+    name: "Murat D.",
+    role: "Express Zulassungsdienst",
+    badge: "8 Anfragen in 4 Wochen",
+  },
+  {
+    quote:
+      "Festpreis war exakt eingehalten. Keine bösen Überraschungen, kein Hin-und-Her — endlich mal eine Agentur, die liefert.",
+    name: "Thomas R.",
+    role: "Malermeister",
+    badge: "On time. On budget.",
+  },
+  {
+    quote:
+      "Ich hätte nie gedacht, dass eine 800€-Website so professionell aussehen kann. Kunden sprechen mich aktiv darauf an.",
+    name: "Lisa F.",
+    role: "Heilpraktikerin",
+    badge: "Sieht aus wie 5.000 €",
+  },
+];
+
 const faqs = [
   {
     q: "Was bekomme ich konkret für 800€?",
@@ -93,6 +248,22 @@ const faqs = [
   {
     q: "Kann ich später erweitern?",
     a: "Ja. Das Starter Paket ist so aufgebaut, dass weitere Seiten, Funktionen oder ein Relaunch jederzeit angedockt werden können — ohne von vorn anzufangen.",
+  },
+  {
+    q: "Wie läuft die Bezahlung ab?",
+    a: "50 % bei Projektstart nach Konzept-Freigabe, 50 % nach Launch. Per Überweisung. Rechnung mit ausgewiesener MwSt. — alles transparent.",
+  },
+  {
+    q: "Bin ich nach Launch auf euch angewiesen?",
+    a: "Nein. Du bekommst alle Zugänge und bist Eigentümer. Wenn du später Änderungen willst, kannst du sie selbst, mit uns oder mit jeder anderen Agentur machen.",
+  },
+  {
+    q: "Was, wenn mir das Konzept nicht gefällt?",
+    a: "Dann zahlst du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48h-Konzept kostenlos: damit du sehen kannst, was du bekommst — bevor du dich bindest.",
+  },
+  {
+    q: "Macht ihr auch Texte und Bilder?",
+    a: "Ja, beides ist im Paket inklusive. Wir schreiben verkaufsstarke Texte und nutzen passende Stockfotos oder KI-Bilder. Eigene Fotos kannst du natürlich auch liefern.",
   },
 ];
 
@@ -181,6 +352,45 @@ const Starter = () => (
       </div>
     </section>
 
+    {/* 2.5 Pain Points */}
+    <section className="section-padding">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <span className="badge-label bg-destructive/10 text-destructive mb-5">
+              Klingt bekannt?
+            </span>
+            <h2 className="mb-4 text-balance">
+              Was dich gerade Anfragen kostet — jeden Tag
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Wenn dich auch nur einer dieser Punkte trifft, verlierst du gerade
+              Geld. Die gute Nachricht: jeder davon ist in 2 Wochen lösbar.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div className="grid sm:grid-cols-2 gap-5">
+          {painPoints.map((p, i) => (
+            <AnimatedSection key={p.title} delay={i * 0.05}>
+              <div className="flex items-start gap-4 p-5 sm:p-6 rounded-xl bg-card/70 border border-border">
+                <div className="w-11 h-11 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center shrink-0">
+                  <p.icon size={20} />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-heading font-bold mb-2">
+                    {p.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {p.text}
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+
     {/* 3. Paket-Section */}
     <section id="paket" className="section-padding scroll-mt-24">
       <div className="container-narrow px-4">
@@ -256,8 +466,153 @@ const Starter = () => (
       </div>
     </section>
 
+    {/* 3.5 Vergleich */}
+    <section className="section-padding bg-card/50 border-y border-border/50">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <h2 className="mb-4 text-balance">
+              Warum Starter — und nicht Selbstbau oder klassische Agentur?
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Drei Wege zu einer Website. Nur einer davon kostet dich nicht
+              Wochen deiner Lebenszeit oder tausende Euro extra.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div className="grid md:grid-cols-3 gap-6">
+          {comparison.map((c, i) => (
+            <AnimatedSection key={c.label} delay={i * 0.1}>
+              <Card
+                className={`h-full ${
+                  c.highlight
+                    ? "border-2 border-primary shadow-elevated relative"
+                    : "border-border opacity-90"
+                }`}
+              >
+                {c.highlight && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground">
+                    Empfehlung
+                  </span>
+                )}
+                <CardContent className="p-6 sm:p-7">
+                  <h3
+                    className={`text-base sm:text-lg font-heading font-bold mb-5 ${
+                      c.highlight ? "text-primary" : "text-muted-foreground"
+                    }`}
+                  >
+                    {c.label}
+                  </h3>
+                  <ul className="space-y-3">
+                    {c.points.map((p) => (
+                      <li key={p} className="flex items-start gap-3">
+                        <c.icon
+                          size={18}
+                          className={`shrink-0 mt-0.5 ${
+                            c.highlight ? "text-primary" : "text-destructive"
+                          }`}
+                        />
+                        <span
+                          className={`text-sm ${
+                            c.highlight
+                              ? "text-foreground/90"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          {p}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* 3.7 Prozess */}
+    <section className="section-padding">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <span className="badge-label bg-primary/10 text-primary mb-5">
+              <Clock size={12} className="inline mr-1" /> 14 Tage von Null zu Online
+            </span>
+            <h2 className="mb-4 text-balance">
+              Dein Weg zur fertigen Website — Schritt für Schritt
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Klare Phasen, klare Erwartungen. Du weißt jederzeit, wo wir stehen.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div className="max-w-4xl mx-auto space-y-4">
+          {process.map((p, i) => (
+            <AnimatedSection key={p.title} delay={i * 0.05}>
+              <div className="flex items-start gap-4 sm:gap-6 p-5 sm:p-6 rounded-xl bg-card/70 border border-border hover:shadow-elevated transition-all duration-300">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl gradient-bg flex items-center justify-center text-primary-foreground shrink-0">
+                  <p.icon size={22} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-3 mb-1.5 flex-wrap">
+                    <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                      {p.duration}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-heading font-bold">
+                      Schritt {i + 1}: {p.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    {p.text}
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+
     {/* 4. Portfolio */}
     <IndexPortfolio />
+
+    {/* 4.5 Mehr Testimonials */}
+    <section className="section-padding">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <span className="badge-label bg-primary/10 text-primary mb-5">
+              <Star size={12} className="inline mr-1" /> Echte Kunden, echte Ergebnisse
+            </span>
+            <h2 className="mb-4 text-balance">
+              Was Starter-Kunden über uns sagen
+            </h2>
+          </div>
+        </AnimatedSection>
+        <div className="grid md:grid-cols-3 gap-6">
+          {moreTestimonials.map((t, i) => (
+            <AnimatedSection key={t.name} delay={i * 0.1}>
+              <Card className="h-full hover:shadow-elevated transition-all duration-300">
+                <CardContent className="p-6 sm:p-8 flex flex-col h-full">
+                  <span className="badge-label bg-primary/10 text-primary self-start mb-4">
+                    {t.badge}
+                  </span>
+                  <p className="text-foreground/90 leading-relaxed mb-6 flex-1">
+                    „{t.quote}"
+                  </p>
+                  <div className="border-t border-border pt-4">
+                    <p className="font-semibold text-sm">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.role}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
 
     {/* 5. Vertrauen */}
     <section className="section-padding">
@@ -281,6 +636,95 @@ const Starter = () => (
               </div>
             </AnimatedSection>
           ))}
+        </div>
+      </div>
+    </section>
+
+    {/* 5.3 Garantien */}
+    <section className="section-padding bg-card/50 border-y border-border/50">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
+              <Shield size={26} />
+            </div>
+            <h2 className="mb-4 text-balance">3 Garantien — du gehst null Risiko</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Vertrauen bekommen wir nicht durch Versprechen — sondern dadurch,
+              dass wir das Risiko übernehmen.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div className="grid md:grid-cols-3 gap-6">
+          {guarantees.map((g, i) => (
+            <AnimatedSection key={g.title} delay={i * 0.1}>
+              <Card className="h-full text-center border-primary/20">
+                <CardContent className="p-6 sm:p-8">
+                  <div className="w-14 h-14 rounded-2xl gradient-bg flex items-center justify-center mx-auto mb-5 text-primary-foreground">
+                    <g.icon size={26} />
+                  </div>
+                  <h3 className="text-lg font-heading font-bold mb-3">{g.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {g.text}
+                  </p>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* 5.5 Fit-Check */}
+    <section className="section-padding">
+      <div className="container-narrow px-4">
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <h2 className="mb-4 text-balance">Ist Starter das Richtige für dich?</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Wir verkaufen lieber ehrlich als überall. Hier siehst du, ob es passt.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <AnimatedSection>
+            <Card className="h-full border-primary/30">
+              <CardContent className="p-6 sm:p-8">
+                <h3 className="text-xl font-heading font-bold mb-6 text-primary flex items-center gap-2">
+                  <Check size={22} /> Starter passt, wenn …
+                </h3>
+                <ul className="space-y-4">
+                  {fitYes.map((y) => (
+                    <li key={y} className="flex items-start gap-3">
+                      <Check size={18} className="text-primary shrink-0 mt-1" />
+                      <span className="text-foreground/90">{y}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <Card className="h-full border-destructive/20">
+              <CardContent className="p-6 sm:p-8">
+                <h3 className="text-xl font-heading font-bold mb-6 text-muted-foreground flex items-center gap-2">
+                  <X size={22} /> Starter passt nicht, wenn …
+                </h3>
+                <ul className="space-y-4">
+                  {fitNo.map((n) => (
+                    <li key={n} className="flex items-start gap-3">
+                      <X size={18} className="text-destructive shrink-0 mt-1" />
+                      <span className="text-muted-foreground">{n}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 text-xs text-muted-foreground italic">
+                  Falls du dich hier wiederfindest: kein Problem — wir empfehlen
+                  dir gern eine andere Lösung oder ein größeres Paket.
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
         </div>
       </div>
     </section>
