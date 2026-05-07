@@ -50,6 +50,26 @@ const LeadCaptureModal = () => {
     return () => window.removeEventListener("open-lead-modal", handler);
   }, []);
 
+  // Globaler Click-Interceptor: jeder <a href="#termin-buchen"> öffnet
+  // das Pop-up — bestehende Funnels (Links zu /kontakt, /kostenlose-vorschau …)
+  // bleiben unangetastet.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      const anchor = target.closest("a") as HTMLAnchorElement | null;
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (href === "#termin-buchen") {
+        e.preventDefault();
+        setSubmitted(false);
+        setOpen(true);
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
   const close = () => {
     setOpen(false);
     sessionStorage.setItem(STORAGE_KEY, "1");
