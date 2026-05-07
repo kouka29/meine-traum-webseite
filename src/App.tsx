@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 import LeadCaptureModal from "@/components/LeadCaptureModal";
+import GlobalCtaPopup from "@/components/GlobalCtaPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
 import StructuredData from "@/components/StructuredData";
@@ -104,6 +105,7 @@ const App = () => (
         <Footer />
         <CookieBanner />
         <LeadCaptureModal />
+        <GlobalCtaPopup />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
