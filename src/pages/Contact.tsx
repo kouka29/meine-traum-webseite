@@ -103,7 +103,7 @@ const Contact = () => {
   };
 
   return (
-    <main className="pt-28 md:pt-36">
+    <main className="pt-20">
       <section className="section-padding">
         <div className="container-narrow px-4">
           <AnimatedSection>
