@@ -66,7 +66,7 @@ const includedLeft = [
 const includedRight = [
   "Google-ready (SEO-Grundlagen)",
   "Logo, Farben & Fotos eingebaut",
-  "Konzept in 48h — kostenlos",
+  "Konzept in 48 h — kostenlos",
   "Online in 7 Tagen",
   "30 Tage Support nach Launch",
 ];
@@ -143,7 +143,7 @@ const comparison = [
     points: [
       "Festpreis ab 990 € einmalig — keine Nachberechnung",
       "Online in 7 Tagen statt 2 Monate",
-      "Konzept in 48h — kostenlos",
+      "Konzept in 48 h — kostenlos",
       "Wir machen alles. Sie sagen nur, ob es passt.",
     ],
   },
@@ -158,7 +158,7 @@ const process = [
   },
   {
     icon: Lightbulb,
-    title: "Konzept in 48h",
+    title: "Konzept in 48 h",
     text: "Sie bekommen Struktur, Textideen und visuelle Richtung — bevor Sie einen Euro zahlen.",
     duration: "Tag 1–3",
   },
@@ -259,7 +259,7 @@ const faqs = [
   },
   {
     q: "Was, wenn mir das Konzept nicht gefällt?",
-    a: "Dann zahlen Sie nichts und wir gehen freundlich auseinander. Genau dafür ist das 48h-Konzept kostenlos: damit Sie sehen können, was Sie bekommen — bevor Sie sich binden.",
+    a: "Dann zahlen Sie nichts und wir gehen freundlich auseinander. Genau dafür ist das 48 h-Konzept kostenlos: damit Sie sehen können, was Sie bekommen — bevor Sie sich binden.",
   },
   {
     q: "Macht ihr auch Texte und Bilder?",
@@ -796,7 +796,7 @@ const Starter = () => (
                 Starte jetzt — ohne Risiko.
               </h2>
               <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8 text-base sm:text-lg">
-                Kostenloses Erstgespräch, Konzept in 48h, Sie entscheiden danach
+                Kostenloses Erstgespräch, Konzept in 48 h, Sie entscheiden danach
                 frei.
               </p>
               <Button

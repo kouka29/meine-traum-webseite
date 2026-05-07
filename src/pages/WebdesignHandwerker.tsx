@@ -23,7 +23,7 @@ const features = [
 
 const faqs = [
   { q: "Brauche ich als Handwerker wirklich eine professionelle Website?", a: "Ja! Über 85% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlieren Sie täglich Aufträge an die Konkurrenz, die online besser aufgestellt ist." },
-  { q: "Was kostet eine Handwerker-Website?", a: "Unsere Handwerker-Websites starten ab 1.500 €. Dafür erhalten Sie ein professionelles, conversion-optimiertes Design mit SEO-Grundlagen. Eine kostenlose Vorschau gibt es in 48h." },
+  { q: "Was kostet eine Handwerker-Website?", a: "Unsere Handwerker-Websites starten ab 1.500 €. Dafür erhalten Sie ein professionelles, conversion-optimiertes Design mit SEO-Grundlagen. Eine kostenlose Vorschau gibt es in 48 h." },
   { q: "Wie lange dauert es, bis meine Website online ist?", a: "In der Regel 2–4 Wochen. Eine erste Vorschau Ihrer neuen Website erhalten Sie bereits innerhalb von 48 Stunden." },
   { q: "Kann ich die Website selbst bearbeiten?", a: "Ja, wir richten ein einfaches System ein, mit dem Sie Texte, Bilder und Öffnungszeiten selbst aktualisieren können – ohne technische Vorkenntnisse." },
 ];
@@ -93,7 +93,7 @@ const WebdesignHandwerker = () => (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
               {[
                 { value: "+450%", label: "Mehr Online-Anfragen" },
-                { value: "48h", label: "Bis zur Vorschau" },
+                { value: "48 h", label: "Bis zur Vorschau" },
                 { value: "Seite 1", label: "Bei Google lokal" },
               ].map((s) => (
                 <div key={s.label} className="text-center">

@@ -115,7 +115,7 @@ const processSteps = [
   },
   {
     icon: Wand2,
-    title: "Ich baue Ihre Vorschau (48h)",
+    title: "Ich baue Ihre Vorschau (48 h)",
     text: "Sie lehnen sich zurück, ich arbeite.",
   },
   {
@@ -167,7 +167,7 @@ const faqs = [
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nDu können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
@@ -647,7 +647,7 @@ const SuccessScreen = ({
             </li>
             <li className="flex gap-3">
               <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">2</span>
-              <span><strong>Ich baue Ihre Vorschau (kostenlos, 48h)</strong> – maßgeschneidert für Ihren Betrieb.</span>
+              <span><strong>Ich baue Ihre Vorschau (kostenlos, 48 h)</strong> – maßgeschneidert für Ihren Betrieb.</span>
             </li>
             <li className="flex gap-3">
               <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">3</span>
@@ -1532,7 +1532,7 @@ const KostenloseVorschauV2 = () => {
               {settings?.hero_h1_line2 ?? "Eine neue Webseite."}
               <br />
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                {settings?.hero_h1_line3 ?? "Kostenlos in 48h."}
+                {settings?.hero_h1_line3 ?? "Kostenlos in 48 h."}
               </span>
             </h1>
 
@@ -1580,7 +1580,7 @@ const KostenloseVorschauV2 = () => {
             </p>
 
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground text-center max-w-md mx-auto">
-              Nach Ihrer Vorschau: Fertige Website ab 59€/Monat – monatlich kündbar.
+              Nach Ihrer Vorschau: Fertige Website ab 59 €/Monat – monatlich kündbar.
             </p>
 
             {/* Social Proof */}

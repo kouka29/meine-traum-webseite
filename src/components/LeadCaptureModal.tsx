@@ -188,7 +188,7 @@ const LeadCaptureModal = () => {
                 Fast geschafft! 🎉
               </h3>
               <p className="text-muted-foreground mb-2">
-                Prüfe jetzt Ihr E-Mail-Postfach und bestätige Ihre Adresse.
+                Prüfen Sie jetzt Ihr E-Mail-Postfach und bestätigen Sie Ihre Adresse.
               </p>
               <p className="text-sm text-muted-foreground">
                 Ihr kostenloser Leitfaden wartet auf Sie.

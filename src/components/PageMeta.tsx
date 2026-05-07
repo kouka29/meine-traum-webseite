@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 const pageMeta: Record<string, { title: string; description: string }> = {
   "/": {
     title: "Webdesign Agentur – Website erstellen lassen | Meine Traum Webseite",
-    description: "Professionelle Webdesign Agentur – Wir erstellen moderne, conversion-optimierte Webseiten für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48h.",
+    description: "Professionelle Webdesign Agentur – Wir erstellen moderne, conversion-optimierte Webseiten für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h.",
   },
   "/leistungen": {
     title: "Leistungen – Webdesign, Conversion-Optimierung & SEO | Meine Traum Webseite",
@@ -19,8 +19,8 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description: "Echte Ergebnisse für echte Unternehmen. Webdesign-Referenzen mit bis zu +700% mehr Anfragen. Website erstellen lassen, die messbar Resultate liefert.",
   },
   "/kontakt": {
-    title: "Kontakt – Kostenlose Website-Vorschau in 48h | Meine Traum Webseite",
-    description: "Sichern Sie sich Ihre kostenlose Website-Vorschau in 48h. Website erstellen lassen – unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
+    title: "Kontakt – Kostenlose Website-Vorschau in 48 h | Meine Traum Webseite",
+    description: "Sichern Sie sich Ihre kostenlose Website-Vorschau in 48 h. Website erstellen lassen – unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
   },
   "/webdesign-agentur": {
     title: "Webdesign Agentur – Moderne Websites die Kunden gewinnen | Meine Traum Webseite",
@@ -28,7 +28,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   },
   "/website-erstellen-lassen": {
     title: "Website erstellen lassen – Professionell & Conversion-optimiert | Meine Traum Webseite",
-    description: "Moderne Website für Ihr Unternehmen erstellen lassen. Conversion-optimiert, mobilfreundlich, SEO-ready. Kostenlose Vorschau in 48h. Ab 1.500 €.",
+    description: "Moderne Website für Ihr Unternehmen erstellen lassen. Conversion-optimiert, mobilfreundlich, SEO-ready. Kostenlose Vorschau in 48 h. Ab 1.500 €.",
   },
   "/landingpage-erstellen-lassen": {
     title: "Landingpage erstellen lassen – Maximale Conversions | Meine Traum Webseite",
@@ -44,14 +44,14 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   },
   "/kostenloser-website-check": {
     title: "Kostenloser Website-Check – Website Analyse gratis | Meine Traum Webseite",
-    description: "Kostenlose Website-Analyse: Performance, SEO, Mobile-Optimierung und Conversion-Potenzial. Erhalten Sie konkrete Handlungsempfehlungen in 48h.",
+    description: "Kostenlose Website-Analyse: Performance, SEO, Mobile-Optimierung und Conversion-Potenzial. Erhalten Sie konkrete Handlungsempfehlungen in 48 h.",
   },
   "/kostenlose-vorschau": {
-    title: "Kostenlose Webseiten-Vorschau in 48h – Nur 5 Plätze/Monat | Meine Traum Webseite",
-    description: "Handwerker: Sichern Sie sich einen von 5 Plätzen pro Monat. Kostenlose Webseiten-Vorschau in 48h. In 2 Minuten Formular ausfüllen, ohne Risiko und Verpflichtung.",
+    title: "Kostenlose Webseiten-Vorschau in 48 h – Nur 5 Plätze/Monat | Meine Traum Webseite",
+    description: "Handwerker: Sichern Sie sich einen von 5 Plätzen pro Monat. Kostenlose Webseiten-Vorschau in 48 h. In 2 Minuten Formular ausfüllen, ohne Risiko und Verpflichtung.",
   },
   "/kostenlose-vorschau2": {
-    title: "Kostenlose Webseiten-Vorschau in 48h für Handwerker | Meine Traum Webseite",
+    title: "Kostenlose Webseiten-Vorschau in 48 h für Handwerker | Meine Traum Webseite",
     description: "Handwerksbetrieb? Erhalte in 48 Stunden eine kostenlose Vorschau Ihrer neuen Webseite. Ohne Risiko, ohne Kosten, ohne Verpflichtung. Jetzt anfordern.",
   },
   "/webdesign-preise": {
@@ -60,7 +60,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   },
   "/webdesign-shk": {
     title: "Webdesign für SHK-Betriebe – Mehr Anfragen online | Meine Traum Webseite",
-    description: "Professionelles Webdesign für SHK-Betriebe: Sanitär, Heizung, Klima. Mehr Online-Anfragen durch conversion-optimierte Websites. Kostenlose Vorschau in 48h.",
+    description: "Professionelles Webdesign für SHK-Betriebe: Sanitär, Heizung, Klima. Mehr Online-Anfragen durch conversion-optimierte Websites. Kostenlose Vorschau in 48 h.",
   },
   "/webdesign-handwerker": {
     title: "Webdesign für Handwerker – Die Website die Aufträge bringt | Meine Traum Webseite",

@@ -38,7 +38,7 @@ const Index = () => (
               damit aus Besuchern <strong className="text-foreground">zuverlässig neue Kunden</strong> werden.
             </p>
             <div className="flex items-center gap-3 sm:gap-5 mb-8 sm:mb-10 flex-wrap">
-              {["Kostenloses Konzept", "Keine Verpflichtung", "Umsetzung in 48h möglich"].map((t) => (
+              {["Kostenloses Konzept", "Keine Verpflichtung", "Umsetzung in 48 h möglich"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
                   <CheckCircle size={14} className="text-primary shrink-0" />
                   <span>{t}</span>

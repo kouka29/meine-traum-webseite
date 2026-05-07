@@ -1,54 +1,71 @@
-## Was passiert aktuell
+## Ziel
+Die gesamte Website (alle Seiten, Komponenten, Popups, E-Mail-Templates) auf Rechtschreibung, Grammatik, Typografie und stilistische Konsistenz prüfen — aus der Perspektive eines erfahrenen deutschen Copywriters.
 
-Auf 11 Unterseiten (Index, Services, Conversion, WebsiteRelaunch, WebsiteErstellenLassen, alle 6 Branchenseiten, IndexOriginal) werden zwei optisch fast identische CTA-Module direkt nacheinander gerendert:
+## Vorgehen eines Experten-Copywriters
 
-```text
-[ FreePreviewCTA  ] – lila Gradient-Box, Headline "Ihre kostenlose Website-Strategie",
-                      Button → /kontakt
-[ CTABanner       ] – lila Gradient-Box, Headline "Jetzt kostenlose Strategie-Vorschau
-                      sichern", Button → /kontakt + Rückruf-Button
-```
+Ein professioneller Copywriter prüft nicht "von oben nach unten", sondern in **mehreren Durchgängen mit unterschiedlichem Fokus**. Jeder Durchgang fängt andere Fehlerklassen:
 
-Beide nutzen `gradient-hero-bg`, dasselbe Versprechen, denselben Ziel-Link. Aus Sicht der vier Rollen:
+### Durchgang 1 — Rechtschreibung & Tippfehler
+- Standard-Duden-Rechtschreibung (z. B. „Webseite" vs. „Website" — beides erlaubt, aber konsistent halten)
+- Häufige Tippfehler: „seit/seid", „das/dass", „wieder/wider", „Standart/Standard"
+- Anglizismen korrekt (z. B. „Website", nicht „Webseite" wenn die ganze Site gemeint ist)
 
-- **UX-Designer:** Doppelung wirkt wie ein Bug. Nutzer scrollen zweimal an „derselben" Box vorbei → CTA-Blindheit, Vertrauensverlust.
-- **Conversion-Texter:** Zwei identische Versprechen direkt hintereinander schwächen den Call-to-Action statt ihn zu verstärken. Eine starke Schlussbotschaft konvertiert besser als zwei mittelmäßige.
-- **Brand/Visual:** Zwei lila Gradient-Blöcke nebeneinander erschlagen den Rhythmus der Seite – es fehlt visueller Wechsel.
-- **Frontend-Engineer:** Zwei Komponenten mit nahezu identischer Markup-Struktur = doppelter Maintenance-Aufwand, doppelte Bundle-Bytes.
+### Durchgang 2 — Grammatik & Satzbau
+- Kongruenz Subjekt/Prädikat
+- Falsche Kasus nach Präpositionen („wegen dem" → „wegen des")
+- Komma-Setzung bei Nebensätzen, Infinitivgruppen, Aufzählungen
+- Bezug von Pronomen (worauf bezieht sich „dieser/das"?)
 
-Einstimmiges Urteil: **eines reicht. Es muss konsolidiert werden.**
+### Durchgang 3 — Typografie (deutscher Standard)
+- Anführungszeichen: „deutsch" statt "englisch" oder ‚gemischt'
+- Bindestrich vs. Gedankenstrich: – (Halbgeviert) statt -
+- Auslassungspunkte: … statt ...
+- Geschützte Leerzeichen vor Einheiten, z. B. „1.500 €" (NBSP)
+- Prozent, €, Zahlen: „48 h" statt „48h", „2–4 Wochen" mit Halbgeviertstrich
+- „z. B.", „u. a." mit Leerzeichen
 
-## Lösung
+### Durchgang 4 — Konsistenz (Brand Voice)
+- Sie-Anrede durchgängig (bereits erledigt — final verifizieren)
+- Schreibweise von Eigennamen: „Meine Traum Webseite" vs. „Meine Traum-Website" vs. „meine-traum-website.de" — eine Variante festlegen
+- „Website" vs. „Webseite" konsistent (Empfehlung: „Website" für ganzen Auftritt, „Seite/Unterseite" für einzelne)
+- Begriffe wie „Conversion", „Landingpage", „SEO" — Groß-/Kleinschreibung einheitlich
+- CTA-Wording vereinheitlichen („Kostenlose Vorschau sichern" vs. „Kostenlose Website-Vorschau sichern" vs. „Kostenlose Strategie-Vorschau sichern")
 
-Die beiden Module zu **einem finalen CTA** zusammenführen, das die Stärken beider kombiniert:
+### Durchgang 5 — Stil & Klarheit
+- Füllwörter raus („eigentlich", „natürlich", „wirklich")
+- Nominalstil → Verbalstil („zur Umsetzung bringen" → „umsetzen")
+- Doppelte Verneinungen, Schachtelsätze
+- Werbliche Übertreibungen prüfen (z. B. „bis zu 400 % mehr" — Quelle?)
 
-- **Headline + Hauptbenefit** aus `FreePreviewCTA` (klares Versprechen „Ihre kostenlose Website-Strategie")
-- **3-Schritte-Trust-Liste** aus `FreePreviewCTA` beibehalten
-- **Zweiter Rückruf-Button** aus `CTABanner` übernehmen (Wahlmöglichkeit erhöht Conversion bei Telefon-affinen Zielgruppen wie Handwerk/SHK/Ärzte)
-- **Trust-Zeile** „Unverbindlich. Schnell. Klar." nur einmal
+### Durchgang 6 — SEO-Texte & Meta
+- Title-Tags und Meta-Descriptions auf Tippfehler
+- Alt-Texte
+- JSON-LD-Strings
 
-Ergebnis: ein einziger, stärkerer Schluss-CTA pro Seite.
+## Scope
+Geprüft werden:
+- Alle Seiten in `src/pages/` (~25 Dateien)
+- Alle Komponenten in `src/components/` mit sichtbarem Text
+- Popups: `LeadCaptureModal`, `PricingLeadPopup`, `GlobalCtaPopup`, `CookieBanner`
+- Footer, Navbar, PageMeta (SEO-Texte)
+- E-Mail-Templates in `supabase/functions/_shared/transactional-email-templates/`
+- Strukturierte Daten (`StructuredData.tsx`)
 
-## Umsetzung
+Nicht geprüft: `IndexOriginal.tsx` (offenbar Backup), Admin-Bereich (interne UI).
 
-1. **`src/components/FreePreviewCTA.tsx`** erweitern:
-   - Bestehende Struktur (Badge, Headline, Beschreibung, 3-Schritte-Liste) bleibt
-   - Button-Bereich bekommt zusätzlich den Outline-„Rückruf vereinbaren"-Button aus `CTABanner`
-   - Beide Buttons in `flex-col sm:flex-row gap-3` Layout
-   - Trust-Zeile „Unverbindlich. Schnell. Klar." bleibt einmal darunter
+## Deliverable
 
-2. **`<CTABanner />` aus den Doppel-Seiten entfernen** (und Imports):
-   - Index.tsx, IndexOriginal.tsx, Services.tsx, ConversionOptimierung.tsx, WebsiteRelaunch.tsx, WebsiteErstellenLassen.tsx
-   - WebdesignAerzte, WebdesignAgentur, WebdesignCoaches, WebdesignHandwerker, WebdesignImmobilienmakler, WebdesignSHK
+Ich liefere die Korrekturen **direkt als Code-Änderungen** in einem Durchgang, gruppiert nach Datei. Vor dem Patchen erhalten Sie zusätzlich eine **kurze Zusammenfassung der wichtigsten gefundenen Fehlerkategorien** (z. B. „12× fehlendes NBSP vor €", „3× ‚dass' falsch geschrieben", „uneinheitliche Schreibweise Markenname"), damit Sie nachvollziehen können, was geändert wurde.
 
-3. **`CTABanner` behalten** für Seiten, die *nur* `CTABanner` nutzen (About, Portfolio, KostenloserWebsiteCheck, LandingpageErstellen) – dort gibt es keine Doppelung, also kein Eingriff.
+## Offene Frage vor Umsetzung
 
-4. **Refs prüfen:** `CTABanner` ist `forwardRef` – kurz checken, ob eine der entfernten Seiten den Ref nutzt; falls ja, Ref auf `FreePreviewCTA` umbiegen oder Trigger anders lösen.
+Damit ich konsistent korrigieren kann, brauche ich **eine Entscheidung** zu zwei Punkten:
 
-Keine Änderungen an Routing, Backend, Forms oder Texten der übrigen Seitenmodule.
+1. **Markenname**: Wie soll er einheitlich geschrieben werden?
+   - „Meine Traum Webseite" (aktuell teilweise)
+   - „Meine Traum-Website"
+   - „meine-traum-website" (klein, wie Domain)
 
-## Ergebnis nach Umsetzung
+2. **Website vs. Webseite**: Streng trennen (Website = ganzer Auftritt, Webseite = Einzelseite) — oder beides synonym beibehalten wie bisher?
 
-- Jede Unterseite endet mit **einem** klaren, vollwertigen CTA-Block
-- Visuell ruhigerer Seitenrhythmus, kein „Déjà-vu"-Effekt
-- Eine einzige Quelle der Wahrheit für den finalen CTA → einfacher A/B-zu-testen
+Wenn Sie hier keine Präferenz haben, entscheide ich nach Duden-Empfehlung: **„Meine Traum-Website"** und **strikte Trennung Website/Webseite**.

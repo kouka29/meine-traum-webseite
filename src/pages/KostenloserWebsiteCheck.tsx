@@ -116,9 +116,9 @@ const KostenloserWebsiteCheck = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-5 mt-8">
                 {[
-                  { icon: Gift, text: "100% kostenlos" },
+                  { icon: Gift, text: "100 % kostenlos" },
                   { icon: Shield, text: "Unverbindlich" },
-                  { icon: Clock, text: "Ergebnis in 48h" },
+                  { icon: Clock, text: "Ergebnis in 48 h" },
                 ].map((b) => (
                   <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
                     <b.icon size={16} className="text-primary" />

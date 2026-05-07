@@ -320,7 +320,7 @@ const IndividuelleSoftware = () => (
               </Button>
             </div>
             <p className="text-xs text-muted-foreground mt-4">
-              Unverbindlich · Kostenlos · Innerhalb von 24h
+              Unverbindlich · Kostenlos · Innerhalb von 24 h
             </p>
           </div>
         </AnimatedSection>

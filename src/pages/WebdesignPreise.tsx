@@ -24,7 +24,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Starter",
     price: "59 €/Monat",
-    badge: "Starter Miete – 59€/Monat",
+    badge: "Starter Miete – 59 €/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -48,7 +48,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Pro",
     price: "99 €/Monat",
-    badge: "Pro Miete – 99€/Monat",
+    badge: "Pro Miete – 99 €/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "2–5 Seiten",
@@ -72,7 +72,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Premium",
     price: "159 €/Monat",
-    badge: "Premium Miete – 159€/Monat",
+    badge: "Premium Miete – 159 €/Monat",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Bis zu 10 Seiten",
@@ -131,7 +131,7 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Starter",
     price: "990 € einmalig",
-    badge: "Starter Kauf – 990€",
+    badge: "Starter Kauf – 990 €",
     compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparen Sie 426 €",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -156,7 +156,7 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Pro",
     price: "1.900 € einmalig",
-    badge: "Pro Kauf – 1.900€",
+    badge: "Pro Kauf – 1.900 €",
     compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 476 €",
     features: [
       "2–5 Seiten",
@@ -182,7 +182,7 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Premium",
     price: "3.500 € einmalig",
-    badge: "Premium Kauf – 3.500€",
+    badge: "Premium Kauf – 3.500 €",
     compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 316 €",
     features: [
       "Bis zu 10 Seiten",
@@ -238,7 +238,7 @@ const faqs = [
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nDu können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
