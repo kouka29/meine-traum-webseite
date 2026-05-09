@@ -31,6 +31,11 @@ const fallbackItems = [
 const IndexPortfolio = () => {
   const [items, setItems] = useState(fallbackItems);
 
+  const normalizeUrl = (url: string) => {
+    if (!url) return "";
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  };
+
   useEffect(() => {
     const fetch = async () => {
       const { data } = await supabase
@@ -89,7 +94,7 @@ const IndexPortfolio = () => {
                 <CarouselItem key={p.id} className="pl-6 basis-full sm:basis-1/2 lg:basis-1/3">
                   <AnimatedSection delay={i * 0.05}>
                     {p.external_url ? (
-                      <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block group cursor-pointer">
+                      <a href={normalizeUrl(p.external_url)} target="_blank" rel="noopener noreferrer" className="block group cursor-pointer">
                         {Inner}
                       </a>
                     ) : (
