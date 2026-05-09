@@ -35,6 +35,11 @@ const Portfolio = () => {
   const [projects, setProjects] = useState(fallbackProjects);
   const [loading, setLoading] = useState(true);
 
+  const normalizeUrl = (url: string) => {
+    if (!url) return "";
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  };
+
   useEffect(() => {
     const fetchProjects = async () => {
       const { data, error } = await supabase
@@ -86,7 +91,7 @@ const Portfolio = () => {
               {projects.map((p, i) => (
                 <AnimatedSection key={p.id} delay={i * 0.08}>
                   {p.external_url ? (
-                    <a href={p.external_url} target="_blank" rel="noopener noreferrer" className="block">
+                    <a href={normalizeUrl(p.external_url)} target="_blank" rel="noopener noreferrer" className="block">
                       <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
                         <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                           {p.image_url ? (
