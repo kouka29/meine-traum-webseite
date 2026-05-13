@@ -55,7 +55,7 @@ const FreePreviewCTA = () => (
                 </Link>
               </Button>
             </div>
-            <p className="text-xs text-primary-foreground/40 mt-6">
+            <p className="text-xs text-primary-foreground/80 mt-6">
               Unverbindlich. Schnell. Klar.
             </p>
           </div>
