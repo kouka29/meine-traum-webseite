@@ -11,14 +11,17 @@ interface FaqItem { q: string; a: string }
 
 const faqsByPage: Record<string, FaqItem[]> = {
   "/": [
-    { q: "Was kostet es, eine Website erstellen zu lassen?", a: "Die Kosten hängen vom Umfang ab. Unsere Webdesign-Projekte starten ab 1.500 € für eine conversion-optimierte Website. Wir bieten transparente Preise ohne versteckte Kosten." },
-    { q: "Wie lange dauert es, eine professionelle Website zu erstellen?", a: "Eine typische Website ist in 2–4 Wochen fertig. Innerhalb von 48 Stunden erhalten Sie bereits eine kostenlose Vorschau." },
-    { q: "Was unterscheidet eure Webdesign Agentur von anderen?", a: "Wir erstellen keine digitalen Visitenkarten, sondern Verkaufsinstrumente. Jede Website wird conversion-optimiert gestaltet – mit verkaufspsychologischem Aufbau, schnellen Ladezeiten und messbaren Ergebnissen." },
-    { q: "Bietet ihr auch einen Website Relaunch an?", a: "Ja, wir sind spezialisiert auf Website Relaunches. Wir analysieren Ihre bestehende Seite, identifizieren Optimierungspotenziale und erstellen eine moderne, conversion-optimierte Neuauflage." },
+    { q: "Was kostet eine conversion-optimierte Website?", a: "Unsere Projekte starten ab 1.500 €. Der genaue Preis hängt vom Umfang ab – aber Sie sehen vorher im kostenlosen Konzept genau, was Sie bekommen. Keine Überraschungen." },
+    { q: "Wie schnell kann meine neue Website live gehen?", a: "Die meisten Projekte sind in 2–4 Wochen fertig. Das erste Konzept mit Struktur und Textideen erhalten Sie bereits innerhalb von 48 Stunden – kostenlos und unverbindlich." },
+    { q: "Was ist der Unterschied zu einer normalen Webdesign-Agentur?", a: "Die meisten Agenturen bauen Webseiten, die gut aussehen. Wir bauen Webseiten, die Anfragen generieren. Jedes Element – vom ersten Satz bis zum letzten Button – ist darauf ausgelegt, Besucher in Kunden zu verwandeln." },
+    { q: "Ist das kostenlose Konzept wirklich ohne Haken?", a: "Ja. Sie erhalten ein individuelles Konzept für Ihre Website – Struktur, Textideen, Empfehlungen. Wenn es Ihnen gefällt, können wir loslegen. Wenn nicht, behalten Sie die Ideen trotzdem. Kein Druck." },
+    { q: "Für wen funktioniert das am besten?", a: "Für Selbstständige und Unternehmen, die über ihre Website Kunden gewinnen wollen – nicht nur eine Visitenkarte im Netz brauchen. Besonders gut funktioniert unser Ansatz für Dienstleister, Handwerker, Berater und Coaches." },
+    { q: "Kann ich meine bestehende Website überarbeiten lassen?", a: "Absolut. Viele unserer Kunden kommen mit einer bestehenden Website, die nicht performt. Wir analysieren sie, zeigen Ihnen die Schwachstellen und erstellen ein Relaunch-Konzept – auf Wunsch komplett kostenlos." },
   ],
   "/leistungen": [
     { q: "Welche Leistungen bietet eure Webdesign Agentur?", a: "Wir bieten Conversion-Webdesign, UX/UI Design, SEO-Optimierung, Landingpage-Erstellung, Website Relaunch und Conversion-Optimierung – alles aus einer Hand." },
     { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Sie können jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten Sie gerne, welche Kombination für Ihre Ziele am sinnvollsten ist." },
+    { q: "Erstellt ihr auch Landingpages?", a: "Ja, wir erstellen hochkonvertierende Landingpages für Google Ads, Social Media Kampagnen und Lead-Generierung. Mehr dazu auf unserer Landingpage-Seite." },
   ],
   "/webdesign-agentur": [
     { q: "Was macht eine gute Webdesign Agentur aus?", a: "Eine gute Webdesign Agentur erstellt nicht nur schöne Websites, sondern Verkaufsinstrumente. Bei Meine Traum Webseite kombinieren wir verkaufspsychologisches Design mit modernster Technik für messbare Ergebnisse." },
