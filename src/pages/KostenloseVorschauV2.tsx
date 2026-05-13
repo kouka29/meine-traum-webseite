@@ -170,6 +170,10 @@ const faqs = [
     a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
+    q: "Warum gibt es eine 12-monatige Mindestlaufzeit?",
+    a: "Eine Website ist kein Sprint, sondern ein Marathon. Google braucht 3–6 Monate, um Sie für lokale Suchanfragen ernst zu nehmen. Erst nach diesem Zeitraum sehen Sie die volle Wirkung. Mit der Laufzeit stellen wir sicher, dass Sie nicht zu früh aufgeben – und tatsächlich Ergebnisse sehen.",
+  },
+  {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
     a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
@@ -1576,16 +1580,36 @@ const KostenloseVorschauV2 = () => {
               {" "}<ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 
-            <p className="mt-3 text-xs text-muted-foreground text-center">
-              Bereits überzeugt?{" "}
-              <Link to="/preise" className="underline hover:text-foreground">
-                Preise direkt ansehen →
-              </Link>
-            </p>
+            {/* Trust-Bridge: Preis-Transparenz */}
+            <div className="mt-5 bg-primary/5 border border-primary/15 rounded-2xl p-5 max-w-lg mx-auto">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-sm font-medium text-foreground">Falls es Ihnen gefällt:</span>
+              </div>
+              <div className="text-center mb-3">
+                <span className="text-2xl sm:text-3xl font-bold text-foreground">59 €/Monat</span>
+                <span className="block text-sm text-muted-foreground mt-1">alles inklusive</span>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-background border border-border px-3 py-1 text-xs font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  12 Monate Laufzeit
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-background border border-border px-3 py-1 text-xs font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  danach monatlich kündbar
+                </span>
+              </div>
+              <p className="text-center">
+                <Link to="/preise" className="text-sm text-primary hover:text-primary/80 inline-flex items-center gap-1 underline-offset-4 hover:underline">
+                  Lieber einmalig kaufen? Preise ansehen <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </p>
+            </div>
 
-            <p className="mt-3 text-xs sm:text-sm text-muted-foreground text-center max-w-md mx-auto">
-              Nach Ihrer Vorschau: Fertige Website ab 59 €/Monat – monatlich kündbar.
-            </p>
+
 
             {/* Social Proof */}
             <div className="mt-6 inline-flex items-center gap-3 rounded-full bg-card border border-border px-4 py-2 text-sm font-medium shadow-sm">
