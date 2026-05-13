@@ -113,26 +113,10 @@ const Datenschutz = () => (
           <AnimatedSection delay={0.3}>
             <h2 className="text-xl font-semibold text-foreground">5. Hosting</h2>
             <p>
-              Diese Website nutzt zwei Dienste für Bereitstellung und Betrieb:
-            </p>
-
-            <h3 className="text-lg font-medium text-foreground mt-4">Frontend-Entwicklung: Lovable</h3>
-            <p>
-              Diese Website wurde mit Lovable (Lovable Ltd.) entwickelt und bereitgestellt. Lovable verarbeitet dabei technische Daten wie IP-Adressen im Rahmen der Bereitstellung des Dienstes.
+              Diese Website wird über den Hosting-Anbieter STRATO AG, Otto-Ostrowski-Straße 7, 10249 Berlin, Deutschland bereitgestellt. STRATO verarbeitet dabei personenbezogene Daten wie IP-Adressen und Zugriffsdaten auf ihren Servern in Deutschland.
             </p>
             <p>
-              Datenschutzerklärung:{" "}
-              <a href="https://lovable.dev/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                lovable.dev/privacy-policy
-              </a>
-            </p>
-
-            <h3 className="text-lg font-medium text-foreground mt-4">Domain & Hosting: STRATO</h3>
-            <p>
-              Die Domain dieser Website wird über STRATO AG, Otto-Ostrowski-Straße 7, 10249 Berlin, Deutschland gehostet. STRATO verarbeitet dabei personenbezogene Daten wie IP-Adressen und Zugriffsdaten auf ihren Servern in Deutschland.
-            </p>
-            <p>
-              Der Einsatz dieser Dienste erfolgt im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots gemäß Art. 6 Abs. 1 lit. f DSGVO.
+              Der Einsatz dieses Dienstes erfolgt im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots gemäß Art. 6 Abs. 1 lit. f DSGVO.
             </p>
             <p>
               Datenschutzerklärung STRATO:{" "}
