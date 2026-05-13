@@ -60,6 +60,7 @@ Deno.serve(async (req) => {
   let idempotencyKey: string
   let messageId: string
   let templateData: Record<string, any> = {}
+  let leadId: string | undefined
   try {
     const body = await req.json()
     templateName = body.templateName || body.template_name
@@ -69,6 +70,7 @@ Deno.serve(async (req) => {
     if (body.templateData && typeof body.templateData === 'object') {
       templateData = body.templateData
     }
+    leadId = body.leadId || body.lead_id
   } catch {
     return new Response(
       JSON.stringify({ error: 'Invalid JSON in request body' }),
@@ -95,9 +97,7 @@ Deno.serve(async (req) => {
   if (!template) {
     console.error('Template not found in registry', { templateName })
     return new Response(
-      JSON.stringify({
-        error: `Template '${templateName}' not found. Available: ${Object.keys(TEMPLATES).join(', ')}`,
-      }),
+      JSON.stringify({ error: 'Template not found' }),
       {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -105,10 +105,52 @@ Deno.serve(async (req) => {
     )
   }
 
-  // Resolve effective recipient: template-level `to` takes precedence over
-  // the caller-provided recipientEmail. This allows notification templates
-  // to always send to a fixed address (e.g., site owner from env var).
-  const effectiveRecipient = template.to || recipientEmail
+  // Create Supabase client with service role (bypasses RLS) — needed early
+  // for recipient validation against the leads table.
+  const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+  // Resolve effective recipient.
+  // - Templates with a fixed `to` always send to that address (owner notifications).
+  // - Recipient-facing templates (booking-confirmation, lead-qualified) MUST resolve
+  //   the recipient from a server-side leads.id lookup. This prevents anonymous
+  //   callers from sending mail from our verified domain to arbitrary third parties.
+  const RECIPIENT_FROM_LEAD = new Set(['booking-confirmation', 'lead-qualified'])
+  let effectiveRecipient: string | undefined = template.to
+
+  if (!effectiveRecipient) {
+    if (RECIPIENT_FROM_LEAD.has(templateName)) {
+      if (!leadId) {
+        return new Response(
+          JSON.stringify({ error: 'leadId is required for this template' }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
+      const { data: lead, error: leadErr } = await supabase
+        .from('leads')
+        .select('email')
+        .eq('id', leadId)
+        .maybeSingle()
+      if (leadErr || !lead?.email) {
+        console.error('Lead lookup failed for recipient resolution', {
+          error: leadErr,
+          leadId,
+        })
+        return new Response(
+          JSON.stringify({ error: 'Recipient could not be resolved' }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
+      effectiveRecipient = lead.email
+    } else {
+      effectiveRecipient = recipientEmail
+    }
+  }
 
   if (!effectiveRecipient) {
     return new Response(
@@ -121,9 +163,6 @@ Deno.serve(async (req) => {
       }
     )
   }
-
-  // Create Supabase client with service role (bypasses RLS)
-  const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
   // 2. Check suppression list (fail-closed: if we can't verify, don't send)
   const { data: suppressed, error: suppressionError } = await supabase
