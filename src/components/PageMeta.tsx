@@ -1,113 +1,169 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+const SITE_ORIGIN = "https://meine-traum-webseite.de";
+const BRAND = "Meine Traum Webseite";
+const DEFAULT_DESCRIPTION =
+  "Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h.";
+
 const pageMeta: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Webdesign Agentur – Website erstellen lassen | Meine Traum Webseite",
-    description: "Professionelle Webdesign Agentur – Wir erstellen moderne, conversion-optimierte Webseiten für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h.",
+    title: `Website erstellen lassen | ${BRAND}`,
+    description: DEFAULT_DESCRIPTION,
   },
   "/leistungen": {
-    title: "Leistungen – Webdesign, Conversion-Optimierung & SEO | Meine Traum Webseite",
-    description: "Conversion-Webdesign, UX/UI Design, SEO und Landingpage-Erstellung. Websites erstellen lassen, die aktiv Kunden gewinnen – für Handwerker, Coaches und KMUs.",
+    title: `Leistungen – Webdesign & SEO | ${BRAND}`,
+    description:
+      "Conversion-Webdesign, UX/UI, SEO und Landingpages. Websites die Kunden gewinnen – für Handwerker, Coaches und KMUs.",
   },
   "/ueber-uns": {
-    title: "Über unsere Webdesign Agentur | Meine Traum Webseite",
-    description: "Erfahren Sie mehr über Meine Traum Webseite – die Webdesign Agentur, die Websites zu Verkaufsinstrumenten macht. 150+ zufriedene Kunden im DACH-Raum.",
+    title: `Über uns – Webdesign Agentur | ${BRAND}`,
+    description:
+      "Lernen Sie Meine Traum Webseite kennen – die Agentur, die Websites zu Verkaufsinstrumenten macht. 150+ Kunden im DACH-Raum.",
   },
   "/portfolio": {
-    title: "Webdesign Portfolio & Referenzen | Meine Traum Webseite",
-    description: "Echte Ergebnisse für echte Unternehmen. Webdesign-Referenzen mit bis zu +700% mehr Anfragen. Website erstellen lassen, die messbar Resultate liefert.",
+    title: `Webdesign Portfolio & Referenzen | ${BRAND}`,
+    description:
+      "Echte Ergebnisse für echte Unternehmen. Webdesign-Referenzen mit bis zu +700 % mehr Anfragen. Jetzt Beispiele ansehen.",
   },
   "/kontakt": {
-    title: "Kontakt – Kostenlose Website-Vorschau in 48 h | Meine Traum Webseite",
-    description: "Sichern Sie sich Ihre kostenlose Website-Vorschau in 48 h. Website erstellen lassen – unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
+    title: `Kontakt – Vorschau in 48 h | ${BRAND}`,
+    description:
+      "Sichern Sie sich Ihre kostenlose Website-Vorschau in 48 h. Unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
   },
   "/webdesign-agentur": {
-    title: "Webdesign Agentur – Moderne Websites die Kunden gewinnen | Meine Traum Webseite",
-    description: "Professionelle Webdesign Agentur für conversion-optimierte Websites. Individuelles Webdesign für kleine Unternehmen, Handwerker und KMUs. Kostenlose Vorschau.",
+    title: `Webdesign Agentur für moderne Websites | ${BRAND}`,
+    description:
+      "Webdesign Agentur für conversion-optimierte Websites. Individuelles Design für KMUs, Handwerker und Selbstständige. Kostenlose Vorschau.",
   },
   "/website-erstellen-lassen": {
-    title: "Website erstellen lassen – Professionell & Conversion-optimiert | Meine Traum Webseite",
-    description: "Moderne Website für Ihr Unternehmen erstellen lassen. Conversion-optimiert, mobilfreundlich, SEO-ready. Kostenlose Vorschau in 48 h. Ab 1.500 €.",
+    title: `Website erstellen lassen ab 1.500 € | ${BRAND}`,
+    description:
+      "Moderne Website für Ihr Unternehmen erstellen lassen. Conversion-optimiert, mobilfreundlich, SEO-ready. Vorschau in 48 h.",
   },
   "/landingpage-erstellen-lassen": {
-    title: "Landingpage erstellen lassen – Maximale Conversions | Meine Traum Webseite",
-    description: "Professionelle Landingpage erstellen lassen mit verkaufspsychologischem Aufbau. Perfekt für Google Ads & Lead-Generierung. Ab 800 €.",
+    title: `Landingpage erstellen lassen | ${BRAND}`,
+    description:
+      "Landingpage erstellen lassen mit verkaufspsychologischem Aufbau. Perfekt für Google Ads & Lead-Generierung. Ab 800 €.",
   },
   "/website-relaunch": {
-    title: "Website Relaunch – Veraltete Website zum Kundenmagnet | Meine Traum Webseite",
-    description: "Professioneller Website Relaunch: modernes Design, schnelle Ladezeiten, mehr Anfragen. Ihre veraltete Website wird zum Verkaufsinstrument. Kostenloser Check.",
+    title: `Website Relaunch – mehr Anfragen | ${BRAND}`,
+    description:
+      "Professioneller Website Relaunch: modernes Design, schnelle Ladezeiten, mehr Anfragen. Kostenloser Check inklusive.",
   },
   "/conversion-optimierung": {
-    title: "Conversion Optimierung Agentur – Mehr Kunden aus Ihrer Website | Meine Traum Webseite",
-    description: "Conversion Optimierung für mehr Anfragen und Umsatz. Wir optimieren Ihre Website datengetrieben – bis zu 400% mehr Conversions. Jetzt Website optimieren lassen.",
+    title: `Conversion Optimierung Agentur | ${BRAND}`,
+    description:
+      "Conversion-Optimierung für mehr Anfragen und Umsatz. Datengetrieben – bis zu 400 % mehr Conversions aus Ihrer Website.",
   },
   "/kostenloser-website-check": {
-    title: "Kostenloser Website-Check – Website Analyse gratis | Meine Traum Webseite",
-    description: "Kostenlose Website-Analyse: Performance, SEO, Mobile-Optimierung und Conversion-Potenzial. Erhalten Sie konkrete Handlungsempfehlungen in 48 h.",
+    title: `Kostenloser Website-Check | ${BRAND}`,
+    description:
+      "Kostenlose Website-Analyse: Performance, SEO, Mobile und Conversion-Potenzial. Konkrete Handlungsempfehlungen in 48 h.",
   },
   "/kostenlose-vorschau": {
-    title: "Kostenlose Webseiten-Vorschau in 48 h – Nur 5 Plätze/Monat | Meine Traum Webseite",
-    description: "Handwerker: Sichern Sie sich einen von 5 Plätzen pro Monat. Kostenlose Webseiten-Vorschau in 48 h. In 2 Minuten Formular ausfüllen, ohne Risiko und Verpflichtung.",
+    title: `Kostenlose Webseiten-Vorschau in 48 h | ${BRAND}`,
+    description:
+      "Handwerker: Sichern Sie sich einen von 5 Plätzen pro Monat. Kostenlose Vorschau in 48 h. Ohne Risiko und Verpflichtung.",
   },
   "/kostenlose-vorschau2": {
-    title: "Kostenlose Webseiten-Vorschau in 48 h für Handwerker | Meine Traum Webseite",
-    description: "Handwerksbetrieb? Erhalte in 48 Stunden eine kostenlose Vorschau Ihrer neuen Webseite. Ohne Risiko, ohne Kosten, ohne Verpflichtung. Jetzt anfordern.",
+    title: `Vorschau in 48 h für Handwerker | ${BRAND}`,
+    description:
+      "Handwerksbetrieb? Erhalten Sie in 48 h eine kostenlose Vorschau Ihrer neuen Website. Ohne Risiko, ohne Kosten.",
+  },
+  "/kostenlose-vorschau-v2": {
+    title: `Kostenlose Website-Vorschau in 48 h | ${BRAND}`,
+    description:
+      "Kostenlose Vorschau Ihrer neuen Website in 48 h. Sehen Sie Ihr Design, bevor Sie sich entscheiden – unverbindlich.",
   },
   "/webdesign-preise": {
-    title: "Webdesign Preise – Was kostet eine Website? | Meine Traum Webseite",
-    description: "Transparente Webdesign Preise ab 1.500 €. Website erstellen lassen Kosten im Überblick. Faire Festpreise ohne versteckte Kosten.",
+    title: `Webdesign Preise & Kosten | ${BRAND}`,
+    description:
+      "Transparente Webdesign-Preise ab 1.500 €. Was kostet eine Website? Faire Festpreise ohne versteckte Kosten.",
+  },
+  "/preise": {
+    title: `Webdesign Preise & Pakete | ${BRAND}`,
+    description:
+      "Transparente Webdesign-Preise ab 1.500 €. Faire Festpreise und klare Pakete – ohne versteckte Kosten.",
   },
   "/webdesign-shk": {
-    title: "Webdesign für SHK-Betriebe – Mehr Anfragen online | Meine Traum Webseite",
-    description: "Professionelles Webdesign für SHK-Betriebe: Sanitär, Heizung, Klima. Mehr Online-Anfragen durch conversion-optimierte Websites. Kostenlose Vorschau in 48 h.",
+    title: `Webdesign für SHK-Betriebe | ${BRAND}`,
+    description:
+      "Webdesign für SHK-Betriebe: Sanitär, Heizung, Klima. Mehr Online-Anfragen durch conversion-optimierte Websites. Vorschau in 48 h.",
   },
   "/webdesign-handwerker": {
-    title: "Webdesign für Handwerker – Die Website die Aufträge bringt | Meine Traum Webseite",
-    description: "Professionelle Websites für Handwerksbetriebe. Lokales SEO, mobilfreundlich, conversion-optimiert. Mehr Aufträge durch bessere Online-Präsenz.",
+    title: `Webdesign für Handwerker | ${BRAND}`,
+    description:
+      "Websites für Handwerksbetriebe: lokales SEO, mobilfreundlich, conversion-optimiert. Mehr Aufträge durch starke Online-Präsenz.",
   },
   "/webdesign-aerzte": {
-    title: "Webdesign für Ärzte – Praxis-Website die Patienten gewinnt | Meine Traum Webseite",
-    description: "Professionelles Webdesign für Arztpraxen. DSGVO-konform, mit Online-Terminbuchung und lokalem SEO. Mehr Patienten durch bessere Sichtbarkeit.",
+    title: `Webdesign für Ärzte & Praxen | ${BRAND}`,
+    description:
+      "Webdesign für Arztpraxen: DSGVO-konform, mit Online-Terminbuchung und lokalem SEO. Mehr Patienten durch bessere Sichtbarkeit.",
   },
   "/webdesign-immobilienmakler": {
-    title: "Webdesign für Immobilienmakler – Mehr Eigentümer-Leads | Meine Traum Webseite",
-    description: "Professionelle Websites für Immobilienmakler. Hochwertige Objektpräsentation, Lead-Generierung und lokales SEO. Kostenlose Vorschau.",
+    title: `Webdesign für Immobilienmakler | ${BRAND}`,
+    description:
+      "Websites für Immobilienmakler: hochwertige Objektpräsentation, Lead-Generierung und lokales SEO. Kostenlose Vorschau.",
   },
   "/webdesign-coaches": {
-    title: "Webdesign für Coaches & Berater – Klienten online gewinnen | Meine Traum Webseite",
-    description: "Professionelle Websites für Coaches und Berater. Persönliches Branding, Conversion-Optimierung und SEO. Mehr Klienten durch starke Online-Präsenz.",
+    title: `Webdesign für Coaches & Berater | ${BRAND}`,
+    description:
+      "Websites für Coaches und Berater: persönliches Branding, Conversion-Optimierung und SEO. Mehr Klienten online gewinnen.",
+  },
+  "/individuelle-software": {
+    title: `Individuelle Software-Entwicklung | ${BRAND}`,
+    description:
+      "Maßgeschneiderte Webanwendungen und individuelle Software-Lösungen für Ihr Unternehmen. Beratung, Konzept und Umsetzung aus einer Hand.",
+  },
+  "/empfehlung": {
+    title: `Empfehlungsprogramm | ${BRAND}`,
+    description:
+      "Empfehlen Sie Meine Traum Webseite und profitieren Sie von attraktiven Prämien für jeden vermittelten Neukunden.",
+  },
+  "/erstgespraech": {
+    title: `Erstgespräch buchen | ${BRAND}`,
+    description:
+      "Buchen Sie Ihr kostenloses Erstgespräch. Gemeinsam klären wir Ziele, Zielgruppe und Strategie für Ihre neue Website.",
+  },
+  "/starter": {
+    title: `Starter-Paket Website | ${BRAND}`,
+    description:
+      "Das Starter-Paket: schnell online mit einer professionellen Website. Ideal für Selbstständige und kleine Unternehmen.",
   },
   "/datenschutz": {
-    title: "Datenschutzerklärung | Meine Traum Webseite",
-    description: "Datenschutzerklärung gemäß DSGVO, BDSG und TDDDG für die Website meinetraumwebseite.de.",
+    title: `Datenschutzerklärung | ${BRAND}`,
+    description: "Datenschutzerklärung gemäß DSGVO, BDSG und TDDDG für meine-traum-webseite.de.",
   },
   "/impressum": {
-    title: "Impressum | Meine Traum Webseite",
+    title: `Impressum | ${BRAND}`,
     description: "Impressum gemäß § 5 DDG für Meine Traum Webseite – Webdesign Agentur.",
   },
+};
+
+const setMeta = (selector: string, attr: string, value: string) => {
+  const tag = document.querySelector(selector);
+  if (tag) tag.setAttribute(attr, value);
 };
 
 const PageMeta = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const meta = pageMeta[pathname];
-    if (meta) {
-      document.title = meta.title;
-      const descTag = document.querySelector('meta[name="description"]');
-      if (descTag) descTag.setAttribute("content", meta.description);
+    const meta = pageMeta[pathname] ?? {
+      title: `${BRAND} – Webdesign Agentur`,
+      description: DEFAULT_DESCRIPTION,
+    };
+    const url = `${SITE_ORIGIN}${pathname === "/" ? "/" : pathname}`;
 
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute("content", meta.title);
-
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.setAttribute("content", meta.description);
-
-      // Update canonical URL
-      const canonical = document.querySelector('link[rel="canonical"]');
-      if (canonical) canonical.setAttribute("href", `https://meinetraumwebseite.de${pathname === "/" ? "" : pathname}`);
-    }
+    document.title = meta.title;
+    setMeta('meta[name="description"]', "content", meta.description);
+    setMeta('meta[property="og:title"]', "content", meta.title);
+    setMeta('meta[property="og:description"]', "content", meta.description);
+    setMeta('meta[property="og:url"]', "content", url);
+    setMeta('meta[name="twitter:title"]', "content", meta.title);
+    setMeta('meta[name="twitter:description"]', "content", meta.description);
+    setMeta('link[rel="canonical"]', "href", url);
   }, [pathname]);
 
   return null;

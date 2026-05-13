@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 const PROVIDER = {
   "@type": "Organization",
   name: "Meine Traum Webseite",
-  url: "https://meinetraumwebseite.de",
+  url: "https://meine-traum-webseite.de",
 };
 
 interface FaqItem { q: string; a: string }
@@ -190,6 +190,27 @@ const StructuredData = () => {
 
     const service = servicesByPage[pathname];
     if (service) schemas.push(buildServiceSchema(service));
+
+    if (pathname === "/portfolio") {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: "Webdesign Portfolio & Referenzen",
+        description:
+          "Ausgewählte Webdesign-Referenzen von Meine Traum Webseite – conversion-optimierte Websites mit messbaren Ergebnissen.",
+        url: "https://meine-traum-webseite.de/portfolio",
+        isPartOf: {
+          "@type": "WebSite",
+          name: "Meine Traum Webseite",
+          url: "https://meine-traum-webseite.de",
+        },
+        about: {
+          "@type": "CreativeWork",
+          name: "Webdesign-Projekte",
+          creator: PROVIDER,
+        },
+      });
+    }
 
     schemas.forEach((schema) => {
       const script = document.createElement("script");

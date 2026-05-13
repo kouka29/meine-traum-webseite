@@ -1,0 +1,32 @@
+# Meine Traum Webseite
+
+> Webdesign-Agentur aus Deutschland. Wir erstellen conversion-optimierte Websites, Landingpages und Relaunches für Selbstständige, Handwerker und KMUs im DACH-Raum.
+
+Wir kombinieren modernes Webdesign mit verkaufspsychologischem Aufbau, damit aus Besuchern planbar Anfragen und Kunden werden. Jede Website erhält in 48 Stunden eine kostenlose Vorschau – unverbindlich und ohne Risiko.
+
+## Pages
+
+- [Startseite](/): Webdesign-Agentur für Websites die Kunden gewinnen.
+- [Leistungen](/leistungen): Webdesign, UX/UI, SEO, Landingpages und Conversion-Optimierung.
+- [Über uns](/ueber-uns): Unsere Mission, Team und Arbeitsweise.
+- [Portfolio](/portfolio): Referenzen und Kundenergebnisse mit bis zu +700 % mehr Anfragen.
+- [Kontakt](/kontakt): Kostenlose Strategie-Vorschau in 48 h anfordern.
+- [Webdesign Agentur](/webdesign-agentur): Conversion-optimierte Websites für KMUs.
+- [Website erstellen lassen](/website-erstellen-lassen): Professionelle Websites ab 1.500 €.
+- [Landingpage erstellen lassen](/landingpage-erstellen-lassen): Landingpages für Ads und Lead-Generierung ab 800 €.
+- [Website Relaunch](/website-relaunch): Modernisieren Sie Ihre veraltete Website.
+- [Conversion-Optimierung](/conversion-optimierung): Mehr Anfragen aus bestehenden Websites.
+- [Kostenloser Website-Check](/kostenloser-website-check): Performance-, SEO- und Conversion-Analyse.
+- [Webdesign Preise](/webdesign-preise): Transparente Festpreise und Pakete.
+- [Kostenlose Vorschau](/kostenlose-vorschau): Website-Vorschau in 48 h.
+- [Webdesign für SHK-Betriebe](/webdesign-shk): Sanitär, Heizung, Klima.
+- [Webdesign für Handwerker](/webdesign-handwerker): Lokal sichtbar, mehr Aufträge.
+- [Webdesign für Ärzte](/webdesign-aerzte): DSGVO-konforme Praxis-Websites.
+- [Webdesign für Immobilienmakler](/webdesign-immobilienmakler): Objektpräsentation und Lead-Generierung.
+- [Webdesign für Coaches](/webdesign-coaches): Persönliches Branding und Kundengewinnung.
+- [Individuelle Software](/individuelle-software): Maßgeschneiderte Webanwendungen.
+
+## Optional
+
+- [Datenschutz](/datenschutz): Datenschutzerklärung gemäß DSGVO.
+- [Impressum](/impressum): Anbieterkennzeichnung gemäß § 5 DDG.
