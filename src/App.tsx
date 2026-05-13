@@ -103,7 +103,6 @@ const App = () => (
         </Suspense>
         <Footer />
         <CookieBanner />
-        <LeadCaptureModal />
         <GlobalCtaPopup />
       </BrowserRouter>
     </TooltipProvider>
