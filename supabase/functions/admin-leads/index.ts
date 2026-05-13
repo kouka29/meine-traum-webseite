@@ -203,6 +203,7 @@ Deno.serve(async (req) => {
             body: {
               templateName: "lead-qualified",
               recipientEmail: existing.email,
+              leadId,
               idempotencyKey: `lead-qualified-${leadId}`,
               templateData: { firstName: existing.first_name },
             },
