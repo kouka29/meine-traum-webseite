@@ -12,5 +12,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /original
+Disallow: /unsubscribe
 
 Sitemap: https://meine-traum-webseite.de/sitemap.xml
