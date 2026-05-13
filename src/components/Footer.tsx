@@ -57,7 +57,7 @@ const Footer = () => (
             info@meine-traum-webseite.de<br />
             06131/30 765 00
           </p>
-          <p className="text-xs text-background/40 mb-6">
+          <p className="text-xs text-background/70 mb-6">
             Mo–Fr: 9:00 – 18:00 Uhr
           </p>
           <h4 className="font-heading font-semibold text-background mb-3 text-sm tracking-wide uppercase">Rechtliches</h4>
@@ -71,7 +71,7 @@ const Footer = () => (
           </ul>
         </div>
       </div>
-      <div className="border-t border-background/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-background/40">
+      <div className="border-t border-background/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-background/70">
         <span>© {new Date().getFullYear()} Meine Traum Webseite – Webdesign Agentur. Alle Rechte vorbehalten.</span>
         <div className="flex gap-4">
           <Link to="/impressum" className="hover:text-background transition-colors">Impressum</Link>
