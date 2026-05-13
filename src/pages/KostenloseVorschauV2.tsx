@@ -170,6 +170,10 @@ const faqs = [
     a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
+    q: "Warum gibt es eine 12-monatige Mindestlaufzeit?",
+    a: "Eine Website ist kein Sprint, sondern ein Marathon. Google braucht 3–6 Monate, um Sie für lokale Suchanfragen ernst zu nehmen. Erst nach diesem Zeitraum sehen Sie die volle Wirkung. Mit der Laufzeit stellen wir sicher, dass Sie nicht zu früh aufgeben – und tatsächlich Ergebnisse sehen.",
+  },
+  {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
     a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
