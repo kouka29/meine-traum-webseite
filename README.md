@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Meine Traum Webseite
 
-TODO: Document your project here
+Webdesign Agentur – Professionelle Websites für Selbstständige, KMUs und Handwerker.
