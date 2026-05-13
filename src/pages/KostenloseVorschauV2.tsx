@@ -563,6 +563,7 @@ const SuccessScreen = ({
         body: {
           templateName: "booking-confirmation",
           recipientEmail: email,
+          leadId,
           idempotencyKey: `vorschau2-booking-customer-${email}-${bookingDate}-${bookingTime}-${contactMethod}`,
           templateData: {
             firstName,
