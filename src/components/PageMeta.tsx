@@ -139,6 +139,18 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: `Impressum | ${BRAND}`,
     description: "Impressum gemäß § 5 DDG für Meine Traum Webseite – Webdesign Agentur.",
   },
+  "/admin": {
+    title: `Admin – Lead-Übersicht | ${BRAND}`,
+    description: "Interner Admin-Bereich für Lead-Management und Anfragen-Übersicht.",
+  },
+  "/original": {
+    title: `Website erstellen lassen – Original-Version | ${BRAND}`,
+    description: "Ursprüngliche Version unserer Homepage. Webdesign Agentur für conversion-optimierte Websites.",
+  },
+  "/unsubscribe": {
+    title: `E-Mail-Abmeldung | ${BRAND}`,
+    description: "Vom Newsletter abmelden. Sie können sich jederzeit wieder anmelden.",
+  },
 };
 
 const setMeta = (selector: string, attr: string, value: string) => {
