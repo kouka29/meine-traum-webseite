@@ -21,6 +21,7 @@ const faqsByPage: Record<string, FaqItem[]> = {
   "/leistungen": [
     { q: "Welche Leistungen bietet eure Webdesign Agentur?", a: "Wir bieten Conversion-Webdesign, UX/UI Design, SEO-Optimierung, Landingpage-Erstellung, Website Relaunch und Conversion-Optimierung – alles aus einer Hand." },
     { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Sie können jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten Sie gerne, welche Kombination für Ihre Ziele am sinnvollsten ist." },
+    { q: "Erstellt ihr auch Landingpages?", a: "Ja, wir erstellen hochkonvertierende Landingpages für Google Ads, Social Media Kampagnen und Lead-Generierung. Mehr dazu auf unserer Landingpage-Seite." },
   ],
   "/webdesign-agentur": [
     { q: "Was macht eine gute Webdesign Agentur aus?", a: "Eine gute Webdesign Agentur erstellt nicht nur schöne Websites, sondern Verkaufsinstrumente. Bei Meine Traum Webseite kombinieren wir verkaufspsychologisches Design mit modernster Technik für messbare Ergebnisse." },
