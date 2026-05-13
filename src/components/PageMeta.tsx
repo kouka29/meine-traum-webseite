@@ -4,12 +4,13 @@ import { useLocation } from "react-router-dom";
 const SITE_ORIGIN = "https://meine-traum-webseite.de";
 const BRAND = "Meine Traum Webseite";
 const DEFAULT_DESCRIPTION =
-  "Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h.";
+  "Professionelle Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker.";
 
 const pageMeta: Record<string, { title: string; description: string }> = {
   "/": {
     title: `Website erstellen lassen | ${BRAND}`,
-    description: DEFAULT_DESCRIPTION,
+    description:
+      "Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h.",
   },
   "/leistungen": {
     title: `Leistungen – Webdesign & SEO | ${BRAND}`,
