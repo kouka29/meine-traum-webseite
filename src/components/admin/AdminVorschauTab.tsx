@@ -117,7 +117,7 @@ const localToISO = (local: string): string | null => {
 export default function AdminVorschauTab({ password }: { password: string }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [pageKey, setPageKey] = useState<"v1" | "v2">("v1");
+  const [pageKey, setPageKey] = useState<"v1" | "v2">("v2");
   const [settings, setSettings] = useState<Settings | null>(null);
   const [demos, setDemos] = useState<Demo[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
@@ -445,8 +445,8 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-center gap-2">
         <span className="text-sm font-medium mr-2">Seite:</span>
         {([
-          { key: "v1" as const, label: "/kostenlose-vorschau-v2", path: "/kostenlose-vorschau-v2" },
           { key: "v2" as const, label: "/kostenlose-vorschau", path: "/kostenlose-vorschau" },
+          { key: "v1" as const, label: "/kostenlose-vorschau-v2", path: "/kostenlose-vorschau-v2" },
         ]).map(p => (
           <Button
             key={p.key}
