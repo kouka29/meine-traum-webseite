@@ -130,6 +130,33 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [demoImageFile, setDemoImageFile] = useState<File | null>(null);
   const [savingDemo, setSavingDemo] = useState(false);
   const [genDescLoading, setGenDescLoading] = useState(false);
+  const [screenshotUrl, setScreenshotUrl] = useState("");
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
+  const [genShotLoading, setGenShotLoading] = useState(false);
+
+  const generateScreenshot = async () => {
+    const url = screenshotUrl.trim();
+    if (!url) {
+      toast.error("Bitte eine URL eingeben.");
+      return;
+    }
+    setGenShotLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-demo-screenshot", {
+        body: { password, url },
+      });
+      if (error || (data as any)?.error) throw new Error((data as any)?.error || error?.message || "Fehler");
+      const u = (data as any)?.image_url;
+      if (!u) throw new Error("Kein Bild erhalten");
+      setGeneratedImageUrl(u);
+      setDemoImageFile(null);
+      toast.success("Screenshot generiert");
+    } catch (e: any) {
+      toast.error(e?.message || "Generierung fehlgeschlagen");
+    } finally {
+      setGenShotLoading(false);
+    }
+  };
 
   const generateDescription = async () => {
     if (!demoForm.company.trim()) {
