@@ -1944,6 +1944,40 @@ const KostenloseVorschauV2 = () => {
         </div>
       </section>
 
+      {/* Demo-Vorschau: Bestätigungs-Dialog vor externem Link */}
+      <AlertDialog open={!!previewDemo} onOpenChange={(open) => !open && setPreviewDemo(null)}>
+        <AlertDialogContent className="max-w-md">
+          <AlertDialogHeader>
+            <div className="mx-auto mb-2 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+              <ExternalLink className="w-5 h-5 text-primary" />
+            </div>
+            <AlertDialogTitle className="text-center">
+              Live-Vorschau von {previewDemo?.company}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-center">
+              Die Vorschau öffnet sich in einem neuen Tab. So bleibt diese Seite für Sie offen –
+              und Sie können danach direkt Ihre eigene Vorschau anfordern.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="sm:flex-col sm:space-x-0 gap-2">
+            <AlertDialogAction
+              onClick={() => {
+                if (previewDemo?.url) {
+                  window.open(previewDemo.url, "_blank", "noopener,noreferrer");
+                }
+                setPreviewDemo(null);
+              }}
+              className="w-full"
+            >
+              Vorschau öffnen <ExternalLink className="ml-2 w-4 h-4" />
+            </AlertDialogAction>
+            <AlertDialogCancel className="w-full mt-0">
+              Hier bleiben
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
     </div>
   );
 };
