@@ -42,6 +42,17 @@ import {
   Share2,
 } from "lucide-react";
 import { Calendar as CalendarIcon, PhoneCall, Video, MessageCircle } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useVorschauSettings, type VorschauSettings, type VorschauDemo, type VorschauFaq } from "@/hooks/useVorschauSettings";
