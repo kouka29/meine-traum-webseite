@@ -642,7 +642,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           ) : (
             <div className="grid gap-3">
               {demos.map((d, i) => (
-                <div key={d.id} className={`flex items-center gap-3 rounded-lg border border-border p-3 ${!d.is_visible ? "opacity-60" : ""}`}>
+                <div key={d.id} className={`flex items-center gap-3 rounded-lg border border-border p-3 min-w-0 ${!d.is_visible ? "opacity-60" : ""}`}>
                   <div className="w-16 h-12 rounded-md overflow-hidden bg-muted shrink-0">
                     {d.image_url
                       ? <img src={d.image_url} alt={d.company} className="w-full h-full object-cover" />
@@ -689,7 +689,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                 const usedDemo = demos.find(d => d.portfolio_project_id === p.id);
                 const used = !!usedDemo;
                 return (
-                  <div key={p.id} className="flex items-center gap-3 rounded-lg border border-border p-3">
+                  <div key={p.id} className="flex items-center gap-3 rounded-lg border border-border p-3 min-w-0">
                     <div className="w-14 h-10 rounded-md overflow-hidden bg-muted shrink-0">
                       {(p.mockup_desktop_url || p.image_url) ? (
                         <img src={p.mockup_desktop_url || p.image_url} alt={p.title} className="w-full h-full object-cover" />
