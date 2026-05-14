@@ -1739,9 +1739,19 @@ const KostenloseVorschauV2 = () => {
             <CarouselContent className="-ml-4">
               {activeDemos.map((d, idx) => (
                 <CarouselItem key={`${d.company}-${idx}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                  <div className="h-full bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (d.external_url) {
+                        setPreviewDemo({ company: d.company, url: d.external_url });
+                      } else {
+                        scrollToForm();
+                      }
+                    }}
+                    className="group h-full w-full text-left bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col transition-all hover:border-primary/40 hover:shadow-lg hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  >
                     {/* Mockup */}
-                    <div className="bg-gradient-to-br from-primary/10 to-accent/10 p-5">
+                    <div className="relative bg-gradient-to-br from-primary/10 to-accent/10 p-5">
                       <div className="bg-card rounded-lg shadow-md overflow-hidden border border-border">
                         <div className="bg-muted h-6 flex items-center gap-1.5 px-2.5">
                           <span className="w-2 h-2 rounded-full bg-rose-400" />
@@ -1758,21 +1768,36 @@ const KostenloseVorschauV2 = () => {
                           </div>
                         )}
                       </div>
+                      {d.external_url && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-200">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-flex items-center gap-2 rounded-full bg-card text-foreground px-4 py-2 text-sm font-semibold shadow-lg">
+                            <ExternalLink className="w-4 h-4" />
+                            Live ansehen
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <div className="p-5 flex-1 flex flex-col">
                       {d.trade && <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
                         {d.trade}
                       </span>}
-                      <h3 className="font-bold mb-1">{d.company}</h3>
+                      <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">{d.company}</h3>
                       <p className="text-sm text-muted-foreground mb-3 flex-1">{(d as any).desc ?? (d as any).description}</p>
-                      <div className="flex items-center gap-1 text-amber-500 text-sm">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-current" />
-                        ))}
-                        <span className="ml-1 text-muted-foreground">Kunde ist begeistert</span>
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1 text-amber-500 text-sm">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-current" />
+                          ))}
+                          <span className="ml-1 text-muted-foreground">Kunde ist begeistert</span>
+                        </div>
+                        {d.external_url && (
+                          <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
+                            Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                          </span>
+                        )}
                       </div>
                     </div>
-                  </div>
+                  </button>
                 </CarouselItem>
               ))}
             </CarouselContent>
