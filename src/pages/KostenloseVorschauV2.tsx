@@ -1833,7 +1833,8 @@ const KostenloseVorschauV2 = () => {
             Was Kunden über ihre Vorschau sagen
           </h2>
           <Carousel
-            opts={{ align: "start", loop: activeTestimonials.length > 3 }}
+            opts={{ align: "start", loop: activeTestimonials.length > 3, direction: "rtl" as const }}
+            plugins={[Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]}
             setApi={setTestimonialsApi}
             className="max-w-6xl mx-auto"
           >
