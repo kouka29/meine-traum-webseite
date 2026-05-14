@@ -130,6 +130,33 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [demoImageFile, setDemoImageFile] = useState<File | null>(null);
   const [savingDemo, setSavingDemo] = useState(false);
   const [genDescLoading, setGenDescLoading] = useState(false);
+  const [screenshotUrl, setScreenshotUrl] = useState("");
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
+  const [genShotLoading, setGenShotLoading] = useState(false);
+
+  const generateScreenshot = async () => {
+    const url = screenshotUrl.trim();
+    if (!url) {
+      toast.error("Bitte eine URL eingeben.");
+      return;
+    }
+    setGenShotLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-demo-screenshot", {
+        body: { password, url },
+      });
+      if (error || (data as any)?.error) throw new Error((data as any)?.error || error?.message || "Fehler");
+      const u = (data as any)?.image_url;
+      if (!u) throw new Error("Kein Bild erhalten");
+      setGeneratedImageUrl(u);
+      setDemoImageFile(null);
+      toast.success("Screenshot generiert");
+    } catch (e: any) {
+      toast.error(e?.message || "Generierung fehlgeschlagen");
+    } finally {
+      setGenShotLoading(false);
+    }
+  };
 
   const generateDescription = async () => {
     if (!demoForm.company.trim()) {
@@ -225,12 +252,17 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     setEditingDemo(null);
     setDemoForm({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" });
     setDemoImageFile(null);
+    setScreenshotUrl("");
+    setGeneratedImageUrl("");
     setShowDemoDialog(true);
   };
   const openEditDemo = (d: Demo) => {
     setEditingDemo(d);
     setDemoForm({ trade: d.trade, company: d.company, description: d.description, is_visible: d.is_visible, portfolio_project_id: d.portfolio_project_id || "" });
     setDemoImageFile(null);
+    setGeneratedImageUrl("");
+    const linked = d.portfolio_project_id ? portfolio.find(p => p.id === d.portfolio_project_id) : null;
+    setScreenshotUrl(linked?.external_url || "");
     setShowDemoDialog(true);
   };
   const saveDemo = async () => {
@@ -257,6 +289,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         ...demoForm,
         portfolio_project_id: demoForm.portfolio_project_id || null,
         ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
+        ...(!uploadedImageUrl && generatedImageUrl ? { image_url: generatedImageUrl } : {}),
         pageKey,
       },
     });
@@ -783,6 +816,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                       description: f.description || p.description || "",
                     } : {}),
                   }));
+                  if (p?.external_url && !screenshotUrl) setScreenshotUrl(p.external_url);
                 }}
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               >
@@ -822,10 +856,46 @@ export default function AdminVorschauTab({ password }: { password: string }) {
             </div>
             <div>
               <Label>Vorschaubild</Label>
-              <Input type="file" accept="image/*" onChange={e => setDemoImageFile(e.target.files?.[0] || null)} />
-              {editingDemo?.image_url && !demoImageFile && (
-                <p className="text-xs text-muted-foreground mt-1">Aktuelles Bild bleibt bestehen.</p>
-              )}
+              <div className="rounded-lg border border-dashed border-border p-3 space-y-3 bg-muted/20">
+                <div>
+                  <Label className="text-xs text-muted-foreground">Auto-Screenshot der Webseite (Cookie-Banner werden ausgeblendet)</Label>
+                  <div className="flex gap-2 mt-1">
+                    <Input
+                      placeholder="https://beispiel.de"
+                      value={screenshotUrl}
+                      onChange={e => setScreenshotUrl(e.target.value)}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline-primary"
+                      onClick={generateScreenshot}
+                      disabled={genShotLoading || !screenshotUrl.trim()}
+                      className="shrink-0"
+                    >
+                      {genShotLoading ? <Loader2 className="animate-spin" size={14} /> : <Sparkles size={14} />}
+                      Screenshot
+                    </Button>
+                  </div>
+                  {generatedImageUrl && (
+                    <div className="mt-2">
+                      <img src={generatedImageUrl} alt="Generierte Vorschau" className="w-full max-h-48 object-cover rounded-md border border-border" />
+                      <p className="text-xs text-muted-foreground mt-1">Wird beim Speichern als Vorschaubild verwendet.</p>
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-px bg-border flex-1" />
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground">oder</span>
+                  <div className="h-px bg-border flex-1" />
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground">Bild-Datei hochladen</Label>
+                  <Input type="file" accept="image/*" onChange={e => { setDemoImageFile(e.target.files?.[0] || null); if (e.target.files?.[0]) setGeneratedImageUrl(""); }} className="mt-1" />
+                  {editingDemo?.image_url && !demoImageFile && !generatedImageUrl && (
+                    <p className="text-xs text-muted-foreground mt-1">Aktuelles Bild bleibt bestehen.</p>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <Switch checked={demoForm.is_visible} onCheckedChange={v => setDemoForm(f => ({ ...f, is_visible: v }))} />
