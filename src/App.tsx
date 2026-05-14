@@ -79,8 +79,8 @@ const App = () => (
             <Route path="/website-relaunch" element={<WebsiteRelaunch />} />
             <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
             <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
-            <Route path="/kostenlose-vorschau" element={<KostenloseVorschau2 />} />
-            <Route path="/kostenlose-vorschau-v2" element={<KostenloseVorschauV2 />} />
+            <Route path="/kostenlose-vorschau" element={<KostenloseVorschauV2 />} />
+            <Route path="/kostenlose-vorschau-v2" element={<KostenloseVorschau2 />} />
             <Route path="/kostenlose-vorschau2" element={<KostenloseVorschau />} />
             <Route path="/webdesign-preise" element={<WebdesignPreise />} />
             <Route path="/preise" element={<WebdesignPreise />} />

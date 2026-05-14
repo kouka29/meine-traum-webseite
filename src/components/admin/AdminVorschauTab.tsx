@@ -409,8 +409,8 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-center gap-2">
         <span className="text-sm font-medium mr-2">Seite:</span>
         {([
-          { key: "v1" as const, label: "/kostenlose-vorschau", path: "/kostenlose-vorschau" },
-          { key: "v2" as const, label: "/kostenlose-vorschau-v2", path: "/kostenlose-vorschau-v2" },
+          { key: "v1" as const, label: "/kostenlose-vorschau-v2", path: "/kostenlose-vorschau-v2" },
+          { key: "v2" as const, label: "/kostenlose-vorschau", path: "/kostenlose-vorschau" },
         ]).map(p => (
           <Button
             key={p.key}
@@ -430,8 +430,8 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           <p className="font-medium text-foreground">Live-Vorschau aktiv</p>
           <p className="text-muted-foreground">
             Alle Änderungen werden nach dem Speichern sofort auf{" "}
-            <a href={pageKey === "v2" ? "/kostenlose-vorschau-v2" : "/kostenlose-vorschau"} target="_blank" rel="noreferrer" className="text-primary underline">
-              {pageKey === "v2" ? "/kostenlose-vorschau-v2" : "/kostenlose-vorschau"}
+            <a href={pageKey === "v2" ? "/kostenlose-vorschau" : "/kostenlose-vorschau-v2"} target="_blank" rel="noreferrer" className="text-primary underline">
+              {pageKey === "v2" ? "/kostenlose-vorschau" : "/kostenlose-vorschau-v2"}
             </a>{" "}
             sichtbar.
           </p>
