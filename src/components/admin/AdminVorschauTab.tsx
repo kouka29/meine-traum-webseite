@@ -642,7 +642,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           ) : (
             <div className="grid gap-3">
               {demos.map((d, i) => (
-                <div key={d.id} className={`flex items-center gap-3 rounded-lg border border-border p-3 ${!d.is_visible ? "opacity-60" : ""}`}>
+                <div key={d.id} className={`flex items-center gap-3 rounded-lg border border-border p-3 min-w-0 ${!d.is_visible ? "opacity-60" : ""}`}>
                   <div className="w-16 h-12 rounded-md overflow-hidden bg-muted shrink-0">
                     {d.image_url
                       ? <img src={d.image_url} alt={d.company} className="w-full h-full object-cover" />
