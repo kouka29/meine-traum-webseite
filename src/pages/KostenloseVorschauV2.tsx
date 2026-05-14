@@ -1492,12 +1492,19 @@ const KostenloseVorschauV2 = () => {
       })
     : demos.map(d => ({ ...d, image_url: "", external_url: "" }));
   const [previewDemo, setPreviewDemo] = useState<{ company: string; url: string } | null>(null);
-  const activeTestimonials = testimonials.map(t => ({
-    quote: t.quote,
-    name: t.name,
-    role: t.role,
-    result: t.result,
-  }));
+  const activeTestimonials = (dbTestimonials && dbTestimonials.length > 0)
+    ? dbTestimonials.map(t => ({
+        quote: t.text,
+        name: t.name,
+        role: t.role,
+        result: t.result,
+      }))
+    : testimonials.map(t => ({
+        quote: t.quote,
+        name: t.name,
+        role: t.role,
+        result: t.result,
+      }));
   // Identische FAQs wie auf /preise – DB-FAQs hier bewusst nicht überschreiben lassen.
   const activeFaqs = faqs;
   const heroBadge = isWaitlist
