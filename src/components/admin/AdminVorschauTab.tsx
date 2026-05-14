@@ -129,6 +129,29 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [demoForm, setDemoForm] = useState({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" as string });
   const [demoImageFile, setDemoImageFile] = useState<File | null>(null);
   const [savingDemo, setSavingDemo] = useState(false);
+  const [genDescLoading, setGenDescLoading] = useState(false);
+
+  const generateDescription = async () => {
+    if (!demoForm.company.trim()) {
+      toast.error("Bitte zuerst den Firmennamen eingeben.");
+      return;
+    }
+    setGenDescLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-demo-description", {
+        body: { trade: demoForm.trade, company: demoForm.company },
+      });
+      if (error) throw error;
+      const text = (data as any)?.description?.trim();
+      if (!text) throw new Error("Keine Antwort erhalten");
+      setDemoForm(f => ({ ...f, description: text }));
+      toast.success("Beschreibung generiert");
+    } catch (e: any) {
+      toast.error(e?.message || "Generierung fehlgeschlagen");
+    } finally {
+      setGenDescLoading(false);
+    }
+  };
 
   // FAQ dialog
   const [showFaqDialog, setShowFaqDialog] = useState(false);
@@ -778,7 +801,20 @@ export default function AdminVorschauTab({ password }: { password: string }) {
               <Input value={demoForm.company} onChange={e => setDemoForm(f => ({ ...f, company: e.target.value }))} placeholder="Mustermann GmbH" />
             </div>
             <div>
-              <Label>Beschreibung</Label>
+              <div className="flex items-center justify-between mb-1">
+                <Label>Beschreibung</Label>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  className="h-7 px-2 text-xs text-primary hover:text-primary"
+                  onClick={generateDescription}
+                  disabled={genDescLoading || !demoForm.company.trim()}
+                >
+                  {genDescLoading ? <Loader2 className="animate-spin" size={12} /> : <Sparkles size={12} />}
+                  Mit KI generieren
+                </Button>
+              </div>
               <Textarea rows={2} value={demoForm.description} onChange={e => setDemoForm(f => ({ ...f, description: e.target.value }))} />
             </div>
             <div>
