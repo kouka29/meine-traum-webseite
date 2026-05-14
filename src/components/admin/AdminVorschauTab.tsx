@@ -252,12 +252,17 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     setEditingDemo(null);
     setDemoForm({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" });
     setDemoImageFile(null);
+    setScreenshotUrl("");
+    setGeneratedImageUrl("");
     setShowDemoDialog(true);
   };
   const openEditDemo = (d: Demo) => {
     setEditingDemo(d);
     setDemoForm({ trade: d.trade, company: d.company, description: d.description, is_visible: d.is_visible, portfolio_project_id: d.portfolio_project_id || "" });
     setDemoImageFile(null);
+    setGeneratedImageUrl("");
+    const linked = d.portfolio_project_id ? portfolio.find(p => p.id === d.portfolio_project_id) : null;
+    setScreenshotUrl(linked?.external_url || "");
     setShowDemoDialog(true);
   };
   const saveDemo = async () => {
@@ -284,6 +289,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         ...demoForm,
         portfolio_project_id: demoForm.portfolio_project_id || null,
         ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
+        ...(!uploadedImageUrl && generatedImageUrl ? { image_url: generatedImageUrl } : {}),
         pageKey,
       },
     });
