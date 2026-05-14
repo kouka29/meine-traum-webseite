@@ -816,6 +816,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                       description: f.description || p.description || "",
                     } : {}),
                   }));
+                  if (p?.external_url && !screenshotUrl) setScreenshotUrl(p.external_url);
                 }}
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               >
@@ -855,10 +856,46 @@ export default function AdminVorschauTab({ password }: { password: string }) {
             </div>
             <div>
               <Label>Vorschaubild</Label>
-              <Input type="file" accept="image/*" onChange={e => setDemoImageFile(e.target.files?.[0] || null)} />
-              {editingDemo?.image_url && !demoImageFile && (
-                <p className="text-xs text-muted-foreground mt-1">Aktuelles Bild bleibt bestehen.</p>
-              )}
+              <div className="rounded-lg border border-dashed border-border p-3 space-y-3 bg-muted/20">
+                <div>
+                  <Label className="text-xs text-muted-foreground">Auto-Screenshot der Webseite (Cookie-Banner werden ausgeblendet)</Label>
+                  <div className="flex gap-2 mt-1">
+                    <Input
+                      placeholder="https://beispiel.de"
+                      value={screenshotUrl}
+                      onChange={e => setScreenshotUrl(e.target.value)}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline-primary"
+                      onClick={generateScreenshot}
+                      disabled={genShotLoading || !screenshotUrl.trim()}
+                      className="shrink-0"
+                    >
+                      {genShotLoading ? <Loader2 className="animate-spin" size={14} /> : <Sparkles size={14} />}
+                      Screenshot
+                    </Button>
+                  </div>
+                  {generatedImageUrl && (
+                    <div className="mt-2">
+                      <img src={generatedImageUrl} alt="Generierte Vorschau" className="w-full max-h-48 object-cover rounded-md border border-border" />
+                      <p className="text-xs text-muted-foreground mt-1">Wird beim Speichern als Vorschaubild verwendet.</p>
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-px bg-border flex-1" />
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground">oder</span>
+                  <div className="h-px bg-border flex-1" />
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground">Bild-Datei hochladen</Label>
+                  <Input type="file" accept="image/*" onChange={e => { setDemoImageFile(e.target.files?.[0] || null); if (e.target.files?.[0]) setGeneratedImageUrl(""); }} className="mt-1" />
+                  {editingDemo?.image_url && !demoImageFile && !generatedImageUrl && (
+                    <p className="text-xs text-muted-foreground mt-1">Aktuelles Bild bleibt bestehen.</p>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <Switch checked={demoForm.is_visible} onCheckedChange={v => setDemoForm(f => ({ ...f, is_visible: v }))} />
