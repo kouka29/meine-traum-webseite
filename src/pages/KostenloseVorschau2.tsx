@@ -54,6 +54,8 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Static data
@@ -1589,6 +1591,7 @@ const KostenloseVorschau2 = () => {
           </div>
           <Carousel
             opts={{ align: "start", loop: activeDemos.length > 3 }}
+            plugins={[Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]}
             className="max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4">
@@ -1656,6 +1659,7 @@ const KostenloseVorschau2 = () => {
           </h2>
           <Carousel
             opts={{ align: "start", loop: activeTestimonials.length > 3 }}
+            plugins={[Autoplay({ delay: 5000, stopOnInteraction: true, stopOnMouseEnter: true })]}
             className="max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4">
