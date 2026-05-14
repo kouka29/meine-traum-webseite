@@ -54,6 +54,8 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Static data
