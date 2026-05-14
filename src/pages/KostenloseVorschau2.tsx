@@ -1591,6 +1591,7 @@ const KostenloseVorschau2 = () => {
           </div>
           <Carousel
             opts={{ align: "start", loop: activeDemos.length > 3 }}
+            plugins={[Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]}
             className="max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4">
