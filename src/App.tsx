@@ -12,7 +12,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
 import StructuredData from "@/components/StructuredData";
 import PageTracker from "@/components/PageTracker";
-import PaymentTestModeBanner from "@/components/PaymentTestModeBanner";
 
 // Eager load Index for fastest initial paint
 import Index from "./pages/Index.tsx";
