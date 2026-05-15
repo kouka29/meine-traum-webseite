@@ -20,6 +20,7 @@ type Pkg = {
   upgradeHint?: string;
   growth?: { price: string; items: string[] };
   badge?: string;
+  priceId?: string;
 };
 
 const rentPackages: Pkg[] = [
@@ -28,6 +29,7 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     badge: "Starter Miete – 59 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    priceId: "starter_rent_monthly",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
@@ -52,6 +54,7 @@ const rentPackages: Pkg[] = [
     price: "99 €/Monat",
     badge: "Pro Miete – 99 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    priceId: "pro_rent_monthly",
     features: [
       "2–5 Seiten",
       "SEO-Grundlagen (Google findet Sie)",
@@ -76,6 +79,7 @@ const rentPackages: Pkg[] = [
     price: "159 €/Monat",
     badge: "Premium Miete – 159 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    priceId: "premium_rent_monthly",
     features: [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
