@@ -432,10 +432,12 @@ const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
+  const [checkoutPkg, setCheckoutPkg] = useState<BuyPkg | null>(null);
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
     setPopupOpen(true);
   };
+  const openCheckout = (pkg: BuyPkg) => setCheckoutPkg(pkg);
 
   useEffect(() => {
     const ctaButtons = Array.from(
@@ -560,7 +562,15 @@ const WebdesignPreise = () => {
               Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
+              {buyPackages.map((pkg, i) => (
+                <BuyCard
+                  key={pkg.name}
+                  pkg={pkg}
+                  i={i}
+                  onOpen={openPopup}
+                  onCheckout={openCheckout}
+                />
+              ))}
             </div>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
