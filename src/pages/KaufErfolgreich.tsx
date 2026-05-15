@@ -1,0 +1,73 @@
+import { useEffect, useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
+import { CheckCircle2, Mail, Calendar, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+export default function KaufErfolgreich() {
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get("session_id");
+  const [confettiShown, setConfettiShown] = useState(false);
+
+  useEffect(() => {
+    setConfettiShown(true);
+  }, []);
+
+  return (
+    <main className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-background to-muted/30">
+      <div className="max-w-2xl mx-auto px-4 text-center">
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
+          <CheckCircle2 className="text-primary" size={48} />
+        </div>
+        <h1 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+          Vielen Dank für Ihre Anzahlung!
+        </h1>
+        <p className="text-lg text-muted-foreground mb-10">
+          Ihre 50 % Anzahlung ist eingegangen. Wir starten jetzt mit Ihrer neuen Website.
+        </p>
+
+        <div className="grid gap-4 text-left mb-10">
+          <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
+            <Mail className="text-primary shrink-0 mt-0.5" size={22} />
+            <div>
+              <p className="font-semibold mb-1">Bestätigung per E-Mail</p>
+              <p className="text-sm text-muted-foreground">
+                Sie erhalten in Kürze eine Bestätigung mit Ihrer Anzahlungs-Rechnung als PDF.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
+            <Calendar className="text-primary shrink-0 mt-0.5" size={22} />
+            <div>
+              <p className="font-semibold mb-1">Onboarding innerhalb von 24 h</p>
+              <p className="text-sm text-muted-foreground">
+                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und Ihren
+                Onboarding-Fragebogen zu schicken.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
+            <CheckCircle2 className="text-primary shrink-0 mt-0.5" size={22} />
+            <div>
+              <p className="font-semibold mb-1">Restzahlung bei Go-Live</p>
+              <p className="text-sm text-muted-foreground">
+                Die restlichen 50 % werden erst fällig, wenn Ihre Website live geht – per Rechnung.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <Button asChild size="lg" variant="outline-primary">
+          <Link to="/">
+            Zurück zur Startseite <ArrowRight size={16} />
+          </Link>
+        </Button>
+
+        {sessionId && (
+          <p className="text-xs text-muted-foreground mt-8">
+            Referenz: <code className="font-mono">{sessionId}</code>
+          </p>
+        )}
+      </div>
+    </main>
+  );
+}
