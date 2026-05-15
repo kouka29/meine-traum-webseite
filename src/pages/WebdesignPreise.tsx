@@ -337,7 +337,17 @@ const PackageCard = ({ pkg, i, onOpen }: { pkg: Pkg; i: number; onOpen: (badge: 
   </AnimatedSection>
 );
 
-const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: string) => void }) => (
+const BuyCard = ({
+  pkg,
+  i,
+  onOpen,
+  onCheckout,
+}: {
+  pkg: BuyPkg;
+  i: number;
+  onOpen: (badge: string) => void;
+  onCheckout: (pkg: BuyPkg) => void;
+}) => (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
@@ -392,15 +402,28 @@ const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: s
           <p className="text-sm text-foreground/80 mb-5 whitespace-pre-line">{pkg.comparison}</p>
         </>
       )}
-      <Button
-        variant={pkg.popular ? "gradient" : "outline-primary"}
-        size="lg"
-        className="w-full"
-        onClick={() => onOpen(pkg.badge ?? pkg.name)}
-        data-pricing-cta="true"
-      >
-        {pkg.cta} <ArrowRight size={16} />
-      </Button>
+      <div className="space-y-2">
+        <Button
+          variant={pkg.popular ? "gradient" : "outline-primary"}
+          size="lg"
+          className="w-full"
+          onClick={() => (pkg.priceId ? onCheckout(pkg) : onOpen(pkg.badge ?? pkg.name))}
+          data-pricing-cta="true"
+        >
+          {pkg.cta} <ArrowRight size={16} />
+        </Button>
+        {pkg.priceId && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full text-muted-foreground hover:text-foreground"
+            onClick={() => onOpen(pkg.badge ?? pkg.name)}
+          >
+            Lieber erst beraten lassen
+          </Button>
+        )}
+      </div>
+      {pkg.priceId && <PaymentTrustStrip />}
     </div>
   </AnimatedSection>
 );
