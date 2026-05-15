@@ -6,10 +6,16 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const PACKAGE_FROM_PRICE: Record<string, "starter" | "pro" | "premium"> = {
-  starter_purchase_deposit: "starter",
-  pro_purchase_deposit: "pro",
-  premium_purchase_deposit: "premium",
+type PackageTier = "starter" | "pro" | "premium";
+type PackageKind = "deposit" | "rent";
+
+const PACKAGE_FROM_PRICE: Record<string, { tier: PackageTier; kind: PackageKind }> = {
+  starter_purchase_deposit: { tier: "starter", kind: "deposit" },
+  pro_purchase_deposit: { tier: "pro", kind: "deposit" },
+  premium_purchase_deposit: { tier: "premium", kind: "deposit" },
+  starter_rent_monthly: { tier: "starter", kind: "rent" },
+  pro_rent_monthly: { tier: "pro", kind: "rent" },
+  premium_rent_monthly: { tier: "premium", kind: "rent" },
 };
 
 Deno.serve(async (req) => {
@@ -40,13 +46,14 @@ Deno.serve(async (req) => {
       });
     }
 
-    const pkg = PACKAGE_FROM_PRICE[priceId];
-    if (!pkg) {
+    const pkgInfo = PACKAGE_FROM_PRICE[priceId];
+    if (!pkgInfo) {
       return new Response(JSON.stringify({ error: "Unknown price" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    const { tier: pkg, kind } = pkgInfo;
 
     const stripe = createStripeClient(environment);
 
@@ -58,21 +65,32 @@ Deno.serve(async (req) => {
       });
     }
     const stripePrice = prices.data[0];
+    const isRecurring = stripePrice.type === "recurring";
+    const tierLabel = pkg.charAt(0).toUpperCase() + pkg.slice(1);
 
     const session = await stripe.checkout.sessions.create({
       line_items: [{ price: stripePrice.id, quantity: 1 }],
-      mode: "payment",
+      mode: isRecurring ? "subscription" : "payment",
       ui_mode: "embedded_page",
       return_url: returnUrl,
       automatic_tax: { enabled: true },
       tax_id_collection: { enabled: true },
       billing_address_collection: "required",
       ...(customerEmail && { customer_email: customerEmail }),
-      payment_intent_data: {
-        description: `Anzahlung (50%) – Webdesign-Paket ${pkg.charAt(0).toUpperCase() + pkg.slice(1)}`,
-        metadata: { package: pkg, kind: "deposit" },
-      },
-      metadata: { package: pkg, kind: "deposit", priceId },
+      ...(isRecurring
+        ? {
+            subscription_data: {
+              description: `Mietmodell – Webdesign-Paket ${tierLabel} (12 Monate Mindestlaufzeit)`,
+              metadata: { package: pkg, kind },
+            },
+          }
+        : {
+            payment_intent_data: {
+              description: `Anzahlung (50%) – Webdesign-Paket ${tierLabel}`,
+              metadata: { package: pkg, kind },
+            },
+          }),
+      metadata: { package: pkg, kind, priceId },
     });
 
     return new Response(JSON.stringify({ clientSecret: session.client_secret }), {
