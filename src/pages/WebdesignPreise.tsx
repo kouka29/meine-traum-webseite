@@ -156,7 +156,6 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
     cta: "Website jetzt sichern",
-    priceId: "starter_purchase_deposit",
   },
   {
     name: "Wachstums-Betrieb",
@@ -183,7 +182,6 @@ const buyPackages: BuyPkg[] = [
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.578 € netto (= 215 €/Monat)",
     popular: true,
     cta: "Website jetzt sichern",
-    priceId: "pro_purchase_deposit",
   },
   {
     name: "Marktführer",
@@ -210,7 +208,6 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.538 € netto (= 378 €/Monat)",
     cta: "Website jetzt sichern",
-    priceId: "premium_purchase_deposit",
   },
 ];
 
