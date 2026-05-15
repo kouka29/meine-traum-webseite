@@ -363,6 +363,7 @@ const PackageCard = ({
           </Button>
         )}
       </div>
+      {pkg.priceId && <PaymentTrustStrip kind="rent" />}
     </div>
   </AnimatedSection>
 );
