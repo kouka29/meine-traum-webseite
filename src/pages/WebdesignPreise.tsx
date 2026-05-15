@@ -687,6 +687,12 @@ const WebdesignPreise = () => {
     </button>
 
     <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
+    <StripeCheckoutDialog
+      open={checkoutPkg !== null}
+      onClose={() => setCheckoutPkg(null)}
+      priceId={checkoutPkg?.priceId ?? null}
+      packageName={checkoutPkg?.name ?? ""}
+    />
   </main>
   );
 };
