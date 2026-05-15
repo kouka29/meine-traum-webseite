@@ -364,7 +364,7 @@ const PackageCard = ({
             className="w-full text-muted-foreground hover:text-foreground"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
-            Lieber erst beraten lassen
+            Kostenlos beraten lassen →
           </Button>
         )}
       </div>
@@ -455,7 +455,7 @@ const BuyCard = ({
             className="w-full text-muted-foreground hover:text-foreground"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
-            Lieber erst beraten lassen
+            Kostenlos beraten lassen →
           </Button>
         )}
       </div>
