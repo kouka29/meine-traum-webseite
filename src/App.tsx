@@ -66,7 +66,6 @@ const App = () => (
         <PageMeta />
         <StructuredData />
         <PageTracker />
-        <PaymentTestModeBanner />
         <Navbar />
         <Suspense fallback={<PageLoader />}>
           <Routes>
