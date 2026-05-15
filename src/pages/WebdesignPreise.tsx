@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
+import StripeCheckoutDialog from "@/components/StripeCheckoutDialog";
+import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 
 type Pkg = {
   name: string;
@@ -125,6 +127,7 @@ type BuyPkg = {
   cta: string;
   growth?: { price: string; items: string[] };
   badge?: string;
+  priceId?: string;
 };
 
 const buyPackages: BuyPkg[] = [
@@ -152,6 +155,7 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
     cta: "Jetzt kaufen & starten",
+    priceId: "starter_purchase_deposit",
   },
   {
     name: "Pro",
@@ -178,6 +182,7 @@ const buyPackages: BuyPkg[] = [
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.578 € netto (= 215 €/Monat)",
     popular: true,
     cta: "Jetzt kaufen & starten",
+    priceId: "pro_purchase_deposit",
   },
   {
     name: "Premium",
@@ -204,6 +209,7 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.538 € netto (= 378 €/Monat)",
     cta: "Jetzt kaufen & starten",
+    priceId: "premium_purchase_deposit",
   },
 ];
 
@@ -331,7 +337,17 @@ const PackageCard = ({ pkg, i, onOpen }: { pkg: Pkg; i: number; onOpen: (badge: 
   </AnimatedSection>
 );
 
-const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: string) => void }) => (
+const BuyCard = ({
+  pkg,
+  i,
+  onOpen,
+  onCheckout,
+}: {
+  pkg: BuyPkg;
+  i: number;
+  onOpen: (badge: string) => void;
+  onCheckout: (pkg: BuyPkg) => void;
+}) => (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
@@ -386,15 +402,28 @@ const BuyCard = ({ pkg, i, onOpen }: { pkg: BuyPkg; i: number; onOpen: (badge: s
           <p className="text-sm text-foreground/80 mb-5 whitespace-pre-line">{pkg.comparison}</p>
         </>
       )}
-      <Button
-        variant={pkg.popular ? "gradient" : "outline-primary"}
-        size="lg"
-        className="w-full"
-        onClick={() => onOpen(pkg.badge ?? pkg.name)}
-        data-pricing-cta="true"
-      >
-        {pkg.cta} <ArrowRight size={16} />
-      </Button>
+      <div className="space-y-2">
+        <Button
+          variant={pkg.popular ? "gradient" : "outline-primary"}
+          size="lg"
+          className="w-full"
+          onClick={() => (pkg.priceId ? onCheckout(pkg) : onOpen(pkg.badge ?? pkg.name))}
+          data-pricing-cta="true"
+        >
+          {pkg.cta} <ArrowRight size={16} />
+        </Button>
+        {pkg.priceId && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full text-muted-foreground hover:text-foreground"
+            onClick={() => onOpen(pkg.badge ?? pkg.name)}
+          >
+            Lieber erst beraten lassen
+          </Button>
+        )}
+      </div>
+      {pkg.priceId && <PaymentTrustStrip />}
     </div>
   </AnimatedSection>
 );
@@ -403,10 +432,12 @@ const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
+  const [checkoutPkg, setCheckoutPkg] = useState<BuyPkg | null>(null);
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
     setPopupOpen(true);
   };
+  const openCheckout = (pkg: BuyPkg) => setCheckoutPkg(pkg);
 
   useEffect(() => {
     const ctaButtons = Array.from(
@@ -531,7 +562,15 @@ const WebdesignPreise = () => {
               Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {buyPackages.map((pkg, i) => <BuyCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
+              {buyPackages.map((pkg, i) => (
+                <BuyCard
+                  key={pkg.name}
+                  pkg={pkg}
+                  i={i}
+                  onOpen={openPopup}
+                  onCheckout={openCheckout}
+                />
+              ))}
             </div>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
@@ -648,6 +687,12 @@ const WebdesignPreise = () => {
     </button>
 
     <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
+    <StripeCheckoutDialog
+      open={checkoutPkg !== null}
+      onClose={() => setCheckoutPkg(null)}
+      priceId={checkoutPkg?.priceId ?? null}
+      packageName={checkoutPkg?.name ?? ""}
+    />
   </main>
   );
 };
