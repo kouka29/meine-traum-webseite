@@ -255,6 +255,10 @@ const faqs = [
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
     a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
+  {
+    q: "Bekomme ich durch die Website wirklich mehr Kunden?",
+    a: "Das ist die wichtigste Frage — und wir verstehen sie. Wir können keine Garantie auf eine bestimmte Anzahl Anfragen geben, aber: Alle unsere Kunden haben eine Website, die auf Google gefunden wird, professionell wirkt und rund um die Uhr für Sie arbeitet. Betriebe ohne Website verlieren täglich potenzielle Kunden an Konkurrenten. Mit einer professionellen Website gewinnen Sie zurück.",
+  },
 ];
 
 const PackageCard = ({
