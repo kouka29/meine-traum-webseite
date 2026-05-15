@@ -1,41 +1,87 @@
-# KI-generiertes Vorschaubild für Demos
+## Buchungsplattform mit Stripe & Google Calendar in /preise
 
-Ein Klick im Demo-Dialog erzeugt automatisch einen sauberen Screenshot der Webseite (Cookie-Banner versteckt) und setzt ihn als Vorschaubild.
+Vollwertige Buchungs- und Bezahlplattform direkt auf der Preisseite. Kunden können ein Paket wählen, einen Termin buchen, der automatisch in den Google Kalender synchronisiert wird, und sicher bezahlen (Anzahlung oder Vollbetrag) via Stripe.
 
-## Konzept
+---
 
-Wir nutzen die bereits vorhandene **Microlink-Screenshot-API** (siehe `generate-mockup` Edge Function). Microlink unterstützt das **Verstecken von Cookie-Bannern via injiziertem CSS** (`screenshot.styles`) — kein zusätzlicher API-Key, kein neuer Provider, keine echte „Bild-KI" nötig (das wäre eine Halluzination, kein echter Webseiten-Screenshot).
+### 1. Bezahlung – Lovable Payments (Stripe)
 
-## Änderungen
+- Lovable's eingebaute Stripe-Integration aktivieren (`enable_stripe_payments`) – kein eigener Stripe-Account nötig, Test-Modus sofort verfügbar.
+- Vorher Eligibility-Check (`recommend_payment_provider`) laufen lassen.
+- Pro Paket auf `/preise` ein Stripe-Produkt + Preis anlegen:
+  - **Starter** – Anzahlung 199 € (Rest nach Go-Live)
+  - **Business** – Anzahlung 299 €
+  - **Premium / Enterprise** – Beratungstermin 0 € (nur Buchung, keine Zahlung) oder Anzahlung 499 €
+- Optional: Miet-Pakete als Stripe **Subscription** (monatlich wiederkehrend).
+- Tax-Handling: „Tax calculation only" (+0,5 %) – passend für DE/EU B2B mit Reverse Charge.
 
-### 1. Neue Edge Function `generate-demo-screenshot`
-- Input: `{ password, url }`
-- Validiert Admin-Passwort (gleiche Brute-Force-Logik wie `generate-mockup`)
-- Ruft Microlink mit Cookie-Banner-Blocker auf:
-  - `screenshot.styles` injiziert CSS, das gängige Banner-Selektoren ausblendet:
-    `[id*="cookie"], [class*="cookie"], [id*="consent"], [class*="consent"], #usercentrics-root, .CybotCookiebotDialog, #onetrust-banner-sdk, [id*="cmp"], .cc-window, body > div[role="dialog"] { display: none !important; } html, body { overflow: auto !important; }`
-  - `waitUntil=networkidle0`, Viewport 1280×800, `fullPage=false`
-- Lädt das PNG in den bestehenden Bucket `vorschau-demos` unter `screenshots/{timestamp}.png`
-- Liefert `{ image_url }` zurück
+### 2. Buchung – eigener Slot-Kalender
 
-### 2. UI-Erweiterung im Demo-Dialog (`AdminVorschauTab.tsx`)
-Über dem „Vorschaubild"-Datei-Input:
-- Neues Feld **„Webseite-URL für Auto-Screenshot"** (optional)
-  - Vorbefüllt mit `external_url` des verlinkten Portfolio-Projekts (sofern vorhanden)
-- Button **„✨ Screenshot generieren"** mit `Sparkles`-Icon
-  - Disabled wenn URL leer oder Loading
-  - Bei Erfolg: temporäres Preview-Image im Dialog anzeigen + neuen `image_url`-State setzen
-- Beim Speichern (`saveDemo`): wenn ein generierter Screenshot vorliegt **und** keine Datei hochgeladen wurde → diesen als `image_url` speichern (Datei-Upload hat Vorrang, falls vorhanden)
+- Neue Tabelle `bookings` (Datum, Uhrzeit, Lead-ID, Paket, Stripe-Session-ID, Status: `pending` / `paid` / `confirmed` / `cancelled`, Google-Event-ID).
+- Neue Tabelle `availability_rules` (Wochentag, Start/Ende, Slot-Dauer, Puffer) – Admin-konfigurierbar.
+- Edge Function `get-available-slots`: berechnet freie Slots aus Regeln minus bereits gebuchte.
+- Doppelbuchungs-Schutz via DB-Unique-Constraint (`booking_date`, `booking_time`).
 
-### 3. Optional: vorhandenes `external_url`-Feld
-`vorschau_demos` hat aktuell kein eigenes URL-Feld — wir benötigen das auch nicht zu speichern. Die URL ist nur transient für die Generierung. Bei verlinktem Portfolio kommt sie automatisch von dort, sonst manuell eingegeben.
+### 3. Google Calendar Sync
 
-## Hinweise zur Cookie-Banner-Unterdrückung
+- Google Calendar Connector verbinden (OAuth-Flow für deinen Agentur-Kalender).
+- Edge Function `sync-booking-to-calendar`:
+  - bei Status `paid` → Event erstellen (Titel „[Paket] – [Kunde]", Teilnehmer = Kunde, Google-Meet-Link automatisch).
+  - bei Storno → Event löschen.
+- Verfügbarkeit zusätzlich gegen Google-Kalender prüfen (busy-Slots ausblenden).
 
-- CSS-Injection deckt **~90 %** gängiger Banner ab (Cookiebot, OneTrust, Usercentrics, CMP-Pattern, generische `[class*="cookie"]`).
-- Edge-Cases (Banner im Shadow-DOM oder mit zufälligen IDs) lassen sich über zusätzliche `screenshot.scripts` (JS, das `document.querySelectorAll` durchgeht und alles mit „cookie/consent" im Text entfernt) abfangen — wird mit ausgeliefert.
-- Microlink Free-Tier reicht für Admin-interne Nutzung (Rate-Limit ~50/Tag pro IP). Falls später mehr nötig: API-Key als Secret nachrüsten.
+### 4. UX auf /preise (mobil-optimiert, conversion-fokussiert)
 
-## Was NICHT gemacht wird
-- Keine echte Bild-KI (Nano Banana etc.) für Webseiten-Screenshots — das würde halluzinierte Fake-Bilder erzeugen, nicht die echte Vorschau.
-- Keine DB-Schema-Änderung.
+```text
+[Paket-Karte]
+   ↓ Klick „Termin buchen & sichern"
+[Modal Step 1: Kalender]  Datum + verfügbare Slots als große Touch-Targets (≥56 px)
+   ↓
+[Modal Step 2: Kontaktdaten]  Vorname, Firma, Telefon, E-Mail (FloatingFields wie PricingLeadPopup)
+   ↓
+[Modal Step 3: Bezahlung]  „Jetzt 199 € anzahlen – Restbetrag nach Freigabe"
+   ↓ Stripe Checkout (neuer Tab)
+   ↓ Webhook bestätigt Zahlung
+[Success Page /buchung-erfolgreich]  Termin + Google-Meet-Link + Kalender-Datei (.ics)
+```
+
+- Kein-Risiko-Copy: „100 % Geld-zurück, falls Demo nicht überzeugt"
+- Trust-Signale unter CTA: Stripe-Logo, SSL, „12 Betriebe vertrauen uns"
+- Sticky Mobile-CTA bleibt erhalten
+
+### 5. Edge Functions & Webhooks
+
+- `create-checkout-session` – legt Stripe-Session an mit Booking-Metadata
+- `stripe-webhook` (`verify_jwt = false`) – `checkout.session.completed` → Booking auf `paid`, triggert Calendar-Sync + Bestätigungs-E-Mail
+- `cancel-booking` – Storno + Refund via Stripe API + Calendar-Event löschen
+
+### 6. Admin-Bereich
+
+- Neuer Tab „Buchungen" in `/admin`: Liste aller Bookings (Status, Zahlung, Kalender-Sync), Storno-Button, manueller Status-Wechsel.
+- Verfügbarkeitsregeln editierbar (Mo–Fr 9–17, Slot 30 min etc.).
+
+### 7. E-Mail-Flow (nutzt vorhandenes `send-transactional-email`)
+
+- `booking-confirmation` (existiert bereits) – an Kunde nach Zahlung
+- Neue Vorlage `booking-internal` – an Inhaber
+
+---
+
+### Technische Reihenfolge
+
+1. Stripe aktivieren + Produkte anlegen
+2. DB-Migration: `bookings`, `availability_rules`
+3. Edge Functions: slots, checkout, webhook, calendar-sync
+4. Google Calendar Connector verbinden
+5. UI: Booking-Modal in `/preise` (3-Step), Success-Page
+6. Admin-Tab Buchungen
+7. End-to-End-Test im Stripe-Test-Modus
+
+---
+
+### Klärungsbedarf vor Implementierung
+
+1. **Bezahlmodell**: Anzahlung pro Paket (z. B. 199/299/499 €) **oder** Vollpreis sofort **oder** nur kostenloses Erstgespräch buchen + Zahlung später per Rechnung?
+2. **Slot-Verfügbarkeit**: feste Zeiten (Mo–Fr 9–17, 30 min) oder soll ich aus deinem Google-Kalender freie Slots ziehen?
+3. **Welcher Google-Account** wird Kalender-Owner (für OAuth-Verbindung)?
+4. **Subscription** für Miet-Pakete oder erstmal nur Einmal-Zahlungen?
