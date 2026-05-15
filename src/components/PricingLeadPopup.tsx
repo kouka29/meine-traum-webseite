@@ -438,20 +438,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   inputRef={phoneRef}
                 />
                 <FloatingField
-                  id="popup-company"
-                  label="Betriebsname"
-                  value={companyName}
-                  onChange={(v) => {
-                    setCompanyName(v);
-                    if (errors.companyName) setErrors((p) => ({ ...p, companyName: undefined }));
-                  }}
-                  error={errors.companyName}
-                  required
-                  autoComplete="organization"
-                  maxLength={200}
-                  inputRef={companyRef}
-                />
-                <FloatingField
                   id="popup-email"
                   label="E-Mail (optional)"
                   type="email"
