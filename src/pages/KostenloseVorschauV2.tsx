@@ -1094,7 +1094,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
     } catch (err) {
       console.error(err);
       setSubmitError(
-        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 30 764 98",
       );
       toast.error("Etwas ist schiefgelaufen. Bitte versuche es erneut.");
     } finally {
@@ -1425,8 +1425,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           {submitError && (
             <p className="text-sm text-destructive text-center">
               Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
-              <a href="tel:+4915123456789" className="font-semibold underline">
-                +49 151 23456789
+              <a href="tel:+4961313076498" className="font-semibold underline">
+                06131 30 764 98
               </a>
             </p>
           )}
