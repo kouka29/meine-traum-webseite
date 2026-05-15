@@ -370,11 +370,11 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               <div className="mt-3">
                 <p className="text-xs text-muted-foreground mb-1">Oder ruf mich direkt an:</p>
                 <a
-                  href="tel:+4915123456789"
+                  href="tel:+4961313076498"
                   className="inline-flex items-center gap-1.5 text-primary font-bold text-sm sm:text-base hover:underline"
                 >
                   <Phone size={14} />
-                  +49 151 23456789
+                  06131 30 764 98
                 </a>
               </div>
             </div>
@@ -489,12 +489,15 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               {submitError && (
                 <p className="text-center text-sm text-destructive mt-2">
                   Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
-                  <a href="tel:+4915123456789" className="font-semibold underline">
-                    +49 151 23456789
+                  <a href="tel:+4961313076498" className="font-semibold underline">
+                    06131 30 764 98
                   </a>
                 </p>
               )}
 
+              <p className="text-center text-xs sm:text-sm text-foreground/80 mt-3">
+                ⏱ Ich melde mich innerhalb von 2 Stunden bei Ihnen — Mo–Fr 9–18 Uhr
+              </p>
               <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1.5">
                 <ShieldCheck size={13} />
                 Kostenlos & unverbindlich – kein Spam, keine Verpflichtung
