@@ -363,7 +363,6 @@ const PackageCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip />}
     </div>
   </AnimatedSection>
 );
@@ -454,7 +453,7 @@ const BuyCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip />}
+      {pkg.priceId && <PaymentTrustStrip kind="deposit" />}
     </div>
   </AnimatedSection>
 );
