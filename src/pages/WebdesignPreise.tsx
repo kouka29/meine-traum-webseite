@@ -24,7 +24,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Starter",
     price: "59 €/Monat",
-    badge: "Starter Miete – 59 €/Monat",
+    badge: "Starter Miete – 59 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -48,7 +48,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Pro",
     price: "99 €/Monat",
-    badge: "Pro Miete – 99 €/Monat",
+    badge: "Pro Miete – 99 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "2–5 Seiten",
@@ -72,7 +72,7 @@ const rentPackages: Pkg[] = [
   {
     name: "Premium",
     price: "159 €/Monat",
-    badge: "Premium Miete – 159 €/Monat",
+    badge: "Premium Miete – 159 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Bis zu 10 Seiten",
@@ -131,8 +131,8 @@ const buyPackages: BuyPkg[] = [
   {
     name: "Starter",
     price: "990 € einmalig",
-    badge: "Starter Kauf – 990 €",
-    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparen Sie 426 €",
+    badge: "Starter Kauf – 990 € netto",
+    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
@@ -155,9 +155,9 @@ const buyPackages: BuyPkg[] = [
   },
   {
     name: "Pro",
-    price: "1.900 € einmalig",
-    badge: "Pro Kauf – 1.900 €",
-    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 476 €",
+    price: "1.990 € einmalig",
+    badge: "Pro Kauf – 1.990 € netto",
+    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
     features: [
       "2–5 Seiten",
       "SEO-Grundlagen (Google findet Sie)",
@@ -175,15 +175,15 @@ const buyPackages: BuyPkg[] = [
         "Priority Support per WhatsApp",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.488 € (= 207 €/Monat)",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.578 € netto (= 215 €/Monat)",
     popular: true,
     cta: "Jetzt kaufen & starten",
   },
   {
     name: "Premium",
-    price: "3.500 € einmalig",
-    badge: "Premium Kauf – 3.500 €",
-    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 316 €",
+    price: "3.590 € einmalig",
+    badge: "Premium Kauf – 3.590 € netto",
+    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
     features: [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
@@ -202,7 +202,7 @@ const buyPackages: BuyPkg[] = [
         "Monatlicher Performance-Check",
       ],
     },
-    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.448 € (= 370 €/Monat)",
+    comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.538 € netto (= 378 €/Monat)",
     cta: "Jetzt kaufen & starten",
   },
 ];
