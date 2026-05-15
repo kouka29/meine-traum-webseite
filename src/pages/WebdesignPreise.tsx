@@ -29,7 +29,6 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     badge: "Einzelkämpfer Miete – 59 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
-    priceId: "starter_rent_monthly",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
       "Eine starke Seite — reicht für die meisten Betriebe",
@@ -54,7 +53,6 @@ const rentPackages: Pkg[] = [
     price: "99 €/Monat",
     badge: "Wachstums-Betrieb Miete – 99 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
-    priceId: "pro_rent_monthly",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
       "SEO-Grundlagen (Google findet Sie)",
@@ -79,7 +77,6 @@ const rentPackages: Pkg[] = [
     price: "159 €/Monat",
     badge: "Marktführer Miete – 159 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
-    priceId: "premium_rent_monthly",
     features: [
       "Bis zu 10 Seiten — komplette Online-Präsenz",
       "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
@@ -159,7 +156,6 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
     cta: "Website jetzt sichern",
-    priceId: "starter_purchase_deposit",
   },
   {
     name: "Wachstums-Betrieb",
@@ -186,7 +182,6 @@ const buyPackages: BuyPkg[] = [
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.578 € netto (= 215 €/Monat)",
     popular: true,
     cta: "Website jetzt sichern",
-    priceId: "pro_purchase_deposit",
   },
   {
     name: "Marktführer",
@@ -213,7 +208,6 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.538 € netto (= 378 €/Monat)",
     cta: "Website jetzt sichern",
-    priceId: "premium_purchase_deposit",
   },
 ];
 
