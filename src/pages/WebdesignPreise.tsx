@@ -330,7 +330,7 @@ const PackageCard = ({
       {pkg.growth && (
         <div className="mb-5 rounded-xl bg-muted/50 border border-border/60 p-4">
           <p className="text-xs font-semibold text-foreground/80 mb-2">
-            🚀 Wachstumspaket: {pkg.growth.price}
+            🚀 Wachstumspaket — für Betriebe die mehr wollen: {pkg.growth.price}
           </p>
           <ul className="space-y-1 mb-2">
             {pkg.growth.items.map((g) => (
@@ -419,7 +419,7 @@ const BuyCard = ({
       {pkg.growth && (
         <div className="mb-3 rounded-xl bg-muted/50 border border-border/60 p-4">
           <p className="text-xs font-semibold text-foreground/80 mb-2">
-            🚀 Wachstumspaket: {pkg.growth.price}
+            🚀 Wachstumspaket — für Betriebe die mehr wollen: {pkg.growth.price}
           </p>
           <ul className="space-y-1 mb-2">
             {pkg.growth.items.map((g) => (
