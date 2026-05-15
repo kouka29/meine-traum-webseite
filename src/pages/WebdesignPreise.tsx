@@ -363,7 +363,7 @@ const PackageCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip />}
+      {pkg.priceId && <PaymentTrustStrip kind="rent" />}
     </div>
   </AnimatedSection>
 );
@@ -454,7 +454,7 @@ const BuyCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip />}
+      {pkg.priceId && <PaymentTrustStrip kind="deposit" />}
     </div>
   </AnimatedSection>
 );
@@ -723,6 +723,7 @@ const WebdesignPreise = () => {
       onClose={() => setCheckoutPkg(null)}
       priceId={checkoutPkg?.priceId ?? null}
       packageName={checkoutPkg?.name ?? ""}
+      kind={checkoutPkg?.priceId?.includes("_rent_") ? "rent" : "deposit"}
     />
   </main>
   );

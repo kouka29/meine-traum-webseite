@@ -1,5 +1,5 @@
 // Mini SVG payment method logos in muted-foreground color
-export default function PaymentTrustStrip() {
+export default function PaymentTrustStrip({ kind = "deposit" }: { kind?: "deposit" | "rent" }) {
   return (
     <div className="flex flex-col items-center gap-1.5 mt-3">
       <div className="flex items-center gap-2 opacity-60">
@@ -22,7 +22,9 @@ export default function PaymentTrustStrip() {
         </svg>
       </div>
       <p className="text-[11px] text-muted-foreground text-center leading-tight">
-        50 % Anzahlung jetzt · Rest nach Go-Live per Rechnung
+        {kind === "rent"
+          ? "Erste Monatsmiete jetzt · danach automatisch monatlich"
+          : "50 % Anzahlung jetzt · Rest nach Go-Live per Rechnung"}
       </p>
     </div>
   );

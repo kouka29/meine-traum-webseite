@@ -11,6 +11,7 @@ interface StripeCheckoutDialogProps {
   priceId: string | null;
   packageName: string;
   customerEmail?: string;
+  kind?: "deposit" | "rent";
 }
 
 export default function StripeCheckoutDialog({
@@ -19,6 +20,7 @@ export default function StripeCheckoutDialog({
   priceId,
   packageName,
   customerEmail,
+  kind = "deposit",
 }: StripeCheckoutDialogProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -72,11 +74,12 @@ export default function StripeCheckoutDialog({
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
         <DialogHeader className="p-6 pb-2">
           <DialogTitle className="font-heading">
-            {packageName} – 50 % Anzahlung
+            {packageName}{kind === "rent" ? " – Mietmodell" : " – 50 % Anzahlung"}
           </DialogTitle>
           <DialogDescription>
-            Sicher bezahlen mit Karte, SEPA-Lastschrift oder Klarna.
-            Die restlichen 50 % werden nach Go-Live per Rechnung fällig.
+            {kind === "rent"
+              ? "Sicher bezahlen mit Karte, SEPA-Lastschrift oder Klarna. Die erste Monatsmiete wird sofort fällig, danach automatisch monatlich. Mindestlaufzeit 12 Monate."
+              : "Sicher bezahlen mit Karte, SEPA-Lastschrift oder Klarna. Die restlichen 50 % werden nach Go-Live per Rechnung fällig."}
           </DialogDescription>
         </DialogHeader>
 
