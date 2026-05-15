@@ -521,19 +521,23 @@ const WebdesignPreise = () => {
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
-              Was kostet Ihre{" "}
-              <span className="gradient-text">neue Website?</span>
+              1 neuer Auftrag zahlt Ihre{" "}
+              <span className="gradient-text">Website für 6 Monate.</span>
             </h1>
-            <p className="text-muted-foreground text-lg">
-              Mieten oder kaufen – Sie entscheiden. Keine versteckten Kosten.
+            <p className="text-muted-foreground text-lg mb-5">
+              Professionell online — ohne großes Investment.
+            </p>
+            <p className="inline-flex items-center gap-2 text-base md:text-lg font-bold text-primary bg-primary/10 px-4 py-2 rounded-full">
+              <CheckCircle size={20} className="text-primary shrink-0" />
+              Für Gewerbetreibende voll steuerlich absetzbar
             </p>
           </div>
         </AnimatedSection>
 
         <Tabs defaultValue="miete" className="mb-12">
           <TabsList className="mx-auto flex w-full max-w-sm mb-8">
-            <TabsTrigger value="miete" className="flex-1">Mieten</TabsTrigger>
-            <TabsTrigger value="kauf" className="flex-1">Einmalkauf</TabsTrigger>
+            <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
+            <TabsTrigger value="kauf" className="flex-1">Einmalig kaufen</TabsTrigger>
           </TabsList>
 
           <p className="text-xs text-muted-foreground text-center italic -mt-4 mb-6 max-w-2xl mx-auto">
@@ -591,7 +595,7 @@ const WebdesignPreise = () => {
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer Ihr. Langfristig günstiger als Miete.
+              💡 Einmal zahlen. Für immer Ihr. Nach ca. 2 Jahren günstiger als die Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
               Sie haben Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
@@ -647,7 +651,7 @@ const WebdesignPreise = () => {
             <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu Ihnen?</h3>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Miete = sofort starten, kein großes Investment, maximale Flexibilität.<br />
-              Einmalkauf = einmal zahlen, Website gehört Ihnen, langfristig günstiger.<br />
+              Einmalkauf = einmal zahlen, Website gehört Ihnen, nach ca. 2 Jahren günstiger als die Miete.<br />
               Nicht sicher? Ich berate Sie kurz und kostenlos.
             </p>
             <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
@@ -655,15 +659,16 @@ const WebdesignPreise = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-3 gap-5 sm:gap-6 max-w-4xl mx-auto mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
             {[
-              { Icon: Lock, label: "Keine versteckten Kosten" },
-              { Icon: FileText, label: "Kein Kleingedrucktes" },
-              { Icon: Target, label: "Erst Demo – dann Entscheidung" },
-            ].map(({ Icon, label }) => (
+              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Sie sehen ist was Sie zahlen" },
+              { Icon: FileText, label: "Kein Kleingedrucktes", sub: "Einfache, klare Verträge" },
+              { Icon: Target, label: "Erst Demo – dann Entscheidung", sub: "Kostenlose Vorschau in 48 Stunden" },
+            ].map(({ Icon, label, sub }) => (
               <div key={label} className="flex flex-col items-center text-center gap-3 px-2">
-                <Icon className="text-primary w-8 h-8 sm:w-6 sm:h-6" />
-                <span className="text-[13px] sm:text-sm font-medium leading-[1.5]">{label}</span>
+                <Icon className="text-primary w-10 h-10 sm:w-12 sm:h-12" strokeWidth={1.8} />
+                <span className="text-base sm:text-[17px] font-bold leading-snug text-foreground">{label}</span>
+                <span className="text-xs sm:text-sm text-muted-foreground leading-[1.5]">{sub}</span>
               </div>
             ))}
           </div>
@@ -692,21 +697,20 @@ const WebdesignPreise = () => {
     <section className="bg-primary/10 py-[60px]">
       <div className="container-narrow px-4 text-center">
         <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
-          Bereit für Ihre neue Website?
+          Mehr Aufträge. Weniger Aufwand.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
-          Kostenlose Design-Demo in 48 Stunden.<br />
-          Kein Risiko. Keine Verpflichtung.<br />
-          Gefällt sie Ihnen nicht – Sie zahlen nichts.
+          Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
+          Gefällt sie Ihnen nicht — Sie zahlen nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
-          Jetzt kostenlose Demo sichern <ArrowRight size={18} />
+          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
-          Fragen? Einfach anrufen: <a href="tel:+4915123456789" className="underline hover:text-foreground">+49 151 23456789</a>
+          Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 30 764 98</a>
         </p>
-        <p className="text-sm text-muted-foreground mt-5">
-          Bereits 12 Handwerksbetriebe vertrauen uns
+        <p className="text-base md:text-lg font-bold text-primary mt-6">
+          ⭐⭐⭐⭐⭐ Bereits 12 Handwerksbetriebe aus der Region vertrauen uns
         </p>
       </div>
     </section>
