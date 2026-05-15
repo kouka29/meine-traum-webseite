@@ -155,6 +155,7 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
     cta: "Jetzt kaufen & starten",
+    priceId: "starter_purchase_deposit",
   },
   {
     name: "Pro",
@@ -181,6 +182,7 @@ const buyPackages: BuyPkg[] = [
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.578 € netto (= 215 €/Monat)",
     popular: true,
     cta: "Jetzt kaufen & starten",
+    priceId: "pro_purchase_deposit",
   },
   {
     name: "Premium",
@@ -207,6 +209,7 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.538 € netto (= 378 €/Monat)",
     cta: "Jetzt kaufen & starten",
+    priceId: "premium_purchase_deposit",
   },
 ];
 
