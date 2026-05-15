@@ -15,10 +15,7 @@ interface PricingLeadPopupProps {
 const getCtaLabel = (badge: string) => {
   const b = badge.toLowerCase();
   if (b.includes("enterprise")) return "Beratung anfragen";
-  if (b.includes("kauf")) return "Jetzt verbindlich anfragen";
-  if (b.includes("miete")) return "Kostenlose Demo anfordern";
-  // Beratung / Demo / sonstige
-  return "Rückruf anfragen";
+  return "Jetzt kostenlos Termin sichern";
 };
 
 type FloatingFieldProps = {
@@ -95,7 +92,6 @@ const FloatingField = ({
 const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
-  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -109,12 +105,10 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [errors, setErrors] = useState<{
     firstName?: string;
     phone?: string;
-    companyName?: string;
   }>({});
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
-  const companyRef = useRef<HTMLInputElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
 
@@ -184,7 +178,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     if (!firstName.trim()) errs.firstName = "Bitte fülle dieses Feld aus.";
     if (!phone.trim() || phone.trim().length < 6)
       errs.phone = "Bitte fülle dieses Feld aus.";
-    if (!companyName.trim()) errs.companyName = "Bitte fülle dieses Feld aus.";
     setErrors(errs);
 
     // Scroll to first invalid
@@ -194,9 +187,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     } else if (errs.phone) {
       phoneRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       phoneRef.current?.focus();
-    } else if (errs.companyName) {
-      companyRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      companyRef.current?.focus();
     }
 
     return Object.keys(errs).length === 0;
@@ -225,9 +215,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         body: JSON.stringify({
           name: firstName.trim(),
           phone: phone.trim(),
-          company: companyName.trim(),
           email: email.trim(),
-          _subject: `🔔 Neue Preisanfrage: ${badge} - ${companyName.trim()}`,
+          _subject: `🔔 Neue Preisanfrage: ${badge} - ${firstName.trim()}`,
           _replyto: email.trim(),
           _gotcha: honeypot,
           paket: badge,
@@ -242,7 +231,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     if (!formspreeOk) {
       setLoading(false);
       setSubmitError(
-        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 30 764 98",
       );
       return;
     }
@@ -251,7 +240,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     const { error } = await supabase.from("leads").insert({
       id: leadId,
       first_name: firstName.trim(),
-      company_name: companyName.trim(),
+      company_name: "",
       phone: phone.trim(),
       email: finalEmail,
       notes: `Pop-up Anfrage von Preisseite – Paket: ${badge}`,
@@ -267,7 +256,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         templateData: {
           source: `Preisseite Pop-up (${badge})`,
           firstName: firstName.trim(),
-          companyName: companyName.trim(),
+          companyName: "(nicht angegeben)",
           email: email.trim() || "(keine E-Mail – nur Telefon)",
           phone: phone.trim(),
           submittedAt: new Date().toLocaleString("de-DE"),
@@ -283,7 +272,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     setSubmitted(true);
     setFirstName("");
     setPhone("");
-    setCompanyName("");
     setEmail("");
   };
 
