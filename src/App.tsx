@@ -12,6 +12,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
 import StructuredData from "@/components/StructuredData";
 import PageTracker from "@/components/PageTracker";
+import PaymentTestModeBanner from "@/components/PaymentTestModeBanner";
 
 // Eager load Index for fastest initial paint
 import Index from "./pages/Index.tsx";
@@ -46,6 +47,7 @@ const KostenloseVorschauV2 = lazy(() => import("./pages/KostenloseVorschauV2.tsx
 const Empfehlung = lazy(() => import("./pages/Empfehlung.tsx"));
 const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 const Starter = lazy(() => import("./pages/Starter.tsx"));
+const KaufErfolgreich = lazy(() => import("./pages/KaufErfolgreich.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -65,6 +67,7 @@ const App = () => (
         <PageMeta />
         <StructuredData />
         <PageTracker />
+        <PaymentTestModeBanner />
         <Navbar />
         <Suspense fallback={<PageLoader />}>
           <Routes>
@@ -98,6 +101,7 @@ const App = () => (
             <Route path="/empfehlung" element={<Empfehlung />} />
             <Route path="/erstgespraech" element={<Erstgespraech />} />
             <Route path="/starter" element={<Starter />} />
+            <Route path="/kauf-erfolgreich" element={<KaufErfolgreich />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
