@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
 
@@ -42,6 +42,13 @@ const Navbar = () => {
               {item.label}
             </Link>
           ))}
+          <a
+            href="tel:+4961313076498"
+            className="hidden lg:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground hover:text-primary transition-colors"
+          >
+            <Phone size={14} className="text-primary" />
+            06131 30 764 98
+          </a>
           <Button variant="gradient" size="sm" className="text-[13px] px-5" asChild>
             <Link to="/kontakt">Erstgespräch buchen</Link>
           </Button>
@@ -76,6 +83,14 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+            <a
+              href="tel:+4961313076498"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-foreground"
+              onClick={() => setOpen(false)}
+            >
+              <Phone size={14} className="text-primary" />
+              06131 30 764 98
+            </a>
             <Button variant="gradient" size="sm" asChild>
               <Link to="/kontakt" onClick={() => setOpen(false)}>
                 Erstgespräch buchen
