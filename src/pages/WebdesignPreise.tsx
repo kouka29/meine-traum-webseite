@@ -20,6 +20,7 @@ type Pkg = {
   upgradeHint?: string;
   growth?: { price: string; items: string[] };
   badge?: string;
+  priceId?: string;
 };
 
 const rentPackages: Pkg[] = [
@@ -28,6 +29,7 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     badge: "Starter Miete – 59 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    priceId: "starter_rent_monthly",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
       "One-Pager (1 Seite)",
@@ -52,6 +54,7 @@ const rentPackages: Pkg[] = [
     price: "99 €/Monat",
     badge: "Pro Miete – 99 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    priceId: "pro_rent_monthly",
     features: [
       "2–5 Seiten",
       "SEO-Grundlagen (Google findet Sie)",
@@ -76,6 +79,7 @@ const rentPackages: Pkg[] = [
     price: "159 €/Monat",
     badge: "Premium Miete – 159 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    priceId: "premium_rent_monthly",
     features: [
       "Bis zu 10 Seiten",
       "SEO-Grundlagen + Seitenstruktur",
@@ -252,7 +256,17 @@ const faqs = [
   },
 ];
 
-const PackageCard = ({ pkg, i, onOpen }: { pkg: Pkg; i: number; onOpen: (badge: string) => void }) => (
+const PackageCard = ({
+  pkg,
+  i,
+  onOpen,
+  onCheckout,
+}: {
+  pkg: Pkg;
+  i: number;
+  onOpen: (badge: string) => void;
+  onCheckout?: (pkg: Pkg) => void;
+}) => (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
@@ -324,15 +338,32 @@ const PackageCard = ({ pkg, i, onOpen }: { pkg: Pkg; i: number; onOpen: (badge: 
           <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
         </div>
       )}
-      <Button
-        variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
-        size="lg"
-        className="w-full"
-        onClick={() => onOpen(pkg.badge ?? pkg.name)}
-        data-pricing-cta="true"
-      >
-        {pkg.cta} <ArrowRight size={16} />
-      </Button>
+      <div className="space-y-2">
+        <Button
+          variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
+          size="lg"
+          className="w-full"
+          onClick={() =>
+            pkg.priceId && onCheckout
+              ? onCheckout(pkg)
+              : onOpen(pkg.badge ?? pkg.name)
+          }
+          data-pricing-cta="true"
+        >
+          {pkg.cta} <ArrowRight size={16} />
+        </Button>
+        {pkg.priceId && onCheckout && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full text-muted-foreground hover:text-foreground"
+            onClick={() => onOpen(pkg.badge ?? pkg.name)}
+          >
+            Lieber erst beraten lassen
+          </Button>
+        )}
+      </div>
+      {pkg.priceId && <PaymentTrustStrip />}
     </div>
   </AnimatedSection>
 );
@@ -432,12 +463,12 @@ const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
-  const [checkoutPkg, setCheckoutPkg] = useState<BuyPkg | null>(null);
+  const [checkoutPkg, setCheckoutPkg] = useState<{ name: string; priceId?: string } | null>(null);
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
     setPopupOpen(true);
   };
-  const openCheckout = (pkg: BuyPkg) => setCheckoutPkg(pkg);
+  const openCheckout = (pkg: { name: string; priceId?: string }) => setCheckoutPkg(pkg);
 
   useEffect(() => {
     const ctaButtons = Array.from(
@@ -514,7 +545,7 @@ const WebdesignPreise = () => {
               Ihre neue Website kostet Sie ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} />)}
+              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openCheckout} />)}
             </div>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
