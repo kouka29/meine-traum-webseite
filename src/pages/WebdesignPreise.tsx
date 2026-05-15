@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
+import StripeCheckoutDialog from "@/components/StripeCheckoutDialog";
+import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 
 type Pkg = {
   name: string;
@@ -125,6 +127,7 @@ type BuyPkg = {
   cta: string;
   growth?: { price: string; items: string[] };
   badge?: string;
+  priceId?: string;
 };
 
 const buyPackages: BuyPkg[] = [
