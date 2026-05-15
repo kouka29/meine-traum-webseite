@@ -1,87 +1,83 @@
-## Buchungsplattform mit Stripe & Google Calendar in /preise
+# Stripe Embedded Checkout für Kauf-Pakete + Sekundär-CTA "Anfragen"
 
-Vollwertige Buchungs- und Bezahlplattform direkt auf der Preisseite. Kunden können ein Paket wählen, einen Termin buchen, der automatisch in den Google Kalender synchronisiert wird, und sicher bezahlen (Anzahlung oder Vollbetrag) via Stripe.
+## Ziel
+Auf den drei Kauf-Karten (Starter 990 €, Pro 1.990 €, Premium 3.590 €) bekommt der **„Jetzt kaufen & starten"-Button** den Stripe Embedded Checkout für die **50 % Anzahlung**. Darunter ein **sekundärer Outline-Button „Lieber erst beraten lassen"**, der das bestehende `PricingLeadPopup` öffnet. Mini-Trust-Hinweis + Zahlungs-Logos darunter.
+
+Die Miet-Karten und Enterprise bleiben unverändert (öffnen weiterhin das Popup).
 
 ---
 
-### 1. Bezahlung – Lovable Payments (Stripe)
+## 1. Backend: Stripe Edge Functions
 
-- Lovable's eingebaute Stripe-Integration aktivieren (`enable_stripe_payments`) – kein eigener Stripe-Account nötig, Test-Modus sofort verfügbar.
-- Vorher Eligibility-Check (`recommend_payment_provider`) laufen lassen.
-- Pro Paket auf `/preise` ein Stripe-Produkt + Preis anlegen:
-  - **Starter** – Anzahlung 199 € (Rest nach Go-Live)
-  - **Business** – Anzahlung 299 €
-  - **Premium / Enterprise** – Beratungstermin 0 € (nur Buchung, keine Zahlung) oder Anzahlung 499 €
-- Optional: Miet-Pakete als Stripe **Subscription** (monatlich wiederkehrend).
-- Tax-Handling: „Tax calculation only" (+0,5 %) – passend für DE/EU B2B mit Reverse Charge.
+Voraussetzungen sind bereits da: `STRIPE_SANDBOX_API_KEY`, `PAYMENTS_SANDBOX_WEBHOOK_SECRET`, Produkte in Stripe angelegt (Deposit-Preise: `starter_purchase_deposit` 495 €, `pro_purchase_deposit` 995 €, `premium_purchase_deposit` 1.795 €).
 
-### 2. Buchung – eigener Slot-Kalender
+Neu zu erstellen:
+- `supabase/functions/_shared/stripe.ts` — Gateway-Client (`createStripeClient`, `verifyWebhook`)
+- `supabase/functions/create-checkout/index.ts` — erstellt Embedded Checkout Session (`ui_mode: "embedded_page"`, `mode: "payment"`, `automatic_tax: { enabled: true }` für 19 % MwSt.)
+- `supabase/functions/payments-webhook/index.ts` — empfängt `checkout.session.completed`, schreibt in neue `purchases`-Tabelle
+- `supabase/config.toml` — `verify_jwt = false` für `create-checkout` und `payments-webhook`
 
-- Neue Tabelle `bookings` (Datum, Uhrzeit, Lead-ID, Paket, Stripe-Session-ID, Status: `pending` / `paid` / `confirmed` / `cancelled`, Google-Event-ID).
-- Neue Tabelle `availability_rules` (Wochentag, Start/Ende, Slot-Dauer, Puffer) – Admin-konfigurierbar.
-- Edge Function `get-available-slots`: berechnet freie Slots aus Regeln minus bereits gebuchte.
-- Doppelbuchungs-Schutz via DB-Unique-Constraint (`booking_date`, `booking_time`).
+**Tax-Mode:** Option 2 — `automatic_tax: { enabled: true }` (+0,5 %). Stripe rechnet 19 % MwSt. automatisch auf den Netto-Anzahlungsbetrag drauf. Keine Managed Payments (Zielmarkt DE, niedrige Volumina, wir wollen kein „LINK.COM*" auf der Bankabrechnung der Kunden).
 
-### 3. Google Calendar Sync
+## 2. Datenbank — neue Tabelle `purchases`
 
-- Google Calendar Connector verbinden (OAuth-Flow für deinen Agentur-Kalender).
-- Edge Function `sync-booking-to-calendar`:
-  - bei Status `paid` → Event erstellen (Titel „[Paket] – [Kunde]", Teilnehmer = Kunde, Google-Meet-Link automatisch).
-  - bei Storno → Event löschen.
-- Verfügbarkeit zusätzlich gegen Google-Kalender prüfen (busy-Slots ausblenden).
+Felder: `stripe_session_id` (unique), `stripe_customer_id`, `stripe_payment_intent_id`, `package` (`starter|pro|premium`), `deposit_amount_cents`, `total_amount_cents` (= 2 × deposit), `currency`, `customer_email`, `customer_name`, `status` (`deposit_paid|completed|refunded`), `lead_id` (nullable FK auf `leads`), `environment`, `created_at`, `updated_at`.
 
-### 4. UX auf /preise (mobil-optimiert, conversion-fokussiert)
+RLS: nur Service-Role schreibt; Admin liest via bestehendem `admin-leads`-Pattern (`ADMIN_PASSWORD`).
+
+## 3. Frontend — `WebdesignPreise.tsx`
+
+**`BuyCard` umbauen** (`Pkg`-Typ erweitern um `priceId: string`):
 
 ```text
-[Paket-Karte]
-   ↓ Klick „Termin buchen & sichern"
-[Modal Step 1: Kalender]  Datum + verfügbare Slots als große Touch-Targets (≥56 px)
-   ↓
-[Modal Step 2: Kontaktdaten]  Vorname, Firma, Telefon, E-Mail (FloatingFields wie PricingLeadPopup)
-   ↓
-[Modal Step 3: Bezahlung]  „Jetzt 199 € anzahlen – Restbetrag nach Freigabe"
-   ↓ Stripe Checkout (neuer Tab)
-   ↓ Webhook bestätigt Zahlung
-[Success Page /buchung-erfolgreich]  Termin + Google-Meet-Link + Kalender-Datei (.ics)
+┌──────────────────────────────┐
+│  [ Jetzt kaufen & starten →]│  ← gradient/primary, öffnet Stripe-Dialog
+│  [ Lieber erst beraten     ]│  ← outline-primary, öffnet PricingLeadPopup
+│  💳 Visa MC SEPA Klarna     │  ← graue Mini-Logos
+│  50 % Anzahlung jetzt ·     │  ← text-xs muted
+│  Rest bei Go-Live           │
+└──────────────────────────────┘
 ```
 
-- Kein-Risiko-Copy: „100 % Geld-zurück, falls Demo nicht überzeugt"
-- Trust-Signale unter CTA: Stripe-Logo, SSL, „12 Betriebe vertrauen uns"
-- Sticky Mobile-CTA bleibt erhalten
+Pro Karte:
+- Primär-Button → `openStripeCheckout(pkg.priceId, pkg.name)`
+- Sekundär-Button → `openPopup(pkg.badge)` (bestehendes Verhalten)
+- Trust-Strip: 4 Mini-SVG-Logos (Visa, Mastercard, SEPA, Klarna) als Inline-SVGs in `text-muted-foreground`
+- Zwei Zeilen Mini-Text (zahlungsmodell)
 
-### 5. Edge Functions & Webhooks
+**Neue Komponente** `src/components/StripeCheckoutDialog.tsx`:
+- Shadcn `Dialog` als Container
+- Lädt `@stripe/stripe-js` + `@stripe/react-stripe-js` (Pin: `9.2.0` / `6.2.0`)
+- Mountet `EmbeddedCheckoutProvider` + `EmbeddedCheckout` mit `clientSecret` aus `supabase.functions.invoke("create-checkout", { body: { priceId, environment } })`
+- `return_url`: `${origin}/kauf-erfolgreich?session_id={CHECKOUT_SESSION_ID}`
 
-- `create-checkout-session` – legt Stripe-Session an mit Booking-Metadata
-- `stripe-webhook` (`verify_jwt = false`) – `checkout.session.completed` → Booking auf `paid`, triggert Calendar-Sync + Bestätigungs-E-Mail
-- `cancel-booking` – Storno + Refund via Stripe API + Calendar-Event löschen
+**Neue Helfer-Datei** `src/lib/stripe.ts` — `getStripe()`, `getStripeEnvironment()` (aus `VITE_PAYMENTS_CLIENT_TOKEN`-Prefix abgeleitet).
 
-### 6. Admin-Bereich
+**Neue Seite** `src/pages/KaufErfolgreich.tsx` — Dankesseite mit nächsten Schritten („Wir melden uns innerhalb von 24 h zur Onboarding-Mail …"), Route in `App.tsx` registrieren.
 
-- Neuer Tab „Buchungen" in `/admin`: Liste aller Bookings (Status, Zahlung, Kalender-Sync), Storno-Button, manueller Status-Wechsel.
-- Verfügbarkeitsregeln editierbar (Mo–Fr 9–17, Slot 30 min etc.).
+**`PaymentTestModeBanner`** im Layout einbauen — zeigt im Preview/Sandbox einen Hinweis; im Production-Build mit Live-Token unsichtbar.
 
-### 7. E-Mail-Flow (nutzt vorhandenes `send-transactional-email`)
+## 4. Senior-Consultant-Hinweise (Geschäftslogik)
 
-- `booking-confirmation` (existiert bereits) – an Kunde nach Zahlung
-- Neue Vorlage `booking-internal` – an Inhaber
+- **Subscription „Wachstumspaket" wird beim Direktkauf NICHT mitverkauft** — separate Upsell-Mail nach Go-Live (sonst Checkout zu komplex)
+- Nach erfolgreichem Stripe-Checkout: automatische Confirmation-Mail mit:
+  - Anzahlungs-Rechnung (Stripe generiert PDF)
+  - Restzahlungs-Hinweis (50 % bei Go-Live)
+  - Onboarding-Fragebogen-Link
+- `lead_id` in `purchases` erlaubt späteres Verknüpfen, falls der Käufer vorher schon im Funnel war (Email-Match in Webhook)
 
----
+## 5. Aufgabenreihenfolge
 
-### Technische Reihenfolge
+1. `_shared/stripe.ts`, `create-checkout`, `payments-webhook`, `config.toml`
+2. Migration `purchases`-Tabelle + RLS
+3. `priceId`-Feld zu `buyPackages` hinzufügen
+4. `src/lib/stripe.ts`, `StripeCheckoutDialog`, `PaymentTestModeBanner`
+5. `BuyCard` umbauen (zwei Buttons + Trust-Strip)
+6. `KaufErfolgreich`-Seite + Route
+7. Test: Sandbox-Karte `4242 4242 4242 4242` → Webhook → DB-Eintrag prüfen
 
-1. Stripe aktivieren + Produkte anlegen
-2. DB-Migration: `bookings`, `availability_rules`
-3. Edge Functions: slots, checkout, webhook, calendar-sync
-4. Google Calendar Connector verbinden
-5. UI: Booking-Modal in `/preise` (3-Step), Success-Page
-6. Admin-Tab Buchungen
-7. End-to-End-Test im Stripe-Test-Modus
+## Außerhalb des Scopes (separate Schritte)
 
----
-
-### Klärungsbedarf vor Implementierung
-
-1. **Bezahlmodell**: Anzahlung pro Paket (z. B. 199/299/499 €) **oder** Vollpreis sofort **oder** nur kostenloses Erstgespräch buchen + Zahlung später per Rechnung?
-2. **Slot-Verfügbarkeit**: feste Zeiten (Mo–Fr 9–17, 30 min) oder soll ich aus deinem Google-Kalender freie Slots ziehen?
-3. **Welcher Google-Account** wird Kalender-Owner (für OAuth-Verbindung)?
-4. **Subscription** für Miet-Pakete oder erstmal nur Einmal-Zahlungen?
+- Live-Mode-Aktivierung (Go-Live-Flow im Stripe-Dashboard)
+- Restzahlungs-Rechnung (passiert manuell per Stripe-Dashboard nach Go-Live)
+- Subscription-Checkout für Miet-Pakete (kommt separat — andere User-Journey)
