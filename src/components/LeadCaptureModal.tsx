@@ -110,7 +110,7 @@ const LeadCaptureModal = () => {
     if (!formspreeOk) {
       setLoading(false);
       setSubmitError(
-        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 30 764 98",
       );
       return;
     }
@@ -357,8 +357,8 @@ const LeadCaptureModal = () => {
                 {submitError && (
                   <p className="text-center text-sm text-destructive">
                     Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
-                    <a href="tel:+4915123456789" className="font-semibold underline">
-                      +49 151 23456789
+                    <a href="tel:+4961313076498" className="font-semibold underline">
+                      06131 30 764 98
                     </a>
                   </p>
                 )}

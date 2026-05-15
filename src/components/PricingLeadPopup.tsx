@@ -15,10 +15,7 @@ interface PricingLeadPopupProps {
 const getCtaLabel = (badge: string) => {
   const b = badge.toLowerCase();
   if (b.includes("enterprise")) return "Beratung anfragen";
-  if (b.includes("kauf")) return "Jetzt verbindlich anfragen";
-  if (b.includes("miete")) return "Kostenlose Demo anfordern";
-  // Beratung / Demo / sonstige
-  return "Rückruf anfragen";
+  return "Jetzt kostenlos Termin sichern";
 };
 
 type FloatingFieldProps = {
@@ -95,7 +92,6 @@ const FloatingField = ({
 const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
-  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -109,12 +105,10 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [errors, setErrors] = useState<{
     firstName?: string;
     phone?: string;
-    companyName?: string;
   }>({});
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
-  const companyRef = useRef<HTMLInputElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
 
@@ -184,7 +178,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     if (!firstName.trim()) errs.firstName = "Bitte fülle dieses Feld aus.";
     if (!phone.trim() || phone.trim().length < 6)
       errs.phone = "Bitte fülle dieses Feld aus.";
-    if (!companyName.trim()) errs.companyName = "Bitte fülle dieses Feld aus.";
     setErrors(errs);
 
     // Scroll to first invalid
@@ -194,9 +187,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     } else if (errs.phone) {
       phoneRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       phoneRef.current?.focus();
-    } else if (errs.companyName) {
-      companyRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      companyRef.current?.focus();
     }
 
     return Object.keys(errs).length === 0;
@@ -225,9 +215,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         body: JSON.stringify({
           name: firstName.trim(),
           phone: phone.trim(),
-          company: companyName.trim(),
           email: email.trim(),
-          _subject: `🔔 Neue Preisanfrage: ${badge} - ${companyName.trim()}`,
+          _subject: `🔔 Neue Preisanfrage: ${badge} - ${firstName.trim()}`,
           _replyto: email.trim(),
           _gotcha: honeypot,
           paket: badge,
@@ -242,7 +231,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     if (!formspreeOk) {
       setLoading(false);
       setSubmitError(
-        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: +49 151 23456789",
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 30 764 98",
       );
       return;
     }
@@ -251,7 +240,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     const { error } = await supabase.from("leads").insert({
       id: leadId,
       first_name: firstName.trim(),
-      company_name: companyName.trim(),
+      company_name: "",
       phone: phone.trim(),
       email: finalEmail,
       notes: `Pop-up Anfrage von Preisseite – Paket: ${badge}`,
@@ -267,7 +256,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         templateData: {
           source: `Preisseite Pop-up (${badge})`,
           firstName: firstName.trim(),
-          companyName: companyName.trim(),
+          companyName: "(nicht angegeben)",
           email: email.trim() || "(keine E-Mail – nur Telefon)",
           phone: phone.trim(),
           submittedAt: new Date().toLocaleString("de-DE"),
@@ -283,7 +272,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     setSubmitted(true);
     setFirstName("");
     setPhone("");
-    setCompanyName("");
     setEmail("");
   };
 
@@ -382,11 +370,11 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               <div className="mt-3">
                 <p className="text-xs text-muted-foreground mb-1">Oder ruf mich direkt an:</p>
                 <a
-                  href="tel:+4915123456789"
+                  href="tel:+4961313076498"
                   className="inline-flex items-center gap-1.5 text-primary font-bold text-sm sm:text-base hover:underline"
                 >
                   <Phone size={14} />
-                  +49 151 23456789
+                  06131 30 764 98
                 </a>
               </div>
             </div>
@@ -450,20 +438,6 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   inputRef={phoneRef}
                 />
                 <FloatingField
-                  id="popup-company"
-                  label="Betriebsname"
-                  value={companyName}
-                  onChange={(v) => {
-                    setCompanyName(v);
-                    if (errors.companyName) setErrors((p) => ({ ...p, companyName: undefined }));
-                  }}
-                  error={errors.companyName}
-                  required
-                  autoComplete="organization"
-                  maxLength={200}
-                  inputRef={companyRef}
-                />
-                <FloatingField
                   id="popup-email"
                   label="E-Mail (optional)"
                   type="email"
@@ -515,12 +489,15 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               {submitError && (
                 <p className="text-center text-sm text-destructive mt-2">
                   Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
-                  <a href="tel:+4915123456789" className="font-semibold underline">
-                    +49 151 23456789
+                  <a href="tel:+4961313076498" className="font-semibold underline">
+                    06131 30 764 98
                   </a>
                 </p>
               )}
 
+              <p className="text-center text-xs sm:text-sm text-foreground/80 mt-3">
+                ⏱ Ich melde mich innerhalb von 2 Stunden bei Ihnen — Mo–Fr 9–18 Uhr
+              </p>
               <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1.5">
                 <ShieldCheck size={13} />
                 Kostenlos & unverbindlich – kein Spam, keine Verpflichtung

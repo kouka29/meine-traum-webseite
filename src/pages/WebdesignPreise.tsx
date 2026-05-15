@@ -25,21 +25,21 @@ type Pkg = {
 
 const rentPackages: Pkg[] = [
   {
-    name: "Starter",
+    name: "Einzelkämpfer",
     price: "59 €/Monat",
-    badge: "Starter Miete – 59 €/Monat netto",
+    badge: "Einzelkämpfer Miete – 59 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     priceId: "starter_rent_monthly",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
-      "One-Pager (1 Seite)",
-      "Mobil-optimiert",
-      "Kontaktformular",
-      "SSL-Zertifikat & Hosting inklusive",
-      "Online in 7 Tagen",
+      "Eine starke Seite — reicht für die meisten Betriebe",
+      "Perfekt auf jedem Handy — auch auf der Baustelle",
+      "Kunden können Sie direkt anfragen — rund um die Uhr",
+      "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
+      "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
     ],
-    cta: "Jetzt starten",
-    upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
+    cta: "Website jetzt sichern",
+    upgradeHint: "↑ Upgrade auf Wachstums-Betrieb jederzeit – ohne neue Mindestlaufzeit",
     growth: {
       price: "+29 €/Monat zubuchbar",
       items: [
@@ -50,21 +50,21 @@ const rentPackages: Pkg[] = [
     },
   },
   {
-    name: "Pro",
+    name: "Wachstums-Betrieb",
     price: "99 €/Monat",
-    badge: "Pro Miete – 99 €/Monat netto",
+    badge: "Wachstums-Betrieb Miete – 99 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     priceId: "pro_rent_monthly",
     features: [
-      "2–5 Seiten",
+      "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
       "SEO-Grundlagen (Google findet Sie)",
-      "Google Business Einrichtung",
-      "Mobil-optimiert & SSL",
+      "Google Maps Eintrag eingerichtet — Kunden finden Sie sofort",
+      "Handy-optimiert & sicher — kein technisches Wissen nötig",
       "Hosting & Domain inklusive",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
     ],
     popular: true,
-    cta: "Jetzt starten",
+    cta: "Website jetzt sichern",
     growth: {
       price: "+49 €/Monat zubuchbar",
       items: [
@@ -75,20 +75,20 @@ const rentPackages: Pkg[] = [
     },
   },
   {
-    name: "Premium",
+    name: "Marktführer",
     price: "159 €/Monat",
-    badge: "Premium Miete – 159 €/Monat netto",
+    badge: "Marktführer Miete – 159 €/Monat netto",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     priceId: "premium_rent_monthly",
     features: [
-      "Bis zu 10 Seiten",
-      "SEO-Grundlagen + Seitenstruktur",
+      "Bis zu 10 Seiten — komplette Online-Präsenz",
+      "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
       "Design das mehr Anfragen bringt",
       "Google Business Einrichtung",
       "Hosting & Domain inklusive",
       "Individuelle Umsetzung – Timing nach Absprache",
     ],
-    cta: "Jetzt starten",
+    cta: "Website jetzt sichern",
     growth: {
       price: "+79 €/Monat zubuchbar",
       items: [
@@ -111,7 +111,7 @@ const rentPackages: Pkg[] = [
       "SEO-Strategie",
       "Google Ads Setup",
       "Persönlicher Ansprechpartner",
-      "3 Änderungen/Monat inklusive",
+      "Unbegrenzte Änderungen inklusive",
       "Wartung & Updates inklusive",
     ],
     enterprise: true,
@@ -136,17 +136,17 @@ type BuyPkg = {
 
 const buyPackages: BuyPkg[] = [
   {
-    name: "Starter",
+    name: "Einzelkämpfer",
     price: "990 € einmalig",
-    badge: "Starter Kauf – 990 € netto",
-    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
+    badge: "Einzelkämpfer Kauf – 990 € netto",
+    compare: "Miete Einzelkämpfer: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
-      "One-Pager (1 Seite)",
-      "Mobil-optimiert",
-      "Kontaktformular",
-      "SSL-Zertifikat",
-      "Online in 7 Tagen",
+      "Eine starke Seite — reicht für die meisten Betriebe",
+      "Perfekt auf jedem Handy — auch auf der Baustelle",
+      "Kunden können Sie direkt anfragen — rund um die Uhr",
+      "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
+      "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
       "Website gehört Ihnen – kein Vertrag",
     ],
     growth: {
@@ -158,20 +158,20 @@ const buyPackages: BuyPkg[] = [
       ],
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
-    cta: "Jetzt kaufen & starten",
+    cta: "Website jetzt sichern",
     priceId: "starter_purchase_deposit",
   },
   {
-    name: "Pro",
+    name: "Wachstums-Betrieb",
     price: "1.990 € einmalig",
-    badge: "Pro Kauf – 1.990 € netto",
-    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
+    badge: "Wachstums-Betrieb Kauf – 1.990 € netto",
+    compare: "Miete Wachstums-Betrieb: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
     features: [
-      "2–5 Seiten",
+      "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
       "SEO-Grundlagen (Google findet Sie)",
-      "Google Business Einrichtung",
+      "Google Maps Eintrag eingerichtet — Kunden finden Sie sofort",
       "30 Tage Support nach Start",
-      "Mobil-optimiert & SSL",
+      "Handy-optimiert & sicher — kein technisches Wissen nötig",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
       "Website gehört Ihnen – kein Vertrag",
     ],
@@ -185,20 +185,20 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.578 € netto (= 215 €/Monat)",
     popular: true,
-    cta: "Jetzt kaufen & starten",
+    cta: "Website jetzt sichern",
     priceId: "pro_purchase_deposit",
   },
   {
-    name: "Premium",
+    name: "Marktführer",
     price: "3.590 € einmalig",
-    badge: "Premium Kauf – 3.590 € netto",
-    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
+    badge: "Marktführer Kauf – 3.590 € netto",
+    compare: "Miete Marktführer: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
     features: [
-      "Bis zu 10 Seiten",
-      "SEO-Grundlagen + Seitenstruktur",
+      "Bis zu 10 Seiten — komplette Online-Präsenz",
+      "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
       "Design das mehr Anfragen bringt",
       "60 Tage Priority Support",
-      "Mobil-optimiert & SSL",
+      "Handy-optimiert & sicher — kein technisches Wissen nötig",
       "Individuelle Umsetzung – Timing nach Absprache",
       "Website gehört Ihnen – kein Vertrag",
     ],
@@ -212,7 +212,7 @@ const buyPackages: BuyPkg[] = [
       ],
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.538 € netto (= 378 €/Monat)",
-    cta: "Jetzt kaufen & starten",
+    cta: "Website jetzt sichern",
     priceId: "premium_purchase_deposit",
   },
 ];
@@ -226,6 +226,7 @@ const buyEnterprise = {
     "Unbegrenzte Seiten",
     "SEO-Strategie + Google Ads",
     "Persönlicher Ansprechpartner",
+    "Unbegrenzte Änderungen inklusive",
     "Wartung & Support inklusive",
     "Individuelle Umsetzung",
   ],
@@ -253,6 +254,10 @@ const faqs = [
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
     a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+  },
+  {
+    q: "Bekomme ich durch die Website wirklich mehr Kunden?",
+    a: "Das ist die wichtigste Frage — und wir verstehen sie. Wir können keine Garantie auf eine bestimmte Anzahl Anfragen geben, aber: Alle unsere Kunden haben eine Website, die auf Google gefunden wird, professionell wirkt und rund um die Uhr für Sie arbeitet. Betriebe ohne Website verlieren täglich potenzielle Kunden an Konkurrenten. Mit einer professionellen Website gewinnen Sie zurück.",
   },
 ];
 
@@ -325,7 +330,7 @@ const PackageCard = ({
       {pkg.growth && (
         <div className="mb-5 rounded-xl bg-muted/50 border border-border/60 p-4">
           <p className="text-xs font-semibold text-foreground/80 mb-2">
-            🚀 Wachstumspaket: {pkg.growth.price}
+            🚀 Wachstumspaket — für Betriebe die mehr wollen: {pkg.growth.price}
           </p>
           <ul className="space-y-1 mb-2">
             {pkg.growth.items.map((g) => (
@@ -359,7 +364,7 @@ const PackageCard = ({
             className="w-full text-muted-foreground hover:text-foreground"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
-            Lieber erst beraten lassen
+            Kostenlos beraten lassen →
           </Button>
         )}
       </div>
@@ -414,7 +419,7 @@ const BuyCard = ({
       {pkg.growth && (
         <div className="mb-3 rounded-xl bg-muted/50 border border-border/60 p-4">
           <p className="text-xs font-semibold text-foreground/80 mb-2">
-            🚀 Wachstumspaket: {pkg.growth.price}
+            🚀 Wachstumspaket — für Betriebe die mehr wollen: {pkg.growth.price}
           </p>
           <ul className="space-y-1 mb-2">
             {pkg.growth.items.map((g) => (
@@ -450,7 +455,7 @@ const BuyCard = ({
             className="w-full text-muted-foreground hover:text-foreground"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
-            Lieber erst beraten lassen
+            Kostenlos beraten lassen →
           </Button>
         )}
       </div>
@@ -516,19 +521,23 @@ const WebdesignPreise = () => {
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
-              Was kostet Ihre{" "}
-              <span className="gradient-text">neue Website?</span>
+              1 neuer Auftrag zahlt Ihre{" "}
+              <span className="gradient-text">Website für 6 Monate.</span>
             </h1>
-            <p className="text-muted-foreground text-lg">
-              Mieten oder kaufen – Sie entscheiden. Keine versteckten Kosten.
+            <p className="text-muted-foreground text-lg mb-5">
+              Professionell online — ohne großes Investment.
+            </p>
+            <p className="inline-flex items-center gap-2 text-base md:text-lg font-bold text-primary bg-primary/10 px-4 py-2 rounded-full">
+              <CheckCircle size={20} className="text-primary shrink-0" />
+              Für Gewerbetreibende voll steuerlich absetzbar
             </p>
           </div>
         </AnimatedSection>
 
         <Tabs defaultValue="miete" className="mb-12">
           <TabsList className="mx-auto flex w-full max-w-sm mb-8">
-            <TabsTrigger value="miete" className="flex-1">Mieten</TabsTrigger>
-            <TabsTrigger value="kauf" className="flex-1">Einmalkauf</TabsTrigger>
+            <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
+            <TabsTrigger value="kauf" className="flex-1">Einmalig kaufen</TabsTrigger>
           </TabsList>
 
           <p className="text-xs text-muted-foreground text-center italic -mt-4 mb-6 max-w-2xl mx-auto">
@@ -586,7 +595,7 @@ const WebdesignPreise = () => {
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer Ihr. Langfristig günstiger als Miete.
+              💡 Einmal zahlen. Für immer Ihr. Nach ca. 2 Jahren günstiger als die Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
               Sie haben Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
@@ -642,7 +651,7 @@ const WebdesignPreise = () => {
             <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu Ihnen?</h3>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Miete = sofort starten, kein großes Investment, maximale Flexibilität.<br />
-              Einmalkauf = einmal zahlen, Website gehört Ihnen, langfristig günstiger.<br />
+              Einmalkauf = einmal zahlen, Website gehört Ihnen, nach ca. 2 Jahren günstiger als die Miete.<br />
               Nicht sicher? Ich berate Sie kurz und kostenlos.
             </p>
             <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
@@ -650,15 +659,16 @@ const WebdesignPreise = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-3 gap-5 sm:gap-6 max-w-4xl mx-auto mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
             {[
-              { Icon: Lock, label: "Keine versteckten Kosten" },
-              { Icon: FileText, label: "Kein Kleingedrucktes" },
-              { Icon: Target, label: "Erst Demo – dann Entscheidung" },
-            ].map(({ Icon, label }) => (
+              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Sie sehen ist was Sie zahlen" },
+              { Icon: FileText, label: "Kein Kleingedrucktes", sub: "Einfache, klare Verträge" },
+              { Icon: Target, label: "Erst Demo – dann Entscheidung", sub: "Kostenlose Vorschau in 48 Stunden" },
+            ].map(({ Icon, label, sub }) => (
               <div key={label} className="flex flex-col items-center text-center gap-3 px-2">
-                <Icon className="text-primary w-8 h-8 sm:w-6 sm:h-6" />
-                <span className="text-[13px] sm:text-sm font-medium leading-[1.5]">{label}</span>
+                <Icon className="text-primary w-10 h-10 sm:w-12 sm:h-12" strokeWidth={1.8} />
+                <span className="text-base sm:text-[17px] font-bold leading-snug text-foreground">{label}</span>
+                <span className="text-xs sm:text-sm text-muted-foreground leading-[1.5]">{sub}</span>
               </div>
             ))}
           </div>
@@ -687,21 +697,20 @@ const WebdesignPreise = () => {
     <section className="bg-primary/10 py-[60px]">
       <div className="container-narrow px-4 text-center">
         <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
-          Bereit für Ihre neue Website?
+          Mehr Aufträge. Weniger Aufwand.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
-          Kostenlose Design-Demo in 48 Stunden.<br />
-          Kein Risiko. Keine Verpflichtung.<br />
-          Gefällt sie Ihnen nicht – Sie zahlen nichts.
+          Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
+          Gefällt sie Ihnen nicht — Sie zahlen nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
-          Jetzt kostenlose Demo sichern <ArrowRight size={18} />
+          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
-          Fragen? Einfach anrufen: <a href="tel:+4915123456789" className="underline hover:text-foreground">+49 151 23456789</a>
+          Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 30 764 98</a>
         </p>
-        <p className="text-sm text-muted-foreground mt-5">
-          Bereits 12 Handwerksbetriebe vertrauen uns
+        <p className="text-base md:text-lg font-bold text-primary mt-6">
+          ⭐⭐⭐⭐⭐ Bereits 12 Handwerksbetriebe aus der Region vertrauen uns
         </p>
       </div>
     </section>
