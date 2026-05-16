@@ -25,9 +25,9 @@ type Pkg = {
 
 const rentPackages: Pkg[] = [
   {
-    name: "Starter",
+    name: "Einzelkämpfer",
     price: "59 €/Monat",
-    badge: "Starter Miete – 59 €/Monat netto",
+    badge: "Einzelkämpfer Miete – 59 €/Monat netto",
     priceId: "starter_rent_monthly",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
@@ -38,8 +38,8 @@ const rentPackages: Pkg[] = [
       "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
       "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
     ],
-    cta: "Jetzt starten",
-    upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
+    cta: "Website jetzt sichern",
+    upgradeHint: "↑ Upgrade auf Wachstums-Betrieb jederzeit – ohne neue Mindestlaufzeit",
     growth: {
       price: "+29 €/Monat zubuchbar",
       items: [
@@ -50,9 +50,9 @@ const rentPackages: Pkg[] = [
     },
   },
   {
-    name: "Pro",
+    name: "Wachstums-Betrieb",
     price: "99 €/Monat",
-    badge: "Pro Miete – 99 €/Monat netto",
+    badge: "Wachstums-Betrieb Miete – 99 €/Monat netto",
     priceId: "pro_rent_monthly",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
@@ -64,7 +64,7 @@ const rentPackages: Pkg[] = [
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
     ],
     popular: true,
-    cta: "Jetzt starten",
+    cta: "Website jetzt sichern",
     growth: {
       price: "+49 €/Monat zubuchbar",
       items: [
@@ -75,9 +75,9 @@ const rentPackages: Pkg[] = [
     },
   },
   {
-    name: "Premium",
+    name: "Marktführer",
     price: "159 €/Monat",
-    badge: "Premium Miete – 159 €/Monat netto",
+    badge: "Marktführer Miete – 159 €/Monat netto",
     priceId: "premium_rent_monthly",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
@@ -88,7 +88,7 @@ const rentPackages: Pkg[] = [
       "Hosting & Domain inklusive",
       "Individuelle Umsetzung – Timing nach Absprache",
     ],
-    cta: "Jetzt starten",
+    cta: "Website jetzt sichern",
     growth: {
       price: "+79 €/Monat zubuchbar",
       items: [
@@ -136,11 +136,11 @@ type BuyPkg = {
 
 const buyPackages: BuyPkg[] = [
   {
-    name: "Starter",
+    name: "Einzelkämpfer",
     price: "990 € einmalig",
-    badge: "Starter Kauf – 990 € netto",
+    badge: "Einzelkämpfer Kauf – 990 € netto",
     priceId: "starter_purchase_deposit",
-    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
+    compare: "Miete Einzelkämpfer: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
       "Eine starke Seite — reicht für die meisten Betriebe",
@@ -159,14 +159,14 @@ const buyPackages: BuyPkg[] = [
       ],
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 1.338 € (= 111 €/Monat)",
-    cta: "Jetzt starten",
+    cta: "Website jetzt sichern",
   },
   {
-    name: "Pro",
+    name: "Wachstums-Betrieb",
     price: "1.990 € einmalig",
-    badge: "Pro Kauf – 1.990 € netto",
+    badge: "Wachstums-Betrieb Kauf – 1.990 € netto",
     priceId: "pro_purchase_deposit",
-    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
+    compare: "Miete Wachstums-Betrieb: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
       "SEO-Grundlagen (Google findet Sie)",
@@ -186,14 +186,14 @@ const buyPackages: BuyPkg[] = [
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 2.578 € netto (= 215 €/Monat)",
     popular: true,
-    cta: "Jetzt starten",
+    cta: "Website jetzt sichern",
   },
   {
-    name: "Premium",
+    name: "Marktführer",
     price: "3.590 € einmalig",
-    badge: "Premium Kauf – 3.590 € netto",
+    badge: "Marktführer Kauf – 3.590 € netto",
     priceId: "premium_purchase_deposit",
-    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
+    compare: "Miete Marktführer: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
     features: [
       "Bis zu 10 Seiten — komplette Online-Präsenz",
       "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
@@ -213,7 +213,7 @@ const buyPackages: BuyPkg[] = [
       ],
     },
     comparison: "Inkl. Wachstumspaket Jahr 1: ca. 4.538 € netto (= 378 €/Monat)",
-    cta: "Jetzt starten",
+    cta: "Website jetzt sichern",
   },
 ];
 
@@ -464,7 +464,7 @@ const BuyCard = ({
   </AnimatedSection>
 );
 
-const WebdesignPreise = () => {
+const WebdesignPreise2 = () => {
   const [showFloating, setShowFloating] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
@@ -738,4 +738,4 @@ const WebdesignPreise = () => {
   );
 };
 
-export default WebdesignPreise;
+export default WebdesignPreise2;
