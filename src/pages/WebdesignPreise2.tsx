@@ -738,4 +738,4 @@ const WebdesignPreise2 = () => {
   );
 };
 
-export default WebdesignPreise;
+export default WebdesignPreise2;
