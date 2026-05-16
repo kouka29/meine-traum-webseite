@@ -464,7 +464,7 @@ const BuyCard = ({
   </AnimatedSection>
 );
 
-const WebdesignPreise = () => {
+const WebdesignPreise2 = () => {
   const [showFloating, setShowFloating] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
