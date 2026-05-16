@@ -28,6 +28,7 @@ const rentPackages: Pkg[] = [
     name: "Einzelkämpfer",
     price: "59 €/Monat",
     badge: "Einzelkämpfer Miete – 59 €/Monat netto",
+    priceId: "starter_rent_monthly",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -52,6 +53,7 @@ const rentPackages: Pkg[] = [
     name: "Wachstums-Betrieb",
     price: "99 €/Monat",
     badge: "Wachstums-Betrieb Miete – 99 €/Monat netto",
+    priceId: "pro_rent_monthly",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
@@ -76,6 +78,7 @@ const rentPackages: Pkg[] = [
     name: "Marktführer",
     price: "159 €/Monat",
     badge: "Marktführer Miete – 159 €/Monat netto",
+    priceId: "premium_rent_monthly",
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Bis zu 10 Seiten — komplette Online-Präsenz",
@@ -136,6 +139,7 @@ const buyPackages: BuyPkg[] = [
     name: "Einzelkämpfer",
     price: "990 € einmalig",
     badge: "Einzelkämpfer Kauf – 990 € netto",
+    priceId: "starter_purchase_deposit",
     compare: "Miete Einzelkämpfer: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
@@ -161,6 +165,7 @@ const buyPackages: BuyPkg[] = [
     name: "Wachstums-Betrieb",
     price: "1.990 € einmalig",
     badge: "Wachstums-Betrieb Kauf – 1.990 € netto",
+    priceId: "pro_purchase_deposit",
     compare: "Miete Wachstums-Betrieb: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
@@ -187,6 +192,7 @@ const buyPackages: BuyPkg[] = [
     name: "Marktführer",
     price: "3.590 € einmalig",
     badge: "Marktführer Kauf – 3.590 € netto",
+    priceId: "premium_purchase_deposit",
     compare: "Miete Marktführer: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
     features: [
       "Bis zu 10 Seiten — komplette Online-Präsenz",
