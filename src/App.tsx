@@ -48,6 +48,7 @@ const Empfehlung = lazy(() => import("./pages/Empfehlung.tsx"));
 const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 const Starter = lazy(() => import("./pages/Starter.tsx"));
 const KaufErfolgreich = lazy(() => import("./pages/KaufErfolgreich.tsx"));
+const Handwerker = lazy(() => import("./pages/Handwerker.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -102,6 +103,7 @@ const App = () => (
             <Route path="/erstgespraech" element={<Erstgespraech />} />
             <Route path="/starter" element={<Starter />} />
             <Route path="/kauf-erfolgreich" element={<KaufErfolgreich />} />
+            <Route path="/handwerker" element={<Handwerker />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
