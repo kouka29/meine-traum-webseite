@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
   Plus, Trash2, Shuffle, Copy, ExternalLink, Loader2, FileText, CheckCircle2,
+  Upload, Sparkles,
 } from "lucide-react";
 
 interface AngebotModalProps {
@@ -56,11 +57,16 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
   const [pin, setPin] = useState(genPin());
   const [preis, setPreis] = useState("");
   const [normalpreis, setNormalpreis] = useState("");
+  const [mieteMonatlich, setMieteMonatlich] = useState("");
+  const [anzahlung, setAnzahlung] = useState("");
+  const [wachstumspaketPreis, setWachstumspaketPreis] = useState("");
+  const [wachstumspaketBeschreibung, setWachstumspaketBeschreibung] = useState("");
   const [gueltigkeit, setGueltigkeit] = useState<"7" | "14" | "30">("14");
   const [stripeLink, setStripeLink] = useState("");
   const [leistungen, setLeistungen] = useState<Leistung[]>([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [saving, setSaving] = useState(false);
+  const [parsing, setParsing] = useState(false);
   const [result, setResult] = useState<{ link: string; pin: string } | null>(null);
 
   useEffect(() => {
@@ -70,6 +76,10 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       setPin(genPin());
       setPreis("");
       setNormalpreis("");
+      setMieteMonatlich("");
+      setAnzahlung("");
+      setWachstumspaketPreis("");
+      setWachstumspaketBeschreibung("");
       setGueltigkeit("14");
       setStripeLink("");
       setLeistungen([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
@@ -137,6 +147,10 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       pin,
       preis: preisNum,
       normalpreis: normalpreis ? Number(normalpreis) : null,
+      miete_monatlich: mieteMonatlich ? Number(mieteMonatlich) : null,
+      anzahlung: anzahlung ? Number(anzahlung) : null,
+      wachstumspaket_preis: wachstumspaketPreis ? Number(wachstumspaketPreis) : null,
+      wachstumspaket_beschreibung: wachstumspaketBeschreibung.trim() || null,
       ablauf_datum: ablauf.toISOString(),
       stripe_link: stripeLink.trim(),
       leistungen: cleanLeistungen,
@@ -177,6 +191,69 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       toast.success(`${label} kopiert`);
     } catch {
       toast.error("Konnte nicht kopieren");
+    }
+  };
+
+  const handleUpload = async (file: File) => {
+    if (file.size > 15 * 1024 * 1024) {
+      toast.error("Datei zu groß (max. 15 MB)");
+      return;
+    }
+    const allowed = ["application/pdf", "image/png", "image/jpeg", "image/webp"];
+    if (!allowed.includes(file.type)) {
+      toast.error("Bitte PDF, PNG, JPG oder WEBP hochladen");
+      return;
+    }
+    setParsing(true);
+    try {
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const r = String(reader.result || "");
+          const idx = r.indexOf(",");
+          resolve(idx >= 0 ? r.slice(idx + 1) : r);
+        };
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+
+      const { data, error } = await supabase.functions.invoke("parse-angebot-upload", {
+        body: { password, file_base64: base64, mime_type: file.type },
+      });
+      if (error || data?.error) {
+        toast.error(data?.error || error?.message || "Auslesen fehlgeschlagen");
+        return;
+      }
+      const ex = data?.extracted || {};
+      if (typeof ex.nachricht === "string") setNachricht(ex.nachricht.slice(0, 200));
+      if (typeof ex.preis === "number") setPreis(String(ex.preis));
+      if (typeof ex.normalpreis === "number") setNormalpreis(String(ex.normalpreis));
+      if (typeof ex.miete_monatlich === "number") setMieteMonatlich(String(ex.miete_monatlich));
+      if (typeof ex.anzahlung === "number") setAnzahlung(String(ex.anzahlung));
+      if (typeof ex.wachstumspaket_preis === "number") setWachstumspaketPreis(String(ex.wachstumspaket_preis));
+      if (typeof ex.wachstumspaket_beschreibung === "string") setWachstumspaketBeschreibung(ex.wachstumspaket_beschreibung);
+      if (Array.isArray(ex.leistungen) && ex.leistungen.length > 0) {
+        setLeistungen(
+          ex.leistungen.slice(0, 6).map((l: any) => ({
+            emoji: typeof l?.emoji === "string" ? l.emoji : "",
+            titel: typeof l?.titel === "string" ? l.titel : "",
+            beschreibung: typeof l?.beschreibung === "string" ? l.beschreibung : "",
+          })),
+        );
+      }
+      if (Array.isArray(ex.faqs) && ex.faqs.length > 0) {
+        setFaqs(
+          ex.faqs.slice(0, 5).map((f: any) => ({
+            frage: typeof f?.frage === "string" ? f.frage : "",
+            antwort: typeof f?.antwort === "string" ? f.antwort : "",
+          })),
+        );
+      }
+      toast.success("Angebot ausgelesen — bitte prüfen und ggf. anpassen");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload fehlgeschlagen");
+    } finally {
+      setParsing(false);
     }
   };
 
@@ -242,6 +319,41 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               {branche ? <> · {branche}</> : null}
             </div>
 
+            {/* KI-Upload */}
+            <div
+              className="rounded-lg border-2 border-dashed p-4 flex items-center gap-3"
+              style={{ borderColor: `${BRAND}40`, background: `${BRAND}08` }}
+            >
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: BRAND }}>
+                  <Sparkles size={14} /> Angebot per KI auslesen
+                </div>
+                <div className="text-xs text-muted-foreground mt-0.5">
+                  Laden Sie ein bestehendes Angebot (PDF / Bild) hoch — Felder werden automatisch befüllt.
+                </div>
+              </div>
+              <label className="shrink-0">
+                <input
+                  type="file"
+                  accept="application/pdf,image/png,image/jpeg,image/webp"
+                  className="hidden"
+                  disabled={parsing}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    e.target.value = "";
+                    if (f) handleUpload(f);
+                  }}
+                />
+                <span
+                  className={`inline-flex items-center gap-1.5 text-sm font-medium rounded-md px-3 py-2 cursor-pointer ${parsing ? "opacity-60 pointer-events-none" : ""}`}
+                  style={{ background: BRAND, color: "#fff" }}
+                >
+                  {parsing ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+                  {parsing ? "Lese aus…" : "Datei wählen"}
+                </span>
+              </label>
+            </div>
+
             {/* Persönliche Nachricht */}
             <div className="space-y-1.5">
               <Label>Persönliche Nachricht <span className="text-muted-foreground font-normal">({nachricht.length}/200)</span></Label>
@@ -280,6 +392,44 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               <div className="space-y-1.5">
                 <Label>Normalpreis in € <span className="text-muted-foreground font-normal">(optional)</span></Label>
                 <Input type="number" min="1" value={normalpreis} onChange={(e) => setNormalpreis(e.target.value)} placeholder="z.B. 1990" />
+              </div>
+            </div>
+
+            {/* Optionale Zahlungsmodelle */}
+            <div className="rounded-lg border border-border p-3 space-y-3 bg-muted/20">
+              <div className="text-xs font-semibold uppercase text-muted-foreground tracking-wide">
+                Optionale Zahlungsmodelle
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label>Monatliche Miete in € <span className="text-muted-foreground font-normal">(optional)</span></Label>
+                  <Input type="number" min="1" value={mieteMonatlich} onChange={(e) => setMieteMonatlich(e.target.value)} placeholder="z.B. 89" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Anzahlung in € <span className="text-muted-foreground font-normal">(optional)</span></Label>
+                  <Input type="number" min="1" value={anzahlung} onChange={(e) => setAnzahlung(e.target.value)} placeholder="z.B. 500" />
+                </div>
+              </div>
+            </div>
+
+            {/* Wachstumspaket */}
+            <div className="rounded-lg border border-border p-3 space-y-3 bg-muted/20">
+              <div className="text-xs font-semibold uppercase text-muted-foreground tracking-wide">
+                Wachstumspaket <span className="font-normal normal-case">(optional Upsell)</span>
+              </div>
+              <div className="space-y-1.5">
+                <Label>Preis Wachstumspaket in €</Label>
+                <Input type="number" min="1" value={wachstumspaketPreis} onChange={(e) => setWachstumspaketPreis(e.target.value)} placeholder="z.B. 990" />
+              </div>
+              <div className="space-y-1.5">
+                <Label>Beschreibung</Label>
+                <Textarea
+                  value={wachstumspaketBeschreibung}
+                  onChange={(e) => setWachstumspaketBeschreibung(e.target.value.slice(0, 400))}
+                  placeholder="Was ist im Wachstumspaket enthalten?"
+                  rows={2}
+                  maxLength={400}
+                />
               </div>
             </div>
 

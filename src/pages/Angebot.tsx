@@ -23,6 +23,10 @@ interface AngebotData {
   pin: string;
   preis: number;
   normalpreis: number | null;
+  miete_monatlich?: number | null;
+  anzahlung?: number | null;
+  wachstumspaket_preis?: number | null;
+  wachstumspaket_beschreibung?: string | null;
   ablauf_datum: string;
   stripe_link: string;
   leistungen: Leistung[];
@@ -337,7 +341,63 @@ function AngebotPage({ data }: { data: AngebotData }) {
             <div style={{ fontSize: 14, color: TEXT_MUTED, marginTop: 12 }}>
               Einmalig. Kein Abo. Keine versteckten Kosten.
             </div>
+
+            {(data.miete_monatlich || data.anzahlung) && (
+              <div style={{
+                marginTop: 24, paddingTop: 20,
+                borderTop: "1px dashed rgba(79,63,240,0.2)",
+                display: "grid", gap: 10,
+              }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: TEXT_MUTED, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  Alternative: flexible Zahlung
+                </div>
+                {data.anzahlung ? (
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, color: TEXT_DARK }}>
+                    <span>Einmalige Anzahlung</span>
+                    <strong style={{ color: BRAND }}>{Number(data.anzahlung).toLocaleString("de-DE")} €</strong>
+                  </div>
+                ) : null}
+                {data.miete_monatlich ? (
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, color: TEXT_DARK }}>
+                    <span>Monatliche Miete</span>
+                    <strong style={{ color: BRAND }}>{Number(data.miete_monatlich).toLocaleString("de-DE")} € / Monat</strong>
+                  </div>
+                ) : null}
+                <div style={{ fontSize: 12, color: TEXT_MUTED }}>
+                  Kein Abo-Zwang. Jederzeit auf einmalige Investition umstellbar.
+                </div>
+              </div>
+            )}
           </div>
+
+          {/* WACHSTUMSPAKET */}
+          {data.wachstumspaket_preis ? (
+            <div style={{
+              marginTop: 24,
+              background: BG_SOFT, borderRadius: 20,
+              padding: "28px 28px",
+              maxWidth: 520, marginLeft: "auto", marginRight: "auto",
+              border: `1px dashed ${BRAND}40`,
+              textAlign: "center",
+            }}>
+              <div style={{
+                display: "inline-block", background: "#fff", color: BRAND,
+                padding: "4px 12px", borderRadius: 50,
+                fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em",
+                marginBottom: 12,
+              }}>
+                Optionales Wachstumspaket
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 800, color: TEXT_DARK, marginBottom: 8 }}>
+                + {Number(data.wachstumspaket_preis).toLocaleString("de-DE")} €
+              </div>
+              {data.wachstumspaket_beschreibung ? (
+                <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0 }}>
+                  {data.wachstumspaket_beschreibung}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </section>
 
