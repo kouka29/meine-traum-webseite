@@ -125,6 +125,15 @@ html.dark.apple-mode body::before {
     radial-gradient(ellipse 70% 50% at 50% 100%, hsl(270 70% 50% / 0.2), transparent 60%);
 }
 
+/* Apple-mode: PainPoints cards sit on dark section but get a white glass background
+   from the global card override. Force readable dark text inside. */
+html.apple-mode .pain-card .pain-card-title {
+  color: hsl(228 24% 10%) !important;
+}
+html.apple-mode .pain-card .pain-card-text {
+  color: hsl(220 10% 35%) !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
