@@ -152,6 +152,30 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: `E-Mail-Abmeldung | ${BRAND}`,
     description: "Vom Newsletter abmelden. Sie können sich jederzeit wieder anmelden.",
   },
+  "/handwerker": {
+    title: `Website für Handwerker | ${BRAND}`,
+    description: "Professionelle Websites für Handwerksbetriebe. Kostenlose Vorschau in 48 Stunden. Mehr Aufträge durch Google-Optimierung.",
+  },
+  "/handwerker/preise": {
+    title: `Preise Website für Handwerker | ${BRAND}`,
+    description: "Transparente Website-Preise für Handwerksbetriebe. Ab 59€/Monat. Steuerlich absetzbar.",
+  },
+  "/handwerker/leistungen": {
+    title: `Leistungen für Handwerker | ${BRAND}`,
+    description: "Website-Leistungen speziell für Handwerksbetriebe. SEO, Design, Texte, Hosting — wir übernehmen alles.",
+  },
+  "/handwerker/portfolio": {
+    title: `Portfolio Handwerker-Websites | ${BRAND}`,
+    description: "Webdesign-Projekte für Handwerksbetriebe. Elektriker, Maler, Sanitär, Dachdecker — echte Ergebnisse.",
+  },
+  "/handwerker/ueber-uns": {
+    title: `Über uns | ${BRAND} — Websites für Handwerker`,
+    description: "Wir bauen Websites speziell für Handwerksbetriebe. Ehrlich, schnell, ergebnisorientiert.",
+  },
+  "/handwerker/kontakt": {
+    title: `Kontakt | ${BRAND}`,
+    description: "Kostenlose Website-Vorschau für Handwerker in 48 Stunden. Jetzt anfragen — Antwort in 2 Stunden.",
+  },
 };
 
 const setMeta = (selector: string, attr: string, value: string) => {
