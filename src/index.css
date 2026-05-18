@@ -125,13 +125,53 @@ html.dark.apple-mode body::before {
     radial-gradient(ellipse 70% 50% at 50% 100%, hsl(270 70% 50% / 0.2), transparent 60%);
 }
 
-/* Apple-mode: PainPoints cards sit on dark section but get a white glass background
-   from the global card override. Force readable dark text inside. */
+/* ============================================================
+   APPLE MODE — PainPoints section redesign
+   Light, airy, Apple-style: soft gradient background, large
+   spacing, refined glass cards with dark legible text.
+   ============================================================ */
+html.apple-mode .painpoints-section {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, hsl(250 80% 70% / 0.12), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, hsl(215 100% 60% / 0.10), transparent 60%),
+    linear-gradient(180deg, hsl(225 40% 99%) 0%, hsl(250 40% 97%) 100%) !important;
+}
+
+html.apple-mode .painpoints-title {
+  background-image: linear-gradient(135deg, hsl(228 24% 10%) 0%, hsl(250 56% 48%) 60%, hsl(215 100% 50%) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  letter-spacing: -0.035em;
+}
+
+html.apple-mode .painpoints-sub {
+  color: hsl(220 10% 40%) !important;
+}
+
+html.apple-mode .pain-card {
+  background: hsl(0 0% 100% / 0.7) !important;
+  border-color: hsl(0 0% 100% / 0.9) !important;
+  box-shadow:
+    0 1px 2px hsl(228 24% 10% / 0.04),
+    0 12px 32px hsl(250 56% 48% / 0.08) !important;
+  padding: 2rem !important;
+}
+
+html.apple-mode .pain-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 24px hsl(228 24% 10% / 0.06),
+    0 32px 80px hsl(250 56% 48% / 0.18) !important;
+}
+
 html.apple-mode .pain-card .pain-card-title {
   color: hsl(228 24% 10%) !important;
+  letter-spacing: -0.02em;
 }
+
 html.apple-mode .pain-card .pain-card-text {
-  color: hsl(220 10% 35%) !important;
+  color: hsl(220 10% 40%) !important;
 }
 
 @layer base {
