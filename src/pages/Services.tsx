@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { Monitor, TrendingUp, Palette, Search, Settings, ArrowRight, CheckCircle } from "lucide-react";
+import { Monitor, TrendingUp, Palette, Search, Settings, CheckCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
@@ -56,7 +56,7 @@ const faqs = [
 
 const Services = () => (
   <main className="pt-20">
-    <section className="section-padding">
+    <section className="section-padding pb-0">
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-20 max-w-2xl mx-auto">
@@ -103,27 +103,23 @@ const Services = () => (
           ))}
         </div>
 
-        <div className="text-center mt-16">
-          <Button variant="gradient" size="lg" asChild>
-            <Link to="/kontakt">
-              Kostenlose Vorschau anfordern <ArrowRight size={18} />
-            </Link>
-          </Button>
-        </div>
-
         <AnimatedSection>
-          <div className="mt-20">
-            <h2 className="text-center mb-10 text-balance">Häufige Fragen zu unseren Leistungen</h2>
-            <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="space-y-3">
-                {faqs.map((faq, i) => (
-                  <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
-                    <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
+          <div className="mt-20 grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
+            <div className="lg:sticky lg:top-28">
+              <span className="badge-label bg-primary/10 text-primary mb-5">FAQ</span>
+              <h2 className="mb-5 text-balance">Häufige Fragen zu unseren Leistungen</h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Keine Standard-Antworten. Hier finden Sie klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
+              </p>
             </div>
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqs.map((faq, i) => (
+                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+                  <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </AnimatedSection>
       </div>
