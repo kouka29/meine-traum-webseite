@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -60,6 +60,7 @@ const ElektrikerHub = lazy(() => import("./pages/trade/ElektrikerHub.tsx"));
 const MalerHub = lazy(() => import("./pages/trade/MalerHub.tsx"));
 const SanitaerHub = lazy(() => import("./pages/trade/SanitaerHub.tsx"));
 const DachdeckerHub = lazy(() => import("./pages/trade/DachdeckerHub.tsx"));
+const Angebot = lazy(() => import("./pages/Angebot.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,20 @@ const HandwerkerRoute = () => {
   return appleDesign ? <Handwerker /> : <HandwerkerClassic />;
 };
 
+const ChromeWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { pathname } = useLocation();
+  const standalone = pathname === "/angebot";
+  return (
+    <>
+      {!standalone && <Navbar />}
+      {children}
+      {!standalone && <Footer />}
+      {!standalone && <CookieBanner />}
+      {!standalone && <GlobalCtaPopup />}
+    </>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -85,9 +100,9 @@ const App = () => (
           <PageMeta />
           <StructuredData />
           <PageTracker />
-          <Navbar />
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
+          <ChromeWrapper>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/leistungen" element={<Services />} />
             <Route path="/ueber-uns" element={<About />} />
@@ -159,12 +174,11 @@ const App = () => (
             <Route path="/dachdecker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
             <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
             <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
+            <Route path="/angebot" element={<Angebot />} />
             <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-          <Footer />
-          <CookieBanner />
-          <GlobalCtaPopup />
+              </Routes>
+            </Suspense>
+          </ChromeWrapper>
         </DesignModeProvider>
       </BrowserRouter>
     </TooltipProvider>
