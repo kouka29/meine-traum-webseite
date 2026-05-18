@@ -22,6 +22,8 @@ import {
   PieChart, Pie, Cell, LineChart, Line, CartesianGrid
 } from "recharts";
 import AdminVorschauTab from "@/components/admin/AdminVorschauTab";
+import AdminAngeboteTab from "@/components/admin/AdminAngeboteTab";
+import AngebotModal from "@/components/admin/AngebotModal";
 import { useDesignMode } from "@/contexts/DesignModeProvider";
 import { Sparkles as SparklesIcon } from "lucide-react";
 
@@ -168,9 +170,12 @@ const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "vorschau">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "angebote" | "vorschau">("dashboard");
   const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer" | "waitlist">("all");
   const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
+
+  // Angebot-Modal state
+  const [angebotModalLead, setAngebotModalLead] = useState<Lead | null>(null);
 
   // Portfolio state
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
@@ -635,6 +640,7 @@ const AdminLeads = () => {
             { key: "leads" as const, icon: Users, label: `Leads (${leads.length})` },
             { key: "portfolio" as const, icon: FolderOpen, label: `Portfolio (${projects.length})` },
             { key: "testimonials" as const, icon: MessageSquare, label: `Referenzen (${testimonials.length})` },
+            { key: "angebote" as const, icon: FileText, label: "Angebote" },
             { key: "vorschau" as const, icon: Sparkles, label: "Kostenlose Vorschau" },
           ]).map(tab => (
             <button
@@ -955,6 +961,14 @@ const AdminLeads = () => {
                             Zurück zu „Neu"
                           </Button>
                         )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setAngebotModalLead(lead)}
+                          className="border-[#4F3FF0] text-[#4F3FF0] bg-transparent hover:bg-[#4F3FF0]/10 hover:text-[#4F3FF0]"
+                        >
+                          <FileText size={12} /> Angebot erstellen
+                        </Button>
                       </div>
                     </div>
                     {/* Funnel-Antworten: Branche, Webseite, Ziele, Dringlichkeit, Notizen */}
@@ -1202,7 +1216,22 @@ const AdminLeads = () => {
         {activeTab === "vorschau" && (
           <AdminVorschauTab password={password} />
         )}
+
+        {/* Angebote Tab */}
+        {activeTab === "angebote" && (
+          <AdminAngeboteTab password={password} />
+        )}
       </div>
+
+      {/* Angebot Modal */}
+      {angebotModalLead && (
+        <AngebotModal
+          open={!!angebotModalLead}
+          onOpenChange={(o) => { if (!o) setAngebotModalLead(null); }}
+          password={password}
+          lead={angebotModalLead}
+        />
+      )}
 
       {/* Project Dialog */}
       <Dialog open={showProjectDialog} onOpenChange={setShowProjectDialog}>

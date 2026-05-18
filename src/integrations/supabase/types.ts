@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      angebote: {
+        Row: {
+          ablauf_datum: string | null
+          base64_data: string | null
+          erstellt_am: string
+          id: string
+          lead_email: string | null
+          lead_name: string | null
+          normalpreis: number | null
+          pin: string | null
+          preis: number | null
+          status: string
+          stripe_link: string | null
+        }
+        Insert: {
+          ablauf_datum?: string | null
+          base64_data?: string | null
+          erstellt_am?: string
+          id?: string
+          lead_email?: string | null
+          lead_name?: string | null
+          normalpreis?: number | null
+          pin?: string | null
+          preis?: number | null
+          status?: string
+          stripe_link?: string | null
+        }
+        Update: {
+          ablauf_datum?: string | null
+          base64_data?: string | null
+          erstellt_am?: string
+          id?: string
+          lead_email?: string | null
+          lead_name?: string | null
+          normalpreis?: number | null
+          pin?: string | null
+          preis?: number | null
+          status?: string
+          stripe_link?: string | null
+        }
+        Relationships: []
+      }
       design_settings: {
         Row: {
           apple_design_enabled: boolean
