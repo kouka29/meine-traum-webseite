@@ -4,6 +4,7 @@ import { z } from "zod";
 
 interface Props {
   branche?: string;
+  withMessage?: boolean;
 }
 
 const BRANCHEN = [
@@ -26,8 +27,8 @@ const schema = z.object({
   email: z.union([z.string().trim().email("Ungültige E-Mail").max(160), z.literal("")]).optional(),
 });
 
-const HandwerkerLeadForm = ({ branche = "" }: Props) => {
-  const [form, setForm] = useState({ vorname: "", telefon: "", branche, ort: "", email: "" });
+const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
+  const [form, setForm] = useState({ vorname: "", telefon: "", branche, ort: "", email: "", nachricht: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -120,6 +121,17 @@ const HandwerkerLeadForm = ({ branche = "" }: Props) => {
         />
         {errors.ort && <p className="text-xs text-red-500 mt-1">{errors.ort}</p>}
       </div>
+      {withMessage && (
+        <div>
+          <textarea
+            placeholder="Z.B.: Ich bin Elektriker in Mainz und brauche eine neue Website..."
+            value={form.nachricht}
+            onChange={(e) => setForm({ ...form, nachricht: e.target.value })}
+            rows={3}
+            className={inputCls("nachricht") + " resize-none"}
+          />
+        </div>
+      )}
       <div>
         <input
           type="email"
