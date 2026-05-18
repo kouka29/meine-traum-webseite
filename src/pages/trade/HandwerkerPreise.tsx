@@ -68,7 +68,7 @@ const enterprise: Plan = {
 };
 
 const faqs = [
-  { q: "Lohnt sich eine Website überhaupt für meinen Betrieb?", a: "Ja – ein einziger neuer Auftrag über Deine Website deckt oft die kompletten Jahreskosten." },
+  { q: "Lohnt sich eine Website überhaupt für meinen Betrieb?", a: "Ja – ein einziger neuer Auftrag reicht. Den Rest verdienst Du." },
   { q: "Was passiert wenn mir die Vorschau nicht gefällt?", a: "Gar nichts. Du zahlst keinen Cent. Kein Druck, keine Verpflichtung." },
   { q: "Muss ich selbst viel Zeit investieren?", a: "Nein. 2-Minuten-Formular ausfüllen — wir kümmern uns um alles." },
   { q: "Kann ich das Paket wechseln?", a: "Ja — jederzeit upgraden ohne neue Mindestlaufzeit. Downgrade nach Ablauf der 12 Monate möglich." },
