@@ -45,15 +45,15 @@ const Navbar = () => {
           {trade.bannerText}
         </Link>
       )}
-      <div className="container-narrow flex items-center justify-between h-[72px] px-4">
+      <div className="container-narrow flex items-center justify-between gap-6 h-[72px] px-4">
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <img src={logo} alt="Meine Traum Webseite Logo" width={44} height={44} className="h-11 w-11 shrink-0" />
-          <span className="font-heading text-base sm:text-lg lg:text-xl font-bold gradient-text tracking-tight whitespace-nowrap">
+          <img src={logo} alt="Meine Traum Webseite Logo" width={40} height={40} className="h-10 w-10 shrink-0" />
+          <span className="font-heading text-base lg:text-lg font-bold gradient-text tracking-tight whitespace-nowrap">
             Meine Traum Webseite
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
           {navItems.map((item) => {
             const active = location.pathname === item.path;
             return (
@@ -61,7 +61,7 @@ const Navbar = () => {
                 key={item.path + item.label}
                 to={item.path}
                 className={cn(
-                  "text-[13px] font-medium tracking-wide transition-colors hover:text-primary",
+                  "text-[13px] font-medium tracking-wide whitespace-nowrap transition-colors hover:text-primary",
                   item.highlight ? "font-semibold" : "",
                   active && !item.highlight ? "text-primary" : !item.highlight ? "text-muted-foreground" : ""
                 )}
@@ -73,7 +73,7 @@ const Navbar = () => {
           })}
           <a
             href="tel:+4961313076498"
-            className="hidden lg:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground hover:text-primary transition-colors"
+            className="hidden xl:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground whitespace-nowrap hover:text-primary transition-colors"
           >
             <Phone size={14} className="text-primary" />
             06131 30 764 98
@@ -81,7 +81,7 @@ const Navbar = () => {
           <Button
             variant="gradient"
             size="sm"
-            className="text-[13px] px-5"
+            className="text-[13px] px-5 whitespace-nowrap"
             style={trade ? { background: "#5B5FEF", color: "#fff" } : undefined}
             asChild
           >
@@ -90,7 +90,7 @@ const Navbar = () => {
         </div>
 
         <button
-          className="md:hidden p-2 text-foreground"
+          className="lg:hidden p-2 text-foreground"
           onClick={() => setOpen(!open)}
           aria-label="Menü"
         >
@@ -99,7 +99,7 @@ const Navbar = () => {
       </div>
 
       {open && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
+        <div className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
           <div className="container-narrow px-4 py-6 flex flex-col gap-5">
             {navItems.map((item) => (
               <Link
