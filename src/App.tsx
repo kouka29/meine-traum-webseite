@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -51,6 +51,15 @@ const Starter = lazy(() => import("./pages/Starter.tsx"));
 const KaufErfolgreich = lazy(() => import("./pages/KaufErfolgreich.tsx"));
 const Handwerker = lazy(() => import("./pages/Handwerker.tsx"));
 const HandwerkerClassic = lazy(() => import("./pages/HandwerkerClassic.tsx"));
+const HandwerkerPreise = lazy(() => import("./pages/trade/HandwerkerPreise.tsx"));
+const HandwerkerLeistungen = lazy(() => import("./pages/trade/HandwerkerLeistungen.tsx"));
+const HandwerkerPortfolio = lazy(() => import("./pages/trade/HandwerkerPortfolio.tsx"));
+const HandwerkerUeberUns = lazy(() => import("./pages/trade/HandwerkerUeberUns.tsx"));
+const HandwerkerKontakt = lazy(() => import("./pages/trade/HandwerkerKontakt.tsx"));
+const ElektrikerHub = lazy(() => import("./pages/trade/ElektrikerHub.tsx"));
+const MalerHub = lazy(() => import("./pages/trade/MalerHub.tsx"));
+const SanitaerHub = lazy(() => import("./pages/trade/SanitaerHub.tsx"));
+const DachdeckerHub = lazy(() => import("./pages/trade/DachdeckerHub.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -112,6 +121,44 @@ const App = () => (
             <Route path="/starter" element={<Starter />} />
             <Route path="/kauf-erfolgreich" element={<KaufErfolgreich />} />
             <Route path="/handwerker" element={<HandwerkerRoute />} />
+            <Route path="/handwerker/preise" element={<HandwerkerPreise />} />
+            <Route path="/handwerker/leistungen" element={<HandwerkerLeistungen />} />
+            <Route path="/handwerker/portfolio" element={<HandwerkerPortfolio />} />
+            <Route path="/handwerker/ueber-uns" element={<HandwerkerUeberUns />} />
+            <Route path="/handwerker/kontakt" element={<HandwerkerKontakt />} />
+            <Route path="/handwerker/*" element={<Navigate to="/handwerker" replace />} />
+
+            <Route path="/elektriker" element={<ElektrikerHub />} />
+            <Route path="/elektriker/preise" element={<Navigate to="/handwerker/preise" replace />} />
+            <Route path="/elektriker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+            <Route path="/elektriker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+            <Route path="/elektriker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+            <Route path="/elektriker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+            <Route path="/elektriker/*" element={<Navigate to="/elektriker" replace />} />
+
+            <Route path="/maler" element={<MalerHub />} />
+            <Route path="/maler/preise" element={<Navigate to="/handwerker/preise" replace />} />
+            <Route path="/maler/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+            <Route path="/maler/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+            <Route path="/maler/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+            <Route path="/maler/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+            <Route path="/maler/*" element={<Navigate to="/maler" replace />} />
+
+            <Route path="/sanitaer" element={<SanitaerHub />} />
+            <Route path="/sanitaer/preise" element={<Navigate to="/handwerker/preise" replace />} />
+            <Route path="/sanitaer/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+            <Route path="/sanitaer/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+            <Route path="/sanitaer/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+            <Route path="/sanitaer/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+            <Route path="/sanitaer/*" element={<Navigate to="/sanitaer" replace />} />
+
+            <Route path="/dachdecker" element={<DachdeckerHub />} />
+            <Route path="/dachdecker/preise" element={<Navigate to="/handwerker/preise" replace />} />
+            <Route path="/dachdecker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+            <Route path="/dachdecker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+            <Route path="/dachdecker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+            <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+            <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
             <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
