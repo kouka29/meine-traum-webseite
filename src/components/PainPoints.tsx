@@ -25,14 +25,14 @@ const painPoints = [
 ];
 
 const PainPoints = () => (
-  <section className="section-padding bg-foreground">
+  <section className="painpoints-section section-padding bg-foreground relative overflow-hidden">
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="text-center mb-16">
-          <h2 className="text-background mb-5 text-balance">
+          <h2 className="painpoints-title text-background mb-5 text-balance">
             Warum die meisten Webseiten keine Kunden bringen
           </h2>
-          <p className="text-background/50 max-w-xl mx-auto text-lg">
+          <p className="painpoints-sub text-background/50 max-w-xl mx-auto text-lg">
             Es liegt selten am Traffic. Es liegt fast immer an diesen vier Fehlern – und jeder einzelne kostet Sie bares Geld.
           </p>
         </div>
