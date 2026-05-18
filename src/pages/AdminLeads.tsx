@@ -961,6 +961,14 @@ const AdminLeads = () => {
                             Zurück zu „Neu"
                           </Button>
                         )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setAngebotModalLead(lead)}
+                          className="border-[#4F3FF0] text-[#4F3FF0] bg-transparent hover:bg-[#4F3FF0]/10 hover:text-[#4F3FF0]"
+                        >
+                          <FileText size={12} /> Angebot erstellen
+                        </Button>
                       </div>
                     </div>
                     {/* Funnel-Antworten: Branche, Webseite, Ziele, Dringlichkeit, Notizen */}
