@@ -38,7 +38,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
       "Webdesign Agentur für conversion-optimierte Websites. Individuelles Design für KMUs, Handwerker und Selbstständige. Kostenlose Vorschau.",
   },
   "/website-erstellen-lassen": {
-    title: `Website erstellen lassen ab 1.500 € | ${BRAND}`,
+    title: `Website erstellen lassen ab 990 € | ${BRAND}`,
     description:
       "Moderne Website für Ihr Unternehmen erstellen lassen. Conversion-optimiert, mobilfreundlich, SEO-ready. Vorschau in 48 h.",
   },
@@ -80,12 +80,12 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/webdesign-preise": {
     title: `Webdesign Preise & Kosten | ${BRAND}`,
     description:
-      "Transparente Webdesign-Preise ab 1.500 €. Was kostet eine Website? Faire Festpreise ohne versteckte Kosten.",
+      "Transparente Webdesign-Preise ab 990 €. Was kostet eine Website? Faire Festpreise ohne versteckte Kosten.",
   },
   "/preise": {
     title: `Webdesign Preise & Pakete | ${BRAND}`,
     description:
-      "Transparente Webdesign-Preise ab 1.500 €. Faire Festpreise und klare Pakete – ohne versteckte Kosten.",
+      "Transparente Webdesign-Preise ab 990 €. Faire Festpreise und klare Pakete – ohne versteckte Kosten.",
   },
   "/webdesign-shk": {
     title: `Webdesign für SHK-Betriebe | ${BRAND}`,
