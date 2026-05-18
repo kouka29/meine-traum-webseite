@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      design_settings: {
+        Row: {
+          apple_design_enabled: boolean
+          id: number
+          updated_at: string
+        }
+        Insert: {
+          apple_design_enabled?: boolean
+          id?: number
+          updated_at?: string
+        }
+        Update: {
+          apple_design_enabled?: boolean
+          id?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
