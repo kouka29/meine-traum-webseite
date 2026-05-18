@@ -748,6 +748,67 @@ Deno.serve(async (req) => {
       });
     }
 
+    // =================== ANGEBOTE ===================
+    if (action === "angebote-list") {
+      const { data, error } = await supabase
+        .from("angebote")
+        .select("*")
+        .order("erstellt_am", { ascending: false })
+        .limit(500);
+      if (error) throw error;
+      return new Response(JSON.stringify({ angebote: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "angebot-create") {
+      const {
+        lead_name, lead_email, preis, normalpreis, pin,
+        ablauf_datum, base64_data, stripe_link,
+      } = body as Record<string, unknown>;
+
+      if (!lead_name || !lead_email || preis === undefined || preis === null || !pin || !ablauf_datum || !base64_data || !stripe_link) {
+        return new Response(JSON.stringify({ error: "Pflichtfelder fehlen" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (typeof pin !== "string" || !/^\d{5}$/.test(pin)) {
+        return new Response(JSON.stringify({ error: "PIN muss 5-stellig sein" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { data, error } = await supabase.from("angebote").insert({
+        lead_name: String(lead_name).slice(0, 200),
+        lead_email: String(lead_email).slice(0, 200),
+        preis: Number(preis),
+        normalpreis: normalpreis !== undefined && normalpreis !== null && normalpreis !== "" ? Number(normalpreis) : null,
+        pin,
+        ablauf_datum: String(ablauf_datum),
+        base64_data: String(base64_data),
+        stripe_link: String(stripe_link).slice(0, 1000),
+        status: "aktiv",
+      }).select().single();
+      if (error) throw error;
+      return new Response(JSON.stringify({ angebot: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "angebot-delete") {
+      const { angebotId } = body as { angebotId?: string };
+      if (!angebotId) {
+        return new Response(JSON.stringify({ error: "angebotId fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase.from("angebote").delete().eq("id", angebotId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Ungültige Aktion" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
