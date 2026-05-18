@@ -177,6 +177,17 @@ html.dark.apple-mode body::before {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Brand tokens — Trade subpages */
+    --brand-purple: #5B5FEF;
+    --brand-blue: #3B5BDB;
+    --dark-bg: #0F1117;
+    --dark-card: #1A1D2E;
+    --light-bg: #F8F9FF;
+    --amber: #F59E0B;
+    --text-white: #FFFFFF;
+    --text-muted: #9CA3AF;
+    --success: #10B981;
   }
 
   .dark {
