@@ -850,7 +850,7 @@ const AdminLeads = () => {
             <div className="flex items-center justify-between mb-6">
               <p className="text-muted-foreground">{leads.length} Lead{leads.length !== 1 ? "s" : ""} insgesamt</p>
               <div className="flex items-center gap-2">
-                <Button variant="default" size="sm" onClick={() => setNewLeadOpen(true)}>
+                <Button type="button" variant="default" size="sm" onClick={() => { console.log("[admin] open NewLeadModal"); setNewLeadOpen(true); }}>
                   <Plus size={14} /> Lead manuell hinzufügen
                 </Button>
                 <Button variant="outline-primary" size="sm" onClick={exportCSV} disabled={leads.length === 0}>
