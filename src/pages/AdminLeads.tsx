@@ -25,6 +25,51 @@ import AdminVorschauTab from "@/components/admin/AdminVorschauTab";
 import { useDesignMode } from "@/contexts/DesignModeProvider";
 import { Sparkles as SparklesIcon } from "lucide-react";
 
+const DesignToggleBanner = ({ password }: { password: string }) => {
+  const { appleDesign } = useDesignMode();
+  const [saving, setSaving] = useState(false);
+
+  const toggle = async (next: boolean) => {
+    if (saving) return;
+    setSaving(true);
+    const { error } = await supabase.functions.invoke("admin-design-toggle", {
+      body: { password, appleDesignEnabled: next },
+    });
+    setSaving(false);
+    if (error) {
+      toast.error("Konnte Design nicht umschalten");
+      return;
+    }
+    toast.success(next ? "Apple Design aktiviert" : "Classic Design aktiviert");
+  };
+
+  return (
+    <div className="mb-6 rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex items-center gap-4">
+        <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <SparklesIcon size={20} className="text-primary" />
+        </div>
+        <div>
+          <div className="font-heading font-semibold text-base flex items-center gap-2">
+            Apple Design
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${appleDesign ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+              {appleDesign ? "AKTIV" : "AUS"}
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Schaltet das Premium-Design global für alle Besucher um. Auf <code>/handwerker</code> wechselt die Version automatisch.
+          </p>
+        </div>
+      </div>
+      <div className="flex items-center gap-3">
+        <span className="text-xs text-muted-foreground">Classic</span>
+        <Switch checked={appleDesign} onCheckedChange={toggle} disabled={saving} />
+        <span className="text-xs font-semibold text-primary">Apple</span>
+      </div>
+    </div>
+  );
+};
+
 interface Lead {
   id: string;
   first_name: string;
