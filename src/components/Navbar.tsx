@@ -20,15 +20,14 @@ const Navbar = () => {
   const location = useLocation();
   const trade = getTradeContext(location.pathname);
 
-  // Build nav items based on context
   const navItems = trade
     ? [
         { label: `${trade.emoji} ${trade.label}`, path: trade.hubPath, highlight: true },
-        { label: "Leistungen", path: "/handwerker/leistungen" },
-        { label: "Über uns", path: "/handwerker/ueber-uns" },
-        { label: "Portfolio", path: "/handwerker/portfolio" },
-        { label: "Preise", path: "/handwerker/preise" },
-        { label: "Kontakt", path: "/handwerker/kontakt" },
+        { label: "Leistungen", path: "/handwerker/leistungen", highlight: false },
+        { label: "Über uns", path: "/handwerker/ueber-uns", highlight: false },
+        { label: "Portfolio", path: "/handwerker/portfolio", highlight: false },
+        { label: "Preise", path: "/handwerker/preise", highlight: false },
+        { label: "Kontakt", path: "/handwerker/kontakt", highlight: false },
       ]
     : defaultNavItems.map((i) => ({ ...i, highlight: false }));
 
@@ -36,7 +35,7 @@ const Navbar = () => {
   const ctaPath = trade ? "/handwerker/kontakt" : "/kontakt";
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       {trade && (
         <Link
           to="/handwerker/kontakt"
@@ -46,41 +45,82 @@ const Navbar = () => {
           {trade.bannerText}
         </Link>
       )}
-      <nav className="bg-background/70 backdrop-blur-xl border-b border-border/50">
-        <div className="container-narrow flex items-center justify-between h-[72px] px-4">
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src={logo} alt="Meine Traum Webseite Logo" width={44} height={44} className="h-11 w-11" />
-            <span className="font-heading text-base sm:text-xl font-bold gradient-text tracking-tight">
-              Meine Traum Webseite
-            </span>
-          </Link>
+      <div className="container-narrow flex items-center justify-between h-[72px] px-4">
+        <Link to="/" className="flex items-center gap-2.5">
+          <img src={logo} alt="Meine Traum Webseite Logo" width={44} height={44} className="h-11 w-11" />
+          <span className="font-heading text-base sm:text-xl font-bold gradient-text tracking-tight">
+            Meine Traum Webseite
+          </span>
+        </Link>
 
-          {/* Desktop */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => {
-              const active = location.pathname === item.path;
-              return (
-                <Link
-                  key={item.path + item.label}
-                  to={item.path}
-                  className={cn(
-                    "text-[13px] font-medium tracking-wide transition-colors hover:text-primary",
-                    item.highlight
-                      ? "font-semibold"
-                      : "",
-                    active || item.highlight
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  )}
-                  style={item.highlight ? { color: "#5B5FEF" } : undefined}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+        <div className="hidden md:flex items-center gap-8">
+          {navItems.map((item) => {
+            const active = location.pathname === item.path;
+            return (
+              <Link
+                key={item.path + item.label}
+                to={item.path}
+                className={cn(
+                  "text-[13px] font-medium tracking-wide transition-colors hover:text-primary",
+                  item.highlight ? "font-semibold" : "",
+                  active && !item.highlight ? "text-primary" : !item.highlight ? "text-muted-foreground" : ""
+                )}
+                style={item.highlight ? { color: "#5B5FEF" } : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+          <a
+            href="tel:+4961313076498"
+            className="hidden lg:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground hover:text-primary transition-colors"
+          >
+            <Phone size={14} className="text-primary" />
+            06131 30 764 98
+          </a>
+          <Button
+            variant="gradient"
+            size="sm"
+            className="text-[13px] px-5"
+            style={trade ? { background: "#5B5FEF", color: "#fff" } : undefined}
+            asChild
+          >
+            <Link to={ctaPath}>{ctaLabel}</Link>
+          </Button>
+        </div>
+
+        <button
+          className="md:hidden p-2 text-foreground"
+          onClick={() => setOpen(!open)}
+          aria-label="Menü"
+        >
+          {open ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
+          <div className="container-narrow px-4 py-6 flex flex-col gap-5">
+            {navItems.map((item) => (
+              <Link
+                key={item.path + item.label}
+                to={item.path}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  "text-sm font-medium py-1 transition-colors",
+                  location.pathname === item.path || item.highlight
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                )}
+                style={item.highlight ? { color: "#5B5FEF" } : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
             <a
               href="tel:+4961313076498"
-              className="hidden lg:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground hover:text-primary transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-foreground"
+              onClick={() => setOpen(false)}
             >
               <Phone size={14} className="text-primary" />
               06131 30 764 98
@@ -88,67 +128,17 @@ const Navbar = () => {
             <Button
               variant="gradient"
               size="sm"
-              className="text-[13px] px-5"
               style={trade ? { background: "#5B5FEF", color: "#fff" } : undefined}
               asChild
             >
-              <Link to={ctaPath}>{ctaLabel}</Link>
+              <Link to={ctaPath} onClick={() => setOpen(false)}>
+                {ctaLabel}
+              </Link>
             </Button>
           </div>
-
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden p-2 text-foreground"
-            onClick={() => setOpen(!open)}
-            aria-label="Menü"
-          >
-            {open ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
-
-        {/* Mobile menu */}
-        {open && (
-          <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
-            <div className="container-narrow px-4 py-6 flex flex-col gap-5">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path + item.label}
-                  to={item.path}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "text-sm font-medium py-1 transition-colors",
-                    location.pathname === item.path || item.highlight
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  )}
-                  style={item.highlight ? { color: "#5B5FEF" } : undefined}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <a
-                href="tel:+4961313076498"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-foreground"
-                onClick={() => setOpen(false)}
-              >
-                <Phone size={14} className="text-primary" />
-                06131 30 764 98
-              </a>
-              <Button
-                variant="gradient"
-                size="sm"
-                style={trade ? { background: "#5B5FEF", color: "#fff" } : undefined}
-                asChild
-              >
-                <Link to={ctaPath} onClick={() => setOpen(false)}>
-                  {ctaLabel}
-                </Link>
-              </Button>
-            </div>
-          </div>
-        )}
-      </nav>
-    </div>
+      )}
+    </nav>
   );
 };
 
