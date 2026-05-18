@@ -56,7 +56,7 @@ const faqs = [
 
 const Services = () => (
   <main className="pt-20">
-    <section className="section-padding">
+    <section className="section-padding pb-0">
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-20 max-w-2xl mx-auto">
