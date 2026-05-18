@@ -22,6 +22,8 @@ import {
   PieChart, Pie, Cell, LineChart, Line, CartesianGrid
 } from "recharts";
 import AdminVorschauTab from "@/components/admin/AdminVorschauTab";
+import { useDesignMode } from "@/contexts/DesignModeProvider";
+import { Sparkles as SparklesIcon } from "lucide-react";
 
 interface Lead {
   id: string;
@@ -566,6 +568,9 @@ const AdminLeads = () => {
   return (
     <div className="min-h-screen bg-background pt-24">
       <div className="max-w-7xl mx-auto px-4 pb-12">
+        {/* Design toggle banner */}
+        <DesignToggleBanner password={password} />
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
