@@ -176,6 +176,22 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: `Kontakt | ${BRAND}`,
     description: "Kostenlose Website-Vorschau für Handwerker in 48 Stunden. Jetzt anfragen — Antwort in 2 Stunden.",
   },
+  "/elektriker": {
+    title: `Website für Elektriker | ${BRAND}`,
+    description: "Websites speziell für Elektriker. Gefunden bei 'Elektriker [Stadt]'. Mehr Aufträge, auch bei Notfällen. Kostenlose Vorschau in 48h.",
+  },
+  "/maler": {
+    title: `Website für Maler | ${BRAND}`,
+    description: "Websites speziell für Maler & Lackierer. Referenzgalerie, Google-Optimierung, mehr Aufträge. Kostenlose Vorschau in 48h.",
+  },
+  "/sanitaer": {
+    title: `Website für Sanitärbetriebe | ${BRAND}`,
+    description: "Websites für Sanitär & Heizungsbetriebe. Notfall-Seiten, Badgalerien, Google-Optimierung. Kostenlose Vorschau in 48h.",
+  },
+  "/dachdecker": {
+    title: `Website für Dachdecker | ${BRAND}`,
+    description: "Websites speziell für Dachdecker. Sturmschaden-Seiten, Referenzgalerien, Google-Rankings. Kostenlose Vorschau in 48h.",
+  },
 };
 
 const setMeta = (selector: string, attr: string, value: string) => {
