@@ -52,6 +52,9 @@ const faqs = [
   { q: "Welche Leistungen bietet eure Webdesign Agentur?", a: "Wir bieten Conversion-Webdesign, UX/UI Design, SEO-Optimierung, Landingpage-Erstellung, Website Relaunch und Conversion-Optimierung – alles aus einer Hand." },
   { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Sie können jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten Sie gerne, welche Kombination für Ihre Ziele am sinnvollsten ist." },
   { q: "Erstellt ihr auch Landingpages?", a: "Ja, wir erstellen hochkonvertierende Landingpages für Google Ads, Social Media Kampagnen und Lead-Generierung. Mehr dazu auf unserer Landingpage-Seite." },
+  { q: "Wie lange dauert ein Webdesign-Projekt?", a: "Eine typische Website ist innerhalb von 3–6 Wochen live. Landingpages oft schon in 1–2 Wochen. Den genauen Zeitplan stimmen wir nach dem Strategiegespräch mit Ihnen ab." },
+  { q: "Was kostet eine professionelle Website?", a: "Unsere Websites starten ab einem klar definierten Festpreis. Den genauen Investitionsrahmen erhalten Sie nach einem kostenlosen Strategiegespräch – transparent, ohne versteckte Kosten." },
+  { q: "Übernehmt ihr auch die Pflege und Wartung?", a: "Ja, auf Wunsch übernehmen wir Hosting, Updates, Backups und inhaltliche Anpassungen in einem monatlichen Wartungspaket – damit Ihre Website dauerhaft schnell und sicher bleibt." },
 ];
 
 const Services = () => (
@@ -104,13 +107,20 @@ const Services = () => (
         </div>
 
         <AnimatedSection>
-          <div className="mt-20 grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
+          <div className="mt-24 lg:mt-28 grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-20 items-start">
             <div className="lg:sticky lg:top-28">
               <span className="badge-label bg-primary/10 text-primary mb-5">FAQ</span>
               <h2 className="mb-5 text-balance">Häufige Fragen zu unseren Leistungen</h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
                 Keine Standard-Antworten. Hier finden Sie klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
               </p>
+              <div className="hidden lg:block p-6 rounded-2xl border border-border bg-muted/30">
+                <p className="font-heading font-semibold mb-2">Ihre Frage ist nicht dabei?</p>
+                <p className="text-sm text-muted-foreground mb-4">Wir beantworten sie gerne persönlich – unverbindlich und kostenfrei.</p>
+                <Link to="/kontakt" className="text-sm font-semibold text-primary hover:underline">
+                  Jetzt Kontakt aufnehmen →
+                </Link>
+              </div>
             </div>
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
