@@ -89,10 +89,10 @@ const Portfolio = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {projects.map((p, i) => (
-                <AnimatedSection key={p.id} delay={i * 0.08}>
+                <AnimatedSection key={p.id} delay={i * 0.08} className="h-full">
                   {p.external_url ? (
-                    <a href={normalizeUrl(p.external_url)} target="_blank" rel="noopener noreferrer" className="block">
-                      <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
+                    <a href={normalizeUrl(p.external_url)} target="_blank" rel="noopener noreferrer" className="block h-full">
+                      <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
                         <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                           {p.image_url ? (
                             <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
@@ -108,15 +108,17 @@ const Portfolio = () => {
                             </span>
                           )}
                         </div>
-                        <div className="p-6">
+                        <div className="p-6 flex flex-col flex-1">
                           <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
                           <h2 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h2>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed min-h-[3.75rem]">
+                            {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
+                          </p>
                         </div>
                       </div>
                     </a>
                   ) : (
-                    <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background">
+                    <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
                       <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                         {p.image_url ? (
                           <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
@@ -129,10 +131,12 @@ const Portfolio = () => {
                           </span>
                         )}
                       </div>
-                      <div className="p-6">
+                      <div className="p-6 flex flex-col flex-1">
                         <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
                         <h2 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h2>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed min-h-[3.75rem]">
+                          {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
+                        </p>
                       </div>
                     </div>
                   )}
