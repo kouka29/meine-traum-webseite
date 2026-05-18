@@ -22,7 +22,7 @@ const benefits = [
 ];
 
 const faqs = [
-  { q: "Was kostet es, eine Website erstellen zu lassen?", a: "Die Kosten für eine professionelle Website starten ab 1.500 €. Der Preis hängt vom Umfang ab – Landingpage, Unternehmensseite oder E-Commerce. Wir erstellen Ihnen ein individuelles Angebot nach dem Erstgespräch." },
+  { q: "Was kostet es, eine Website erstellen zu lassen?", a: "Die Kosten für eine professionelle Website starten ab 990 €. Der Preis hängt vom Umfang ab – Landingpage, Unternehmensseite oder E-Commerce. Wir erstellen Ihnen ein individuelles Angebot nach dem Erstgespräch." },
   { q: "Wie lange dauert es, eine Homepage erstellen zu lassen?", a: "Eine typische Website ist in 2–4 Wochen fertig. Einfache Landingpages können schneller umgesetzt werden. Sie erhalten bereits nach 48 Stunden eine kostenlose Vorschau." },
   { q: "Kann ich meine Website selbst pflegen?", a: "Ja! Wir integrieren ein einfach bedienbares CMS, mit dem Sie Texte, Bilder und Inhalte selbst aktualisieren können – ohne technische Kenntnisse." },
   { q: "Website erstellen lassen oder selbst machen?", a: "Eine professionell erstellte Website spart Ihnen Zeit und liefert bessere Ergebnisse. Unsere Kunden berichten von durchschnittlich 3x mehr Anfragen nach dem Relaunch. Selbstgebaute Websites erreichen selten diese Conversion-Raten." },

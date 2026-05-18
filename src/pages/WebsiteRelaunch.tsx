@@ -15,7 +15,7 @@ const signs = [
 ];
 
 const faqs = [
-  { q: "Was kostet ein Website Relaunch?", a: "Ein professioneller Website Relaunch startet ab 1.500 €. Der Preis hängt vom Umfang der bestehenden Seite und den gewünschten Funktionen ab. Wir erstellen Ihnen ein individuelles Angebot." },
+  { q: "Was kostet ein Website Relaunch?", a: "Ein professioneller Website Relaunch startet ab 990 €. Der Preis hängt vom Umfang der bestehenden Seite und den gewünschten Funktionen ab. Wir erstellen Ihnen ein individuelles Angebot." },
   { q: "Verliere ich mein Google-Ranking beim Relaunch?", a: "Nein! Wir setzen saubere Weiterleitungen (301-Redirects) und optimieren Ihre neue Website von Anfang an für Suchmaschinen. In der Regel verbessern sich die Rankings nach einem professionellen Relaunch sogar." },
   { q: "Wie lange dauert ein Website Relaunch?", a: "Ein typischer Relaunch dauert 3–5 Wochen, abhängig vom Umfang. Sie erhalten vorab eine kostenlose Vorschau innerhalb von 48 Stunden." },
 ];

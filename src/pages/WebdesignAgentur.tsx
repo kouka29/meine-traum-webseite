@@ -16,7 +16,7 @@ const features = [
 
 const faqs = [
   { q: "Was macht eine gute Webdesign Agentur aus?", a: "Eine gute Webdesign Agentur erstellt nicht nur schöne Websites, sondern Verkaufsinstrumente. Bei Meine Traum Webseite kombinieren wir verkaufspsychologisches Design mit modernster Technik für messbare Ergebnisse." },
-  { q: "Wie viel kostet professionelles Webdesign?", a: "Unsere Webdesign-Projekte starten ab 1.500 €. Der genaue Preis hängt vom Umfang Ihres Projekts ab. Wir bieten transparente Preise und eine kostenlose Erstberatung." },
+   { q: "Wie viel kostet professionelles Webdesign?", a: "Unsere Webdesign-Projekte starten ab 990 €. Der genaue Preis hängt vom Umfang Ihres Projekts ab. Wir bieten transparente Preise und eine kostenlose Erstberatung." },
   { q: "Wie lange dauert die Erstellung einer Website?", a: "In der Regel 2–4 Wochen. Eine kostenlose Vorschau erhalten Sie bereits innerhalb von 48 Stunden nach dem Erstgespräch." },
   { q: "Bietet ihr auch Webdesign für kleine Unternehmen an?", a: "Ja! Wir sind spezialisiert auf Webdesign für kleine Unternehmen, Selbstständige, Handwerker und KMUs im DACH-Raum." },
 ];
@@ -91,7 +91,7 @@ const WebdesignAgentur = () => (
               Sie sind Handwerker, Coach, Berater oder führen ein lokales Unternehmen? Eine moderne Website, die Kunden gewinnt, muss kein Vermögen kosten. Wir erstellen professionelle Webseiten speziell für kleine Unternehmen.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-              {["Professioneller Online-Auftritt ab 1.500 €", "Kostenlose Vorschau in 48 Stunden", "Keine laufenden Agenturkosten", "Persönlicher Ansprechpartner", "SEO-Grundlagen inklusive", "Mobile-optimiert"].map((p) => (
+               {["Professioneller Online-Auftritt ab 990 €", "Kostenlose Vorschau in 48 Stunden", "Keine laufenden Agenturkosten", "Persönlicher Ansprechpartner", "SEO-Grundlagen inklusive", "Mobile-optimiert"].map((p) => (
                 <div key={p} className="flex items-center gap-3">
                   <CheckCircle size={17} className="text-primary shrink-0" />
                   <span className="text-sm">{p}</span>

@@ -23,7 +23,7 @@ const features = [
 
 const faqs = [
   { q: "Warum braucht ein SHK-Betrieb eine professionelle Website?", a: "Über 80% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlieren Sie täglich potenzielle Aufträge an Ihre Konkurrenz – besonders bei Notdienst-Anfragen." },
-  { q: "Was kostet eine Website für SHK-Betriebe?", a: "Unsere Webdesign-Projekte für SHK-Betriebe starten ab 1.500 €. Der genaue Preis hängt vom Umfang ab. Sie erhalten eine kostenlose Vorschau in 48 Stunden." },
+  { q: "Was kostet eine Website für SHK-Betriebe?", a: "Unsere Webdesign-Projekte für SHK-Betriebe starten ab 990 €. Der genaue Preis hängt vom Umfang ab. Sie erhalten eine kostenlose Vorschau in 48 Stunden." },
   { q: "Kann ich meine Leistungen selbst aktualisieren?", a: "Ja. Wir richten Ihre Website so ein, dass Sie Inhalte wie Notdienst-Zeiten oder neue Leistungen einfach selbst anpassen können." },
   { q: "Wie schnell ist meine neue SHK-Website online?", a: "In der Regel innerhalb von 2–4 Wochen. Eine erste Vorschau erhalten Sie bereits nach 48 Stunden." },
 ];

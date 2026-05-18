@@ -9,7 +9,7 @@ import {
 const faqs = [
   {
     q: "Was kostet eine conversion-optimierte Website?",
-    a: "Unsere Projekte starten ab 1.500 €. Der genaue Preis hängt vom Umfang ab – aber Sie sehen vorher im kostenlosen Konzept genau, was Sie bekommen. Keine Überraschungen.",
+    a: "Unsere Projekte starten ab 990 €. Der genaue Preis hängt vom Umfang ab – aber Sie sehen vorher im kostenlosen Konzept genau, was Sie bekommen. Keine Überraschungen.",
   },
   {
     q: "Wie schnell kann meine neue Website live gehen?",
