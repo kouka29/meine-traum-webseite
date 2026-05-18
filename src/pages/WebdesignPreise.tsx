@@ -237,7 +237,7 @@ const buyEnterprise = {
 const faqs = [
   {
     q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als Sie denken. Ein einziger neuer Auftrag über Ihre Website deckt oft die kompletten Jahreskosten. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    a: "Ja – und zwar schneller als Sie denken. Ein einziger neuer Auftrag reicht. Den Rest verdienst Du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
     q: "Was passiert wenn mir die Vorschau nicht gefällt?",
