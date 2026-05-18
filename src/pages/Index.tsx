@@ -23,7 +23,7 @@ const Index = () => (
       <div className="absolute inset-0">
         <img src={heroBg} alt="Webdesign das Kunden bringt" width={1920} height={1080} className="w-full h-full object-cover" fetchPriority="high" />
       </div>
-      <div className="container-narrow px-4 relative z-10 overflow-hidden">
+      <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
           <div className="max-w-3xl">
             <span className="badge-label bg-destructive/10 text-destructive mb-6 sm:mb-8 text-[10px] sm:text-xs">
