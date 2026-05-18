@@ -23,7 +23,7 @@ const features = [
 
 const faqs = [
   { q: "Warum braucht meine Arztpraxis eine professionelle Website?", a: "Über 70% der Patienten suchen online nach Ärzten, bevor sie einen Termin buchen. Eine professionelle, vertrauenswürdige Website ist heute entscheidend für die Patientengewinnung." },
-  { q: "Was kostet eine Website für Ärzte?", a: "Unsere Praxis-Websites starten ab 1.500 €. Sie erhalten ein individuelles, DSGVO-konformes Design mit lokaler SEO-Optimierung. Kostenlose Vorschau in 48 h." },
+  { q: "Was kostet eine Website für Ärzte?", a: "Unsere Praxis-Websites starten ab 990 €. Sie erhalten ein individuelles, DSGVO-konformes Design mit lokaler SEO-Optimierung. Kostenlose Vorschau in 48 h." },
   { q: "Ist die Website DSGVO-konform?", a: "Ja, selbstverständlich. Wir achten besonders auf Datenschutz – gerade im medizinischen Bereich ist das essentiell. Impressum, Datenschutzerklärung und Cookie-Banner sind inklusive." },
   { q: "Können Patienten online Termine buchen?", a: "Ja, wir können eine Online-Terminbuchung integrieren. So können Patienten rund um die Uhr Termine vereinbaren – das entlastet Ihr Praxisteam." },
 ];

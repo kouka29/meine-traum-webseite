@@ -60,7 +60,7 @@ const fitYes = [
 const fitNo = [
   "Sie nur eine \"hübsche\" Website wollen ohne Strategie",
   "Sie noch keine klare Zielgruppe kennst",
-  "Sie Budget unter 1.500 € eingeplant haben",
+  "Sie Budget unter 990 € eingeplant haben",
 ];
 
 const steps = [
@@ -106,7 +106,7 @@ const objections = [
   },
   {
     q: "Wie viel kostet das Ganze ungefähr?",
-    a: "Unsere Projekte starten ab 1.500 € für eine Landingpage und liegen meist zwischen 3.500–8.000 € für eine vollständige Website. Den exakten Preis nennen wir erst nach dem Konzept — damit Sie wissen, wofür Sie bezahlst.",
+    a: "Unsere Projekte starten ab 990 € für eine Landingpage und liegen meist zwischen 3.500–8.000 € für eine vollständige Website. Den exakten Preis nennen wir erst nach dem Konzept — damit Sie wissen, wofür Sie bezahlst.",
   },
   {
     q: "Wie lange dauert die Umsetzung?",

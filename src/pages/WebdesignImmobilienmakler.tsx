@@ -23,7 +23,7 @@ const features = [
 
 const faqs = [
   { q: "Warum braucht ein Immobilienmakler eine professionelle Website?", a: "Vertrauen ist im Immobiliengeschäft alles. Eine professionelle Website zeigt Kompetenz, präsentiert Ihre Objekte hochwertig und generiert kontinuierlich neue Eigentümer- und Käufer-Leads." },
-  { q: "Was kostet eine Makler-Website?", a: "Unsere Websites für Immobilienmakler starten ab 1.500 €. Je nach Funktionsumfang (Objektlisten, Wertermittlung, etc.) variiert der Preis. Kostenlose Vorschau in 48 h." },
+  { q: "Was kostet eine Makler-Website?", a: "Unsere Websites für Immobilienmakler starten ab 990 €. Je nach Funktionsumfang (Objektlisten, Wertermittlung, etc.) variiert der Preis. Kostenlose Vorschau in 48 h." },
   { q: "Kann ich Immobilien selbst auf der Website einpflegen?", a: "Ja, wir richten eine einfache Verwaltung ein, mit der Sie Objekte, Bilder und Beschreibungen selbst aktualisieren können." },
   { q: "Bietet ihr auch Landingpages für Wertermittlung an?", a: "Ja! Spezielle Landingpages für kostenlose Wertermittlung sind einer der besten Wege, um Eigentümer-Leads zu generieren. Wir erstellen diese gerne für Sie." },
 ];

@@ -79,7 +79,7 @@ const trust = [
 const faqs = [
   {
     q: "Was kostet das ungefähr?",
-    a: "Landingpage ab 1.500 €, Corporate Website ab 2.500 €. Im Erstgespräch konkrete Einschätzung — ohne Überraschungen.",
+    a: "Landingpage ab 990 €, Corporate Website ab 2.500 €. Im Erstgespräch konkrete Einschätzung — ohne Überraschungen.",
   },
   {
     q: "Wie lange dauert die Umsetzung?",
