@@ -24,6 +24,7 @@ import {
 import AdminVorschauTab from "@/components/admin/AdminVorschauTab";
 import AdminAngeboteTab from "@/components/admin/AdminAngeboteTab";
 import AngebotModal from "@/components/admin/AngebotModal";
+import NewLeadModal from "@/components/admin/NewLeadModal";
 import { useDesignMode } from "@/contexts/DesignModeProvider";
 import { Sparkles as SparklesIcon } from "lucide-react";
 
@@ -176,6 +177,9 @@ const AdminLeads = () => {
 
   // Angebot-Modal state
   const [angebotModalLead, setAngebotModalLead] = useState<Lead | null>(null);
+
+  // Neues Lead Modal
+  const [newLeadOpen, setNewLeadOpen] = useState(false);
 
   // Portfolio state
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
@@ -845,9 +849,14 @@ const AdminLeads = () => {
           <div>
             <div className="flex items-center justify-between mb-6">
               <p className="text-muted-foreground">{leads.length} Lead{leads.length !== 1 ? "s" : ""} insgesamt</p>
-              <Button variant="outline-primary" size="sm" onClick={exportCSV} disabled={leads.length === 0}>
-                <FileDown size={14} /> CSV Export
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button variant="default" size="sm" onClick={() => setNewLeadOpen(true)}>
+                  <Plus size={14} /> Lead manuell hinzufügen
+                </Button>
+                <Button variant="outline-primary" size="sm" onClick={exportCSV} disabled={leads.length === 0}>
+                  <FileDown size={14} /> CSV Export
+                </Button>
+              </div>
             </div>
             {/* Status-Filter */}
             <div className="flex flex-wrap gap-2 mb-5">
@@ -1232,6 +1241,13 @@ const AdminLeads = () => {
           lead={angebotModalLead}
         />
       )}
+
+      {/* Lead manuell hinzufügen */}
+      <NewLeadModal
+        open={newLeadOpen}
+        onOpenChange={setNewLeadOpen}
+        onCreated={() => fetchLeads()}
+      />
 
       {/* Project Dialog */}
       <Dialog open={showProjectDialog} onOpenChange={setShowProjectDialog}>
