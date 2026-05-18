@@ -46,9 +46,9 @@ const Navbar = () => {
         </Link>
       )}
       <div className="container-narrow flex items-center justify-between h-[72px] px-4">
-        <Link to="/" className="flex items-center gap-2.5">
-          <img src={logo} alt="Meine Traum Webseite Logo" width={44} height={44} className="h-11 w-11" />
-          <span className="font-heading text-base sm:text-xl font-bold gradient-text tracking-tight">
+        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <img src={logo} alt="Meine Traum Webseite Logo" width={44} height={44} className="h-11 w-11 shrink-0" />
+          <span className="font-heading text-base sm:text-lg lg:text-xl font-bold gradient-text tracking-tight whitespace-nowrap">
             Meine Traum Webseite
           </span>
         </Link>
