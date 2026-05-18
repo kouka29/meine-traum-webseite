@@ -12,6 +12,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
 import StructuredData from "@/components/StructuredData";
 import PageTracker from "@/components/PageTracker";
+import { DesignModeProvider, useDesignMode } from "@/contexts/DesignModeProvider";
 
 // Eager load Index for fastest initial paint
 import Index from "./pages/Index.tsx";
@@ -49,6 +50,7 @@ const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 const Starter = lazy(() => import("./pages/Starter.tsx"));
 const KaufErfolgreich = lazy(() => import("./pages/KaufErfolgreich.tsx"));
 const Handwerker = lazy(() => import("./pages/Handwerker.tsx"));
+const HandwerkerClassic = lazy(() => import("./pages/HandwerkerClassic.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -58,19 +60,25 @@ const PageLoader = () => (
   </div>
 );
 
+const HandwerkerRoute = () => {
+  const { appleDesign } = useDesignMode();
+  return appleDesign ? <Handwerker /> : <HandwerkerClassic />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <PageMeta />
-        <StructuredData />
-        <PageTracker />
-        <Navbar />
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
+        <DesignModeProvider>
+          <ScrollToTop />
+          <PageMeta />
+          <StructuredData />
+          <PageTracker />
+          <Navbar />
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/leistungen" element={<Services />} />
             <Route path="/ueber-uns" element={<About />} />
@@ -103,13 +111,14 @@ const App = () => (
             <Route path="/erstgespraech" element={<Erstgespraech />} />
             <Route path="/starter" element={<Starter />} />
             <Route path="/kauf-erfolgreich" element={<KaufErfolgreich />} />
-            <Route path="/handwerker" element={<Handwerker />} />
+            <Route path="/handwerker" element={<HandwerkerRoute />} />
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-        <Footer />
-        <CookieBanner />
-        <GlobalCtaPopup />
+            </Routes>
+          </Suspense>
+          <Footer />
+          <CookieBanner />
+          <GlobalCtaPopup />
+        </DesignModeProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
