@@ -106,8 +106,8 @@ html.apple-mode a[class*="rounded"] {
 
 /* Footer subtle gradient */
 html.apple-mode footer {
-  background: linear-gradient(180deg, transparent, hsl(228 24% 10% / 0.03)) !important;
-  backdrop-filter: blur(20px);
+  background: linear-gradient(180deg, hsl(228 24% 12%), hsl(228 24% 8%)) !important;
+  color: hsl(0 0% 100% / 0.75) !important;
 }
 
 /* Badges glow */
