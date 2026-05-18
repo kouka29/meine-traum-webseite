@@ -1208,7 +1208,22 @@ const AdminLeads = () => {
         {activeTab === "vorschau" && (
           <AdminVorschauTab password={password} />
         )}
+
+        {/* Angebote Tab */}
+        {activeTab === "angebote" && (
+          <AdminAngeboteTab password={password} />
+        )}
       </div>
+
+      {/* Angebot Modal */}
+      {angebotModalLead && (
+        <AngebotModal
+          open={!!angebotModalLead}
+          onOpenChange={(o) => { if (!o) setAngebotModalLead(null); }}
+          password={password}
+          lead={angebotModalLead}
+        />
+      )}
 
       {/* Project Dialog */}
       <Dialog open={showProjectDialog} onOpenChange={setShowProjectDialog}>
