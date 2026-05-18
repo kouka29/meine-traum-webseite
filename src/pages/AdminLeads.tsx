@@ -178,6 +178,9 @@ const AdminLeads = () => {
   // Angebot-Modal state
   const [angebotModalLead, setAngebotModalLead] = useState<Lead | null>(null);
 
+  // Neues Lead Modal
+  const [newLeadOpen, setNewLeadOpen] = useState(false);
+
   // Portfolio state
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
   const [portfolioLoading, setPortfolioLoading] = useState(false);
@@ -1238,6 +1241,13 @@ const AdminLeads = () => {
           lead={angebotModalLead}
         />
       )}
+
+      {/* Lead manuell hinzufügen */}
+      <NewLeadModal
+        open={newLeadOpen}
+        onOpenChange={setNewLeadOpen}
+        onCreated={() => fetchLeads()}
+      />
 
       {/* Project Dialog */}
       <Dialog open={showProjectDialog} onOpenChange={setShowProjectDialog}>
