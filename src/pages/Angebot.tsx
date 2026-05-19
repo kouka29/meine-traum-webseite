@@ -849,9 +849,11 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                               <CheckIcon size={14} color="#059669" style={{ marginTop: 4, flexShrink: 0 }} />
                               <div>
                                 <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK }}>{l.titel}</div>
-                                <div style={{ fontSize: 12, color: TEXT_MUTED, fontStyle: "italic", lineHeight: 1.5 }}>
-                                  {nutzenFor(l.titel, l.beschreibung)}
-                                </div>
+                                {nutzenFor(l.titel, l.beschreibung) && (
+                                  <div style={{ fontSize: 12, color: TEXT_MUTED, fontStyle: "italic", lineHeight: 1.5 }}>
+                                    {nutzenFor(l.titel, l.beschreibung)}
+                                  </div>
+                                )}
                               </div>
                             </li>
                           ))}
@@ -911,9 +913,11 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             }}>
               {l.emoji && <div style={{ fontSize: 32, marginBottom: 12, lineHeight: 1 }}>{l.emoji}</div>}
               <h3 style={{ fontSize: 17, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{l.titel}</h3>
-              <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
-                {nutzenFor(l.titel, l.beschreibung)}
-              </p>
+              {nutzenFor(l.titel, l.beschreibung) && (
+                <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
+                  {nutzenFor(l.titel, l.beschreibung)}
+                </p>
+              )}
             </div>
           ))}
         </div>
