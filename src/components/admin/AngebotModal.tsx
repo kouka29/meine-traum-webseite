@@ -531,6 +531,28 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               <Switch checked={multiMode} onCheckedChange={setMultiMode} />
             </div>
 
+            {/* Zahlungsart */}
+            <div className="rounded-lg border p-3 space-y-2" style={{ borderColor: `${BRAND}30`, background: `${BRAND}05` }}>
+              <Label>Zahlungsart</Label>
+              <div className="grid grid-cols-2 gap-2">
+                <button type="button" onClick={() => setPaymentMethod("stripe")}
+                  className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "stripe" ? "text-white" : "bg-background text-muted-foreground"}`}
+                  style={paymentMethod === "stripe" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
+                  <CreditCard size={14} /> Stripe Checkout
+                </button>
+                <button type="button" onClick={() => setPaymentMethod("rechnung")}
+                  className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "rechnung" ? "text-white" : "bg-background text-muted-foreground"}`}
+                  style={paymentMethod === "rechnung" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
+                  <Receipt size={14} /> Zahlung per Rechnung
+                </button>
+              </div>
+              {paymentMethod === "rechnung" && (
+                <div className="text-xs text-muted-foreground bg-muted/40 rounded-md p-2 leading-relaxed">
+                  Der Kunde bucht verbindlich per Bestätigungsflow. Du erhältst eine E-Mail und sendest die Rechnung manuell. Stripe-Link wird nicht benötigt.
+                </div>
+              )}
+            </div>
+
             {!multiMode ? (
               <SingleEditor
                 password={password}
