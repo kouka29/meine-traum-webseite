@@ -1211,7 +1211,16 @@ function PriceCard({
 
       <div style={{ marginTop: 10, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
-          <span style={{ fontSize: "clamp(40px, 6vw, 52px)", fontWeight: 800, color: kind === "miete" ? BRAND : TEXT_DARK, lineHeight: 1, letterSpacing: "-0.02em" }}>
+          <span style={{
+            fontSize: "clamp(40px, 6vw, 56px)", fontWeight: 800,
+            lineHeight: 1, letterSpacing: "-0.02em",
+            ...(kind === "miete" ? {
+              background: BRAND_GRADIENT,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            } : { color: TEXT_DARK }),
+          }}>
             {mainPrice}
           </span>
           {mainSub && (
@@ -1250,18 +1259,19 @@ function PriceCard({
 
       <button
         type="button"
+        className={buttonVariant === "outline" ? "ang-btn-outline" : "ang-btn-primary"}
         onClick={(e) => { e.stopPropagation(); onSelect(); }}
         style={{
           width: "100%",
-          padding: "14px 32px",
+          padding: "16px 32px",
           borderRadius: 50,
-          fontSize: 15, fontWeight: 700,
+          fontSize: 16, fontWeight: 700,
           cursor: "pointer", fontFamily: "inherit",
           border: buttonVariant === "outline" ? `2px solid ${BRAND}` : "none",
           background: buttonVariant === "outline" ? "transparent" : BRAND_GRADIENT,
           color: buttonVariant === "outline" ? BRAND : "#fff",
           transition: "all 0.2s",
-          boxShadow: buttonVariant === "outline" ? "none" : "0 4px 16px rgba(79,63,240,0.3)",
+          boxShadow: buttonVariant === "outline" ? "none" : "0 4px 20px rgba(79,63,240,0.35)",
         }}
       >
         {active ? "✓ " : ""}{buttonLabel}
