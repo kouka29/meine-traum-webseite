@@ -1079,9 +1079,9 @@ function PriceSection({
                           {o.preis_typ === "monatlich" && <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span>}
                         </div>
                       </div>
-                      {o.beschreibung && (
-                        <p style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, margin: 0 }}>{o.beschreibung}</p>
-                      )}
+                      <p style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, margin: 0 }}>
+                        {addonBeschreibungFor(o.titel, o.beschreibung)}
+                      </p>
                     </div>
                   </button>
                 );
