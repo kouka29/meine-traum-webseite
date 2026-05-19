@@ -372,3 +372,118 @@ html.apple-mode .pain-card .pain-card-text {
     @apply inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase;
   }
 }
+
+/* ============================================================
+   APPLE MODE — Angebot-Seite (/a/[slug]) Feinschliff
+   Hebt die Angebots-Seite auf das gleiche Apple-Niveau wie
+   den Rest der Site, ohne den Aufbau zu verändern. Nur aktiv
+   wenn .apple-mode auf <html> gesetzt ist.
+   ============================================================ */
+
+/* Header: Glas-Effekt */
+html.apple-mode body > div > header {
+  background: hsl(0 0% 100% / 0.65) !important;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom-color: hsl(0 0% 100% / 0.5) !important;
+}
+
+/* Hero-Headline mit Gradient (Aurora) */
+html.apple-mode .ang-hero-deco ~ * h1,
+html.apple-mode section h1 {
+  letter-spacing: -0.035em;
+}
+
+/* Trust-Counter: Premium-Zahlen */
+html.apple-mode .ang-trust-row {
+  background: hsl(0 0% 100% / 0.65) !important;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-color: hsl(0 0% 100% / 0.8) !important;
+  box-shadow:
+    0 1px 2px hsl(228 24% 10% / 0.04),
+    0 16px 48px hsl(250 56% 48% / 0.10) !important;
+  border-radius: 24px !important;
+}
+html.apple-mode .ang-count-num {
+  background-image: linear-gradient(135deg, hsl(228 24% 10%) 0%, hsl(250 56% 48%) 60%, hsl(215 100% 50%) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  letter-spacing: -0.04em;
+}
+
+/* Timeline-Karten: Glas */
+html.apple-mode .angebot-timeline-step {
+  background: hsl(0 0% 100% / 0.72) !important;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid hsl(0 0% 100% / 0.85) !important;
+  box-shadow:
+    0 1px 2px hsl(228 24% 10% / 0.04),
+    0 12px 32px hsl(250 56% 48% / 0.08) !important;
+}
+html.apple-mode .angebot-timeline-dot {
+  box-shadow:
+    0 6px 18px hsl(250 56% 48% / 0.30),
+    inset 0 1px 0 hsl(0 0% 100% / 0.25) !important;
+}
+
+/* Leistungen-Karten: Glas */
+html.apple-mode .angebot-leistung-card {
+  background: hsl(0 0% 100% / 0.7) !important;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-color: hsl(0 0% 100% / 0.85) !important;
+  border-radius: 22px !important;
+  box-shadow:
+    0 1px 2px hsl(228 24% 10% / 0.04),
+    0 12px 32px hsl(250 56% 48% / 0.08) !important;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+html.apple-mode .angebot-leistung-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 24px hsl(228 24% 10% / 0.06),
+    0 32px 80px hsl(250 56% 48% / 0.18) !important;
+}
+
+/* FAQ-Items: dezenter, kein voller Border */
+html.apple-mode .angebot-faq-item {
+  background: hsl(0 0% 100% / 0.6) !important;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-color: hsl(0 0% 100% / 0.8) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 1px 2px hsl(228 24% 10% / 0.04) !important;
+}
+
+/* Preis-Karten: premium shadow + größere Radius */
+html.apple-mode .ang-price-kauf,
+html.apple-mode .ang-price-miete {
+  border-radius: 28px !important;
+  box-shadow:
+    0 1px 2px hsl(228 24% 10% / 0.04),
+    0 24px 60px hsl(250 56% 48% / 0.12) !important;
+}
+html.apple-mode .ang-price-miete {
+  box-shadow:
+    0 1px 2px hsl(228 24% 10% / 0.04),
+    0 32px 80px hsl(250 56% 48% / 0.22) !important;
+}
+
+/* ODER-Badge zwischen Preis-Karten */
+html.apple-mode .ang-oder-badge {
+  background: hsl(0 0% 100% / 0.85) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px hsl(250 56% 48% / 0.15) !important;
+}
+
+/* Sticky-Bar: Glas */
+html.apple-mode .angebot-sticky-bar {
+  background: hsl(0 0% 100% / 0.75) !important;
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border-top-color: hsl(0 0% 100% / 0.5) !important;
+  box-shadow: 0 -8px 32px hsl(228 24% 10% / 0.06) !important;
+}
