@@ -1001,7 +1001,7 @@ function PriceSection({
   preis, normalpreis, miete, anzahlung,
   priceMode, setPriceMode, hasMiete,
   optionen, selectedOptionIds, toggleOption,
-  anzeigeGesamt, monatlicheZusatz, selectedOptionsCount, matchedBundle,
+  anzeigeGesamt, monatlicheZusatz, einmaligeZusatz, selectedOptionsCount, matchedBundle,
   isRechnung, ctaModeAnfrage,
 }: {
   preis: number;
@@ -1016,6 +1016,7 @@ function PriceSection({
   toggleOption: (id: string) => void;
   anzeigeGesamt: number;
   monatlicheZusatz: number;
+  einmaligeZusatz: number;
   selectedOptionsCount: number;
   matchedBundle: AngebotBundle | null | undefined;
   isRechnung: boolean;
