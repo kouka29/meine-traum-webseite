@@ -808,6 +808,10 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
   selectedPaketId: string;
   setSelectedPaketId: (id: string) => void;
 }) {
+  const anyHasMiete = pakete.some((p) => p.miete_monatlich && p.miete_monatlich > 0);
+  const minMiete = anyHasMiete
+    ? Math.min(...pakete.filter((p) => p.miete_monatlich && p.miete_monatlich > 0).map((p) => Number(p.miete_monatlich)))
+    : 0;
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(180deg, #F5F4FF 0%, #FFFFFF 100%)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
@@ -820,6 +824,23 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
           </p>
         </div>
 
+        {anyHasMiete && (
+          <div style={{
+            maxWidth: 720, margin: "0 auto 28px",
+            background: "linear-gradient(135deg, rgba(79,63,240,0.06) 0%, rgba(123,94,248,0.08) 100%)",
+            border: "1px solid rgba(79,63,240,0.18)",
+            borderRadius: 14,
+            padding: "14px 22px",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+            fontSize: 14.5, color: TEXT_DARK, textAlign: "center", flexWrap: "wrap",
+          }}>
+            <span style={{ fontSize: 18 }}>💡</span>
+            <span>
+              <strong style={{ color: BRAND }}>Zwei Wege zu Ihrer Website</strong> — mieten ab <strong>{minMiete} €/Monat</strong> oder einmalig kaufen. Sie entscheiden später.
+            </span>
+          </div>
+        )}
+
         <div style={{
           display: "grid",
           gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`,
@@ -829,6 +850,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
             const active = p.id === selectedPaketId;
             const badge = p.badge || badgeFor(idx, pakete.length);
             const recommended = idx === pakete.length - 1 && pakete.length > 1;
+            const paketMiete = p.miete_monatlich && p.miete_monatlich > 0 ? Number(p.miete_monatlich) : null;
             return (
               <button
                 key={p.id}
@@ -864,9 +886,26 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                   <p style={{ fontSize: 14, color: TEXT_MUTED, margin: "0 0 14px", lineHeight: 1.5 }}>{p.beschreibung}</p>
                 )}
                 <div style={{ borderTop: "1px solid rgba(79,63,240,0.1)", margin: "16px 0" }} />
-                <div style={{ fontSize: 40, fontWeight: 800, color: BRAND, marginBottom: 4, lineHeight: 1, letterSpacing: "-0.02em" }}>
-                  {Number(p.preis).toLocaleString("de-DE")} €
-                </div>
+                {paketMiete ? (
+                  <>
+                    <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>
+                      Ab nur
+                    </div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 6, lineHeight: 1 }}>
+                      <span style={{ fontSize: 40, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em" }}>
+                        {paketMiete} €
+                      </span>
+                      <span style={{ fontSize: 16, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
+                    </div>
+                    <div style={{ fontSize: 13, color: TEXT_MUTED, marginBottom: 2 }}>
+                      oder einmalig <strong style={{ color: TEXT_DARK }}>{Number(p.preis).toLocaleString("de-DE")} €</strong>
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ fontSize: 40, fontWeight: 800, color: BRAND, marginBottom: 4, lineHeight: 1, letterSpacing: "-0.02em" }}>
+                    {Number(p.preis).toLocaleString("de-DE")} €
+                  </div>
+                )}
                 {p.leistungen && p.leistungen.length > 0 && (
                   <Accordion type="single" collapsible className="mt-3">
                     <AccordionItem value="leistungen" className="border-none">
