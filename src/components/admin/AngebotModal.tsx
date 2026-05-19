@@ -288,7 +288,6 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
     try { r = buildPayload(); } catch (e: any) { toast.error(e.message); return; }
     if (!r.ok) { toast.error(r.error); return; }
     const base64 = encodeBase64Utf8(r.payload);
-    const link = `${ANGEBOT_BASE_URL}?d=${base64}`;
 
     setSaving(true);
     const { data, error } = await supabase.functions.invoke("admin-leads", {
@@ -304,6 +303,10 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
     });
     setSaving(false);
     if (error || data?.error) { toast.error(data?.error || error?.message || "Fehler"); return; }
+    const shortId = data?.short_id || data?.angebot?.short_id;
+    const link = shortId
+      ? `${ANGEBOT_BASE_URL}?s=${shortId}`
+      : `${ANGEBOT_BASE_URL}?d=${base64}`;
     toast.success("Angebot erstellt");
     setResult({ link, pin });
     onCreated?.();

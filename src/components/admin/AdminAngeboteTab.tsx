@@ -16,6 +16,7 @@ interface Angebot {
   stripe_link: string | null;
   erstellt_am: string;
   status: string;
+  short_id?: string | null;
 }
 
 const ANGEBOT_BASE_URL = "https://meine-traum-webseite.de/angebot";
@@ -40,7 +41,9 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
   useEffect(() => { fetchAngebote(); }, [fetchAngebote]);
 
   const linkFor = (a: Angebot) =>
-    a.base64_data ? `${ANGEBOT_BASE_URL}?d=${encodeURIComponent(a.base64_data)}` : "";
+    a.short_id
+      ? `${ANGEBOT_BASE_URL}?s=${a.short_id}`
+      : a.base64_data ? `${ANGEBOT_BASE_URL}?d=${encodeURIComponent(a.base64_data)}` : "";
 
   const copyLink = async (a: Angebot) => {
     const url = linkFor(a);
