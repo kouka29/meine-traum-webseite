@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { copyToClipboard } from "@/lib/clipboard";
 import {
   Plus, Trash2, Shuffle, Copy, ExternalLink, Loader2, FileText, CheckCircle2,
   Upload, Sparkles, Eye, FileDown, Package, CreditCard, Receipt, Pencil,
@@ -417,40 +418,9 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
   };
 
   const copy = async (text: string, label: string) => {
-    const copyWithTextarea = () => {
-      try {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.setAttribute("readonly", "");
-        textarea.style.position = "fixed";
-        textarea.style.left = "0";
-        textarea.style.top = "0";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        textarea.setSelectionRange(0, text.length);
-        const copied = document.execCommand("copy");
-        document.body.removeChild(textarea);
-        return copied;
-      } catch {
-        return false;
-      }
-    };
-
-    if (copyWithTextarea()) {
+    if (await copyToClipboard(text)) {
       toast.success(`${label} kopiert`);
       return;
-    }
-
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-        toast.success(`${label} kopiert`);
-        return;
-      }
-    } catch {
-      // Preview-Frames können Clipboard blockieren; dann unten manuell anbieten.
     }
 
     window.prompt(`${label} zum Kopieren (Strg/Cmd+C):`, text);
