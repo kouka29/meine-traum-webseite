@@ -560,17 +560,21 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
   return (
     <section style={{
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(135deg, #F5F4FF 0%, #EEF2FF 100%)",
-      padding: "clamp(48px, 8vw, 96px) 16px clamp(40px, 6vw, 64px)",
+      background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 60%, #F0F4FF 100%)",
+      padding: "clamp(48px, 8vw, 80px) 16px",
     }}>
       {/* Dekorative Kreise */}
       <div aria-hidden style={{
-        position: "absolute", top: -120, right: -120, width: 360, height: 360,
-        borderRadius: "50%", background: BRAND, opacity: 0.06, pointerEvents: "none",
+        position: "absolute", top: -100, right: -100, width: 400, height: 400,
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(79,63,240,0.08) 0%, transparent 70%)",
+        pointerEvents: "none", zIndex: 0,
       }} />
       <div aria-hidden style={{
-        position: "absolute", bottom: -160, left: -100, width: 320, height: 320,
-        borderRadius: "50%", background: BRAND, opacity: 0.06, pointerEvents: "none",
+        position: "absolute", bottom: -50, left: -50, width: 200, height: 200,
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(123,94,248,0.06) 0%, transparent 70%)",
+        pointerEvents: "none", zIndex: 0,
       }} />
 
       <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
@@ -612,12 +616,11 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
 
         {/* Countdown-Box */}
         <div style={{
-          background: "#fff", borderRadius: 20,
+          background: "#fff",
+          borderRadius: "0 16px 16px 0",
           borderLeft: "4px solid #EF4444",
-          padding: "24px 28px",
-          border: "1px solid rgba(79,63,240,0.1)",
-          borderLeftWidth: 4, borderLeftColor: "#EF4444",
-          boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+          padding: "20px 24px",
+          boxShadow: "0 4px 20px rgba(239,68,68,0.08)",
           maxWidth: 600,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 16, fontSize: 14 }}>
@@ -632,10 +635,10 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
               { v: secs, l: "Sek" },
             ].map((b) => (
               <div key={b.l} style={{ textAlign: "center", background: BG_SOFT, borderRadius: 12, padding: "14px 4px" }}>
-                <div style={{ fontSize: "clamp(22px, 4vw, 30px)", fontWeight: 800, color: TEXT_DARK, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
+                <div style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
                   {pad(b.v)}
                 </div>
-                <div style={{ fontSize: 10, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 6 }}>{b.l}</div>
+                <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 6 }}>{b.l}</div>
               </div>
             ))}
           </div>
