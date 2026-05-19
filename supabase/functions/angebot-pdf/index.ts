@@ -9,14 +9,16 @@ Deno.serve(async (req) => {
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) return json({ error: "Server nicht konfiguriert" }, 500);
 
-    const body = await req.json().catch(() => null) as { id?: string; pin?: string } | null;
-    if (!body?.id || !body?.pin) return json({ error: "id und pin erforderlich" }, 400);
+    const body = await req.json().catch(() => null) as {
+      pdf_path?: string; pin?: string;
+    } | null;
+    if (!body?.pdf_path || !body?.pin) return json({ error: "pdf_path und pin erforderlich" }, 400);
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     const { data, error } = await supabase
       .from("angebote")
       .select("pin, pdf_path, ablauf_datum")
-      .eq("id", body.id)
+      .eq("pdf_path", body.pdf_path)
       .maybeSingle();
 
     if (error || !data) return json({ error: "Angebot nicht gefunden" }, 404);
