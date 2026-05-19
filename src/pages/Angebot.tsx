@@ -1538,8 +1538,10 @@ function TrustSection() {
           {stats.map((s, i) => (
             <div key={i} className="ang-trust-item">
               <div className="ang-trust-item-icon" aria-hidden="true">{s.icon}</div>
-              <div className="ang-trust-item-value">{s.v}</div>
-              <div className="ang-trust-item-label">{s.l}</div>
+              <div className="ang-trust-item-text">
+                <div className="ang-trust-item-value">{s.v}</div>
+                <div className="ang-trust-item-label">{s.l}</div>
+              </div>
             </div>
           ))}
         </div>
@@ -2099,66 +2101,62 @@ function AngebotGlobalStyles() {
         .ang-count-sep { font-size: 18px; }
       }
 
-      /* Trust stats row — Premium Glass (v2): zentriert, Aurora-Blob, uniform */
+      /* Trust stats row — Icon-Liste mit Hairlines */
       .ang-trust-row {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-        max-width: 1040px;
+        max-width: 1120px;
         margin: 0 auto;
-        padding: 0;
-        background: transparent;
-        border: none;
-        box-shadow: none;
+        background: #FFFFFF;
+        border: 1px solid rgba(15,23,42,0.06);
+        border-radius: 40px;
+        box-shadow: 0 32px 64px -16px rgba(15,23,42,0.08);
+        overflow: hidden;
       }
       .ang-trust-item {
         position: relative;
-        overflow: visible;
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        padding: 24px 12px;
-        min-height: 200px;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        text-align: center;
-        box-shadow: none;
-        transition: transform .4s cubic-bezier(.4,0,.2,1), box-shadow .4s ease;
+        gap: 20px;
+        padding: 36px 28px;
+        border-right: 1px solid rgba(15,23,42,0.06);
+        transition: background .3s ease;
       }
-      .ang-trust-item::before {
-        content: none;
+      .ang-trust-item:last-child { border-right: none; }
+      .ang-trust-item:hover .ang-trust-item-icon {
+        background: rgba(79,63,240,0.1);
       }
-      .ang-trust-item:hover {
-        transform: translateY(-4px);
-        box-shadow: none;
-      }
-      .ang-trust-item:hover::before { content: none; }
       .ang-trust-item-icon {
-        position: relative;
-        width: 56px; height: 56px; border-radius: 16px;
-        background: linear-gradient(135deg, rgba(237,233,255,0.95), rgba(245,244,255,0.95));
+        flex-shrink: 0;
+        width: 64px; height: 64px;
+        border-radius: 18px;
+        background: rgba(79,63,240,0.05);
         color: #4F3FF0;
         display: flex; align-items: center; justify-content: center;
-        margin-bottom: 20px;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+        transition: background .3s ease;
+      }
+      .ang-trust-item-icon svg { width: 28px; height: 28px; }
+      .ang-trust-item-text {
+        display: flex; flex-direction: column; min-width: 0;
       }
       .ang-trust-item-value {
-        position: relative;
-        font-size: clamp(34px, 4.4vw, 46px);
+        font-size: clamp(28px, 3vw, 36px);
         font-weight: 800;
-        background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
+        background: linear-gradient(135deg,#4F3FF0 0%,#5B8DEF 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         line-height: 1;
-        margin-bottom: 12px;
         letter-spacing: -0.03em;
       }
       .ang-trust-item-label {
-        position: relative;
-        font-size: 14px; color: #6B7280; font-weight: 500; line-height: 1.4;
+        font-size: 12px;
+        color: #6B7280;
+        font-weight: 600;
+        line-height: 1.35;
+        margin-top: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
       }
       .ang-trust-mobile { display: none; }
       @media (max-width: 720px) {
