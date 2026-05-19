@@ -55,8 +55,12 @@ const sections: Section[] = [
       <>
         <P n="1">
           Diese Allgemeinen Geschäftsbedingungen (nachfolgend „AGB") gelten für alle Geschäftsbeziehungen zwischen{" "}
-          <strong>Muad Amar – QK Marketing, Rheinallee 88, Gebäude 23, 55120 Mainz</strong> (nachfolgend „Auftragnehmer") und seinen Auftraggebern, bei denen es sich ausschließlich um Unternehmer im Sinne des § 14 BGB handelt (nachfolgend „Auftraggeber"). Diese AGB gelten für alle Leistungen im Bereich Webdesign, Webseitenerstellung, Webseitenpflege, Webseitenredesign, Mietmodelle für Webseiten, Marketing-Dienstleistungen sowie Grafikdesign.
+          <strong>Muad Amar – QK Marketing, Rheinallee 88, Gebäude 23, 55120 Mainz, handelnd unter dem Markennamen „Meine-Traum-Webseite"</strong> (nachfolgend „Auftragnehmer") und seinen Auftraggebern, bei denen es sich ausschließlich um Unternehmer im Sinne des § 14 BGB handelt (nachfolgend „Auftraggeber"). Diese AGB gelten für alle Leistungen im Bereich Webdesign, Webseitenerstellung, Webseitenpflege, Webseitenredesign, Mietmodelle für Webseiten, Marketing-Dienstleistungen sowie Grafikdesign.
         </P>
+        <div className="bg-muted/60 border-l-4 border-accent-agb/50 rounded-r-lg px-5 py-4 my-5 text-sm text-foreground/85 leading-[1.7]">
+          <span className="font-semibold text-foreground">Hinweis:</span>{" "}
+          „Meine-Traum-Webseite" (meine-traum-webseite.de) ist ein eingetragener Handelsname und eine Marke des Auftragnehmers Muad Amar / QK Marketing. Vertragspartner ist stets Muad Amar – QK Marketing als Einzelunternehmer. Die Marke „Meine-Traum-Webseite" begründet keine eigene Rechtspersönlichkeit.
+        </div>
         <P n="2">
           Entgegenstehende oder abweichende Bedingungen des Auftraggebers werden nicht anerkannt, es sei denn, der Auftragnehmer stimmt ihrer Geltung ausdrücklich schriftlich zu.
         </P>
