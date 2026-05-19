@@ -449,7 +449,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
       )}
 
       {/* ── SECTION 4: LEISTUNGEN ────────────────────────── */}
-      <LeistungenSection leistungen={aktiveLeistungen} />
+      {!hasMultiplePakete && <LeistungenSection leistungen={aktiveLeistungen} />}
 
       {/* ── SECTION 5: VERTRAUEN (vor Preis!) ────────────── */}
       <TrustSection />
