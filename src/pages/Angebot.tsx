@@ -925,30 +925,18 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             Jede Leistung — mit konkretem Nutzen für Sie.
           </p>
         </div>
-        <div className="angebot-leistungen-grid" style={{
+        <div className="angebot-leistungen-grid ang-stagger-leist" style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 16,
         }}>
           {leistungen.map((l, i) => (
-            <div key={i} className="angebot-leistung-card" style={{
-              background: "#fff",
-              borderRadius: 16,
-              borderLeft: `3px solid ${BRAND}`,
-              padding: "24px 20px 24px 24px",
-              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
-              transition: "all 0.2s ease",
+            <div key={i} className="angebot-leistung-card ang-reveal" style={{
+              animationDelay: `${i * 80}ms`,
             }}>
-              {l.emoji ? (
-                <div style={{ fontSize: 28, marginBottom: 12, lineHeight: 1, display: "block" }}>{l.emoji}</div>
-              ) : (
-                <div style={{
-                  display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  width: 32, height: 32, borderRadius: 8,
-                  background: `${BRAND}15`, color: BRAND,
-                  marginBottom: 12, fontSize: 16, fontWeight: 800,
-                }}>✓</div>
-              )}
+              <div className="ang-leist-emoji">
+                {l.emoji || <span style={{ color: BRAND, fontSize: 22, fontWeight: 800 }}>✦</span>}
+              </div>
               <h3 style={{ fontSize: 16, fontWeight: 700, color: TEXT_DARK, marginBottom: 6 }}>{l.titel}</h3>
               {nutzenFor(l.titel, l.beschreibung) && (
                 <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
@@ -958,12 +946,6 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             </div>
           ))}
         </div>
-        <style>{`
-          .angebot-leistung-card:hover {
-            box-shadow: 0 4px 24px rgba(79,63,240,0.12);
-            transform: translateY(-2px);
-          }
-        `}</style>
       </div>
     </section>
   );
@@ -994,7 +976,7 @@ function PriceSection({
   ctaModeAnfrage: boolean;
 }) {
   return (
-    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 100%)" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px 48px", background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 100%)" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
@@ -1193,14 +1175,18 @@ function PriceCard({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(); } }}
+      className={highlighted ? "ang-price-miete" : "ang-price-kauf"}
       style={{
-        background: highlighted ? "linear-gradient(160deg, #F5F4FF 0%, #EDE9FF 100%)" : "#fff",
+        background: highlighted ? "linear-gradient(145deg, #EDE9FF 0%, #E8E4FF 40%, #DDD7FF 100%)" : "#fff",
         borderRadius: 20,
-        border: highlighted ? `2px solid ${BRAND}` : "1.5px solid rgba(79,63,240,0.2)",
+        border: highlighted ? `2px solid ${BRAND}` : "1.5px solid rgba(79,63,240,0.15)",
         padding: "36px 32px",
         position: "relative",
+        overflow: "hidden",
         cursor: "pointer",
-        boxShadow: highlighted ? "0 8px 40px rgba(79,63,240,0.18)" : "0 4px 20px rgba(79,63,240,0.06)",
+        boxShadow: highlighted
+          ? "0 8px 40px rgba(79,63,240,0.20), 0 0 0 1px rgba(79,63,240,0.10)"
+          : "0 2px 16px rgba(79,63,240,0.06)",
         transition: "all 0.2s",
         display: "flex", flexDirection: "column",
       }}
