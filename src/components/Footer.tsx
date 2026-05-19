@@ -68,6 +68,18 @@ const Footer = () => (
             <li>
               <Link to="/datenschutz" className="hover:text-background transition-colors">Datenschutzerklärung</Link>
             </li>
+            <li>
+              <Link to="/agb" className="hover:text-background transition-colors">AGB</Link>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+                className="hover:text-background transition-colors text-left"
+              >
+                Cookie-Einstellungen
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -76,6 +88,7 @@ const Footer = () => (
         <div className="flex gap-4">
           <Link to="/impressum" className="hover:text-background transition-colors">Impressum</Link>
           <Link to="/datenschutz" className="hover:text-background transition-colors">Datenschutz</Link>
+          <Link to="/agb" className="hover:text-background transition-colors">AGB</Link>
         </div>
       </div>
     </div>
