@@ -471,6 +471,111 @@ function AngebotPage({ data }: { data: AngebotData }) {
               ) : null}
             </div>
           ) : null}
+
+          {/* OPTIONALE ERWEITERUNGEN */}
+          {optionen.length > 0 && (
+            <div style={{ marginTop: 48, maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
+              <div style={{ textAlign: "center", marginBottom: 20 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                  Optionale Erweiterungen
+                </div>
+                <h3 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
+                  Stellen Sie Ihr Paket zusammen
+                </h3>
+                <p style={{ fontSize: 14, color: TEXT_MUTED }}>
+                  Wählen Sie aus, was Sie zusätzlich dazubuchen möchten.
+                </p>
+              </div>
+              <div style={{ display: "grid", gap: 12 }}>
+                {optionen.map((o) => {
+                  const active = selectedOptionIds.includes(o.id);
+                  return (
+                    <button
+                      key={o.id}
+                      type="button"
+                      onClick={() => toggleOption(o.id)}
+                      style={{
+                        textAlign: "left",
+                        background: "#fff",
+                        borderRadius: 16,
+                        border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.15)"}`,
+                        padding: "18px 20px",
+                        cursor: "pointer",
+                        display: "flex",
+                        gap: 14,
+                        alignItems: "flex-start",
+                        fontFamily: "inherit",
+                        transition: "border-color 0.15s, background 0.15s",
+                        background: active ? `${BRAND}08` : "#fff",
+                      }}
+                    >
+                      <div style={{
+                        width: 24, height: 24, borderRadius: 6,
+                        border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.3)"}`,
+                        background: active ? BRAND : "#fff",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        flexShrink: 0, marginTop: 2,
+                      }}>
+                        {active && <CheckCircle2 size={16} color="#fff" />}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 4 }}>
+                          <div style={{ fontWeight: 700, color: TEXT_DARK, fontSize: 16 }}>
+                            {o.emoji ? `${o.emoji} ` : ""}{o.titel}
+                          </div>
+                          <div style={{ fontWeight: 800, color: BRAND, fontSize: 16, whiteSpace: "nowrap" }}>
+                            + {Number(o.preis).toLocaleString("de-DE")} €
+                            {o.preis_typ === "monatlich" ? <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span> : null}
+                          </div>
+                        </div>
+                        {o.beschreibung && (
+                          <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.5, margin: 0 }}>
+                            {o.beschreibung}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Live-Summary */}
+              {selectedOptions.length > 0 && (
+                <div style={{
+                  marginTop: 16,
+                  background: BG_SOFT, borderRadius: 14,
+                  padding: "14px 18px",
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  flexWrap: "wrap", gap: 8,
+                }}>
+                  <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                    Ihre Auswahl ({selectedOptions.length} Option{selectedOptions.length !== 1 ? "en" : ""})
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
+                      {Number(anzeigeGesamt).toLocaleString("de-DE")} €
+                      {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
+                    </div>
+                    {monatlicheZusatz > 0 && (
+                      <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                        + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {ctaMode === "anfrage" && (
+                <div style={{
+                  marginTop: 12, padding: "12px 16px",
+                  background: "#FEF3C7", color: "#92400E",
+                  borderRadius: 12, fontSize: 13, lineHeight: 1.5,
+                }}>
+                  Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen Sie uns kurz an, wir senden Ihnen einen passenden Zahlungslink.
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
@@ -518,21 +623,37 @@ function AngebotPage({ data }: { data: AngebotData }) {
           <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 28 }}>
             Kein Risiko. Einmalige Investition.
           </p>
-          <a
-            href={data.stripe_link}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-block",
-              background: "#fff", color: BRAND,
-              padding: "16px 36px", borderRadius: 50,
-              fontSize: 16, fontWeight: 700,
-              textDecoration: "none",
-              fontFamily: "inherit",
-            }}
-          >
-            Angebot annehmen & starten →
-          </a>
+          {ctaLink ? (
+            <a
+              href={ctaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-block",
+                background: "#fff", color: BRAND,
+                padding: "16px 36px", borderRadius: 50,
+                fontSize: 16, fontWeight: 700,
+                textDecoration: "none",
+                fontFamily: "inherit",
+              }}
+            >
+              {ctaLabel}
+            </a>
+          ) : (
+            <a
+              href={`mailto:hallo@meine-traum-webseite.de?subject=${encodeURIComponent("Angebot-Auswahl für " + data.lead_name)}&body=${encodeURIComponent("Ich möchte folgende Optionen dazubuchen: " + selectedOptions.map((o) => o.titel).join(", "))}`}
+              style={{
+                display: "inline-block",
+                background: "#fff", color: BRAND,
+                padding: "16px 36px", borderRadius: 50,
+                fontSize: 16, fontWeight: 700,
+                textDecoration: "none",
+                fontFamily: "inherit",
+              }}
+            >
+              {ctaLabel}
+            </a>
+          )}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 20, color: "rgba(255,255,255,0.85)", fontSize: 12 }}>
             <Shield size={12} /> Sichere Zahlung via Stripe · SSL-verschlüsselt
           </div>
@@ -551,13 +672,13 @@ function AngebotPage({ data }: { data: AngebotData }) {
           flexWrap: "wrap",
         }}>
           <div style={{ color: TEXT_DARK, fontWeight: 600, fontSize: 15 }}>
-            <span style={{ color: BRAND, fontWeight: 800 }}>{Number(data.preis).toLocaleString("de-DE")} €</span>
+            <span style={{ color: BRAND, fontWeight: 800 }}>{Number(anzeigeGesamt).toLocaleString("de-DE")} €</span>
             <span style={{ color: TEXT_MUTED, fontWeight: 500 }}> · Angebot läuft ab in {days} Tagen</span>
           </div>
           <a
-            href={data.stripe_link}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={ctaLink ?? "mailto:hallo@meine-traum-webseite.de"}
+            target={ctaLink ? "_blank" : undefined}
+            rel={ctaLink ? "noopener noreferrer" : undefined}
             style={{
               background: BRAND_GRADIENT, color: "#fff",
               padding: "12px 28px", borderRadius: 50,
@@ -565,7 +686,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
               fontFamily: "inherit",
             }}
           >
-            Jetzt starten →
+            {ctaMode === "anfrage" ? "Auf Anfrage →" : "Jetzt starten →"}
           </a>
         </div>
       )}
