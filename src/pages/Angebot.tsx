@@ -601,14 +601,14 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           Angebot.
         </h1>
 
-        {nachricht && (
-          <p style={{
-            fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
-            marginBottom: 32, maxWidth: 600, fontStyle: "italic",
-          }}>
-            „{nachricht}"
-          </p>
-        )}
+        <p style={{
+          fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
+          marginBottom: 32, maxWidth: 600, fontStyle: "italic",
+        }}>
+          „{nachricht && nachricht.trim()
+            ? nachricht
+            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}"
+        </p>
 
         {/* Countdown-Box */}
         <div style={{
@@ -712,19 +712,30 @@ function nutzenFor(titel: string, beschreibung?: string): string {
     return b.startsWith("→") ? b : `→ ${b}`;
   }
   const t = (titel || "").toLowerCase();
-  if (t.includes("design")) return "→ Kunden nehmen Sie auf den ersten Blick ernst.";
-  if (t.includes("mobil") || t.includes("responsive") || t.includes("smartphone")) return "→ Jeder Kunde erreicht Sie — egal von welchem Gerät.";
-  if (t.includes("korrektur")) return "→ Sie bekommen genau das, was Sie sich vorgestellt haben.";
-  if (t.includes("shop") || t.includes("ecommerce") || t.includes("e-commerce")) return "→ Sie sind sofort verkaufsbereit — ohne technisches Vorwissen.";
-  if (t.includes("seo") || t.includes("google")) return "→ Mehr Sichtbarkeit — mehr Anfragen ohne Werbebudget.";
-  if (t.includes("hosting") || t.includes("ssl")) return "→ Alles läuft im Hintergrund — Sie müssen sich um nichts kümmern.";
-  if (t.includes("kontakt") || t.includes("formular")) return "→ Anfragen kommen direkt in Ihr Postfach — keine geht verloren.";
-  if (t.includes("support") || t.includes("wartung")) return "→ Sie sind nie alleine — wir sind für Sie erreichbar.";
-  if (t.includes("text") || t.includes("copy")) return "→ Worte, die verkaufen — nicht nur informieren.";
-  if (t.includes("foto") || t.includes("bild")) return "→ Bilder, die Vertrauen schaffen — nicht von der Stange.";
-  if (t.includes("logo") || t.includes("branding")) return "→ Ein Auftritt, den man wiedererkennt.";
-  if (t.includes("analyt") || t.includes("track")) return "→ Sie wissen, was funktioniert — und was nicht.";
-  return "→ Spürbarer Mehrwert für Ihr Unternehmen.";
+  if (t.includes("produkt") || t.includes("artikel")) return "→ Ihre Produkte sind sofort online kaufbar — rund um die Uhr.";
+  if (t.includes("kategor")) return "→ Kunden finden sich in Ihrem Shop sofort zurecht.";
+  if (t.includes("design") || t.includes("marke")) return "→ Kunden nehmen Sie auf den ersten Blick ernst.";
+  if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht Sie — egal von welchem Gerät.";
+  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ Ihr Shop läuft automatisch — Sie müssen nichts manuell tun.";
+  if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei Ihnen — ohne Umwege.";
+  if (t.includes("korrektur") || t.includes("runde")) return "→ Sie bekommen genau das, was Sie sich vorgestellt haben.";
+  if (t.includes("impressum") || t.includes("datenschutz")) return "→ Rechtlich abgesichert — kein Stress mit Abmahnungen.";
+  if (t.includes("support") || t.includes("whatsapp")) return "→ Bei Fragen sind wir direkt für Sie da — ohne Warteschleife.";
+  if (t.includes("launch") || t.includes("live") || t.includes("veröffentlich")) return "→ Ihre Website geht pünktlich online — wir kümmern uns um alles.";
+  return "";
+}
+
+// ─── Add-on Beschreibungs-Fallback ──────────────────────
+function addonBeschreibungFor(titel: string, beschreibung?: string): string {
+  if (beschreibung && beschreibung.trim()) return beschreibung.trim();
+  const t = (titel || "").toLowerCase();
+  if (t.includes("care") || t.includes("wartung") || t.includes("support")) {
+    return "Wir halten Ihre Website aktuell, sicher und fehlerfrei. Updates, Backups und technischer Support — monatlich gebucht, monatlich kündbar.";
+  }
+  if (t.includes("seo")) {
+    return "Mehr Sichtbarkeit bei Google — damit Kunden Sie finden, bevor sie zur Konkurrenz gehen.";
+  }
+  return "Auf Anfrage erfahren Sie mehr Details.";
 }
 
 function badgeFor(index: number, total: number): string {
@@ -736,12 +747,12 @@ function badgeFor(index: number, total: number): string {
 
 // ─── Standard-FAQs (Fallback wenn Admin keine eingetragen hat) ──
 const STANDARD_FAQS: Faq[] = [
-  { frage: "Was passiert direkt nach meiner Beauftragung?", antwort: "Sobald Sie den Auftrag erteilt haben, erhalten Sie innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei Ihnen, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
+  { frage: "Was passiert direkt nach der Beauftragung?", antwort: "Sobald Sie den Auftrag erteilt haben, erhalten Sie innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei Ihnen, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
   { frage: "Wie lange dauert die Umsetzung?", antwort: "Die Umsetzung beginnt direkt nach Zahlungseingang. Je nach Paket und Ihrer Mitwirkung (Texte, Bilder, Inhalte) ist Ihre Website in der Regel innerhalb von 2–4 Wochen fertig und live. Wir halten Sie während des gesamten Prozesses auf dem Laufenden." },
-  { frage: "Was wenn mir das Ergebnis nicht gefällt?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Sie sehen die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis Sie zufrieden sind — im Rahmen der vereinbarten Runden." },
-  { frage: "Bin ich langfristig an Sie gebunden?", antwort: "Beim Einmalkauf gehört Ihnen die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben Sie flexibel." },
-  { frage: "Was kostet mich das monatlich nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei Ihrem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
-  { frage: "Kann ich die Website später selbst bearbeiten?", antwort: "Ja. Wir bauen Ihre Website so auf, dass Sie Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir Ihnen im Kickoff wie das funktioniert. Für alles Weitere steht Ihnen unser Care-Paket zur Verfügung." },
+  { frage: "Was wenn das Ergebnis nicht den Erwartungen entspricht?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Sie sehen die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis Sie zufrieden sind — im Rahmen der vereinbarten Runden." },
+  { frage: "Besteht eine langfristige Bindung?", antwort: "Beim Einmalkauf gehört Ihnen die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben Sie flexibel." },
+  { frage: "Welche monatlichen Kosten entstehen nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei Ihrem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
+  { frage: "Kann die Website später selbst bearbeitet werden?", antwort: "Ja. Wir bauen Ihre Website so auf, dass Sie Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir Ihnen im Kickoff wie das funktioniert. Für alles Weitere steht Ihnen unser Care-Paket zur Verfügung." },
   { frage: "Was ist der Unterschied zwischen Website kaufen und Website mieten?", antwort: "Beim Kauf zahlen Sie einmalig und die Website gehört Ihnen. Beim Mietmodell zahlen Sie eine monatliche Rate — dafür ist der Einstieg günstiger, und Wartung sowie Updates sind inklusive. Welches Modell besser zu Ihnen passt, hängt von Ihrem Budget und Ihren Zielen ab. Beides führt zum gleichen Ergebnis: eine professionelle Website die Kunden bringt." },
 ];
 
@@ -838,9 +849,11 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                               <CheckIcon size={14} color="#059669" style={{ marginTop: 4, flexShrink: 0 }} />
                               <div>
                                 <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK }}>{l.titel}</div>
-                                <div style={{ fontSize: 12, color: TEXT_MUTED, fontStyle: "italic", lineHeight: 1.5 }}>
-                                  {nutzenFor(l.titel, l.beschreibung)}
-                                </div>
+                                {nutzenFor(l.titel, l.beschreibung) && (
+                                  <div style={{ fontSize: 12, color: TEXT_MUTED, fontStyle: "italic", lineHeight: 1.5 }}>
+                                    {nutzenFor(l.titel, l.beschreibung)}
+                                  </div>
+                                )}
                               </div>
                             </li>
                           ))}
@@ -900,9 +913,11 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             }}>
               {l.emoji && <div style={{ fontSize: 32, marginBottom: 12, lineHeight: 1 }}>{l.emoji}</div>}
               <h3 style={{ fontSize: 17, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{l.titel}</h3>
-              <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
-                {nutzenFor(l.titel, l.beschreibung)}
-              </p>
+              {nutzenFor(l.titel, l.beschreibung) && (
+                <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
+                  {nutzenFor(l.titel, l.beschreibung)}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -984,11 +999,8 @@ function PriceSection({
               badge="EMPFOHLEN"
               badgeStyle={{ background: BRAND_GRADIENT, color: "#fff" }}
               mainPrice={`${Number(miete).toLocaleString("de-DE")} €`}
-              mainSub={
-                anzahlung && anzahlung > 0
-                  ? `/Monat · + ${Number(anzahlung).toLocaleString("de-DE")} € Anzahlung einmalig`
-                  : "/Monat"
-              }
+              mainSub="/Monat"
+              anzahlung={anzahlung ?? null}
               normalpreis={null}
               tagline="Geringer Einstieg. Volle Leistung."
               bullets={[
@@ -1064,9 +1076,9 @@ function PriceSection({
                           {o.preis_typ === "monatlich" && <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span>}
                         </div>
                       </div>
-                      {o.beschreibung && (
-                        <p style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, margin: 0 }}>{o.beschreibung}</p>
-                      )}
+                      <p style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, margin: 0 }}>
+                        {addonBeschreibungFor(o.titel, o.beschreibung)}
+                      </p>
                     </div>
                   </button>
                 );
@@ -1115,7 +1127,7 @@ function PriceSection({
 
 function PriceCard({
   kind, active, onSelect, badge, badgeStyle, mainPrice, mainSub,
-  normalpreis, tagline, bullets, buttonLabel, buttonVariant, highlighted,
+  normalpreis, tagline, bullets, buttonLabel, buttonVariant, highlighted, anzahlung,
 }: {
   kind: "kauf" | "miete";
   active: boolean;
@@ -1130,6 +1142,7 @@ function PriceCard({
   buttonLabel: string;
   buttonVariant: "primary" | "outline";
   highlighted?: boolean;
+  anzahlung?: number | null;
 }) {
   return (
     <div
@@ -1179,6 +1192,16 @@ function PriceCard({
         {normalpreis && normalpreis > 0 && (
           <div style={{ fontSize: 15, color: TEXT_MUTED, textDecoration: "line-through", marginTop: 6 }}>
             {Number(normalpreis).toLocaleString("de-DE")} €
+          </div>
+        )}
+        {anzahlung && anzahlung > 0 && (
+          <div style={{ marginTop: 8 }}>
+            <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 600 }}>
+              + {Number(anzahlung).toLocaleString("de-DE")} € Anzahlung einmalig zum Start
+            </div>
+            <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 2 }}>
+              Die Anzahlung wird bei Auftragserteilung fällig.
+            </div>
           </div>
         )}
       </div>
@@ -1342,10 +1365,10 @@ function FinalCtaSection({
           Bereit, loszulegen?
         </h2>
         <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 8, lineHeight: 1.6 }}>
-          Sie haben alles gesehen. Jetzt liegt es an Ihnen.
+          {leadName ? `${leadName}, Ihr Projekt wartet auf den Startschuss.` : "Ihr Projekt wartet auf den Startschuss."}
         </p>
         <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", marginBottom: 32, lineHeight: 1.6 }}>
-          Dieser Schritt dauert 2 Minuten — und bringt Ihr Projekt ins Rollen.
+          Ein Klick — und wir kümmern uns um den Rest.
         </p>
         {ctaLink ? (
           <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={buttonBaseStyle}>
