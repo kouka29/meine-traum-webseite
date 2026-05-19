@@ -1409,11 +1409,7 @@ function TimelineSection() {
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             position: relative;
-            padding: 18px;
-            border: 1px solid rgba(79,63,240,0.08);
-            border-radius: 32px;
-            background: linear-gradient(180deg, rgba(250,250,255,0.95), rgba(255,255,255,1));
-            box-shadow: 0 24px 70px -46px rgba(79,63,240,0.32);
+            padding: 0;
           }
           .angebot-timeline-step {
             position: relative;
@@ -1423,23 +1419,15 @@ function TimelineSection() {
             text-align: center;
             z-index: 1;
           }
-          .angebot-timeline-step:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            top: 32px;
-            right: -20px;
-            width: 20px;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(79,63,240,0.26), rgba(123,94,248,0.06));
-          }
           .angebot-timeline-dot {
-            width: 64px; height: 64px; border-radius: 50%;
+            width: 54px; height: 54px; border-radius: 18px;
             background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
             color: #fff;
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 8px 24px rgba(79,63,240,0.35), 0 0 0 6px #fff, 0 0 0 7px rgba(79,63,240,0.10);
+            margin: 0 auto -27px;
+            box-shadow: 0 14px 30px rgba(79,63,240,0.30), 0 0 0 8px #fff;
             position: relative;
+            z-index: 2;
           }
           .angebot-timeline-dot-num { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
           .angebot-timeline-card {
