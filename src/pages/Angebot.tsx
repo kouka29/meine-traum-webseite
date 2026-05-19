@@ -401,8 +401,29 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
   const showProblemSection = !!(data.lead_name && data.branche);
 
+  // ─── Preis-Modus (Kauf / Miete) ──────────────────────
+  const hasMiete = !!(aktiveMiete && aktiveMiete > 0);
+  const [priceMode, setPriceMode] = useState<"kauf" | "miete">(hasMiete ? "miete" : "kauf");
+  useEffect(() => {
+    setPriceMode(hasMiete ? "miete" : "kauf");
+  }, [hasMiete, selectedPaketId]);
+
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
+      {/* Standalone Header: nur Logo, kein Link */}
+      <header style={{
+        background: "#fff",
+        borderBottom: "1px solid rgba(79,63,240,0.08)",
+        padding: "14px 24px",
+      }}>
+        <div style={{ maxWidth: 1040, margin: "0 auto", display: "flex", alignItems: "center", gap: 10 }}>
+          <img src={logo} alt="Meine Traum Webseite" width={36} height={36} style={{ display: "block" }} />
+          <span style={{ fontWeight: 800, color: TEXT_DARK, fontSize: 15, letterSpacing: "-0.01em" }}>
+            Meine Traum Webseite
+          </span>
+        </div>
+      </header>
+
       {/* ── SECTION 1: HERO ───────────────────────────────── */}
       <HeroSection
         leadName={data.lead_name}
@@ -414,19 +435,36 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── SECTION 2: PROBLEM / LÖSUNG ──────────────────── */}
       {showProblemSection && <ProblemSection />}
 
-      {/* ── SECTION 3: PAKET / LEISTUNGEN ────────────────── */}
-      <PaketSection
-        hasMultiplePakete={hasMultiplePakete}
-        pakete={pakete}
-        selectedPaketId={selectedPaketId}
-        setSelectedPaketId={setSelectedPaketId}
-        leistungen={aktiveLeistungen}
-        optionen={aktiveOptionen}
-        selectedOptionIds={selectedOptionIds}
-        toggleOption={toggleOption}
+      {/* ── SECTION 3: PAKET-AUSWAHL (nur bei mehreren) ──── */}
+      {hasMultiplePakete && (
+        <PaketChooserSection
+          pakete={pakete}
+          selectedPaketId={selectedPaketId}
+          setSelectedPaketId={setSelectedPaketId}
+        />
+      )}
+
+      {/* ── SECTION 4: LEISTUNGEN ────────────────────────── */}
+      <LeistungenSection leistungen={aktiveLeistungen} />
+
+      {/* ── SECTION 5: VERTRAUEN (vor Preis!) ────────────── */}
+      <TrustSection />
+
+      {/* ── SECTION 6: SO LÄUFT ES AB ────────────────────── */}
+      <TimelineSection />
+
+      {/* ── SECTION 7: PREIS (Kauf / Miete) ──────────────── */}
+      <PriceSection
         preis={aktivePreis}
         normalpreis={aktiverNormalpreis}
         miete={aktiveMiete}
+        anzahlung={data.anzahlung ?? null}
+        priceMode={priceMode}
+        setPriceMode={setPriceMode}
+        hasMiete={hasMiete}
+        optionen={aktiveOptionen}
+        selectedOptionIds={selectedOptionIds}
+        toggleOption={toggleOption}
         anzeigeGesamt={anzeigeGesamt}
         monatlicheZusatz={monatlicheZusatz}
         selectedOptionsCount={selectedOptions.length}
@@ -435,13 +473,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         ctaModeAnfrage={ctaMode === "anfrage"}
       />
 
-      {/* ── SECTION 4: SO LÄUFT ES AB ────────────────────── */}
-      <TimelineSection />
-
-      {/* ── SECTION 5: VERTRAUEN ─────────────────────────── */}
-      <TrustSection />
-
-      {/* ── SECTION 6: FAQs ──────────────────────────────── */}
+      {/* ── SECTION 8: FAQs ──────────────────────────────── */}
       {data.faqs && data.faqs.length > 0 && (
         <section style={{ padding: "80px 24px", background: BG_SOFT }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
@@ -472,7 +504,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         </section>
       )}
 
-      {/* ── SECTION 7: FINALER CTA ───────────────────────── */}
+      {/* ── SECTION 9: FINALER CTA ───────────────────────── */}
       <FinalCtaSection
         ctaLink={ctaLink}
         ctaLabel={ctaLabel}
@@ -486,7 +518,10 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── STICKY BOTTOM BAR ────────────────────────────── */}
       {showSticky && (
         <StickyBar
+          paketName={selectedPaket?.name || data.branche || "Ihr Angebot"}
           preis={anzeigeGesamt}
+          miete={aktiveMiete}
+          priceMode={priceMode}
           days={days}
           ctaLink={ctaLink}
           isRechnung={isRechnung}
