@@ -2116,7 +2116,7 @@ function AngebotGlobalStyles() {
       }
       .ang-trust-label {
         font-size: 14px;
-        color: ${"`${TEXT_MUTED}`".replace(/[`${}]/g,"")};
+        color: #6B7280;
         font-weight: 500;
         line-height: 1.35;
       }
