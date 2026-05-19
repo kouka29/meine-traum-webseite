@@ -712,19 +712,30 @@ function nutzenFor(titel: string, beschreibung?: string): string {
     return b.startsWith("→") ? b : `→ ${b}`;
   }
   const t = (titel || "").toLowerCase();
-  if (t.includes("design")) return "→ Kunden nehmen Sie auf den ersten Blick ernst.";
-  if (t.includes("mobil") || t.includes("responsive") || t.includes("smartphone")) return "→ Jeder Kunde erreicht Sie — egal von welchem Gerät.";
-  if (t.includes("korrektur")) return "→ Sie bekommen genau das, was Sie sich vorgestellt haben.";
-  if (t.includes("shop") || t.includes("ecommerce") || t.includes("e-commerce")) return "→ Sie sind sofort verkaufsbereit — ohne technisches Vorwissen.";
-  if (t.includes("seo") || t.includes("google")) return "→ Mehr Sichtbarkeit — mehr Anfragen ohne Werbebudget.";
-  if (t.includes("hosting") || t.includes("ssl")) return "→ Alles läuft im Hintergrund — Sie müssen sich um nichts kümmern.";
-  if (t.includes("kontakt") || t.includes("formular")) return "→ Anfragen kommen direkt in Ihr Postfach — keine geht verloren.";
-  if (t.includes("support") || t.includes("wartung")) return "→ Sie sind nie alleine — wir sind für Sie erreichbar.";
-  if (t.includes("text") || t.includes("copy")) return "→ Worte, die verkaufen — nicht nur informieren.";
-  if (t.includes("foto") || t.includes("bild")) return "→ Bilder, die Vertrauen schaffen — nicht von der Stange.";
-  if (t.includes("logo") || t.includes("branding")) return "→ Ein Auftritt, den man wiedererkennt.";
-  if (t.includes("analyt") || t.includes("track")) return "→ Sie wissen, was funktioniert — und was nicht.";
-  return "→ Spürbarer Mehrwert für Ihr Unternehmen.";
+  if (t.includes("produkt") || t.includes("artikel")) return "→ Ihre Produkte sind sofort online kaufbar — rund um die Uhr.";
+  if (t.includes("kategor")) return "→ Kunden finden sich in Ihrem Shop sofort zurecht.";
+  if (t.includes("design") || t.includes("marke")) return "→ Kunden nehmen Sie auf den ersten Blick ernst.";
+  if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht Sie — egal von welchem Gerät.";
+  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ Ihr Shop läuft automatisch — Sie müssen nichts manuell tun.";
+  if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei Ihnen — ohne Umwege.";
+  if (t.includes("korrektur") || t.includes("runde")) return "→ Sie bekommen genau das, was Sie sich vorgestellt haben.";
+  if (t.includes("impressum") || t.includes("datenschutz")) return "→ Rechtlich abgesichert — kein Stress mit Abmahnungen.";
+  if (t.includes("support") || t.includes("whatsapp")) return "→ Bei Fragen sind wir direkt für Sie da — ohne Warteschleife.";
+  if (t.includes("launch") || t.includes("live") || t.includes("veröffentlich")) return "→ Ihre Website geht pünktlich online — wir kümmern uns um alles.";
+  return "";
+}
+
+// ─── Add-on Beschreibungs-Fallback ──────────────────────
+function addonBeschreibungFor(titel: string, beschreibung?: string): string {
+  if (beschreibung && beschreibung.trim()) return beschreibung.trim();
+  const t = (titel || "").toLowerCase();
+  if (t.includes("care") || t.includes("wartung") || t.includes("support")) {
+    return "Wir halten Ihre Website aktuell, sicher und fehlerfrei. Updates, Backups und technischer Support — monatlich gebucht, monatlich kündbar.";
+  }
+  if (t.includes("seo")) {
+    return "Mehr Sichtbarkeit bei Google — damit Kunden Sie finden, bevor sie zur Konkurrenz gehen.";
+  }
+  return "Auf Anfrage erfahren Sie mehr Details.";
 }
 
 function badgeFor(index: number, total: number): string {
