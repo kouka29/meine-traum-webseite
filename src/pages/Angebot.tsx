@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Lock, Shield, Clock, Sparkles, CheckCircle2, FileDown, Eye, Loader2, X, CheckCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -108,9 +108,10 @@ function useJakartaFont() {
 
 export default function Angebot() {
   useJakartaFont();
+  const routeParams = useParams();
   const [params] = useSearchParams();
   const d = params.get("d");
-  const s = params.get("s") || params.get("id");
+  const s = routeParams.shortId || params.get("s") || params.get("id");
   const previewMode = params.get("preview") === "1";
 
   const [resolvedB64, setResolvedB64] = useState<string | null>(d);
