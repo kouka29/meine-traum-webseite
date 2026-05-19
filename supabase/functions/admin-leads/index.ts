@@ -822,6 +822,20 @@ Deno.serve(async (req) => {
         });
       }
 
+      // Generate unique short_id (retry on collision)
+      let shortId = genShortId();
+      let tries = 0;
+      while (tries < 5) {
+        const { data: existing } = await supabase
+          .from("angebote")
+          .select("id")
+          .eq("short_id", shortId)
+          .maybeSingle();
+        if (!existing) break;
+        shortId = genShortId();
+        tries++;
+      }
+
       const { data, error } = await supabase.from("angebote").insert({
         lead_name: String(lead_name).slice(0, 200),
         lead_email: String(lead_email).slice(0, 200),
@@ -833,9 +847,10 @@ Deno.serve(async (req) => {
         stripe_link: stripe_link ? String(stripe_link).slice(0, 1000) : null,
         pdf_path: pdf_path ? String(pdf_path).slice(0, 500) : null,
         status: "aktiv",
+        short_id: shortId,
       }).select().single();
       if (error) throw error;
-      return new Response(JSON.stringify({ angebot: data }), {
+      return new Response(JSON.stringify({ angebot: data, short_id: shortId }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
