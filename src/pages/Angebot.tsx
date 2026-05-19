@@ -1296,9 +1296,9 @@ function TimelineSection() {
   ];
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.02em" }}>
-          Ihr Weg zur fertigen Website
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+          Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{
           display: "grid",
