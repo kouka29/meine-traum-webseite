@@ -747,12 +747,12 @@ function badgeFor(index: number, total: number): string {
 
 // ─── Standard-FAQs (Fallback wenn Admin keine eingetragen hat) ──
 const STANDARD_FAQS: Faq[] = [
-  { frage: "Was passiert direkt nach meiner Beauftragung?", antwort: "Sobald Sie den Auftrag erteilt haben, erhalten Sie innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei Ihnen, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
+  { frage: "Was passiert direkt nach der Beauftragung?", antwort: "Sobald Sie den Auftrag erteilt haben, erhalten Sie innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei Ihnen, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
   { frage: "Wie lange dauert die Umsetzung?", antwort: "Die Umsetzung beginnt direkt nach Zahlungseingang. Je nach Paket und Ihrer Mitwirkung (Texte, Bilder, Inhalte) ist Ihre Website in der Regel innerhalb von 2–4 Wochen fertig und live. Wir halten Sie während des gesamten Prozesses auf dem Laufenden." },
-  { frage: "Was wenn mir das Ergebnis nicht gefällt?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Sie sehen die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis Sie zufrieden sind — im Rahmen der vereinbarten Runden." },
-  { frage: "Bin ich langfristig an Sie gebunden?", antwort: "Beim Einmalkauf gehört Ihnen die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben Sie flexibel." },
-  { frage: "Was kostet mich das monatlich nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei Ihrem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
-  { frage: "Kann ich die Website später selbst bearbeiten?", antwort: "Ja. Wir bauen Ihre Website so auf, dass Sie Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir Ihnen im Kickoff wie das funktioniert. Für alles Weitere steht Ihnen unser Care-Paket zur Verfügung." },
+  { frage: "Was wenn das Ergebnis nicht den Erwartungen entspricht?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Sie sehen die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis Sie zufrieden sind — im Rahmen der vereinbarten Runden." },
+  { frage: "Besteht eine langfristige Bindung?", antwort: "Beim Einmalkauf gehört Ihnen die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben Sie flexibel." },
+  { frage: "Welche monatlichen Kosten entstehen nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei Ihrem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
+  { frage: "Kann die Website später selbst bearbeitet werden?", antwort: "Ja. Wir bauen Ihre Website so auf, dass Sie Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir Ihnen im Kickoff wie das funktioniert. Für alles Weitere steht Ihnen unser Care-Paket zur Verfügung." },
   { frage: "Was ist der Unterschied zwischen Website kaufen und Website mieten?", antwort: "Beim Kauf zahlen Sie einmalig und die Website gehört Ihnen. Beim Mietmodell zahlen Sie eine monatliche Rate — dafür ist der Einstieg günstiger, und Wartung sowie Updates sind inklusive. Welches Modell besser zu Ihnen passt, hängt von Ihrem Budget und Ihren Zielen ab. Beides führt zum gleichen Ergebnis: eine professionelle Website die Kunden bringt." },
 ];
 
@@ -1365,10 +1365,10 @@ function FinalCtaSection({
           Bereit, loszulegen?
         </h2>
         <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 8, lineHeight: 1.6 }}>
-          Sie haben alles gesehen. Jetzt liegt es an Ihnen.
+          {leadName ? `${leadName}, Ihr Projekt wartet auf den Startschuss.` : "Ihr Projekt wartet auf den Startschuss."}
         </p>
         <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", marginBottom: 32, lineHeight: 1.6 }}>
-          Dieser Schritt dauert 2 Minuten — und bringt Ihr Projekt ins Rollen.
+          Ein Klick — und wir kümmern uns um den Rest.
         </p>
         {ctaLink ? (
           <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={buttonBaseStyle}>
