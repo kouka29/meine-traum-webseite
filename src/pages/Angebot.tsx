@@ -2115,22 +2115,29 @@ function AngebotGlobalStyles() {
       .ang-trust-row {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
+        gap: 0;
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 12px;
+        border-radius: 34px;
+        background: rgba(255,255,255,0.58);
+        border: 1px solid rgba(79,63,240,0.08);
+        box-shadow: 0 28px 80px -46px rgba(79,63,240,0.42);
       }
       .ang-trust-item {
         position: relative;
         overflow: hidden;
         background: #FFFFFF;
-        border: 1px solid rgba(79,63,240,0.08);
-        border-radius: 24px;
-        padding: 36px 24px;
-        min-height: 220px;
+        border: 1px solid rgba(79,63,240,0.07);
+        border-radius: 26px;
+        padding: 34px 22px;
+        min-height: 198px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 20px 50px -18px rgba(79,63,240,0.18);
+        box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 18px 46px -30px rgba(79,63,240,0.24);
         transition: transform .4s cubic-bezier(.4,0,.2,1), box-shadow .4s ease;
       }
       .ang-trust-item::before {
