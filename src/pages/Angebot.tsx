@@ -1457,10 +1457,8 @@ function TimelineSection() {
           .angebot-timeline-card {
             width: 100%;
             min-height: 132px;
-            background: rgba(255,255,255,0.55);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border: 1px solid rgba(255,255,255,0.7);
+            background: #FFFFFF;
+            border: 1px solid rgba(79,63,240,0.08);
             border-radius: 24px;
             padding: 22px 20px;
             display: flex;
