@@ -1173,13 +1173,13 @@ function PriceCard({
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(); } }}
       style={{
-        background: "#fff",
-        borderRadius: 24,
-        border: `2px solid ${active ? BRAND : highlighted ? `${BRAND}40` : "rgba(79,63,240,0.12)"}`,
-        padding: "32px 28px",
+        background: highlighted ? "linear-gradient(160deg, #F5F4FF 0%, #EDE9FF 100%)" : "#fff",
+        borderRadius: 20,
+        border: highlighted ? `2px solid ${BRAND}` : "1.5px solid rgba(79,63,240,0.2)",
+        padding: "36px 32px",
         position: "relative",
         cursor: "pointer",
-        boxShadow: active ? `0 20px 50px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
+        boxShadow: highlighted ? "0 8px 40px rgba(79,63,240,0.18)" : "0 4px 20px rgba(79,63,240,0.06)",
         transition: "all 0.2s",
         display: "flex", flexDirection: "column",
       }}
@@ -1204,7 +1204,7 @@ function PriceCard({
 
       <div style={{ marginTop: 10, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
-          <span style={{ fontSize: "clamp(36px, 5vw, 48px)", fontWeight: 800, color: BRAND, lineHeight: 1, letterSpacing: "-0.02em" }}>
+          <span style={{ fontSize: "clamp(40px, 6vw, 52px)", fontWeight: 800, color: kind === "miete" ? BRAND : TEXT_DARK, lineHeight: 1, letterSpacing: "-0.02em" }}>
             {mainPrice}
           </span>
           {mainSub && (
@@ -1246,13 +1246,15 @@ function PriceCard({
         onClick={(e) => { e.stopPropagation(); onSelect(); }}
         style={{
           width: "100%",
-          padding: "13px 20px",
+          padding: "14px 32px",
           borderRadius: 50,
           fontSize: 15, fontWeight: 700,
           cursor: "pointer", fontFamily: "inherit",
           border: buttonVariant === "outline" ? `2px solid ${BRAND}` : "none",
-          background: buttonVariant === "outline" ? "#fff" : BRAND_GRADIENT,
+          background: buttonVariant === "outline" ? "transparent" : BRAND_GRADIENT,
           color: buttonVariant === "outline" ? BRAND : "#fff",
+          transition: "all 0.2s",
+          boxShadow: buttonVariant === "outline" ? "none" : "0 4px 16px rgba(79,63,240,0.3)",
         }}
       >
         {active ? "✓ " : ""}{buttonLabel}
