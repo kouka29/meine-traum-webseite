@@ -1827,21 +1827,44 @@ function AngebotGlobalStyles() {
         pointer-events: none; z-index: 0;
         animation: ang-blob-float 8s ease-in-out infinite;
       }
-      .ang-blob-1 {
-        top: -120px; right: -80px; width: 500px; height: 500px;
-        background: radial-gradient(circle, rgba(79,63,240,0.12) 0%, transparent 70%);
+
+      /* Hero deco — geometrische Kreise (wie Hauptseite) */
+      .ang-hero-deco {
+        position: absolute; inset: 0;
+        overflow: hidden; pointer-events: none; z-index: 1;
       }
-      .ang-blob-2 {
-        bottom: -80px; left: -60px; width: 350px; height: 350px;
-        background: radial-gradient(circle, rgba(123,94,248,0.08) 0%, transparent 70%);
-        animation-duration: 10s;
-        animation-direction: reverse;
+      .ang-deco-circle-lg {
+        position: absolute; top: -60px; right: -60px;
+        width: 320px; height: 320px; border-radius: 50%;
+        border: 2px solid rgba(79,63,240,0.12);
       }
-      .ang-blob-3 {
-        top: 40%; right: 5%; width: 180px; height: 180px;
-        background: radial-gradient(circle, rgba(91,141,239,0.07) 0%, transparent 70%);
-        animation-duration: 6s;
-        animation-delay: 2s;
+      .ang-deco-circle-md {
+        position: absolute; top: 35%; right: 8%;
+        width: 180px; height: 180px; border-radius: 50%;
+        border: 1.5px solid rgba(79,63,240,0.08);
+      }
+      .ang-deco-dot {
+        position: absolute; border-radius: 50%;
+      }
+      .ang-deco-dot-1 {
+        top: 15%; right: 20%;
+        width: 10px; height: 10px;
+        background: rgba(79,63,240,0.25);
+      }
+      .ang-deco-dot-2 {
+        bottom: 20%; right: 35%;
+        width: 6px; height: 6px;
+        background: rgba(123,94,248,0.2);
+      }
+      .ang-deco-circle-bl {
+        position: absolute; bottom: -140px; left: -80px;
+        width: 280px; height: 280px; border-radius: 50%;
+        border: 2px solid rgba(79,63,240,0.08);
+      }
+      @media (max-width: 720px) {
+        .ang-deco-circle-lg { width: 220px; height: 220px; top: -40px; right: -80px; }
+        .ang-deco-circle-md { display: none; }
+        .ang-deco-circle-bl { width: 200px; height: 200px; bottom: -120px; left: -100px; }
       }
 
       /* Reveal */
@@ -1856,48 +1879,55 @@ function AngebotGlobalStyles() {
       .ang-d-7 { animation-delay: 700ms; }
       .ang-stagger-leist > .ang-reveal { /* delays set inline */ }
 
-      /* Glass countdown */
-      .ang-glass-count {
-        position: relative;
-        background: rgba(255,255,255,0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255,255,255,0.8);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(79,63,240,0.10);
-        padding: 24px 28px;
-        overflow: hidden;
-      }
-      .ang-glass-count::before {
-        content: "";
-        position: absolute; top: 0; left: 0; right: 0; height: 3px;
-        background: linear-gradient(90deg, #EF4444, #FF6B6B);
-        border-radius: 20px 20px 0 0;
-      }
+      /* Countdown — inline (kein Kasten) */
       .ang-count-row {
         display: flex; align-items: center; justify-content: flex-start;
-        gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+        gap: 8px; flex-wrap: wrap;
       }
       .ang-count-block {
-        background: #F5F4FF; border-radius: 12px;
-        padding: 12px 16px; min-width: 72px; text-align: center;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(79,63,240,0.12);
+        border-radius: 8px;
+        padding: 8px 14px;
+        text-align: center;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
       }
       .ang-count-num {
-        font-size: 44px; font-weight: 800; color: #1E1B4B;
+        font-size: 28px; font-weight: 800; color: #1E1B4B;
         font-variant-numeric: tabular-nums; line-height: 1;
       }
       .ang-count-lab {
-        font-size: 11px; font-weight: 600; color: #6B7280;
-        text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px;
+        font-size: 10px; font-weight: 600; color: #6B7280;
+        text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
       }
       .ang-count-sep {
-        font-size: 28px; color: #4F3FF0; font-weight: 800;
-        align-self: center; margin: 0 4px;
+        font-size: 22px; color: #4F3FF0; font-weight: 800;
+        align-self: flex-start; margin-top: 6px;
       }
       @media (max-width: 560px) {
-        .ang-count-num { font-size: 30px; }
-        .ang-count-block { padding: 10px 10px; min-width: 56px; }
-        .ang-count-sep { font-size: 20px; margin: 0 2px; }
+        .ang-count-num { font-size: 22px; }
+        .ang-count-block { padding: 6px 10px; }
+        .ang-count-sep { font-size: 18px; }
+      }
+
+      /* Trust stats row — keine Cards, vertikale Trennlinien */
+      .ang-trust-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+      .ang-trust-item {
+        text-align: center;
+        padding: 16px 20px;
+        border-right: 1px solid rgba(79,63,240,0.12);
+      }
+      .ang-trust-item:last-child { border-right: none; }
+      @media (max-width: 720px) {
+        .ang-trust-row { grid-template-columns: 1fr 1fr; }
+        .ang-trust-item:nth-child(2) { border-right: none; }
+        .ang-trust-item:nth-child(-n+2) { border-bottom: 1px solid rgba(79,63,240,0.12); padding-bottom: 24px; }
+        .ang-trust-item:nth-child(n+3) { padding-top: 24px; }
       }
 
       /* Leistungs-Cards */
@@ -1957,7 +1987,7 @@ function AngebotGlobalStyles() {
 
       /* Reduced motion */
       @media (prefers-reduced-motion: reduce) {
-        .ang-blob, .ang-pulse-dot, .ang-reveal,
+        .ang-pulse-dot, .ang-reveal,
         .angebot-leistung-card { animation: none !important; transition: none !important; }
         .ang-reveal { opacity: 1 !important; transform: none !important; }
       }
