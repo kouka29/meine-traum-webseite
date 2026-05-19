@@ -1262,7 +1262,7 @@ function PriceCard({
         border: highlighted ? `2px solid ${BRAND}` : "1.5px solid rgba(79,63,240,0.15)",
         padding: "36px 32px",
         position: "relative",
-        overflow: "hidden",
+        overflow: "visible",
         cursor: "pointer",
         boxShadow: highlighted
           ? "0 8px 40px rgba(79,63,240,0.20), 0 0 0 1px rgba(79,63,240,0.10)"
