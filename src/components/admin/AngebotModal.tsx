@@ -387,7 +387,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       setSaving(false);
       if (error || data?.error) { toast.error(data?.error || error?.message || "Fehler"); return; }
       const shortId = editing.short_id;
-      const link = shortId ? `${ANGEBOT_BASE_URL}?id=${shortId}` : `${ANGEBOT_BASE_URL}?d=${base64}`;
+      const link = shortId ? `${ANGEBOT_BASE_URL}/${shortId}` : `${ANGEBOT_BASE_URL}?d=${base64}`;
       toast.success("Angebot aktualisiert");
       setResult({ link, pin });
       onCreated?.();
@@ -409,7 +409,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
     if (error || data?.error) { toast.error(data?.error || error?.message || "Fehler"); return; }
     const shortId = data?.short_id || data?.angebot?.short_id;
     const link = shortId
-      ? `${ANGEBOT_BASE_URL}?id=${shortId}`
+      ? `${ANGEBOT_BASE_URL}/${shortId}`
       : `${ANGEBOT_BASE_URL}?d=${base64}`;
     toast.success("Angebot erstellt");
     setResult({ link, pin });
