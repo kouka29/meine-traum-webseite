@@ -399,7 +399,7 @@ const AGB = () => {
         <div className="container-narrow px-4 py-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors">
             <ChevronLeft className="w-4 h-4" />
-            <span className="font-heading font-bold text-lg tracking-tight">QK Marketing</span>
+            <span className="font-heading font-bold text-lg tracking-tight">Meine-Traum-Webseite</span>
           </Link>
           <button
             onClick={() => window.print()}
@@ -415,22 +415,18 @@ const AGB = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-accent-agb font-semibold mb-4">
-              <FileText className="w-3.5 h-3.5" />
-              Rechtliches
-            </span>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-tight">
-              Allgemeine Geschäftsbedingungen
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-3 leading-tight">
+              Meine-Traum-Webseite
             </h1>
-            <p className="text-white/70 text-base md:text-lg max-w-2xl leading-relaxed mb-6">
-              QK Marketing | Muad Amar · meine-traum-webseite.de
+            <h2 className="font-heading text-2xl md:text-3xl font-semibold text-white/90 tracking-tight mb-5">
+              Allgemeine Geschäftsbedingungen
+            </h2>
+            <p className="text-white/60 text-base md:text-lg max-w-2xl leading-relaxed mb-6">
+              Ein Angebot von Muad Amar – QK Marketing · Stand: Mai 2025 | Version 2.0
             </p>
             <div className="flex flex-wrap gap-2 text-xs">
               <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full border border-white/10">
-                Stand: Mai 2025
-              </span>
-              <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full border border-white/10">
-                Version 2.0
+                meine-traum-webseite.de
               </span>
               <span className="bg-accent-agb/15 text-accent-agb px-3 py-1.5 rounded-full border border-accent-agb/30">
                 B2B – nur für Unternehmer
