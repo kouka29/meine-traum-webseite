@@ -14,6 +14,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   Copyright,
+  BadgeCheck,
   Lock,
   Database,
   Gavel,
