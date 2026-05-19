@@ -1487,6 +1487,11 @@ function TimelineSection() {
               gap: 14px !important;
               align-items: center !important;
               text-align: left !important;
+              padding: 16px !important;
+              border: 1px solid rgba(79,63,240,0.10) !important;
+              border-radius: 20px !important;
+              background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFF 100%) !important;
+              box-shadow: 0 6px 22px rgba(79,63,240,0.07) !important;
             }
             .angebot-timeline-dot { width: 48px !important; height: 48px !important; margin: 0 !important; box-shadow: 0 6px 18px rgba(79,63,240,0.24), 0 0 0 4px #fff !important; }
             .angebot-timeline-dot-num { font-size: 18px !important; }
