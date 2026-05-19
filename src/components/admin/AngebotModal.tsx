@@ -417,8 +417,44 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
   };
 
   const copy = async (text: string, label: string) => {
-    try { await navigator.clipboard.writeText(text); toast.success(`${label} kopiert`); }
-    catch { toast.error("Konnte nicht kopieren"); }
+    const copyWithTextarea = () => {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.left = "0";
+        textarea.style.top = "0";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        textarea.setSelectionRange(0, text.length);
+        const copied = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        return copied;
+      } catch {
+        return false;
+      }
+    };
+
+    if (copyWithTextarea()) {
+      toast.success(`${label} kopiert`);
+      return;
+    }
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        toast.success(`${label} kopiert`);
+        return;
+      }
+    } catch {
+      // Preview-Frames können Clipboard blockieren; dann unten manuell anbieten.
+    }
+
+    window.prompt(`${label} zum Kopieren (Strg/Cmd+C):`, text);
+    toast.success(`${label} bereit zum Kopieren`);
   };
 
   const handleUpload = async (file: File) => {
