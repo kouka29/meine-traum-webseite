@@ -850,6 +850,36 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "buchungen-list") {
+      const { data, error } = await supabase
+        .from("buchungen")
+        .select("*")
+        .order("gebucht_am", { ascending: false })
+        .limit(500);
+      if (error) throw error;
+      return new Response(JSON.stringify({ buchungen: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "buchung-update-status") {
+      const { buchungId, status } = body as { buchungId?: string; status?: string };
+      const allowed = ["neu", "rechnung_gesendet", "bezahlt", "storniert"];
+      if (!buchungId || !status || !allowed.includes(status)) {
+        return new Response(JSON.stringify({ error: "Ungültige Parameter" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase
+        .from("buchungen")
+        .update({ status, updated_at: new Date().toISOString() })
+        .eq("id", buchungId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Ungültige Aktion" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
