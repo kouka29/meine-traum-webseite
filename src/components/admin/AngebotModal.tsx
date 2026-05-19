@@ -529,8 +529,8 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <FileText size={20} style={{ color: BRAND }} />
-            Angebot für {lead.first_name} erstellen
+            {editing ? <Pencil size={20} style={{ color: BRAND }} /> : <FileText size={20} style={{ color: BRAND }} />}
+            {editing ? `Angebot für ${lead.first_name} bearbeiten` : `Angebot für ${lead.first_name} erstellen`}
           </DialogTitle>
         </DialogHeader>
 
@@ -742,7 +742,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 className="flex-[2] text-white"
                 style={{ background: `linear-gradient(135deg, ${BRAND}, #7B5EF8)` }}>
                 {saving ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
-                Angebot-Link generieren
+                {editing ? "Änderungen speichern" : "Angebot-Link generieren"}
               </Button>
             </div>
           </div>
