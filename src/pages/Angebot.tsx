@@ -2155,27 +2155,61 @@ function AngebotGlobalStyles() {
         border-right: 1px solid rgba(79,63,240,0.12);
       }
       .ang-trust-item:last-child { border-right: none; }
+      .ang-trust-mobile { display: none; }
       @media (max-width: 720px) {
-        .ang-trust-row {
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          background: #fff;
-          border: 1px solid rgba(79,63,240,0.10);
-          border-radius: 20px;
-          padding: 12px;
-          box-shadow: 0 4px 20px rgba(79,63,240,0.06);
-        }
-        .ang-trust-item {
-          padding: 20px 8px;
-          border-right: none !important;
-          min-height: 130px;
-        }
-        .ang-trust-item:nth-child(odd) {
-          border-right: 1px solid rgba(79,63,240,0.10) !important;
-        }
-        .ang-trust-item:nth-child(-n+2) {
-          border-bottom: 1px solid rgba(79,63,240,0.10);
-        }
+        .ang-trust-row { display: none; }
+        .ang-trust-mobile { display: block; }
+      }
+
+      /* Trust stats — Mobile Snap-Carousel */
+      .ang-trust-track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        border-radius: 28px;
+      }
+      .ang-trust-track::-webkit-scrollbar { display: none; }
+      .ang-trust-slide {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        padding: 0 2px;
+      }
+      .ang-trust-card {
+        background: rgba(255,255,255,0.78);
+        border: 1px solid rgba(255,255,255,0.7);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border-radius: 28px;
+        padding: 44px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 220px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 16px 40px -12px rgba(79,63,240,0.18);
+      }
+      .ang-trust-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 18px;
+      }
+      .ang-trust-dot {
+        width: 6px; height: 6px;
+        border: none; padding: 0;
+        border-radius: 999px;
+        background: rgba(79,63,240,0.18);
+        cursor: pointer;
+        transition: width 0.35s ease, background 0.35s ease;
+      }
+      .ang-trust-dot.active {
+        width: 24px;
+        background: #4F3FF0;
       }
 
       /* Leistungs-Cards */
