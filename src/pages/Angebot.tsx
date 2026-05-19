@@ -474,6 +474,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         toggleOption={toggleOption}
         anzeigeGesamt={anzeigeGesamt}
         monatlicheZusatz={monatlicheZusatz}
+        einmaligeZusatz={einmaligeZusatz}
         selectedOptionsCount={selectedOptions.length}
         matchedBundle={matchedBundle}
         isRechnung={isRechnung}
