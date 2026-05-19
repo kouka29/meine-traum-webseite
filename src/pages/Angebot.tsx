@@ -249,6 +249,8 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
   const [showSticky, setShowSticky] = useState(false);
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
 
   const optionen = data.optionen ?? [];
   const bundles = data.bundles ?? [];
@@ -294,6 +296,13 @@ function AngebotPage({ data }: { data: AngebotData }) {
     }
   }
 
+  // Wenn Rechnung als Zahlart konfiguriert ist → Buchungs-Modal statt Stripe
+  const isRechnung = data.payment_method === "rechnung";
+  if (isRechnung && ctaMode !== "anfrage") {
+    ctaLink = null;
+    ctaLabel = "Jetzt verbindlich buchen →";
+  }
+
   // Geschätzter Gesamtpreis (Anzeige): Hauptpreis + einmalige Optionen; monatliche separat
   const einmaligeZusatz = selectedOptions
     .filter((o) => (o.preis_typ ?? "einmalig") === "einmalig")
@@ -322,6 +331,29 @@ function AngebotPage({ data }: { data: AngebotData }) {
   if (expired) {
     return <ExpiredOverlay />;
   }
+
+  // Positions für Rechnung berechnen (nur einmalige Beträge)
+  const buildPositions = (): { titel: string; preis: number }[] => {
+    if (matchedBundle?.gesamt_preis) {
+      return [{
+        titel: `Bundle: ${matchedBundle.label || "Gesamtpaket"}`,
+        preis: matchedBundle.gesamt_preis,
+      }];
+    }
+    const list: { titel: string; preis: number }[] = [
+      { titel: "Webseiten-Angebot (Hauptleistung)", preis: data.preis },
+    ];
+    for (const o of selectedOptions) {
+      if ((o.preis_typ ?? "einmalig") === "einmalig") {
+        list.push({ titel: o.titel, preis: o.preis });
+      }
+    }
+    return list;
+  };
+
+  const openBooking = () => {
+    setBookingOpen(true);
+  };
 
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
@@ -671,6 +703,21 @@ function AngebotPage({ data }: { data: AngebotData }) {
             >
               {ctaLabel}
             </a>
+          ) : isRechnung && ctaMode !== "anfrage" ? (
+            <button
+              type="button"
+              onClick={openBooking}
+              style={{
+                display: "inline-block",
+                background: "#fff", color: BRAND,
+                padding: "16px 36px", borderRadius: 50,
+                fontSize: 16, fontWeight: 700,
+                border: "none", cursor: "pointer",
+                fontFamily: "inherit",
+              }}
+            >
+              {ctaLabel}
+            </button>
           ) : (
             <a
               href={`mailto:hallo@meine-traum-webseite.de?subject=${encodeURIComponent("Angebot-Auswahl für " + data.lead_name)}&body=${encodeURIComponent("Ich möchte folgende Optionen dazubuchen: " + selectedOptions.map((o) => o.titel).join(", "))}`}
@@ -687,7 +734,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
             </a>
           )}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 20, color: "rgba(255,255,255,0.85)", fontSize: 12 }}>
-            <Shield size={12} /> Sichere Zahlung via Stripe · SSL-verschlüsselt
+            <Shield size={12} /> {isRechnung ? "Bezahlung per Rechnung · 14 Tage Zahlungsziel" : "Sichere Zahlung via Stripe · SSL-verschlüsselt"}
           </div>
         </div>
       </section>
@@ -707,20 +754,59 @@ function AngebotPage({ data }: { data: AngebotData }) {
             <span style={{ color: BRAND, fontWeight: 800 }}>{Number(anzeigeGesamt).toLocaleString("de-DE")} €</span>
             <span style={{ color: TEXT_MUTED, fontWeight: 500 }}> · Angebot läuft ab in {days} Tagen</span>
           </div>
-          <a
-            href={ctaLink ?? "mailto:hallo@meine-traum-webseite.de"}
-            target={ctaLink ? "_blank" : undefined}
-            rel={ctaLink ? "noopener noreferrer" : undefined}
-            style={{
-              background: BRAND_GRADIENT, color: "#fff",
-              padding: "12px 28px", borderRadius: 50,
-              fontSize: 15, fontWeight: 700, textDecoration: "none",
-              fontFamily: "inherit",
-            }}
-          >
-            {ctaMode === "anfrage" ? "Auf Anfrage →" : "Jetzt starten →"}
-          </a>
+          {ctaLink ? (
+            <a
+              href={ctaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: BRAND_GRADIENT, color: "#fff",
+                padding: "12px 28px", borderRadius: 50,
+                fontSize: 15, fontWeight: 700, textDecoration: "none",
+                fontFamily: "inherit",
+              }}
+            >
+              Jetzt starten →
+            </a>
+          ) : isRechnung && ctaMode !== "anfrage" ? (
+            <button
+              type="button"
+              onClick={openBooking}
+              style={{
+                background: BRAND_GRADIENT, color: "#fff",
+                padding: "12px 28px", borderRadius: 50,
+                fontSize: 15, fontWeight: 700, border: "none", cursor: "pointer",
+                fontFamily: "inherit",
+              }}
+            >
+              Jetzt verbindlich buchen →
+            </button>
+          ) : (
+            <a
+              href="mailto:hallo@meine-traum-webseite.de"
+              style={{
+                background: BRAND_GRADIENT, color: "#fff",
+                padding: "12px 28px", borderRadius: 50,
+                fontSize: 15, fontWeight: 700, textDecoration: "none",
+                fontFamily: "inherit",
+              }}
+            >
+              Auf Anfrage →
+            </a>
+          )}
         </div>
+      )}
+
+      {bookingOpen && !bookingSuccess && (
+        <BookingModal
+          data={data}
+          positions={buildPositions()}
+          onClose={() => setBookingOpen(false)}
+          onSuccess={(nr) => { setBookingSuccess(nr); }}
+        />
+      )}
+      {bookingSuccess && (
+        <BookingSuccessOverlay auftragsNr={bookingSuccess} onClose={() => { setBookingSuccess(null); setBookingOpen(false); }} />
       )}
     </div>
   );
