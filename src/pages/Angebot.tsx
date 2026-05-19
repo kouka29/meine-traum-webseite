@@ -417,7 +417,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         borderBottom: "1px solid rgba(79,63,240,0.08)",
         padding: "14px 24px",
       }}>
-        <div style={{ maxWidth: 1040, margin: "0 auto", display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "center", gap: 10 }}>
           <img src={logo} alt="Meine Traum Webseite" width={36} height={36} style={{ display: "block" }} />
           <span style={{ fontWeight: 800, color: TEXT_DARK, fontSize: 15, letterSpacing: "-0.01em" }}>
             Meine Traum Webseite
