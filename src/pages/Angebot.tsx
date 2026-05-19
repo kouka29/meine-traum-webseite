@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Lock, Shield, Clock, Sparkles, CheckCircle2, Eye, Loader2, X, CheckCheck, AlertTriangle, Check as CheckIcon, ChevronRight } from "lucide-react";
+import { Lock, Shield, Clock, Sparkles, CheckCircle2, Eye, Loader2, X, CheckCheck, AlertTriangle, Check as CheckIcon, ChevronRight, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
+import logo from "@/assets/logo.png";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
