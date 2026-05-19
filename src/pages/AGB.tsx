@@ -520,6 +520,13 @@ const AGB = () => {
             <span>© {new Date().getFullYear()} Meine-Traum-Webseite | Muad Amar – QK Marketing | Alle Rechte vorbehalten</span>
             <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>
             <Link to="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+              className="hover:text-white transition-colors"
+            >
+              Cookie-Einstellungen
+            </button>
             <Link to="/" className="hover:text-white transition-colors">Startseite</Link>
           </div>
         </div>
