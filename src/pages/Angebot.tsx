@@ -1903,6 +1903,15 @@ function SectionDivider() {
 function AngebotGlobalStyles() {
   return (
     <style>{`
+      :root {
+        --angebot-sticky-space: 96px;
+      }
+      @media (max-width: 640px) {
+        :root {
+          --angebot-sticky-space: 172px;
+        }
+      }
+
       @keyframes ang-blob-float {
         0%, 100% { transform: translate(0,0) scale(1); }
         33% { transform: translate(15px,-20px) scale(1.05); }
