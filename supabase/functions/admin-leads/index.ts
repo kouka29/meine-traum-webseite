@@ -764,7 +764,7 @@ Deno.serve(async (req) => {
     if (action === "angebot-create") {
       const {
         lead_name, lead_email, preis, normalpreis, pin,
-        ablauf_datum, base64_data, stripe_link,
+        ablauf_datum, base64_data, stripe_link, pdf_path,
       } = body as Record<string, unknown>;
 
       if (!lead_name || !lead_email || preis === undefined || preis === null || !pin || !ablauf_datum || !base64_data || !stripe_link) {
@@ -787,12 +787,53 @@ Deno.serve(async (req) => {
         ablauf_datum: String(ablauf_datum),
         base64_data: String(base64_data),
         stripe_link: String(stripe_link).slice(0, 1000),
+        pdf_path: pdf_path ? String(pdf_path).slice(0, 500) : null,
         status: "aktiv",
       }).select().single();
       if (error) throw error;
       return new Response(JSON.stringify({ angebot: data }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
+    }
+
+    if (action === "angebot-upload-pdf") {
+      const { file_base64, mime_type, filename } = body as Record<string, unknown>;
+      if (!file_base64 || !mime_type) {
+        return new Response(JSON.stringify({ error: "file_base64 und mime_type erforderlich" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const allowed = ["application/pdf", "image/png", "image/jpeg", "image/webp"];
+      if (!allowed.includes(String(mime_type))) {
+        return new Response(JSON.stringify({ error: "Dateityp nicht erlaubt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      try {
+        const bin = Uint8Array.from(atob(String(file_base64)), (c) => c.charCodeAt(0));
+        if (bin.byteLength > 15 * 1024 * 1024) {
+          return new Response(JSON.stringify({ error: "Datei zu groß (max 15 MB)" }), {
+            status: 413, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        const ext = String(mime_type) === "application/pdf" ? "pdf"
+          : String(mime_type) === "image/png" ? "png"
+          : String(mime_type) === "image/webp" ? "webp" : "jpg";
+        const safeName = String(filename || "angebot").replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 80);
+        const path = `${new Date().toISOString().slice(0, 10)}/${crypto.randomUUID()}-${safeName}.${ext}`;
+        const { error: upErr } = await supabase.storage
+          .from("angebot-uploads")
+          .upload(path, bin, { contentType: String(mime_type), upsert: false });
+        if (upErr) throw upErr;
+        return new Response(JSON.stringify({ pdf_path: path }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : "Upload fehlgeschlagen";
+        return new Response(JSON.stringify({ error: msg }), {
+          status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
 
     if (action === "angebot-delete") {

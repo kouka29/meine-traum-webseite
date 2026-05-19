@@ -3,7 +3,11 @@ import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 const SYSTEM_PROMPT = `Sie sind ein Experte für das Auslesen von Angeboten und Kostenvoranschlägen.
 Extrahieren Sie aus dem hochgeladenen Dokument alle relevanten Informationen für ein Web-Angebot.
 Antworten Sie ausschließlich über das bereitgestellte Tool. Wenn ein Feld nicht eindeutig vorhanden ist, lassen Sie es weg / null.
-Beträge immer in EUR als reine Zahl (kein Währungssymbol, kein Tausenderpunkt).`;
+Beträge immer in EUR als reine Zahl (kein Währungssymbol, kein Tausenderpunkt).
+
+WICHTIG zu PAKETEN:
+- Wenn das Dokument MEHRERE Pakete als Alternativen vorschlägt (z.B. "Starter", "Pro", "Premium", "Basis vs Erweitert", "Variante A vs Variante B"), fülle das Feld 'pakete' mit den einzelnen Paketen — jedes mit eigenem Preis, eigenen Leistungen und ggf. eigener Beschreibung. Lasse in diesem Fall das flache 'preis'-Feld und 'leistungen' leer.
+- Wenn das Dokument NUR EIN Angebot beschreibt (auch mit Add-ons), fülle 'preis', 'leistungen' und ggf. 'optionen' wie bisher und lasse 'pakete' leer.`;
 
 const TOOL = {
   type: "function",
@@ -20,6 +24,53 @@ const TOOL = {
         anzahlung: { type: "number", description: "Optional: Anzahlung in EUR." },
         wachstumspaket_preis: { type: "number", description: "Optional: Preis Wachstumspaket / Upsell in EUR." },
         wachstumspaket_beschreibung: { type: "string", description: "Optional: Kurzbeschreibung Wachstumspaket." },
+        pakete: {
+          type: "array",
+          description: "Mehrere Paket-Alternativen (z.B. Starter/Pro/Premium). NUR setzen, wenn das Dokument explizit Alternativen anbietet zwischen denen der Kunde wählt. Max 3.",
+          items: {
+            type: "object",
+            properties: {
+              name: { type: "string", description: "Paket-Name, z.B. 'Starter', 'Pro'." },
+              badge: { type: "string", description: "Optional: 'Empfohlen', 'Beliebt', etc." },
+              beschreibung: { type: "string", description: "Kurzer Subtext zum Paket." },
+              preis: { type: "number" },
+              normalpreis: { type: "number" },
+              miete_monatlich: { type: "number" },
+              anzahlung: { type: "number" },
+              leistungen: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    emoji: { type: "string" },
+                    titel: { type: "string" },
+                    beschreibung: { type: "string" },
+                  },
+                  required: ["titel"],
+                  additionalProperties: false,
+                },
+              },
+              optionen: {
+                type: "array",
+                description: "Add-ons NUR für dieses Paket.",
+                items: {
+                  type: "object",
+                  properties: {
+                    emoji: { type: "string" },
+                    titel: { type: "string" },
+                    beschreibung: { type: "string" },
+                    preis: { type: "number" },
+                    preis_typ: { type: "string", enum: ["einmalig", "monatlich"] },
+                  },
+                  required: ["titel", "preis"],
+                  additionalProperties: false,
+                },
+              },
+            },
+            required: ["name", "preis"],
+            additionalProperties: false,
+          },
+        },
         optionen: {
           type: "array",
           description: "Optionale Zusatzpositionen / Add-ons (max 4). Positionen, die mit 'optional', 'auf Wunsch', 'Zusatz', 'Add-on' o.ä. markiert sind — NICHT in 'leistungen'.",
