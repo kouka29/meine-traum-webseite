@@ -1026,10 +1026,14 @@ function PriceSection({
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-            Ihr <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span>
+            {hasMiete ? (
+              <>Wie möchten Sie <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>zahlen</span>?</>
+            ) : (
+              <>Ihr <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span></>
+            )}
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            {hasMiete ? "Zwei Wege — gleiches Ergebnis. Sie entscheiden." : "Einmalige Investition — Ihre Website gehört Ihnen."}
+            {hasMiete ? "Beide Wege — gleiches Ergebnis. Sie entscheiden." : "Einmalige Investition — Ihre Website gehört Ihnen."}
           </p>
         </div>
 
@@ -1040,7 +1044,23 @@ function PriceSection({
           gap: 20,
           maxWidth: hasMiete ? 880 : 560,
           margin: "0 auto",
+          position: "relative",
         }}>
+          {hasMiete && (
+            <div aria-hidden="true" className="ang-oder-badge" style={{
+              position: "absolute",
+              top: "50%", left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 52, height: 52, borderRadius: "50%",
+              background: "#fff",
+              border: `2px solid ${BRAND}`,
+              boxShadow: "0 4px 16px rgba(79,63,240,0.18)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 12, fontWeight: 800, color: BRAND,
+              letterSpacing: "0.06em",
+              zIndex: 5,
+            }}>ODER</div>
+          )}
           {/* CARD: KAUF */}
           <PriceCard
             kind="kauf"
@@ -1085,6 +1105,20 @@ function PriceSection({
             />
           )}
         </div>
+
+        {hasMiete && (
+          <div style={{
+            maxWidth: 720, margin: "24px auto 0",
+            background: "#fff",
+            border: "1px solid rgba(79,63,240,0.12)",
+            borderRadius: 12,
+            padding: "14px 22px",
+            fontSize: 13.5, color: TEXT_MUTED, textAlign: "center",
+            lineHeight: 1.6,
+          }}>
+            <strong style={{ color: TEXT_DARK }}>Beides enthält:</strong> alle Leistungen aus Ihrem Paket · 2 Korrekturrunden · DSGVO-konform · Hosting & Domain
+          </div>
+        )}
 
         {isRechnung && (
           <div style={{
