@@ -52,31 +52,46 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
     if (!url) return;
 
     const fallbackCopy = (text: string) => {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.left = "-9999px";
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      let ok = false;
       try {
-        ok = document.execCommand("copy");
-      } catch {}
-      document.body.removeChild(ta);
-      return ok;
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "0";
+        ta.style.left = "0";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      } catch {
+        return false;
+      }
     };
 
+    let copied = false;
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(url);
-      } else {
-        const ok = fallbackCopy(url);
-        if (!ok) throw new Error("fallback failed");
+        copied = true;
       }
-      toast.success("Link kopiert");
     } catch {
-      toast.error("Konnte nicht kopieren");
+      copied = false;
+    }
+    if (!copied) copied = fallbackCopy(url);
+
+    if (copied) {
+      toast.success("Link kopiert");
+    } else {
+      try {
+        window.prompt("Link zum Kopieren (Strg/Cmd+C):", url);
+        toast.success("Link bereit zum Kopieren");
+      } catch {
+        toast.error("Konnte nicht kopieren");
+      }
     }
   };
 
