@@ -505,8 +505,11 @@ const AGB = () => {
       {/* Footer */}
       <footer className="bg-[#0d0d10] text-white/70 print:bg-white print:text-black">
         <div className="container-narrow px-4 py-12 text-sm">
-          <div className="font-heading font-bold text-white text-lg mb-2 print:text-black">
-            Muad Amar – QK Marketing
+          <div className="font-heading font-bold text-accent-agb text-xl mb-1 print:text-black">
+            Meine-Traum-Webseite
+          </div>
+          <div className="text-white/60 mb-5 print:text-black">
+            Ein Angebot von Muad Amar – QK Marketing
           </div>
           <p className="leading-relaxed mb-6">
             Rheinallee 88, Gebäude 23 · 55120 Mainz
@@ -514,7 +517,7 @@ const AGB = () => {
             www.meine-traum-webseite.de
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-6 border-t border-white/10 text-xs">
-            <span>© {new Date().getFullYear()} QK Marketing | Alle Rechte vorbehalten</span>
+            <span>© {new Date().getFullYear()} Meine-Traum-Webseite | Muad Amar – QK Marketing | Alle Rechte vorbehalten</span>
             <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>
             <Link to="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
             <Link to="/" className="hover:text-white transition-colors">Startseite</Link>
