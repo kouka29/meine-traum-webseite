@@ -637,6 +637,132 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               ))}
             </div>
 
+            {/* Optionale Positionen */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label>Optionale Positionen ({optionen.length}/4)</Label>
+                <Button type="button" size="sm" variant="outline" onClick={addOption} disabled={optionen.length >= 4}>
+                  <Plus size={14} /> Option hinzufügen
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground -mt-1">
+                Add-ons, die der Kunde per Checkbox dazubuchen kann. Pro Option ein eigener Stripe-Link.
+              </p>
+              {optionen.map((o, i) => (
+                <div key={o.id} className="rounded-lg border border-border p-3 space-y-2 bg-muted/20">
+                  <div className="flex gap-2">
+                    <Input
+                      value={o.emoji}
+                      onChange={(e) => updateOption(i, { emoji: e.target.value })}
+                      placeholder="✨"
+                      className="w-14 text-center text-lg"
+                      maxLength={4}
+                    />
+                    <Input
+                      value={o.titel}
+                      onChange={(e) => updateOption(i, { titel: e.target.value })}
+                      placeholder="Titel der Option"
+                      className="flex-1"
+                      maxLength={100}
+                    />
+                    <Button type="button" variant="ghost" size="icon" onClick={() => removeOption(i)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                      <Trash2 size={14} />
+                    </Button>
+                  </div>
+                  <Textarea
+                    value={o.beschreibung}
+                    onChange={(e) => updateOption(i, { beschreibung: e.target.value })}
+                    placeholder="Kurzbeschreibung"
+                    rows={2}
+                    maxLength={300}
+                  />
+                  <div className="grid grid-cols-[1fr,140px] gap-2">
+                    <Input
+                      type="number" min="1"
+                      value={o.preis}
+                      onChange={(e) => updateOption(i, { preis: e.target.value })}
+                      placeholder="Preis in €"
+                    />
+                    <Select value={o.preis_typ} onValueChange={(v) => updateOption(i, { preis_typ: v as "einmalig" | "monatlich" })}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="einmalig">einmalig</SelectItem>
+                        <SelectItem value="monatlich">monatlich</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <Input
+                    type="url"
+                    value={o.stripe_link}
+                    onChange={(e) => updateOption(i, { stripe_link: e.target.value })}
+                    placeholder="Stripe-Link für diese Option (Hauptangebot + diese Option)"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Bundle-Links für Mehrfachauswahl */}
+            {optionen.length >= 2 && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label>Bundle-Links ({bundles.length}/6)</Label>
+                  <Button type="button" size="sm" variant="outline" onClick={addBundle} disabled={bundles.length >= 6}>
+                    <Plus size={14} /> Bundle hinzufügen
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground -mt-1">
+                  Stripe-Links für gängige Kombinationen (2+ Optionen). Wenn Kunde eine nicht hinterlegte Kombi wählt, sehen sie eine „auf Anfrage"-CTA.
+                </p>
+                {bundles.map((b, bi) => (
+                  <div key={b.id} className="rounded-lg border border-border p-3 space-y-2 bg-muted/20">
+                    <div className="flex gap-2">
+                      <Input
+                        value={b.label}
+                        onChange={(e) => updateBundle(bi, { label: e.target.value })}
+                        placeholder="Bundle-Name (intern), z.B. „A + B Komplett"
+                        className="flex-1"
+                        maxLength={100}
+                      />
+                      <Button type="button" variant="ghost" size="icon" onClick={() => removeBundle(bi)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                        <Trash2 size={14} />
+                      </Button>
+                    </div>
+                    <div className="text-xs font-semibold text-muted-foreground">Enthaltene Optionen (mind. 2):</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {optionen.map((o) => {
+                        const active = b.option_ids.includes(o.id);
+                        return (
+                          <button
+                            key={o.id}
+                            type="button"
+                            onClick={() => toggleBundleOption(bi, o.id)}
+                            className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${active ? "text-white" : "bg-background text-muted-foreground border-border hover:border-foreground/30"}`}
+                            style={active ? { background: BRAND, borderColor: BRAND } : undefined}
+                          >
+                            {o.emoji ? `${o.emoji} ` : ""}{o.titel || "Option ohne Name"}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        type="number" min="1"
+                        value={b.gesamt_preis}
+                        onChange={(e) => updateBundle(bi, { gesamt_preis: e.target.value })}
+                        placeholder="Gesamtpreis in € (optional)"
+                      />
+                      <Input
+                        type="url"
+                        value={b.stripe_link}
+                        onChange={(e) => updateBundle(bi, { stripe_link: e.target.value })}
+                        placeholder="Stripe-Link Bundle *"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Submit */}
             <Button
               type="button"
