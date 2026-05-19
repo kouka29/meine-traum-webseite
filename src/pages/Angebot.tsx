@@ -674,7 +674,7 @@ function ProblemSection() {
     { titel: "Kein System für neue Anfragen", text: "Aufträge kommen per Zufall — nicht planbar." },
   ];
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
         <h2 style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 40, textAlign: "center", letterSpacing: "-0.02em" }}>
           Was Ihr Unternehmen gerade kostet —<br />ohne professionelle Website
