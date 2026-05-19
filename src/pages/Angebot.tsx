@@ -1271,9 +1271,9 @@ function TimelineSection() {
     { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
   ];
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.02em" }}>
+        <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.02em" }}>
           Ihr Weg zur fertigen Website
         </h2>
         <div className="angebot-timeline" style={{
@@ -1285,22 +1285,22 @@ function TimelineSection() {
           {steps.map((s, i) => (
             <div key={s.n} style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
               <div style={{
-                width: 56, height: 56, borderRadius: "50%",
+                width: 52, height: 52, borderRadius: "50%",
                 background: BRAND_GRADIENT, color: "#fff",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 22, fontWeight: 800,
+                fontSize: 20, fontWeight: 800,
                 margin: "0 auto 16px",
-                boxShadow: `0 8px 24px ${BRAND}30`,
+                boxShadow: "0 4px 16px rgba(79,63,240,0.3)",
                 position: "relative", zIndex: 2,
               }}>{s.n}</div>
               {i < steps.length - 1 && (
                 <div className="angebot-timeline-line" style={{
-                  position: "absolute", top: 28, left: "calc(50% + 32px)", right: "calc(-50% + 32px)",
-                  height: 2, background: `${BRAND}30`, zIndex: 1,
+                  position: "absolute", top: 26, left: "calc(50% + 30px)", right: "calc(-50% + 30px)",
+                  height: 3, background: "linear-gradient(90deg, #4F3FF0, #7B5EF8)", opacity: 0.3, zIndex: 1,
                 }} />
               )}
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: TEXT_DARK, marginBottom: 6 }}>{s.titel}</h3>
-              <p style={{ fontSize: 14, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+              <h3 style={{ fontSize: 15, fontWeight: 700, color: TEXT_DARK, margin: "16px 0 6px" }}>{s.titel}</h3>
+              <p style={{ fontSize: 13, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
             </div>
           ))}
         </div>
@@ -1325,7 +1325,7 @@ function TrustSection() {
     { v: "2–5x", l: "Mehr Anfragen nach Launch" },
   ];
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 80px) 16px", background: BG_SOFT }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: BG_SOFT }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
         <div style={{
           display: "grid",
@@ -1334,22 +1334,22 @@ function TrustSection() {
         }}>
           {stats.map((s, i) => (
             <div key={i} style={{
-              background: "#fff", borderRadius: 20,
+              background: "#fff", borderRadius: 16,
               border: "1px solid rgba(79,63,240,0.1)",
               padding: "28px 20px",
               textAlign: "center",
-              boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
             }}>
               <div style={{
-                fontSize: "clamp(32px, 5vw, 40px)", fontWeight: 800,
+                fontSize: "clamp(34px, 5vw, 44px)", fontWeight: 800,
                 background: BRAND_GRADIENT,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                lineHeight: 1, marginBottom: 10,
+                lineHeight: 1, marginBottom: 8,
                 letterSpacing: "-0.02em",
               }}>{s.v}</div>
-              <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 600, lineHeight: 1.4 }}>{s.l}</div>
+              <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 500, lineHeight: 1.4 }}>{s.l}</div>
             </div>
           ))}
         </div>
