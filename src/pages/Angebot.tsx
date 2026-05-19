@@ -474,7 +474,10 @@ function AngebotPage({ data }: { data: AngebotData }) {
       />
 
       {/* ── SECTION 8: FAQs ──────────────────────────────── */}
-      {data.faqs && data.faqs.length > 0 && (
+      {(() => {
+        const displayFaqs = resolveFaqs(data.faqs, hasMiete);
+        if (displayFaqs.length === 0) return null;
+        return (
         <section style={{ padding: "80px 24px", background: BG_SOFT }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center" }}>
@@ -483,8 +486,8 @@ function AngebotPage({ data }: { data: AngebotData }) {
             <p style={{ fontSize: 16, color: TEXT_MUTED, textAlign: "center", marginBottom: 32 }}>
               Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
             </p>
-            <Accordion type="single" collapsible className="space-y-3">
-              {data.faqs.slice(0, 5).map((f, i) => (
+            <Accordion type="single" collapsible defaultValue="faq-0" className="space-y-3">
+              {displayFaqs.map((f, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
@@ -494,7 +497,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
                   <AccordionTrigger className="text-left font-semibold hover:no-underline" style={{ color: TEXT_DARK, fontFamily: "inherit" }}>
                     {f.frage}
                   </AccordionTrigger>
-                  <AccordionContent style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.6, fontFamily: "inherit" }}>
+                  <AccordionContent style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.7, fontFamily: "inherit" }}>
                     {f.antwort}
                   </AccordionContent>
                 </AccordionItem>
@@ -502,7 +505,8 @@ function AngebotPage({ data }: { data: AngebotData }) {
             </Accordion>
           </div>
         </section>
-      )}
+        );
+      })()}
 
       {/* ── SECTION 9: FINALER CTA ───────────────────────── */}
       <FinalCtaSection
