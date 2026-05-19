@@ -288,16 +288,35 @@ function AngebotPage({ data }: { data: AngebotData }) {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
 
-  const optionen = data.optionen ?? [];
+  // ─── Pakete: Multi-Paket-Auswahl (wenn mehr als 1 Paket) ───
+  const pakete = data.pakete ?? [];
+  const hasMultiplePakete = pakete.length > 1;
+  const [selectedPaketId, setSelectedPaketId] = useState<string>(pakete[0]?.id || "");
+  const selectedPaket = hasMultiplePakete
+    ? pakete.find((p) => p.id === selectedPaketId) ?? pakete[0]
+    : pakete[0] || null;
+
+  // Aktive Werte: Paket-Werte bevorzugen, sonst Top-Level-Daten
+  const aktivePreis = selectedPaket?.preis ?? data.preis;
+  const aktiverNormalpreis = selectedPaket?.normalpreis ?? data.normalpreis;
+  const aktiveLeistungen = selectedPaket?.leistungen ?? data.leistungen;
+  const aktiveOptionen = selectedPaket?.optionen ?? data.optionen ?? [];
+  const aktiverStripeLink = selectedPaket?.stripe_link || data.stripe_link || "";
+  const aktiveMiete = selectedPaket?.miete_monatlich ?? data.miete_monatlich;
+
   const bundles = data.bundles ?? [];
+
+  // Wenn das Paket wechselt: Optionen-Auswahl zurücksetzen
+  useEffect(() => {
+    setSelectedOptionIds([]);
+  }, [selectedPaketId]);
 
   const toggleOption = (id: string) =>
     setSelectedOptionIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
 
-  // Match-Logik: 0 → Hauptangebot; 1 → Einzel-Link; >=2 → Bundle (oder "auf Anfrage")
-  const selectedOptions = optionen.filter((o) => selectedOptionIds.includes(o.id));
+  const selectedOptions = aktiveOptionen.filter((o) => selectedOptionIds.includes(o.id));
   const matchedBundle = selectedOptions.length >= 2
     ? bundles.find((b) =>
         b.option_ids.length === selectedOptions.length &&
@@ -305,7 +324,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
       )
     : null;
 
-  let ctaLink: string | null = data.stripe_link || null;
+  let ctaLink: string | null = aktiverStripeLink || null;
   let ctaMode: "haupt" | "option" | "bundle" | "anfrage" = "haupt";
   let ctaLabel = "Angebot annehmen & starten →";
 
@@ -314,7 +333,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
     if (single.stripe_link) {
       ctaLink = single.stripe_link;
       ctaMode = "option";
-      ctaLabel = `Angebot + ${single.titel} buchen →`;
+      ctaLabel = "Angebot annehmen & starten →";
     } else {
       ctaLink = null;
       ctaMode = "anfrage";
@@ -324,7 +343,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
     if (matchedBundle) {
       ctaLink = matchedBundle.stripe_link;
       ctaMode = "bundle";
-      ctaLabel = "Bundle buchen →";
+      ctaLabel = "Angebot annehmen & starten →";
     } else {
       ctaLink = null;
       ctaMode = "anfrage";
@@ -332,27 +351,25 @@ function AngebotPage({ data }: { data: AngebotData }) {
     }
   }
 
-  // Wenn Rechnung als Zahlart konfiguriert ist → Buchungs-Modal statt Stripe
   const isRechnung = data.payment_method === "rechnung";
   if (isRechnung && ctaMode !== "anfrage") {
     ctaLink = null;
-    ctaLabel = "Jetzt verbindlich buchen →";
+    ctaLabel = "Jetzt verbindlich beauftragen →";
   }
 
-  // Geschätzter Gesamtpreis (Anzeige): Hauptpreis + einmalige Optionen; monatliche separat
   const einmaligeZusatz = selectedOptions
     .filter((o) => (o.preis_typ ?? "einmalig") === "einmalig")
     .reduce((sum, o) => sum + o.preis, 0);
   const monatlicheZusatz = selectedOptions
     .filter((o) => o.preis_typ === "monatlich")
     .reduce((sum, o) => sum + o.preis, 0);
-  const anzeigeGesamt = matchedBundle?.gesamt_preis ?? (data.preis + einmaligeZusatz);
+  const anzeigeGesamt = matchedBundle?.gesamt_preis ?? (aktivePreis + einmaligeZusatz);
 
   useEffect(() => {
     const onScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setShowSticky(docHeight > 0 && scrollTop / docHeight > 0.3);
+      setShowSticky(docHeight > 0 && scrollTop / docHeight > 0.25);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -364,330 +381,77 @@ function AngebotPage({ data }: { data: AngebotData }) {
     weekday: "long", day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
   });
 
-  if (expired) {
-    return <ExpiredOverlay />;
-  }
+  if (expired) return <ExpiredOverlay />;
 
-  // Positions für Rechnung berechnen (nur einmalige Beträge)
   const buildPositions = (): { titel: string; preis: number }[] => {
     if (matchedBundle?.gesamt_preis) {
-      return [{
-        titel: `Bundle: ${matchedBundle.label || "Gesamtpaket"}`,
-        preis: matchedBundle.gesamt_preis,
-      }];
+      return [{ titel: `Bundle: ${matchedBundle.label || "Gesamtpaket"}`, preis: matchedBundle.gesamt_preis }];
     }
     const list: { titel: string; preis: number }[] = [
-      { titel: "Webseiten-Angebot (Hauptleistung)", preis: data.preis },
+      { titel: selectedPaket?.name ? `Paket: ${selectedPaket.name}` : "Webseiten-Angebot (Hauptleistung)", preis: aktivePreis },
     ];
     for (const o of selectedOptions) {
-      if ((o.preis_typ ?? "einmalig") === "einmalig") {
-        list.push({ titel: o.titel, preis: o.preis });
-      }
+      if ((o.preis_typ ?? "einmalig") === "einmalig") list.push({ titel: o.titel, preis: o.preis });
     }
     return list;
   };
 
-  const openBooking = () => {
-    setBookingOpen(true);
-  };
+  const openBooking = () => setBookingOpen(true);
+
+  const showProblemSection = !!(data.lead_name && data.branche);
 
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
-      {/* HERO */}
-      <section style={{ background: BG_SOFT, padding: "80px 24px 60px" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            background: "#fff", color: BRAND,
-            padding: "8px 16px", borderRadius: 50,
-            fontSize: 13, fontWeight: 600,
-            border: `1px solid ${BRAND}20`,
-            marginBottom: 24,
-          }}>
-            <Sparkles size={14} /> Persönliches Angebot — nur für Sie
-          </div>
+      {/* ── SECTION 1: HERO ───────────────────────────────── */}
+      <HeroSection
+        leadName={data.lead_name}
+        nachricht={data.nachricht}
+        ablaufStr={ablaufStr}
+        days={days} hours={hours} mins={mins} secs={secs}
+      />
 
-          <h1 style={{
-            fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, lineHeight: 1.1,
-            color: TEXT_DARK, marginBottom: 20,
-          }}>
-            Hallo {data.lead_name}, hier ist Ihr{" "}
-            <span style={{
-              background: BRAND_GRADIENT,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>
-              maßgeschneidertes
-            </span>{" "}
-            Angebot.
-          </h1>
+      {/* ── SECTION 2: PROBLEM / LÖSUNG ──────────────────── */}
+      {showProblemSection && <ProblemSection />}
 
-          {data.nachricht && (
-            <p style={{ fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6, marginBottom: 32, maxWidth: 720 }}>
-              {data.nachricht}
-            </p>
-          )}
+      {/* ── SECTION 3: PAKET / LEISTUNGEN ────────────────── */}
+      <PaketSection
+        hasMultiplePakete={hasMultiplePakete}
+        pakete={pakete}
+        selectedPaketId={selectedPaketId}
+        setSelectedPaketId={setSelectedPaketId}
+        leistungen={aktiveLeistungen}
+        optionen={aktiveOptionen}
+        selectedOptionIds={selectedOptionIds}
+        toggleOption={toggleOption}
+        preis={aktivePreis}
+        normalpreis={aktiverNormalpreis}
+        miete={aktiveMiete}
+        anzeigeGesamt={anzeigeGesamt}
+        monatlicheZusatz={monatlicheZusatz}
+        selectedOptionsCount={selectedOptions.length}
+        matchedBundle={matchedBundle}
+        isRechnung={isRechnung}
+        ctaModeAnfrage={ctaMode === "anfrage"}
+      />
 
-          {/* Countdown */}
-          <div style={{
-            background: "#fff", borderRadius: 16,
-            borderLeft: "4px solid #EF4444",
-            padding: "20px 24px",
-            border: "1px solid rgba(79,63,240,0.1)",
-            borderLeftWidth: 4, borderLeftColor: "#EF4444",
-            maxWidth: 600,
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 12, fontSize: 14 }}>
-              <Clock size={16} color="#EF4444" />
-              Dieses Angebot ist reserviert bis: {ablaufStr}
-            </div>
-            <div style={{ display: "flex", gap: 12, marginBottom: 8 }}>
-              {[
-                { v: days, l: "Tage" },
-                { v: hours, l: "Std" },
-                { v: mins, l: "Min" },
-                { v: secs, l: "Sek" },
-              ].map((b) => (
-                <div key={b.l} style={{ flex: 1, textAlign: "center", background: BG_SOFT, borderRadius: 10, padding: "10px 4px" }}>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: BRAND, fontVariantNumeric: "tabular-nums" }}>
-                    {pad(b.v)}
-                  </div>
-                  <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase" }}>{b.l}</div>
-                </div>
-              ))}
-            </div>
-            <div style={{ fontSize: 13, color: TEXT_MUTED }}>
-              Danach wird die Kapazität neu vergeben.
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── SECTION 4: SO LÄUFT ES AB ────────────────────── */}
+      <TimelineSection />
 
-      {/* LEISTUNGEN */}
-      <section style={{ padding: "80px 24px", background: "#fff" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 40, textAlign: "center" }}>
-            Was wir gemeinsam umsetzen
-          </h2>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 20,
-          }}>
-            {data.leistungen.map((l, i) => (
-              <div key={i} style={{
-                background: "#fff", borderRadius: 20,
-                border: "1px solid rgba(79,63,240,0.1)",
-                padding: 28,
-                transition: "all 0.2s",
-              }}>
-                {l.emoji && <div style={{ fontSize: 36, marginBottom: 12 }}>{l.emoji}</div>}
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{l.titel}</h3>
-                {l.beschreibung && (
-                  <p style={{ fontSize: 15, color: TEXT_MUTED, lineHeight: 1.6 }}>{l.beschreibung}</p>
-                )}
-              </div>
-            ))}
-          </div>
+      {/* ── SECTION 5: VERTRAUEN ─────────────────────────── */}
+      <TrustSection />
 
-          {/* PREIS-CARD */}
-          <div style={{
-            marginTop: 48,
-            background: "#fff", borderRadius: 24,
-            border: `2px solid ${BRAND}`,
-            padding: "40px 32px",
-            textAlign: "center",
-            maxWidth: 520, marginLeft: "auto", marginRight: "auto",
-            boxShadow: `0 20px 60px ${BRAND}20`,
-          }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
-              Ihr Investitionsvolumen
-            </div>
-            <div style={{ fontSize: "clamp(40px, 8vw, 56px)", fontWeight: 800, color: BRAND, lineHeight: 1, marginBottom: 8 }}>
-              {Number(data.preis).toLocaleString("de-DE")} €
-            </div>
-            {data.normalpreis && data.normalpreis > data.preis && (
-              <div style={{ fontSize: 20, color: TEXT_MUTED, textDecoration: "line-through", marginBottom: 12 }}>
-                {Number(data.normalpreis).toLocaleString("de-DE")} €
-              </div>
-            )}
-            <div style={{ fontSize: 14, color: TEXT_MUTED, marginTop: 12 }}>
-              Einmalig. Kein Abo. Keine versteckten Kosten.
-            </div>
-
-            {(data.miete_monatlich || data.anzahlung) && (
-              <div style={{
-                marginTop: 24, paddingTop: 20,
-                borderTop: "1px dashed rgba(79,63,240,0.2)",
-                display: "grid", gap: 10,
-              }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: TEXT_MUTED, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                  Alternative: flexible Zahlung
-                </div>
-                {data.anzahlung ? (
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, color: TEXT_DARK }}>
-                    <span>Einmalige Anzahlung</span>
-                    <strong style={{ color: BRAND }}>{Number(data.anzahlung).toLocaleString("de-DE")} €</strong>
-                  </div>
-                ) : null}
-                {data.miete_monatlich ? (
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, color: TEXT_DARK }}>
-                    <span>Monatliche Miete</span>
-                    <strong style={{ color: BRAND }}>{Number(data.miete_monatlich).toLocaleString("de-DE")} € / Monat</strong>
-                  </div>
-                ) : null}
-                <div style={{ fontSize: 12, color: TEXT_MUTED }}>
-                  Kein Abo-Zwang. Jederzeit auf einmalige Investition umstellbar.
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* WACHSTUMSPAKET */}
-          {data.wachstumspaket_preis ? (
-            <div style={{
-              marginTop: 24,
-              background: BG_SOFT, borderRadius: 20,
-              padding: "28px 28px",
-              maxWidth: 520, marginLeft: "auto", marginRight: "auto",
-              border: `1px dashed ${BRAND}40`,
-              textAlign: "center",
-            }}>
-              <div style={{
-                display: "inline-block", background: "#fff", color: BRAND,
-                padding: "4px 12px", borderRadius: 50,
-                fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em",
-                marginBottom: 12,
-              }}>
-                Optionales Wachstumspaket
-              </div>
-              <div style={{ fontSize: 28, fontWeight: 800, color: TEXT_DARK, marginBottom: 8 }}>
-                + {Number(data.wachstumspaket_preis).toLocaleString("de-DE")} €
-              </div>
-              {data.wachstumspaket_beschreibung ? (
-                <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0 }}>
-                  {data.wachstumspaket_beschreibung}
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-
-          {/* OPTIONALE ERWEITERUNGEN */}
-          {optionen.length > 0 && (
-            <div style={{ marginTop: 48, maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
-              <div style={{ textAlign: "center", marginBottom: 20 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                  Optionale Erweiterungen
-                </div>
-                <h3 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
-                  Stellen Sie Ihr Paket zusammen
-                </h3>
-                <p style={{ fontSize: 14, color: TEXT_MUTED }}>
-                  Wählen Sie aus, was Sie zusätzlich dazubuchen möchten.
-                </p>
-              </div>
-              <div style={{ display: "grid", gap: 12 }}>
-                {optionen.map((o) => {
-                  const active = selectedOptionIds.includes(o.id);
-                  return (
-                    <button
-                      key={o.id}
-                      type="button"
-                      onClick={() => toggleOption(o.id)}
-                      style={{
-                        textAlign: "left",
-                        borderRadius: 16,
-                        border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.15)"}`,
-                        padding: "18px 20px",
-                        cursor: "pointer",
-                        display: "flex",
-                        gap: 14,
-                        alignItems: "flex-start",
-                        fontFamily: "inherit",
-                        transition: "border-color 0.15s, background 0.15s",
-                        background: active ? `${BRAND}08` : "#fff",
-                      }}
-                    >
-                      <div style={{
-                        width: 24, height: 24, borderRadius: 6,
-                        border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.3)"}`,
-                        background: active ? BRAND : "#fff",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        flexShrink: 0, marginTop: 2,
-                      }}>
-                        {active && <CheckCircle2 size={16} color="#fff" />}
-                      </div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 4 }}>
-                          <div style={{ fontWeight: 700, color: TEXT_DARK, fontSize: 16 }}>
-                            {o.emoji ? `${o.emoji} ` : ""}{o.titel}
-                          </div>
-                          <div style={{ fontWeight: 800, color: BRAND, fontSize: 16, whiteSpace: "nowrap" }}>
-                            + {Number(o.preis).toLocaleString("de-DE")} €
-                            {o.preis_typ === "monatlich" ? <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span> : null}
-                          </div>
-                        </div>
-                        {o.beschreibung && (
-                          <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.5, margin: 0 }}>
-                            {o.beschreibung}
-                          </p>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Live-Summary */}
-              {selectedOptions.length > 0 && (
-                <div style={{
-                  marginTop: 16,
-                  background: BG_SOFT, borderRadius: 14,
-                  padding: "14px 18px",
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
-                  flexWrap: "wrap", gap: 8,
-                }}>
-                  <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
-                    Ihre Auswahl ({selectedOptions.length} Option{selectedOptions.length !== 1 ? "en" : ""})
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
-                      {Number(anzeigeGesamt).toLocaleString("de-DE")} €
-                      {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
-                    </div>
-                    {monatlicheZusatz > 0 && (
-                      <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
-                        + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {ctaMode === "anfrage" && (
-                <div style={{
-                  marginTop: 12, padding: "12px 16px",
-                  background: "#FEF3C7", color: "#92400E",
-                  borderRadius: 12, fontSize: 13, lineHeight: 1.5,
-                }}>
-                  Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen Sie uns kurz an, wir senden Ihnen einen passenden Zahlungslink.
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* FAQs */}
+      {/* ── SECTION 6: FAQs ──────────────────────────────── */}
       {data.faqs && data.faqs.length > 0 && (
         <section style={{ padding: "80px 24px", background: BG_SOFT }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 32, textAlign: "center" }}>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center" }}>
               Häufige Fragen
             </h2>
+            <p style={{ fontSize: 16, color: TEXT_MUTED, textAlign: "center", marginBottom: 32 }}>
+              Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
+            </p>
             <Accordion type="single" collapsible className="space-y-3">
-              {data.faqs.map((f, i) => (
+              {data.faqs.slice(0, 5).map((f, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
@@ -707,130 +471,27 @@ function AngebotPage({ data }: { data: AngebotData }) {
         </section>
       )}
 
-      {/* FINAL CTA */}
-      <section style={{ padding: "80px 24px", background: "#fff" }}>
-        <div style={{
-          maxWidth: 720, margin: "0 auto",
-          background: BRAND_GRADIENT,
-          borderRadius: 24,
-          padding: "56px 40px",
-          textAlign: "center",
-          color: "#fff",
-        }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: "#fff", marginBottom: 12 }}>
-            Bereit, loszulegen?
-          </h2>
-          <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 28 }}>
-            Kein Risiko. Einmalige Investition.
-          </p>
-          {ctaLink ? (
-            <a
-              href={ctaLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-block",
-                background: "#fff", color: BRAND,
-                padding: "16px 36px", borderRadius: 50,
-                fontSize: 16, fontWeight: 700,
-                textDecoration: "none",
-                fontFamily: "inherit",
-              }}
-            >
-              {ctaLabel}
-            </a>
-          ) : isRechnung && ctaMode !== "anfrage" ? (
-            <button
-              type="button"
-              onClick={openBooking}
-              style={{
-                display: "inline-block",
-                background: "#fff", color: BRAND,
-                padding: "16px 36px", borderRadius: 50,
-                fontSize: 16, fontWeight: 700,
-                border: "none", cursor: "pointer",
-                fontFamily: "inherit",
-              }}
-            >
-              {ctaLabel}
-            </button>
-          ) : (
-            <a
-              href={`mailto:hallo@meine-traum-webseite.de?subject=${encodeURIComponent("Angebot-Auswahl für " + data.lead_name)}&body=${encodeURIComponent("Ich möchte folgende Optionen dazubuchen: " + selectedOptions.map((o) => o.titel).join(", "))}`}
-              style={{
-                display: "inline-block",
-                background: "#fff", color: BRAND,
-                padding: "16px 36px", borderRadius: 50,
-                fontSize: 16, fontWeight: 700,
-                textDecoration: "none",
-                fontFamily: "inherit",
-              }}
-            >
-              {ctaLabel}
-            </a>
-          )}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 20, color: "rgba(255,255,255,0.85)", fontSize: 12 }}>
-            <Shield size={12} /> {isRechnung ? "Bezahlung per Rechnung · 14 Tage Zahlungsziel" : "Sichere Zahlung via Stripe · SSL-verschlüsselt"}
-          </div>
-        </div>
-      </section>
+      {/* ── SECTION 7: FINALER CTA ───────────────────────── */}
+      <FinalCtaSection
+        ctaLink={ctaLink}
+        ctaLabel={ctaLabel}
+        ctaMode={ctaMode}
+        isRechnung={isRechnung}
+        openBooking={openBooking}
+        selectedOptions={selectedOptions}
+        leadName={data.lead_name}
+      />
 
-      {/* STICKY BOTTOM BAR */}
+      {/* ── STICKY BOTTOM BAR ────────────────────────────── */}
       {showSticky && (
-        <div style={{
-          position: "fixed", bottom: 0, left: 0, right: 0,
-          background: "#fff", borderTop: "1px solid rgba(79,63,240,0.1)",
-          boxShadow: "0 -4px 20px rgba(0,0,0,0.06)",
-          padding: "12px 24px",
-          zIndex: 100,
-          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16,
-          flexWrap: "wrap",
-        }}>
-          <div style={{ color: TEXT_DARK, fontWeight: 600, fontSize: 15 }}>
-            <span style={{ color: BRAND, fontWeight: 800 }}>{Number(anzeigeGesamt).toLocaleString("de-DE")} €</span>
-            <span style={{ color: TEXT_MUTED, fontWeight: 500 }}> · Angebot läuft ab in {days} Tagen</span>
-          </div>
-          {ctaLink ? (
-            <a
-              href={ctaLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: BRAND_GRADIENT, color: "#fff",
-                padding: "12px 28px", borderRadius: 50,
-                fontSize: 15, fontWeight: 700, textDecoration: "none",
-                fontFamily: "inherit",
-              }}
-            >
-              Jetzt starten →
-            </a>
-          ) : isRechnung && ctaMode !== "anfrage" ? (
-            <button
-              type="button"
-              onClick={openBooking}
-              style={{
-                background: BRAND_GRADIENT, color: "#fff",
-                padding: "12px 28px", borderRadius: 50,
-                fontSize: 15, fontWeight: 700, border: "none", cursor: "pointer",
-                fontFamily: "inherit",
-              }}
-            >
-              Jetzt verbindlich buchen →
-            </button>
-          ) : (
-            <a
-              href="mailto:hallo@meine-traum-webseite.de"
-              style={{
-                background: BRAND_GRADIENT, color: "#fff",
-                padding: "12px 28px", borderRadius: 50,
-                fontSize: 15, fontWeight: 700, textDecoration: "none",
-                fontFamily: "inherit",
-              }}
-            >
-              Auf Anfrage →
-            </a>
-          )}
-        </div>
+        <StickyBar
+          preis={anzeigeGesamt}
+          days={days}
+          ctaLink={ctaLink}
+          isRechnung={isRechnung}
+          ctaMode={ctaMode}
+          openBooking={openBooking}
+        />
       )}
 
       {bookingOpen && !bookingSuccess && (
@@ -838,12 +499,650 @@ function AngebotPage({ data }: { data: AngebotData }) {
           data={data}
           positions={buildPositions()}
           onClose={() => setBookingOpen(false)}
-          onSuccess={(nr) => { setBookingSuccess(nr); }}
+          onSuccess={(nr) => setBookingSuccess(nr)}
         />
       )}
       {bookingSuccess && (
         <BookingSuccessOverlay auftragsNr={bookingSuccess} onClose={() => { setBookingSuccess(null); setBookingOpen(false); }} />
       )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// SECTION COMPONENTS
+// ═══════════════════════════════════════════════════════════
+
+function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }: {
+  leadName: string; nachricht: string; ablaufStr: string;
+  days: number; hours: number; mins: number; secs: number;
+}) {
+  return (
+    <section style={{
+      position: "relative", overflow: "hidden",
+      background: "linear-gradient(135deg, #F5F4FF 0%, #EEF2FF 100%)",
+      padding: "clamp(48px, 8vw, 96px) 16px clamp(40px, 6vw, 64px)",
+    }}>
+      {/* Dekorative Kreise */}
+      <div aria-hidden style={{
+        position: "absolute", top: -120, right: -120, width: 360, height: 360,
+        borderRadius: "50%", background: BRAND, opacity: 0.06, pointerEvents: "none",
+      }} />
+      <div aria-hidden style={{
+        position: "absolute", bottom: -160, left: -100, width: 320, height: 320,
+        borderRadius: "50%", background: BRAND, opacity: 0.06, pointerEvents: "none",
+      }} />
+
+      <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 8,
+          background: "#EDE9FF", color: BRAND,
+          padding: "8px 16px", borderRadius: 20,
+          fontSize: 12, fontWeight: 700,
+          textTransform: "uppercase", letterSpacing: "0.08em",
+          marginBottom: 24,
+        }}>
+          <Sparkles size={14} /> Persönliches Angebot — nur für Sie
+        </div>
+
+        <h1 style={{
+          fontSize: "clamp(32px, 5.2vw, 48px)", fontWeight: 800, lineHeight: 1.1,
+          color: TEXT_DARK, marginBottom: 20, letterSpacing: "-0.02em",
+        }}>
+          Hallo {leadName},<br />hier ist Ihr{" "}
+          <span style={{
+            background: BRAND_GRADIENT,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}>
+            maßgeschneidertes
+          </span>{" "}
+          Angebot.
+        </h1>
+
+        {nachricht && (
+          <p style={{
+            fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
+            marginBottom: 32, maxWidth: 600, fontStyle: "italic",
+          }}>
+            „{nachricht}"
+          </p>
+        )}
+
+        {/* Countdown-Box */}
+        <div style={{
+          background: "#fff", borderRadius: 20,
+          borderLeft: "4px solid #EF4444",
+          padding: "24px 28px",
+          border: "1px solid rgba(79,63,240,0.1)",
+          borderLeftWidth: 4, borderLeftColor: "#EF4444",
+          boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+          maxWidth: 600,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 16, fontSize: 14 }}>
+            <Clock size={16} color="#EF4444" />
+            Dieses Angebot ist reserviert bis: <strong style={{ color: TEXT_DARK }}>{ablaufStr}</strong>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
+            {[
+              { v: days, l: "Tage" },
+              { v: hours, l: "Std" },
+              { v: mins, l: "Min" },
+              { v: secs, l: "Sek" },
+            ].map((b) => (
+              <div key={b.l} style={{ textAlign: "center", background: BG_SOFT, borderRadius: 12, padding: "14px 4px" }}>
+                <div style={{ fontSize: "clamp(22px, 4vw, 30px)", fontWeight: 800, color: TEXT_DARK, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
+                  {pad(b.v)}
+                </div>
+                <div style={{ fontSize: 10, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 6 }}>{b.l}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5 }}>
+            Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
+          </div>
+        </div>
+
+        {/* Trust badges */}
+        <div style={{
+          marginTop: 20, display: "flex", flexWrap: "wrap", gap: 18,
+          fontSize: 13, color: TEXT_MUTED, fontWeight: 600,
+        }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <CheckIcon size={14} color={BRAND} /> Kein Abo
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <CheckIcon size={14} color={BRAND} /> Einmalige Investition
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <CheckIcon size={14} color={BRAND} /> Umsetzung startet sofort
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProblemSection() {
+  const problems = [
+    { titel: "Unsichtbar bei Google", text: "Kunden finden Ihre Mitbewerber — nicht Sie." },
+    { titel: "Kein Vertrauen auf den ersten Blick", text: "Interessenten springen ab, bevor sie überhaupt anrufen." },
+    { titel: "Kein System für neue Anfragen", text: "Aufträge kommen per Zufall — nicht planbar." },
+  ];
+  return (
+    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+        <h2 style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 40, textAlign: "center", letterSpacing: "-0.02em" }}>
+          Was Ihr Unternehmen gerade kostet —<br />ohne professionelle Website
+        </h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+          {problems.map((p, i) => (
+            <div key={i} style={{
+              background: "#fff", borderRadius: 20,
+              border: "1px solid rgba(79,63,240,0.1)",
+              padding: 28,
+              boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+            }}>
+              <div style={{
+                width: 44, height: 44, borderRadius: 12,
+                background: "#FEE2E2", color: "#DC2626",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                marginBottom: 16,
+              }}>
+                <AlertTriangle size={20} />
+              </div>
+              <h3 style={{ fontSize: 18, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{p.titel}</h3>
+              <p style={{ fontSize: 15, color: TEXT_MUTED, lineHeight: 1.6, margin: 0 }}>{p.text}</p>
+            </div>
+          ))}
+        </div>
+        <p style={{ marginTop: 40, textAlign: "center", fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
+          Genau das ändern wir — mit Ihrem individuellen Projekt.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function PaketSection({
+  hasMultiplePakete, pakete, selectedPaketId, setSelectedPaketId,
+  leistungen, optionen, selectedOptionIds, toggleOption,
+  preis, normalpreis, miete,
+  anzeigeGesamt, monatlicheZusatz, selectedOptionsCount, matchedBundle,
+  isRechnung, ctaModeAnfrage,
+}: {
+  hasMultiplePakete: boolean;
+  pakete: AngebotPaket[];
+  selectedPaketId: string;
+  setSelectedPaketId: (id: string) => void;
+  leistungen: Leistung[];
+  optionen: AngebotOption[];
+  selectedOptionIds: string[];
+  toggleOption: (id: string) => void;
+  preis: number;
+  normalpreis?: number | null;
+  miete?: number | null;
+  anzeigeGesamt: number;
+  monatlicheZusatz: number;
+  selectedOptionsCount: number;
+  matchedBundle: AngebotBundle | null | undefined;
+  isRechnung: boolean;
+  ctaModeAnfrage: boolean;
+}) {
+  return (
+    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: BG_SOFT }}>
+      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
+            Was wir gemeinsam umsetzen
+          </h2>
+          <p style={{ fontSize: 17, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
+            Ihr Projekt — kein Standardpaket. Jede Position wurde für Sie ausgewählt.
+          </p>
+        </div>
+
+        {/* Paket-Auswahl */}
+        {hasMultiplePakete && (
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(auto-fit, minmax(260px, 1fr))`,
+            gap: 16,
+            marginBottom: 40,
+          }}>
+            {pakete.map((p) => {
+              const active = p.id === selectedPaketId;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => setSelectedPaketId(p.id)}
+                  style={{
+                    textAlign: "left", cursor: "pointer", fontFamily: "inherit",
+                    background: active ? `${BRAND}08` : "#fff",
+                    border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.1)"}`,
+                    borderRadius: 20, padding: "24px 22px",
+                    boxShadow: active ? `0 8px 28px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
+                    transition: "all 0.2s",
+                    position: "relative",
+                  }}
+                >
+                  {p.badge && (
+                    <div style={{
+                      position: "absolute", top: -12, right: 16,
+                      background: BRAND_GRADIENT, color: "#fff",
+                      fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      padding: "5px 12px", borderRadius: 50,
+                    }}>{p.badge}</div>
+                  )}
+                  <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
+                    Paket
+                  </div>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>{p.name}</div>
+                  {p.beschreibung && (
+                    <p style={{ fontSize: 14, color: TEXT_MUTED, margin: "0 0 14px", lineHeight: 1.5 }}>{p.beschreibung}</p>
+                  )}
+                  <div style={{ fontSize: 28, fontWeight: 800, color: BRAND, marginBottom: 4 }}>
+                    {Number(p.preis).toLocaleString("de-DE")} €
+                  </div>
+                  {active && (
+                    <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, color: BRAND, fontSize: 13, fontWeight: 700 }}>
+                      <CheckCircle2 size={16} /> Ausgewählt
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Leistungen */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: 16,
+          marginBottom: 48,
+        }}>
+          {leistungen.map((l, i) => (
+            <div key={i} style={{
+              background: "#fff", borderRadius: 20,
+              border: "1px solid rgba(79,63,240,0.1)",
+              padding: 24,
+              boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+              borderBottom: `3px solid ${BRAND}20`,
+            }}>
+              {l.emoji && <div style={{ fontSize: 32, marginBottom: 12, lineHeight: 1 }}>{l.emoji}</div>}
+              <h3 style={{ fontSize: 17, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{l.titel}</h3>
+              {l.beschreibung && (
+                <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0 }}>{l.beschreibung}</p>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* PREIS-CARD */}
+        <div style={{
+          background: "#fff", borderRadius: 24,
+          border: `2px solid ${BRAND}`,
+          padding: "clamp(28px, 5vw, 48px) clamp(20px, 4vw, 40px)",
+          textAlign: "center",
+          maxWidth: 560, marginLeft: "auto", marginRight: "auto",
+          boxShadow: `0 20px 60px ${BRAND}20`,
+        }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: TEXT_MUTED, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 16 }}>
+            Ihr Investitionsvolumen
+          </div>
+          <div style={{ fontSize: "clamp(48px, 8vw, 64px)", fontWeight: 800, color: BRAND, lineHeight: 1, marginBottom: 8, letterSpacing: "-0.02em" }}>
+            {Number(preis).toLocaleString("de-DE")} €
+          </div>
+          {normalpreis && normalpreis > preis && (
+            <div style={{ fontSize: 18, color: TEXT_MUTED, textDecoration: "line-through", marginBottom: 8 }}>
+              {Number(normalpreis).toLocaleString("de-DE")} €
+            </div>
+          )}
+          {miete && (
+            <div style={{ fontSize: 14, color: TEXT_MUTED, marginTop: 8 }}>
+              + optional <strong style={{ color: TEXT_DARK }}>{Number(miete).toLocaleString("de-DE")} €/Monat</strong> (Mietmodell)
+            </div>
+          )}
+          <div style={{
+            marginTop: 16, display: "flex", flexWrap: "wrap", gap: 14,
+            justifyContent: "center", color: "#059669", fontSize: 13, fontWeight: 600,
+          }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><CheckIcon size={14} /> Einmalig</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><CheckIcon size={14} /> Kein Abo</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><CheckIcon size={14} /> Keine versteckten Kosten</span>
+          </div>
+        </div>
+
+        {isRechnung && (
+          <div style={{
+            maxWidth: 560, margin: "16px auto 0",
+            background: BG_SOFT, borderRadius: 12,
+            padding: "12px 18px", fontSize: 13, color: TEXT_MUTED, textAlign: "center",
+          }}>
+            Zahlung per Rechnung · 14 Tage Zahlungsziel nach Auftragserteilung
+          </div>
+        )}
+
+        {/* OPTIONALE ERWEITERUNGEN */}
+        {optionen.length > 0 && (
+          <div style={{ marginTop: 48, maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
+            <div style={{ textAlign: "center", marginBottom: 20 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                Optionale Erweiterungen
+              </div>
+              <h3 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
+                Stellen Sie Ihr Paket zusammen
+              </h3>
+            </div>
+            <div style={{ display: "grid", gap: 12 }}>
+              {optionen.map((o) => {
+                const active = selectedOptionIds.includes(o.id);
+                return (
+                  <button
+                    key={o.id}
+                    type="button"
+                    onClick={() => toggleOption(o.id)}
+                    style={{
+                      textAlign: "left",
+                      borderRadius: 16,
+                      border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.15)"}`,
+                      padding: "16px 18px",
+                      cursor: "pointer",
+                      display: "flex", gap: 14, alignItems: "flex-start",
+                      fontFamily: "inherit",
+                      transition: "all 0.15s",
+                      background: active ? `${BRAND}08` : "#fff",
+                    }}
+                  >
+                    <div style={{
+                      width: 22, height: 22, borderRadius: 6,
+                      border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.3)"}`,
+                      background: active ? BRAND : "#fff",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      flexShrink: 0, marginTop: 2,
+                    }}>
+                      {active && <CheckIcon size={14} color="#fff" />}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 4 }}>
+                        <div style={{ fontWeight: 700, color: TEXT_DARK, fontSize: 16 }}>
+                          {o.emoji ? `${o.emoji} ` : ""}{o.titel}
+                        </div>
+                        <div style={{ fontWeight: 800, color: BRAND, fontSize: 16, whiteSpace: "nowrap" }}>
+                          + {Number(o.preis).toLocaleString("de-DE")} €
+                          {o.preis_typ === "monatlich" && <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span>}
+                        </div>
+                      </div>
+                      {o.beschreibung && (
+                        <p style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, margin: 0 }}>{o.beschreibung}</p>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {selectedOptionsCount > 0 && (
+              <div style={{
+                marginTop: 16, background: "#fff", borderRadius: 14,
+                padding: "14px 18px", border: `1px solid ${BRAND}20`,
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                flexWrap: "wrap", gap: 8,
+              }}>
+                <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                  Ihre Auswahl ({selectedOptionsCount} Option{selectedOptionsCount !== 1 ? "en" : ""})
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
+                    {Number(anzeigeGesamt).toLocaleString("de-DE")} €
+                    {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
+                  </div>
+                  {monatlicheZusatz > 0 && (
+                    <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                      + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {ctaModeAnfrage && (
+              <div style={{
+                marginTop: 12, padding: "12px 16px",
+                background: "#FEF3C7", color: "#92400E",
+                borderRadius: 12, fontSize: 13, lineHeight: 1.5,
+              }}>
+                Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen Sie uns kurz an, wir senden Ihnen einen passenden Zahlungslink.
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function TimelineSection() {
+  const steps = [
+    { n: 1, titel: "Auftrag erteilen", text: "Sie bestätigen heute verbindlich." },
+    { n: 2, titel: "Kickoff-Call", text: "Wir starten innerhalb von 48 Stunden." },
+    { n: 3, titel: "Umsetzung", text: "Ihr Projekt wird umgesetzt." },
+    { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
+  ];
+  return (
+    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+        <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.02em" }}>
+          Ihr Weg zur fertigen Website
+        </h2>
+        <div className="angebot-timeline" style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: 20,
+          position: "relative",
+        }}>
+          {steps.map((s, i) => (
+            <div key={s.n} style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: "50%",
+                background: BRAND_GRADIENT, color: "#fff",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 22, fontWeight: 800,
+                margin: "0 auto 16px",
+                boxShadow: `0 8px 24px ${BRAND}30`,
+                position: "relative", zIndex: 2,
+              }}>{s.n}</div>
+              {i < steps.length - 1 && (
+                <div className="angebot-timeline-line" style={{
+                  position: "absolute", top: 28, left: "calc(50% + 32px)", right: "calc(-50% + 32px)",
+                  height: 2, background: `${BRAND}30`, zIndex: 1,
+                }} />
+              )}
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: TEXT_DARK, marginBottom: 6 }}>{s.titel}</h3>
+              <p style={{ fontSize: 14, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+            </div>
+          ))}
+        </div>
+        <style>{`
+          @media (max-width: 720px) {
+            .angebot-timeline { grid-template-columns: 1fr !important; gap: 28px !important; text-align: left !important; }
+            .angebot-timeline > div { display: grid !important; grid-template-columns: 56px 1fr !important; gap: 16px !important; align-items: start !important; text-align: left !important; }
+            .angebot-timeline > div > div:first-child { margin: 0 !important; }
+            .angebot-timeline-line { display: none !important; }
+          }
+        `}</style>
+      </div>
+    </section>
+  );
+}
+
+function TrustSection() {
+  const stats = [
+    { v: "150+", l: "Webseiten umgesetzt" },
+    { v: "98%", l: "Weiterempfehlungsrate" },
+    { v: "48h", l: "Bis zum ersten Konzept" },
+    { v: "2–5x", l: "Mehr Anfragen nach Launch" },
+  ];
+  return (
+    <section style={{ padding: "clamp(56px, 8vw, 80px) 16px", background: BG_SOFT }}>
+      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gap: 16,
+        }}>
+          {stats.map((s, i) => (
+            <div key={i} style={{
+              background: "#fff", borderRadius: 20,
+              border: "1px solid rgba(79,63,240,0.1)",
+              padding: "28px 20px",
+              textAlign: "center",
+              boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+            }}>
+              <div style={{
+                fontSize: "clamp(32px, 5vw, 40px)", fontWeight: 800,
+                background: BRAND_GRADIENT,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                lineHeight: 1, marginBottom: 10,
+                letterSpacing: "-0.02em",
+              }}>{s.v}</div>
+              <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 600, lineHeight: 1.4 }}>{s.l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalCtaSection({
+  ctaLink, ctaLabel, ctaMode, isRechnung, openBooking, selectedOptions, leadName,
+}: {
+  ctaLink: string | null; ctaLabel: string;
+  ctaMode: "haupt" | "option" | "bundle" | "anfrage";
+  isRechnung: boolean; openBooking: () => void;
+  selectedOptions: AngebotOption[]; leadName: string;
+}) {
+  const buttonBaseStyle: React.CSSProperties = {
+    display: "inline-block",
+    background: "#fff", color: BRAND,
+    padding: "18px 48px", borderRadius: 50,
+    fontSize: 16, fontWeight: 700,
+    textDecoration: "none", border: "none", cursor: "pointer",
+    fontFamily: "inherit",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+  };
+  return (
+    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+      <div style={{
+        maxWidth: 760, margin: "0 auto",
+        background: BRAND_GRADIENT,
+        borderRadius: 24,
+        padding: "clamp(40px, 6vw, 60px) clamp(24px, 5vw, 56px)",
+        textAlign: "center", color: "#fff",
+        boxShadow: `0 30px 80px ${BRAND}40`,
+      }}>
+        <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: "#fff", marginBottom: 12, letterSpacing: "-0.02em" }}>
+          Bereit, loszulegen?
+        </h2>
+        <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 8, lineHeight: 1.6 }}>
+          Sie haben alles gesehen. Jetzt liegt es an Ihnen.
+        </p>
+        <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", marginBottom: 32, lineHeight: 1.6 }}>
+          Dieser Schritt dauert 2 Minuten — und bringt Ihr Projekt ins Rollen.
+        </p>
+        {ctaLink ? (
+          <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={buttonBaseStyle}>
+            {ctaLabel}
+          </a>
+        ) : isRechnung && ctaMode !== "anfrage" ? (
+          <button type="button" onClick={openBooking} style={buttonBaseStyle}>
+            {ctaLabel}
+          </button>
+        ) : (
+          <a
+            href={`mailto:hallo@meine-traum-webseite.de?subject=${encodeURIComponent("Angebot-Auswahl für " + leadName)}&body=${encodeURIComponent("Ich möchte folgende Optionen dazubuchen: " + selectedOptions.map((o) => o.titel).join(", "))}`}
+            style={buttonBaseStyle}
+          >
+            {ctaLabel}
+          </a>
+        )}
+        <div style={{ marginTop: 18, fontSize: 13, color: "rgba(255,255,255,0.85)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+          <Shield size={13} />
+          {isRechnung
+            ? "Zahlung per Rechnung · 14 Tage Zahlungsziel · B2B · Kein Widerrufsrecht"
+            : "Sichere Zahlung via Stripe · SSL-verschlüsselt"}
+        </div>
+        <div style={{ marginTop: 24, display: "grid", gap: 6, fontSize: 13, color: "rgba(255,255,255,0.7)", textAlign: "left", maxWidth: 400, margin: "24px auto 0" }}>
+          <div>✓ Verbindliche Auftragserteilung gemäß AGB</div>
+          <div>✓ Auftragsbestätigung per E-Mail innerhalb von Minuten</div>
+          <div>✓ Umsetzung startet nach Zahlungseingang</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StickyBar({
+  preis, days, ctaLink, isRechnung, ctaMode, openBooking,
+}: {
+  preis: number; days: number; ctaLink: string | null;
+  isRechnung: boolean; ctaMode: "haupt" | "option" | "bundle" | "anfrage";
+  openBooking: () => void;
+}) {
+  const btnStyle: React.CSSProperties = {
+    background: BRAND_GRADIENT, color: "#fff",
+    padding: "12px 24px", borderRadius: 50,
+    fontSize: 15, fontWeight: 700,
+    border: "none", cursor: "pointer",
+    textDecoration: "none", fontFamily: "inherit",
+    display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+  };
+  return (
+    <div className="angebot-sticky-bar" style={{
+      position: "fixed", bottom: 0, left: 0, right: 0,
+      background: "#fff",
+      borderTop: "1px solid rgba(79,63,240,0.15)",
+      boxShadow: "0 -4px 20px rgba(79,63,240,0.08)",
+      padding: "12px 24px",
+      zIndex: 100,
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      gap: 16, flexWrap: "wrap",
+      animation: "angebot-slide-up 0.3s ease-out",
+    }}>
+      <div style={{ color: TEXT_DARK, fontWeight: 600, fontSize: 15 }}>
+        <span style={{ color: BRAND, fontWeight: 800 }}>{Number(preis).toLocaleString("de-DE")} €</span>
+        <span style={{ color: TEXT_MUTED, fontWeight: 500 }}> · Angebot läuft ab in {days} Tag{days !== 1 ? "en" : ""}</span>
+      </div>
+      {ctaLink ? (
+        <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={btnStyle}>
+          Jetzt starten <ChevronRight size={16} />
+        </a>
+      ) : isRechnung && ctaMode !== "anfrage" ? (
+        <button type="button" onClick={openBooking} style={btnStyle}>
+          Jetzt starten <ChevronRight size={16} />
+        </button>
+      ) : (
+        <a href="mailto:hallo@meine-traum-webseite.de" style={btnStyle}>
+          Auf Anfrage <ChevronRight size={16} />
+        </a>
+      )}
+      <style>{`
+        @keyframes angebot-slide-up {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
+        }
+        @media (max-width: 640px) {
+          .angebot-sticky-bar { padding: 12px 16px !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
+          .angebot-sticky-bar > div:first-child { text-align: center; }
+          .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; }
+        }
+      `}</style>
     </div>
   );
 }
