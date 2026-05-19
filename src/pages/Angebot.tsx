@@ -13,6 +13,22 @@ const BG_SOFT = "#F5F4FF";
 
 interface Leistung { emoji: string; titel: string; beschreibung: string; }
 interface Faq { frage: string; antwort: string; }
+interface AngebotOption {
+  id: string;
+  emoji?: string;
+  titel: string;
+  beschreibung?: string;
+  preis: number;
+  preis_typ?: "einmalig" | "monatlich";
+  stripe_link?: string;
+}
+interface AngebotBundle {
+  id: string;
+  label?: string;
+  option_ids: string[];
+  gesamt_preis?: number | null;
+  stripe_link: string;
+}
 
 interface AngebotData {
   v: number;
@@ -31,6 +47,8 @@ interface AngebotData {
   stripe_link: string;
   leistungen: Leistung[];
   faqs: Faq[];
+  optionen?: AngebotOption[];
+  bundles?: AngebotBundle[];
 }
 
 function decodeBase64Utf8(b64: string): unknown {
