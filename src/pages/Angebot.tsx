@@ -894,31 +894,41 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
 function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
   if (!leistungen || leistungen.length === 0) return null;
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Was Sie konkret bekommen
           </h2>
-          <p style={{ fontSize: 17, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
+          <p style={{ fontSize: 18, color: TEXT_MUTED, maxWidth: 560, margin: "0 auto" }}>
             Jede Leistung — mit konkretem Nutzen für Sie.
           </p>
         </div>
-        <div style={{
+        <div className="angebot-leistungen-grid" style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 16,
         }}>
           {leistungen.map((l, i) => (
-            <div key={i} style={{
-              background: "#fff", borderRadius: 20,
-              border: "1px solid rgba(79,63,240,0.1)",
-              padding: 24,
-              boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
-              borderBottom: `3px solid ${BRAND}20`,
+            <div key={i} className="angebot-leistung-card" style={{
+              background: "#fff",
+              borderRadius: 16,
+              borderLeft: `3px solid ${BRAND}`,
+              padding: "24px 20px 24px 24px",
+              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
+              transition: "all 0.2s ease",
             }}>
-              {l.emoji && <div style={{ fontSize: 32, marginBottom: 12, lineHeight: 1 }}>{l.emoji}</div>}
-              <h3 style={{ fontSize: 17, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{l.titel}</h3>
+              {l.emoji ? (
+                <div style={{ fontSize: 28, marginBottom: 12, lineHeight: 1, display: "block" }}>{l.emoji}</div>
+              ) : (
+                <div style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  width: 32, height: 32, borderRadius: 8,
+                  background: `${BRAND}15`, color: BRAND,
+                  marginBottom: 12, fontSize: 16, fontWeight: 800,
+                }}>✓</div>
+              )}
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: TEXT_DARK, marginBottom: 6 }}>{l.titel}</h3>
               {nutzenFor(l.titel, l.beschreibung) && (
                 <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
                   {nutzenFor(l.titel, l.beschreibung)}
@@ -927,6 +937,12 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             </div>
           ))}
         </div>
+        <style>{`
+          .angebot-leistung-card:hover {
+            box-shadow: 0 4px 24px rgba(79,63,240,0.12);
+            transform: translateY(-2px);
+          }
+        `}</style>
       </div>
     </section>
   );
