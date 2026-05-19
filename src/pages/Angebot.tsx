@@ -1457,10 +1457,8 @@ function TimelineSection() {
           .angebot-timeline-card {
             width: 100%;
             min-height: 132px;
-            background: rgba(255,255,255,0.55);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border: 1px solid rgba(255,255,255,0.7);
+            background: #FFFFFF;
+            border: 1px solid rgba(79,63,240,0.08);
             border-radius: 24px;
             padding: 22px 20px;
             display: flex;
@@ -2134,10 +2132,8 @@ function AngebotGlobalStyles() {
       .ang-trust-item {
         position: relative;
         overflow: hidden;
-        background: rgba(255,255,255,0.80);
-        backdrop-filter: blur(20px) saturate(150%);
-        -webkit-backdrop-filter: blur(20px) saturate(150%);
-        border: 1px solid rgba(255,255,255,0.7);
+        background: #FFFFFF;
+        border: 1px solid rgba(79,63,240,0.08);
         border-radius: 24px;
         padding: 36px 24px;
         min-height: 220px;
@@ -2152,10 +2148,9 @@ function AngebotGlobalStyles() {
       .ang-trust-item::before {
         content: "";
         position: absolute;
-        top: -50px; right: -50px;
-        width: 140px; height: 140px;
-        background: radial-gradient(circle, rgba(79,63,240,0.18), transparent 70%);
-        filter: blur(10px);
+        top: -40px; right: -40px;
+        width: 110px; height: 110px;
+        background: radial-gradient(circle, rgba(79,63,240,0.10), transparent 70%);
         border-radius: 50%;
         transition: transform .7s cubic-bezier(.4,0,.2,1);
         pointer-events: none;
