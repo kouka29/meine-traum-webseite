@@ -47,6 +47,15 @@ function recordSuccess(ip: string) {
   failedAttempts.delete(ip);
 }
 
+const SHORT_ID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+function genShortId(len = 8): string {
+  let id = "";
+  for (let i = 0; i < len; i++) {
+    id += SHORT_ID_CHARS.charAt(Math.floor(Math.random() * SHORT_ID_CHARS.length));
+  }
+  return id;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
