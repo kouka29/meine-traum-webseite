@@ -215,6 +215,61 @@ function AngebotPage({ data }: { data: AngebotData }) {
   const expired = diff <= 0;
 
   const [showSticky, setShowSticky] = useState(false);
+  const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+
+  const optionen = data.optionen ?? [];
+  const bundles = data.bundles ?? [];
+
+  const toggleOption = (id: string) =>
+    setSelectedOptionIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+
+  // Match-Logik: 0 → Hauptangebot; 1 → Einzel-Link; >=2 → Bundle (oder "auf Anfrage")
+  const selectedOptions = optionen.filter((o) => selectedOptionIds.includes(o.id));
+  const matchedBundle = selectedOptions.length >= 2
+    ? bundles.find((b) =>
+        b.option_ids.length === selectedOptions.length &&
+        b.option_ids.every((id) => selectedOptionIds.includes(id))
+      )
+    : null;
+
+  let ctaLink: string | null = data.stripe_link || null;
+  let ctaMode: "haupt" | "option" | "bundle" | "anfrage" = "haupt";
+  let ctaLabel = "Angebot annehmen & starten →";
+
+  if (selectedOptions.length === 1) {
+    const single = selectedOptions[0];
+    if (single.stripe_link) {
+      ctaLink = single.stripe_link;
+      ctaMode = "option";
+      ctaLabel = `Angebot + ${single.titel} buchen →`;
+    } else {
+      ctaLink = null;
+      ctaMode = "anfrage";
+      ctaLabel = "Auswahl auf Anfrage →";
+    }
+  } else if (selectedOptions.length >= 2) {
+    if (matchedBundle) {
+      ctaLink = matchedBundle.stripe_link;
+      ctaMode = "bundle";
+      ctaLabel = "Bundle buchen →";
+    } else {
+      ctaLink = null;
+      ctaMode = "anfrage";
+      ctaLabel = "Auswahl auf Anfrage →";
+    }
+  }
+
+  // Geschätzter Gesamtpreis (Anzeige): Hauptpreis + einmalige Optionen; monatliche separat
+  const einmaligeZusatz = selectedOptions
+    .filter((o) => (o.preis_typ ?? "einmalig") === "einmalig")
+    .reduce((sum, o) => sum + o.preis, 0);
+  const monatlicheZusatz = selectedOptions
+    .filter((o) => o.preis_typ === "monatlich")
+    .reduce((sum, o) => sum + o.preis, 0);
+  const anzeigeGesamt = matchedBundle?.gesamt_preis ?? (data.preis + einmaligeZusatz);
+
   useEffect(() => {
     const onScroll = () => {
       const scrollTop = window.scrollY;
