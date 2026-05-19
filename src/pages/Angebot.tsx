@@ -486,9 +486,9 @@ function AngebotPage({ data }: { data: AngebotData }) {
         if (displayFaqs.length === 0) return null;
         return (
         <section style={{ padding: "clamp(48px, 8vw, 80px) 24px", background: "#F8F7FF" }}>
-          <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, textAlign: "center", letterSpacing: "-0.02em" }}>
-              Häufige Fragen
+          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+            <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+              Häufige <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Fragen</span>
             </h2>
             <p style={{ fontSize: 18, color: TEXT_MUTED, textAlign: "center", marginBottom: 48, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
               Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
