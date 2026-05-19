@@ -1793,3 +1793,182 @@ function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; on
     </div>
   );
 }
+
+// ═══════════════════════════════════════════════════════════
+// SHARED DESIGN COMPONENTS
+// ═══════════════════════════════════════════════════════════
+
+function SectionDivider() {
+  return (
+    <div style={{
+      width: 60, height: 3,
+      background: "linear-gradient(90deg, #4F3FF0, #7B5EF8)",
+      borderRadius: 2, margin: "0 auto 48px",
+    }} />
+  );
+}
+
+function AngebotGlobalStyles() {
+  return (
+    <style>{`
+      @keyframes ang-blob-float {
+        0%, 100% { transform: translate(0,0) scale(1); }
+        33% { transform: translate(15px,-20px) scale(1.05); }
+        66% { transform: translate(-10px,10px) scale(0.97); }
+      }
+      @keyframes ang-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.8); }
+      }
+      @keyframes ang-reveal-in {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .ang-blob {
+        position: absolute; border-radius: 50%;
+        pointer-events: none; z-index: 0;
+        animation: ang-blob-float 8s ease-in-out infinite;
+      }
+      .ang-blob-1 {
+        top: -120px; right: -80px; width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(79,63,240,0.12) 0%, transparent 70%);
+      }
+      .ang-blob-2 {
+        bottom: -80px; left: -60px; width: 350px; height: 350px;
+        background: radial-gradient(circle, rgba(123,94,248,0.08) 0%, transparent 70%);
+        animation-duration: 10s;
+        animation-direction: reverse;
+      }
+      .ang-blob-3 {
+        top: 40%; right: 5%; width: 180px; height: 180px;
+        background: radial-gradient(circle, rgba(91,141,239,0.07) 0%, transparent 70%);
+        animation-duration: 6s;
+        animation-delay: 2s;
+      }
+
+      /* Reveal */
+      .ang-reveal {
+        opacity: 0;
+        animation: ang-reveal-in 0.55s ease-out forwards;
+      }
+      .ang-d-3 { animation-delay: 300ms; }
+      .ang-d-4 { animation-delay: 400ms; }
+      .ang-d-5 { animation-delay: 500ms; }
+      .ang-d-6 { animation-delay: 600ms; }
+      .ang-d-7 { animation-delay: 700ms; }
+      .ang-stagger-leist > .ang-reveal { /* delays set inline */ }
+
+      /* Glass countdown */
+      .ang-glass-count {
+        position: relative;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.8);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(79,63,240,0.10);
+        padding: 24px 28px;
+        overflow: hidden;
+      }
+      .ang-glass-count::before {
+        content: "";
+        position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, #EF4444, #FF6B6B);
+        border-radius: 20px 20px 0 0;
+      }
+      .ang-count-row {
+        display: flex; align-items: center; justify-content: flex-start;
+        gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+      }
+      .ang-count-block {
+        background: #F5F4FF; border-radius: 12px;
+        padding: 12px 16px; min-width: 72px; text-align: center;
+      }
+      .ang-count-num {
+        font-size: 44px; font-weight: 800; color: #1E1B4B;
+        font-variant-numeric: tabular-nums; line-height: 1;
+      }
+      .ang-count-lab {
+        font-size: 11px; font-weight: 600; color: #6B7280;
+        text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px;
+      }
+      .ang-count-sep {
+        font-size: 28px; color: #4F3FF0; font-weight: 800;
+        align-self: center; margin: 0 4px;
+      }
+      @media (max-width: 560px) {
+        .ang-count-num { font-size: 30px; }
+        .ang-count-block { padding: 10px 10px; min-width: 56px; }
+        .ang-count-sep { font-size: 20px; margin: 0 2px; }
+      }
+
+      /* Leistungs-Cards */
+      .angebot-leistung-card {
+        background: #FFFFFF;
+        border: 1px solid rgba(79,63,240,0.08);
+        border-left: 3px solid #4F3FF0;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 2px 16px rgba(79,63,240,0.05);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+      }
+      .ang-leist-emoji {
+        width: 52px; height: 52px;
+        background: linear-gradient(135deg, #EDE9FF, #F5F4FF);
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 26px; margin-bottom: 16px;
+      }
+      @media (hover: hover) {
+        .angebot-leistung-card:hover {
+          box-shadow: 0 8px 32px rgba(79,63,240,0.14);
+          transform: translateY(-4px);
+          border-left-color: #7B5EF8;
+          background: linear-gradient(160deg, #FFFFFF 0%, #FAFAFF 100%);
+        }
+      }
+
+      /* Miete-Card decorative glow */
+      .ang-price-miete::before {
+        content: "";
+        position: absolute; top: 0; right: 0;
+        width: 150px; height: 150px;
+        background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+        border-radius: 0 20px 0 0;
+        pointer-events: none;
+      }
+
+      /* Buttons */
+      @media (hover: hover) {
+        .ang-btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(79,63,240,0.45) !important;
+        }
+        .ang-btn-outline:hover {
+          background: #F5F4FF !important;
+        }
+      }
+
+      /* Sticky bar pulse dot */
+      .ang-pulse-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #EF4444; display: inline-block;
+        animation: ang-pulse 1.5s ease-in-out infinite;
+      }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .ang-blob, .ang-pulse-dot, .ang-reveal,
+        .angebot-leistung-card { animation: none !important; transition: none !important; }
+        .ang-reveal { opacity: 1 !important; transform: none !important; }
+      }
+
+      /* Mobile: disable hover transforms */
+      @media (hover: none) {
+        .angebot-leistung-card:hover { transform: none !important; }
+      }
+    `}</style>
+  );
+}
