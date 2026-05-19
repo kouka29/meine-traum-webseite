@@ -1478,26 +1478,27 @@ function StickyBar({
   return (
     <div className="angebot-sticky-bar" style={{
       position: "fixed", bottom: 0, left: 0, right: 0,
-      background: "rgba(255,255,255,0.95)",
-      backdropFilter: "blur(12px)",
-      WebkitBackdropFilter: "blur(12px)",
+      background: "rgba(255,255,255,0.90)",
+      backdropFilter: "blur(16px)",
+      WebkitBackdropFilter: "blur(16px)",
       borderTop: "1px solid rgba(79,63,240,0.12)",
-      boxShadow: "0 -4px 24px rgba(79,63,240,0.08)",
-      padding: "12px 32px",
+      boxShadow: "0 -4px 32px rgba(79,63,240,0.10)",
+      padding: "14px 40px",
       zIndex: 100,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       gap: 16, flexWrap: "wrap",
       animation: "angebot-slide-up 0.3s ease-out",
     }}>
       <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2, lineHeight: 1.2 }}>
+        <div style={{ fontSize: 11, color: BRAND, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 2, lineHeight: 1.2 }}>
           {paketName}
         </div>
-        <div style={{ color: BRAND, fontWeight: 800, fontSize: 20, lineHeight: 1.1 }}>
+        <div style={{ color: TEXT_DARK, fontWeight: 800, fontSize: 22, lineHeight: 1.1 }}>
           {priceLabel}
         </div>
-        <div style={{ fontSize: 12, color: "#EF4444", fontWeight: 600, marginTop: 2 }}>
-          ⏱ Noch {days} Tag{days !== 1 ? "e" : ""} reserviert
+        <div style={{ fontSize: 12, color: "#EF4444", fontWeight: 600, marginTop: 4, display: "flex", alignItems: "center", gap: 6 }}>
+          <span className="ang-pulse-dot" />
+          Noch {days} Tag{days !== 1 ? "e" : ""} reserviert
         </div>
       </div>
       {ctaLink ? (
