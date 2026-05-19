@@ -14,6 +14,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   Copyright,
+  BadgeCheck,
   Lock,
   Database,
   Gavel,
@@ -54,8 +55,12 @@ const sections: Section[] = [
       <>
         <P n="1">
           Diese Allgemeinen Geschäftsbedingungen (nachfolgend „AGB") gelten für alle Geschäftsbeziehungen zwischen{" "}
-          <strong>Muad Amar – QK Marketing, Rheinallee 88, Gebäude 23, 55120 Mainz</strong> (nachfolgend „Auftragnehmer") und seinen Auftraggebern, bei denen es sich ausschließlich um Unternehmer im Sinne des § 14 BGB handelt (nachfolgend „Auftraggeber"). Diese AGB gelten für alle Leistungen im Bereich Webdesign, Webseitenerstellung, Webseitenpflege, Webseitenredesign, Mietmodelle für Webseiten, Marketing-Dienstleistungen sowie Grafikdesign.
+          <strong>Muad Amar – QK Marketing, Rheinallee 88, Gebäude 23, 55120 Mainz, handelnd unter dem Markennamen „Meine-Traum-Webseite"</strong> (nachfolgend „Auftragnehmer") und seinen Auftraggebern, bei denen es sich ausschließlich um Unternehmer im Sinne des § 14 BGB handelt (nachfolgend „Auftraggeber"). Diese AGB gelten für alle Leistungen im Bereich Webdesign, Webseitenerstellung, Webseitenpflege, Webseitenredesign, Mietmodelle für Webseiten, Marketing-Dienstleistungen sowie Grafikdesign.
         </P>
+        <div className="bg-muted/60 border-l-4 border-accent-agb/50 rounded-r-lg px-5 py-4 my-5 text-sm text-foreground/85 leading-[1.7]">
+          <span className="font-semibold text-foreground">Hinweis:</span>{" "}
+          „Meine-Traum-Webseite" (meine-traum-webseite.de) ist ein eingetragener Handelsname und eine Marke des Auftragnehmers Muad Amar / QK Marketing. Vertragspartner ist stets Muad Amar – QK Marketing als Einzelunternehmer. Die Marke „Meine-Traum-Webseite" begründet keine eigene Rechtspersönlichkeit.
+        </div>
         <P n="2">
           Entgegenstehende oder abweichende Bedingungen des Auftraggebers werden nicht anerkannt, es sei denn, der Auftragnehmer stimmt ihrer Geltung ausdrücklich schriftlich zu.
         </P>
@@ -271,6 +276,20 @@ const sections: Section[] = [
     ),
   },
   {
+    id: "marke",
+    num: "§ 12a",
+    title: "Marke, Handelsname und geistiges Eigentum des Auftragnehmers",
+    icon: BadgeCheck,
+    content: (
+      <>
+        <P n="1">Der Handelsname „Meine-Traum-Webseite" sowie das zugehörige Logo, Wort-Bild-Marken, Farbschemata und sonstige Kennzeichen sind geistiges Eigentum von Muad Amar / QK Marketing (nachfolgend „Marke"). Der Auftraggeber erwirbt durch den Vertragsschluss keinerlei Rechte an der Marke.</P>
+        <P n="2">Dem Auftraggeber ist es untersagt, die Marke „Meine-Traum-Webseite", das Logo oder damit assoziierte Kennzeichen ohne ausdrückliche schriftliche Zustimmung des Auftragnehmers zu verwenden, zu vervielfältigen, zu verändern oder Dritten zur Nutzung zu überlassen.</P>
+        <P n="3">Die Verwendung des Markennamens oder Logos im Rahmen eines Portfolio-Eintrags, einer Kundenreferenz oder ähnlicher Darstellungen durch den Auftraggeber bedarf der vorherigen schriftlichen Zustimmung des Auftragnehmers.</P>
+        <P n="4">Der Auftragnehmer ist berechtigt, den Namen und das Projekt des Auftraggebers im Rahmen seiner Referenzliste und seines Portfolios unter der Marke „Meine-Traum-Webseite" zu verwenden, sofern der Auftraggeber nicht innerhalb von 14 Tagen nach Abnahme schriftlich widerspricht (vgl. § 12 Abs. 4).</P>
+      </>
+    ),
+  },
+  {
     id: "p13",
     num: "§ 13",
     title: "Vertraulichkeit",
@@ -380,7 +399,7 @@ const AGB = () => {
         <div className="container-narrow px-4 py-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors">
             <ChevronLeft className="w-4 h-4" />
-            <span className="font-heading font-bold text-lg tracking-tight">QK Marketing</span>
+            <span className="font-heading font-bold text-lg tracking-tight">Meine-Traum-Webseite</span>
           </Link>
           <button
             onClick={() => window.print()}
@@ -396,22 +415,18 @@ const AGB = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-accent-agb font-semibold mb-4">
-              <FileText className="w-3.5 h-3.5" />
-              Rechtliches
-            </span>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-tight">
-              Allgemeine Geschäftsbedingungen
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-3 leading-tight">
+              Meine-Traum-Webseite
             </h1>
-            <p className="text-white/70 text-base md:text-lg max-w-2xl leading-relaxed mb-6">
-              QK Marketing | Muad Amar · meine-traum-webseite.de
+            <h2 className="font-heading text-2xl md:text-3xl font-semibold text-white/90 tracking-tight mb-5">
+              Allgemeine Geschäftsbedingungen
+            </h2>
+            <p className="text-white/60 text-base md:text-lg max-w-2xl leading-relaxed mb-6">
+              Ein Angebot von Muad Amar – QK Marketing · Stand: Mai 2025 | Version 2.0
             </p>
             <div className="flex flex-wrap gap-2 text-xs">
               <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full border border-white/10">
-                Stand: Mai 2025
-              </span>
-              <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full border border-white/10">
-                Version 2.0
+                meine-traum-webseite.de
               </span>
               <span className="bg-accent-agb/15 text-accent-agb px-3 py-1.5 rounded-full border border-accent-agb/30">
                 B2B – nur für Unternehmer
@@ -490,8 +505,11 @@ const AGB = () => {
       {/* Footer */}
       <footer className="bg-[#0d0d10] text-white/70 print:bg-white print:text-black">
         <div className="container-narrow px-4 py-12 text-sm">
-          <div className="font-heading font-bold text-white text-lg mb-2 print:text-black">
-            Muad Amar – QK Marketing
+          <div className="font-heading font-bold text-accent-agb text-xl mb-1 print:text-black">
+            Meine-Traum-Webseite
+          </div>
+          <div className="text-white/60 mb-5 print:text-black">
+            Ein Angebot von Muad Amar – QK Marketing
           </div>
           <p className="leading-relaxed mb-6">
             Rheinallee 88, Gebäude 23 · 55120 Mainz
@@ -499,7 +517,7 @@ const AGB = () => {
             www.meine-traum-webseite.de
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-6 border-t border-white/10 text-xs">
-            <span>© {new Date().getFullYear()} QK Marketing | Alle Rechte vorbehalten</span>
+            <span>© {new Date().getFullYear()} Meine-Traum-Webseite | Muad Amar – QK Marketing | Alle Rechte vorbehalten</span>
             <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>
             <Link to="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
             <Link to="/" className="hover:text-white transition-colors">Startseite</Link>
