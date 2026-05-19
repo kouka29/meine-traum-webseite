@@ -394,40 +394,8 @@ html.apple-mode section h1 {
   letter-spacing: -0.035em;
 }
 
-/* Trust-Counter: Premium-Zahlen */
-html.apple-mode .ang-trust-row {
-  background: hsl(0 0% 100% / 0.65) !important;
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border-color: hsl(0 0% 100% / 0.8) !important;
-  box-shadow:
-    0 1px 2px hsl(228 24% 10% / 0.04),
-    0 16px 48px hsl(250 56% 48% / 0.10) !important;
-  border-radius: 24px !important;
-}
-html.apple-mode .ang-count-num {
-  background-image: linear-gradient(135deg, hsl(228 24% 10%) 0%, hsl(250 56% 48%) 60%, hsl(215 100% 50%) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
-  letter-spacing: -0.04em;
-}
-
-/* Timeline-Karten: Glas */
-html.apple-mode .angebot-timeline-step {
-  background: hsl(0 0% 100% / 0.72) !important;
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
-  border: 1px solid hsl(0 0% 100% / 0.85) !important;
-  box-shadow:
-    0 1px 2px hsl(228 24% 10% / 0.04),
-    0 12px 32px hsl(250 56% 48% / 0.08) !important;
-}
-html.apple-mode .angebot-timeline-dot {
-  box-shadow:
-    0 6px 18px hsl(250 56% 48% / 0.30),
-    inset 0 1px 0 hsl(0 0% 100% / 0.25) !important;
-}
+/* Apple-Mode-Overrides für Trust- und Timeline-Sektion bewusst deaktiviert,
+   damit die Komponenten-Styles aus Angebot.tsx greifen. */
 
 /* Leistungen-Karten: Glas */
 html.apple-mode .angebot-leistung-card {
