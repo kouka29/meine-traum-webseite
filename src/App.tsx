@@ -177,6 +177,7 @@ const App = () => (
             <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
             <Route path="/angebot" element={<Angebot />} />
             <Route path="/a" element={<Angebot />} />
+            <Route path="/a/:shortId" element={<Angebot />} />
             <Route path="/agb" element={<AGB />} />
             <Route path="*" element={<NotFound />} />
               </Routes>
