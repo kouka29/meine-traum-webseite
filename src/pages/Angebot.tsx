@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Lock, Shield, Clock, Sparkles, CheckCircle2 } from "lucide-react";
+import { Lock, Shield, Clock, Sparkles, CheckCircle2, FileDown, Eye, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
@@ -30,6 +32,20 @@ interface AngebotBundle {
   stripe_link: string;
 }
 
+interface AngebotPaket {
+  id: string;
+  name: string;
+  badge?: string;
+  beschreibung?: string;
+  preis: number;
+  normalpreis?: number | null;
+  miete_monatlich?: number | null;
+  anzahlung?: number | null;
+  stripe_link: string;
+  leistungen: Leistung[];
+  optionen?: AngebotOption[];
+}
+
 interface AngebotData {
   v: number;
   lead_name: string;
@@ -49,6 +65,8 @@ interface AngebotData {
   faqs: Faq[];
   optionen?: AngebotOption[];
   bundles?: AngebotBundle[];
+  pakete?: AngebotPaket[];
+  pdf_path?: string | null;
 }
 
 function decodeBase64Utf8(b64: string): unknown {
@@ -90,6 +108,7 @@ export default function Angebot() {
   useJakartaFont();
   const [params] = useSearchParams();
   const d = params.get("d");
+  const previewMode = params.get("preview") === "1";
 
   const data: AngebotData | null = useMemo(() => {
     if (!d) return null;
@@ -102,7 +121,7 @@ export default function Angebot() {
     }
   }, [d]);
 
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(previewMode);
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState(false);
 
@@ -129,6 +148,18 @@ export default function Angebot() {
 
   return (
     <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: "100vh", background: "#fff", color: TEXT_DARK }}>
+      {previewMode && (
+        <div style={{
+          position: "sticky", top: 0, zIndex: 9998,
+          background: "#FEF3C7", color: "#92400E",
+          padding: "10px 16px", textAlign: "center",
+          fontSize: 13, fontWeight: 600,
+          borderBottom: "1px solid #FCD34D",
+        }}>
+          <Eye size={14} style={{ display: "inline", marginRight: 6, verticalAlign: "-2px" }} />
+          Vorschau-Modus — so wird der Kunde das Angebot sehen
+        </div>
+      )}
       {!unlocked && <PinGate pinInput={pinInput} setPinInput={setPinInput} error={pinError} onSubmit={handlePinSubmit} />}
       {unlocked && <AngebotPage data={data} />}
     </div>
