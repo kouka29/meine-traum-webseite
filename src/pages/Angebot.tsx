@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Lock, Shield, Clock, Sparkles, CheckCircle2, Eye, Loader2, X, CheckCheck, AlertTriangle, Check as CheckIcon, ChevronRight, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -1457,9 +1457,116 @@ function TrustSection() {
     { v: "48h", l: "Bis zum ersten Konzept" },
     { v: "2–5x", l: "Mehr Anfragen nach Launch" },
   ];
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const userPausedRef = useRef(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 720px)");
+    const update = () => setIsMobile(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+
+  // Track active card via scroll position
+  useEffect(() => {
+    if (!isMobile) return;
+    const el = trackRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const w = el.clientWidth;
+      if (w > 0) setActiveIdx(Math.round(el.scrollLeft / w));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [isMobile]);
+
+  // Pause auto-advance on user interaction
+  useEffect(() => {
+    if (!isMobile) return;
+    const el = trackRef.current;
+    if (!el) return;
+    const pause = () => { userPausedRef.current = true; };
+    el.addEventListener("touchstart", pause, { passive: true });
+    el.addEventListener("pointerdown", pause, { passive: true });
+    return () => {
+      el.removeEventListener("touchstart", pause);
+      el.removeEventListener("pointerdown", pause);
+    };
+  }, [isMobile]);
+
+  // Auto-advance every 4s on mobile
+  useEffect(() => {
+    if (!isMobile) return;
+    const id = setInterval(() => {
+      if (userPausedRef.current) return;
+      const el = trackRef.current;
+      if (!el) return;
+      const w = el.clientWidth;
+      const next = (Math.round(el.scrollLeft / w) + 1) % stats.length;
+      el.scrollTo({ left: next * w, behavior: "smooth" });
+    }, 4000);
+    return () => clearInterval(id);
+  }, [isMobile, stats.length]);
+
+  const goTo = (i: number) => {
+    userPausedRef.current = true;
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+  };
+
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: BG_SOFT }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        {/* Mobile: Snap-Carousel with auto-advance + dots */}
+        <div className="ang-trust-mobile">
+          <div style={{
+            display: "flex", justifyContent: "space-between", alignItems: "center",
+            padding: "0 4px", marginBottom: 14,
+          }}>
+            <span style={{
+              fontSize: 10, fontWeight: 800, letterSpacing: "0.2em",
+              color: "rgba(79,63,240,0.6)", textTransform: "uppercase",
+            }}>Ergebnisse</span>
+          </div>
+          <div ref={trackRef} className="ang-trust-track">
+            {stats.map((s, i) => (
+              <div key={i} className="ang-trust-slide">
+                <div className="ang-trust-card">
+                  <div style={{
+                    fontSize: 60, fontWeight: 800, lineHeight: 1,
+                    background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    letterSpacing: "-0.035em",
+                    marginBottom: 14,
+                  }}>{s.v}</div>
+                  <p style={{
+                    fontSize: 15, color: TEXT_MUTED, fontWeight: 500,
+                    lineHeight: 1.45, margin: 0, maxWidth: 200, textAlign: "center",
+                  }}>{s.l}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="ang-trust-dots">
+            {stats.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`Statistik ${i + 1}`}
+                onClick={() => goTo(i)}
+                className={`ang-trust-dot ${i === activeIdx ? "active" : ""}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: classic 4-column row */}
         <div className="ang-trust-row">
           {stats.map((s, i) => (
             <div key={i} className="ang-trust-item">
@@ -2048,27 +2155,61 @@ function AngebotGlobalStyles() {
         border-right: 1px solid rgba(79,63,240,0.12);
       }
       .ang-trust-item:last-child { border-right: none; }
+      .ang-trust-mobile { display: none; }
       @media (max-width: 720px) {
-        .ang-trust-row {
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          background: #fff;
-          border: 1px solid rgba(79,63,240,0.10);
-          border-radius: 20px;
-          padding: 12px;
-          box-shadow: 0 4px 20px rgba(79,63,240,0.06);
-        }
-        .ang-trust-item {
-          padding: 20px 8px;
-          border-right: none !important;
-          min-height: 130px;
-        }
-        .ang-trust-item:nth-child(odd) {
-          border-right: 1px solid rgba(79,63,240,0.10) !important;
-        }
-        .ang-trust-item:nth-child(-n+2) {
-          border-bottom: 1px solid rgba(79,63,240,0.10);
-        }
+        .ang-trust-row { display: none; }
+        .ang-trust-mobile { display: block; }
+      }
+
+      /* Trust stats — Mobile Snap-Carousel */
+      .ang-trust-track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        border-radius: 28px;
+      }
+      .ang-trust-track::-webkit-scrollbar { display: none; }
+      .ang-trust-slide {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        padding: 0 2px;
+      }
+      .ang-trust-card {
+        background: rgba(255,255,255,0.78);
+        border: 1px solid rgba(255,255,255,0.7);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border-radius: 28px;
+        padding: 44px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 220px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 16px 40px -12px rgba(79,63,240,0.18);
+      }
+      .ang-trust-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 18px;
+      }
+      .ang-trust-dot {
+        width: 6px; height: 6px;
+        border: none; padding: 0;
+        border-radius: 999px;
+        background: rgba(79,63,240,0.18);
+        cursor: pointer;
+        transition: width 0.35s ease, background 0.35s ease;
+      }
+      .ang-trust-dot.active {
+        width: 24px;
+        background: #4F3FF0;
       }
 
       /* Leistungs-Cards */
