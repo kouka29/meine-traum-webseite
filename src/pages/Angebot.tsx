@@ -474,7 +474,10 @@ function AngebotPage({ data }: { data: AngebotData }) {
       />
 
       {/* ── SECTION 8: FAQs ──────────────────────────────── */}
-      {data.faqs && data.faqs.length > 0 && (
+      {(() => {
+        const displayFaqs = resolveFaqs(data.faqs, hasMiete);
+        if (displayFaqs.length === 0) return null;
+        return (
         <section style={{ padding: "80px 24px", background: BG_SOFT }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center" }}>
@@ -483,8 +486,8 @@ function AngebotPage({ data }: { data: AngebotData }) {
             <p style={{ fontSize: 16, color: TEXT_MUTED, textAlign: "center", marginBottom: 32 }}>
               Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
             </p>
-            <Accordion type="single" collapsible className="space-y-3">
-              {data.faqs.slice(0, 5).map((f, i) => (
+            <Accordion type="single" collapsible defaultValue="faq-0" className="space-y-3">
+              {displayFaqs.map((f, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
@@ -494,7 +497,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
                   <AccordionTrigger className="text-left font-semibold hover:no-underline" style={{ color: TEXT_DARK, fontFamily: "inherit" }}>
                     {f.frage}
                   </AccordionTrigger>
-                  <AccordionContent style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.6, fontFamily: "inherit" }}>
+                  <AccordionContent style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.7, fontFamily: "inherit" }}>
                     {f.antwort}
                   </AccordionContent>
                 </AccordionItem>
@@ -502,7 +505,8 @@ function AngebotPage({ data }: { data: AngebotData }) {
             </Accordion>
           </div>
         </section>
-      )}
+        );
+      })()}
 
       {/* ── SECTION 9: FINALER CTA ───────────────────────── */}
       <FinalCtaSection
@@ -728,6 +732,33 @@ function badgeFor(index: number, total: number): string {
   if (index === 0) return "EINSTIEG";
   if (index === total - 1) return "FÜR WACHSTUM";
   return "BELIEBT";
+}
+
+// ─── Standard-FAQs (Fallback wenn Admin keine eingetragen hat) ──
+const STANDARD_FAQS: Faq[] = [
+  { frage: "Was passiert direkt nach meiner Beauftragung?", antwort: "Sobald Sie den Auftrag erteilt haben, erhalten Sie innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei Ihnen, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
+  { frage: "Wie lange dauert die Umsetzung?", antwort: "Die Umsetzung beginnt direkt nach Zahlungseingang. Je nach Paket und Ihrer Mitwirkung (Texte, Bilder, Inhalte) ist Ihre Website in der Regel innerhalb von 2–4 Wochen fertig und live. Wir halten Sie während des gesamten Prozesses auf dem Laufenden." },
+  { frage: "Was wenn mir das Ergebnis nicht gefällt?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Sie sehen die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis Sie zufrieden sind — im Rahmen der vereinbarten Runden." },
+  { frage: "Bin ich langfristig an Sie gebunden?", antwort: "Beim Einmalkauf gehört Ihnen die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben Sie flexibel." },
+  { frage: "Was kostet mich das monatlich nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei Ihrem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
+  { frage: "Kann ich die Website später selbst bearbeiten?", antwort: "Ja. Wir bauen Ihre Website so auf, dass Sie Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir Ihnen im Kickoff wie das funktioniert. Für alles Weitere steht Ihnen unser Care-Paket zur Verfügung." },
+  { frage: "Was ist der Unterschied zwischen Website kaufen und Website mieten?", antwort: "Beim Kauf zahlen Sie einmalig und die Website gehört Ihnen. Beim Mietmodell zahlen Sie eine monatliche Rate — dafür ist der Einstieg günstiger, und Wartung sowie Updates sind inklusive. Welches Modell besser zu Ihnen passt, hängt von Ihrem Budget und Ihren Zielen ab. Beides führt zum gleichen Ergebnis: eine professionelle Website die Kunden bringt." },
+];
+
+function resolveFaqs(custom: Faq[] | undefined, hasMiete: boolean): Faq[] {
+  const cleaned = (custom ?? []).filter((f) => f && f.frage?.trim() && f.antwort?.trim());
+  // Priorität: 1, 3, 4, (7 nur bei Miete), 2, 6, 5  →  Indizes 0, 2, 3, (6), 1, 5, 4
+  const fillOrder = [0, 2, 3, ...(hasMiete ? [6] : []), 1, 5, 4];
+  if (cleaned.length === 0) {
+    return fillOrder.map((i) => STANDARD_FAQS[i]);
+  }
+  if (cleaned.length >= 3) return cleaned;
+  const result = [...cleaned];
+  for (const idx of fillOrder) {
+    if (result.length >= 5) break;
+    result.push(STANDARD_FAQS[idx]);
+  }
+  return result;
 }
 
 function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {

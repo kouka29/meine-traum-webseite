@@ -737,6 +737,9 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                     placeholder="Antwort" rows={2} maxLength={600} />
                 </div>
               ))}
+              <p className="text-xs text-muted-foreground bg-muted/40 rounded-md px-3 py-2 leading-relaxed">
+                Wenn keine FAQs eingetragen werden, erscheinen automatisch 7 bewährte Standard-Fragen auf der Angebotsseite. Bei weniger als 3 eigenen FAQs werden die Standard-Fragen passend ergänzt.
+              </p>
             </div>
 
             {/* Buttons */}
