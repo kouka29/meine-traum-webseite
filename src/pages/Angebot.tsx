@@ -410,6 +410,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
+      <AngebotGlobalStyles />
       {/* Standalone Header: nur Logo, kein Link */}
       <header style={{
         background: "#fff",
@@ -435,6 +436,9 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── SECTION 2: PROBLEM / LÖSUNG ──────────────────── */}
       {showProblemSection && <ProblemSection />}
 
+      {/* Divider between Problem & Paket */}
+      {showProblemSection && <SectionDivider />}
+
       {/* ── SECTION 3: PAKET-AUSWAHL (nur bei mehreren) ──── */}
       {hasMultiplePakete && (
         <PaketChooserSection
@@ -449,6 +453,9 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
       {/* ── SECTION 5: VERTRAUEN (vor Preis!) ────────────── */}
       <TrustSection />
+
+      {/* Divider between Trust & Timeline */}
+      <SectionDivider />
 
       {/* ── SECTION 6: SO LÄUFT ES AB ────────────────────── */}
       <TimelineSection />
