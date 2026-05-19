@@ -50,8 +50,30 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
   const copyLink = async (a: Angebot) => {
     const url = linkFor(a);
     if (!url) return;
+
+    const fallbackCopy = (text: string) => {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch {}
+      document.body.removeChild(ta);
+      return ok;
+    };
+
     try {
-      await navigator.clipboard.writeText(url);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        const ok = fallbackCopy(url);
+        if (!ok) throw new Error("fallback failed");
+      }
       toast.success("Link kopiert");
     } catch {
       toast.error("Konnte nicht kopieren");
