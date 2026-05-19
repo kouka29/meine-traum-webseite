@@ -1407,31 +1407,13 @@ function TimelineSection() {
           .angebot-timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            gap: 20px;
             position: relative;
-            padding-top: 8px;
-          }
-          .angebot-timeline-track {
-            position: absolute;
-            top: 34px;
-            left: 12.5%;
-            right: 12.5%;
-            height: 2px;
-            background: rgba(79,63,240,0.12);
-            border-radius: 2px;
-            z-index: 0;
-          }
-          .angebot-timeline-track-fill {
-            position: absolute;
-            top: 33px;
-            left: 12.5%;
-            right: 12.5%;
-            height: 4px;
-            background: linear-gradient(90deg, #4F3FF0 0%, #7B5EF8 50%, #5B8DEF 100%);
-            border-radius: 4px;
-            opacity: 0.85;
-            z-index: 0;
-            box-shadow: 0 4px 14px rgba(79,63,240,0.25);
+            padding: 18px;
+            border: 1px solid rgba(79,63,240,0.08);
+            border-radius: 32px;
+            background: linear-gradient(180deg, rgba(250,250,255,0.95), rgba(255,255,255,1));
+            box-shadow: 0 24px 70px -46px rgba(79,63,240,0.32);
           }
           .angebot-timeline-step {
             position: relative;
@@ -1440,6 +1422,15 @@ function TimelineSection() {
             align-items: center;
             text-align: center;
             z-index: 1;
+          }
+          .angebot-timeline-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 32px;
+            right: -20px;
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(79,63,240,0.26), rgba(123,94,248,0.06));
           }
           .angebot-timeline-dot {
             width: 64px; height: 64px; border-radius: 50%;
@@ -1453,15 +1444,15 @@ function TimelineSection() {
           .angebot-timeline-dot-num { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
           .angebot-timeline-card {
             width: 100%;
-            min-height: 132px;
+            min-height: 150px;
             background: #FFFFFF;
-            border: 1px solid rgba(79,63,240,0.08);
-            border-radius: 24px;
-            padding: 22px 20px;
+            border: 1px solid rgba(79,63,240,0.10);
+            border-radius: 22px;
+            padding: 24px 18px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 1px 2px rgba(15,15,40,0.03), 0 14px 36px -22px rgba(79,63,240,0.20);
+            box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 18px 42px -28px rgba(79,63,240,0.28);
             transition: transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s ease, border-color .35s ease;
           }
           .angebot-timeline-card:hover {
