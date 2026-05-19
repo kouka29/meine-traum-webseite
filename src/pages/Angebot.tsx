@@ -2092,55 +2092,50 @@ function AngebotGlobalStyles() {
         .ang-trust-mobile { display: block; }
       }
 
-      /* Trust stats — Mobile Snap-Carousel */
-      .ang-trust-track {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-        border-radius: 28px;
+      /* Trust stats — Mobile icon list with hairlines */
+      .ang-trust-list {
+        background: #FFFFFF;
+        border: 1px solid rgba(79,63,240,0.08);
+        border-radius: 32px;
+        padding: 8px 0;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 12px 32px -16px rgba(79,63,240,0.16);
       }
-      .ang-trust-track::-webkit-scrollbar { display: none; }
-      .ang-trust-slide {
-        flex: 0 0 100%;
-        scroll-snap-align: center;
-        scroll-snap-stop: always;
-        padding: 0 2px;
-      }
-      .ang-trust-card {
-        background: rgba(255,255,255,0.78);
-        border: 1px solid rgba(255,255,255,0.7);
-        backdrop-filter: blur(20px) saturate(150%);
-        -webkit-backdrop-filter: blur(20px) saturate(150%);
-        border-radius: 28px;
-        padding: 44px 24px;
-        display: flex;
-        flex-direction: column;
+      .ang-trust-row-item {
+        display: grid;
+        grid-template-columns: 44px 1fr auto;
         align-items: center;
-        justify-content: center;
-        min-height: 220px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 16px 40px -12px rgba(79,63,240,0.18);
+        gap: 14px;
+        padding: 18px 22px;
       }
-      .ang-trust-dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 18px;
+      .ang-trust-icon {
+        width: 44px; height: 44px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(237,233,255,0.9), rgba(245,244,255,0.9));
+        color: #4F3FF0;
+        display: flex; align-items: center; justify-content: center;
       }
-      .ang-trust-dot {
-        width: 6px; height: 6px;
-        border: none; padding: 0;
-        border-radius: 999px;
-        background: rgba(79,63,240,0.18);
-        cursor: pointer;
-        transition: width 0.35s ease, background 0.35s ease;
+      .ang-trust-label {
+        font-size: 14px;
+        color: ${"`${TEXT_MUTED}`".replace(/[`${}]/g,"")};
+        font-weight: 500;
+        line-height: 1.35;
       }
-      .ang-trust-dot.active {
-        width: 24px;
-        background: #4F3FF0;
+      .ang-trust-value {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+        order: 3;
+      }
+      .ang-trust-row-item .ang-trust-label { order: 2; }
+      .ang-trust-hairline {
+        height: 1px;
+        background: rgba(79,63,240,0.08);
+        margin: 0 22px;
       }
 
       /* Leistungs-Cards */
