@@ -47,6 +47,15 @@ function recordSuccess(ip: string) {
   failedAttempts.delete(ip);
 }
 
+const SHORT_ID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+function genShortId(len = 8): string {
+  let id = "";
+  for (let i = 0; i < len; i++) {
+    id += SHORT_ID_CHARS.charAt(Math.floor(Math.random() * SHORT_ID_CHARS.length));
+  }
+  return id;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -89,6 +98,43 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const { password, action, leadId } = body;
 
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+    // ===== PUBLIC ENDPOINTS (no password needed) =====
+    if (action === "angebot-get-by-short-id") {
+      const { short_id } = body as { short_id?: string };
+      if (!short_id) {
+        return new Response(JSON.stringify({ error: "short_id fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data, error } = await supabase
+        .from("angebote")
+        .select("base64_data, ablauf_datum, status")
+        .eq("short_id", short_id)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) {
+        return new Response(JSON.stringify({ error: "Angebot nicht gefunden" }), {
+          status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (data.status !== "aktiv") {
+        return new Response(JSON.stringify({ error: "Angebot nicht mehr aktiv" }), {
+          status: 410, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (data.ablauf_datum && new Date(data.ablauf_datum) < new Date()) {
+        return new Response(JSON.stringify({ error: "Angebot abgelaufen" }), {
+          status: 410, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      return new Response(JSON.stringify({ base64_data: data.base64_data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // ===== ADMIN ENDPOINTS (password required) =====
     if (!password || password !== ADMIN_PASSWORD) {
       recordFailure(ip);
       return new Response(JSON.stringify({ error: "Ungültiges Passwort" }), {
@@ -97,8 +143,6 @@ Deno.serve(async (req) => {
       });
     }
     recordSuccess(ip);
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // =================== SIGNED UPLOAD URL ===================
     // Liefert eine signierte URL, mit der der Browser direkt in den
@@ -778,6 +822,20 @@ Deno.serve(async (req) => {
         });
       }
 
+      // Generate unique short_id (retry on collision)
+      let shortId = genShortId();
+      let tries = 0;
+      while (tries < 5) {
+        const { data: existing } = await supabase
+          .from("angebote")
+          .select("id")
+          .eq("short_id", shortId)
+          .maybeSingle();
+        if (!existing) break;
+        shortId = genShortId();
+        tries++;
+      }
+
       const { data, error } = await supabase.from("angebote").insert({
         lead_name: String(lead_name).slice(0, 200),
         lead_email: String(lead_email).slice(0, 200),
@@ -789,9 +847,10 @@ Deno.serve(async (req) => {
         stripe_link: stripe_link ? String(stripe_link).slice(0, 1000) : null,
         pdf_path: pdf_path ? String(pdf_path).slice(0, 500) : null,
         status: "aktiv",
+        short_id: shortId,
       }).select().single();
       if (error) throw error;
-      return new Response(JSON.stringify({ angebot: data }), {
+      return new Response(JSON.stringify({ angebot: data, short_id: shortId }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }

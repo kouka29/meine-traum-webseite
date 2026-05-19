@@ -26,6 +26,7 @@ export type Database = {
           pdf_path: string | null
           pin: string | null
           preis: number | null
+          short_id: string | null
           status: string
           stripe_link: string | null
         }
@@ -40,6 +41,7 @@ export type Database = {
           pdf_path?: string | null
           pin?: string | null
           preis?: number | null
+          short_id?: string | null
           status?: string
           stripe_link?: string | null
         }
@@ -54,6 +56,7 @@ export type Database = {
           pdf_path?: string | null
           pin?: string | null
           preis?: number | null
+          short_id?: string | null
           status?: string
           stripe_link?: string | null
         }
