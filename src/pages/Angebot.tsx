@@ -1475,35 +1475,37 @@ function StickyBar({
 
   const btnStyle: React.CSSProperties = {
     background: BRAND_GRADIENT, color: "#fff",
-    padding: "14px 26px", borderRadius: 50,
+    padding: "10px 28px", borderRadius: 50,
     fontSize: 15, fontWeight: 700,
     border: "none", cursor: "pointer",
     textDecoration: "none", fontFamily: "inherit",
     display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
     whiteSpace: "nowrap",
-    boxShadow: `0 8px 20px ${BRAND}40`,
+    boxShadow: "0 4px 16px rgba(79,63,240,0.3)",
   };
 
   return (
     <div className="angebot-sticky-bar" style={{
       position: "fixed", bottom: 0, left: 0, right: 0,
-      background: "#fff",
-      borderTop: "1px solid rgba(79,63,240,0.15)",
-      boxShadow: "0 -4px 20px rgba(79,63,240,0.08)",
-      padding: "12px 24px",
+      background: "rgba(255,255,255,0.95)",
+      backdropFilter: "blur(12px)",
+      WebkitBackdropFilter: "blur(12px)",
+      borderTop: "1px solid rgba(79,63,240,0.12)",
+      boxShadow: "0 -4px 24px rgba(79,63,240,0.08)",
+      padding: "12px 32px",
       zIndex: 100,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       gap: 16, flexWrap: "wrap",
       animation: "angebot-slide-up 0.3s ease-out",
     }}>
       <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, marginBottom: 2, lineHeight: 1.2 }}>
+        <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2, lineHeight: 1.2 }}>
           {paketName}
         </div>
         <div style={{ color: BRAND, fontWeight: 800, fontSize: 20, lineHeight: 1.1 }}>
           {priceLabel}
         </div>
-        <div style={{ fontSize: 12, color: "#DC2626", fontWeight: 600, marginTop: 2 }}>
+        <div style={{ fontSize: 12, color: "#EF4444", fontWeight: 600, marginTop: 2 }}>
           ⏱ Noch {days} Tag{days !== 1 ? "e" : ""} reserviert
         </div>
       </div>
