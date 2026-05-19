@@ -1609,9 +1609,12 @@ function StickyBar({
           to { transform: translateY(0); }
         }
         @media (max-width: 640px) {
-          .angebot-sticky-bar { padding: 12px 16px !important; flex-direction: column !important; align-items: stretch !important; gap: 10px !important; }
+          .angebot-sticky-bar { padding: 10px 14px max(12px, env(safe-area-inset-bottom)) !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
           .angebot-sticky-bar > div:first-child { text-align: center; }
-          .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; }
+          .angebot-sticky-bar > div:first-child > div:first-child { font-size: 10px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+          .angebot-sticky-bar > div:first-child > div:nth-child(2) { font-size: 20px !important; }
+          .angebot-sticky-bar > div:first-child > div:nth-child(3) { justify-content: center; margin-top: 3px !important; }
+          .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; min-height: 42px; padding: 11px 16px !important; font-size: 14px !important; white-space: normal !important; line-height: 1.2 !important; }
         }
       `}</style>
     </div>
