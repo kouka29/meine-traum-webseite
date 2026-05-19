@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Copy, Trash2, Loader2, FileText, ExternalLink } from "lucide-react";
+import { Copy, Trash2, Loader2, FileText, ExternalLink, Pencil } from "lucide-react";
+import AngebotModal from "@/components/admin/AngebotModal";
 
 interface Angebot {
   id: string;
@@ -24,6 +25,7 @@ const ANGEBOT_BASE_URL = "https://meine-traum-webseite.de/angebot";
 export default function AdminAngeboteTab({ password }: { password: string }) {
   const [angebote, setAngebote] = useState<Angebot[]>([]);
   const [loading, setLoading] = useState(false);
+  const [editing, setEditing] = useState<Angebot | null>(null);
 
   const fetchAngebote = useCallback(async () => {
     setLoading(true);
@@ -138,6 +140,9 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
                         <Button variant="ghost" size="icon" onClick={() => copyLink(a)} title="Link kopieren" className="h-8 w-8">
                           <Copy size={14} />
                         </Button>
+                        <Button variant="ghost" size="icon" onClick={() => setEditing(a)} title="Bearbeiten" className="h-8 w-8" disabled={!a.base64_data}>
+                          <Pencil size={14} />
+                        </Button>
                         <Button variant="ghost" size="icon" onClick={() => del(a.id)} title="Löschen" className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
                           <Trash2 size={14} />
                         </Button>
@@ -149,6 +154,17 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
             </tbody>
           </table>
         </div>
+      )}
+
+      {editing && editing.base64_data && (
+        <AngebotModal
+          open={!!editing}
+          onOpenChange={(o) => { if (!o) setEditing(null); }}
+          password={password}
+          lead={{ first_name: editing.lead_name || "Kunde", email: editing.lead_email || "" }}
+          editing={{ angebotId: editing.id, base64_data: editing.base64_data, short_id: editing.short_id ?? null }}
+          onCreated={() => { fetchAngebote(); }}
+        />
       )}
     </div>
   );
