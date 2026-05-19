@@ -855,3 +855,224 @@ function ExpiredOverlay() {
     </div>
   );
 }
+function BookingModal({ data, positions, onClose, onSuccess }: {
+  data: AngebotData;
+  positions: { titel: string; preis: number }[];
+  onClose: () => void;
+  onSuccess: (auftragsNr: string) => void;
+}) {
+  const [vorname, setVorname] = useState(data.lead_name?.split(" ")[0] || "");
+  const [nachname, setNachname] = useState(data.lead_name?.split(" ").slice(1).join(" ") || "");
+  const [firma, setFirma] = useState("");
+  const [email, setEmail] = useState(data.lead_email || "");
+  const [telefon, setTelefon] = useState("");
+  const [agb, setAgb] = useState(false);
+  const [kostenpflichtig, setKostenpflichtig] = useState(false);
+  const [sendCopy, setSendCopy] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const netto = positions.reduce((s, p) => s + p.preis, 0);
+  const mwst = Math.round(netto * 19) / 100;
+  const brutto = Math.round((netto + mwst) * 100) / 100;
+
+  const canSubmit = vorname.trim() && nachname.trim() && firma.trim() && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && agb && kostenpflichtig && !submitting;
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSubmit) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const { data: resp, error: invErr } = await supabase.functions.invoke("buchung-erstellen", {
+        body: {
+          kunde_vorname: vorname.trim(),
+          kunde_nachname: nachname.trim(),
+          kunde_firma: firma.trim(),
+          kunde_email: email.trim(),
+          kunde_telefon: telefon.trim(),
+          angebots_id: data.angebots_id || null,
+          payment_method: "rechnung",
+          positions,
+          agb_akzeptiert: true,
+          kostenpflichtig_bestaetigt: true,
+          send_copy: sendCopy,
+        },
+      });
+      if (invErr) throw invErr;
+      const r = resp as { success?: boolean; auftrags_nr?: string; error?: string };
+      if (!r?.success || !r.auftrags_nr) throw new Error(r?.error || "Buchung fehlgeschlagen");
+      onSuccess(r.auftrags_nr);
+    } catch (err: any) {
+      setError(err?.message || "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 9999, background: "rgba(30,27,75,0.6)",
+      backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center",
+      padding: 16, overflowY: "auto",
+    }}>
+      <form onSubmit={submit} style={{
+        background: "#fff", borderRadius: 20, maxWidth: 560, width: "100%",
+        padding: "32px 28px", boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+        maxHeight: "92vh", overflowY: "auto", fontFamily: "inherit",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+          <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, margin: 0 }}>Verbindlich buchen</h2>
+          <button type="button" onClick={onClose} style={{ background: "transparent", border: "none", cursor: "pointer", color: TEXT_MUTED, padding: 4 }}>
+            <X size={20} />
+          </button>
+        </div>
+        <p style={{ color: TEXT_MUTED, fontSize: 14, marginBottom: 20 }}>
+          Bezahlung per Rechnung · 14 Tage Zahlungsziel nach Lieferung
+        </p>
+
+        {/* Positionen */}
+        <div style={{ background: BG_SOFT, borderRadius: 12, padding: "14px 16px", marginBottom: 20 }}>
+          {positions.map((p, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: TEXT_DARK, padding: "4px 0" }}>
+              <span>{p.titel}</span>
+              <strong>{p.preis.toLocaleString("de-DE")} €</strong>
+            </div>
+          ))}
+          <div style={{ borderTop: "1px dashed rgba(79,63,240,0.2)", marginTop: 8, paddingTop: 8, display: "grid", gap: 4, fontSize: 13, color: TEXT_MUTED }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}><span>Netto</span><span>{netto.toLocaleString("de-DE")} €</span></div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}><span>MwSt (19%)</span><span>{mwst.toLocaleString("de-DE")} €</span></div>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, color: BRAND, fontWeight: 800 }}>
+              <span>Gesamt (Brutto)</span><span>{brutto.toLocaleString("de-DE")} €</span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
+          <Field label="Vorname *" value={vorname} onChange={setVorname} />
+          <Field label="Nachname *" value={nachname} onChange={setNachname} />
+        </div>
+        <Field label="Firma *" value={firma} onChange={setFirma} />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }}>
+          <Field label="E-Mail *" type="email" value={email} onChange={setEmail} />
+          <Field label="Telefon" value={telefon} onChange={setTelefon} />
+        </div>
+
+        <div style={{ marginTop: 16, display: "grid", gap: 10 }}>
+          <Check label={<>Ich akzeptiere die <a href="/agb" target="_blank" rel="noopener noreferrer" style={{ color: BRAND, textDecoration: "underline" }}>AGB</a> sowie die <a href="/datenschutz" target="_blank" rel="noopener noreferrer" style={{ color: BRAND, textDecoration: "underline" }}>Datenschutzerklärung</a>. *</>} checked={agb} onChange={setAgb} />
+          <Check label={<>Ich beauftrage hiermit verbindlich und <strong>kostenpflichtig</strong> die oben aufgeführten Leistungen zum Gesamtbetrag von <strong>{brutto.toLocaleString("de-DE")} € brutto</strong>. *</>} checked={kostenpflichtig} onChange={setKostenpflichtig} />
+          <Check label={<>Bestellbestätigung an meine E-Mail senden</>} checked={sendCopy} onChange={setSendCopy} />
+        </div>
+
+        {error && (
+          <div style={{ marginTop: 14, padding: "10px 14px", background: "#FEE2E2", color: "#991B1B", borderRadius: 10, fontSize: 13 }}>
+            {error}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={!canSubmit}
+          style={{
+            marginTop: 20, width: "100%",
+            padding: "14px 24px",
+            background: canSubmit ? BRAND_GRADIENT : "rgba(79,63,240,0.4)",
+            color: "#fff", fontSize: 16, fontWeight: 700,
+            border: "none", borderRadius: 50,
+            cursor: canSubmit ? "pointer" : "not-allowed",
+            fontFamily: "inherit",
+            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+          }}
+        >
+          {submitting ? <><Loader2 size={16} className="animate-spin" /> Wird verarbeitet…</> : <>Zahlungspflichtig bestellen →</>}
+        </button>
+        <p style={{ marginTop: 12, fontSize: 11, color: TEXT_MUTED, textAlign: "center" }}>
+          Mit Klick erteilen Sie einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
+        </p>
+      </form>
+    </div>
+  );
+}
+
+function Field({ label, value, onChange, type = "text" }: {
+  label: string; value: string; onChange: (v: string) => void; type?: string;
+}) {
+  return (
+    <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: TEXT_DARK }}>
+      {label}
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          marginTop: 4, width: "100%", padding: "10px 12px",
+          border: "1.5px solid rgba(79,63,240,0.2)",
+          borderRadius: 10, fontSize: 14, fontFamily: "inherit",
+          outline: "none", color: TEXT_DARK, background: "#fff",
+        }}
+      />
+    </label>
+  );
+}
+
+function Check({ label, checked, onChange }: { label: React.ReactNode; checked: boolean; onChange: (v: boolean) => void }) {
+  return (
+    <label style={{ display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer", fontSize: 13, color: TEXT_DARK, lineHeight: 1.5 }}>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        style={{ marginTop: 3, width: 16, height: 16, accentColor: BRAND, flexShrink: 0 }}
+      />
+      <span>{label}</span>
+    </label>
+  );
+}
+
+function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; onClose: () => void }) {
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 9999, background: "rgba(30,27,75,0.7)",
+      backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24,
+    }}>
+      <div style={{
+        background: "#fff", borderRadius: 24, padding: "44px 36px", maxWidth: 480, width: "100%",
+        textAlign: "center", boxShadow: "0 20px 60px rgba(0,0,0,0.2)", fontFamily: "'Plus Jakarta Sans', sans-serif",
+      }}>
+        <div style={{
+          width: 72, height: 72, borderRadius: 20,
+          background: `${BRAND}15`, color: BRAND,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          margin: "0 auto 20px",
+        }}>
+          <CheckCheck size={32} />
+        </div>
+        <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 10 }}>
+          Vielen Dank für Ihren Auftrag!
+        </h2>
+        <p style={{ color: TEXT_MUTED, fontSize: 15, marginBottom: 16 }}>
+          Ihre Bestellung wurde verbindlich erfasst. Sie erhalten in Kürze eine Bestätigung per E-Mail.
+        </p>
+        <div style={{
+          display: "inline-block", background: BG_SOFT, color: TEXT_DARK,
+          padding: "10px 18px", borderRadius: 12, fontWeight: 700, fontSize: 15, marginBottom: 24,
+        }}>
+          Auftrags-Nr.: <span style={{ color: BRAND }}>{auftragsNr}</span>
+        </div>
+        <div>
+          <button
+            type="button"
+            onClick={onClose}
+            style={{
+              background: BRAND_GRADIENT, color: "#fff",
+              padding: "12px 28px", borderRadius: 50, border: "none",
+              fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "inherit",
+            }}
+          >
+            Schließen
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
