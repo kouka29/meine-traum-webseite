@@ -1127,7 +1127,7 @@ function PriceSection({
 
 function PriceCard({
   kind, active, onSelect, badge, badgeStyle, mainPrice, mainSub,
-  normalpreis, tagline, bullets, buttonLabel, buttonVariant, highlighted,
+  normalpreis, tagline, bullets, buttonLabel, buttonVariant, highlighted, anzahlung,
 }: {
   kind: "kauf" | "miete";
   active: boolean;
@@ -1142,6 +1142,7 @@ function PriceCard({
   buttonLabel: string;
   buttonVariant: "primary" | "outline";
   highlighted?: boolean;
+  anzahlung?: number | null;
 }) {
   return (
     <div
@@ -1191,6 +1192,16 @@ function PriceCard({
         {normalpreis && normalpreis > 0 && (
           <div style={{ fontSize: 15, color: TEXT_MUTED, textDecoration: "line-through", marginTop: 6 }}>
             {Number(normalpreis).toLocaleString("de-DE")} €
+          </div>
+        )}
+        {anzahlung && anzahlung > 0 && (
+          <div style={{ marginTop: 8 }}>
+            <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 600 }}>
+              + {Number(anzahlung).toLocaleString("de-DE")} € Anzahlung einmalig zum Start
+            </div>
+            <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 2 }}>
+              Die Anzahlung wird bei Auftragserteilung fällig.
+            </div>
           </div>
         )}
       </div>
