@@ -1385,15 +1385,12 @@ function TimelineSection() {
     { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
   ];
   return (
-    <section className="angebot-timeline-section" style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
+    <section className="angebot-timeline-section" style={{ padding: "clamp(58px, 8vw, 92px) 16px", background: "#fff" }}>
       <div className="angebot-timeline-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+        <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
           Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{ position: "relative" }}>
-          {/* Connector track behind dots (desktop) */}
-          <div className="angebot-timeline-track" aria-hidden="true" />
-          <div className="angebot-timeline-track-fill" aria-hidden="true" />
           {steps.map((s, i) => (
             <div key={s.n} className="angebot-timeline-step">
               <div className="angebot-timeline-dot">
