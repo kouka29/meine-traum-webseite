@@ -61,6 +61,7 @@ const MalerHub = lazy(() => import("./pages/trade/MalerHub.tsx"));
 const SanitaerHub = lazy(() => import("./pages/trade/SanitaerHub.tsx"));
 const DachdeckerHub = lazy(() => import("./pages/trade/DachdeckerHub.tsx"));
 const Angebot = lazy(() => import("./pages/Angebot.tsx"));
+const AGB = lazy(() => import("./pages/AGB.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -77,7 +78,7 @@ const HandwerkerRoute = () => {
 
 const ChromeWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
-  const standalone = pathname === "/angebot";
+  const standalone = pathname === "/angebot" || pathname === "/agb";
   return (
     <>
       {!standalone && <Navbar />}
@@ -175,6 +176,7 @@ const App = () => (
             <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
             <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
             <Route path="/angebot" element={<Angebot />} />
+            <Route path="/agb" element={<AGB />} />
             <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
