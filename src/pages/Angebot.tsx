@@ -110,29 +110,63 @@ export default function Angebot() {
   useJakartaFont();
   const [params] = useSearchParams();
   const d = params.get("d");
+  const s = params.get("s");
   const previewMode = params.get("preview") === "1";
 
+  const [resolvedB64, setResolvedB64] = useState<string | null>(d);
+  const [loadingShort, setLoadingShort] = useState<boolean>(!!s && !d);
+  const [shortError, setShortError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!s || d) return;
+    let cancelled = false;
+    (async () => {
+      setLoadingShort(true);
+      const { data: res, error } = await supabase.functions.invoke("admin-leads", {
+        body: { action: "angebot-get-by-short-id", short_id: s },
+      });
+      if (cancelled) return;
+      if (error || res?.error || !res?.base64_data) {
+        setShortError(res?.error || error?.message || "Angebot nicht gefunden");
+      } else {
+        setResolvedB64(res.base64_data);
+      }
+      setLoadingShort(false);
+    })();
+    return () => { cancelled = true; };
+  }, [s, d]);
+
   const data: AngebotData | null = useMemo(() => {
-    if (!d) return null;
+    if (!resolvedB64) return null;
     try {
-      const parsed = decodeBase64Utf8(d);
+      const parsed = decodeBase64Utf8(resolvedB64);
       if (parsed && typeof parsed === "object") return parsed as AngebotData;
       return null;
     } catch {
       return null;
     }
-  }, [d]);
+  }, [resolvedB64]);
 
   const [unlocked, setUnlocked] = useState(previewMode);
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState(false);
+
+  if (loadingShort) {
+    return (
+      <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: "100vh", background: BG_SOFT, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, color: TEXT_MUTED }}>
+          <Loader2 size={20} className="animate-spin" /> Angebot wird geladen…
+        </div>
+      </div>
+    );
+  }
 
   if (!data) {
     return (
       <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: "100vh", background: BG_SOFT, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
         <div style={{ background: "#fff", borderRadius: 20, padding: 40, maxWidth: 480, textAlign: "center", boxShadow: "0 10px 40px rgba(79,63,240,0.1)" }}>
           <h1 style={{ color: TEXT_DARK, fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Ungültiger Link</h1>
-          <p style={{ color: TEXT_MUTED }}>Dieser Angebot-Link ist nicht gültig. Bitte prüfen Sie die URL oder kontaktieren Sie uns.</p>
+          <p style={{ color: TEXT_MUTED }}>{shortError || "Dieser Angebot-Link ist nicht gültig. Bitte prüfen Sie die URL oder kontaktieren Sie uns."}</p>
         </div>
       </div>
     );
