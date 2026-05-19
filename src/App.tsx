@@ -84,7 +84,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
       {!standalone && <Navbar />}
       {children}
       {!standalone && <Footer />}
-      {!standalone && <CookieBanner />}
+      <CookieBanner />
       {!standalone && <GlobalCtaPopup />}
     </>
   );
