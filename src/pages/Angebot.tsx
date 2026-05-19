@@ -409,7 +409,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
   }, [hasMiete, selectedPaketId]);
 
   return (
-    <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
+    <div style={{ position: "relative", paddingBottom: showSticky ? "var(--angebot-sticky-space)" : 0 }}>
       <AngebotGlobalStyles />
       {/* Standalone Header: nur Logo, kein Link */}
       <header style={{
@@ -1368,9 +1368,9 @@ function TimelineSection() {
     { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
   ];
   return (
-    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+    <section className="angebot-timeline-section" style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
+      <div className="angebot-timeline-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
           Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{
@@ -1380,8 +1380,8 @@ function TimelineSection() {
           position: "relative",
         }}>
           {steps.map((s, i) => (
-            <div key={s.n} style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
-              <div style={{
+            <div key={s.n} className="angebot-timeline-step" style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
+              <div className="angebot-timeline-dot" style={{
                 width: 52, height: 52, borderRadius: "50%",
                 background: BRAND_GRADIENT, color: "#fff",
                 display: "flex", alignItems: "center", justifyContent: "center",
@@ -1396,16 +1396,35 @@ function TimelineSection() {
                   height: 3, background: "linear-gradient(90deg, #4F3FF0, #7B5EF8)", opacity: 0.3, zIndex: 1,
                 }} />
               )}
-              <h3 style={{ fontSize: 15, fontWeight: 700, color: TEXT_DARK, margin: "16px 0 6px" }}>{s.titel}</h3>
-              <p style={{ fontSize: 13, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+              <div className="angebot-timeline-copy">
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: TEXT_DARK, margin: "16px 0 6px" }}>{s.titel}</h3>
+                <p style={{ fontSize: 13, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+              </div>
             </div>
           ))}
         </div>
         <style>{`
           @media (max-width: 720px) {
-            .angebot-timeline { grid-template-columns: 1fr !important; gap: 28px !important; text-align: left !important; }
-            .angebot-timeline > div { display: grid !important; grid-template-columns: 56px 1fr !important; gap: 16px !important; align-items: start !important; text-align: left !important; }
-            .angebot-timeline > div > div:first-child { margin: 0 !important; }
+            .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
+            .angebot-timeline-inner { padding: 0 !important; max-width: 430px !important; }
+            .angebot-timeline-title { font-size: 32px !important; line-height: 1.08 !important; margin: 0 auto 30px !important; max-width: 300px !important; }
+            .angebot-timeline { grid-template-columns: 1fr !important; gap: 14px !important; text-align: left !important; }
+            .angebot-timeline-step {
+              display: grid !important;
+              grid-template-columns: 48px minmax(0, 1fr) !important;
+              gap: 14px !important;
+              align-items: center !important;
+              text-align: left !important;
+              padding: 16px !important;
+              border: 1px solid rgba(79,63,240,0.10);
+              border-radius: 20px;
+              background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFF 100%);
+              box-shadow: 0 6px 22px rgba(79,63,240,0.07);
+            }
+            .angebot-timeline-dot { width: 48px !important; height: 48px !important; margin: 0 !important; font-size: 18px !important; box-shadow: 0 6px 18px rgba(79,63,240,0.24) !important; }
+            .angebot-timeline-copy { min-width: 0 !important; }
+            .angebot-timeline-copy h3 { margin: 0 0 4px !important; font-size: 15px !important; line-height: 1.25 !important; }
+            .angebot-timeline-copy p { font-size: 13px !important; line-height: 1.42 !important; }
             .angebot-timeline-line { display: none !important; }
           }
         `}</style>
@@ -1590,9 +1609,12 @@ function StickyBar({
           to { transform: translateY(0); }
         }
         @media (max-width: 640px) {
-          .angebot-sticky-bar { padding: 12px 16px !important; flex-direction: column !important; align-items: stretch !important; gap: 10px !important; }
+          .angebot-sticky-bar { padding: 10px 14px max(12px, env(safe-area-inset-bottom)) !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
           .angebot-sticky-bar > div:first-child { text-align: center; }
-          .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; }
+          .angebot-sticky-bar > div:first-child > div:first-child { font-size: 10px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+          .angebot-sticky-bar > div:first-child > div:nth-child(2) { font-size: 20px !important; }
+          .angebot-sticky-bar > div:first-child > div:nth-child(3) { justify-content: center; margin-top: 3px !important; }
+          .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; min-height: 42px; padding: 11px 16px !important; font-size: 14px !important; white-space: normal !important; line-height: 1.2 !important; }
         }
       `}</style>
     </div>
@@ -1881,6 +1903,15 @@ function SectionDivider() {
 function AngebotGlobalStyles() {
   return (
     <style>{`
+      :root {
+        --angebot-sticky-space: 96px;
+      }
+      @media (max-width: 640px) {
+        :root {
+          --angebot-sticky-space: 172px;
+        }
+      }
+
       @keyframes ang-blob-float {
         0%, 100% { transform: translate(0,0) scale(1); }
         33% { transform: translate(15px,-20px) scale(1.05); }
