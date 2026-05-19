@@ -593,33 +593,39 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
   return (
     <section style={{
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 60%, #F0F4FF 100%)",
-      padding: "clamp(48px, 8vw, 80px) 16px",
+      background: "linear-gradient(135deg, #F5F4FF 0%, #EEF2FF 40%, #F0F4FF 70%, #E8F4FF 100%)",
+      padding: "clamp(64px, 10vw, 110px) 20px clamp(56px, 8vw, 90px)",
     }}>
-      {/* Animierte Hintergrund-Blobs */}
-      <div aria-hidden className="ang-blob ang-blob-1" />
-      <div aria-hidden className="ang-blob ang-blob-2" />
-      <div aria-hidden className="ang-blob ang-blob-3" />
+      {/* Geometrische Deko-Elemente — wie Hauptseite */}
+      <div aria-hidden className="ang-hero-deco">
+        <div className="ang-deco-circle-lg" />
+        <div className="ang-deco-circle-md" />
+        <div className="ang-deco-dot ang-deco-dot-1" />
+        <div className="ang-deco-dot ang-deco-dot-2" />
+        <div className="ang-deco-circle-bl" />
+      </div>
 
-      <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", position: "relative", zIndex: 2 }}>
+        <div style={{ maxWidth: 860 }}>
         <div className="ang-reveal ang-d-3" style={{
           display: "inline-flex", alignItems: "center", gap: 8,
-          background: "#EDE9FF", color: BRAND,
-          padding: "8px 16px", borderRadius: 20,
+          background: "rgba(244,67,54,0.08)", color: "#E53935",
+          padding: "6px 16px", borderRadius: 20,
           fontSize: 12, fontWeight: 700,
-          textTransform: "uppercase", letterSpacing: "0.08em",
-          marginBottom: 24,
+          textTransform: "uppercase", letterSpacing: "0.06em",
+          marginBottom: 28,
         }}>
-          <Sparkles size={14} /> Persönliches Angebot — nur für Sie
+          Persönliches Angebot — nur für Sie
         </div>
 
         <h1 className="ang-reveal ang-d-4" style={{
-          fontSize: "clamp(32px, 5.2vw, 48px)", fontWeight: 800, lineHeight: 1.1,
-          color: TEXT_DARK, marginBottom: 20, letterSpacing: "-0.02em",
+          fontSize: "clamp(42px, 6.5vw, 72px)", fontWeight: 800, lineHeight: 1.05,
+          color: TEXT_DARK, marginBottom: 24, letterSpacing: "-0.025em",
+          maxWidth: 800,
         }}>
           Hallo {leadName},<br />hier ist Ihr{" "}
           <span style={{
-            background: BRAND_GRADIENT,
+            background: "linear-gradient(135deg, #4F3FF0 0%, #7B5EF8 50%, #5B8DEF 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -630,26 +636,26 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         </h1>
 
         <p className="ang-reveal ang-d-5" style={{
-          fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
-          marginBottom: 32, maxWidth: 600, fontStyle: "italic",
+          fontSize: 18, color: TEXT_MUTED, lineHeight: 1.7,
+          marginBottom: 36, maxWidth: 640,
         }}>
-          „{nachricht && nachricht.trim()
+          {nachricht && nachricht.trim()
             ? nachricht
-            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}"
+            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}
         </p>
 
-        {/* Countdown-Glass-Card */}
-        <div className="ang-reveal ang-d-6 ang-glass-count" style={{ maxWidth: 600 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 18, fontSize: 14, position: "relative" }}>
+        {/* Countdown — Inline, kein Kasten */}
+        <div className="ang-reveal ang-d-6" style={{ maxWidth: 640, marginBottom: 28 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 14, fontSize: 14 }}>
             <Clock size={16} color="#EF4444" />
-            Dieses Angebot ist reserviert bis: <strong style={{ color: TEXT_DARK }}>{ablaufStr}</strong>
+            Reserviert bis <strong style={{ color: TEXT_DARK, fontWeight: 700 }}>{ablaufStr}</strong> —
           </div>
           <div className="ang-count-row">
             {[
-              { v: days, l: "Tage" },
-              { v: hours, l: "Std" },
-              { v: mins, l: "Min" },
-              { v: secs, l: "Sek" },
+              { v: days, l: "TAGE" },
+              { v: hours, l: "STD" },
+              { v: mins, l: "MIN" },
+              { v: secs, l: "SEK" },
             ].flatMap((b, idx, arr) => {
               const block = (
                 <div key={b.l} className="ang-count-block">
@@ -663,15 +669,15 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
               return [block];
             })}
           </div>
-          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5 }}>
+          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, marginTop: 14 }}>
             Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
           </div>
         </div>
 
         {/* Trust badges */}
         <div className="ang-reveal ang-d-7" style={{
-          marginTop: 20, display: "flex", flexWrap: "wrap", gap: 18,
-          fontSize: 13, color: TEXT_MUTED, fontWeight: 600,
+          display: "flex", flexWrap: "wrap", gap: 24,
+          fontSize: 14, color: TEXT_MUTED, fontWeight: 500,
         }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
             <CheckIcon size={14} color={BRAND} /> Kein Abo
@@ -682,6 +688,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
             <CheckIcon size={14} color={BRAND} /> Umsetzung startet sofort
           </span>
+        </div>
         </div>
       </div>
     </section>
