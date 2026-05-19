@@ -31,6 +31,22 @@ interface AngebotModalProps {
 
 interface Leistung { emoji: string; titel: string; beschreibung: string; }
 interface Faq { frage: string; antwort: string; }
+interface Option {
+  id: string;
+  emoji: string;
+  titel: string;
+  beschreibung: string;
+  preis: string; // string in form, number on serialize
+  preis_typ: "einmalig" | "monatlich";
+  stripe_link: string;
+}
+interface Bundle {
+  id: string;
+  label: string;
+  option_ids: string[]; // refs to Option.id
+  gesamt_preis: string;
+  stripe_link: string;
+}
 
 const BRAND = "#4F3FF0";
 const ANGEBOT_BASE_URL = "https://meine-traum-webseite.de/angebot";
@@ -47,6 +63,17 @@ function genPin(): string {
 
 const emptyLeistung = (): Leistung => ({ emoji: "", titel: "", beschreibung: "" });
 const emptyFaq = (): Faq => ({ frage: "", antwort: "" });
+const genId = () =>
+  (typeof crypto !== "undefined" && "randomUUID" in crypto)
+    ? crypto.randomUUID().slice(0, 8)
+    : Math.random().toString(36).slice(2, 10);
+const emptyOption = (): Option => ({
+  id: genId(), emoji: "", titel: "", beschreibung: "",
+  preis: "", preis_typ: "einmalig", stripe_link: "",
+});
+const emptyBundle = (): Bundle => ({
+  id: genId(), label: "", option_ids: [], gesamt_preis: "", stripe_link: "",
+});
 
 export default function AngebotModal({ open, onOpenChange, password, lead, onCreated }: AngebotModalProps) {
   const branche = lead.trade === "Sonstiges" && lead.trade_other
@@ -65,6 +92,8 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
   const [stripeLink, setStripeLink] = useState("");
   const [leistungen, setLeistungen] = useState<Leistung[]>([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
+  const [optionen, setOptionen] = useState<Option[]>([]);
+  const [bundles, setBundles] = useState<Bundle[]>([]);
   const [saving, setSaving] = useState(false);
   const [parsing, setParsing] = useState(false);
   const [result, setResult] = useState<{ link: string; pin: string } | null>(null);
@@ -84,6 +113,8 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       setStripeLink("");
       setLeistungen([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
       setFaqs([]);
+      setOptionen([]);
+      setBundles([]);
       setResult(null);
     }
   }, [open]);
@@ -104,6 +135,36 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
   const addFaq = () => {
     if (faqs.length >= 5) return;
     setFaqs((prev) => [...prev, emptyFaq()]);
+  };
+
+  const updateOption = (i: number, patch: Partial<Option>) =>
+    setOptionen((prev) => prev.map((o, idx) => idx === i ? { ...o, ...patch } : o));
+  const removeOption = (i: number) => {
+    const removedId = optionen[i]?.id;
+    setOptionen((prev) => prev.filter((_, idx) => idx !== i));
+    if (removedId) {
+      setBundles((prev) => prev.map((b) => ({ ...b, option_ids: b.option_ids.filter((id) => id !== removedId) })));
+    }
+  };
+  const addOption = () => {
+    if (optionen.length >= 4) return;
+    setOptionen((prev) => [...prev, emptyOption()]);
+  };
+
+  const updateBundle = (i: number, patch: Partial<Bundle>) =>
+    setBundles((prev) => prev.map((b, idx) => idx === i ? { ...b, ...patch } : b));
+  const removeBundle = (i: number) =>
+    setBundles((prev) => prev.filter((_, idx) => idx !== i));
+  const addBundle = () => {
+    if (bundles.length >= 6) return;
+    setBundles((prev) => [...prev, emptyBundle()]);
+  };
+  const toggleBundleOption = (bi: number, optId: string) => {
+    setBundles((prev) => prev.map((b, idx) => {
+      if (idx !== bi) return b;
+      const has = b.option_ids.includes(optId);
+      return { ...b, option_ids: has ? b.option_ids.filter((x) => x !== optId) : [...b.option_ids, optId] };
+    }));
   };
 
   const handleGenerate = async () => {
@@ -135,6 +196,42 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
     }
     const cleanFaqs = faqs.filter(f => f.frage.trim() && f.antwort.trim());
 
+    // Optionen validieren & serialisieren
+    const cleanOptionen = optionen
+      .filter((o) => o.titel.trim() && o.preis && Number(o.preis) > 0)
+      .map((o) => ({
+        id: o.id,
+        emoji: o.emoji.trim(),
+        titel: o.titel.trim(),
+        beschreibung: o.beschreibung.trim(),
+        preis: Number(o.preis),
+        preis_typ: o.preis_typ,
+        stripe_link: o.stripe_link.trim(),
+      }));
+    for (const o of cleanOptionen) {
+      if (o.stripe_link && !/^https?:\/\//i.test(o.stripe_link)) {
+        toast.error(`Option "${o.titel}": Stripe-Link ungültig`);
+        return;
+      }
+    }
+    const validOptionIds = new Set(cleanOptionen.map((o) => o.id));
+    const cleanBundles = bundles
+      .filter((b) => b.option_ids.length >= 2 && b.stripe_link.trim())
+      .map((b) => ({
+        id: b.id,
+        label: b.label.trim(),
+        option_ids: b.option_ids.filter((id) => validOptionIds.has(id)),
+        gesamt_preis: b.gesamt_preis ? Number(b.gesamt_preis) : null,
+        stripe_link: b.stripe_link.trim(),
+      }))
+      .filter((b) => b.option_ids.length >= 2);
+    for (const b of cleanBundles) {
+      if (!/^https?:\/\//i.test(b.stripe_link)) {
+        toast.error(`Bundle "${b.label || "ohne Name"}": Stripe-Link ungültig`);
+        return;
+      }
+    }
+
     const days = Number(gueltigkeit);
     const ablauf = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
 
@@ -155,6 +252,8 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       stripe_link: stripeLink.trim(),
       leistungen: cleanLeistungen,
       faqs: cleanFaqs,
+      optionen: cleanOptionen,
+      bundles: cleanBundles,
     };
 
     const base64 = encodeBase64Utf8(payload);
