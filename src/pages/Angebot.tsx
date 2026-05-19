@@ -1402,7 +1402,7 @@ function FinalCtaSection({
     boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
   };
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{
         maxWidth: 760, margin: "0 auto",
         background: BRAND_GRADIENT,
