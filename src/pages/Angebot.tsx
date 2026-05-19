@@ -478,31 +478,57 @@ function AngebotPage({ data }: { data: AngebotData }) {
         const displayFaqs = resolveFaqs(data.faqs, hasMiete);
         if (displayFaqs.length === 0) return null;
         return (
-        <section style={{ padding: "80px 24px", background: BG_SOFT }}>
+        <section style={{ padding: "clamp(48px, 8vw, 80px) 24px", background: "#F8F7FF" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center" }}>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, textAlign: "center", letterSpacing: "-0.02em" }}>
               Häufige Fragen
             </h2>
-            <p style={{ fontSize: 16, color: TEXT_MUTED, textAlign: "center", marginBottom: 32 }}>
+            <p style={{ fontSize: 18, color: TEXT_MUTED, textAlign: "center", marginBottom: 48, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
               Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
             </p>
-            <Accordion type="single" collapsible defaultValue="faq-0" className="space-y-3">
+            <Accordion type="single" collapsible defaultValue="faq-0" className="angebot-faq-accordion">
               {displayFaqs.map((f, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
-                  className="border rounded-2xl px-5 bg-white"
-                  style={{ borderColor: "rgba(79,63,240,0.1)" }}
+                  className="angebot-faq-item border bg-white"
                 >
-                  <AccordionTrigger className="text-left font-semibold hover:no-underline" style={{ color: TEXT_DARK, fontFamily: "inherit" }}>
+                  <AccordionTrigger className="angebot-faq-trigger text-left hover:no-underline" style={{ color: TEXT_DARK, fontFamily: "inherit", fontSize: 16, fontWeight: 600 }}>
                     {f.frage}
                   </AccordionTrigger>
-                  <AccordionContent style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.7, fontFamily: "inherit" }}>
+                  <AccordionContent className="angebot-faq-content" style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.7, fontFamily: "inherit" }}>
                     {f.antwort}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
+            <style>{`
+              .angebot-faq-accordion .angebot-faq-item {
+                background: #fff !important;
+                border: 1px solid rgba(79,63,240,0.1) !important;
+                border-radius: 14px !important;
+                margin-bottom: 8px !important;
+                padding: 4px 24px !important;
+                transition: all 0.2s ease;
+              }
+              .angebot-faq-accordion .angebot-faq-item[data-state="open"] {
+                border-color: rgba(79,63,240,0.3) !important;
+                box-shadow: 0 2px 12px rgba(79,63,240,0.08);
+              }
+              .angebot-faq-accordion .angebot-faq-trigger {
+                padding: 18px 0 !important;
+              }
+              .angebot-faq-accordion .angebot-faq-trigger svg {
+                color: #4F3FF0 !important;
+                transition: transform 200ms ease;
+              }
+              .angebot-faq-accordion .angebot-faq-content > div {
+                padding-top: 12px !important;
+                padding-bottom: 18px !important;
+                border-top: 1px solid rgba(79,63,240,0.08);
+                margin-top: 4px;
+              }
+            `}</style>
           </div>
         </section>
         );
