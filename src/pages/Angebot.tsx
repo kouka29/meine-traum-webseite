@@ -478,31 +478,57 @@ function AngebotPage({ data }: { data: AngebotData }) {
         const displayFaqs = resolveFaqs(data.faqs, hasMiete);
         if (displayFaqs.length === 0) return null;
         return (
-        <section style={{ padding: "80px 24px", background: BG_SOFT }}>
+        <section style={{ padding: "clamp(48px, 8vw, 80px) 24px", background: "#F8F7FF" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center" }}>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, textAlign: "center", letterSpacing: "-0.02em" }}>
               Häufige Fragen
             </h2>
-            <p style={{ fontSize: 16, color: TEXT_MUTED, textAlign: "center", marginBottom: 32 }}>
+            <p style={{ fontSize: 18, color: TEXT_MUTED, textAlign: "center", marginBottom: 48, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
               Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
             </p>
-            <Accordion type="single" collapsible defaultValue="faq-0" className="space-y-3">
+            <Accordion type="single" collapsible defaultValue="faq-0" className="angebot-faq-accordion">
               {displayFaqs.map((f, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
-                  className="border rounded-2xl px-5 bg-white"
-                  style={{ borderColor: "rgba(79,63,240,0.1)" }}
+                  className="angebot-faq-item border bg-white"
                 >
-                  <AccordionTrigger className="text-left font-semibold hover:no-underline" style={{ color: TEXT_DARK, fontFamily: "inherit" }}>
+                  <AccordionTrigger className="angebot-faq-trigger text-left hover:no-underline" style={{ color: TEXT_DARK, fontFamily: "inherit", fontSize: 16, fontWeight: 600 }}>
                     {f.frage}
                   </AccordionTrigger>
-                  <AccordionContent style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.7, fontFamily: "inherit" }}>
+                  <AccordionContent className="angebot-faq-content" style={{ color: TEXT_MUTED, fontSize: 15, lineHeight: 1.7, fontFamily: "inherit" }}>
                     {f.antwort}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
+            <style>{`
+              .angebot-faq-accordion .angebot-faq-item {
+                background: #fff !important;
+                border: 1px solid rgba(79,63,240,0.1) !important;
+                border-radius: 14px !important;
+                margin-bottom: 8px !important;
+                padding: 4px 24px !important;
+                transition: all 0.2s ease;
+              }
+              .angebot-faq-accordion .angebot-faq-item[data-state="open"] {
+                border-color: rgba(79,63,240,0.3) !important;
+                box-shadow: 0 2px 12px rgba(79,63,240,0.08);
+              }
+              .angebot-faq-accordion .angebot-faq-trigger {
+                padding: 18px 0 !important;
+              }
+              .angebot-faq-accordion .angebot-faq-trigger svg {
+                color: #4F3FF0 !important;
+                transition: transform 200ms ease;
+              }
+              .angebot-faq-accordion .angebot-faq-content > div {
+                padding-top: 12px !important;
+                padding-bottom: 18px !important;
+                border-top: 1px solid rgba(79,63,240,0.08);
+                margin-top: 4px;
+              }
+            `}</style>
           </div>
         </section>
         );
@@ -560,17 +586,21 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
   return (
     <section style={{
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(135deg, #F5F4FF 0%, #EEF2FF 100%)",
-      padding: "clamp(48px, 8vw, 96px) 16px clamp(40px, 6vw, 64px)",
+      background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 60%, #F0F4FF 100%)",
+      padding: "clamp(48px, 8vw, 80px) 16px",
     }}>
       {/* Dekorative Kreise */}
       <div aria-hidden style={{
-        position: "absolute", top: -120, right: -120, width: 360, height: 360,
-        borderRadius: "50%", background: BRAND, opacity: 0.06, pointerEvents: "none",
+        position: "absolute", top: -100, right: -100, width: 400, height: 400,
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(79,63,240,0.08) 0%, transparent 70%)",
+        pointerEvents: "none", zIndex: 0,
       }} />
       <div aria-hidden style={{
-        position: "absolute", bottom: -160, left: -100, width: 320, height: 320,
-        borderRadius: "50%", background: BRAND, opacity: 0.06, pointerEvents: "none",
+        position: "absolute", bottom: -50, left: -50, width: 200, height: 200,
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(123,94,248,0.06) 0%, transparent 70%)",
+        pointerEvents: "none", zIndex: 0,
       }} />
 
       <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
@@ -612,12 +642,11 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
 
         {/* Countdown-Box */}
         <div style={{
-          background: "#fff", borderRadius: 20,
+          background: "#fff",
+          borderRadius: "0 16px 16px 0",
           borderLeft: "4px solid #EF4444",
-          padding: "24px 28px",
-          border: "1px solid rgba(79,63,240,0.1)",
-          borderLeftWidth: 4, borderLeftColor: "#EF4444",
-          boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+          padding: "20px 24px",
+          boxShadow: "0 4px 20px rgba(239,68,68,0.08)",
           maxWidth: 600,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 16, fontSize: 14 }}>
@@ -632,10 +661,10 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
               { v: secs, l: "Sek" },
             ].map((b) => (
               <div key={b.l} style={{ textAlign: "center", background: BG_SOFT, borderRadius: 12, padding: "14px 4px" }}>
-                <div style={{ fontSize: "clamp(22px, 4vw, 30px)", fontWeight: 800, color: TEXT_DARK, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
+                <div style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
                   {pad(b.v)}
                 </div>
-                <div style={{ fontSize: 10, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 6 }}>{b.l}</div>
+                <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 6 }}>{b.l}</div>
               </div>
             ))}
           </div>
@@ -671,7 +700,7 @@ function ProblemSection() {
     { titel: "Kein System für neue Anfragen", text: "Aufträge kommen per Zufall — nicht planbar." },
   ];
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
         <h2 style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 40, textAlign: "center", letterSpacing: "-0.02em" }}>
           Was Ihr Unternehmen gerade kostet —<br />ohne professionelle Website
@@ -778,13 +807,13 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
   setSelectedPaketId: (id: string) => void;
 }) {
   return (
-    <section style={{ padding: "clamp(48px, 7vw, 72px) 16px", background: BG_SOFT }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(180deg, #F5F4FF 0%, #FFFFFF 100%)" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <h2 style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 10, letterSpacing: "-0.02em" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Welches Paket passt zu Ihnen?
           </h2>
-          <p style={{ fontSize: 16, color: TEXT_MUTED, margin: 0 }}>
+          <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
             Wählen Sie Ihre Variante — alle Inhalte unten passen sich automatisch an.
           </p>
         </div>
@@ -805,22 +834,24 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                 onClick={() => setSelectedPaketId(p.id)}
                 style={{
                   textAlign: "left", cursor: "pointer", fontFamily: "inherit",
-                  background: active ? `${BRAND}08` : "#fff",
-                  border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.1)"}`,
-                  borderRadius: 20, padding: "26px 22px",
-                  boxShadow: active ? `0 8px 28px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
-                  transition: "all 0.2s",
+                  background: "#fff",
+                  border: active ? `2px solid ${BRAND}` : "1px solid rgba(79,63,240,0.15)",
+                  borderRadius: 20, padding: "28px 22px 22px",
+                  boxShadow: active ? "0 8px 32px rgba(79,63,240,0.15)" : "0 2px 12px rgba(79,63,240,0.05)",
+                  opacity: active ? 1 : 0.85,
+                  transform: active ? "scale(1.01)" : "scale(1)",
+                  transition: "all 0.2s ease",
                   position: "relative",
                 }}
               >
                 {badge && (
                   <div style={{
-                    position: "absolute", top: -12, right: 16,
-                    background: recommended ? BRAND_GRADIENT : "#EDE9FF",
-                    color: recommended ? "#fff" : BRAND,
-                    fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
+                    position: "absolute", top: -1, left: "50%", transform: "translateX(-50%)",
+                    background: recommended ? BRAND_GRADIENT : BRAND,
+                    color: "#fff",
+                    fontSize: 11, fontWeight: 600, letterSpacing: "0.06em",
                     textTransform: "uppercase",
-                    padding: "5px 12px", borderRadius: 50,
+                    padding: "4px 16px", borderRadius: "0 0 10px 10px",
                   }}>{badge}</div>
                 )}
                 <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
@@ -830,7 +861,8 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                 {p.beschreibung && (
                   <p style={{ fontSize: 14, color: TEXT_MUTED, margin: "0 0 14px", lineHeight: 1.5 }}>{p.beschreibung}</p>
                 )}
-                <div style={{ fontSize: 28, fontWeight: 800, color: BRAND, marginBottom: 4 }}>
+                <div style={{ borderTop: "1px solid rgba(79,63,240,0.1)", margin: "16px 0" }} />
+                <div style={{ fontSize: 40, fontWeight: 800, color: BRAND, marginBottom: 4, lineHeight: 1, letterSpacing: "-0.02em" }}>
                   {Number(p.preis).toLocaleString("de-DE")} €
                 </div>
                 {p.leistungen && p.leistungen.length > 0 && (
@@ -888,31 +920,41 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
 function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
   if (!leistungen || leistungen.length === 0) return null;
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Was Sie konkret bekommen
           </h2>
-          <p style={{ fontSize: 17, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
+          <p style={{ fontSize: 18, color: TEXT_MUTED, maxWidth: 560, margin: "0 auto" }}>
             Jede Leistung — mit konkretem Nutzen für Sie.
           </p>
         </div>
-        <div style={{
+        <div className="angebot-leistungen-grid" style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 16,
         }}>
           {leistungen.map((l, i) => (
-            <div key={i} style={{
-              background: "#fff", borderRadius: 20,
-              border: "1px solid rgba(79,63,240,0.1)",
-              padding: 24,
-              boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
-              borderBottom: `3px solid ${BRAND}20`,
+            <div key={i} className="angebot-leistung-card" style={{
+              background: "#fff",
+              borderRadius: 16,
+              borderLeft: `3px solid ${BRAND}`,
+              padding: "24px 20px 24px 24px",
+              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
+              transition: "all 0.2s ease",
             }}>
-              {l.emoji && <div style={{ fontSize: 32, marginBottom: 12, lineHeight: 1 }}>{l.emoji}</div>}
-              <h3 style={{ fontSize: 17, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{l.titel}</h3>
+              {l.emoji ? (
+                <div style={{ fontSize: 28, marginBottom: 12, lineHeight: 1, display: "block" }}>{l.emoji}</div>
+              ) : (
+                <div style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  width: 32, height: 32, borderRadius: 8,
+                  background: `${BRAND}15`, color: BRAND,
+                  marginBottom: 12, fontSize: 16, fontWeight: 800,
+                }}>✓</div>
+              )}
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: TEXT_DARK, marginBottom: 6 }}>{l.titel}</h3>
               {nutzenFor(l.titel, l.beschreibung) && (
                 <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
                   {nutzenFor(l.titel, l.beschreibung)}
@@ -921,6 +963,12 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             </div>
           ))}
         </div>
+        <style>{`
+          .angebot-leistung-card:hover {
+            box-shadow: 0 4px 24px rgba(79,63,240,0.12);
+            transform: translateY(-2px);
+          }
+        `}</style>
       </div>
     </section>
   );
@@ -951,13 +999,13 @@ function PriceSection({
   ctaModeAnfrage: boolean;
 }) {
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: BG_SOFT }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 100%)" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Ihr Investitionsvolumen
           </h2>
-          <p style={{ fontSize: 16, color: TEXT_MUTED, margin: 0 }}>
+          <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
             {hasMiete ? "Zwei Wege — gleiches Ergebnis. Sie entscheiden." : "Einmalige Investition — Ihre Website gehört Ihnen."}
           </p>
         </div>
@@ -1151,13 +1199,13 @@ function PriceCard({
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(); } }}
       style={{
-        background: "#fff",
-        borderRadius: 24,
-        border: `2px solid ${active ? BRAND : highlighted ? `${BRAND}40` : "rgba(79,63,240,0.12)"}`,
-        padding: "32px 28px",
+        background: highlighted ? "linear-gradient(160deg, #F5F4FF 0%, #EDE9FF 100%)" : "#fff",
+        borderRadius: 20,
+        border: highlighted ? `2px solid ${BRAND}` : "1.5px solid rgba(79,63,240,0.2)",
+        padding: "36px 32px",
         position: "relative",
         cursor: "pointer",
-        boxShadow: active ? `0 20px 50px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
+        boxShadow: highlighted ? "0 8px 40px rgba(79,63,240,0.18)" : "0 4px 20px rgba(79,63,240,0.06)",
         transition: "all 0.2s",
         display: "flex", flexDirection: "column",
       }}
@@ -1182,7 +1230,7 @@ function PriceCard({
 
       <div style={{ marginTop: 10, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
-          <span style={{ fontSize: "clamp(36px, 5vw, 48px)", fontWeight: 800, color: BRAND, lineHeight: 1, letterSpacing: "-0.02em" }}>
+          <span style={{ fontSize: "clamp(40px, 6vw, 52px)", fontWeight: 800, color: kind === "miete" ? BRAND : TEXT_DARK, lineHeight: 1, letterSpacing: "-0.02em" }}>
             {mainPrice}
           </span>
           {mainSub && (
@@ -1224,13 +1272,15 @@ function PriceCard({
         onClick={(e) => { e.stopPropagation(); onSelect(); }}
         style={{
           width: "100%",
-          padding: "13px 20px",
+          padding: "14px 32px",
           borderRadius: 50,
           fontSize: 15, fontWeight: 700,
           cursor: "pointer", fontFamily: "inherit",
           border: buttonVariant === "outline" ? `2px solid ${BRAND}` : "none",
-          background: buttonVariant === "outline" ? "#fff" : BRAND_GRADIENT,
+          background: buttonVariant === "outline" ? "transparent" : BRAND_GRADIENT,
           color: buttonVariant === "outline" ? BRAND : "#fff",
+          transition: "all 0.2s",
+          boxShadow: buttonVariant === "outline" ? "none" : "0 4px 16px rgba(79,63,240,0.3)",
         }}
       >
         {active ? "✓ " : ""}{buttonLabel}
@@ -1247,9 +1297,9 @@ function TimelineSection() {
     { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
   ];
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.02em" }}>
+        <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.02em" }}>
           Ihr Weg zur fertigen Website
         </h2>
         <div className="angebot-timeline" style={{
@@ -1261,22 +1311,22 @@ function TimelineSection() {
           {steps.map((s, i) => (
             <div key={s.n} style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
               <div style={{
-                width: 56, height: 56, borderRadius: "50%",
+                width: 52, height: 52, borderRadius: "50%",
                 background: BRAND_GRADIENT, color: "#fff",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 22, fontWeight: 800,
+                fontSize: 20, fontWeight: 800,
                 margin: "0 auto 16px",
-                boxShadow: `0 8px 24px ${BRAND}30`,
+                boxShadow: "0 4px 16px rgba(79,63,240,0.3)",
                 position: "relative", zIndex: 2,
               }}>{s.n}</div>
               {i < steps.length - 1 && (
                 <div className="angebot-timeline-line" style={{
-                  position: "absolute", top: 28, left: "calc(50% + 32px)", right: "calc(-50% + 32px)",
-                  height: 2, background: `${BRAND}30`, zIndex: 1,
+                  position: "absolute", top: 26, left: "calc(50% + 30px)", right: "calc(-50% + 30px)",
+                  height: 3, background: "linear-gradient(90deg, #4F3FF0, #7B5EF8)", opacity: 0.3, zIndex: 1,
                 }} />
               )}
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: TEXT_DARK, marginBottom: 6 }}>{s.titel}</h3>
-              <p style={{ fontSize: 14, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+              <h3 style={{ fontSize: 15, fontWeight: 700, color: TEXT_DARK, margin: "16px 0 6px" }}>{s.titel}</h3>
+              <p style={{ fontSize: 13, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
             </div>
           ))}
         </div>
@@ -1301,7 +1351,7 @@ function TrustSection() {
     { v: "2–5x", l: "Mehr Anfragen nach Launch" },
   ];
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 80px) 16px", background: BG_SOFT }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: BG_SOFT }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
         <div style={{
           display: "grid",
@@ -1310,22 +1360,22 @@ function TrustSection() {
         }}>
           {stats.map((s, i) => (
             <div key={i} style={{
-              background: "#fff", borderRadius: 20,
+              background: "#fff", borderRadius: 16,
               border: "1px solid rgba(79,63,240,0.1)",
               padding: "28px 20px",
               textAlign: "center",
-              boxShadow: "0 4px 24px rgba(79,63,240,0.06)",
+              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
             }}>
               <div style={{
-                fontSize: "clamp(32px, 5vw, 40px)", fontWeight: 800,
+                fontSize: "clamp(34px, 5vw, 44px)", fontWeight: 800,
                 background: BRAND_GRADIENT,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                lineHeight: 1, marginBottom: 10,
+                lineHeight: 1, marginBottom: 8,
                 letterSpacing: "-0.02em",
               }}>{s.v}</div>
-              <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 600, lineHeight: 1.4 }}>{s.l}</div>
+              <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 500, lineHeight: 1.4 }}>{s.l}</div>
             </div>
           ))}
         </div>
@@ -1352,7 +1402,7 @@ function FinalCtaSection({
     boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
   };
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{
         maxWidth: 760, margin: "0 auto",
         background: BRAND_GRADIENT,
@@ -1425,35 +1475,37 @@ function StickyBar({
 
   const btnStyle: React.CSSProperties = {
     background: BRAND_GRADIENT, color: "#fff",
-    padding: "14px 26px", borderRadius: 50,
+    padding: "10px 28px", borderRadius: 50,
     fontSize: 15, fontWeight: 700,
     border: "none", cursor: "pointer",
     textDecoration: "none", fontFamily: "inherit",
     display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
     whiteSpace: "nowrap",
-    boxShadow: `0 8px 20px ${BRAND}40`,
+    boxShadow: "0 4px 16px rgba(79,63,240,0.3)",
   };
 
   return (
     <div className="angebot-sticky-bar" style={{
       position: "fixed", bottom: 0, left: 0, right: 0,
-      background: "#fff",
-      borderTop: "1px solid rgba(79,63,240,0.15)",
-      boxShadow: "0 -4px 20px rgba(79,63,240,0.08)",
-      padding: "12px 24px",
+      background: "rgba(255,255,255,0.95)",
+      backdropFilter: "blur(12px)",
+      WebkitBackdropFilter: "blur(12px)",
+      borderTop: "1px solid rgba(79,63,240,0.12)",
+      boxShadow: "0 -4px 24px rgba(79,63,240,0.08)",
+      padding: "12px 32px",
       zIndex: 100,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       gap: 16, flexWrap: "wrap",
       animation: "angebot-slide-up 0.3s ease-out",
     }}>
       <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, marginBottom: 2, lineHeight: 1.2 }}>
+        <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2, lineHeight: 1.2 }}>
           {paketName}
         </div>
         <div style={{ color: BRAND, fontWeight: 800, fontSize: 20, lineHeight: 1.1 }}>
           {priceLabel}
         </div>
-        <div style={{ fontSize: 12, color: "#DC2626", fontWeight: 600, marginTop: 2 }}>
+        <div style={{ fontSize: 12, color: "#EF4444", fontWeight: 600, marginTop: 2 }}>
           ⏱ Noch {days} Tag{days !== 1 ? "e" : ""} reserviert
         </div>
       </div>
