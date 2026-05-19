@@ -409,7 +409,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
   }, [hasMiete, selectedPaketId]);
 
   return (
-    <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
+    <div style={{ position: "relative", paddingBottom: showSticky ? "var(--angebot-sticky-space)" : 0 }}>
       <AngebotGlobalStyles />
       {/* Standalone Header: nur Logo, kein Link */}
       <header style={{
@@ -1368,9 +1368,9 @@ function TimelineSection() {
     { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
   ];
   return (
-    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+    <section className="angebot-timeline-section" style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
+      <div className="angebot-timeline-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
           Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{
@@ -1380,8 +1380,8 @@ function TimelineSection() {
           position: "relative",
         }}>
           {steps.map((s, i) => (
-            <div key={s.n} style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
-              <div style={{
+            <div key={s.n} className="angebot-timeline-step" style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
+              <div className="angebot-timeline-dot" style={{
                 width: 52, height: 52, borderRadius: "50%",
                 background: BRAND_GRADIENT, color: "#fff",
                 display: "flex", alignItems: "center", justifyContent: "center",
@@ -1396,8 +1396,10 @@ function TimelineSection() {
                   height: 3, background: "linear-gradient(90deg, #4F3FF0, #7B5EF8)", opacity: 0.3, zIndex: 1,
                 }} />
               )}
-              <h3 style={{ fontSize: 15, fontWeight: 700, color: TEXT_DARK, margin: "16px 0 6px" }}>{s.titel}</h3>
-              <p style={{ fontSize: 13, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+              <div className="angebot-timeline-copy">
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: TEXT_DARK, margin: "16px 0 6px" }}>{s.titel}</h3>
+                <p style={{ fontSize: 13, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+              </div>
             </div>
           ))}
         </div>
