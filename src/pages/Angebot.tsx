@@ -410,6 +410,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
+      <AngebotGlobalStyles />
       {/* Standalone Header: nur Logo, kein Link */}
       <header style={{
         background: "#fff",
@@ -435,6 +436,9 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── SECTION 2: PROBLEM / LÖSUNG ──────────────────── */}
       {showProblemSection && <ProblemSection />}
 
+      {/* Divider between Problem & Paket */}
+      {showProblemSection && <SectionDivider />}
+
       {/* ── SECTION 3: PAKET-AUSWAHL (nur bei mehreren) ──── */}
       {hasMultiplePakete && (
         <PaketChooserSection
@@ -449,6 +453,9 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
       {/* ── SECTION 5: VERTRAUEN (vor Preis!) ────────────── */}
       <TrustSection />
+
+      {/* Divider between Trust & Timeline */}
+      <SectionDivider />
 
       {/* ── SECTION 6: SO LÄUFT ES AB ────────────────────── */}
       <TimelineSection />
@@ -589,22 +596,13 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
       background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 60%, #F0F4FF 100%)",
       padding: "clamp(48px, 8vw, 80px) 16px",
     }}>
-      {/* Dekorative Kreise */}
-      <div aria-hidden style={{
-        position: "absolute", top: -100, right: -100, width: 400, height: 400,
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(79,63,240,0.08) 0%, transparent 70%)",
-        pointerEvents: "none", zIndex: 0,
-      }} />
-      <div aria-hidden style={{
-        position: "absolute", bottom: -50, left: -50, width: 200, height: 200,
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(123,94,248,0.06) 0%, transparent 70%)",
-        pointerEvents: "none", zIndex: 0,
-      }} />
+      {/* Animierte Hintergrund-Blobs */}
+      <div aria-hidden className="ang-blob ang-blob-1" />
+      <div aria-hidden className="ang-blob ang-blob-2" />
+      <div aria-hidden className="ang-blob ang-blob-3" />
 
       <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
-        <div style={{
+        <div className="ang-reveal ang-d-3" style={{
           display: "inline-flex", alignItems: "center", gap: 8,
           background: "#EDE9FF", color: BRAND,
           padding: "8px 16px", borderRadius: 20,
@@ -615,7 +613,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           <Sparkles size={14} /> Persönliches Angebot — nur für Sie
         </div>
 
-        <h1 style={{
+        <h1 className="ang-reveal ang-d-4" style={{
           fontSize: "clamp(32px, 5.2vw, 48px)", fontWeight: 800, lineHeight: 1.1,
           color: TEXT_DARK, marginBottom: 20, letterSpacing: "-0.02em",
         }}>
@@ -631,7 +629,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           Angebot.
         </h1>
 
-        <p style={{
+        <p className="ang-reveal ang-d-5" style={{
           fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
           marginBottom: 32, maxWidth: 600, fontStyle: "italic",
         }}>
@@ -640,33 +638,30 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}"
         </p>
 
-        {/* Countdown-Box */}
-        <div style={{
-          background: "#fff",
-          borderRadius: "0 16px 16px 0",
-          borderLeft: "4px solid #EF4444",
-          padding: "20px 24px",
-          boxShadow: "0 4px 20px rgba(239,68,68,0.08)",
-          maxWidth: 600,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 16, fontSize: 14 }}>
+        {/* Countdown-Glass-Card */}
+        <div className="ang-reveal ang-d-6 ang-glass-count" style={{ maxWidth: 600 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 18, fontSize: 14, position: "relative" }}>
             <Clock size={16} color="#EF4444" />
             Dieses Angebot ist reserviert bis: <strong style={{ color: TEXT_DARK }}>{ablaufStr}</strong>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
+          <div className="ang-count-row">
             {[
               { v: days, l: "Tage" },
               { v: hours, l: "Std" },
               { v: mins, l: "Min" },
               { v: secs, l: "Sek" },
-            ].map((b) => (
-              <div key={b.l} style={{ textAlign: "center", background: BG_SOFT, borderRadius: 12, padding: "14px 4px" }}>
-                <div style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
-                  {pad(b.v)}
+            ].flatMap((b, idx, arr) => {
+              const block = (
+                <div key={b.l} className="ang-count-block">
+                  <div className="ang-count-num">{pad(b.v)}</div>
+                  <div className="ang-count-lab">{b.l}</div>
                 </div>
-                <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 6 }}>{b.l}</div>
-              </div>
-            ))}
+              );
+              if (idx < arr.length - 1) {
+                return [block, <span key={`sep-${idx}`} className="ang-count-sep">:</span>];
+              }
+              return [block];
+            })}
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5 }}>
             Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
@@ -674,7 +669,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         </div>
 
         {/* Trust badges */}
-        <div style={{
+        <div className="ang-reveal ang-d-7" style={{
           marginTop: 20, display: "flex", flexWrap: "wrap", gap: 18,
           fontSize: 13, color: TEXT_MUTED, fontWeight: 600,
         }}>
@@ -930,30 +925,18 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             Jede Leistung — mit konkretem Nutzen für Sie.
           </p>
         </div>
-        <div className="angebot-leistungen-grid" style={{
+        <div className="angebot-leistungen-grid ang-stagger-leist" style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 16,
         }}>
           {leistungen.map((l, i) => (
-            <div key={i} className="angebot-leistung-card" style={{
-              background: "#fff",
-              borderRadius: 16,
-              borderLeft: `3px solid ${BRAND}`,
-              padding: "24px 20px 24px 24px",
-              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
-              transition: "all 0.2s ease",
+            <div key={i} className="angebot-leistung-card ang-reveal" style={{
+              animationDelay: `${i * 80}ms`,
             }}>
-              {l.emoji ? (
-                <div style={{ fontSize: 28, marginBottom: 12, lineHeight: 1, display: "block" }}>{l.emoji}</div>
-              ) : (
-                <div style={{
-                  display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  width: 32, height: 32, borderRadius: 8,
-                  background: `${BRAND}15`, color: BRAND,
-                  marginBottom: 12, fontSize: 16, fontWeight: 800,
-                }}>✓</div>
-              )}
+              <div className="ang-leist-emoji">
+                {l.emoji || <span style={{ color: BRAND, fontSize: 22, fontWeight: 800 }}>✦</span>}
+              </div>
               <h3 style={{ fontSize: 16, fontWeight: 700, color: TEXT_DARK, marginBottom: 6 }}>{l.titel}</h3>
               {nutzenFor(l.titel, l.beschreibung) && (
                 <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
@@ -963,12 +946,6 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             </div>
           ))}
         </div>
-        <style>{`
-          .angebot-leistung-card:hover {
-            box-shadow: 0 4px 24px rgba(79,63,240,0.12);
-            transform: translateY(-2px);
-          }
-        `}</style>
       </div>
     </section>
   );
@@ -999,7 +976,7 @@ function PriceSection({
   ctaModeAnfrage: boolean;
 }) {
   return (
-    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 100%)" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px 48px", background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 100%)" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
@@ -1198,14 +1175,18 @@ function PriceCard({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(); } }}
+      className={highlighted ? "ang-price-miete" : "ang-price-kauf"}
       style={{
-        background: highlighted ? "linear-gradient(160deg, #F5F4FF 0%, #EDE9FF 100%)" : "#fff",
+        background: highlighted ? "linear-gradient(145deg, #EDE9FF 0%, #E8E4FF 40%, #DDD7FF 100%)" : "#fff",
         borderRadius: 20,
-        border: highlighted ? `2px solid ${BRAND}` : "1.5px solid rgba(79,63,240,0.2)",
+        border: highlighted ? `2px solid ${BRAND}` : "1.5px solid rgba(79,63,240,0.15)",
         padding: "36px 32px",
         position: "relative",
+        overflow: "hidden",
         cursor: "pointer",
-        boxShadow: highlighted ? "0 8px 40px rgba(79,63,240,0.18)" : "0 4px 20px rgba(79,63,240,0.06)",
+        boxShadow: highlighted
+          ? "0 8px 40px rgba(79,63,240,0.20), 0 0 0 1px rgba(79,63,240,0.10)"
+          : "0 2px 16px rgba(79,63,240,0.06)",
         transition: "all 0.2s",
         display: "flex", flexDirection: "column",
       }}
@@ -1230,7 +1211,16 @@ function PriceCard({
 
       <div style={{ marginTop: 10, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
-          <span style={{ fontSize: "clamp(40px, 6vw, 52px)", fontWeight: 800, color: kind === "miete" ? BRAND : TEXT_DARK, lineHeight: 1, letterSpacing: "-0.02em" }}>
+          <span style={{
+            fontSize: "clamp(40px, 6vw, 56px)", fontWeight: 800,
+            lineHeight: 1, letterSpacing: "-0.02em",
+            ...(kind === "miete" ? {
+              background: BRAND_GRADIENT,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            } : { color: TEXT_DARK }),
+          }}>
             {mainPrice}
           </span>
           {mainSub && (
@@ -1269,18 +1259,19 @@ function PriceCard({
 
       <button
         type="button"
+        className={buttonVariant === "outline" ? "ang-btn-outline" : "ang-btn-primary"}
         onClick={(e) => { e.stopPropagation(); onSelect(); }}
         style={{
           width: "100%",
-          padding: "14px 32px",
+          padding: "16px 32px",
           borderRadius: 50,
-          fontSize: 15, fontWeight: 700,
+          fontSize: 16, fontWeight: 700,
           cursor: "pointer", fontFamily: "inherit",
           border: buttonVariant === "outline" ? `2px solid ${BRAND}` : "none",
           background: buttonVariant === "outline" ? "transparent" : BRAND_GRADIENT,
           color: buttonVariant === "outline" ? BRAND : "#fff",
           transition: "all 0.2s",
-          boxShadow: buttonVariant === "outline" ? "none" : "0 4px 16px rgba(79,63,240,0.3)",
+          boxShadow: buttonVariant === "outline" ? "none" : "0 4px 20px rgba(79,63,240,0.35)",
         }}
       >
         {active ? "✓ " : ""}{buttonLabel}
@@ -1487,26 +1478,27 @@ function StickyBar({
   return (
     <div className="angebot-sticky-bar" style={{
       position: "fixed", bottom: 0, left: 0, right: 0,
-      background: "rgba(255,255,255,0.95)",
-      backdropFilter: "blur(12px)",
-      WebkitBackdropFilter: "blur(12px)",
+      background: "rgba(255,255,255,0.90)",
+      backdropFilter: "blur(16px)",
+      WebkitBackdropFilter: "blur(16px)",
       borderTop: "1px solid rgba(79,63,240,0.12)",
-      boxShadow: "0 -4px 24px rgba(79,63,240,0.08)",
-      padding: "12px 32px",
+      boxShadow: "0 -4px 32px rgba(79,63,240,0.10)",
+      padding: "14px 40px",
       zIndex: 100,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       gap: 16, flexWrap: "wrap",
       animation: "angebot-slide-up 0.3s ease-out",
     }}>
       <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2, lineHeight: 1.2 }}>
+        <div style={{ fontSize: 11, color: BRAND, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 2, lineHeight: 1.2 }}>
           {paketName}
         </div>
-        <div style={{ color: BRAND, fontWeight: 800, fontSize: 20, lineHeight: 1.1 }}>
+        <div style={{ color: TEXT_DARK, fontWeight: 800, fontSize: 22, lineHeight: 1.1 }}>
           {priceLabel}
         </div>
-        <div style={{ fontSize: 12, color: "#EF4444", fontWeight: 600, marginTop: 2 }}>
-          ⏱ Noch {days} Tag{days !== 1 ? "e" : ""} reserviert
+        <div style={{ fontSize: 12, color: "#EF4444", fontWeight: 600, marginTop: 4, display: "flex", alignItems: "center", gap: 6 }}>
+          <span className="ang-pulse-dot" />
+          Noch {days} Tag{days !== 1 ? "e" : ""} reserviert
         </div>
       </div>
       {ctaLink ? (
@@ -1799,5 +1791,184 @@ function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; on
         </div>
       </div>
     </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// SHARED DESIGN COMPONENTS
+// ═══════════════════════════════════════════════════════════
+
+function SectionDivider() {
+  return (
+    <div style={{
+      width: 60, height: 3,
+      background: "linear-gradient(90deg, #4F3FF0, #7B5EF8)",
+      borderRadius: 2, margin: "0 auto 48px",
+    }} />
+  );
+}
+
+function AngebotGlobalStyles() {
+  return (
+    <style>{`
+      @keyframes ang-blob-float {
+        0%, 100% { transform: translate(0,0) scale(1); }
+        33% { transform: translate(15px,-20px) scale(1.05); }
+        66% { transform: translate(-10px,10px) scale(0.97); }
+      }
+      @keyframes ang-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.8); }
+      }
+      @keyframes ang-reveal-in {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .ang-blob {
+        position: absolute; border-radius: 50%;
+        pointer-events: none; z-index: 0;
+        animation: ang-blob-float 8s ease-in-out infinite;
+      }
+      .ang-blob-1 {
+        top: -120px; right: -80px; width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(79,63,240,0.12) 0%, transparent 70%);
+      }
+      .ang-blob-2 {
+        bottom: -80px; left: -60px; width: 350px; height: 350px;
+        background: radial-gradient(circle, rgba(123,94,248,0.08) 0%, transparent 70%);
+        animation-duration: 10s;
+        animation-direction: reverse;
+      }
+      .ang-blob-3 {
+        top: 40%; right: 5%; width: 180px; height: 180px;
+        background: radial-gradient(circle, rgba(91,141,239,0.07) 0%, transparent 70%);
+        animation-duration: 6s;
+        animation-delay: 2s;
+      }
+
+      /* Reveal */
+      .ang-reveal {
+        opacity: 0;
+        animation: ang-reveal-in 0.55s ease-out forwards;
+      }
+      .ang-d-3 { animation-delay: 300ms; }
+      .ang-d-4 { animation-delay: 400ms; }
+      .ang-d-5 { animation-delay: 500ms; }
+      .ang-d-6 { animation-delay: 600ms; }
+      .ang-d-7 { animation-delay: 700ms; }
+      .ang-stagger-leist > .ang-reveal { /* delays set inline */ }
+
+      /* Glass countdown */
+      .ang-glass-count {
+        position: relative;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.8);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(79,63,240,0.10);
+        padding: 24px 28px;
+        overflow: hidden;
+      }
+      .ang-glass-count::before {
+        content: "";
+        position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, #EF4444, #FF6B6B);
+        border-radius: 20px 20px 0 0;
+      }
+      .ang-count-row {
+        display: flex; align-items: center; justify-content: flex-start;
+        gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+      }
+      .ang-count-block {
+        background: #F5F4FF; border-radius: 12px;
+        padding: 12px 16px; min-width: 72px; text-align: center;
+      }
+      .ang-count-num {
+        font-size: 44px; font-weight: 800; color: #1E1B4B;
+        font-variant-numeric: tabular-nums; line-height: 1;
+      }
+      .ang-count-lab {
+        font-size: 11px; font-weight: 600; color: #6B7280;
+        text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px;
+      }
+      .ang-count-sep {
+        font-size: 28px; color: #4F3FF0; font-weight: 800;
+        align-self: center; margin: 0 4px;
+      }
+      @media (max-width: 560px) {
+        .ang-count-num { font-size: 30px; }
+        .ang-count-block { padding: 10px 10px; min-width: 56px; }
+        .ang-count-sep { font-size: 20px; margin: 0 2px; }
+      }
+
+      /* Leistungs-Cards */
+      .angebot-leistung-card {
+        background: #FFFFFF;
+        border: 1px solid rgba(79,63,240,0.08);
+        border-left: 3px solid #4F3FF0;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 2px 16px rgba(79,63,240,0.05);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+      }
+      .ang-leist-emoji {
+        width: 52px; height: 52px;
+        background: linear-gradient(135deg, #EDE9FF, #F5F4FF);
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 26px; margin-bottom: 16px;
+      }
+      @media (hover: hover) {
+        .angebot-leistung-card:hover {
+          box-shadow: 0 8px 32px rgba(79,63,240,0.14);
+          transform: translateY(-4px);
+          border-left-color: #7B5EF8;
+          background: linear-gradient(160deg, #FFFFFF 0%, #FAFAFF 100%);
+        }
+      }
+
+      /* Miete-Card decorative glow */
+      .ang-price-miete::before {
+        content: "";
+        position: absolute; top: 0; right: 0;
+        width: 150px; height: 150px;
+        background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+        border-radius: 0 20px 0 0;
+        pointer-events: none;
+      }
+
+      /* Buttons */
+      @media (hover: hover) {
+        .ang-btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(79,63,240,0.45) !important;
+        }
+        .ang-btn-outline:hover {
+          background: #F5F4FF !important;
+        }
+      }
+
+      /* Sticky bar pulse dot */
+      .ang-pulse-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #EF4444; display: inline-block;
+        animation: ang-pulse 1.5s ease-in-out infinite;
+      }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .ang-blob, .ang-pulse-dot, .ang-reveal,
+        .angebot-leistung-card { animation: none !important; transition: none !important; }
+        .ang-reveal { opacity: 1 !important; transform: none !important; }
+      }
+
+      /* Mobile: disable hover transforms */
+      @media (hover: none) {
+        .angebot-leistung-card:hover { transform: none !important; }
+      }
+    `}</style>
   );
 }
