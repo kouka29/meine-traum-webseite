@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
   Plus, Trash2, Shuffle, Copy, ExternalLink, Loader2, FileText, CheckCircle2,
-  Upload, Sparkles, Eye, FileDown, Package,
+  Upload, Sparkles, Eye, FileDown, Package, CreditCard, Receipt,
 } from "lucide-react";
 
 interface AngebotModalProps {
@@ -113,6 +113,9 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
   const [multiMode, setMultiMode] = useState(false);
   const [pakete, setPakete] = useState<Paket[]>([]);
 
+  // Zahlungsart
+  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "rechnung">("stripe");
+
   const [saving, setSaving] = useState(false);
   const [parsing, setParsing] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -128,6 +131,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       setOptionen([]); setBundles([]);
       setMultiMode(false);
       setPakete([emptyPaket("Starter"), emptyPaket("Pro")]);
+      setPaymentMethod("stripe");
       setResult(null);
     }
   }, [open]);
@@ -200,6 +204,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       wachstumspaket_beschreibung: wachstumspaketBeschreibung.trim() || null,
       faqs: cleanFaqs,
       pdf_path: pdfPath || null,
+      payment_method: paymentMethod,
     };
 
     if (multiMode) {
@@ -208,7 +213,9 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
         const preisN = Number(p.preis);
         if (!p.name.trim()) throw new Error("Paket-Name fehlt");
         if (!Number.isFinite(preisN) || preisN <= 0) throw new Error(`Paket "${p.name || "?"}": Preis ungültig`);
-        if (!p.stripe_link.trim() || !/^https?:\/\//i.test(p.stripe_link)) throw new Error(`Paket "${p.name}": Stripe-Link ungültig`);
+        if (paymentMethod === "stripe" && (!p.stripe_link.trim() || !/^https?:\/\//i.test(p.stripe_link))) {
+          throw new Error(`Paket "${p.name}": Stripe-Link ungültig`);
+        }
         const cleanL = p.leistungen.filter((l) => l.titel.trim() || l.beschreibung.trim() || l.emoji.trim());
         if (cleanL.length === 0) throw new Error(`Paket "${p.name}": Mindestens eine Leistung`);
         const cleanO = p.optionen
@@ -223,7 +230,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
           normalpreis: p.normalpreis ? Number(p.normalpreis) : null,
           miete_monatlich: p.miete_monatlich ? Number(p.miete_monatlich) : null,
           anzahlung: p.anzahlung ? Number(p.anzahlung) : null,
-          stripe_link: p.stripe_link.trim(),
+          stripe_link: paymentMethod === "stripe" ? p.stripe_link.trim() : "",
           leistungen: cleanL, optionen: cleanO,
         };
       });
@@ -231,12 +238,14 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       base.pakete = cleanPakete;
       base.preis = cleanPakete[0].preis;
       base.normalpreis = cleanPakete[0].normalpreis;
-      base.stripe_link = cleanPakete[0].stripe_link;
+      base.stripe_link = paymentMethod === "stripe" ? cleanPakete[0].stripe_link : "";
       base.leistungen = [];
     } else {
       const preisN = Number(preis);
       if (!Number.isFinite(preisN) || preisN <= 0) return { ok: false, error: "Bitte gültigen Preis eingeben" };
-      if (!stripeLink || !/^https?:\/\//i.test(stripeLink)) return { ok: false, error: "Bitte gültigen Stripe-Link eingeben" };
+      if (paymentMethod === "stripe" && (!stripeLink || !/^https?:\/\//i.test(stripeLink))) {
+        return { ok: false, error: "Bitte gültigen Stripe-Link eingeben" };
+      }
       const cleanL = leistungen.filter((l) => l.titel.trim() || l.beschreibung.trim() || l.emoji.trim());
       if (cleanL.length === 0) return { ok: false, error: "Mindestens eine Leistung erforderlich" };
       const cleanO = optionen.filter((o) => o.titel.trim() && Number(o.preis) > 0).map((o) => ({
@@ -256,14 +265,15 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       base.normalpreis = normalpreis ? Number(normalpreis) : null;
       base.miete_monatlich = mieteMonatlich ? Number(mieteMonatlich) : null;
       base.anzahlung = anzahlung ? Number(anzahlung) : null;
-      base.stripe_link = stripeLink.trim();
+      base.stripe_link = paymentMethod === "stripe" ? stripeLink.trim() : "";
       base.leistungen = cleanL;
       base.optionen = cleanO;
       base.bundles = cleanB;
     }
     return { ok: true, payload: base };
   }, [pin, dauerTage, lead, branche, nachricht, wachstumspaketPreis, wachstumspaketBeschreibung, faqs, pdfPath,
-      multiMode, pakete, preis, normalpreis, mieteMonatlich, anzahlung, stripeLink, leistungen, optionen, bundles]);
+      multiMode, pakete, preis, normalpreis, mieteMonatlich, anzahlung, stripeLink, leistungen, optionen, bundles,
+      paymentMethod]);
 
   const handlePreview = () => {
     let r: ReturnType<typeof buildPayload>;
@@ -519,6 +529,28 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 </div>
               </div>
               <Switch checked={multiMode} onCheckedChange={setMultiMode} />
+            </div>
+
+            {/* Zahlungsart */}
+            <div className="rounded-lg border p-3 space-y-2" style={{ borderColor: `${BRAND}30`, background: `${BRAND}05` }}>
+              <Label>Zahlungsart</Label>
+              <div className="grid grid-cols-2 gap-2">
+                <button type="button" onClick={() => setPaymentMethod("stripe")}
+                  className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "stripe" ? "text-white" : "bg-background text-muted-foreground"}`}
+                  style={paymentMethod === "stripe" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
+                  <CreditCard size={14} /> Stripe Checkout
+                </button>
+                <button type="button" onClick={() => setPaymentMethod("rechnung")}
+                  className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "rechnung" ? "text-white" : "bg-background text-muted-foreground"}`}
+                  style={paymentMethod === "rechnung" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
+                  <Receipt size={14} /> Zahlung per Rechnung
+                </button>
+              </div>
+              {paymentMethod === "rechnung" && (
+                <div className="text-xs text-muted-foreground bg-muted/40 rounded-md p-2 leading-relaxed">
+                  Der Kunde bucht verbindlich per Bestätigungsflow. Du erhältst eine E-Mail und sendest die Rechnung manuell. Stripe-Link wird nicht benötigt.
+                </div>
+              )}
             </div>
 
             {!multiMode ? (

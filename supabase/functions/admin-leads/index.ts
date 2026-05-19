@@ -767,7 +767,7 @@ Deno.serve(async (req) => {
         ablauf_datum, base64_data, stripe_link, pdf_path,
       } = body as Record<string, unknown>;
 
-      if (!lead_name || !lead_email || preis === undefined || preis === null || !pin || !ablauf_datum || !base64_data || !stripe_link) {
+      if (!lead_name || !lead_email || preis === undefined || preis === null || !pin || !ablauf_datum || !base64_data) {
         return new Response(JSON.stringify({ error: "Pflichtfelder fehlen" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -786,7 +786,7 @@ Deno.serve(async (req) => {
         pin,
         ablauf_datum: String(ablauf_datum),
         base64_data: String(base64_data),
-        stripe_link: String(stripe_link).slice(0, 1000),
+        stripe_link: stripe_link ? String(stripe_link).slice(0, 1000) : null,
         pdf_path: pdf_path ? String(pdf_path).slice(0, 500) : null,
         status: "aktiv",
       }).select().single();
@@ -844,6 +844,36 @@ Deno.serve(async (req) => {
         });
       }
       const { error } = await supabase.from("angebote").delete().eq("id", angebotId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "buchungen-list") {
+      const { data, error } = await supabase
+        .from("buchungen")
+        .select("*")
+        .order("gebucht_am", { ascending: false })
+        .limit(500);
+      if (error) throw error;
+      return new Response(JSON.stringify({ buchungen: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "buchung-update-status") {
+      const { buchungId, status } = body as { buchungId?: string; status?: string };
+      const allowed = ["neu", "rechnung_gesendet", "bezahlt", "storniert"];
+      if (!buchungId || !status || !allowed.includes(status)) {
+        return new Response(JSON.stringify({ error: "Ungültige Parameter" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase
+        .from("buchungen")
+        .update({ status, updated_at: new Date().toISOString() })
+        .eq("id", buchungId);
       if (error) throw error;
       return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },

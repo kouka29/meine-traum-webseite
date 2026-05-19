@@ -59,6 +59,87 @@ export type Database = {
         }
         Relationships: []
       }
+      buchungen: {
+        Row: {
+          addons: Json | null
+          agb_akzeptiert: boolean
+          agb_version: string
+          angebots_id: string | null
+          angebots_nr: string
+          gebucht_am: string
+          gesamtbetrag_brutto: number
+          gesamtbetrag_netto: number
+          id: string
+          ip_adresse: string | null
+          kostenpflichtig_bestaetigt: boolean
+          kunde_email: string
+          kunde_firma: string
+          kunde_nachname: string
+          kunde_telefon: string | null
+          kunde_vorname: string
+          leistungen: Json | null
+          mwst: number
+          notizen: string | null
+          pakete: Json | null
+          payment_method: string
+          status: string
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          addons?: Json | null
+          agb_akzeptiert?: boolean
+          agb_version?: string
+          angebots_id?: string | null
+          angebots_nr: string
+          gebucht_am?: string
+          gesamtbetrag_brutto?: number
+          gesamtbetrag_netto?: number
+          id?: string
+          ip_adresse?: string | null
+          kostenpflichtig_bestaetigt?: boolean
+          kunde_email: string
+          kunde_firma: string
+          kunde_nachname: string
+          kunde_telefon?: string | null
+          kunde_vorname: string
+          leistungen?: Json | null
+          mwst?: number
+          notizen?: string | null
+          pakete?: Json | null
+          payment_method?: string
+          status?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          addons?: Json | null
+          agb_akzeptiert?: boolean
+          agb_version?: string
+          angebots_id?: string | null
+          angebots_nr?: string
+          gebucht_am?: string
+          gesamtbetrag_brutto?: number
+          gesamtbetrag_netto?: number
+          id?: string
+          ip_adresse?: string | null
+          kostenpflichtig_bestaetigt?: boolean
+          kunde_email?: string
+          kunde_firma?: string
+          kunde_nachname?: string
+          kunde_telefon?: string | null
+          kunde_vorname?: string
+          leistungen?: Json | null
+          mwst?: number
+          notizen?: string | null
+          pakete?: Json | null
+          payment_method?: string
+          status?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       design_settings: {
         Row: {
           apple_design_enabled: boolean
