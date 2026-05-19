@@ -98,6 +98,43 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const { password, action, leadId } = body;
 
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+    // ===== PUBLIC ENDPOINTS (no password needed) =====
+    if (action === "angebot-get-by-short-id") {
+      const { short_id } = body as { short_id?: string };
+      if (!short_id) {
+        return new Response(JSON.stringify({ error: "short_id fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data, error } = await supabase
+        .from("angebote")
+        .select("base64_data, ablauf_datum, status")
+        .eq("short_id", short_id)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) {
+        return new Response(JSON.stringify({ error: "Angebot nicht gefunden" }), {
+          status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (data.status !== "aktiv") {
+        return new Response(JSON.stringify({ error: "Angebot nicht mehr aktiv" }), {
+          status: 410, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (data.ablauf_datum && new Date(data.ablauf_datum) < new Date()) {
+        return new Response(JSON.stringify({ error: "Angebot abgelaufen" }), {
+          status: 410, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      return new Response(JSON.stringify({ base64_data: data.base64_data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // ===== ADMIN ENDPOINTS (password required) =====
     if (!password || password !== ADMIN_PASSWORD) {
       recordFailure(ip);
       return new Response(JSON.stringify({ error: "Ungültiges Passwort" }), {
@@ -106,8 +143,6 @@ Deno.serve(async (req) => {
       });
     }
     recordSuccess(ip);
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // =================== SIGNED UPLOAD URL ===================
     // Liefert eine signierte URL, mit der der Browser direkt in den
