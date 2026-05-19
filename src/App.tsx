@@ -78,7 +78,7 @@ const HandwerkerRoute = () => {
 
 const ChromeWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
-  const standalone = pathname === "/angebot" || pathname === "/agb";
+  const standalone = pathname === "/angebot" || pathname === "/a" || pathname === "/agb";
   return (
     <>
       {!standalone && <Navbar />}
@@ -176,6 +176,8 @@ const App = () => (
             <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
             <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
             <Route path="/angebot" element={<Angebot />} />
+            <Route path="/a" element={<Angebot />} />
+            <Route path="/a/:shortId" element={<Angebot />} />
             <Route path="/agb" element={<AGB />} />
             <Route path="*" element={<NotFound />} />
               </Routes>
