@@ -1201,14 +1201,29 @@ function PriceSection({
                   Ihre Auswahl ({selectedOptionsCount} Option{selectedOptionsCount !== 1 ? "en" : ""})
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
-                    {Number(anzeigeGesamt).toLocaleString("de-DE")} €
-                    {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
-                  </div>
-                  {monatlicheZusatz > 0 && (
-                    <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
-                      + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
-                    </div>
+                  {priceMode === "miete" && miete ? (
+                    <>
+                      <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
+                        {Number(Number(miete) + monatlicheZusatz).toLocaleString("de-DE")} € <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}>/Monat</span>
+                      </div>
+                      {einmaligeZusatz > 0 && (
+                        <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                          + {Number(einmaligeZusatz).toLocaleString("de-DE")} € einmalig
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
+                        {Number(anzeigeGesamt).toLocaleString("de-DE")} €
+                        {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
+                      </div>
+                      {monatlicheZusatz > 0 && (
+                        <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                          + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
