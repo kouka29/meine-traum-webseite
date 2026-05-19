@@ -348,6 +348,19 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
           })),
         );
       }
+      if (Array.isArray(ex.optionen) && ex.optionen.length > 0) {
+        setOptionen(
+          ex.optionen.slice(0, 4).map((o: any) => ({
+            id: genId(),
+            emoji: typeof o?.emoji === "string" ? o.emoji : "",
+            titel: typeof o?.titel === "string" ? o.titel : "",
+            beschreibung: typeof o?.beschreibung === "string" ? o.beschreibung : "",
+            preis: typeof o?.preis === "number" ? String(o.preis) : "",
+            preis_typ: o?.preis_typ === "monatlich" ? "monatlich" : "einmalig",
+            stripe_link: "",
+          })),
+        );
+      }
       toast.success("Angebot ausgelesen — bitte prüfen und ggf. anpassen");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Upload fehlgeschlagen");
