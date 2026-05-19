@@ -781,13 +781,13 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
   setSelectedPaketId: (id: string) => void;
 }) {
   return (
-    <section style={{ padding: "clamp(48px, 7vw, 72px) 16px", background: BG_SOFT }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(180deg, #F5F4FF 0%, #FFFFFF 100%)" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <h2 style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 10, letterSpacing: "-0.02em" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Welches Paket passt zu Ihnen?
           </h2>
-          <p style={{ fontSize: 16, color: TEXT_MUTED, margin: 0 }}>
+          <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
             Wählen Sie Ihre Variante — alle Inhalte unten passen sich automatisch an.
           </p>
         </div>
@@ -808,22 +808,24 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                 onClick={() => setSelectedPaketId(p.id)}
                 style={{
                   textAlign: "left", cursor: "pointer", fontFamily: "inherit",
-                  background: active ? `${BRAND}08` : "#fff",
-                  border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.1)"}`,
-                  borderRadius: 20, padding: "26px 22px",
-                  boxShadow: active ? `0 8px 28px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
-                  transition: "all 0.2s",
+                  background: "#fff",
+                  border: active ? `2px solid ${BRAND}` : "1px solid rgba(79,63,240,0.15)",
+                  borderRadius: 20, padding: "28px 22px 22px",
+                  boxShadow: active ? "0 8px 32px rgba(79,63,240,0.15)" : "0 2px 12px rgba(79,63,240,0.05)",
+                  opacity: active ? 1 : 0.85,
+                  transform: active ? "scale(1.01)" : "scale(1)",
+                  transition: "all 0.2s ease",
                   position: "relative",
                 }}
               >
                 {badge && (
                   <div style={{
-                    position: "absolute", top: -12, right: 16,
-                    background: recommended ? BRAND_GRADIENT : "#EDE9FF",
-                    color: recommended ? "#fff" : BRAND,
-                    fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
+                    position: "absolute", top: -1, left: "50%", transform: "translateX(-50%)",
+                    background: recommended ? BRAND_GRADIENT : BRAND,
+                    color: "#fff",
+                    fontSize: 11, fontWeight: 600, letterSpacing: "0.06em",
                     textTransform: "uppercase",
-                    padding: "5px 12px", borderRadius: 50,
+                    padding: "4px 16px", borderRadius: "0 0 10px 10px",
                   }}>{badge}</div>
                 )}
                 <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
@@ -833,7 +835,8 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                 {p.beschreibung && (
                   <p style={{ fontSize: 14, color: TEXT_MUTED, margin: "0 0 14px", lineHeight: 1.5 }}>{p.beschreibung}</p>
                 )}
-                <div style={{ fontSize: 28, fontWeight: 800, color: BRAND, marginBottom: 4 }}>
+                <div style={{ borderTop: "1px solid rgba(79,63,240,0.1)", margin: "16px 0" }} />
+                <div style={{ fontSize: 40, fontWeight: 800, color: BRAND, marginBottom: 4, lineHeight: 1, letterSpacing: "-0.02em" }}>
                   {Number(p.preis).toLocaleString("de-DE")} €
                 </div>
                 {p.leistungen && p.leistungen.length > 0 && (
