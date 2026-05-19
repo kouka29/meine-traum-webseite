@@ -1385,15 +1385,12 @@ function TimelineSection() {
     { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
   ];
   return (
-    <section className="angebot-timeline-section" style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
+    <section className="angebot-timeline-section" style={{ padding: "clamp(58px, 8vw, 92px) 16px", background: "#fff" }}>
       <div className="angebot-timeline-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+        <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
           Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{ position: "relative" }}>
-          {/* Connector track behind dots (desktop) */}
-          <div className="angebot-timeline-track" aria-hidden="true" />
-          <div className="angebot-timeline-track-fill" aria-hidden="true" />
           {steps.map((s, i) => (
             <div key={s.n} className="angebot-timeline-step">
               <div className="angebot-timeline-dot">
@@ -1410,31 +1407,9 @@ function TimelineSection() {
           .angebot-timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            gap: 20px;
             position: relative;
-            padding-top: 8px;
-          }
-          .angebot-timeline-track {
-            position: absolute;
-            top: 34px;
-            left: 12.5%;
-            right: 12.5%;
-            height: 2px;
-            background: rgba(79,63,240,0.12);
-            border-radius: 2px;
-            z-index: 0;
-          }
-          .angebot-timeline-track-fill {
-            position: absolute;
-            top: 33px;
-            left: 12.5%;
-            right: 12.5%;
-            height: 4px;
-            background: linear-gradient(90deg, #4F3FF0 0%, #7B5EF8 50%, #5B8DEF 100%);
-            border-radius: 4px;
-            opacity: 0.85;
-            z-index: 0;
-            box-shadow: 0 4px 14px rgba(79,63,240,0.25);
+            padding: 0;
           }
           .angebot-timeline-step {
             position: relative;
@@ -1445,26 +1420,27 @@ function TimelineSection() {
             z-index: 1;
           }
           .angebot-timeline-dot {
-            width: 64px; height: 64px; border-radius: 50%;
+            width: 54px; height: 54px; border-radius: 18px;
             background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
             color: #fff;
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 8px 24px rgba(79,63,240,0.35), 0 0 0 6px #fff, 0 0 0 7px rgba(79,63,240,0.10);
+            margin: 0 auto -27px;
+            box-shadow: 0 14px 30px rgba(79,63,240,0.30), 0 0 0 8px #fff;
             position: relative;
+            z-index: 2;
           }
           .angebot-timeline-dot-num { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
           .angebot-timeline-card {
             width: 100%;
-            min-height: 132px;
+            min-height: 168px;
             background: #FFFFFF;
-            border: 1px solid rgba(79,63,240,0.08);
-            border-radius: 24px;
-            padding: 22px 20px;
+            border: 1px solid rgba(79,63,240,0.09);
+            border-radius: 26px;
+            padding: 42px 22px 26px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 1px 2px rgba(15,15,40,0.03), 0 14px 36px -22px rgba(79,63,240,0.20);
+            box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 24px 58px -34px rgba(79,63,240,0.35);
             transition: transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s ease, border-color .35s ease;
           }
           .angebot-timeline-card:hover {
@@ -1473,11 +1449,11 @@ function TimelineSection() {
             box-shadow: 0 4px 10px rgba(15,15,40,0.04), 0 26px 56px -20px rgba(79,63,240,0.28);
           }
           .angebot-timeline-card h3 {
-            font-size: 17px; font-weight: 700; color: ${TEXT_DARK};
-            margin: 0 0 8px; letter-spacing: -0.015em;
+            font-size: 18px; font-weight: 800; color: ${TEXT_DARK};
+            margin: 0 0 10px; letter-spacing: -0.015em;
           }
           .angebot-timeline-card p {
-            font-size: 13.5px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.5;
+            font-size: 14px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.55;
           }
           @media (max-width: 720px) {
             .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
@@ -2127,22 +2103,29 @@ function AngebotGlobalStyles() {
       .ang-trust-row {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
+        gap: 0;
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 12px;
+        border-radius: 34px;
+        background: rgba(255,255,255,0.58);
+        border: 1px solid rgba(79,63,240,0.08);
+        box-shadow: 0 28px 80px -46px rgba(79,63,240,0.42);
       }
       .ang-trust-item {
         position: relative;
         overflow: hidden;
         background: #FFFFFF;
-        border: 1px solid rgba(79,63,240,0.08);
-        border-radius: 24px;
-        padding: 36px 24px;
-        min-height: 220px;
+        border: 1px solid rgba(79,63,240,0.07);
+        border-radius: 26px;
+        padding: 34px 22px;
+        min-height: 198px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 20px 50px -18px rgba(79,63,240,0.18);
+        box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 18px 46px -30px rgba(79,63,240,0.24);
         transition: transform .4s cubic-bezier(.4,0,.2,1), box-shadow .4s ease;
       }
       .ang-trust-item::before {
