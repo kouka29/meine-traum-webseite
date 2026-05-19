@@ -23,6 +23,7 @@ export type Database = {
           lead_email: string | null
           lead_name: string | null
           normalpreis: number | null
+          pdf_path: string | null
           pin: string | null
           preis: number | null
           status: string
@@ -36,6 +37,7 @@ export type Database = {
           lead_email?: string | null
           lead_name?: string | null
           normalpreis?: number | null
+          pdf_path?: string | null
           pin?: string | null
           preis?: number | null
           status?: string
@@ -49,6 +51,7 @@ export type Database = {
           lead_email?: string | null
           lead_name?: string | null
           normalpreis?: number | null
+          pdf_path?: string | null
           pin?: string | null
           preis?: number | null
           status?: string
