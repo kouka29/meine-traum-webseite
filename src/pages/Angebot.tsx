@@ -973,13 +973,13 @@ function PriceSection({
   ctaModeAnfrage: boolean;
 }) {
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: BG_SOFT }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 100%)" }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Ihr Investitionsvolumen
           </h2>
-          <p style={{ fontSize: 16, color: TEXT_MUTED, margin: 0 }}>
+          <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
             {hasMiete ? "Zwei Wege — gleiches Ergebnis. Sie entscheiden." : "Einmalige Investition — Ihre Website gehört Ihnen."}
           </p>
         </div>
