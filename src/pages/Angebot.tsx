@@ -1390,59 +1390,110 @@ function TimelineSection() {
         <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
           Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
-        <div className="angebot-timeline" style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: 20,
-          position: "relative",
-        }}>
+        <div className="angebot-timeline" style={{ position: "relative" }}>
+          {/* Connector track behind dots (desktop) */}
+          <div className="angebot-timeline-track" aria-hidden="true" />
+          <div className="angebot-timeline-track-fill" aria-hidden="true" />
           {steps.map((s, i) => (
-            <div key={s.n} className="angebot-timeline-step" style={{ position: "relative", textAlign: "center", padding: "0 8px" }}>
-              <div className="angebot-timeline-dot" style={{
-                width: 52, height: 52, borderRadius: "50%",
-                background: BRAND_GRADIENT, color: "#fff",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 20, fontWeight: 800,
-                margin: "0 auto 16px",
-                boxShadow: "0 4px 16px rgba(79,63,240,0.3)",
-                position: "relative", zIndex: 2,
-              }}>{s.n}</div>
-              {i < steps.length - 1 && (
-                <div className="angebot-timeline-line" style={{
-                  position: "absolute", top: 26, left: "calc(50% + 30px)", right: "calc(-50% + 30px)",
-                  height: 3, background: "linear-gradient(90deg, #4F3FF0, #7B5EF8)", opacity: 0.3, zIndex: 1,
-                }} />
-              )}
-              <div className="angebot-timeline-copy">
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: TEXT_DARK, margin: "16px 0 6px" }}>{s.titel}</h3>
-                <p style={{ fontSize: 13, color: TEXT_MUTED, margin: 0, lineHeight: 1.5 }}>{s.text}</p>
+            <div key={s.n} className="angebot-timeline-step">
+              <div className="angebot-timeline-dot">
+                <span className="angebot-timeline-dot-num">{s.n}</span>
+              </div>
+              <div className="angebot-timeline-card">
+                <h3>{s.titel}</h3>
+                <p>{s.text}</p>
               </div>
             </div>
           ))}
         </div>
         <style>{`
+          .angebot-timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            position: relative;
+            padding-top: 8px;
+          }
+          .angebot-timeline-track {
+            position: absolute;
+            top: 34px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 2px;
+            background: rgba(79,63,240,0.12);
+            border-radius: 2px;
+            z-index: 0;
+          }
+          .angebot-timeline-track-fill {
+            position: absolute;
+            top: 33px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 4px;
+            background: linear-gradient(90deg, #4F3FF0 0%, #7B5EF8 50%, #5B8DEF 100%);
+            border-radius: 4px;
+            opacity: 0.85;
+            z-index: 0;
+            box-shadow: 0 4px 14px rgba(79,63,240,0.25);
+          }
+          .angebot-timeline-step {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 1;
+          }
+          .angebot-timeline-dot {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(79,63,240,0.35), 0 0 0 6px #fff, 0 0 0 7px rgba(79,63,240,0.10);
+            position: relative;
+          }
+          .angebot-timeline-dot-num { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+          .angebot-timeline-card {
+            width: 100%;
+            background: #fff;
+            border: 1px solid rgba(79,63,240,0.10);
+            border-radius: 20px;
+            padding: 20px 18px 22px;
+            box-shadow: 0 2px 6px rgba(15,15,40,0.03), 0 18px 40px -22px rgba(79,63,240,0.22);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+          }
+          .angebot-timeline-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(79,63,240,0.22);
+            box-shadow: 0 4px 10px rgba(15,15,40,0.04), 0 24px 50px -20px rgba(79,63,240,0.28);
+          }
+          .angebot-timeline-card h3 {
+            font-size: 16px; font-weight: 700; color: ${TEXT_DARK};
+            margin: 0 0 6px; letter-spacing: -0.01em;
+          }
+          .angebot-timeline-card p {
+            font-size: 13.5px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.5;
+          }
           @media (max-width: 720px) {
             .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
             .angebot-timeline-inner { padding: 0 !important; max-width: 430px !important; }
             .angebot-timeline-title { font-size: 32px !important; line-height: 1.08 !important; margin: 0 auto 30px !important; max-width: 300px !important; }
             .angebot-timeline { grid-template-columns: 1fr !important; gap: 14px !important; text-align: left !important; }
+            .angebot-timeline-track, .angebot-timeline-track-fill { display: none !important; }
             .angebot-timeline-step {
               display: grid !important;
               grid-template-columns: 48px minmax(0, 1fr) !important;
               gap: 14px !important;
               align-items: center !important;
               text-align: left !important;
-              padding: 16px !important;
-              border: 1px solid rgba(79,63,240,0.10);
-              border-radius: 20px;
-              background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFF 100%);
-              box-shadow: 0 6px 22px rgba(79,63,240,0.07);
             }
-            .angebot-timeline-dot { width: 48px !important; height: 48px !important; margin: 0 !important; font-size: 18px !important; box-shadow: 0 6px 18px rgba(79,63,240,0.24) !important; }
-            .angebot-timeline-copy { min-width: 0 !important; }
-            .angebot-timeline-copy h3 { margin: 0 0 4px !important; font-size: 15px !important; line-height: 1.25 !important; }
-            .angebot-timeline-copy p { font-size: 13px !important; line-height: 1.42 !important; }
-            .angebot-timeline-line { display: none !important; }
+            .angebot-timeline-dot { width: 48px !important; height: 48px !important; margin: 0 !important; box-shadow: 0 6px 18px rgba(79,63,240,0.24), 0 0 0 4px #fff !important; }
+            .angebot-timeline-dot-num { font-size: 18px !important; }
+            .angebot-timeline-card { padding: 0 !important; border: none !important; box-shadow: none !important; background: transparent !important; border-radius: 0 !important; }
+            .angebot-timeline-card:hover { transform: none !important; box-shadow: none !important; }
+            .angebot-timeline-card h3 { margin: 0 0 4px !important; font-size: 15px !important; line-height: 1.25 !important; }
+            .angebot-timeline-card p { font-size: 13px !important; line-height: 1.42 !important; }
           }
         `}</style>
       </div>
