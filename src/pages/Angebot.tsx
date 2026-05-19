@@ -2119,49 +2119,69 @@ function AngebotGlobalStyles() {
         .ang-count-sep { font-size: 18px; }
       }
 
-      /* Trust stats row — keine Cards, vertikale Trennlinien */
+      /* Trust stats row — Premium Glass (v2): zentriert, Aurora-Blob, uniform */
       .ang-trust-row {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        gap: 24px;
       }
       .ang-trust-item {
-        background: #FFFFFF;
-        border: 1px solid rgba(79,63,240,0.10);
-        border-radius: 22px;
-        padding: 28px 22px 26px;
+        position: relative;
+        overflow: hidden;
+        background: rgba(255,255,255,0.80);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border: 1px solid rgba(255,255,255,0.7);
+        border-radius: 24px;
+        padding: 36px 24px;
+        min-height: 220px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        box-shadow: 0 2px 6px rgba(15,15,40,0.03), 0 18px 40px -24px rgba(79,63,240,0.22);
-        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 20px 50px -18px rgba(79,63,240,0.18);
+        transition: transform .4s cubic-bezier(.4,0,.2,1), box-shadow .4s ease;
+      }
+      .ang-trust-item::before {
+        content: "";
+        position: absolute;
+        top: -50px; right: -50px;
+        width: 140px; height: 140px;
+        background: radial-gradient(circle, rgba(79,63,240,0.18), transparent 70%);
+        filter: blur(10px);
+        border-radius: 50%;
+        transition: transform .7s cubic-bezier(.4,0,.2,1);
+        pointer-events: none;
       }
       .ang-trust-item:hover {
-        transform: translateY(-3px);
-        border-color: rgba(79,63,240,0.22);
-        box-shadow: 0 4px 10px rgba(15,15,40,0.04), 0 26px 52px -22px rgba(79,63,240,0.28);
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(15,15,40,0.06), 0 32px 70px -18px rgba(79,63,240,0.30);
       }
+      .ang-trust-item:hover::before { transform: scale(1.5); }
       .ang-trust-item-icon {
-        width: 48px; height: 48px; border-radius: 14px;
+        position: relative;
+        width: 56px; height: 56px; border-radius: 16px;
         background: linear-gradient(135deg, rgba(237,233,255,0.95), rgba(245,244,255,0.95));
         color: #4F3FF0;
         display: flex; align-items: center; justify-content: center;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
       }
       .ang-trust-item-value {
-        font-size: clamp(32px, 4.2vw, 44px);
+        position: relative;
+        font-size: clamp(34px, 4.4vw, 46px);
         font-weight: 800;
         background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         line-height: 1;
-        margin-bottom: 10px;
-        letter-spacing: -0.025em;
+        margin-bottom: 12px;
+        letter-spacing: -0.03em;
       }
       .ang-trust-item-label {
+        position: relative;
         font-size: 14px; color: #6B7280; font-weight: 500; line-height: 1.4;
       }
       .ang-trust-mobile { display: none; }
