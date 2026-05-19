@@ -417,7 +417,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         borderBottom: "1px solid rgba(79,63,240,0.08)",
         padding: "14px 24px",
       }}>
-        <div style={{ maxWidth: 1040, margin: "0 auto", display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "center", gap: 10 }}>
           <img src={logo} alt="Meine Traum Webseite" width={36} height={36} style={{ display: "block" }} />
           <span style={{ fontWeight: 800, color: TEXT_DARK, fontSize: 15, letterSpacing: "-0.01em" }}>
             Meine Traum Webseite
@@ -486,9 +486,9 @@ function AngebotPage({ data }: { data: AngebotData }) {
         if (displayFaqs.length === 0) return null;
         return (
         <section style={{ padding: "clamp(48px, 8vw, 80px) 24px", background: "#F8F7FF" }}>
-          <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, textAlign: "center", letterSpacing: "-0.02em" }}>
-              Häufige Fragen
+          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+            <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+              Häufige <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Fragen</span>
             </h2>
             <p style={{ fontSize: 18, color: TEXT_MUTED, textAlign: "center", marginBottom: 48, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
               Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
@@ -593,33 +593,39 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
   return (
     <section style={{
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 60%, #F0F4FF 100%)",
-      padding: "clamp(48px, 8vw, 80px) 16px",
+      background: "linear-gradient(135deg, #F5F4FF 0%, #EEF2FF 40%, #F0F4FF 70%, #E8F4FF 100%)",
+      padding: "clamp(64px, 10vw, 110px) 20px clamp(56px, 8vw, 90px)",
     }}>
-      {/* Animierte Hintergrund-Blobs */}
-      <div aria-hidden className="ang-blob ang-blob-1" />
-      <div aria-hidden className="ang-blob ang-blob-2" />
-      <div aria-hidden className="ang-blob ang-blob-3" />
+      {/* Geometrische Deko-Elemente — wie Hauptseite */}
+      <div aria-hidden className="ang-hero-deco">
+        <div className="ang-deco-circle-lg" />
+        <div className="ang-deco-circle-md" />
+        <div className="ang-deco-dot ang-deco-dot-1" />
+        <div className="ang-deco-dot ang-deco-dot-2" />
+        <div className="ang-deco-circle-bl" />
+      </div>
 
-      <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", position: "relative", zIndex: 2 }}>
+        <div style={{ maxWidth: 860 }}>
         <div className="ang-reveal ang-d-3" style={{
           display: "inline-flex", alignItems: "center", gap: 8,
-          background: "#EDE9FF", color: BRAND,
-          padding: "8px 16px", borderRadius: 20,
+          background: "rgba(244,67,54,0.08)", color: "#E53935",
+          padding: "6px 16px", borderRadius: 20,
           fontSize: 12, fontWeight: 700,
-          textTransform: "uppercase", letterSpacing: "0.08em",
-          marginBottom: 24,
+          textTransform: "uppercase", letterSpacing: "0.06em",
+          marginBottom: 28,
         }}>
-          <Sparkles size={14} /> Persönliches Angebot — nur für Sie
+          Persönliches Angebot — nur für Sie
         </div>
 
         <h1 className="ang-reveal ang-d-4" style={{
-          fontSize: "clamp(32px, 5.2vw, 48px)", fontWeight: 800, lineHeight: 1.1,
-          color: TEXT_DARK, marginBottom: 20, letterSpacing: "-0.02em",
+          fontSize: "clamp(42px, 6.5vw, 72px)", fontWeight: 800, lineHeight: 1.05,
+          color: TEXT_DARK, marginBottom: 24, letterSpacing: "-0.025em",
+          maxWidth: 800,
         }}>
           Hallo {leadName},<br />hier ist Ihr{" "}
           <span style={{
-            background: BRAND_GRADIENT,
+            background: "linear-gradient(135deg, #4F3FF0 0%, #7B5EF8 50%, #5B8DEF 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -630,26 +636,26 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         </h1>
 
         <p className="ang-reveal ang-d-5" style={{
-          fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
-          marginBottom: 32, maxWidth: 600, fontStyle: "italic",
+          fontSize: 18, color: TEXT_MUTED, lineHeight: 1.7,
+          marginBottom: 36, maxWidth: 640,
         }}>
-          „{nachricht && nachricht.trim()
+          {nachricht && nachricht.trim()
             ? nachricht
-            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}"
+            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}
         </p>
 
-        {/* Countdown-Glass-Card */}
-        <div className="ang-reveal ang-d-6 ang-glass-count" style={{ maxWidth: 600 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 18, fontSize: 14, position: "relative" }}>
+        {/* Countdown — Inline, kein Kasten */}
+        <div className="ang-reveal ang-d-6" style={{ maxWidth: 640, marginBottom: 28 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 14, fontSize: 14 }}>
             <Clock size={16} color="#EF4444" />
-            Dieses Angebot ist reserviert bis: <strong style={{ color: TEXT_DARK }}>{ablaufStr}</strong>
+            Reserviert bis <strong style={{ color: TEXT_DARK, fontWeight: 700 }}>{ablaufStr}</strong> —
           </div>
           <div className="ang-count-row">
             {[
-              { v: days, l: "Tage" },
-              { v: hours, l: "Std" },
-              { v: mins, l: "Min" },
-              { v: secs, l: "Sek" },
+              { v: days, l: "TAGE" },
+              { v: hours, l: "STD" },
+              { v: mins, l: "MIN" },
+              { v: secs, l: "SEK" },
             ].flatMap((b, idx, arr) => {
               const block = (
                 <div key={b.l} className="ang-count-block">
@@ -663,15 +669,15 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
               return [block];
             })}
           </div>
-          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5 }}>
+          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, marginTop: 14 }}>
             Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
           </div>
         </div>
 
         {/* Trust badges */}
         <div className="ang-reveal ang-d-7" style={{
-          marginTop: 20, display: "flex", flexWrap: "wrap", gap: 18,
-          fontSize: 13, color: TEXT_MUTED, fontWeight: 600,
+          display: "flex", flexWrap: "wrap", gap: 24,
+          fontSize: 14, color: TEXT_MUTED, fontWeight: 500,
         }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
             <CheckIcon size={14} color={BRAND} /> Kein Abo
@@ -682,6 +688,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
             <CheckIcon size={14} color={BRAND} /> Umsetzung startet sofort
           </span>
+        </div>
         </div>
       </div>
     </section>
@@ -696,9 +703,9 @@ function ProblemSection() {
   ];
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <h2 style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 40, textAlign: "center", letterSpacing: "-0.02em" }}>
-          Was Ihr Unternehmen gerade kostet —<br />ohne professionelle Website
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+          Was Ihr Unternehmen gerade <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>kostet</span><br />ohne professionelle Website
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
           {problems.map((p, i) => (
@@ -803,10 +810,10 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
 }) {
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(180deg, #F5F4FF 0%, #FFFFFF 100%)" }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
-            Welches Paket passt zu Ihnen?
+          <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+            Welches <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Paket</span> passt zu Ihnen?
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
             Wählen Sie Ihre Variante — alle Inhalte unten passen sich automatisch an.
@@ -916,10 +923,10 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
   if (!leistungen || leistungen.length === 0) return null;
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
-            Was Sie konkret bekommen
+          <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+            Was wir gemeinsam <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>umsetzen</span>
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, maxWidth: 560, margin: "0 auto" }}>
             Jede Leistung — mit konkretem Nutzen für Sie.
@@ -977,10 +984,10 @@ function PriceSection({
 }) {
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px 48px", background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 100%)" }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
-            Ihr Investitionsvolumen
+          <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+            Ihr <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span>
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
             {hasMiete ? "Zwei Wege — gleiches Ergebnis. Sie entscheiden." : "Einmalige Investition — Ihre Website gehört Ihnen."}
@@ -1289,9 +1296,9 @@ function TimelineSection() {
   ];
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.02em" }}>
-          Ihr Weg zur fertigen Website
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 56, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+          Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{
           display: "grid",
@@ -1343,28 +1350,18 @@ function TrustSection() {
   ];
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: BG_SOFT }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: 16,
-        }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <div className="ang-trust-row">
           {stats.map((s, i) => (
-            <div key={i} style={{
-              background: "#fff", borderRadius: 16,
-              border: "1px solid rgba(79,63,240,0.1)",
-              padding: "28px 20px",
-              textAlign: "center",
-              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
-            }}>
+            <div key={i} className="ang-trust-item">
               <div style={{
-                fontSize: "clamp(34px, 5vw, 44px)", fontWeight: 800,
-                background: BRAND_GRADIENT,
+                fontSize: "clamp(36px, 5.5vw, 52px)", fontWeight: 800,
+                background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                lineHeight: 1, marginBottom: 8,
-                letterSpacing: "-0.02em",
+                lineHeight: 1, marginBottom: 10,
+                letterSpacing: "-0.025em",
               }}>{s.v}</div>
               <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 500, lineHeight: 1.4 }}>{s.l}</div>
             </div>
@@ -1830,21 +1827,44 @@ function AngebotGlobalStyles() {
         pointer-events: none; z-index: 0;
         animation: ang-blob-float 8s ease-in-out infinite;
       }
-      .ang-blob-1 {
-        top: -120px; right: -80px; width: 500px; height: 500px;
-        background: radial-gradient(circle, rgba(79,63,240,0.12) 0%, transparent 70%);
+
+      /* Hero deco — geometrische Kreise (wie Hauptseite) */
+      .ang-hero-deco {
+        position: absolute; inset: 0;
+        overflow: hidden; pointer-events: none; z-index: 1;
       }
-      .ang-blob-2 {
-        bottom: -80px; left: -60px; width: 350px; height: 350px;
-        background: radial-gradient(circle, rgba(123,94,248,0.08) 0%, transparent 70%);
-        animation-duration: 10s;
-        animation-direction: reverse;
+      .ang-deco-circle-lg {
+        position: absolute; top: -60px; right: -60px;
+        width: 320px; height: 320px; border-radius: 50%;
+        border: 2px solid rgba(79,63,240,0.12);
       }
-      .ang-blob-3 {
-        top: 40%; right: 5%; width: 180px; height: 180px;
-        background: radial-gradient(circle, rgba(91,141,239,0.07) 0%, transparent 70%);
-        animation-duration: 6s;
-        animation-delay: 2s;
+      .ang-deco-circle-md {
+        position: absolute; top: 35%; right: 8%;
+        width: 180px; height: 180px; border-radius: 50%;
+        border: 1.5px solid rgba(79,63,240,0.08);
+      }
+      .ang-deco-dot {
+        position: absolute; border-radius: 50%;
+      }
+      .ang-deco-dot-1 {
+        top: 15%; right: 20%;
+        width: 10px; height: 10px;
+        background: rgba(79,63,240,0.25);
+      }
+      .ang-deco-dot-2 {
+        bottom: 20%; right: 35%;
+        width: 6px; height: 6px;
+        background: rgba(123,94,248,0.2);
+      }
+      .ang-deco-circle-bl {
+        position: absolute; bottom: -140px; left: -80px;
+        width: 280px; height: 280px; border-radius: 50%;
+        border: 2px solid rgba(79,63,240,0.08);
+      }
+      @media (max-width: 720px) {
+        .ang-deco-circle-lg { width: 220px; height: 220px; top: -40px; right: -80px; }
+        .ang-deco-circle-md { display: none; }
+        .ang-deco-circle-bl { width: 200px; height: 200px; bottom: -120px; left: -100px; }
       }
 
       /* Reveal */
@@ -1859,48 +1879,55 @@ function AngebotGlobalStyles() {
       .ang-d-7 { animation-delay: 700ms; }
       .ang-stagger-leist > .ang-reveal { /* delays set inline */ }
 
-      /* Glass countdown */
-      .ang-glass-count {
-        position: relative;
-        background: rgba(255,255,255,0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255,255,255,0.8);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(79,63,240,0.10);
-        padding: 24px 28px;
-        overflow: hidden;
-      }
-      .ang-glass-count::before {
-        content: "";
-        position: absolute; top: 0; left: 0; right: 0; height: 3px;
-        background: linear-gradient(90deg, #EF4444, #FF6B6B);
-        border-radius: 20px 20px 0 0;
-      }
+      /* Countdown — inline (kein Kasten) */
       .ang-count-row {
         display: flex; align-items: center; justify-content: flex-start;
-        gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+        gap: 8px; flex-wrap: wrap;
       }
       .ang-count-block {
-        background: #F5F4FF; border-radius: 12px;
-        padding: 12px 16px; min-width: 72px; text-align: center;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(79,63,240,0.12);
+        border-radius: 8px;
+        padding: 8px 14px;
+        text-align: center;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
       }
       .ang-count-num {
-        font-size: 44px; font-weight: 800; color: #1E1B4B;
+        font-size: 28px; font-weight: 800; color: #1E1B4B;
         font-variant-numeric: tabular-nums; line-height: 1;
       }
       .ang-count-lab {
-        font-size: 11px; font-weight: 600; color: #6B7280;
-        text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px;
+        font-size: 10px; font-weight: 600; color: #6B7280;
+        text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
       }
       .ang-count-sep {
-        font-size: 28px; color: #4F3FF0; font-weight: 800;
-        align-self: center; margin: 0 4px;
+        font-size: 22px; color: #4F3FF0; font-weight: 800;
+        align-self: flex-start; margin-top: 6px;
       }
       @media (max-width: 560px) {
-        .ang-count-num { font-size: 30px; }
-        .ang-count-block { padding: 10px 10px; min-width: 56px; }
-        .ang-count-sep { font-size: 20px; margin: 0 2px; }
+        .ang-count-num { font-size: 22px; }
+        .ang-count-block { padding: 6px 10px; }
+        .ang-count-sep { font-size: 18px; }
+      }
+
+      /* Trust stats row — keine Cards, vertikale Trennlinien */
+      .ang-trust-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+      .ang-trust-item {
+        text-align: center;
+        padding: 16px 20px;
+        border-right: 1px solid rgba(79,63,240,0.12);
+      }
+      .ang-trust-item:last-child { border-right: none; }
+      @media (max-width: 720px) {
+        .ang-trust-row { grid-template-columns: 1fr 1fr; }
+        .ang-trust-item:nth-child(2) { border-right: none; }
+        .ang-trust-item:nth-child(-n+2) { border-bottom: 1px solid rgba(79,63,240,0.12); padding-bottom: 24px; }
+        .ang-trust-item:nth-child(n+3) { padding-top: 24px; }
       }
 
       /* Leistungs-Cards */
@@ -1960,7 +1987,7 @@ function AngebotGlobalStyles() {
 
       /* Reduced motion */
       @media (prefers-reduced-motion: reduce) {
-        .ang-blob, .ang-pulse-dot, .ang-reveal,
+        .ang-pulse-dot, .ang-reveal,
         .angebot-leistung-card { animation: none !important; transition: none !important; }
         .ang-reveal { opacity: 1 !important; transform: none !important; }
       }
