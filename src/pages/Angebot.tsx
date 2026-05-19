@@ -1557,16 +1557,9 @@ function TrustSection() {
         <div className="ang-trust-row">
           {stats.map((s, i) => (
             <div key={i} className="ang-trust-item">
-              <div style={{
-                fontSize: "clamp(36px, 5.5vw, 52px)", fontWeight: 800,
-                background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                lineHeight: 1, marginBottom: 10,
-                letterSpacing: "-0.025em",
-              }}>{s.v}</div>
-              <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 500, lineHeight: 1.4 }}>{s.l}</div>
+              <div className="ang-trust-item-icon" aria-hidden="true">{s.icon}</div>
+              <div className="ang-trust-item-value">{s.v}</div>
+              <div className="ang-trust-item-label">{s.l}</div>
             </div>
           ))}
         </div>
