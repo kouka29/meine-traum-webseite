@@ -20,6 +20,22 @@ const TOOL = {
         anzahlung: { type: "number", description: "Optional: Anzahlung in EUR." },
         wachstumspaket_preis: { type: "number", description: "Optional: Preis Wachstumspaket / Upsell in EUR." },
         wachstumspaket_beschreibung: { type: "string", description: "Optional: Kurzbeschreibung Wachstumspaket." },
+        optionen: {
+          type: "array",
+          description: "Optionale Zusatzpositionen / Add-ons (max 4). Positionen, die mit 'optional', 'auf Wunsch', 'Zusatz', 'Add-on' o.ä. markiert sind — NICHT in 'leistungen'.",
+          items: {
+            type: "object",
+            properties: {
+              emoji: { type: "string", description: "Passendes Emoji (1 Zeichen)." },
+              titel: { type: "string" },
+              beschreibung: { type: "string" },
+              preis: { type: "number", description: "Preis dieser Option in EUR." },
+              preis_typ: { type: "string", enum: ["einmalig", "monatlich"], description: "Standard: einmalig." },
+            },
+            required: ["titel", "preis"],
+            additionalProperties: false,
+          },
+        },
         leistungen: {
           type: "array",
           description: "Liste der Leistungen / Module (max 6).",
