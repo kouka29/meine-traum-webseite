@@ -1432,15 +1432,15 @@ function TimelineSection() {
           .angebot-timeline-dot-num { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
           .angebot-timeline-card {
             width: 100%;
-            min-height: 150px;
+            min-height: 168px;
             background: #FFFFFF;
-            border: 1px solid rgba(79,63,240,0.10);
-            border-radius: 22px;
-            padding: 24px 18px;
+            border: 1px solid rgba(79,63,240,0.09);
+            border-radius: 26px;
+            padding: 42px 22px 26px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 18px 42px -28px rgba(79,63,240,0.28);
+            box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 24px 58px -34px rgba(79,63,240,0.35);
             transition: transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s ease, border-color .35s ease;
           }
           .angebot-timeline-card:hover {
@@ -1449,11 +1449,11 @@ function TimelineSection() {
             box-shadow: 0 4px 10px rgba(15,15,40,0.04), 0 26px 56px -20px rgba(79,63,240,0.28);
           }
           .angebot-timeline-card h3 {
-            font-size: 17px; font-weight: 700; color: ${TEXT_DARK};
-            margin: 0 0 8px; letter-spacing: -0.015em;
+            font-size: 18px; font-weight: 800; color: ${TEXT_DARK};
+            margin: 0 0 10px; letter-spacing: -0.015em;
           }
           .angebot-timeline-card p {
-            font-size: 13.5px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.5;
+            font-size: 14px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.55;
           }
           @media (max-width: 720px) {
             .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
