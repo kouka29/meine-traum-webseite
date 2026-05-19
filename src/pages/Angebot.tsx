@@ -601,14 +601,14 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           Angebot.
         </h1>
 
-        {nachricht && (
-          <p style={{
-            fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
-            marginBottom: 32, maxWidth: 600, fontStyle: "italic",
-          }}>
-            „{nachricht}"
-          </p>
-        )}
+        <p style={{
+          fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
+          marginBottom: 32, maxWidth: 600, fontStyle: "italic",
+        }}>
+          „{nachricht && nachricht.trim()
+            ? nachricht
+            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}"
+        </p>
 
         {/* Countdown-Box */}
         <div style={{
