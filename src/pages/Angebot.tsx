@@ -2105,7 +2105,8 @@ function AngebotGlobalStyles() {
         grid-template-columns: 44px 1fr auto;
         align-items: center;
         gap: 14px;
-        padding: 18px 22px;
+        padding: 16px 20px;
+        min-width: 0;
       }
       .ang-trust-icon {
         width: 44px; height: 44px;
@@ -2113,15 +2114,19 @@ function AngebotGlobalStyles() {
         background: linear-gradient(135deg, rgba(237,233,255,0.9), rgba(245,244,255,0.9));
         color: #4F3FF0;
         display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
       }
       .ang-trust-label {
-        font-size: 14px;
+        font-size: 13.5px;
         color: #6B7280;
         font-weight: 500;
-        line-height: 1.35;
+        line-height: 1.3;
+        min-width: 0;
+        word-break: normal;
+        overflow-wrap: break-word;
       }
       .ang-trust-value {
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 800;
         line-height: 1;
         background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
@@ -2129,13 +2134,15 @@ function AngebotGlobalStyles() {
         -webkit-text-fill-color: transparent;
         background-clip: text;
         letter-spacing: -0.02em;
+        white-space: nowrap;
+        padding-left: 8px;
         order: 3;
       }
       .ang-trust-row-item .ang-trust-label { order: 2; }
       .ang-trust-hairline {
         height: 1px;
         background: rgba(79,63,240,0.08);
-        margin: 0 22px;
+        margin: 0 20px;
       }
 
       /* Leistungs-Cards */
