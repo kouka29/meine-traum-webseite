@@ -20,7 +20,7 @@ interface Angebot {
   short_id?: string | null;
 }
 
-const ANGEBOT_BASE_URL = "https://meine-traum-webseite.de/angebot";
+const ANGEBOT_BASE_URL = "https://meine-traum-webseite.de/a";
 
 export default function AdminAngeboteTab({ password }: { password: string }) {
   const [angebote, setAngebote] = useState<Angebot[]>([]);
@@ -44,7 +44,7 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
 
   const linkFor = (a: Angebot) =>
     a.short_id
-      ? `${ANGEBOT_BASE_URL}?s=${a.short_id}`
+      ? `${ANGEBOT_BASE_URL}?id=${a.short_id}`
       : a.base64_data ? `${ANGEBOT_BASE_URL}?d=${encodeURIComponent(a.base64_data)}` : "";
 
   const copyLink = async (a: Angebot) => {
