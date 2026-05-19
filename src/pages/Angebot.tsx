@@ -999,11 +999,8 @@ function PriceSection({
               badge="EMPFOHLEN"
               badgeStyle={{ background: BRAND_GRADIENT, color: "#fff" }}
               mainPrice={`${Number(miete).toLocaleString("de-DE")} €`}
-              mainSub={
-                anzahlung && anzahlung > 0
-                  ? `/Monat · + ${Number(anzahlung).toLocaleString("de-DE")} € Anzahlung einmalig`
-                  : "/Monat"
-              }
+              mainSub="/Monat"
+              anzahlung={anzahlung ?? null}
               normalpreis={null}
               tagline="Geringer Einstieg. Volle Leistung."
               bullets={[
