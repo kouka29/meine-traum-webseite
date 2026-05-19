@@ -1,16 +1,17 @@
-const readClipboardText = async (): Promise<string | null> => {
+const canUseAsyncClipboard = () =>
+  typeof window !== "undefined" &&
+  typeof navigator !== "undefined" &&
+  window.isSecureContext &&
+  !!navigator.clipboard;
+
+const clipboardMatches = async (text: string): Promise<boolean | null> => {
+  if (!canUseAsyncClipboard() || !navigator.clipboard.readText) return null;
+
   try {
-    if (typeof window === "undefined" || typeof navigator === "undefined") return null;
-    if (!window.isSecureContext || !navigator.clipboard?.readText) return null;
-    return await navigator.clipboard.readText();
+    return (await navigator.clipboard.readText()) === text;
   } catch {
     return null;
   }
-};
-
-const isClipboardValue = async (text: string) => {
-  const current = await readClipboardText();
-  return current === null || current === text;
 };
 
 export const copyToClipboard = async (text: string): Promise<boolean> => {
@@ -49,15 +50,17 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
     }
   };
 
-  if (copyWithTextarea() && await isClipboardValue(value)) return true;
-
   try {
-    if (typeof window !== "undefined" && window.isSecureContext && navigator.clipboard?.writeText) {
+    if (canUseAsyncClipboard() && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(value);
-      return await isClipboardValue(value);
+      return (await clipboardMatches(value)) !== false;
     }
   } catch {
-    return false;
+    // Fallback unten versuchen.
+  }
+
+  if (copyWithTextarea()) {
+    return (await clipboardMatches(value)) === true;
   }
 
   return false;
