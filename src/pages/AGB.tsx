@@ -276,6 +276,20 @@ const sections: Section[] = [
     ),
   },
   {
+    id: "marke",
+    num: "§ 12a",
+    title: "Marke, Handelsname und geistiges Eigentum des Auftragnehmers",
+    icon: BadgeCheck,
+    content: (
+      <>
+        <P n="1">Der Handelsname „Meine-Traum-Webseite" sowie das zugehörige Logo, Wort-Bild-Marken, Farbschemata und sonstige Kennzeichen sind geistiges Eigentum von Muad Amar / QK Marketing (nachfolgend „Marke"). Der Auftraggeber erwirbt durch den Vertragsschluss keinerlei Rechte an der Marke.</P>
+        <P n="2">Dem Auftraggeber ist es untersagt, die Marke „Meine-Traum-Webseite", das Logo oder damit assoziierte Kennzeichen ohne ausdrückliche schriftliche Zustimmung des Auftragnehmers zu verwenden, zu vervielfältigen, zu verändern oder Dritten zur Nutzung zu überlassen.</P>
+        <P n="3">Die Verwendung des Markennamens oder Logos im Rahmen eines Portfolio-Eintrags, einer Kundenreferenz oder ähnlicher Darstellungen durch den Auftraggeber bedarf der vorherigen schriftlichen Zustimmung des Auftragnehmers.</P>
+        <P n="4">Der Auftragnehmer ist berechtigt, den Namen und das Projekt des Auftraggebers im Rahmen seiner Referenzliste und seines Portfolios unter der Marke „Meine-Traum-Webseite" zu verwenden, sofern der Auftraggeber nicht innerhalb von 14 Tagen nach Abnahme schriftlich widerspricht (vgl. § 12 Abs. 4).</P>
+      </>
+    ),
+  },
+  {
     id: "p13",
     num: "§ 13",
     title: "Vertraulichkeit",
