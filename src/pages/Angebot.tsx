@@ -496,7 +496,6 @@ function AngebotPage({ data }: { data: AngebotData }) {
                       onClick={() => toggleOption(o.id)}
                       style={{
                         textAlign: "left",
-                        background: "#fff",
                         borderRadius: 16,
                         border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.15)"}`,
                         padding: "18px 20px",
