@@ -909,6 +909,40 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "angebot-update") {
+      const {
+        angebotId, preis, normalpreis, pin, ablauf_datum,
+        base64_data, stripe_link, pdf_path,
+      } = body as Record<string, unknown>;
+      if (!angebotId) {
+        return new Response(JSON.stringify({ error: "angebotId fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (pin !== undefined && (typeof pin !== "string" || !/^\d{5}$/.test(pin))) {
+        return new Response(JSON.stringify({ error: "PIN muss 5-stellig sein" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const updates: Record<string, unknown> = {};
+      if (preis !== undefined && preis !== null && preis !== "") updates.preis = Number(preis);
+      if (normalpreis !== undefined) {
+        updates.normalpreis = normalpreis === null || normalpreis === "" ? null : Number(normalpreis);
+      }
+      if (pin !== undefined) updates.pin = pin;
+      if (ablauf_datum !== undefined) updates.ablauf_datum = String(ablauf_datum);
+      if (base64_data !== undefined) updates.base64_data = String(base64_data);
+      if (stripe_link !== undefined) updates.stripe_link = stripe_link ? String(stripe_link).slice(0, 1000) : null;
+      if (pdf_path !== undefined) updates.pdf_path = pdf_path ? String(pdf_path).slice(0, 500) : null;
+
+      const { data, error } = await supabase.from("angebote")
+        .update(updates).eq("id", String(angebotId)).select().single();
+      if (error) throw error;
+      return new Response(JSON.stringify({ angebot: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     if (action === "buchungen-list") {
       const { data, error } = await supabase
         .from("buchungen")

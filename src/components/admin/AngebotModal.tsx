@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
   Plus, Trash2, Shuffle, Copy, ExternalLink, Loader2, FileText, CheckCircle2,
-  Upload, Sparkles, Eye, FileDown, Package, CreditCard, Receipt,
+  Upload, Sparkles, Eye, FileDown, Package, CreditCard, Receipt, Pencil,
 } from "lucide-react";
 
 interface AngebotModalProps {
@@ -19,6 +19,12 @@ interface AngebotModalProps {
   password: string;
   lead: { first_name: string; email: string; trade?: string | null; trade_other?: string | null };
   onCreated?: () => void;
+  /** Wenn gesetzt: Bearbeitungs-Modus. Felder werden aus base64_data vorbefüllt und „Speichern" updated statt zu erstellen. */
+  editing?: {
+    angebotId: string;
+    base64_data: string;
+    short_id?: string | null;
+  } | null;
 }
 
 interface Leistung { emoji: string; titel: string; beschreibung: string; }
@@ -86,7 +92,11 @@ function RephraseButton({
   );
 }
 
-export default function AngebotModal({ open, onOpenChange, password, lead, onCreated }: AngebotModalProps) {
+function decodeBase64Utf8Safe(b64: string): any | null {
+  try { return JSON.parse(decodeURIComponent(escape(atob(b64)))); } catch { return null; }
+}
+
+export default function AngebotModal({ open, onOpenChange, password, lead, onCreated, editing }: AngebotModalProps) {
   const branche = lead.trade === "Sonstiges" && lead.trade_other ? lead.trade_other : (lead.trade || "");
 
   // Globaler Zustand
@@ -133,8 +143,79 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       setPakete([emptyPaket("Starter"), emptyPaket("Pro")]);
       setPaymentMethod("stripe");
       setResult(null);
+
+      // Edit-Modus: bestehende Daten einladen
+      if (editing?.base64_data) {
+        const d = decodeBase64Utf8Safe(editing.base64_data);
+        if (d && typeof d === "object") {
+          setNachricht(String(d.nachricht || "").slice(0, 200));
+          if (typeof d.pin === "string" && /^\d{5}$/.test(d.pin)) setPin(d.pin);
+          if (d.ablauf_datum) {
+            const ms = new Date(d.ablauf_datum).getTime() - Date.now();
+            const days = Math.max(1, Math.round(ms / 86400000));
+            setDauerTage(String(Math.min(365, days)));
+          }
+          if (typeof d.wachstumspaket_preis === "number") setWachstumspaketPreis(String(d.wachstumspaket_preis));
+          if (typeof d.wachstumspaket_beschreibung === "string") setWachstumspaketBeschreibung(d.wachstumspaket_beschreibung);
+          if (Array.isArray(d.faqs)) setFaqs(d.faqs.slice(0, 5).map((f: any) => ({ frage: String(f?.frage || ""), antwort: String(f?.antwort || "") })));
+          if (d.pdf_path) setPdfPath(String(d.pdf_path));
+          if (d.payment_method === "rechnung") setPaymentMethod("rechnung");
+
+          if (Array.isArray(d.pakete) && d.pakete.length > 0) {
+            setMultiMode(true);
+            setPakete(d.pakete.slice(0, 3).map((p: any) => ({
+              id: genId(),
+              name: String(p?.name || ""), badge: String(p?.badge || ""), beschreibung: String(p?.beschreibung || ""),
+              preis: typeof p?.preis === "number" ? String(p.preis) : "",
+              normalpreis: typeof p?.normalpreis === "number" ? String(p.normalpreis) : "",
+              miete_monatlich: typeof p?.miete_monatlich === "number" ? String(p.miete_monatlich) : "",
+              anzahlung: typeof p?.anzahlung === "number" ? String(p.anzahlung) : "",
+              stripe_link: String(p?.stripe_link || ""),
+              leistungen: Array.isArray(p?.leistungen) && p.leistungen.length > 0
+                ? p.leistungen.map((l: any) => ({ emoji: String(l?.emoji || ""), titel: String(l?.titel || ""), beschreibung: String(l?.beschreibung || "") }))
+                : [emptyLeistung()],
+              optionen: Array.isArray(p?.optionen) ? p.optionen.map((o: any) => ({
+                id: genId(), emoji: String(o?.emoji || ""), titel: String(o?.titel || ""), beschreibung: String(o?.beschreibung || ""),
+                preis: typeof o?.preis === "number" ? String(o.preis) : "",
+                preis_typ: o?.preis_typ === "monatlich" ? "monatlich" : "einmalig",
+                stripe_link: String(o?.stripe_link || ""),
+              })) : [],
+            })));
+          } else {
+            setMultiMode(false);
+            if (typeof d.preis === "number") setPreis(String(d.preis));
+            if (typeof d.normalpreis === "number") setNormalpreis(String(d.normalpreis));
+            if (typeof d.miete_monatlich === "number") setMieteMonatlich(String(d.miete_monatlich));
+            if (typeof d.anzahlung === "number") setAnzahlung(String(d.anzahlung));
+            if (typeof d.stripe_link === "string") setStripeLink(d.stripe_link);
+            if (Array.isArray(d.leistungen) && d.leistungen.length > 0) {
+              setLeistungen(d.leistungen.map((l: any) => ({ emoji: String(l?.emoji || ""), titel: String(l?.titel || ""), beschreibung: String(l?.beschreibung || "") })));
+            }
+            if (Array.isArray(d.optionen)) {
+              const opts = d.optionen.map((o: any) => ({
+                id: String(o?.id || genId()),
+                emoji: String(o?.emoji || ""), titel: String(o?.titel || ""), beschreibung: String(o?.beschreibung || ""),
+                preis: typeof o?.preis === "number" ? String(o.preis) : "",
+                preis_typ: o?.preis_typ === "monatlich" ? "monatlich" : "einmalig",
+                stripe_link: String(o?.stripe_link || ""),
+              }));
+              setOptionen(opts);
+            }
+            if (Array.isArray(d.bundles)) {
+              setBundles(d.bundles.map((b: any) => ({
+                id: String(b?.id || genId()),
+                label: String(b?.label || ""),
+                option_ids: Array.isArray(b?.option_ids) ? b.option_ids.map(String) : [],
+                gesamt_preis: typeof b?.gesamt_preis === "number" ? String(b.gesamt_preis) : "",
+                stripe_link: String(b?.stripe_link || ""),
+              })));
+            }
+          }
+        }
+      }
     }
-  }, [open]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, editing?.angebotId]);
 
   // Helpers Single-Mode
   const updateLeistung = (i: number, p: Partial<Leistung>) =>
@@ -290,6 +371,29 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
     const base64 = encodeBase64Utf8(r.payload);
 
     setSaving(true);
+    if (editing?.angebotId) {
+      // UPDATE bestehendes Angebot
+      const { data, error } = await supabase.functions.invoke("admin-leads", {
+        body: {
+          password, action: "angebot-update",
+          angebotId: editing.angebotId,
+          preis: r.payload.preis,
+          normalpreis: r.payload.normalpreis,
+          pin, ablauf_datum: r.payload.ablauf_datum,
+          base64_data: base64, stripe_link: r.payload.stripe_link,
+          pdf_path: pdfPath,
+        },
+      });
+      setSaving(false);
+      if (error || data?.error) { toast.error(data?.error || error?.message || "Fehler"); return; }
+      const shortId = editing.short_id;
+      const link = shortId ? `${ANGEBOT_BASE_URL}?s=${shortId}` : `${ANGEBOT_BASE_URL}?d=${base64}`;
+      toast.success("Angebot aktualisiert");
+      setResult({ link, pin });
+      onCreated?.();
+      return;
+    }
+
     const { data, error } = await supabase.functions.invoke("admin-leads", {
       body: {
         password, action: "angebot-create",
@@ -425,8 +529,8 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <FileText size={20} style={{ color: BRAND }} />
-            Angebot für {lead.first_name} erstellen
+            {editing ? <Pencil size={20} style={{ color: BRAND }} /> : <FileText size={20} style={{ color: BRAND }} />}
+            {editing ? `Angebot für ${lead.first_name} bearbeiten` : `Angebot für ${lead.first_name} erstellen`}
           </DialogTitle>
         </DialogHeader>
 
@@ -638,7 +742,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 className="flex-[2] text-white"
                 style={{ background: `linear-gradient(135deg, ${BRAND}, #7B5EF8)` }}>
                 {saving ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
-                Angebot-Link generieren
+                {editing ? "Änderungen speichern" : "Angebot-Link generieren"}
               </Button>
             </div>
           </div>
