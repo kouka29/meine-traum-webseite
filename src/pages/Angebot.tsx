@@ -110,7 +110,7 @@ export default function Angebot() {
   useJakartaFont();
   const [params] = useSearchParams();
   const d = params.get("d");
-  const s = params.get("s");
+  const s = params.get("s") || params.get("id");
   const previewMode = params.get("preview") === "1";
 
   const [resolvedB64, setResolvedB64] = useState<string | null>(d);
@@ -122,8 +122,9 @@ export default function Angebot() {
     let cancelled = false;
     (async () => {
       setLoadingShort(true);
+      const cleanShortId = s.trim().replace(/^\?+|^s=/i, "").trim();
       const { data: res, error } = await supabase.functions.invoke("admin-leads", {
-        body: { action: "angebot-get-by-short-id", short_id: s },
+        body: { action: "angebot-get-by-short-id", short_id: cleanShortId },
       });
       if (cancelled) return;
       if (error || res?.error || !res?.base64_data) {
