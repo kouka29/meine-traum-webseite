@@ -650,15 +650,18 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
               { v: hours, l: "Std" },
               { v: mins, l: "Min" },
               { v: secs, l: "Sek" },
-            ].map((b, idx) => (
-              <>
+            ].flatMap((b, idx, arr) => {
+              const block = (
                 <div key={b.l} className="ang-count-block">
                   <div className="ang-count-num">{pad(b.v)}</div>
                   <div className="ang-count-lab">{b.l}</div>
                 </div>
-                {idx < 3 && <span key={`sep-${idx}`} className="ang-count-sep">:</span>}
-              </>
-            ))}
+              );
+              if (idx < arr.length - 1) {
+                return [block, <span key={`sep-${idx}`} className="ang-count-sep">:</span>];
+              }
+              return [block];
+            })}
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5 }}>
             Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
