@@ -1350,28 +1350,18 @@ function TrustSection() {
   ];
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: BG_SOFT }}>
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: 16,
-        }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <div className="ang-trust-row">
           {stats.map((s, i) => (
-            <div key={i} style={{
-              background: "#fff", borderRadius: 16,
-              border: "1px solid rgba(79,63,240,0.1)",
-              padding: "28px 20px",
-              textAlign: "center",
-              boxShadow: "0 2px 16px rgba(79,63,240,0.06)",
-            }}>
+            <div key={i} className="ang-trust-item">
               <div style={{
-                fontSize: "clamp(34px, 5vw, 44px)", fontWeight: 800,
-                background: BRAND_GRADIENT,
+                fontSize: "clamp(36px, 5.5vw, 52px)", fontWeight: 800,
+                background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                lineHeight: 1, marginBottom: 8,
-                letterSpacing: "-0.02em",
+                lineHeight: 1, marginBottom: 10,
+                letterSpacing: "-0.025em",
               }}>{s.v}</div>
               <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 500, lineHeight: 1.4 }}>{s.l}</div>
             </div>
