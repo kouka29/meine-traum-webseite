@@ -1,73 +1,112 @@
 
-# Erweiterung Angebotssystem
+# Diskussion & Plan — 3 Conversion-Probleme auf /a/[slug]
 
-## 1. Datenmodell (Payload-Erweiterung, keine DB-Migration nötig außer Storage)
+Als Team aus **Conversion-Stratege + Senior Copywriter + UX/UI Designer + Branchenexperte** — hier die Analyse und Empfehlung pro Punkt.
 
-Neues optionales Feld `pakete` im Base64-Payload:
+---
 
-```ts
-pakete?: Array<{
-  id: string
-  name: string                // "Starter", "Pro"
-  badge?: string              // z.B. "Empfohlen"
-  beschreibung?: string
-  preis: number
-  normalpreis?: number | null
-  miete_monatlich?: number | null
-  anzahlung?: number | null
-  stripe_link: string
-  leistungen: Leistung[]
-  optionen?: Option[]         // Add-ons NUR für dieses Paket
-  bundles?: Bundle[]          // Bundles NUR für dieses Paket
-}>
-pdf_path?: string             // Storage-Pfad zum Original-PDF
+## PROBLEM 1 — Paket-Wahl zeigt nur Kaufpreis (2.490 € / 3.900 €)
+
+**Diagnose:**
+Der Kunde sieht sofort den vollen Kaufpreis ohne zu wissen, dass es auch eine Mietoption ab 139 €/Monat gibt. Wer mit so einer Summe nicht gerechnet hat, scrollt nicht weiter — er schließt. Wir verlieren ihn 3 Sekunden bevor wir unser stärkstes Argument zeigen konnten.
+
+**Was die Rollen sagen:**
+
+- **Conversion-Stratege:** "Price anchoring zu früh auf den höchsten Wert killt die Conversion. Wir müssen die niedrigste Einstiegshürde zuerst kommunizieren."
+- **Copywriter:** "Niemand kauft eine Zahl. Sie kaufen eine Entscheidung. Gib ihnen zwei Wege, nicht einen Preis."
+- **UX-Designer:** "Dual-Pricing direkt auf der Card — gleich sichtbar, gleichwertig dargestellt."
+- **Branchenexperte:** "Im Webdesign-Markt erwartet der Kunde heute beide Modelle. Wer nur Kauf zeigt, wirkt teuer und unflexibel."
+
+**Empfehlung — Dual-Price Toggle auf jeder Paket-Card:**
+
+```
+┌────────────────────────────────┐
+│  EINSTIEG                      │
+│  E-COMMERCE PAKET S            │
+│  Professioneller Online-Shop…  │
+│                                │
+│  ┌──────────┬──────────────┐   │
+│  │ MIETEN   │  KAUFEN      │   │  ← Toggle
+│  └──────────┴──────────────┘   │
+│                                │
+│  ab  139 €/Monat               │  ← große Zahl
+│  oder einmalig 2.490 €         │  ← kleine Zeile
+│                                │
+│  ✓ Keine hohe Anfangsinvestition│
+│  ✓ Monatlich kündbar nach 12 M.│
+│                                │
+│  [ Alle 7 Leistungen anzeigen ]│
+│  [ Dieses Paket wählen      ]  │
+└────────────────────────────────┘
 ```
 
-Fallback: wenn `pakete` leer/fehlt → bestehende flache Struktur weiterverwenden (Backward-Compat).
+Dazu **über den Paketen** ein kurzer Hinweis-Streifen:
+> "Zwei Wege zu Ihrer Website — mieten ab 139 €/Monat oder einmalig kaufen. Sie entscheiden später."
 
-## 2. Storage (Migration nötig)
+Effekt: Der erste Preis, den der Kunde sieht, ist **139 €**, nicht 2.490 €. Die Kaufoption bleibt prominent — aber sie schreckt nicht mehr ab.
 
-- Neuer privater Bucket `angebot-uploads`
-- RLS: nur Service-Role darf hochladen/lesen
-- Kundenseite lädt PDF über neuen Edge-Function-Endpoint `angebot-pdf` (validiert PIN+ID, liefert signierte URL, 5 Min gültig)
+---
 
-## 3. AngebotModal Umbau (`src/components/admin/AngebotModal.tsx`)
+## PROBLEM 2 — "Was wir gemeinsam umsetzen" zeigt Leistungen ein zweites Mal
 
-- **Modus-Toggle oben**: "Einzelangebot" vs "Mehrere Pakete"
-- **Multi-Paket-Editor**: bis zu 3 Pakete als Akkordeon, jedes mit eigenem Editor (Name, Badge, Preis, Stripe-Link, Beschreibung, Leistungen, Add-on-Optionen, Bundles)
-- **Gültigkeit**: number-Input "X Tage" + Schnellbuttons 7/14/30
-- **Sparkles-Button** (KI-Neuformulierung) neben jedem Freitext: Nachricht, Wachstumspaket-Beschreibung, jede Leistungs-Beschreibung, jede Paket-Beschreibung → ruft neue Edge-Function `rephrase-text`
-- **Upload-Bereich**: Datei wird zusätzlich zu KI-Parsing in `angebot-uploads` Bucket gespeichert, `pdf_path` in State gespeichert
-- **Live-Vorschau-Button**: "Kundenansicht öffnen" — baut Payload aus aktuellem Formstate, Base64-Encode, öffnet `/angebot?d=...&preview=1` in neuem Tab (Preview-Mode überspringt PIN)
+**Diagnose:**
+Die Leistungen stehen bereits ausklappbar auf der Paket-Card oben. Sie nochmal als 7 große Cards mit identischem Inhalt zu wiederholen, wirkt redundant — und die generischen lila ✦-Icons machen es visuell unruhig ohne Information hinzuzufügen.
 
-## 4. Edge Functions
+**Was die Rollen sagen:**
 
-### `parse-angebot-upload` (Update)
-Tool-Schema erweitern: zusätzlich `pakete` extrahieren — wenn Dokument mehrere Pakete (Starter/Pro/Premium) enthält, in `pakete[]` mit eigenen Leistungen mappen statt flach in `leistungen`.
+- **UX-Designer:** "Doppelte Information = kognitive Last. Entweder weglassen oder neu framen."
+- **Copywriter:** "Wenn wir es nochmal zeigen, dann mit **anderem Blickwinkel** — nicht 'was' sondern 'warum es Ihnen hilft'."
+- **Conversion-Stratege:** "Die zweite Wiederholung sollte den **Wert** verkaufen, nicht das Feature."
 
-### `rephrase-text` (NEU)
-- Input: `{ password, text, kontext: "nachricht"|"leistung"|"wachstumspaket"|"paket", ton?: "professionell"|"locker" }`
-- Output: `{ text: string }`
-- Verwendet Lovable AI `google/gemini-2.5-flash`
+**Zwei Optionen — bitte wählen:**
 
-### `angebot-pdf` (NEU)
-- Input: `{ id, pin }`
-- Lädt Angebot aus DB, prüft PIN, prüft `ablauf_datum`, liefert signierte URL aus Storage
+**Option A (radikal, empfohlen):** Section komplett entfernen. Stattdessen direkt unter den Paketen ein **"So läuft Ihr Projekt"** Block (Timeline) — das beantwortet die Frage, die jetzt offen ist: "Wie geht es weiter, wenn ich buche?"
 
-### `admin-leads` (Update)
-- `angebot-upload-pdf` action: nimmt base64 + filename, lädt nach Storage, returned `pdf_path`
+**Option B (sanft):** Section umbauen zu **"Was Sie davon haben"** — keine Feature-Liste mehr, sondern 4–5 **Benefit-Statements** mit Mini-Icons:
+> "Kunden bestellen auch nachts" · "Sie wirken sofort professionell" · "Sie sparen Stunden manueller Arbeit" · "Sie brauchen kein Technik-Wissen"
 
-## 5. Angebot.tsx Umbau (`src/pages/Angebot.tsx`)
+Keine Card-Wiederholung der Features oben.
 
-- Wenn `data.pakete?.length > 0` → **Paket-Switcher** oberhalb der Leistungen (Karten oder Tabs)
-- Aktives Paket bestimmt: Leistungen, Preis-Card, Add-ons, Bundles, Stripe-CTA
-- Bei aktivem Paket: bestehende Add-on/Bundle-Logik gilt INNERHALB des Pakets
-- **PDF-Download-Button** in Hero-Bereich (nur wenn `pdf_path` vorhanden) → ruft `angebot-pdf` Edge-Function
-- **Preview-Mode**: `?preview=1` Param → PIN-Gate skip, "Vorschau-Banner" oben
+---
 
-## 6. Reihenfolge
+## PROBLEM 3 — "Kauf oder Miete" wird nicht als Entscheidung kommuniziert
 
-1. Migration: Storage-Bucket + RLS
-2. Edge Functions: `rephrase-text`, `angebot-pdf`, Update `parse-angebot-upload`, Update `admin-leads`
-3. AngebotModal: Multi-Paket-Editor + freie Gültigkeit + Sparkles + Upload-zu-Storage + Live-Vorschau
-4. Angebot.tsx: Paket-Switcher + Preview-Mode + PDF-Download
+**Diagnose:**
+Die zwei Preis-Karten stehen nebeneinander, aber es ist nicht visuell klar: **"Das ist ein ODER — Sie wählen eines von beidem."** Es sieht aus wie zwei getrennte Angebote oder gar wie eine Addition.
+
+**Was die Rollen sagen:**
+
+- **UX-Designer:** "Es fehlt das visuelle Verbindungs-Element zwischen den Karten — ein 'ODER' in der Mitte."
+- **Copywriter:** "Headline muss die Entscheidung framen: nicht 'Investitionsvolumen' (analytisch), sondern 'Wie möchten Sie zahlen?' (handlungsorientiert)."
+- **Branchenexperte:** "Kunden kennen das Muster von Streaming-Abos: 'Monatlich vs. Jährlich'. Das gleiche Muster funktioniert hier."
+
+**Empfehlung:**
+
+1. **Neue Headline:** "Wie möchten Sie zahlen?" + Subtext: "Beide Wege — gleiches Ergebnis. Sie entscheiden."
+2. **"ODER"-Badge** zwischen den Karten (Kreis, weiß, Border, absolut positioniert in der Mitte)
+3. **Visuelle Hierarchie aufbrechen** — eine Karte aktiv hervorgehoben (Miete, da Einstiegshürde niedriger = mehr Conversions), die andere zurückgenommen
+4. **Comparison-Row darunter:** Mini-Tabelle die zeigt was identisch ist ("Beide enthalten: alles aus dem Paket, 2 Korrekturrunden, DSGVO, …")
+
+```
+       Wie möchten Sie zahlen?
+       Beide Wege — gleiches Ergebnis.
+
+  ┌──────────────┐  ╭───╮  ┌──────────────┐
+  │ EINMAL KAUFEN│  │ODER│  │ MONATLICH    │ ★ EMPFOHLEN
+  │              │  ╰───╯  │              │
+  │   2.490 €    │         │  139 €/Monat │
+  │              │         │              │
+  └──────────────┘         └──────────────┘
+
+  Beides enthält: alles aus Paket S · 2 Korrekturen · DSGVO · Hosting
+```
+
+---
+
+## ENTSCHEIDUNGEN — bitte bestätigen
+
+1. **Problem 1:** Dual-Price-Toggle auf Paket-Cards einbauen + Hinweis-Streifen darüber? **(empfohlen: ja)**
+2. **Problem 2:** Option A (Section ersetzen durch Timeline) oder Option B (zu Benefits umbauen)?
+3. **Problem 3:** "ODER"-Badge + neue Headline + Comparison-Row? **(empfohlen: ja)**
+
+Sobald Du die 3 Punkte bestätigst (oder Variationen wünschst), setze ich es um.
