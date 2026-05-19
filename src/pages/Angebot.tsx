@@ -1405,9 +1405,26 @@ function TimelineSection() {
         </div>
         <style>{`
           @media (max-width: 720px) {
-            .angebot-timeline { grid-template-columns: 1fr !important; gap: 28px !important; text-align: left !important; }
-            .angebot-timeline > div { display: grid !important; grid-template-columns: 56px 1fr !important; gap: 16px !important; align-items: start !important; text-align: left !important; }
-            .angebot-timeline > div > div:first-child { margin: 0 !important; }
+            .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
+            .angebot-timeline-inner { padding: 0 !important; max-width: 430px !important; }
+            .angebot-timeline-title { font-size: 32px !important; line-height: 1.08 !important; margin: 0 auto 30px !important; max-width: 300px !important; }
+            .angebot-timeline { grid-template-columns: 1fr !important; gap: 14px !important; text-align: left !important; }
+            .angebot-timeline-step {
+              display: grid !important;
+              grid-template-columns: 48px minmax(0, 1fr) !important;
+              gap: 14px !important;
+              align-items: center !important;
+              text-align: left !important;
+              padding: 16px !important;
+              border: 1px solid rgba(79,63,240,0.10);
+              border-radius: 20px;
+              background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFF 100%);
+              box-shadow: 0 6px 22px rgba(79,63,240,0.07);
+            }
+            .angebot-timeline-dot { width: 48px !important; height: 48px !important; margin: 0 !important; font-size: 18px !important; box-shadow: 0 6px 18px rgba(79,63,240,0.24) !important; }
+            .angebot-timeline-copy { min-width: 0 !important; }
+            .angebot-timeline-copy h3 { margin: 0 0 4px !important; font-size: 15px !important; line-height: 1.25 !important; }
+            .angebot-timeline-copy p { font-size: 13px !important; line-height: 1.42 !important; }
             .angebot-timeline-line { display: none !important; }
           }
         `}</style>
