@@ -767,7 +767,7 @@ Deno.serve(async (req) => {
         ablauf_datum, base64_data, stripe_link, pdf_path,
       } = body as Record<string, unknown>;
 
-      if (!lead_name || !lead_email || preis === undefined || preis === null || !pin || !ablauf_datum || !base64_data || !stripe_link) {
+      if (!lead_name || !lead_email || preis === undefined || preis === null || !pin || !ablauf_datum || !base64_data) {
         return new Response(JSON.stringify({ error: "Pflichtfelder fehlen" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -786,7 +786,7 @@ Deno.serve(async (req) => {
         pin,
         ablauf_datum: String(ablauf_datum),
         base64_data: String(base64_data),
-        stripe_link: String(stripe_link).slice(0, 1000),
+        stripe_link: stripe_link ? String(stripe_link).slice(0, 1000) : null,
         pdf_path: pdf_path ? String(pdf_path).slice(0, 500) : null,
         status: "aktiv",
       }).select().single();
