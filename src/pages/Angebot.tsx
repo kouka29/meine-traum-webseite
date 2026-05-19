@@ -474,6 +474,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         toggleOption={toggleOption}
         anzeigeGesamt={anzeigeGesamt}
         monatlicheZusatz={monatlicheZusatz}
+        einmaligeZusatz={einmaligeZusatz}
         selectedOptionsCount={selectedOptions.length}
         matchedBundle={matchedBundle}
         isRechnung={isRechnung}
@@ -1001,7 +1002,7 @@ function PriceSection({
   preis, normalpreis, miete, anzahlung,
   priceMode, setPriceMode, hasMiete,
   optionen, selectedOptionIds, toggleOption,
-  anzeigeGesamt, monatlicheZusatz, selectedOptionsCount, matchedBundle,
+  anzeigeGesamt, monatlicheZusatz, einmaligeZusatz, selectedOptionsCount, matchedBundle,
   isRechnung, ctaModeAnfrage,
 }: {
   preis: number;
@@ -1016,6 +1017,7 @@ function PriceSection({
   toggleOption: (id: string) => void;
   anzeigeGesamt: number;
   monatlicheZusatz: number;
+  einmaligeZusatz: number;
   selectedOptionsCount: number;
   matchedBundle: AngebotBundle | null | undefined;
   isRechnung: boolean;
@@ -1201,14 +1203,29 @@ function PriceSection({
                   Ihre Auswahl ({selectedOptionsCount} Option{selectedOptionsCount !== 1 ? "en" : ""})
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
-                    {Number(anzeigeGesamt).toLocaleString("de-DE")} €
-                    {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
-                  </div>
-                  {monatlicheZusatz > 0 && (
-                    <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
-                      + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
-                    </div>
+                  {priceMode === "miete" && miete ? (
+                    <>
+                      <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
+                        {Number(Number(miete) + monatlicheZusatz).toLocaleString("de-DE")} € <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}>/Monat</span>
+                      </div>
+                      {einmaligeZusatz > 0 && (
+                        <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                          + {Number(einmaligeZusatz).toLocaleString("de-DE")} € einmalig
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
+                        {Number(anzeigeGesamt).toLocaleString("de-DE")} €
+                        {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
+                      </div>
+                      {monatlicheZusatz > 0 && (
+                        <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+                          + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
