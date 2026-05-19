@@ -1452,116 +1452,47 @@ function TimelineSection() {
 
 function TrustSection() {
   const stats = [
-    { v: "150+", l: "Webseiten umgesetzt" },
-    { v: "98%", l: "Weiterempfehlungsrate" },
-    { v: "48h", l: "Bis zum ersten Konzept" },
-    { v: "2–5x", l: "Mehr Anfragen nach Launch" },
+    {
+      v: "150+", l: "Webseiten umgesetzt",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg>
+      ),
+    },
+    {
+      v: "98%", l: "Weiterempfehlungsrate",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      ),
+    },
+    {
+      v: "48h", l: "Bis zum ersten Konzept",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      ),
+    },
+    {
+      v: "2–5x", l: "Mehr Anfragen nach Launch",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+      ),
+    },
   ];
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const userPausedRef = useRef(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia("(max-width: 720px)");
-    const update = () => setIsMobile(mql.matches);
-    update();
-    mql.addEventListener("change", update);
-    return () => mql.removeEventListener("change", update);
-  }, []);
-
-  // Track active card via scroll position
-  useEffect(() => {
-    if (!isMobile) return;
-    const el = trackRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const w = el.clientWidth;
-      if (w > 0) setActiveIdx(Math.round(el.scrollLeft / w));
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [isMobile]);
-
-  // Pause auto-advance on user interaction
-  useEffect(() => {
-    if (!isMobile) return;
-    const el = trackRef.current;
-    if (!el) return;
-    const pause = () => { userPausedRef.current = true; };
-    el.addEventListener("touchstart", pause, { passive: true });
-    el.addEventListener("pointerdown", pause, { passive: true });
-    return () => {
-      el.removeEventListener("touchstart", pause);
-      el.removeEventListener("pointerdown", pause);
-    };
-  }, [isMobile]);
-
-  // Auto-advance every 4s on mobile
-  useEffect(() => {
-    if (!isMobile) return;
-    const id = setInterval(() => {
-      if (userPausedRef.current) return;
-      const el = trackRef.current;
-      if (!el) return;
-      const w = el.clientWidth;
-      const next = (Math.round(el.scrollLeft / w) + 1) % stats.length;
-      el.scrollTo({ left: next * w, behavior: "smooth" });
-    }, 4000);
-    return () => clearInterval(id);
-  }, [isMobile, stats.length]);
-
-  const goTo = (i: number) => {
-    userPausedRef.current = true;
-    const el = trackRef.current;
-    if (!el) return;
-    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
-  };
 
   return (
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: BG_SOFT }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        {/* Mobile: Snap-Carousel with auto-advance + dots */}
+        {/* Mobile: Icon list with hairlines */}
         <div className="ang-trust-mobile">
-          <div style={{
-            display: "flex", justifyContent: "space-between", alignItems: "center",
-            padding: "0 4px", marginBottom: 14,
-          }}>
-            <span style={{
-              fontSize: 10, fontWeight: 800, letterSpacing: "0.2em",
-              color: "rgba(79,63,240,0.6)", textTransform: "uppercase",
-            }}>Ergebnisse</span>
-          </div>
-          <div ref={trackRef} className="ang-trust-track">
+          <div className="ang-trust-list">
             {stats.map((s, i) => (
-              <div key={i} className="ang-trust-slide">
-                <div className="ang-trust-card">
-                  <div style={{
-                    fontSize: 60, fontWeight: 800, lineHeight: 1,
-                    background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    letterSpacing: "-0.035em",
-                    marginBottom: 14,
-                  }}>{s.v}</div>
-                  <p style={{
-                    fontSize: 15, color: TEXT_MUTED, fontWeight: 500,
-                    lineHeight: 1.45, margin: 0, maxWidth: 200, textAlign: "center",
-                  }}>{s.l}</p>
+              <div key={i}>
+                <div className="ang-trust-row-item">
+                  <div className="ang-trust-icon" aria-hidden="true">{s.icon}</div>
+                  <div className="ang-trust-value">{s.v}</div>
+                  <div className="ang-trust-label">{s.l}</div>
                 </div>
+                {i < stats.length - 1 && <div className="ang-trust-hairline" />}
               </div>
-            ))}
-          </div>
-          <div className="ang-trust-dots">
-            {stats.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                aria-label={`Statistik ${i + 1}`}
-                onClick={() => goTo(i)}
-                className={`ang-trust-dot ${i === activeIdx ? "active" : ""}`}
-              />
             ))}
           </div>
         </div>
