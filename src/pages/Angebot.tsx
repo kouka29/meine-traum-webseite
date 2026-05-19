@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Lock, Shield, Clock, Sparkles, CheckCircle2, Eye, Loader2, X, CheckCheck, AlertTriangle, Check as CheckIcon, ChevronRight } from "lucide-react";
+import { Lock, Shield, Clock, Sparkles, CheckCircle2, Eye, Loader2, X, CheckCheck, AlertTriangle, Check as CheckIcon, ChevronRight, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
+import logo from "@/assets/logo.png";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
@@ -400,8 +401,29 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
   const showProblemSection = !!(data.lead_name && data.branche);
 
+  // ─── Preis-Modus (Kauf / Miete) ──────────────────────
+  const hasMiete = !!(aktiveMiete && aktiveMiete > 0);
+  const [priceMode, setPriceMode] = useState<"kauf" | "miete">(hasMiete ? "miete" : "kauf");
+  useEffect(() => {
+    setPriceMode(hasMiete ? "miete" : "kauf");
+  }, [hasMiete, selectedPaketId]);
+
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? 96 : 0 }}>
+      {/* Standalone Header: nur Logo, kein Link */}
+      <header style={{
+        background: "#fff",
+        borderBottom: "1px solid rgba(79,63,240,0.08)",
+        padding: "14px 24px",
+      }}>
+        <div style={{ maxWidth: 1040, margin: "0 auto", display: "flex", alignItems: "center", gap: 10 }}>
+          <img src={logo} alt="Meine Traum Webseite" width={36} height={36} style={{ display: "block" }} />
+          <span style={{ fontWeight: 800, color: TEXT_DARK, fontSize: 15, letterSpacing: "-0.01em" }}>
+            Meine Traum Webseite
+          </span>
+        </div>
+      </header>
+
       {/* ── SECTION 1: HERO ───────────────────────────────── */}
       <HeroSection
         leadName={data.lead_name}
@@ -413,19 +435,36 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── SECTION 2: PROBLEM / LÖSUNG ──────────────────── */}
       {showProblemSection && <ProblemSection />}
 
-      {/* ── SECTION 3: PAKET / LEISTUNGEN ────────────────── */}
-      <PaketSection
-        hasMultiplePakete={hasMultiplePakete}
-        pakete={pakete}
-        selectedPaketId={selectedPaketId}
-        setSelectedPaketId={setSelectedPaketId}
-        leistungen={aktiveLeistungen}
-        optionen={aktiveOptionen}
-        selectedOptionIds={selectedOptionIds}
-        toggleOption={toggleOption}
+      {/* ── SECTION 3: PAKET-AUSWAHL (nur bei mehreren) ──── */}
+      {hasMultiplePakete && (
+        <PaketChooserSection
+          pakete={pakete}
+          selectedPaketId={selectedPaketId}
+          setSelectedPaketId={setSelectedPaketId}
+        />
+      )}
+
+      {/* ── SECTION 4: LEISTUNGEN ────────────────────────── */}
+      <LeistungenSection leistungen={aktiveLeistungen} />
+
+      {/* ── SECTION 5: VERTRAUEN (vor Preis!) ────────────── */}
+      <TrustSection />
+
+      {/* ── SECTION 6: SO LÄUFT ES AB ────────────────────── */}
+      <TimelineSection />
+
+      {/* ── SECTION 7: PREIS (Kauf / Miete) ──────────────── */}
+      <PriceSection
         preis={aktivePreis}
         normalpreis={aktiverNormalpreis}
         miete={aktiveMiete}
+        anzahlung={data.anzahlung ?? null}
+        priceMode={priceMode}
+        setPriceMode={setPriceMode}
+        hasMiete={hasMiete}
+        optionen={aktiveOptionen}
+        selectedOptionIds={selectedOptionIds}
+        toggleOption={toggleOption}
         anzeigeGesamt={anzeigeGesamt}
         monatlicheZusatz={monatlicheZusatz}
         selectedOptionsCount={selectedOptions.length}
@@ -434,13 +473,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         ctaModeAnfrage={ctaMode === "anfrage"}
       />
 
-      {/* ── SECTION 4: SO LÄUFT ES AB ────────────────────── */}
-      <TimelineSection />
-
-      {/* ── SECTION 5: VERTRAUEN ─────────────────────────── */}
-      <TrustSection />
-
-      {/* ── SECTION 6: FAQs ──────────────────────────────── */}
+      {/* ── SECTION 8: FAQs ──────────────────────────────── */}
       {data.faqs && data.faqs.length > 0 && (
         <section style={{ padding: "80px 24px", background: BG_SOFT }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
@@ -471,7 +504,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
         </section>
       )}
 
-      {/* ── SECTION 7: FINALER CTA ───────────────────────── */}
+      {/* ── SECTION 9: FINALER CTA ───────────────────────── */}
       <FinalCtaSection
         ctaLink={ctaLink}
         ctaLabel={ctaLabel}
@@ -485,7 +518,10 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── STICKY BOTTOM BAR ────────────────────────────── */}
       {showSticky && (
         <StickyBar
+          paketName={selectedPaket?.name || data.branche || "Ihr Angebot"}
           preis={anzeigeGesamt}
+          miete={aktiveMiete}
+          priceMode={priceMode}
           days={days}
           ctaLink={ctaLink}
           isRechnung={isRechnung}
@@ -665,104 +701,163 @@ function ProblemSection() {
   );
 }
 
-function PaketSection({
-  hasMultiplePakete, pakete, selectedPaketId, setSelectedPaketId,
-  leistungen, optionen, selectedOptionIds, toggleOption,
-  preis, normalpreis, miete,
-  anzeigeGesamt, monatlicheZusatz, selectedOptionsCount, matchedBundle,
-  isRechnung, ctaModeAnfrage,
-}: {
-  hasMultiplePakete: boolean;
+// ─── Nutzen-Helper ──────────────────────────────────────
+function nutzenFor(titel: string, beschreibung?: string): string {
+  if (beschreibung && beschreibung.trim()) {
+    const b = beschreibung.trim();
+    return b.startsWith("→") ? b : `→ ${b}`;
+  }
+  const t = (titel || "").toLowerCase();
+  if (t.includes("design")) return "→ Kunden nehmen Sie auf den ersten Blick ernst.";
+  if (t.includes("mobil") || t.includes("responsive") || t.includes("smartphone")) return "→ Jeder Kunde erreicht Sie — egal von welchem Gerät.";
+  if (t.includes("korrektur")) return "→ Sie bekommen genau das, was Sie sich vorgestellt haben.";
+  if (t.includes("shop") || t.includes("ecommerce") || t.includes("e-commerce")) return "→ Sie sind sofort verkaufsbereit — ohne technisches Vorwissen.";
+  if (t.includes("seo") || t.includes("google")) return "→ Mehr Sichtbarkeit — mehr Anfragen ohne Werbebudget.";
+  if (t.includes("hosting") || t.includes("ssl")) return "→ Alles läuft im Hintergrund — Sie müssen sich um nichts kümmern.";
+  if (t.includes("kontakt") || t.includes("formular")) return "→ Anfragen kommen direkt in Ihr Postfach — keine geht verloren.";
+  if (t.includes("support") || t.includes("wartung")) return "→ Sie sind nie alleine — wir sind für Sie erreichbar.";
+  if (t.includes("text") || t.includes("copy")) return "→ Worte, die verkaufen — nicht nur informieren.";
+  if (t.includes("foto") || t.includes("bild")) return "→ Bilder, die Vertrauen schaffen — nicht von der Stange.";
+  if (t.includes("logo") || t.includes("branding")) return "→ Ein Auftritt, den man wiedererkennt.";
+  if (t.includes("analyt") || t.includes("track")) return "→ Sie wissen, was funktioniert — und was nicht.";
+  return "→ Spürbarer Mehrwert für Ihr Unternehmen.";
+}
+
+function badgeFor(index: number, total: number): string {
+  if (total === 1) return "";
+  if (index === 0) return "EINSTIEG";
+  if (index === total - 1) return "FÜR WACHSTUM";
+  return "BELIEBT";
+}
+
+function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
   pakete: AngebotPaket[];
   selectedPaketId: string;
   setSelectedPaketId: (id: string) => void;
-  leistungen: Leistung[];
-  optionen: AngebotOption[];
-  selectedOptionIds: string[];
-  toggleOption: (id: string) => void;
-  preis: number;
-  normalpreis?: number | null;
-  miete?: number | null;
-  anzeigeGesamt: number;
-  monatlicheZusatz: number;
-  selectedOptionsCount: number;
-  matchedBundle: AngebotBundle | null | undefined;
-  isRechnung: boolean;
-  ctaModeAnfrage: boolean;
 }) {
   return (
-    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: BG_SOFT }}>
+    <section style={{ padding: "clamp(48px, 7vw, 72px) 16px", background: BG_SOFT }}>
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
-            Was wir gemeinsam umsetzen
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <h2 style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 10, letterSpacing: "-0.02em" }}>
+            Welches Paket passt zu Ihnen?
           </h2>
-          <p style={{ fontSize: 17, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
-            Ihr Projekt — kein Standardpaket. Jede Position wurde für Sie ausgewählt.
+          <p style={{ fontSize: 16, color: TEXT_MUTED, margin: 0 }}>
+            Wählen Sie Ihre Variante — alle Inhalte unten passen sich automatisch an.
           </p>
         </div>
 
-        {/* Paket-Auswahl */}
-        {hasMultiplePakete && (
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`,
+          gap: 16,
+        }}>
+          {pakete.map((p, idx) => {
+            const active = p.id === selectedPaketId;
+            const badge = p.badge || badgeFor(idx, pakete.length);
+            const recommended = idx === pakete.length - 1 && pakete.length > 1;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setSelectedPaketId(p.id)}
+                style={{
+                  textAlign: "left", cursor: "pointer", fontFamily: "inherit",
+                  background: active ? `${BRAND}08` : "#fff",
+                  border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.1)"}`,
+                  borderRadius: 20, padding: "26px 22px",
+                  boxShadow: active ? `0 8px 28px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
+                  transition: "all 0.2s",
+                  position: "relative",
+                }}
+              >
+                {badge && (
+                  <div style={{
+                    position: "absolute", top: -12, right: 16,
+                    background: recommended ? BRAND_GRADIENT : "#EDE9FF",
+                    color: recommended ? "#fff" : BRAND,
+                    fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    padding: "5px 12px", borderRadius: 50,
+                  }}>{badge}</div>
+                )}
+                <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
+                  Paket
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>{p.name}</div>
+                {p.beschreibung && (
+                  <p style={{ fontSize: 14, color: TEXT_MUTED, margin: "0 0 14px", lineHeight: 1.5 }}>{p.beschreibung}</p>
+                )}
+                <div style={{ fontSize: 28, fontWeight: 800, color: BRAND, marginBottom: 4 }}>
+                  {Number(p.preis).toLocaleString("de-DE")} €
+                </div>
+                {p.leistungen && p.leistungen.length > 0 && (
+                  <Accordion type="single" collapsible className="mt-3">
+                    <AccordionItem value="leistungen" className="border-none">
+                      <AccordionTrigger
+                        className="py-2 text-sm font-semibold hover:no-underline"
+                        style={{ color: BRAND, fontFamily: "inherit" }}
+                      >
+                        Alle {p.leistungen.length} Leistungen anzeigen
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul style={{ listStyle: "none", padding: 0, margin: "8px 0 0", display: "grid", gap: 10 }}>
+                          {p.leistungen.map((l, i) => (
+                            <li key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                              <CheckIcon size={14} color="#059669" style={{ marginTop: 4, flexShrink: 0 }} />
+                              <div>
+                                <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK }}>{l.titel}</div>
+                                <div style={{ fontSize: 12, color: TEXT_MUTED, fontStyle: "italic", lineHeight: 1.5 }}>
+                                  {nutzenFor(l.titel, l.beschreibung)}
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                )}
+                {active && (
+                  <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, color: BRAND, fontSize: 13, fontWeight: 700 }}>
+                    <CheckCircle2 size={16} /> Ausgewählt
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {pakete.length > 1 && (
           <div style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(auto-fit, minmax(260px, 1fr))`,
-            gap: 16,
-            marginBottom: 40,
+            marginTop: 20, textAlign: "center",
+            fontSize: 14, color: TEXT_MUTED, fontStyle: "italic",
           }}>
-            {pakete.map((p) => {
-              const active = p.id === selectedPaketId;
-              return (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => setSelectedPaketId(p.id)}
-                  style={{
-                    textAlign: "left", cursor: "pointer", fontFamily: "inherit",
-                    background: active ? `${BRAND}08` : "#fff",
-                    border: `2px solid ${active ? BRAND : "rgba(79,63,240,0.1)"}`,
-                    borderRadius: 20, padding: "24px 22px",
-                    boxShadow: active ? `0 8px 28px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
-                    transition: "all 0.2s",
-                    position: "relative",
-                  }}
-                >
-                  {p.badge && (
-                    <div style={{
-                      position: "absolute", top: -12, right: 16,
-                      background: BRAND_GRADIENT, color: "#fff",
-                      fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                      padding: "5px 12px", borderRadius: 50,
-                    }}>{p.badge}</div>
-                  )}
-                  <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
-                    Paket
-                  </div>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>{p.name}</div>
-                  {p.beschreibung && (
-                    <p style={{ fontSize: 14, color: TEXT_MUTED, margin: "0 0 14px", lineHeight: 1.5 }}>{p.beschreibung}</p>
-                  )}
-                  <div style={{ fontSize: 28, fontWeight: 800, color: BRAND, marginBottom: 4 }}>
-                    {Number(p.preis).toLocaleString("de-DE")} €
-                  </div>
-                  {active && (
-                    <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, color: BRAND, fontSize: 13, fontWeight: 700 }}>
-                      <CheckCircle2 size={16} /> Ausgewählt
-                    </div>
-                  )}
-                </button>
-              );
-            })}
+            Mehr Funktionen, mehr Inhalte, längerer Support? → Das größere Paket wählen.
           </div>
         )}
+      </div>
+    </section>
+  );
+}
 
-        {/* Leistungen */}
+function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
+  if (!leistungen || leistungen.length === 0) return null;
+  return (
+    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: "#fff" }}>
+      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
+            Was Sie konkret bekommen
+          </h2>
+          <p style={{ fontSize: 17, color: TEXT_MUTED, maxWidth: 600, margin: "0 auto" }}>
+            Jede Leistung — mit konkretem Nutzen für Sie.
+          </p>
+        </div>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 16,
-          marginBottom: 48,
         }}>
           {leistungen.map((l, i) => (
             <div key={i} style={{
@@ -774,53 +869,115 @@ function PaketSection({
             }}>
               {l.emoji && <div style={{ fontSize: 32, marginBottom: 12, lineHeight: 1 }}>{l.emoji}</div>}
               <h3 style={{ fontSize: 17, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{l.titel}</h3>
-              {l.beschreibung && (
-                <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0 }}>{l.beschreibung}</p>
-              )}
+              <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
+                {nutzenFor(l.titel, l.beschreibung)}
+              </p>
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
 
-        {/* PREIS-CARD */}
-        <div style={{
-          background: "#fff", borderRadius: 24,
-          border: `2px solid ${BRAND}`,
-          padding: "clamp(28px, 5vw, 48px) clamp(20px, 4vw, 40px)",
-          textAlign: "center",
-          maxWidth: 560, marginLeft: "auto", marginRight: "auto",
-          boxShadow: `0 20px 60px ${BRAND}20`,
-        }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: TEXT_MUTED, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 16 }}>
+function PriceSection({
+  preis, normalpreis, miete, anzahlung,
+  priceMode, setPriceMode, hasMiete,
+  optionen, selectedOptionIds, toggleOption,
+  anzeigeGesamt, monatlicheZusatz, selectedOptionsCount, matchedBundle,
+  isRechnung, ctaModeAnfrage,
+}: {
+  preis: number;
+  normalpreis?: number | null;
+  miete?: number | null;
+  anzahlung?: number | null;
+  priceMode: "kauf" | "miete";
+  setPriceMode: (m: "kauf" | "miete") => void;
+  hasMiete: boolean;
+  optionen: AngebotOption[];
+  selectedOptionIds: string[];
+  toggleOption: (id: string) => void;
+  anzeigeGesamt: number;
+  monatlicheZusatz: number;
+  selectedOptionsCount: number;
+  matchedBundle: AngebotBundle | null | undefined;
+  isRechnung: boolean;
+  ctaModeAnfrage: boolean;
+}) {
+  return (
+    <section style={{ padding: "clamp(56px, 8vw, 88px) 16px", background: BG_SOFT }}>
+      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.02em" }}>
             Ihr Investitionsvolumen
-          </div>
-          <div style={{ fontSize: "clamp(48px, 8vw, 64px)", fontWeight: 800, color: BRAND, lineHeight: 1, marginBottom: 8, letterSpacing: "-0.02em" }}>
-            {Number(preis).toLocaleString("de-DE")} €
-          </div>
-          {normalpreis && normalpreis > preis && (
-            <div style={{ fontSize: 18, color: TEXT_MUTED, textDecoration: "line-through", marginBottom: 8 }}>
-              {Number(normalpreis).toLocaleString("de-DE")} €
-            </div>
+          </h2>
+          <p style={{ fontSize: 16, color: TEXT_MUTED, margin: 0 }}>
+            {hasMiete ? "Zwei Wege — gleiches Ergebnis. Sie entscheiden." : "Einmalige Investition — Ihre Website gehört Ihnen."}
+          </p>
+        </div>
+
+        {/* TWO-CARD CHOICE */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: hasMiete ? "repeat(auto-fit, minmax(280px, 1fr))" : "1fr",
+          gap: 20,
+          maxWidth: hasMiete ? 880 : 560,
+          margin: "0 auto",
+        }}>
+          {/* CARD: KAUF */}
+          <PriceCard
+            kind="kauf"
+            active={priceMode === "kauf"}
+            onSelect={() => setPriceMode("kauf")}
+            badge="EINMALIG"
+            badgeStyle={{ background: "#EDE9FF", color: BRAND }}
+            mainPrice={`${Number(preis).toLocaleString("de-DE")} €`}
+            mainSub={null}
+            normalpreis={normalpreis ?? null}
+            tagline="Einmalige Investition. Website gehört Ihnen."
+            bullets={[
+              "Kein monatlicher Aufwand",
+              "Vollständiges Eigentum",
+              "Einmalig. Fertig.",
+            ]}
+            buttonLabel="Website kaufen"
+            buttonVariant={hasMiete ? "outline" : "primary"}
+          />
+
+          {/* CARD: MIETE */}
+          {hasMiete && (
+            <PriceCard
+              kind="miete"
+              active={priceMode === "miete"}
+              onSelect={() => setPriceMode("miete")}
+              badge="EMPFOHLEN"
+              badgeStyle={{ background: BRAND_GRADIENT, color: "#fff" }}
+              mainPrice={`${Number(miete).toLocaleString("de-DE")} €`}
+              mainSub={
+                anzahlung && anzahlung > 0
+                  ? `/Monat · + ${Number(anzahlung).toLocaleString("de-DE")} € Anzahlung einmalig`
+                  : "/Monat"
+              }
+              normalpreis={null}
+              tagline="Geringer Einstieg. Volle Leistung."
+              bullets={[
+                "Geringes Startkapital nötig",
+                "Immer aktuell & gewartet",
+                "Flexibel — monatlich kündbar nach Mindestlaufzeit",
+              ]}
+              buttonLabel="Website mieten"
+              buttonVariant="primary"
+              highlighted
+            />
           )}
-          {miete && (
-            <div style={{ fontSize: 14, color: TEXT_MUTED, marginTop: 8 }}>
-              + optional <strong style={{ color: TEXT_DARK }}>{Number(miete).toLocaleString("de-DE")} €/Monat</strong> (Mietmodell)
-            </div>
-          )}
-          <div style={{
-            marginTop: 16, display: "flex", flexWrap: "wrap", gap: 14,
-            justifyContent: "center", color: "#059669", fontSize: 13, fontWeight: 600,
-          }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><CheckIcon size={14} /> Einmalig</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><CheckIcon size={14} /> Kein Abo</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><CheckIcon size={14} /> Keine versteckten Kosten</span>
-          </div>
         </div>
 
         {isRechnung && (
           <div style={{
-            maxWidth: 560, margin: "16px auto 0",
-            background: BG_SOFT, borderRadius: 12,
+            maxWidth: 560, margin: "20px auto 0",
+            background: "#fff", borderRadius: 12,
             padding: "12px 18px", fontSize: 13, color: TEXT_MUTED, textAlign: "center",
+            border: "1px solid rgba(79,63,240,0.1)",
           }}>
             Zahlung per Rechnung · 14 Tage Zahlungsziel nach Auftragserteilung
           </div>
@@ -922,6 +1079,109 @@ function PaketSection({
         )}
       </div>
     </section>
+  );
+}
+
+function PriceCard({
+  kind, active, onSelect, badge, badgeStyle, mainPrice, mainSub,
+  normalpreis, tagline, bullets, buttonLabel, buttonVariant, highlighted,
+}: {
+  kind: "kauf" | "miete";
+  active: boolean;
+  onSelect: () => void;
+  badge: string;
+  badgeStyle: React.CSSProperties;
+  mainPrice: string;
+  mainSub: string | null;
+  normalpreis: number | null;
+  tagline: string;
+  bullets: string[];
+  buttonLabel: string;
+  buttonVariant: "primary" | "outline";
+  highlighted?: boolean;
+}) {
+  return (
+    <div
+      onClick={onSelect}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(); } }}
+      style={{
+        background: "#fff",
+        borderRadius: 24,
+        border: `2px solid ${active ? BRAND : highlighted ? `${BRAND}40` : "rgba(79,63,240,0.12)"}`,
+        padding: "32px 28px",
+        position: "relative",
+        cursor: "pointer",
+        boxShadow: active ? `0 20px 50px ${BRAND}25` : "0 4px 24px rgba(79,63,240,0.06)",
+        transition: "all 0.2s",
+        display: "flex", flexDirection: "column",
+      }}
+    >
+      <div style={{
+        position: "absolute", top: -12, left: 20,
+        ...badgeStyle,
+        fontSize: 11, fontWeight: 800, letterSpacing: "0.08em",
+        padding: "5px 14px", borderRadius: 50,
+      }}>{badge}</div>
+
+      {active && (
+        <div style={{
+          position: "absolute", top: 16, right: 16,
+          width: 28, height: 28, borderRadius: "50%",
+          background: BRAND, color: "#fff",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <CheckIcon size={16} />
+        </div>
+      )}
+
+      <div style={{ marginTop: 10, marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
+          <span style={{ fontSize: "clamp(36px, 5vw, 48px)", fontWeight: 800, color: BRAND, lineHeight: 1, letterSpacing: "-0.02em" }}>
+            {mainPrice}
+          </span>
+          {mainSub && (
+            <span style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 600 }}>{mainSub}</span>
+          )}
+        </div>
+        {normalpreis && normalpreis > 0 && (
+          <div style={{ fontSize: 15, color: TEXT_MUTED, textDecoration: "line-through", marginTop: 6 }}>
+            {Number(normalpreis).toLocaleString("de-DE")} €
+          </div>
+        )}
+      </div>
+
+      <p style={{ fontSize: 14, color: TEXT_DARK, fontWeight: 600, margin: "0 0 16px", lineHeight: 1.5 }}>
+        {tagline}
+      </p>
+
+      <ul style={{ listStyle: "none", padding: 0, margin: "0 0 20px", display: "grid", gap: 10, flex: 1 }}>
+        {bullets.map((b, i) => (
+          <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 14, color: TEXT_DARK, lineHeight: 1.5 }}>
+            <CheckIcon size={16} color="#059669" style={{ marginTop: 2, flexShrink: 0 }} />
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+
+      <button
+        type="button"
+        onClick={(e) => { e.stopPropagation(); onSelect(); }}
+        style={{
+          width: "100%",
+          padding: "13px 20px",
+          borderRadius: 50,
+          fontSize: 15, fontWeight: 700,
+          cursor: "pointer", fontFamily: "inherit",
+          border: buttonVariant === "outline" ? `2px solid ${BRAND}` : "none",
+          background: buttonVariant === "outline" ? "#fff" : BRAND_GRADIENT,
+          color: buttonVariant === "outline" ? BRAND : "#fff",
+        }}
+      >
+        {active ? "✓ " : ""}{buttonLabel}
+      </button>
+    </div>
   );
 }
 
@@ -1089,20 +1349,37 @@ function FinalCtaSection({
 }
 
 function StickyBar({
-  preis, days, ctaLink, isRechnung, ctaMode, openBooking,
+  paketName, preis, miete, priceMode, days, ctaLink, isRechnung, ctaMode, openBooking,
 }: {
-  preis: number; days: number; ctaLink: string | null;
-  isRechnung: boolean; ctaMode: "haupt" | "option" | "bundle" | "anfrage";
+  paketName: string;
+  preis: number;
+  miete?: number | null;
+  priceMode: "kauf" | "miete";
+  days: number;
+  ctaLink: string | null;
+  isRechnung: boolean;
+  ctaMode: "haupt" | "option" | "bundle" | "anfrage";
   openBooking: () => void;
 }) {
+  const showMiete = priceMode === "miete" && !!miete;
+  const priceLabel = showMiete
+    ? `${Number(miete).toLocaleString("de-DE")} €/Monat`
+    : `${Number(preis).toLocaleString("de-DE")} €`;
+  const btnLabel = isRechnung || ctaMode === "anfrage"
+    ? "Jetzt verbindlich beauftragen"
+    : "Angebot annehmen & starten";
+
   const btnStyle: React.CSSProperties = {
     background: BRAND_GRADIENT, color: "#fff",
-    padding: "12px 24px", borderRadius: 50,
+    padding: "14px 26px", borderRadius: 50,
     fontSize: 15, fontWeight: 700,
     border: "none", cursor: "pointer",
     textDecoration: "none", fontFamily: "inherit",
     display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+    whiteSpace: "nowrap",
+    boxShadow: `0 8px 20px ${BRAND}40`,
   };
+
   return (
     <div className="angebot-sticky-bar" style={{
       position: "fixed", bottom: 0, left: 0, right: 0,
@@ -1115,17 +1392,24 @@ function StickyBar({
       gap: 16, flexWrap: "wrap",
       animation: "angebot-slide-up 0.3s ease-out",
     }}>
-      <div style={{ color: TEXT_DARK, fontWeight: 600, fontSize: 15 }}>
-        <span style={{ color: BRAND, fontWeight: 800 }}>{Number(preis).toLocaleString("de-DE")} €</span>
-        <span style={{ color: TEXT_MUTED, fontWeight: 500 }}> · Angebot läuft ab in {days} Tag{days !== 1 ? "en" : ""}</span>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, marginBottom: 2, lineHeight: 1.2 }}>
+          {paketName}
+        </div>
+        <div style={{ color: BRAND, fontWeight: 800, fontSize: 20, lineHeight: 1.1 }}>
+          {priceLabel}
+        </div>
+        <div style={{ fontSize: 12, color: "#DC2626", fontWeight: 600, marginTop: 2 }}>
+          ⏱ Noch {days} Tag{days !== 1 ? "e" : ""} reserviert
+        </div>
       </div>
       {ctaLink ? (
         <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={btnStyle}>
-          Jetzt starten <ChevronRight size={16} />
+          {btnLabel} <ChevronRight size={16} />
         </a>
       ) : isRechnung && ctaMode !== "anfrage" ? (
         <button type="button" onClick={openBooking} style={btnStyle}>
-          Jetzt starten <ChevronRight size={16} />
+          {btnLabel} <ChevronRight size={16} />
         </button>
       ) : (
         <a href="mailto:hallo@meine-traum-webseite.de" style={btnStyle}>
@@ -1138,7 +1422,7 @@ function StickyBar({
           to { transform: translateY(0); }
         }
         @media (max-width: 640px) {
-          .angebot-sticky-bar { padding: 12px 16px !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
+          .angebot-sticky-bar { padding: 12px 16px !important; flex-direction: column !important; align-items: stretch !important; gap: 10px !important; }
           .angebot-sticky-bar > div:first-child { text-align: center; }
           .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; }
         }

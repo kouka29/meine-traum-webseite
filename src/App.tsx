@@ -78,7 +78,11 @@ const HandwerkerRoute = () => {
 
 const ChromeWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
-  const standalone = pathname === "/angebot" || pathname === "/a" || pathname === "/agb";
+  const standalone =
+    pathname === "/angebot" ||
+    pathname === "/a" ||
+    pathname.startsWith("/a/") ||
+    pathname === "/agb";
   return (
     <>
       {!standalone && <Navbar />}
