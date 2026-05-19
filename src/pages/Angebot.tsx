@@ -1993,14 +1993,34 @@ function AngebotGlobalStyles() {
       .ang-trust-item {
         text-align: center;
         padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         border-right: 1px solid rgba(79,63,240,0.12);
       }
       .ang-trust-item:last-child { border-right: none; }
       @media (max-width: 720px) {
-        .ang-trust-row { grid-template-columns: 1fr 1fr; }
-        .ang-trust-item:nth-child(2) { border-right: none; }
-        .ang-trust-item:nth-child(-n+2) { border-bottom: 1px solid rgba(79,63,240,0.12); padding-bottom: 24px; }
-        .ang-trust-item:nth-child(n+3) { padding-top: 24px; }
+        .ang-trust-row {
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          background: #fff;
+          border: 1px solid rgba(79,63,240,0.10);
+          border-radius: 20px;
+          padding: 12px;
+          box-shadow: 0 4px 20px rgba(79,63,240,0.06);
+        }
+        .ang-trust-item {
+          padding: 20px 8px;
+          border-right: none !important;
+          min-height: 130px;
+        }
+        .ang-trust-item:nth-child(odd) {
+          border-right: 1px solid rgba(79,63,240,0.10) !important;
+        }
+        .ang-trust-item:nth-child(-n+2) {
+          border-bottom: 1px solid rgba(79,63,240,0.10);
+        }
       }
 
       /* Leistungs-Cards */
