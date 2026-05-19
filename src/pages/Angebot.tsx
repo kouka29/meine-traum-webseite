@@ -596,22 +596,13 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
       background: "linear-gradient(160deg, #F5F4FF 0%, #EEF2FF 60%, #F0F4FF 100%)",
       padding: "clamp(48px, 8vw, 80px) 16px",
     }}>
-      {/* Dekorative Kreise */}
-      <div aria-hidden style={{
-        position: "absolute", top: -100, right: -100, width: 400, height: 400,
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(79,63,240,0.08) 0%, transparent 70%)",
-        pointerEvents: "none", zIndex: 0,
-      }} />
-      <div aria-hidden style={{
-        position: "absolute", bottom: -50, left: -50, width: 200, height: 200,
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(123,94,248,0.06) 0%, transparent 70%)",
-        pointerEvents: "none", zIndex: 0,
-      }} />
+      {/* Animierte Hintergrund-Blobs */}
+      <div aria-hidden className="ang-blob ang-blob-1" />
+      <div aria-hidden className="ang-blob ang-blob-2" />
+      <div aria-hidden className="ang-blob ang-blob-3" />
 
       <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
-        <div style={{
+        <div className="ang-reveal ang-d-3" style={{
           display: "inline-flex", alignItems: "center", gap: 8,
           background: "#EDE9FF", color: BRAND,
           padding: "8px 16px", borderRadius: 20,
@@ -622,7 +613,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           <Sparkles size={14} /> Persönliches Angebot — nur für Sie
         </div>
 
-        <h1 style={{
+        <h1 className="ang-reveal ang-d-4" style={{
           fontSize: "clamp(32px, 5.2vw, 48px)", fontWeight: 800, lineHeight: 1.1,
           color: TEXT_DARK, marginBottom: 20, letterSpacing: "-0.02em",
         }}>
@@ -638,7 +629,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           Angebot.
         </h1>
 
-        <p style={{
+        <p className="ang-reveal ang-d-5" style={{
           fontSize: 18, color: TEXT_MUTED, lineHeight: 1.6,
           marginBottom: 32, maxWidth: 600, fontStyle: "italic",
         }}>
@@ -647,32 +638,26 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}"
         </p>
 
-        {/* Countdown-Box */}
-        <div style={{
-          background: "#fff",
-          borderRadius: "0 16px 16px 0",
-          borderLeft: "4px solid #EF4444",
-          padding: "20px 24px",
-          boxShadow: "0 4px 20px rgba(239,68,68,0.08)",
-          maxWidth: 600,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 16, fontSize: 14 }}>
+        {/* Countdown-Glass-Card */}
+        <div className="ang-reveal ang-d-6 ang-glass-count" style={{ maxWidth: 600 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 18, fontSize: 14, position: "relative" }}>
             <Clock size={16} color="#EF4444" />
             Dieses Angebot ist reserviert bis: <strong style={{ color: TEXT_DARK }}>{ablaufStr}</strong>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
+          <div className="ang-count-row">
             {[
               { v: days, l: "Tage" },
               { v: hours, l: "Std" },
               { v: mins, l: "Min" },
               { v: secs, l: "Sek" },
-            ].map((b) => (
-              <div key={b.l} style={{ textAlign: "center", background: BG_SOFT, borderRadius: 12, padding: "14px 4px" }}>
-                <div style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 800, color: TEXT_DARK, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
-                  {pad(b.v)}
+            ].map((b, idx) => (
+              <>
+                <div key={b.l} className="ang-count-block">
+                  <div className="ang-count-num">{pad(b.v)}</div>
+                  <div className="ang-count-lab">{b.l}</div>
                 </div>
-                <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 6 }}>{b.l}</div>
-              </div>
+                {idx < 3 && <span key={`sep-${idx}`} className="ang-count-sep">:</span>}
+              </>
             ))}
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5 }}>
@@ -681,7 +666,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         </div>
 
         {/* Trust badges */}
-        <div style={{
+        <div className="ang-reveal ang-d-7" style={{
           marginTop: 20, display: "flex", flexWrap: "wrap", gap: 18,
           fontSize: 13, color: TEXT_MUTED, fontWeight: 600,
         }}>
