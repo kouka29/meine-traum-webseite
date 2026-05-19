@@ -33,6 +33,18 @@ const CookieBanner = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const reopen = () => {
+      const stored = getStoredConsent();
+      setAnalytics(stored?.analytics ?? false);
+      setMarketing(stored?.marketing ?? false);
+      setShowDetails(true);
+      setVisible(true);
+    };
+    window.addEventListener("open-cookie-settings", reopen);
+    return () => window.removeEventListener("open-cookie-settings", reopen);
+  }, []);
+
   const saveConsent = (consent: ConsentState) => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify(consent));
     setVisible(false);
