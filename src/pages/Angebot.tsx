@@ -1432,9 +1432,32 @@ function TimelineSection() {
           .angebot-timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 32px;
             position: relative;
-            padding: 0;
+            padding: 0 6%;
+          }
+          /* Horizontal progress rail behind the dots */
+          .angebot-timeline::before {
+            content: "";
+            position: absolute;
+            top: 40px;
+            left: calc(6% + 40px);
+            right: calc(6% + 40px);
+            height: 4px;
+            background: #E2E8F0;
+            border-radius: 999px;
+            z-index: 0;
+          }
+          .angebot-timeline::after {
+            content: "";
+            position: absolute;
+            top: 40px;
+            left: calc(6% + 40px);
+            width: calc((100% - 12% - 80px) * 0.34);
+            height: 4px;
+            background: linear-gradient(90deg,#4F3FF0 0%,#5B8DEF 100%);
+            border-radius: 999px;
+            z-index: 0;
           }
           .angebot-timeline-badge { display: none; }
           .angebot-timeline-step {
@@ -1446,40 +1469,59 @@ function TimelineSection() {
             z-index: 1;
           }
           .angebot-timeline-dot {
-            width: 54px; height: 54px; border-radius: 18px;
-            background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
-            color: #fff;
+            width: 80px; height: 80px; border-radius: 999px;
+            background: #fff;
+            color: #CBD5E1;
+            border: 2px solid #F1F5F9;
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto -27px;
-            box-shadow: 0 14px 30px rgba(79,63,240,0.30), 0 0 0 8px #fff;
+            margin: 0 auto 28px;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.05), 0 0 0 8px #fff;
             position: relative;
             z-index: 2;
+            transition: transform .3s cubic-bezier(.4,0,.2,1);
           }
-          .angebot-timeline-dot-num { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+          .angebot-timeline-step:hover .angebot-timeline-dot { transform: scale(1.06); }
+          .angebot-timeline-dot-num { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+          .angebot-timeline-step[data-step="1"] .angebot-timeline-dot {
+            background: #4F3FF0;
+            border-color: #4F3FF0;
+            box-shadow: 0 14px 30px rgba(79,63,240,0.32), 0 0 0 8px #fff;
+          }
+          .angebot-timeline-step[data-step="1"] .angebot-timeline-dot-num { color: #fff; }
+          .angebot-timeline-step[data-step="2"] .angebot-timeline-dot-num { color: #4F3FF0; }
+          .angebot-timeline-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+            border: 1px solid transparent;
+          }
+          .angebot-timeline-badge.tone-primary { background: #EEF0FF; color: #4F3FF0; border-color: #E0E4FF; }
+          .angebot-timeline-badge.tone-neutral { background: #EFF6FF; color: #5B8DEF; border-color: #DBEAFE; }
+          .angebot-timeline-badge.tone-success { background: #F1F5F9; color: #64748B; border-color: #E2E8F0; }
+          .angebot-timeline-step[data-step="4"] .angebot-timeline-badge { background: #ECFDF5; color: #059669; border-color: #D1FAE5; }
           .angebot-timeline-card {
             width: 100%;
-            min-height: 168px;
-            background: #FFFFFF;
-            border: 1px solid rgba(79,63,240,0.09);
-            border-radius: 26px;
-            padding: 42px 22px 26px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0 8px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            box-shadow: 0 1px 2px rgba(15,15,40,0.04), 0 24px 58px -34px rgba(79,63,240,0.35);
-            transition: transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s ease, border-color .35s ease;
-          }
-          .angebot-timeline-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(79,63,240,0.22);
-            box-shadow: 0 4px 10px rgba(15,15,40,0.04), 0 26px 56px -20px rgba(79,63,240,0.28);
+            align-items: center;
+            text-align: center;
+            box-shadow: none;
           }
           .angebot-timeline-card h3 {
-            font-size: 18px; font-weight: 800; color: ${TEXT_DARK};
-            margin: 0 0 10px; letter-spacing: -0.015em;
+            font-size: 20px; font-weight: 800; color: ${TEXT_DARK};
+            margin: 0 0 12px; letter-spacing: -0.015em;
           }
           .angebot-timeline-card p {
-            font-size: 14px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.55;
+            font-size: 14px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.6;
           }
           @media (max-width: 720px) {
             .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
@@ -1490,14 +1532,18 @@ function TimelineSection() {
               gap: 24px !important;
               text-align: left !important;
               position: relative !important;
+              padding: 0 !important;
             }
+            .angebot-timeline::after { display: none !important; }
             /* Vertical timeline line behind dots */
             .angebot-timeline::before {
               content: "";
               position: absolute;
-              left: 23px;
+              left: 23px !important;
+              right: auto !important;
               top: 28px;
               bottom: 28px;
+              height: auto !important;
               width: 2px;
               background: #E2E8F0;
               z-index: 0;
