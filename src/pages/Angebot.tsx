@@ -1379,10 +1379,34 @@ function PriceCard({
 
 function TimelineSection() {
   const steps = [
-    { n: 1, titel: "Auftrag erteilen", text: "Sie bestätigen heute verbindlich." },
-    { n: 2, titel: "Kickoff-Call", text: "Wir starten innerhalb von 48 Stunden." },
-    { n: 3, titel: "Umsetzung", text: "Ihr Projekt wird umgesetzt." },
-    { n: 4, titel: "Live & fertig", text: "Ihre Website geht online." },
+    {
+      n: 1,
+      titel: "Auftrag erteilen",
+      text: "Sie bestätigen heute verbindlich. Wir reservieren Ihre Kapazitäten und schalten den Zugang frei.",
+      badge: "Sofort",
+      badgeTone: "primary" as const,
+    },
+    {
+      n: 2,
+      titel: "Kickoff-Call",
+      text: "Wir klären alle Details und Ziele in einem gemeinsamen Videocall für einen reibungslosen Start.",
+      badge: "48 Stunden",
+      badgeTone: "neutral" as const,
+    },
+    {
+      n: 3,
+      titel: "Umsetzung",
+      text: "Ihr Projekt wird nach höchsten Standards umgesetzt. Sie erhalten regelmäßige Updates zum Fortschritt.",
+      badge: "Hauptphase",
+      badgeTone: "neutral" as const,
+    },
+    {
+      n: 4,
+      titel: "Live & fertig",
+      text: "Wir feiern den Launch gemeinsam und begleiten Sie auch danach, um den dauerhaften Erfolg zu sichern.",
+      badge: "Go-Live",
+      badgeTone: "success" as const,
+    },
   ];
   return (
     <section className="angebot-timeline-section" style={{ padding: "clamp(58px, 8vw, 92px) 16px", background: "#fff" }}>
@@ -1392,11 +1416,12 @@ function TimelineSection() {
         </h2>
         <div className="angebot-timeline" style={{ position: "relative" }}>
           {steps.map((s, i) => (
-            <div key={s.n} className="angebot-timeline-step">
+            <div key={s.n} className="angebot-timeline-step" data-step={s.n}>
               <div className="angebot-timeline-dot">
                 <span className="angebot-timeline-dot-num">{s.n}</span>
               </div>
               <div className="angebot-timeline-card">
+                <span className={`angebot-timeline-badge tone-${s.badgeTone}`}>{s.badge}</span>
                 <h3>{s.titel}</h3>
                 <p>{s.text}</p>
               </div>
@@ -1411,6 +1436,7 @@ function TimelineSection() {
             position: relative;
             padding: 0;
           }
+          .angebot-timeline-badge { display: none; }
           .angebot-timeline-step {
             position: relative;
             display: flex;
@@ -1459,26 +1485,76 @@ function TimelineSection() {
             .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
             .angebot-timeline-inner { padding: 0 !important; max-width: 430px !important; }
             .angebot-timeline-title { font-size: 32px !important; line-height: 1.08 !important; margin: 0 auto 30px !important; max-width: 300px !important; }
-            .angebot-timeline { grid-template-columns: 1fr !important; gap: 14px !important; text-align: left !important; }
+            .angebot-timeline {
+              grid-template-columns: 1fr !important;
+              gap: 24px !important;
+              text-align: left !important;
+              position: relative !important;
+            }
+            /* Vertical timeline line behind dots */
+            .angebot-timeline::before {
+              content: "";
+              position: absolute;
+              left: 23px;
+              top: 28px;
+              bottom: 28px;
+              width: 2px;
+              background: #E2E8F0;
+              z-index: 0;
+            }
             .angebot-timeline-track, .angebot-timeline-track-fill { display: none !important; }
             .angebot-timeline-step {
               display: grid !important;
-              grid-template-columns: 48px minmax(0, 1fr) !important;
-              gap: 14px !important;
-              align-items: center !important;
+              grid-template-columns: 46px minmax(0, 1fr) !important;
+              gap: 16px !important;
+              align-items: flex-start !important;
               text-align: left !important;
-              padding: 16px !important;
-              border: 1px solid rgba(79,63,240,0.10) !important;
-              border-radius: 20px !important;
-              background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFF 100%) !important;
-              box-shadow: 0 6px 22px rgba(79,63,240,0.07) !important;
+              padding: 0 !important;
+              border: none !important;
+              border-radius: 0 !important;
+              background: transparent !important;
+              box-shadow: none !important;
+              position: relative !important;
             }
-            .angebot-timeline-dot { width: 48px !important; height: 48px !important; margin: 0 !important; box-shadow: 0 6px 18px rgba(79,63,240,0.24), 0 0 0 4px #fff !important; }
-            .angebot-timeline-dot-num { font-size: 18px !important; }
-            .angebot-timeline-card { padding: 0 !important; border: none !important; box-shadow: none !important; background: transparent !important; border-radius: 0 !important; }
-            .angebot-timeline-card:hover { transform: none !important; box-shadow: none !important; }
-            .angebot-timeline-card h3 { margin: 0 0 4px !important; font-size: 15px !important; line-height: 1.25 !important; }
-            .angebot-timeline-card p { font-size: 13px !important; line-height: 1.42 !important; }
+            .angebot-timeline-dot {
+              width: 32px !important; height: 32px !important;
+              border-radius: 999px !important;
+              margin: 18px 0 0 8px !important;
+              background: #fff !important;
+              border: 2px solid #4F3FF0 !important;
+              box-shadow: 0 0 0 4px #fff !important;
+              position: relative !important;
+              z-index: 1 !important;
+            }
+            .angebot-timeline-step[data-step="1"] .angebot-timeline-dot {
+              background: #4F3FF0 !important;
+              border-color: #4F3FF0 !important;
+              box-shadow: 0 8px 20px rgba(79,63,240,0.30), 0 0 0 4px #fff !important;
+            }
+            .angebot-timeline-step[data-step="1"] .angebot-timeline-dot-num { color: #fff !important; }
+            .angebot-timeline-dot-num { font-size: 14px !important; font-weight: 700 !important; color: #4F3FF0 !important; }
+            .angebot-timeline-card {
+              padding: 18px 18px 20px !important;
+              border: 1px solid #F1F5F9 !important;
+              background: #fff !important;
+              border-radius: 24px !important;
+              box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 12px 28px -20px rgba(15,23,42,0.18) !important;
+            }
+            .angebot-timeline-card:hover { transform: none !important; }
+            .angebot-timeline-card h3 { margin: 8px 0 6px !important; font-size: 16px !important; line-height: 1.25 !important; font-weight: 700 !important; }
+            .angebot-timeline-card p { font-size: 13.5px !important; line-height: 1.5 !important; color: #64748B !important; }
+            .angebot-timeline-badge {
+              display: inline-block !important;
+              font-size: 10px !important;
+              font-weight: 700 !important;
+              text-transform: uppercase !important;
+              letter-spacing: 0.08em !important;
+              padding: 4px 10px !important;
+              border-radius: 999px !important;
+            }
+            .angebot-timeline-badge.tone-primary { background: #EFF6FF !important; color: #5B8DEF !important; }
+            .angebot-timeline-badge.tone-neutral { background: #F1F5F9 !important; color: #64748B !important; }
+            .angebot-timeline-badge.tone-success { background: #ECFDF5 !important; color: #059669 !important; }
           }
         `}</style>
       </div>
