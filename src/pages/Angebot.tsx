@@ -602,6 +602,25 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {bookingSuccess && (
         <BookingSuccessOverlay auftragsNr={bookingSuccess} onClose={() => { setBookingSuccess(null); setBookingOpen(false); }} />
       )}
+
+      {funnelPaket && (
+        <CheckoutFunnel
+          open={funnelOpen}
+          onClose={() => setFunnelOpen(false)}
+          paket={{
+            id: funnelPaket.id,
+            name: funnelPaket.name,
+            preis: Number(funnelPaket.preis),
+            miete_monatlich: funnelPaket.miete_monatlich ? Number(funnelPaket.miete_monatlich) : null,
+          }}
+          addons={funnelAddons}
+          paymentConfig={funnelPaymentConfig}
+          angebots_id={data.angebots_id}
+          leadEmail={data.lead_email}
+          leadName={data.lead_name}
+          stripeLink={funnelPaket.stripe_link || data.stripe_link || null}
+        />
+      )}
     </div>
   );
 }
