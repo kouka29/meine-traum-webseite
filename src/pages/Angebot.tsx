@@ -646,12 +646,13 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         </p>
 
         {/* Countdown — Inline, kein Kasten */}
-        <div className="ang-reveal ang-d-6" style={{ maxWidth: 640, marginBottom: 28 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 14, fontSize: 14 }}>
-            <Clock size={16} color="#EF4444" />
-            Reserviert bis <strong style={{ color: TEXT_DARK, fontWeight: 700 }}>{ablaufStr}</strong> —
+        <div className="ang-reveal ang-d-6 ang-count-wrap" style={{ maxWidth: 640, marginBottom: 28 }}>
+          <div className="ang-count-pill">
+            <Clock size={14} color="#4F3FF0" strokeWidth={2.5} />
+            <span>Reserviert bis <strong>{ablaufStr}</strong></span>
           </div>
           <div className="ang-count-row">
+            <div className="ang-count-glow" aria-hidden="true" />
             {[
               { v: days, l: "TAGE" },
               { v: hours, l: "STD" },
@@ -660,17 +661,19 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             ].flatMap((b, idx, arr) => {
               const block = (
                 <div key={b.l} className="ang-count-block">
-                  <div className="ang-count-num">{pad(b.v)}</div>
-                  <div className="ang-count-lab">{b.l}</div>
+                  <div className="ang-count-card">
+                    <span className="ang-count-num">{pad(b.v)}</span>
+                  </div>
+                  <div className={`ang-count-lab${b.l === "SEK" ? " is-live" : ""}`}>{b.l}</div>
                 </div>
               );
               if (idx < arr.length - 1) {
-                return [block, <span key={`sep-${idx}`} className="ang-count-sep">:</span>];
+                return [block, <span key={`sep-${idx}`} className="ang-count-sep" aria-hidden="true"><i /><i /></span>];
               }
               return [block];
             })}
           </div>
-          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, marginTop: 14 }}>
+          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, marginTop: 18 }}>
             Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
           </div>
         </div>
