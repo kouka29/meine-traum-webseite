@@ -1678,10 +1678,8 @@ function TrustSection() {
           {stats.map((s, i) => (
             <div key={i} className="ang-trust-item">
               <div className="ang-trust-item-icon" aria-hidden="true">{s.icon}</div>
-              <div className="ang-trust-item-text">
-                <div className="ang-trust-item-value">{s.v}</div>
-                <div className="ang-trust-item-label">{s.l}</div>
-              </div>
+              <div className="ang-trust-item-value">{s.v}</div>
+              <div className="ang-trust-item-label">{s.l}</div>
             </div>
           ))}
         </div>
