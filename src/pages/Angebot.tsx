@@ -411,6 +411,25 @@ function AngebotPage({ data }: { data: AngebotData }) {
     setPriceMode(hasMiete ? "miete" : "kauf");
   }, [hasMiete, selectedPaketId]);
 
+  // ─── Checkout-Funnel ──────────────────────────────────
+  const [funnelOpen, setFunnelOpen] = useState(false);
+  const [funnelPaketId, setFunnelPaketId] = useState<string | null>(null);
+  const funnelPaket = funnelPaketId
+    ? pakete.find((p) => p.id === funnelPaketId) ?? selectedPaket
+    : selectedPaket;
+
+  const openFunnel = (paketId: string) => {
+    setFunnelPaketId(paketId);
+    setSelectedPaketId(paketId);
+    setFunnelOpen(true);
+  };
+
+  const funnelAddons: FunnelAddon[] = data.addons ?? [];
+  const funnelPaymentConfig: PaymentConfig = data.payment_config ?? {
+    kauf: { enabled: true, mode: data.anzahlung ? "deposit" : "full", deposit_percent: data.anzahlung ? Math.round((Number(data.anzahlung) / Number(funnelPaket?.preis || data.preis)) * 100) : undefined },
+    miete: funnelPaket?.miete_monatlich ? { enabled: true, monthly_cents: Math.round(Number(funnelPaket.miete_monatlich) * 100), min_months: 12 } : { enabled: false, monthly_cents: 0 },
+  };
+
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? "var(--angebot-sticky-space)" : 0 }}>
       <AngebotGlobalStyles />
@@ -448,6 +467,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
           pakete={pakete}
           selectedPaketId={selectedPaketId}
           setSelectedPaketId={setSelectedPaketId}
+          onChoose={openFunnel}
         />
       )}
 
