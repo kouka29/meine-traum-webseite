@@ -678,20 +678,35 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           </div>
         </div>
 
-        {/* Trust badges */}
-        <div className="ang-reveal ang-d-7" style={{
-          display: "flex", flexWrap: "wrap", gap: 24,
-          fontSize: 14, color: TEXT_MUTED, fontWeight: 500,
-        }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <CheckIcon size={14} color={BRAND} /> Kein Abo
-          </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <CheckIcon size={14} color={BRAND} /> Einmalige Investition
-          </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <CheckIcon size={14} color={BRAND} /> Umsetzung startet sofort
-          </span>
+        {/* Zahlmodell-Optionen */}
+        <div className="ang-reveal ang-d-7" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+            <span style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "10px 14px", borderRadius: 12,
+              background: "#fff", border: `1px solid ${BRAND}20`,
+              fontSize: 13, color: TEXT_DARK, fontWeight: 600,
+              boxShadow: "0 1px 2px rgba(15,23,42,0.04)",
+            }}>
+              <span aria-hidden="true">💳</span>
+              <strong style={{ color: BRAND, fontWeight: 700 }}>Einmalkauf</strong>
+              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— Website gehört Ihnen</span>
+            </span>
+            <span style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "10px 14px", borderRadius: 12,
+              background: "#fff", border: `1px solid ${BRAND}20`,
+              fontSize: 13, color: TEXT_DARK, fontWeight: 600,
+              boxShadow: "0 1px 2px rgba(15,23,42,0.04)",
+            }}>
+              <span aria-hidden="true">📅</span>
+              <strong style={{ color: BRAND, fontWeight: 700 }}>Mietmodell</strong>
+              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— ab {minMiete} €/Monat, jederzeit kündbar</span>
+            </span>
+          </div>
+          <div style={{ fontSize: 13, color: TEXT_MUTED, fontStyle: "italic" }}>
+            Sie entscheiden nach dem Erstgespräch — wir beraten Sie ehrlich.
+          </div>
         </div>
         </div>
       </div>
