@@ -1678,10 +1678,8 @@ function TrustSection() {
           {stats.map((s, i) => (
             <div key={i} className="ang-trust-item">
               <div className="ang-trust-item-icon" aria-hidden="true">{s.icon}</div>
-              <div className="ang-trust-item-text">
-                <div className="ang-trust-item-value">{s.v}</div>
-                <div className="ang-trust-item-label">{s.l}</div>
-              </div>
+              <div className="ang-trust-item-value">{s.v}</div>
+              <div className="ang-trust-item-label">{s.l}</div>
             </div>
           ))}
         </div>
@@ -2296,56 +2294,55 @@ function AngebotGlobalStyles() {
         grid-template-columns: repeat(4, 1fr);
         max-width: 1120px;
         margin: 0 auto;
-        background: #FFFFFF;
-        border: 1px solid rgba(15,23,42,0.06);
-        border-radius: 40px;
-        box-shadow: 0 32px 64px -16px rgba(15,23,42,0.08);
-        overflow: hidden;
+        gap: 24px;
+        background: transparent;
       }
       .ang-trust-item {
         position: relative;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 20px;
-        padding: 36px 28px;
-        border-right: 1px solid rgba(15,23,42,0.06);
-        transition: background .3s ease;
+        text-align: center;
+        gap: 16px;
+        padding: 32px 24px;
+        background: #FFFFFF;
+        border: 1px solid #F1F5F9;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+        transition: transform .3s ease, box-shadow .3s ease;
       }
-      .ang-trust-item:last-child { border-right: none; }
+      .ang-trust-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(79,63,240,0.08);
+      }
       .ang-trust-item:hover .ang-trust-item-icon {
         background: rgba(79,63,240,0.1);
       }
       .ang-trust-item-icon {
         flex-shrink: 0;
-        width: 64px; height: 64px;
-        border-radius: 18px;
+        width: 48px; height: 48px;
+        border-radius: 14px;
         background: rgba(79,63,240,0.05);
         color: #4F3FF0;
         display: flex; align-items: center; justify-content: center;
         transition: background .3s ease;
       }
-      .ang-trust-item-icon svg { width: 28px; height: 28px; }
-      .ang-trust-item-text {
-        display: flex; flex-direction: column; min-width: 0;
-      }
+      .ang-trust-item-icon svg { width: 24px; height: 24px; }
       .ang-trust-item-value {
-        font-size: clamp(28px, 3vw, 36px);
+        font-size: clamp(30px, 2.6vw, 38px);
         font-weight: 800;
-        background: linear-gradient(135deg,#4F3FF0 0%,#5B8DEF 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: #4F3FF0;
         line-height: 1;
         letter-spacing: -0.03em;
+        margin-bottom: 4px;
       }
       .ang-trust-item-label {
-        font-size: 12px;
-        color: #6B7280;
-        font-weight: 600;
-        line-height: 1.35;
-        margin-top: 8px;
+        font-size: 11px;
+        color: #94A3B8;
+        font-weight: 700;
+        line-height: 1.4;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.12em;
       }
       .ang-trust-mobile { display: none; }
       @media (max-width: 720px) {
