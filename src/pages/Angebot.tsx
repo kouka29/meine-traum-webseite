@@ -864,10 +864,11 @@ function resolveFaqs(custom: Faq[] | undefined, hasMiete: boolean): Faq[] {
   return result;
 }
 
-function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
+function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onChoose }: {
   pakete: AngebotPaket[];
   selectedPaketId: string;
   setSelectedPaketId: (id: string) => void;
+  onChoose?: (paketId: string) => void;
 }) {
   const anyHasMiete = pakete.some((p) => p.miete_monatlich && p.miete_monatlich > 0);
   const minMiete = anyHasMiete
@@ -999,6 +1000,29 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                 {active && (
                   <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, color: BRAND, fontSize: 13, fontWeight: 700 }}>
                     <CheckCircle2 size={16} /> Ausgewählt
+                  </div>
+                )}
+                {onChoose && (
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => { e.stopPropagation(); onChoose(p.id); }}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); onChoose(p.id); } }}
+                    style={{
+                      marginTop: 16, width: "100%",
+                      padding: "12px 16px",
+                      background: active ? BRAND_GRADIENT : "#fff",
+                      color: active ? "#fff" : BRAND,
+                      border: active ? "none" : `2px solid ${BRAND}`,
+                      borderRadius: 12,
+                      fontSize: 14, fontWeight: 700,
+                      display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                      cursor: "pointer",
+                      boxShadow: active ? "0 6px 20px rgba(79,63,240,0.25)" : "none",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    Dieses Paket wählen <ChevronRight size={16} />
                   </div>
                 )}
               </button>
