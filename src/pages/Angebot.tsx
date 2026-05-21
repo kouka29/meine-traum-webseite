@@ -701,7 +701,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             }}>
               <span aria-hidden="true">📅</span>
               <strong style={{ color: BRAND, fontWeight: 700 }}>Mietmodell</strong>
-              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— ab {minMiete} €/Monat, jederzeit kündbar</span>
+              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— monatliche Rate, jederzeit kündbar</span>
             </span>
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, fontStyle: "italic" }}>
