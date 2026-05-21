@@ -7,6 +7,7 @@ import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
 import logo from "@/assets/logo.png";
+import CheckoutFunnel, { type FunnelAddon, type PaymentConfig } from "@/components/angebot/CheckoutFunnel";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
@@ -70,6 +71,8 @@ interface AngebotData {
   pdf_path?: string | null;
   payment_method?: "stripe" | "rechnung";
   angebots_id?: string;
+  addons?: FunnelAddon[];
+  payment_config?: PaymentConfig;
 }
 
 function decodeBase64Utf8(b64: string): unknown {
