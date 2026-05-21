@@ -646,12 +646,13 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         </p>
 
         {/* Countdown — Inline, kein Kasten */}
-        <div className="ang-reveal ang-d-6" style={{ maxWidth: 640, marginBottom: 28 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: TEXT_DARK, fontWeight: 600, marginBottom: 14, fontSize: 14 }}>
-            <Clock size={16} color="#EF4444" />
-            Reserviert bis <strong style={{ color: TEXT_DARK, fontWeight: 700 }}>{ablaufStr}</strong> —
+        <div className="ang-reveal ang-d-6 ang-count-wrap" style={{ maxWidth: 640, marginBottom: 28 }}>
+          <div className="ang-count-pill">
+            <Clock size={14} color="#4F3FF0" strokeWidth={2.5} />
+            <span>Reserviert bis <strong>{ablaufStr}</strong></span>
           </div>
           <div className="ang-count-row">
+            <div className="ang-count-glow" aria-hidden="true" />
             {[
               { v: days, l: "TAGE" },
               { v: hours, l: "STD" },
@@ -660,17 +661,19 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             ].flatMap((b, idx, arr) => {
               const block = (
                 <div key={b.l} className="ang-count-block">
-                  <div className="ang-count-num">{pad(b.v)}</div>
-                  <div className="ang-count-lab">{b.l}</div>
+                  <div className="ang-count-card">
+                    <span className="ang-count-num">{pad(b.v)}</span>
+                  </div>
+                  <div className={`ang-count-lab${b.l === "SEK" ? " is-live" : ""}`}>{b.l}</div>
                 </div>
               );
               if (idx < arr.length - 1) {
-                return [block, <span key={`sep-${idx}`} className="ang-count-sep">:</span>];
+                return [block, <span key={`sep-${idx}`} className="ang-count-sep" aria-hidden="true"><i /><i /></span>];
               }
               return [block];
             })}
           </div>
-          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, marginTop: 14 }}>
+          <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, marginTop: 18 }}>
             Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
           </div>
         </div>
@@ -2192,35 +2195,84 @@ function AngebotGlobalStyles() {
       .ang-stagger-leist > .ang-reveal { /* delays set inline */ }
 
       /* Countdown — inline (kein Kasten) */
-      .ang-count-row {
-        display: flex; align-items: center; justify-content: flex-start;
-        gap: 8px; flex-wrap: wrap;
-      }
-      .ang-count-block {
-        background: rgba(255,255,255,0.7);
-        border: 1px solid rgba(79,63,240,0.12);
-        border-radius: 8px;
-        padding: 8px 14px;
-        text-align: center;
+      /* Countdown — Glassmorphism Gradient */
+      .ang-count-wrap { display: flex; flex-direction: column; align-items: flex-start; }
+      .ang-count-pill {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 7px 14px;
+        background: rgba(255,255,255,0.85);
+        border: 1px solid rgba(15,23,42,0.08);
+        border-radius: 999px;
+        box-shadow: 0 1px 2px rgba(15,23,42,0.04);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
+        font-size: 13px; font-weight: 600; color: #475569;
+        letter-spacing: 0.01em;
+        margin-bottom: 22px;
+      }
+      .ang-count-pill strong { color: #4F3FF0; font-weight: 700; }
+      .ang-count-row {
+        position: relative;
+        display: flex; align-items: flex-start; justify-content: flex-start;
+        gap: 16px; flex-wrap: nowrap;
+      }
+      .ang-count-glow {
+        position: absolute; inset: -10px -20px;
+        background: linear-gradient(90deg, rgba(79,63,240,0.12), rgba(91,141,239,0.12));
+        filter: blur(48px);
+        border-radius: 999px;
+        opacity: 0.55;
+        pointer-events: none; z-index: 0;
+      }
+      .ang-count-block {
+        position: relative; z-index: 1;
+        display: flex; flex-direction: column; align-items: center;
+      }
+      .ang-count-card {
+        position: relative;
+        width: 84px; height: 96px;
+        display: flex; align-items: center; justify-content: center;
+        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        border: 1px solid #FFFFFF;
+        border-radius: 20px;
+        box-shadow:
+          0 1px 2px rgba(15,23,42,0.04),
+          0 12px 32px -8px rgba(79,63,240,0.18),
+          inset 0 1px 0 rgba(255,255,255,0.9);
+        overflow: hidden;
       }
       .ang-count-num {
-        font-size: 28px; font-weight: 800; color: #1E1B4B;
-        font-variant-numeric: tabular-nums; line-height: 1;
+        font-family: 'Poppins', sans-serif;
+        font-size: 44px; font-weight: 700; line-height: 1;
+        font-variant-numeric: tabular-nums;
+        background: linear-gradient(135deg, #4F3FF0 0%, #5B8DEF 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
       }
       .ang-count-lab {
-        font-size: 10px; font-weight: 600; color: #6B7280;
-        text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
+        margin-top: 12px;
+        font-size: 11px; font-weight: 700; color: #94A3B8;
+        text-transform: uppercase; letter-spacing: 0.22em;
       }
+      .ang-count-lab.is-live { color: #4F3FF0; }
       .ang-count-sep {
-        font-size: 22px; color: #4F3FF0; font-weight: 800;
-        align-self: flex-start; margin-top: 6px;
+        position: relative; z-index: 1;
+        display: inline-flex; flex-direction: column; gap: 6px;
+        align-self: center;
+        padding-bottom: 28px;
+      }
+      .ang-count-sep i {
+        width: 5px; height: 5px; border-radius: 999px;
+        background: #CBD5E1; display: block;
       }
       @media (max-width: 560px) {
-        .ang-count-num { font-size: 22px; }
-        .ang-count-block { padding: 6px 10px; }
-        .ang-count-sep { font-size: 18px; }
+        .ang-count-row { gap: 10px; }
+        .ang-count-card { width: 64px; height: 78px; border-radius: 16px; }
+        .ang-count-num { font-size: 32px; }
+        .ang-count-lab { font-size: 10px; letter-spacing: 0.18em; margin-top: 10px; }
+        .ang-count-sep { padding-bottom: 24px; }
+        .ang-count-sep i { width: 4px; height: 4px; }
+        .ang-count-pill { font-size: 12px; padding: 6px 12px; }
       }
 
       /* Trust stats row — Icon-Liste mit Hairlines */
