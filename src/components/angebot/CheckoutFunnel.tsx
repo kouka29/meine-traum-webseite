@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { X, ChevronLeft, Check, Loader2, Shield, ArrowRight, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import StripeEmbeddedCheckoutBox, { type StripeItem } from "./StripeEmbeddedCheckout";
+import { isStripeConfigured } from "@/lib/stripe";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
@@ -53,7 +55,8 @@ interface Props {
 }
 
 type PaymentMode = "kauf" | "miete";
-type Step = 0 | 1 | 2 | 3;
+type PayMethod = "online" | "rechnung";
+type Step = 0 | 1 | 2 | 3 | 4;
 
 function fmtEUR(n: number) {
   return n.toLocaleString("de-DE") + " €";
@@ -72,6 +75,9 @@ export default function CheckoutFunnel({
   );
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<{ auftrags_nr: string } | null>(null);
+  const stripeAvailable = isStripeConfigured();
+  const [payMethod, setPayMethod] = useState<PayMethod>(stripeAvailable ? "online" : "rechnung");
+  const [stripeItems, setStripeItems] = useState<StripeItem[] | null>(null);
 
   // Kontaktdaten
   const initialName = (leadName || "").split(" ");
@@ -90,6 +96,8 @@ export default function CheckoutFunnel({
       setSuccess(null);
       setPaymentMode(mieteEnabled ? "miete" : "kauf");
       setSelectedAddonIds(addons.filter((a) => a.default_selected).map((a) => a.id));
+      setPayMethod(stripeAvailable ? "online" : "rechnung");
+      setStripeItems(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, paket.id]);
@@ -155,6 +163,40 @@ export default function CheckoutFunnel({
     return true;
   };
 
+  const buildStripeItems = (): { items: StripeItem[]; mode: "payment" | "subscription"; description: string } => {
+    const subItems: StripeItem[] = [];
+    if (paymentMode === "miete") {
+      // Stripe subscription: base + monthly addons in einem Abo
+      subItems.push({
+        name: `${paket.name} – Miete`,
+        amount_cents: Math.round(Number(paket.miete_monatlich || 0) * 100),
+        recurring: "month",
+      });
+      for (const a of selectedAddons.filter((a) => a.price_type === "monthly")) {
+        subItems.push({ name: a.name, amount_cents: a.price_cents, recurring: "month" });
+      }
+      // Einmalige Add-ons in Miet-Modus: in Stripe Subscriptions nicht möglich → werden im Funnel zur Rechnung
+      // Wir fügen sie als separate "Setup-Fee" nicht hinzu (Limitation); zeigen Hinweis im UI.
+      return { items: subItems, mode: "subscription", description: `Mietmodell – ${paket.name}` };
+    }
+    // Kauf
+    const items: StripeItem[] = [];
+    const cfg = paymentConfig.kauf || { mode: "full" as const, enabled: true };
+    if (cfg.mode === "deposit" && cfg.deposit_percent) {
+      const depCents = Math.round((basisEinmalig * cfg.deposit_percent) / 100 * 100);
+      items.push({ name: `${paket.name} – Anzahlung ${cfg.deposit_percent}%`, amount_cents: depCents });
+    } else {
+      items.push({ name: paket.name, amount_cents: Math.round(basisEinmalig * 100) });
+    }
+    for (const a of selectedAddons) {
+      items.push({
+        name: a.price_type === "monthly" ? `${a.name} (1. Monat)` : a.name,
+        amount_cents: a.price_cents,
+      });
+    }
+    return { items, mode: "payment", description: `Auftrag ${paket.name}` };
+  };
+
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
@@ -180,7 +222,7 @@ export default function CheckoutFunnel({
           kunde_firma: firma.trim(),
           kunde_email: email.trim(),
           kunde_telefon: telefon.trim(),
-          payment_method: stripeLink ? "stripe" : "rechnung",
+          payment_method: payMethod === "online" ? "stripe" : "rechnung",
           positions,
           pakete: [{
             id: paket.id, name: paket.name,
@@ -200,13 +242,15 @@ export default function CheckoutFunnel({
         throw new Error(data?.error || error?.message || "Speichern fehlgeschlagen");
       }
       setSuccess({ auftrags_nr: data.auftrags_nr });
-      setStep(3);
 
-      // Falls Stripe Payment Link gewünscht → kurz Bestätigung zeigen, dann redirect
-      if (stripeLink) {
-        setTimeout(() => {
-          window.location.href = stripeLink;
-        }, 1500);
+      if (payMethod === "online" && stripeAvailable) {
+        // Stripe Embedded Checkout vorbereiten
+        const built = buildStripeItems();
+        setStripeItems(built.items);
+        setStep(3);
+      } else {
+        // Klassisch: direkt zu Fertig
+        setStep(4);
       }
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Fehler beim Abschicken";
@@ -218,7 +262,7 @@ export default function CheckoutFunnel({
 
   if (!open) return null;
 
-  const stepLabels = ["Zahlung", "Extras", "Kontakt", "Fertig"];
+  const stepLabels = ["Zahlung", "Extras", "Kontakt", "Bezahlen", "Fertig"];
 
   return (
     <div
@@ -379,10 +423,28 @@ export default function CheckoutFunnel({
               agb={agb} setAgb={setAgb}
               kostenpflichtig={kostenpflichtig} setKostenpflichtig={setKostenpflichtig}
               summary={{ heuteZuZahlen, heuteLabel, paymentMode, gesamtMonatlich, gesamtEinmalig }}
+              payMethod={payMethod}
+              setPayMethod={setPayMethod}
+              stripeAvailable={stripeAvailable}
             />
           )}
           {step === 3 && success && (
-            <StepFertig auftragsNr={success.auftrags_nr} stripeRedirect={!!stripeLink} email={email} />
+            <StepBezahlen
+              items={stripeItems || []}
+              mode={paymentMode === "miete" ? "subscription" : "payment"}
+              description={`Auftrag ${success.auftrags_nr} – ${paket.name}`}
+              customerEmail={email}
+              metadata={{
+                auftrags_nr: success.auftrags_nr,
+                angebots_id: angebots_id || "",
+                paket: paket.id,
+                payment_mode: paymentMode,
+              }}
+              returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
+            />
+          )}
+          {step === 4 && success && (
+            <StepFertig auftragsNr={success.auftrags_nr} email={email} />
           )}
         </div>
 
@@ -453,7 +515,7 @@ export default function CheckoutFunnel({
               {submitting ? (
                 <><Loader2 size={18} className="animate-spin" /> Wird abgeschickt…</>
               ) : step === 2 ? (
-                <>Verbindlich beauftragen <ArrowRight size={18} /></>
+                <>{payMethod === "online" && stripeAvailable ? "Weiter zur Zahlung" : "Verbindlich beauftragen"} <ArrowRight size={18} /></>
               ) : (
                 <>Weiter <ArrowRight size={18} /></>
               )}
@@ -687,6 +749,7 @@ function StepKontakt({
   email, setEmail, telefon, setTelefon,
   agb, setAgb, kostenpflichtig, setKostenpflichtig,
   summary,
+  payMethod, setPayMethod, stripeAvailable,
 }: {
   vorname: string; setVorname: (v: string) => void;
   nachname: string; setNachname: (v: string) => void;
@@ -696,6 +759,8 @@ function StepKontakt({
   agb: boolean; setAgb: (v: boolean) => void;
   kostenpflichtig: boolean; setKostenpflichtig: (v: boolean) => void;
   summary: { heuteZuZahlen: number; heuteLabel: string; paymentMode: PaymentMode; gesamtMonatlich: number; gesamtEinmalig: number };
+  payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
+  stripeAvailable: boolean;
 }) {
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "11px 14px",
@@ -764,6 +829,43 @@ function StepKontakt({
         </div>
       </div>
 
+      {stripeAvailable && (
+        <div style={{ marginTop: 18 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: TEXT_MUTED, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+            Zahlungsart
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            {(["online", "rechnung"] as const).map((m) => {
+              const active = payMethod === m;
+              return (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setPayMethod(m)}
+                  style={{
+                    padding: "12px 10px", cursor: "pointer", fontFamily: "inherit",
+                    background: active ? `${BRAND}10` : "#fff",
+                    border: active ? `2px solid ${BRAND}` : "2px solid #E5E3FF",
+                    borderRadius: 12, textAlign: "center",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  <div style={{ fontSize: 18, marginBottom: 4 }} aria-hidden="true">
+                    {m === "online" ? "💳" : "📄"}
+                  </div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_DARK }}>
+                    {m === "online" ? "Online zahlen" : "Auf Rechnung"}
+                  </div>
+                  <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
+                    {m === "online" ? "Karte, Apple/Google Pay" : "Überweisung in 14 Tagen"}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <div style={{ marginTop: 18, display: "grid", gap: 10 }}>
         <label style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: TEXT_DARK, cursor: "pointer", lineHeight: 1.4 }}>
           <input type="checkbox" checked={agb} onChange={(e) => setAgb(e.target.checked)} style={{ marginTop: 3, accentColor: BRAND, width: 16, height: 16, flexShrink: 0 }} />
@@ -783,7 +885,21 @@ function StepKontakt({
 }
 
 // ─── STEP 3: FERTIG ────────────────────────────────────
-function StepFertig({ auftragsNr, stripeRedirect, email }: { auftragsNr: string; stripeRedirect: boolean; email: string }) {
+function StepBezahlen(props: React.ComponentProps<typeof StripeEmbeddedCheckoutBox>) {
+  return (
+    <div>
+      <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
+        Sichere Bezahlung
+      </h2>
+      <p style={{ fontSize: 13, color: TEXT_MUTED, marginBottom: 16 }}>
+        Ihre Buchung ist registriert. Schließen Sie nun die Zahlung ab — sicher über Stripe.
+      </p>
+      <StripeEmbeddedCheckoutBox {...props} />
+    </div>
+  );
+}
+
+function StepFertig({ auftragsNr, email }: { auftragsNr: string; email: string }) {
   return (
     <div style={{ textAlign: "center", padding: "20px 10px" }}>
       <div style={{
@@ -800,20 +916,9 @@ function StepFertig({ auftragsNr, stripeRedirect, email }: { auftragsNr: string;
       <p style={{ fontSize: 15, color: TEXT_MUTED, marginBottom: 16, lineHeight: 1.5 }}>
         Ihr Auftrag <strong style={{ color: TEXT_DARK }}>{auftragsNr}</strong> wurde verbindlich angenommen.
       </p>
-      <p style={{ fontSize: 13, color: TEXT_MUTED, marginBottom: 20 }}>
+      <p style={{ fontSize: 13, color: TEXT_MUTED }}>
         Eine Bestätigung wurde an <strong style={{ color: TEXT_DARK }}>{email}</strong> versendet.
       </p>
-      {stripeRedirect && (
-        <div style={{
-          padding: "12px 14px", background: "#F5F4FF",
-          borderRadius: 12, border: `1px solid ${BRAND}22`,
-          fontSize: 13, color: TEXT_DARK,
-          display: "inline-flex", alignItems: "center", gap: 8,
-        }}>
-          <Loader2 size={14} className="animate-spin" color={BRAND} />
-          Sie werden zur sicheren Bezahlung weitergeleitet…
-        </div>
-      )}
     </div>
   );
 }
