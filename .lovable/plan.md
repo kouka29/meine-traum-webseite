@@ -1,112 +1,103 @@
+# Plan — Guided Checkout Funnel auf /a/[slug]
 
-# Diskussion & Plan — 3 Conversion-Probleme auf /a/[slug]
+## Was gebaut wird
 
-Als Team aus **Conversion-Stratege + Senior Copywriter + UX/UI Designer + Branchenexperte** — hier die Analyse und Empfehlung pro Punkt.
-
----
-
-## PROBLEM 1 — Paket-Wahl zeigt nur Kaufpreis (2.490 € / 3.900 €)
-
-**Diagnose:**
-Der Kunde sieht sofort den vollen Kaufpreis ohne zu wissen, dass es auch eine Mietoption ab 139 €/Monat gibt. Wer mit so einer Summe nicht gerechnet hat, scrollt nicht weiter — er schließt. Wir verlieren ihn 3 Sekunden bevor wir unser stärkstes Argument zeigen konnten.
-
-**Was die Rollen sagen:**
-
-- **Conversion-Stratege:** "Price anchoring zu früh auf den höchsten Wert killt die Conversion. Wir müssen die niedrigste Einstiegshürde zuerst kommunizieren."
-- **Copywriter:** "Niemand kauft eine Zahl. Sie kaufen eine Entscheidung. Gib ihnen zwei Wege, nicht einen Preis."
-- **UX-Designer:** "Dual-Pricing direkt auf der Card — gleich sichtbar, gleichwertig dargestellt."
-- **Branchenexperte:** "Im Webdesign-Markt erwartet der Kunde heute beide Modelle. Wer nur Kauf zeigt, wirkt teuer und unflexibel."
-
-**Empfehlung — Dual-Price Toggle auf jeder Paket-Card:**
+Ein 4-Schritt-Funnel der sich öffnet, sobald der Kunde ein Paket wählt. Desktop = Side-Panel rechts, Mobile = Full-Screen Bottom-Sheet. Endet direkt im Stripe Embedded Checkout.
 
 ```
-┌────────────────────────────────┐
-│  EINSTIEG                      │
-│  E-COMMERCE PAKET S            │
-│  Professioneller Online-Shop…  │
-│                                │
-│  ┌──────────┬──────────────┐   │
-│  │ MIETEN   │  KAUFEN      │   │  ← Toggle
-│  └──────────┴──────────────┘   │
-│                                │
-│  ab  139 €/Monat               │  ← große Zahl
-│  oder einmalig 2.490 €         │  ← kleine Zeile
-│                                │
-│  ✓ Keine hohe Anfangsinvestition│
-│  ✓ Monatlich kündbar nach 12 M.│
-│                                │
-│  [ Alle 7 Leistungen anzeigen ]│
-│  [ Dieses Paket wählen      ]  │
-└────────────────────────────────┘
+Paket-Klick → Step 1: Zahlungsmodell → Step 2: Add-Ons → Step 3: Kontaktdaten → Step 4: Checkout (Stripe)
 ```
 
-Dazu **über den Paketen** ein kurzer Hinweis-Streifen:
-> "Zwei Wege zu Ihrer Website — mieten ab 139 €/Monat oder einmalig kaufen. Sie entscheiden später."
+## Funnel-Verhalten
 
-Effekt: Der erste Preis, den der Kunde sieht, ist **139 €**, nicht 2.490 €. Die Kaufoption bleibt prominent — aber sie schreckt nicht mehr ab.
+- **Trigger:** Klick auf "Paket wählen" Button öffnet sofort den Funnel-Container (kein zusätzlicher Scroll)
+- **Desktop:** Side-Panel 480px breit, gleitet von rechts rein, Hintergrund abgedunkelt
+- **Mobile:** Bottom-Sheet Full-Screen, von unten hochfahrend, ein Schritt pro Screen
+- **Progress:** Desktop = Bar mit Labels (●━━●━━○━━○), Mobile = nur Punkte
+- **Navigation:** "Zurück" oben links, "Weiter" sticky unten, Selection persistiert beim Hin/Her
+- **Sticky Summary:** Aktueller Preis immer sichtbar (Desktop oben rechts im Panel, Mobile in der Bottom-Bar)
 
----
+## Die 4 Schritte im Detail
 
-## PROBLEM 2 — "Was wir gemeinsam umsetzen" zeigt Leistungen ein zweites Mal
+### Step 1 — Zahlungsmodell wählen
+Zwei große Karten nebeneinander (Desktop) / untereinander (Mobile):
+- **Einmalkauf** — z.B. 2.490 € (Card mit Icon, Vorteilen: "Website gehört Ihnen", "keine laufenden Kosten")
+- **Monatliche Miete** — z.B. 139 €/Monat (Card mit Badge "EMPFOHLEN", Vorteilen: "niedrigere Einstiegshürde", "alles inklusive")
+- Eine Karte ist standardmäßig markiert (Miete, da niedrigerer Einstieg)
 
-**Diagnose:**
-Die Leistungen stehen bereits ausklappbar auf der Paket-Card oben. Sie nochmal als 7 große Cards mit identischem Inhalt zu wiederholen, wirkt redundant — und die generischen lila ✦-Icons machen es visuell unruhig ohne Information hinzuzufügen.
+### Step 2 — Add-Ons / Upsells
+Pro Angebot vom Admin konfigurierte Liste. Toggle-Cards mit:
+- Icon + Name (z.B. 🛡️ Care-Paket Basic)
+- Beschreibung (1 Zeile)
+- Preis (+49 €/Monat oder +290 € einmalig)
+- Optional: "Empfohlen"-Badge + Social Proof ("78% wählen das")
+- Mehrfach-Auswahl möglich
+- "Überspringen"-Link für die, die nichts wollen
 
-**Was die Rollen sagen:**
+### Step 3 — Kontaktdaten
+Minimal: Vorname, Nachname, Firma, E-Mail, Telefon. AGB + Kostenpflichtig-Bestätigung. Speichert Lead-Eintrag in `leads`-Tabelle.
 
-- **UX-Designer:** "Doppelte Information = kognitive Last. Entweder weglassen oder neu framen."
-- **Copywriter:** "Wenn wir es nochmal zeigen, dann mit **anderem Blickwinkel** — nicht 'was' sondern 'warum es Ihnen hilft'."
-- **Conversion-Stratege:** "Die zweite Wiederholung sollte den **Wert** verkaufen, nicht das Feature."
+### Step 4 — Stripe Embedded Checkout
+- Direkt im Funnel eingebettet (kein Redirect)
+- Server-Funktion `create-checkout-funnel` baut Stripe Session dynamisch mit `price_data` aus gewählten Items
+- Pro Zahlungsart entscheidet das Angebot: voller Betrag, Anzahlung (Prozent), oder Subscription
+- Return-URL: bestehende `/kauf-erfolgreich`
 
-**Zwei Optionen — bitte wählen:**
+## Datenmodell-Erweiterung
 
-**Option A (radikal, empfohlen):** Section komplett entfernen. Stattdessen direkt unter den Paketen ein **"So läuft Ihr Projekt"** Block (Timeline) — das beantwortet die Frage, die jetzt offen ist: "Wie geht es weiter, wenn ich buche?"
+### `angebote` Tabelle — neue Spalten
+- `addons` (jsonb) — Array von `{ id, name, description, price_cents, price_type: 'one_time'|'monthly', recommended, default_selected }`
+- `payment_config` (jsonb) — `{ kauf: { mode: 'full'|'deposit', deposit_percent }, miete: { monthly_cents } }`
+- (bereits vorhanden: `preis`, `normalpreis` für Einmalkauf)
 
-**Option B (sanft):** Section umbauen zu **"Was Sie davon haben"** — keine Feature-Liste mehr, sondern 4–5 **Benefit-Statements** mit Mini-Icons:
-> "Kunden bestellen auch nachts" · "Sie wirken sofort professionell" · "Sie sparen Stunden manueller Arbeit" · "Sie brauchen kein Technik-Wissen"
+### Neue Tabelle: `buchung_addons`
+Nur falls für Reporting nötig — sonst in `buchungen.addons` (existiert schon).
 
-Keine Card-Wiederholung der Features oben.
+## Admin-Bereich Erweiterung
 
----
+Im `AngebotModal.tsx` neuer Tab/Section: **"Funnel-Konfiguration"**:
 
-## PROBLEM 3 — "Kauf oder Miete" wird nicht als Entscheidung kommuniziert
+1. **Zahlungsarten** — Toggle pro Zahlungsart aktiv/inaktiv, Eingabe für Anzahlungs-%, Eingabe für Mietpreis
+2. **Add-Ons** — Liste mit Add/Remove, pro Add-On:
+   - Name, Beschreibung, Preis, Typ (einmalig/monatlich)
+   - Checkbox "Empfohlen"
+   - Checkbox "Standardmäßig vorausgewählt"
+3. **Vorlagen-Auswahl** — Buttons "Care Basic", "Care Premium", "Logo-Design", "SEO Setup" als Quick-Insert für gängige Add-Ons (befüllen das Formular vor, Admin kann editieren)
 
-**Diagnose:**
-Die zwei Preis-Karten stehen nebeneinander, aber es ist nicht visuell klar: **"Das ist ein ODER — Sie wählen eines von beidem."** Es sieht aus wie zwei getrennte Angebote oder gar wie eine Addition.
+## Neue Dateien
 
-**Was die Rollen sagen:**
+- `src/components/angebot/CheckoutFunnel.tsx` — Container mit Step-Logik, responsive
+- `src/components/angebot/funnel/StepZahlungsmodell.tsx`
+- `src/components/angebot/funnel/StepAddOns.tsx`
+- `src/components/angebot/funnel/StepKontakt.tsx`
+- `src/components/angebot/funnel/StepCheckout.tsx`
+- `src/components/angebot/funnel/FunnelSummary.tsx` (sticky Preis-Anzeige)
+- `src/components/admin/AngebotFunnelConfig.tsx` (neuer Admin-Tab)
+- `supabase/functions/create-checkout-funnel/index.ts`
 
-- **UX-Designer:** "Es fehlt das visuelle Verbindungs-Element zwischen den Karten — ein 'ODER' in der Mitte."
-- **Copywriter:** "Headline muss die Entscheidung framen: nicht 'Investitionsvolumen' (analytisch), sondern 'Wie möchten Sie zahlen?' (handlungsorientiert)."
-- **Branchenexperte:** "Kunden kennen das Muster von Streaming-Abos: 'Monatlich vs. Jährlich'. Das gleiche Muster funktioniert hier."
+## Geänderte Dateien
 
-**Empfehlung:**
+- `src/pages/Angebot.tsx` — Paket-Buttons öffnen Funnel statt direktem Checkout
+- `src/components/admin/AngebotModal.tsx` — neuer Funnel-Config-Tab
+- DB-Migration für neue `angebote`-Spalten
 
-1. **Neue Headline:** "Wie möchten Sie zahlen?" + Subtext: "Beide Wege — gleiches Ergebnis. Sie entscheiden."
-2. **"ODER"-Badge** zwischen den Karten (Kreis, weiß, Border, absolut positioniert in der Mitte)
-3. **Visuelle Hierarchie aufbrechen** — eine Karte aktiv hervorgehoben (Miete, da Einstiegshürde niedriger = mehr Conversions), die andere zurückgenommen
-4. **Comparison-Row darunter:** Mini-Tabelle die zeigt was identisch ist ("Beide enthalten: alles aus dem Paket, 2 Korrekturrunden, DSGVO, …")
+## Reihenfolge der Umsetzung
 
-```
-       Wie möchten Sie zahlen?
-       Beide Wege — gleiches Ergebnis.
+1. **DB-Migration** — neue Spalten in `angebote` (mit sinnvollen Defaults für bestehende Angebote)
+2. **Admin-UI** — Funnel-Config im `AngebotModal` (Test-Angebot konfigurieren)
+3. **Funnel-Komponente** — Container + 4 Steps, responsive
+4. **Edge Function** — `create-checkout-funnel` (Stripe `price_data` dynamisch)
+5. **Integration** — Paket-Buttons in `Angebot.tsx` mit Funnel verdrahten
+6. **QA** — Desktop + Mobile durchklicken
 
-  ┌──────────────┐  ╭───╮  ┌──────────────┐
-  │ EINMAL KAUFEN│  │ODER│  │ MONATLICH    │ ★ EMPFOHLEN
-  │              │  ╰───╯  │              │
-  │   2.490 €    │         │  139 €/Monat │
-  │              │         │              │
-  └──────────────┘         └──────────────┘
+## Offene Fragen (kann ich später klären, blockieren nicht)
 
-  Beides enthält: alles aus Paket S · 2 Korrekturen · DSGVO · Hosting
-```
+- Exakte Stripe-Behandlung von Subscription + One-Time-Addon im selben Checkout (Stripe erlaubt Mix in einer Session — wird in der Edge Function gelöst)
+- Mailchimp/Mail-Trigger bei Lead-Creation aus Funnel (bestehende Logik wird wiederverwendet)
 
----
+## Technische Notizen
 
-## ENTSCHEIDUNGEN — bitte bestätigen
-
-1. **Problem 1:** Dual-Price-Toggle auf Paket-Cards einbauen + Hinweis-Streifen darüber? **(empfohlen: ja)**
-2. **Problem 2:** Option A (Section ersetzen durch Timeline) oder Option B (zu Benefits umbauen)?
-3. **Problem 3:** "ODER"-Badge + neue Headline + Comparison-Row? **(empfohlen: ja)**
-
-Sobald Du die 3 Punkte bestätigst (oder Variationen wünschst), setze ich es um.
+- Funnel-State liegt lokal im Container (useState mit `{ paymentMode, selectedAddons, contact }`)
+- Bei Funnel-Schließen ohne Abschluss: Lead wird NICHT gespeichert (erst ab Step 3 mit Bestätigung)
+- Mobile-Breakpoint: 768px — darüber Side-Panel, darunter Bottom-Sheet
+- Animationen: Tailwind `transition-transform` + `translate-x-full`/`translate-y-full` Slide-In

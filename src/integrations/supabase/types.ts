@@ -17,12 +17,14 @@ export type Database = {
       angebote: {
         Row: {
           ablauf_datum: string | null
+          addons: Json
           base64_data: string | null
           erstellt_am: string
           id: string
           lead_email: string | null
           lead_name: string | null
           normalpreis: number | null
+          payment_config: Json
           pdf_path: string | null
           pin: string | null
           preis: number | null
@@ -32,12 +34,14 @@ export type Database = {
         }
         Insert: {
           ablauf_datum?: string | null
+          addons?: Json
           base64_data?: string | null
           erstellt_am?: string
           id?: string
           lead_email?: string | null
           lead_name?: string | null
           normalpreis?: number | null
+          payment_config?: Json
           pdf_path?: string | null
           pin?: string | null
           preis?: number | null
@@ -47,12 +51,14 @@ export type Database = {
         }
         Update: {
           ablauf_datum?: string | null
+          addons?: Json
           base64_data?: string | null
           erstellt_am?: string
           id?: string
           lead_email?: string | null
           lead_name?: string | null
           normalpreis?: number | null
+          payment_config?: Json
           pdf_path?: string | null
           pin?: string | null
           preis?: number | null

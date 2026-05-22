@@ -7,6 +7,7 @@ import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
 import logo from "@/assets/logo.png";
+import CheckoutFunnel, { type FunnelAddon, type PaymentConfig } from "@/components/angebot/CheckoutFunnel";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
@@ -70,6 +71,8 @@ interface AngebotData {
   pdf_path?: string | null;
   payment_method?: "stripe" | "rechnung";
   angebots_id?: string;
+  addons?: FunnelAddon[];
+  payment_config?: PaymentConfig;
 }
 
 function decodeBase64Utf8(b64: string): unknown {
@@ -408,6 +411,25 @@ function AngebotPage({ data }: { data: AngebotData }) {
     setPriceMode(hasMiete ? "miete" : "kauf");
   }, [hasMiete, selectedPaketId]);
 
+  // ─── Checkout-Funnel ──────────────────────────────────
+  const [funnelOpen, setFunnelOpen] = useState(false);
+  const [funnelPaketId, setFunnelPaketId] = useState<string | null>(null);
+  const funnelPaket = funnelPaketId
+    ? pakete.find((p) => p.id === funnelPaketId) ?? selectedPaket
+    : selectedPaket;
+
+  const openFunnel = (paketId: string) => {
+    setFunnelPaketId(paketId);
+    setSelectedPaketId(paketId);
+    setFunnelOpen(true);
+  };
+
+  const funnelAddons: FunnelAddon[] = data.addons ?? [];
+  const funnelPaymentConfig: PaymentConfig = data.payment_config ?? {
+    kauf: { enabled: true, mode: data.anzahlung ? "deposit" : "full", deposit_percent: data.anzahlung ? Math.round((Number(data.anzahlung) / Number(funnelPaket?.preis || data.preis)) * 100) : undefined },
+    miete: funnelPaket?.miete_monatlich ? { enabled: true, monthly_cents: Math.round(Number(funnelPaket.miete_monatlich) * 100), min_months: 12 } : { enabled: false, monthly_cents: 0 },
+  };
+
   return (
     <div style={{ position: "relative", paddingBottom: showSticky ? "var(--angebot-sticky-space)" : 0 }}>
       <AngebotGlobalStyles />
@@ -445,6 +467,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
           pakete={pakete}
           selectedPaketId={selectedPaketId}
           setSelectedPaketId={setSelectedPaketId}
+          onChoose={openFunnel}
         />
       )}
 
@@ -578,6 +601,25 @@ function AngebotPage({ data }: { data: AngebotData }) {
       )}
       {bookingSuccess && (
         <BookingSuccessOverlay auftragsNr={bookingSuccess} onClose={() => { setBookingSuccess(null); setBookingOpen(false); }} />
+      )}
+
+      {funnelPaket && (
+        <CheckoutFunnel
+          open={funnelOpen}
+          onClose={() => setFunnelOpen(false)}
+          paket={{
+            id: funnelPaket.id,
+            name: funnelPaket.name,
+            preis: Number(funnelPaket.preis),
+            miete_monatlich: funnelPaket.miete_monatlich ? Number(funnelPaket.miete_monatlich) : null,
+          }}
+          addons={funnelAddons}
+          paymentConfig={funnelPaymentConfig}
+          angebots_id={data.angebots_id}
+          leadEmail={data.lead_email}
+          leadName={data.lead_name}
+          stripeLink={funnelPaket.stripe_link || data.stripe_link || null}
+        />
       )}
     </div>
   );
@@ -822,10 +864,11 @@ function resolveFaqs(custom: Faq[] | undefined, hasMiete: boolean): Faq[] {
   return result;
 }
 
-function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
+function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onChoose }: {
   pakete: AngebotPaket[];
   selectedPaketId: string;
   setSelectedPaketId: (id: string) => void;
+  onChoose?: (paketId: string) => void;
 }) {
   const anyHasMiete = pakete.some((p) => p.miete_monatlich && p.miete_monatlich > 0);
   const minMiete = anyHasMiete
@@ -957,6 +1000,29 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId }: {
                 {active && (
                   <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, color: BRAND, fontSize: 13, fontWeight: 700 }}>
                     <CheckCircle2 size={16} /> Ausgewählt
+                  </div>
+                )}
+                {onChoose && (
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => { e.stopPropagation(); onChoose(p.id); }}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); onChoose(p.id); } }}
+                    style={{
+                      marginTop: 16, width: "100%",
+                      padding: "12px 16px",
+                      background: active ? BRAND_GRADIENT : "#fff",
+                      color: active ? "#fff" : BRAND,
+                      border: active ? "none" : `2px solid ${BRAND}`,
+                      borderRadius: 12,
+                      fontSize: 14, fontWeight: 700,
+                      display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                      cursor: "pointer",
+                      boxShadow: active ? "0 6px 20px rgba(79,63,240,0.25)" : "none",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    Dieses Paket wählen <ChevronRight size={16} />
                   </div>
                 )}
               </button>
