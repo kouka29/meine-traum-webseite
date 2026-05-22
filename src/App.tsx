@@ -62,6 +62,7 @@ const SanitaerHub = lazy(() => import("./pages/trade/SanitaerHub.tsx"));
 const DachdeckerHub = lazy(() => import("./pages/trade/DachdeckerHub.tsx"));
 const Angebot = lazy(() => import("./pages/Angebot.tsx"));
 const AGB = lazy(() => import("./pages/AGB.tsx"));
+const ZahlungErfolgreich = lazy(() => import("./pages/ZahlungErfolgreich.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -183,6 +184,7 @@ const App = () => (
             <Route path="/a" element={<Angebot />} />
             <Route path="/a/:shortId" element={<Angebot />} />
             <Route path="/agb" element={<AGB />} />
+            <Route path="/zahlung-erfolgreich" element={<ZahlungErfolgreich />} />
             <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
