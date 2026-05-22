@@ -6,16 +6,12 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-type PackageTier = "starter" | "pro" | "premium";
-type PackageKind = "deposit" | "rent";
-
-const PACKAGE_FROM_PRICE: Record<string, { tier: PackageTier; kind: PackageKind }> = {
-  starter_purchase_deposit: { tier: "starter", kind: "deposit" },
-  pro_purchase_deposit: { tier: "pro", kind: "deposit" },
-  premium_purchase_deposit: { tier: "premium", kind: "deposit" },
-  starter_rent_monthly: { tier: "starter", kind: "rent" },
-  pro_rent_monthly: { tier: "pro", kind: "rent" },
-  premium_rent_monthly: { tier: "premium", kind: "rent" },
+type Item = {
+  name: string;
+  description?: string;
+  amount_cents: number;
+  recurring?: "month" | "year" | null;
+  quantity?: number;
 };
 
 Deno.serve(async (req) => {
@@ -28,74 +24,64 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const priceId: string = body.priceId;
     const environment: StripeEnv = body.environment === "live" ? "live" : "sandbox";
     const returnUrl: string = body.returnUrl;
     const customerEmail: string | undefined = body.customerEmail;
+    const items: Item[] = Array.isArray(body.items) ? body.items : [];
+    const mode: "payment" | "subscription" = body.mode === "subscription" ? "subscription" : "payment";
+    const description: string = typeof body.description === "string" ? body.description.slice(0, 200) : "Webdesign-Auftrag";
+    const metadata: Record<string, string> = (body.metadata && typeof body.metadata === "object") ? body.metadata : {};
 
-    if (!priceId || !/^[a-zA-Z0-9_-]+$/.test(priceId)) {
-      return new Response(JSON.stringify({ error: "Invalid priceId" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
     if (!returnUrl || !returnUrl.startsWith("http")) {
       return new Response(JSON.stringify({ error: "Invalid returnUrl" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    const pkgInfo = PACKAGE_FROM_PRICE[priceId];
-    if (!pkgInfo) {
-      return new Response(JSON.stringify({ error: "Unknown price" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+    if (!items.length) {
+      return new Response(JSON.stringify({ error: "No items" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const { tier: pkg, kind } = pkgInfo;
+    for (const it of items) {
+      if (!it.name || typeof it.amount_cents !== "number" || it.amount_cents < 50) {
+        return new Response(JSON.stringify({ error: "Invalid item" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
 
     const stripe = createStripeClient(environment);
 
-    const prices = await stripe.prices.list({ lookup_keys: [priceId], limit: 1 });
-    if (!prices.data.length) {
-      return new Response(JSON.stringify({ error: "Price not found in Stripe" }), {
-        status: 404,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    const lineItems = items.map((it) => ({
+      price_data: {
+        currency: "eur",
+        product_data: { name: it.name.slice(0, 250), ...(it.description ? { description: it.description.slice(0, 500) } : {}) },
+        unit_amount: Math.round(it.amount_cents),
+        ...(mode === "subscription" && it.recurring ? { recurring: { interval: it.recurring } } : {}),
+      },
+      quantity: Math.max(1, Math.min(100, it.quantity || 1)),
+    }));
+
+    // Stripe metadata: max 50 keys, max 500 chars per value
+    const safeMetadata: Record<string, string> = {};
+    for (const [k, v] of Object.entries(metadata)) {
+      if (typeof v === "string") safeMetadata[k.slice(0, 40)] = v.slice(0, 500);
     }
-    const stripePrice = prices.data[0];
-    const isRecurring = stripePrice.type === "recurring";
-    const tierLabel = pkg.charAt(0).toUpperCase() + pkg.slice(1);
 
     const session = await stripe.checkout.sessions.create({
-      line_items: [{ price: stripePrice.id, quantity: 1 }],
-      mode: isRecurring ? "subscription" : "payment",
-      ui_mode: "embedded_page",
+      line_items: lineItems,
+      mode,
+      ui_mode: "embedded",
       return_url: returnUrl,
-      automatic_tax: { enabled: true },
-      tax_id_collection: { enabled: true },
-      billing_address_collection: "required",
       ...(customerEmail && { customer_email: customerEmail }),
-      ...(isRecurring
-        ? {
-            subscription_data: {
-              description: `Mietmodell – Webdesign-Paket ${tierLabel} (12 Monate Mindestlaufzeit)`,
-              metadata: { package: pkg, kind },
-            },
-          }
-        : {
-            payment_intent_data: {
-              description: `Anzahlung (50%) – Webdesign-Paket ${tierLabel}`,
-              metadata: { package: pkg, kind },
-            },
-          }),
-      metadata: { package: pkg, kind, priceId },
+      ...(mode === "payment"
+        ? { payment_intent_data: { description, metadata: safeMetadata } }
+        : { subscription_data: { description, metadata: safeMetadata } }),
+      metadata: safeMetadata,
     });
 
-    return new Response(JSON.stringify({ clientSecret: session.client_secret }), {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    return new Response(JSON.stringify({ clientSecret: session.client_secret, sessionId: session.id }), {
+      status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
     console.error("create-checkout error:", e);
