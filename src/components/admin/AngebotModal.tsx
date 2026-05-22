@@ -295,8 +295,9 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
         const preisN = Number(p.preis);
         if (!p.name.trim()) throw new Error("Paket-Name fehlt");
         if (!Number.isFinite(preisN) || preisN <= 0) throw new Error(`Paket "${p.name || "?"}": Preis ungültig`);
-        if (paymentMethod === "stripe" && (!p.stripe_link.trim() || !/^https?:\/\//i.test(p.stripe_link))) {
-          throw new Error(`Paket "${p.name}": Stripe-Link ungültig`);
+        // Stripe-Link ist optional – Checkout wird dynamisch aus dem Preis erzeugt.
+        if (paymentMethod === "stripe" && p.stripe_link.trim() && !/^https?:\/\//i.test(p.stripe_link)) {
+          throw new Error(`Paket "${p.name}": Stripe-Link ungültig (muss mit http(s) beginnen)`);
         }
         const cleanL = p.leistungen.filter((l) => l.titel.trim() || l.beschreibung.trim() || l.emoji.trim());
         if (cleanL.length === 0) throw new Error(`Paket "${p.name}": Mindestens eine Leistung`);
@@ -325,8 +326,9 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
     } else {
       const preisN = Number(preis);
       if (!Number.isFinite(preisN) || preisN <= 0) return { ok: false, error: "Bitte gültigen Preis eingeben" };
-      if (paymentMethod === "stripe" && (!stripeLink || !/^https?:\/\//i.test(stripeLink))) {
-        return { ok: false, error: "Bitte gültigen Stripe-Link eingeben" };
+      // Stripe-Link ist optional – Checkout wird dynamisch aus dem Preis erzeugt.
+      if (paymentMethod === "stripe" && stripeLink && !/^https?:\/\//i.test(stripeLink)) {
+        return { ok: false, error: "Stripe-Link ungültig (muss mit http(s) beginnen)" };
       }
       const cleanL = leistungen.filter((l) => l.titel.trim() || l.beschreibung.trim() || l.emoji.trim());
       if (cleanL.length === 0) return { ok: false, error: "Mindestens eine Leistung erforderlich" };
