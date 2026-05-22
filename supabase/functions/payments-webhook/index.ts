@@ -21,17 +21,14 @@ const PRICE_TO_PACKAGE: Record<string, "starter" | "pro" | "premium"> = {
 async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   const meta = session.metadata || {};
   const priceLookup = meta.priceId as string | undefined;
-  const pkg = (meta.package as string | undefined)
-    || (priceLookup ? PRICE_TO_PACKAGE[priceLookup] : undefined);
+  const pkg = (meta.paket as string | undefined)
+    || (meta.package as string | undefined)
+    || (priceLookup ? PRICE_TO_PACKAGE[priceLookup] : undefined)
+    || "custom";
+  const auftragsNr = meta.auftrags_nr as string | undefined;
 
-  if (!pkg) {
-    console.error("payments-webhook: cannot resolve package from session metadata", session.id);
-    return;
-  }
-
-  const depositCents: number = session.amount_subtotal ?? session.amount_total ?? 0;
-  // Stripe gibt amount_subtotal in der Bestell-Currency vor Tax. Falls 0, Fallback auf amount_total.
-  const totalCents = depositCents * 2;
+  const paidCents: number = session.amount_total ?? session.amount_subtotal ?? 0;
+  const totalCents = paidCents;
 
   const customerEmail =
     session.customer_details?.email ?? session.customer_email ?? null;
@@ -56,15 +53,19 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
       stripe_customer_id: typeof session.customer === "string" ? session.customer : session.customer?.id ?? null,
       stripe_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id ?? null,
       package: pkg,
-      deposit_amount_cents: depositCents,
+      deposit_amount_cents: paidCents,
       total_amount_cents: totalCents,
       currency: session.currency ?? "eur",
       customer_email: customerEmail,
       customer_name: customerName,
-      status: "deposit_paid",
+      status: "paid",
       lead_id: leadId,
       environment: env,
       metadata: {
+        auftrags_nr: auftragsNr ?? null,
+        angebots_id: meta.angebots_id ?? null,
+        payment_mode: meta.payment_mode ?? null,
+        mode: session.mode ?? null,
         payment_status: session.payment_status,
         amount_total: session.amount_total,
         tax: session.total_details?.amount_tax ?? null,
@@ -73,6 +74,14 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
     },
     { onConflict: "stripe_session_id" },
   );
+
+  // Buchung als bezahlt markieren, wenn auftrags_nr vorhanden
+  if (auftragsNr) {
+    await getSupabase()
+      .from("buchungen")
+      .update({ status: "bezahlt", updated_at: new Date().toISOString() })
+      .eq("angebots_nr", auftragsNr);
+  }
 }
 
 Deno.serve(async (req) => {
@@ -96,6 +105,11 @@ Deno.serve(async (req) => {
       case "checkout.session.async_payment_succeeded":
         await handleCheckoutCompleted(event.data.object, env);
         break;
+      case "invoice.payment_succeeded": {
+        // Subscription-Renewal (Miete) – kein Auftrag-Update nötig, nur loggen
+        console.log("Subscription invoice paid:", event.data.object?.id);
+        break;
+      }
       default:
         console.log("Unhandled event:", event.type);
     }
