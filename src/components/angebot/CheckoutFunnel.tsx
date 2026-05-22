@@ -172,7 +172,7 @@ export default function CheckoutFunnel({
         positions.push({ titel: `${a.name}${titelSuffix}`, preis });
       }
 
-      const { data, error } = await supabase.functions.invoke("buchung-erstellen", {
+      const { data, error } = await supabase.functions.invoke("buchung-bestaetigen", {
         body: {
           angebots_id,
           kunde_vorname: vorname.trim(),
