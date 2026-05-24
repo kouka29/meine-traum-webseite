@@ -107,8 +107,8 @@ const IndexPortfolio = () => {
           </CarouselContent>
           {items.length > 1 && (
             <>
-              <CarouselPrevious className="hidden sm:flex left-0 lg:-left-2 top-1/2 -translate-y-1/2 h-10 w-10 shadow-md bg-background z-10" />
-              <CarouselNext className="hidden sm:flex right-0 lg:-right-2 top-1/2 -translate-y-1/2 h-10 w-10 shadow-md bg-background z-10" />
+              <CarouselPrevious className="hidden sm:flex left-0 lg:-left-2 top-[38%] -translate-y-1/2 h-10 w-10 shadow-md bg-background z-10" />
+              <CarouselNext className="hidden sm:flex right-0 lg:-right-2 top-[38%] -translate-y-1/2 h-10 w-10 shadow-md bg-background z-10" />
             </>
           )}
         </Carousel>
