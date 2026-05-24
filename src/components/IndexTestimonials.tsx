@@ -64,7 +64,7 @@ const IndexTestimonials = () => {
     if (testimonials.length <= visibleCount) return;
     const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
-  }, [next, testimonials.length]);
+  }, [next, testimonials.length, visibleCount]);
 
   if (testimonials.length === 0) return null;
 
@@ -135,14 +135,14 @@ const IndexTestimonials = () => {
             <>
               <button
                 onClick={prev}
-                className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
+                className="absolute -left-2 sm:-left-4 top-[44%] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
                 aria-label="Vorherige Referenz"
               >
                 <ChevronLeft size={18} className="text-foreground" />
               </button>
               <button
                 onClick={next}
-                className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
+                className="absolute -right-2 sm:-right-4 top-[44%] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
                 aria-label="Nächste Referenz"
               >
                 <ChevronRight size={18} className="text-foreground" />
