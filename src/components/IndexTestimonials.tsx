@@ -82,7 +82,8 @@ const IndexTestimonials = () => {
           </div>
         </AnimatedSection>
 
-        <div className="relative">
+        <div>
+          <div className="relative overflow-visible">
           <div className="overflow-hidden">
             <div
               className="flex transition-transform duration-500 ease-in-out"
@@ -146,7 +147,11 @@ const IndexTestimonials = () => {
               >
                 <ChevronRight size={18} className="text-foreground" />
               </button>
+            </>
+          )}
+          </div>
 
+          {testimonials.length > visibleCount && (
               <div className="flex justify-center gap-2 mt-8">
                 {Array.from({ length: maxIndex + 1 }).map((_, i) => (
                   <button
@@ -159,7 +164,6 @@ const IndexTestimonials = () => {
                   />
                 ))}
               </div>
-            </>
           )}
         </div>
       </div>
