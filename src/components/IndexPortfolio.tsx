@@ -22,7 +22,18 @@ const FALLBACK_IMAGES: Record<string, string> = {
   "DigitalBoost": digitalboostImg,
 };
 
-const fallbackItems = [
+type PortfolioItem = {
+  id: string;
+  title: string;
+  category: string;
+  result: string;
+  image_url: string;
+  external_url: string;
+  mockup_desktop_url: string;
+  mockup_mobile_url: string;
+};
+
+const fallbackItems: PortfolioItem[] = [
   { id: "1", title: "TechStart GmbH", category: "SaaS Landing Page", result: "+300% Anfragen", image_url: techstartImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
   { id: "2", title: "Studio Flow", category: "Branding & Webdesign", result: "+700% Neukunden", image_url: yogastudioImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
   { id: "3", title: "DigitalBoost", category: "E-Commerce", result: "+180% Umsatz", image_url: digitalboostImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
@@ -44,12 +55,12 @@ const IndexPortfolio = () => {
         .eq("is_visible", true)
         .order("sort_order", { ascending: true });
       if (data && data.length > 0) {
-        setItems(data.map(p => ({
+        setItems((data as PortfolioItem[]).map(p => ({
           ...p,
           image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
-          external_url: (p as any).external_url || "",
-          mockup_desktop_url: (p as any).mockup_desktop_url || "",
-          mockup_mobile_url: (p as any).mockup_mobile_url || "",
+          external_url: p.external_url || "",
+          mockup_desktop_url: p.mockup_desktop_url || "",
+          mockup_mobile_url: p.mockup_mobile_url || "",
         })));
       }
     };

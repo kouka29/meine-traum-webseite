@@ -64,7 +64,7 @@ const IndexTestimonials = () => {
     if (testimonials.length <= visibleCount) return;
     const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
-  }, [next, testimonials.length]);
+  }, [next, testimonials.length, visibleCount]);
 
   if (testimonials.length === 0) return null;
 
