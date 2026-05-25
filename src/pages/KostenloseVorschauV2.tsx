@@ -60,8 +60,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -1809,12 +1807,6 @@ const KostenloseVorschauV2 = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {activeDemos.length > 1 && (
-              <>
-                <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-12" />
-                <CarouselNext className="hidden sm:flex -right-4 lg:-right-12" />
-              </>
-            )}
           </Carousel>
           <CarouselDots api={demosApi} count={activeDemos.length} />
           <div className="text-center mt-10">
@@ -1866,12 +1858,6 @@ const KostenloseVorschauV2 = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {activeTestimonials.length > 1 && (
-              <>
-                <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-12" />
-                <CarouselNext className="hidden sm:flex -right-4 lg:-right-12" />
-              </>
-            )}
           </Carousel>
           <CarouselDots api={testimonialsApi} count={activeTestimonials.length} />
           <div className="mt-10 flex justify-center px-4">
