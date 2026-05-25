@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import AnimatedSection from "./AnimatedSection";
-import { Star, Users, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Testimonial {
@@ -131,24 +131,6 @@ const IndexTestimonials = () => {
             </div>
           </div>
 
-          {testimonials.length > visibleCount && (
-            <>
-              <button
-                onClick={prev}
-                className="absolute -left-2 sm:-left-4 top-[44%] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
-                aria-label="Vorherige Referenz"
-              >
-                <ChevronLeft size={18} className="text-foreground" />
-              </button>
-              <button
-                onClick={next}
-                className="absolute -right-2 sm:-right-4 top-[44%] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center hover:bg-accent transition-colors z-10"
-                aria-label="Nächste Referenz"
-              >
-                <ChevronRight size={18} className="text-foreground" />
-              </button>
-            </>
-          )}
           </div>
 
           {testimonials.length > visibleCount && (
