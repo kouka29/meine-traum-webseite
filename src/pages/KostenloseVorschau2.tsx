@@ -51,8 +51,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -1634,12 +1632,6 @@ const KostenloseVorschau2 = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {activeDemos.length > 1 && (
-              <>
-                <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-12" />
-                <CarouselNext className="hidden sm:flex -right-4 lg:-right-12" />
-              </>
-            )}
           </Carousel>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
@@ -1689,12 +1681,6 @@ const KostenloseVorschau2 = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {activeTestimonials.length > 1 && (
-              <>
-                <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-12" />
-                <CarouselNext className="hidden sm:flex -right-4 lg:-right-12" />
-              </>
-            )}
           </Carousel>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
