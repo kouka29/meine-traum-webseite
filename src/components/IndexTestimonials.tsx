@@ -69,7 +69,7 @@ const IndexTestimonials = () => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-gradient-to-b from-background via-secondary/30 to-background">
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12 md:mb-20">
