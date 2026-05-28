@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
@@ -41,6 +42,9 @@ const fallbackItems: PortfolioItem[] = [
 
 const IndexPortfolio = () => {
   const [items, setItems] = useState(fallbackItems);
+  const autoplay = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
+  );
 
   const normalizeUrl = (url: string) => {
     if (!url) return "";
@@ -78,7 +82,8 @@ const IndexPortfolio = () => {
           </div>
         </AnimatedSection>
         <Carousel
-          opts={{ align: "start", loop: items.length > 3 }}
+          opts={{ align: "start", loop: true }}
+          plugins={[autoplay.current]}
           className="max-w-6xl mx-auto relative px-0 sm:px-12"
         >
           <CarouselContent className="-ml-6">
