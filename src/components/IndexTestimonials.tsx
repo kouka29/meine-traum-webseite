@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import AnimatedSection from "./AnimatedSection";
 import { Star, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,6 +22,8 @@ const FALLBACK_TESTIMONIALS: Omit<Testimonial, "id" | "sort_order" | "is_visible
 const IndexTestimonials = () => {
   const [testimonials, setTestimonials] = useState<Omit<Testimonial, "sort_order" | "is_visible">[]>([]);
   const [current, setCurrent] = useState(0);
+  const [enableTransition, setEnableTransition] = useState(true);
+  const isResettingRef = useRef(false);
 
   useEffect(() => {
     const load = async () => {
@@ -50,15 +52,15 @@ const IndexTestimonials = () => {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
-  const maxIndex = Math.max(0, testimonials.length - visibleCount);
-
   const next = useCallback(() => {
-    setCurrent((c) => (c >= maxIndex ? 0 : c + 1));
-  }, [maxIndex]);
+    setEnableTransition(true);
+    setCurrent((c) => c + 1);
+  }, []);
 
   const prev = useCallback(() => {
-    setCurrent((c) => (c <= 0 ? maxIndex : c - 1));
-  }, [maxIndex]);
+    setEnableTransition(true);
+    setCurrent((c) => c - 1);
+  }, []);
 
   useEffect(() => {
     if (testimonials.length <= visibleCount) return;
@@ -67,6 +69,37 @@ const IndexTestimonials = () => {
   }, [next, testimonials.length, visibleCount]);
 
   if (testimonials.length === 0) return null;
+
+  const total = testimonials.length;
+  const shouldLoop = total > visibleCount;
+  const renderItems = shouldLoop ? [...testimonials, ...testimonials] : testimonials;
+
+  const handleTransitionEnd = () => {
+    if (!shouldLoop || isResettingRef.current) return;
+    if (current >= total) {
+      isResettingRef.current = true;
+      setEnableTransition(false);
+      setCurrent((c) => c - total);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setEnableTransition(true);
+          isResettingRef.current = false;
+        });
+      });
+    } else if (current < 0) {
+      isResettingRef.current = true;
+      setEnableTransition(false);
+      setCurrent((c) => c + total);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setEnableTransition(true);
+          isResettingRef.current = false;
+        });
+      });
+    }
+  };
+
+  const activeDot = ((current % total) + total) % total;
 
   return (
     <section className="relative section-padding overflow-hidden">
@@ -98,17 +131,19 @@ const IndexTestimonials = () => {
           <div className="relative overflow-visible">
           <div className="overflow-hidden">
             <div
-              className="flex transition-transform duration-500 ease-in-out"
+              className="flex ease-in-out"
+              onTransitionEnd={handleTransitionEnd}
               style={{
                 gap: visibleCount === 1 ? '0px' : '1.5rem',
+                transition: enableTransition ? 'transform 500ms ease-in-out' : 'none',
                 transform: visibleCount === 1
                   ? `translateX(-${current * 100}%)`
                   : `translateX(calc(-${current} * (100% / ${visibleCount} + ${1.5 / visibleCount}rem)))`,
               }}
             >
-              {testimonials.map((t) => (
+              {renderItems.map((t, idx) => (
                 <div
-                  key={t.id}
+                  key={`${t.id}-${idx}`}
                   className="min-w-0 shrink-0 grow-0"
                   style={{
                     flexBasis: visibleCount === 1
@@ -147,12 +182,15 @@ const IndexTestimonials = () => {
 
           {testimonials.length > visibleCount && (
               <div className="flex justify-center gap-2 mt-8">
-                {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+                {Array.from({ length: total }).map((_, i) => (
                   <button
                     key={i}
-                    onClick={() => setCurrent(i)}
+                    onClick={() => {
+                      setEnableTransition(true);
+                      setCurrent(i);
+                    }}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      i === current ? "bg-primary w-6" : "bg-muted-foreground/30"
+                      i === activeDot ? "bg-primary w-6" : "bg-muted-foreground/30"
                     }`}
                     aria-label={`Zu Gruppe ${i + 1}`}
                   />
