@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import DeviceMockup from "@/components/DeviceMockup";
-import { ExternalLink, ArrowRight, TrendingUp, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { ExternalLink, ArrowRight, TrendingUp } from "lucide-react";
+import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
@@ -32,8 +32,23 @@ const fallbackProjects = [
 ];
 
 const Portfolio = () => {
-  const [projects, setProjects] = useState(fallbackProjects);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState(() => {
+    const cached = getCachedPortfolio();
+    if (cached && cached.length > 0) {
+      return cached.map(p => ({
+        id: p.id,
+        title: p.title,
+        category: p.category,
+        description: p.description,
+        result: p.result,
+        image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        external_url: p.external_url || "",
+        mockup_desktop_url: p.mockup_desktop_url || "",
+        mockup_mobile_url: p.mockup_mobile_url || "",
+      }));
+    }
+    return fallbackProjects;
+  });
 
   const normalizeUrl = (url: string) => {
     if (!url) return "";
@@ -41,29 +56,22 @@ const Portfolio = () => {
   };
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      const { data, error } = await supabase
-        .from("portfolio_projects")
-        .select("*")
-        .eq("is_visible", true)
-        .order("sort_order", { ascending: true });
-
-      if (!error && data && data.length > 0) {
-        setProjects(data.map(p => ({
-          id: p.id,
-          title: p.title,
-          category: p.category,
-          description: p.description,
-          result: p.result,
-          image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
-          external_url: (p as any).external_url || "",
-          mockup_desktop_url: (p as any).mockup_desktop_url || "",
-          mockup_mobile_url: (p as any).mockup_mobile_url || "",
-        })));
-      }
-      setLoading(false);
-    };
-    fetchProjects();
+    let cancelled = false;
+    fetchPortfolio().then(data => {
+      if (cancelled || !data || data.length === 0) return;
+      setProjects(data.map(p => ({
+        id: p.id,
+        title: p.title,
+        category: p.category,
+        description: p.description,
+        result: p.result,
+        image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        external_url: p.external_url || "",
+        mockup_desktop_url: p.mockup_desktop_url || "",
+        mockup_mobile_url: p.mockup_mobile_url || "",
+      })));
+    });
+    return () => { cancelled = true; };
   }, []);
 
   return (
@@ -84,10 +92,7 @@ const Portfolio = () => {
             </div>
           </AnimatedSection>
 
-          {loading ? (
-            <div className="text-center py-12"><Loader2 className="animate-spin mx-auto text-primary" size={32} /></div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {projects.map((p, i) => (
                 <AnimatedSection key={p.id} delay={i * 0.08} className="h-full">
                   {p.external_url ? (
@@ -95,7 +100,7 @@ const Portfolio = () => {
                       <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
                         <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                           {p.image_url ? (
-                            <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                            <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading={i < 3 ? "eager" : "lazy"} fetchPriority={i < 3 ? "high" : "auto"} decoding="async" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
                           ) : p.mockup_desktop_url ? (
                             <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                           ) : null}
@@ -121,7 +126,7 @@ const Portfolio = () => {
                     <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
                       <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                         {p.image_url ? (
-                          <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                          <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading={i < 3 ? "eager" : "lazy"} fetchPriority={i < 3 ? "high" : "auto"} decoding="async" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                         ) : null}
@@ -142,8 +147,7 @@ const Portfolio = () => {
                   )}
                 </AnimatedSection>
               ))}
-            </div>
-          )}
+          </div>
 
           <div className="text-center mt-16">
             <p className="text-muted-foreground mb-5 text-lg">
