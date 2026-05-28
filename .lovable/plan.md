@@ -1,28 +1,42 @@
 ## Ziel
-Das Testimonials-Karussell (`src/components/IndexTestimonials.tsx`) soll nicht mehr sichtbar zum Anfang zurückspringen, sondern in einer echten Endlosschleife laufen – als würde sich der Stream der Karten unendlich weiterdrehen.
+Portfolio-Seite (`/portfolio`) soll spürbar schneller wirken – kein langes Warten auf Bilder/Daten, kein leerer Loader-Bildschirm.
 
-## Aktueller Zustand
-- Eigene Implementierung mit `translateX` und `setCurrent(0)` beim Erreichen des Endes
-- Beim Reset von letztem Index zurück auf 0 entsteht ein sichtbarer Rück-Sprung (mit Animation rückwärts durch alle Karten)
-- Auto-Advance alle 4 Sekunden
+## Diagnose (warum es aktuell langsam wirkt)
+1. **Blockierender Loader:** `Portfolio.tsx` zeigt nur einen Spinner bis Supabase antwortet, obwohl bereits 6 hochwertige Fallback-Projekte im Code stehen. Bei langsamer Verbindung sieht der Nutzer sekundenlang nichts.
+2. **Große JPG-Bilder:** `src/assets/portfolio/*.jpg` werden ungekomprimiert/ohne moderne Formate (WebP/AVIF) geladen.
+3. **Alle Bilder gleichzeitig:** Kein Priorisieren – auch unsichtbare Karten unten laden sofort mit hoher Priorität.
+4. **Kein Caching zwischen Seiten:** Index-Portfolio und `/portfolio` fetchen unabhängig, jedes Mal neu.
+5. **Supabase-Query holt `*`** statt nur benötigte Spalten (inkl. evtl. großer Felder).
 
-## Lösungsansatz: Geklonte Karten + nahtloser Reset
+## Maßnahmen
 
-Klassisches Infinite-Loop-Pattern ohne neue Library:
+### 1. Sofortiges Rendern statt Spinner
+- Fallback-Projekte direkt anzeigen, Supabase-Daten im Hintergrund nachladen und sanft ersetzen.
+- Loader-State entfernen → Seite ist visuell sofort da (perceived performance).
 
-1. **Karten-Array verdoppeln** beim Rendern: `[...testimonials, ...testimonials]` – die zweite Hälfte dient als "Vorschau" der ersten beim Weiterscrollen über das Ende hinaus.
-2. **Weiterzählen über `testimonials.length` hinaus erlauben.** `next()` erhöht `current` einfach um 1 (kein Reset mehr).
-3. **Nahtloser Reset:** Sobald `current === testimonials.length` erreicht ist und die Transition abgeschlossen ist (`onTransitionEnd`), wird die CSS-Transition kurz deaktiviert und `current` auf `0` zurückgesetzt. Da Position 0 und Position `testimonials.length` visuell identisch sind (gleiche Karten), ist der Sprung unsichtbar. Danach Transition wieder aktivieren.
-4. **`prev()` analog:** Bei `current < 0` ohne Transition auf `testimonials.length - 1` springen.
-5. **Pagination-Dots:** unverändert auf `current % testimonials.length` mappen.
+### 2. Bildoptimierung
+- `vite-imagetools` Plugin einbauen und Portfolio-Bilder als WebP + responsives `srcset` (z. B. 400/800/1200px) importieren.
+- `<img>` bekommt `sizes`, `loading="lazy"` (außer erste Reihe → `loading="eager"` + `fetchpriority="high"`), bestehende `width/height` bleiben für CLS.
 
-### Technische Details
-- Neuer State `enableTransition: boolean`, wird vor dem Reset auf `false` gesetzt, im nächsten `requestAnimationFrame` wieder auf `true`.
-- `onTransitionEnd`-Handler am Flex-Container für den Reset-Trigger.
-- `visibleCount`-Logik bleibt unverändert, aber `maxIndex` entfällt – ersetzt durch fortlaufenden Index.
-- Auto-Advance-Interval und Hover-Pause (falls vorhanden) bleiben gleich.
+### 3. Query schlanker
+- In `Portfolio.tsx` `select("*")` → explizite Spaltenliste (wie in `IndexPortfolio.tsx`).
+- `is_visible`-Filter + `sort_order` bleiben; zusätzlich kleines `limit` falls sinnvoll.
 
-## Scope
-- Nur `src/components/IndexTestimonials.tsx` wird angepasst.
-- Keine Änderung am visuellen Design (Aurora-Hintergrund, Card-Hover bleiben).
-- Keine neuen Dependencies.
+### 4. Shared Cache zwischen Index & Portfolio
+- Leichten In-Memory-Cache (Modul-Singleton in z. B. `src/lib/portfolioCache.ts`) oder einfaches Pattern: erstes Fetch-Result in `sessionStorage` ablegen und beim Mount sofort als Initial-State nutzen → zweiter Besuch der Seite ist instant.
+
+### 5. Kleinere Wins
+- `<link rel="preconnect">` zum Supabase-Origin in `index.html` (DNS/TLS schon warm, wenn Fetch losgeht).
+- Externe Projekt-Bilder (falls `image_url` auf Supabase-Storage zeigt) mit `?width=...&quality=75` Transform-Parametern (Supabase Image Transformations) anfordern.
+
+## Reihenfolge der Umsetzung
+1. Fallback sofort rendern + Spalten-Select (schnellster sichtbarer Effekt, minimal Risiko)
+2. SessionStorage-Cache
+3. `vite-imagetools` + WebP/srcset + lazy/eager-Strategie
+4. `preconnect` in `index.html`
+5. Optional: Supabase Storage Transformations für dynamische Bilder
+
+## Nicht im Scope
+- Design-/Layout-Änderungen
+- Server-Side-Rendering / Framework-Wechsel
+- Backend-Schema-Änderungen

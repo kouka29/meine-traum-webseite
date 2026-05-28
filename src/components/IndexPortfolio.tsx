@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
 import DeviceMockup from "./DeviceMockup";
-import { supabase } from "@/integrations/supabase/client";
+import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
@@ -41,7 +41,22 @@ const fallbackItems: PortfolioItem[] = [
 ];
 
 const IndexPortfolio = () => {
-  const [items, setItems] = useState(fallbackItems);
+  const [items, setItems] = useState<PortfolioItem[]>(() => {
+    const cached = getCachedPortfolio();
+    if (cached && cached.length > 0) {
+      return cached.map(p => ({
+        id: p.id,
+        title: p.title,
+        category: p.category,
+        result: p.result,
+        image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        external_url: p.external_url || "",
+        mockup_desktop_url: p.mockup_desktop_url || "",
+        mockup_mobile_url: p.mockup_mobile_url || "",
+      }));
+    }
+    return fallbackItems;
+  });
   const autoplay = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
@@ -52,23 +67,21 @@ const IndexPortfolio = () => {
   };
 
   useEffect(() => {
-    const fetch = async () => {
-      const { data } = await supabase
-        .from("portfolio_projects")
-        .select("id, title, category, result, image_url, external_url, mockup_desktop_url, mockup_mobile_url")
-        .eq("is_visible", true)
-        .order("sort_order", { ascending: true });
-      if (data && data.length > 0) {
-        setItems((data as PortfolioItem[]).map(p => ({
-          ...p,
-          image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
-          external_url: p.external_url || "",
-          mockup_desktop_url: p.mockup_desktop_url || "",
-          mockup_mobile_url: p.mockup_mobile_url || "",
-        })));
-      }
-    };
-    fetch();
+    let cancelled = false;
+    fetchPortfolio().then(data => {
+      if (cancelled || !data || data.length === 0) return;
+      setItems(data.map(p => ({
+        id: p.id,
+        title: p.title,
+        category: p.category,
+        result: p.result,
+        image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        external_url: p.external_url || "",
+        mockup_desktop_url: p.mockup_desktop_url || "",
+        mockup_mobile_url: p.mockup_mobile_url || "",
+      })));
+    });
+    return () => { cancelled = true; };
   }, []);
 
   return (
