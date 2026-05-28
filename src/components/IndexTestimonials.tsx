@@ -69,8 +69,20 @@ const IndexTestimonials = () => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="section-padding bg-gradient-to-b from-background via-secondary/30 to-background">
-      <div className="container-narrow px-4">
+    <section className="relative section-padding overflow-hidden">
+      {/* Seamless aurora background blend */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[hsl(250,56%,97%)] to-transparent pointer-events-none" />
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(hsl(250,56%,48%) 0.5px, transparent 0.5px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
           <div className="text-center mb-12 md:mb-20">
             <h2 className="mb-5 text-balance">
@@ -104,7 +116,7 @@ const IndexTestimonials = () => {
                       : `calc((100% - ${(visibleCount - 1) * 1.5}rem) / ${visibleCount})`,
                   }}
                 >
-                  <div className="bg-card rounded-2xl p-6 sm:p-7 shadow-card h-full flex flex-col border border-border">
+                  <div className="group bg-card rounded-3xl p-6 sm:p-7 h-full flex flex-col border border-border/60 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_32px_64px_-16px_hsl(250_56%_48%/0.18)] hover:border-primary/30">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, j) => (
                         <Star key={j} size={15} className="text-primary fill-primary" />
