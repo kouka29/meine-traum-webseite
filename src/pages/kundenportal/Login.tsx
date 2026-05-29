@@ -7,8 +7,6 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Loader2, Mail, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import PageMeta from "@/components/PageMeta";
-
 export default function KundenportalLogin() {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
@@ -47,9 +45,7 @@ export default function KundenportalLogin() {
   };
 
   return (
-    <>
-      <PageMeta title="Kundenportal Login" description="Login zu deinem Kundenportal bei QK Marketing Group." />
-      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4 py-12">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4 py-12">
         <div className="w-full max-w-md">
           <Link to="/" className="block text-center mb-8">
             <span className="font-heading text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -107,7 +103,6 @@ export default function KundenportalLogin() {
             )}
           </div>
         </div>
-      </main>
-    </>
+    </main>
   );
 }
