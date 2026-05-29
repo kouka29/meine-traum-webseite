@@ -1,42 +1,35 @@
-## Ziel
-Portfolio-Seite (`/portfolio`) soll spürbar schneller wirken – kein langes Warten auf Bilder/Daten, kein leerer Loader-Bildschirm.
+# Funnel: Paket-Auswahl vor "Wie möchten Sie zahlen?"
 
-## Diagnose (warum es aktuell langsam wirkt)
-1. **Blockierender Loader:** `Portfolio.tsx` zeigt nur einen Spinner bis Supabase antwortet, obwohl bereits 6 hochwertige Fallback-Projekte im Code stehen. Bei langsamer Verbindung sieht der Nutzer sekundenlang nichts.
-2. **Große JPG-Bilder:** `src/assets/portfolio/*.jpg` werden ungekomprimiert/ohne moderne Formate (WebP/AVIF) geladen.
-3. **Alle Bilder gleichzeitig:** Kein Priorisieren – auch unsichtbare Karten unten laden sofort mit hoher Priorität.
-4. **Kein Caching zwischen Seiten:** Index-Portfolio und `/portfolio` fetchen unabhängig, jedes Mal neu.
-5. **Supabase-Query holt `*`** statt nur benötigte Spalten (inkl. evtl. großer Felder).
+Aktuell startet der Checkout-Funnel (`src/components/angebot/CheckoutFunnel.tsx`) immer mit Schritt 1 "Wie möchten Sie zahlen?". Bei Angeboten mit mehreren Paketen (z. B. *One Pager* und *Corporate Webseite M*) soll vorher das Paket gewählt werden.
 
-## Maßnahmen
+## Verhalten
 
-### 1. Sofortiges Rendern statt Spinner
-- Fallback-Projekte direkt anzeigen, Supabase-Daten im Hintergrund nachladen und sanft ersetzen.
-- Loader-State entfernen → Seite ist visuell sofort da (perceived performance).
+- **1 Paket:** Funnel startet wie bisher mit „Zahlung". Keine Änderung sichtbar.
+- **≥ 2 Pakete:** Funnel startet mit neuem Schritt „Paket" — Auswahl aus allen verfügbaren Paketen (Name, Preis einmalig / Miete, Empfehlungs-Badge). Erst danach kommt „Zahlung", „Extras", „Kontakt", „Bezahlen", „Fertig".
 
-### 2. Bildoptimierung
-- `vite-imagetools` Plugin einbauen und Portfolio-Bilder als WebP + responsives `srcset` (z. B. 400/800/1200px) importieren.
-- `<img>` bekommt `sizes`, `loading="lazy"` (außer erste Reihe → `loading="eager"` + `fetchpriority="high"`), bestehende `width/height` bleiben für CLS.
+Das auf der Angebotsseite vorausgewählte Paket (über `openFunnel(paketId)`) wird im Funnel als vorausgewählt angezeigt — der Nutzer kann es dort aber noch ändern.
 
-### 3. Query schlanker
-- In `Portfolio.tsx` `select("*")` → explizite Spaltenliste (wie in `IndexPortfolio.tsx`).
-- `is_visible`-Filter + `sort_order` bleiben; zusätzlich kleines `limit` falls sinnvoll.
+## Umsetzung
 
-### 4. Shared Cache zwischen Index & Portfolio
-- Leichten In-Memory-Cache (Modul-Singleton in z. B. `src/lib/portfolioCache.ts`) oder einfaches Pattern: erstes Fetch-Result in `sessionStorage` ablegen und beim Mount sofort als Initial-State nutzen → zweiter Besuch der Seite ist instant.
+1. **`CheckoutFunnel` Props erweitern**
+   - Neu: `pakete: FunnelPaket[]` (Liste aller verfügbaren Pakete)
+   - `paket` bleibt als initial ausgewähltes Paket erhalten
+   - Intern: `selectedPaket` state, initialisiert mit `paket.id`
 
-### 5. Kleinere Wins
-- `<link rel="preconnect">` zum Supabase-Origin in `index.html` (DNS/TLS schon warm, wenn Fetch losgeht).
-- Externe Projekt-Bilder (falls `image_url` auf Supabase-Storage zeigt) mit `?width=...&quality=75` Transform-Parametern (Supabase Image Transformations) anfordern.
+2. **Step-Modell anpassen**
+   - `stepLabels` dynamisch: wenn `pakete.length > 1` → `["Paket", "Zahlung", "Extras", "Kontakt", "Bezahlen", "Fertig"]`, sonst wie bisher
+   - Step-Indizes über Helper (`paketStepEnabled`) statt fester Zahlen 0–4 ableiten, damit Back/Forward, Progress-Anzeige und `Schritt X von Y` korrekt bleiben
 
-## Reihenfolge der Umsetzung
-1. Fallback sofort rendern + Spalten-Select (schnellster sichtbarer Effekt, minimal Risiko)
-2. SessionStorage-Cache
-3. `vite-imagetools` + WebP/srcset + lazy/eager-Strategie
-4. `preconnect` in `index.html`
-5. Optional: Supabase Storage Transformations für dynamische Bilder
+3. **Neue `StepPaket`-Komponente**
+   - Cards-Liste analog zur bestehenden `PaketChooserSection` auf der Angebotsseite (visuell konsistent, kompakter für die Sidebar-Breite 520 px)
+   - Klick wählt Paket aus; „Weiter" aktiv sobald gewählt
+   - Setzt nach Wahl `paymentMode` zurück auf den passenden Default (Miete wenn `miete_monatlich` vorhanden, sonst Kauf), da `mieteEnabled` paketabhängig ist
 
-## Nicht im Scope
-- Design-/Layout-Änderungen
-- Server-Side-Rendering / Framework-Wechsel
-- Backend-Schema-Änderungen
+4. **Aufruf in `src/pages/Angebot.tsx`**
+   - `<CheckoutFunnel … pakete={pakete} paket={funnelPaket} … />` zusätzlich übergeben
+   - Keine Änderung an `openFunnel` nötig
+
+## Nicht enthalten
+
+- Keine Änderung an Add-ons, Stripe-Items, Kontakt-Step, Backend-Aufruf `buchung-bestaetigen`.
+- Keine Layout-Änderung an der Angebotsseite selbst — Paket-Cards dort bleiben unverändert.
