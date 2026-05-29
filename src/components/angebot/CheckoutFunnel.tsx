@@ -562,6 +562,86 @@ export default function CheckoutFunnel({
 }
 
 // ─── STEP 0: ZAHLUNGSMODELL ────────────────────────────
+function StepPaket({
+  pakete, selectedId, onSelect, paymentConfig,
+}: {
+  pakete: FunnelPaket[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+  paymentConfig: PaymentConfig;
+}) {
+  const mieteGloballyEnabled = !!paymentConfig.miete?.enabled;
+  return (
+    <div>
+      <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
+        Welches Paket darf es sein?
+      </h2>
+      <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
+        Wählen Sie das Paket, das am besten zu Ihnen passt.
+      </p>
+      <div style={{ display: "grid", gap: 12 }}>
+        {pakete.map((p, idx) => {
+          const active = p.id === selectedId;
+          const recommended = idx === pakete.length - 1 && pakete.length > 1;
+          const showMiete = mieteGloballyEnabled && p.miete_monatlich && Number(p.miete_monatlich) > 0;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => onSelect(p.id)}
+              className="funnel-paymode-card"
+              style={{
+                textAlign: "left", cursor: "pointer", fontFamily: "inherit",
+                background: active ? "linear-gradient(135deg, #F5F4FF 0%, #FFFFFF 100%)" : "#fff",
+                border: active ? `2px solid ${BRAND}` : "2px solid #E5E3FF",
+                borderRadius: 16, padding: "16px",
+                position: "relative",
+                boxShadow: active ? "0 8px 24px rgba(79,63,240,0.15)" : "0 1px 4px rgba(0,0,0,0.03)",
+                transition: "all 0.15s",
+              }}
+            >
+              {recommended && (
+                <span style={{
+                  position: "absolute", top: -10, right: 14,
+                  background: BRAND_GRADIENT, color: "#fff",
+                  fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
+                  padding: "4px 10px", borderRadius: 20,
+                }}>EMPFOHLEN</span>
+              )}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
+                    {p.name}
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10 }}>
+                    {showMiete && (
+                      <div style={{ fontSize: 20, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                        {fmtEUR(Number(p.miete_monatlich))}
+                        <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span>
+                      </div>
+                    )}
+                    <div style={{ fontSize: showMiete ? 13 : 20, fontWeight: showMiete ? 600 : 800, color: showMiete ? TEXT_MUTED : BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                      {showMiete ? `oder ${fmtEUR(p.preis)} einmalig` : fmtEUR(p.preis)}
+                    </div>
+                  </div>
+                </div>
+                <div style={{
+                  width: 22, height: 22, borderRadius: "50%",
+                  border: active ? `6px solid ${BRAND}` : "2px solid #D1CFEF",
+                  background: "#fff",
+                  flexShrink: 0,
+                  transition: "all 0.15s",
+                }} />
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── STEP 1: ZAHLUNGSMODELL ────────────────────────────
 function StepZahlung({
   paket, paymentMode, setPaymentMode, paymentConfig, kaufEnabled, mieteEnabled,
 }: {
