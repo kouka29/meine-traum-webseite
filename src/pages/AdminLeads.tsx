@@ -23,6 +23,7 @@ import {
 } from "recharts";
 import AdminVorschauTab from "@/components/admin/AdminVorschauTab";
 import AdminAngeboteTab from "@/components/admin/AdminAngeboteTab";
+import AdminTicketsTab from "@/components/admin/AdminTicketsTab";
 import AngebotModal from "@/components/admin/AngebotModal";
 import NewLeadModal from "@/components/admin/NewLeadModal";
 import { useDesignMode } from "@/contexts/DesignModeProvider";
@@ -171,7 +172,7 @@ const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "angebote" | "vorschau">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "angebote" | "tickets" | "vorschau">("dashboard");
   const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer" | "waitlist">("all");
   const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
 
@@ -645,6 +646,7 @@ const AdminLeads = () => {
             { key: "portfolio" as const, icon: FolderOpen, label: `Portfolio (${projects.length})` },
             { key: "testimonials" as const, icon: MessageSquare, label: `Referenzen (${testimonials.length})` },
             { key: "angebote" as const, icon: FileText, label: "Angebote" },
+            { key: "tickets" as const, icon: MessageSquare, label: "Tickets" },
             { key: "vorschau" as const, icon: Sparkles, label: "Kostenlose Vorschau" },
           ]).map(tab => (
             <button
@@ -1229,6 +1231,11 @@ const AdminLeads = () => {
         {/* Angebote Tab */}
         {activeTab === "angebote" && (
           <AdminAngeboteTab password={password} />
+        )}
+
+        {/* Tickets Tab */}
+        {activeTab === "tickets" && (
+          <AdminTicketsTab password={password} />
         )}
       </div>
 
