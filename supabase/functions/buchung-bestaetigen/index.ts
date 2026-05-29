@@ -290,6 +290,27 @@ Deno.serve(async (req) => {
     console.error("Admin-Mail fehlgeschlagen:", e);
   }
 
+  // Kundenportal-Account anlegen (idempotent, nicht-blockierend)
+  try {
+    await fetch(`${SUPABASE_URL}/functions/v1/customer-create-account`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+      body: JSON.stringify({
+        email: kunde_email,
+        first_name: kunde_vorname,
+        company_name: kunde_firma,
+        phone: kunde_telefon || null,
+        buchung_id: inserted.id,
+        send_welcome: true,
+      }),
+    });
+  } catch (e) {
+    console.error("Kundenportal-Anlage fehlgeschlagen:", e);
+  }
+
   return new Response(JSON.stringify({
     success: true, auftrags_nr, buchung_id: inserted.id, email_gesendet,
   }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });

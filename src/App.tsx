@@ -63,6 +63,15 @@ const DachdeckerHub = lazy(() => import("./pages/trade/DachdeckerHub.tsx"));
 const Angebot = lazy(() => import("./pages/Angebot.tsx"));
 const AGB = lazy(() => import("./pages/AGB.tsx"));
 const ZahlungErfolgreich = lazy(() => import("./pages/ZahlungErfolgreich.tsx"));
+const KundenportalLogin = lazy(() => import("./pages/kundenportal/Login.tsx"));
+const KundenportalLayout = lazy(() => import("./pages/kundenportal/Layout.tsx"));
+const KundenportalDashboard = lazy(() => import("./pages/kundenportal/Dashboard.tsx"));
+const KundenportalVertrag = lazy(() => import("./pages/kundenportal/Vertrag.tsx"));
+const KundenportalRechnungen = lazy(() => import("./pages/kundenportal/Rechnungen.tsx"));
+const KundenportalTickets = lazy(() => import("./pages/kundenportal/Tickets.tsx"));
+const KundenportalTicketDetail = lazy(() => import("./pages/kundenportal/TicketDetail.tsx"));
+const KundenportalAngebote = lazy(() => import("./pages/kundenportal/Angebote.tsx"));
+const KundenportalEinstellungen = lazy(() => import("./pages/kundenportal/Einstellungen.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -83,7 +92,8 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
     pathname === "/angebot" ||
     pathname === "/a" ||
     pathname.startsWith("/a/") ||
-    pathname === "/agb";
+    pathname === "/agb" ||
+    pathname.startsWith("/kundenportal");
   return (
     <>
       {!standalone && <Navbar />}
@@ -185,6 +195,16 @@ const App = () => (
             <Route path="/a/:shortId" element={<Angebot />} />
             <Route path="/agb" element={<AGB />} />
             <Route path="/zahlung-erfolgreich" element={<ZahlungErfolgreich />} />
+            <Route path="/kundenportal/login" element={<KundenportalLogin />} />
+            <Route path="/kundenportal" element={<KundenportalLayout />}>
+              <Route index element={<KundenportalDashboard />} />
+              <Route path="vertrag" element={<KundenportalVertrag />} />
+              <Route path="rechnungen" element={<KundenportalRechnungen />} />
+              <Route path="wuensche" element={<KundenportalTickets />} />
+              <Route path="wuensche/:id" element={<KundenportalTicketDetail />} />
+              <Route path="angebote" element={<KundenportalAngebote />} />
+              <Route path="einstellungen" element={<KundenportalEinstellungen />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>

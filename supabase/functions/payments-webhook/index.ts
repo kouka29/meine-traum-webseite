@@ -82,6 +82,27 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
       .update({ status: "bezahlt", updated_at: new Date().toISOString() })
       .eq("angebots_nr", auftragsNr);
   }
+
+  // Kundenportal-Account anlegen (idempotent) + stripe_customer_id speichern
+  if (customerEmail) {
+    try {
+      await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/customer-create-account`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`,
+        },
+        body: JSON.stringify({
+          email: customerEmail,
+          first_name: customerName,
+          stripe_customer_id: typeof session.customer === "string" ? session.customer : session.customer?.id ?? null,
+          send_welcome: true,
+        }),
+      });
+    } catch (e) {
+      console.error("Kundenportal-Anlage (webhook) fehlgeschlagen:", e);
+    }
+  }
 }
 
 Deno.serve(async (req) => {
