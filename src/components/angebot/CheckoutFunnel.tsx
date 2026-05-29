@@ -46,6 +46,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   paket: FunnelPaket;
+  pakete?: FunnelPaket[];
   addons: FunnelAddon[];
   paymentConfig: PaymentConfig;
   angebots_id?: string;
@@ -56,19 +57,36 @@ interface Props {
 
 type PaymentMode = "kauf" | "miete";
 type PayMethod = "online" | "rechnung";
-type Step = 0 | 1 | 2 | 3 | 4;
+type StepKey = "paket" | "zahlung" | "extras" | "kontakt" | "bezahlen" | "fertig";
 
 function fmtEUR(n: number) {
   return n.toLocaleString("de-DE") + " €";
 }
 
 export default function CheckoutFunnel({
-  open, onClose, paket, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink,
+  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink,
 }: Props) {
-  const kaufEnabled = paymentConfig.kauf?.enabled !== false;
-  const mieteEnabled = !!paymentConfig.miete?.enabled && !!paket.miete_monatlich;
+  const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
+  const hasPaketStep = allPakete.length > 1;
 
-  const [step, setStep] = useState<Step>(0);
+  const stepKeys: StepKey[] = hasPaketStep
+    ? ["paket", "zahlung", "extras", "kontakt", "bezahlen", "fertig"]
+    : ["zahlung", "extras", "kontakt", "bezahlen", "fertig"];
+  const stepLabelMap: Record<StepKey, string> = {
+    paket: "Paket", zahlung: "Zahlung", extras: "Extras",
+    kontakt: "Kontakt", bezahlen: "Bezahlen", fertig: "Fertig",
+  };
+  const stepLabels = stepKeys.map((k) => stepLabelMap[k]);
+  const goTo = (k: StepKey) => setStep(stepKeys.indexOf(k));
+
+  const [selectedPaketId, setSelectedPaketId] = useState<string>(paket.id);
+  const currentPaket = allPakete.find((p) => p.id === selectedPaketId) ?? paket;
+
+  const kaufEnabled = paymentConfig.kauf?.enabled !== false;
+  const mieteEnabled = !!paymentConfig.miete?.enabled && !!currentPaket.miete_monatlich;
+
+  const [step, setStep] = useState<number>(0);
+  const currentKey = stepKeys[step] ?? "zahlung";
   const [paymentMode, setPaymentMode] = useState<PaymentMode>(mieteEnabled ? "miete" : "kauf");
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>(
     () => addons.filter((a) => a.default_selected).map((a) => a.id),
