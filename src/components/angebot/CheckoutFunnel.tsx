@@ -112,6 +112,7 @@ export default function CheckoutFunnel({
     if (open) {
       setStep(0);
       setSuccess(null);
+      setSelectedPaketId(paket.id);
       setPaymentMode(mieteEnabled ? "miete" : "kauf");
       setSelectedAddonIds(addons.filter((a) => a.default_selected).map((a) => a.id));
       setPayMethod(stripeAvailable ? "online" : "rechnung");
@@ -119,6 +120,13 @@ export default function CheckoutFunnel({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, paket.id]);
+
+  // Wenn Paket im Funnel gewechselt wird → Zahlmodus auf passenden Default zurücksetzen
+  useEffect(() => {
+    if (!open) return;
+    setPaymentMode(mieteEnabled ? "miete" : "kauf");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPaketId]);
 
   // Lock body scroll while open
   useEffect(() => {
@@ -134,8 +142,8 @@ export default function CheckoutFunnel({
   );
 
   // Preisberechnung
-  const basisEinmalig = paymentMode === "kauf" ? paket.preis : 0;
-  const basisMonatlich = paymentMode === "miete" ? Number(paket.miete_monatlich || 0) : 0;
+  const basisEinmalig = paymentMode === "kauf" ? currentPaket.preis : 0;
+  const basisMonatlich = paymentMode === "miete" ? Number(currentPaket.miete_monatlich || 0) : 0;
   const addonsEinmalig = selectedAddons
     .filter((a) => a.price_type === "one_time")
     .reduce((s, a) => s + a.price_cents / 100, 0);
@@ -168,10 +176,12 @@ export default function CheckoutFunnel({
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
 
-  const canProceedFromStep = (s: Step): boolean => {
-    if (s === 0) return (paymentMode === "kauf" && kaufEnabled) || (paymentMode === "miete" && mieteEnabled);
-    if (s === 1) return true;
-    if (s === 2) {
+  const canProceedFromStep = (s: number): boolean => {
+    const key = stepKeys[s];
+    if (key === "paket") return !!selectedPaketId;
+    if (key === "zahlung") return (paymentMode === "kauf" && kaufEnabled) || (paymentMode === "miete" && mieteEnabled);
+    if (key === "extras") return true;
+    if (key === "kontakt") {
       return vorname.trim().length >= 1
         && nachname.trim().length >= 1
         && firma.trim().length >= 1
