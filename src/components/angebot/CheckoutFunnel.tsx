@@ -40,6 +40,7 @@ export interface FunnelPaket {
   name: string;
   preis: number;             // einmalig (EUR)
   miete_monatlich?: number | null; // monatlich (EUR)
+  addons?: FunnelAddon[];    // paket-spezifische Add-ons
 }
 
 interface Props {
