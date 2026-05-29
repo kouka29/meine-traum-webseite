@@ -46,6 +46,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   paket: FunnelPaket;
+  pakete?: FunnelPaket[];
   addons: FunnelAddon[];
   paymentConfig: PaymentConfig;
   angebots_id?: string;
@@ -56,19 +57,36 @@ interface Props {
 
 type PaymentMode = "kauf" | "miete";
 type PayMethod = "online" | "rechnung";
-type Step = 0 | 1 | 2 | 3 | 4;
+type StepKey = "paket" | "zahlung" | "extras" | "kontakt" | "bezahlen" | "fertig";
 
 function fmtEUR(n: number) {
   return n.toLocaleString("de-DE") + " €";
 }
 
 export default function CheckoutFunnel({
-  open, onClose, paket, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink,
+  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink,
 }: Props) {
-  const kaufEnabled = paymentConfig.kauf?.enabled !== false;
-  const mieteEnabled = !!paymentConfig.miete?.enabled && !!paket.miete_monatlich;
+  const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
+  const hasPaketStep = allPakete.length > 1;
 
-  const [step, setStep] = useState<Step>(0);
+  const stepKeys: StepKey[] = hasPaketStep
+    ? ["paket", "zahlung", "extras", "kontakt", "bezahlen", "fertig"]
+    : ["zahlung", "extras", "kontakt", "bezahlen", "fertig"];
+  const stepLabelMap: Record<StepKey, string> = {
+    paket: "Paket", zahlung: "Zahlung", extras: "Extras",
+    kontakt: "Kontakt", bezahlen: "Bezahlen", fertig: "Fertig",
+  };
+  const stepLabels = stepKeys.map((k) => stepLabelMap[k]);
+  const goTo = (k: StepKey) => setStep(stepKeys.indexOf(k));
+
+  const [selectedPaketId, setSelectedPaketId] = useState<string>(paket.id);
+  const currentPaket = allPakete.find((p) => p.id === selectedPaketId) ?? paket;
+
+  const kaufEnabled = paymentConfig.kauf?.enabled !== false;
+  const mieteEnabled = !!paymentConfig.miete?.enabled && !!currentPaket.miete_monatlich;
+
+  const [step, setStep] = useState<number>(0);
+  const currentKey = stepKeys[step] ?? "zahlung";
   const [paymentMode, setPaymentMode] = useState<PaymentMode>(mieteEnabled ? "miete" : "kauf");
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>(
     () => addons.filter((a) => a.default_selected).map((a) => a.id),
@@ -94,6 +112,7 @@ export default function CheckoutFunnel({
     if (open) {
       setStep(0);
       setSuccess(null);
+      setSelectedPaketId(paket.id);
       setPaymentMode(mieteEnabled ? "miete" : "kauf");
       setSelectedAddonIds(addons.filter((a) => a.default_selected).map((a) => a.id));
       setPayMethod(stripeAvailable ? "online" : "rechnung");
@@ -101,6 +120,13 @@ export default function CheckoutFunnel({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, paket.id]);
+
+  // Wenn Paket im Funnel gewechselt wird → Zahlmodus auf passenden Default zurücksetzen
+  useEffect(() => {
+    if (!open) return;
+    setPaymentMode(mieteEnabled ? "miete" : "kauf");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPaketId]);
 
   // Lock body scroll while open
   useEffect(() => {
@@ -116,8 +142,8 @@ export default function CheckoutFunnel({
   );
 
   // Preisberechnung
-  const basisEinmalig = paymentMode === "kauf" ? paket.preis : 0;
-  const basisMonatlich = paymentMode === "miete" ? Number(paket.miete_monatlich || 0) : 0;
+  const basisEinmalig = paymentMode === "kauf" ? currentPaket.preis : 0;
+  const basisMonatlich = paymentMode === "miete" ? Number(currentPaket.miete_monatlich || 0) : 0;
   const addonsEinmalig = selectedAddons
     .filter((a) => a.price_type === "one_time")
     .reduce((s, a) => s + a.price_cents / 100, 0);
@@ -150,10 +176,12 @@ export default function CheckoutFunnel({
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
 
-  const canProceedFromStep = (s: Step): boolean => {
-    if (s === 0) return (paymentMode === "kauf" && kaufEnabled) || (paymentMode === "miete" && mieteEnabled);
-    if (s === 1) return true;
-    if (s === 2) {
+  const canProceedFromStep = (s: number): boolean => {
+    const key = stepKeys[s];
+    if (key === "paket") return !!selectedPaketId;
+    if (key === "zahlung") return (paymentMode === "kauf" && kaufEnabled) || (paymentMode === "miete" && mieteEnabled);
+    if (key === "extras") return true;
+    if (key === "kontakt") {
       return vorname.trim().length >= 1
         && nachname.trim().length >= 1
         && firma.trim().length >= 1
@@ -168,8 +196,8 @@ export default function CheckoutFunnel({
     if (paymentMode === "miete") {
       // Stripe subscription: base + monthly addons in einem Abo
       subItems.push({
-        name: `${paket.name} – Miete`,
-        amount_cents: Math.round(Number(paket.miete_monatlich || 0) * 100),
+        name: `${currentPaket.name} – Miete`,
+        amount_cents: Math.round(Number(currentPaket.miete_monatlich || 0) * 100),
         recurring: "month",
       });
       for (const a of selectedAddons.filter((a) => a.price_type === "monthly")) {
@@ -177,16 +205,16 @@ export default function CheckoutFunnel({
       }
       // Einmalige Add-ons in Miet-Modus: in Stripe Subscriptions nicht möglich → werden im Funnel zur Rechnung
       // Wir fügen sie als separate "Setup-Fee" nicht hinzu (Limitation); zeigen Hinweis im UI.
-      return { items: subItems, mode: "subscription", description: `Mietmodell – ${paket.name}` };
+      return { items: subItems, mode: "subscription", description: `Mietmodell – ${currentPaket.name}` };
     }
     // Kauf
     const items: StripeItem[] = [];
     const cfg = paymentConfig.kauf || { mode: "full" as const, enabled: true };
     if (cfg.mode === "deposit" && cfg.deposit_percent) {
       const depCents = Math.round((basisEinmalig * cfg.deposit_percent) / 100 * 100);
-      items.push({ name: `${paket.name} – Anzahlung ${cfg.deposit_percent}%`, amount_cents: depCents });
+      items.push({ name: `${currentPaket.name} – Anzahlung ${cfg.deposit_percent}%`, amount_cents: depCents });
     } else {
-      items.push({ name: paket.name, amount_cents: Math.round(basisEinmalig * 100) });
+      items.push({ name: currentPaket.name, amount_cents: Math.round(basisEinmalig * 100) });
     }
     for (const a of selectedAddons) {
       items.push({
@@ -194,7 +222,7 @@ export default function CheckoutFunnel({
         amount_cents: a.price_cents,
       });
     }
-    return { items, mode: "payment", description: `Auftrag ${paket.name}` };
+    return { items, mode: "payment", description: `Auftrag ${currentPaket.name}` };
   };
 
   const handleSubmit = async () => {
@@ -202,9 +230,9 @@ export default function CheckoutFunnel({
     try {
       const positions: { titel: string; preis: number }[] = [];
       if (paymentMode === "kauf") {
-        positions.push({ titel: `Paket: ${paket.name} (Einmalkauf)`, preis: paket.preis });
+        positions.push({ titel: `Paket: ${currentPaket.name} (Einmalkauf)`, preis: currentPaket.preis });
       } else {
-        positions.push({ titel: `Paket: ${paket.name} (Miete, erster Monat)`, preis: Number(paket.miete_monatlich || 0) });
+        positions.push({ titel: `Paket: ${currentPaket.name} (Miete, erster Monat)`, preis: Number(currentPaket.miete_monatlich || 0) });
       }
       for (const a of selectedAddons) {
         const preis = a.price_type === "monthly"
@@ -225,9 +253,9 @@ export default function CheckoutFunnel({
           payment_method: payMethod === "online" ? "stripe" : "rechnung",
           positions,
           pakete: [{
-            id: paket.id, name: paket.name,
-            preis: paket.preis,
-            miete_monatlich: paket.miete_monatlich || null,
+            id: currentPaket.id, name: currentPaket.name,
+            preis: currentPaket.preis,
+            miete_monatlich: currentPaket.miete_monatlich || null,
             payment_mode: paymentMode,
           }],
           addons: selectedAddons.map((a) => ({
@@ -247,10 +275,10 @@ export default function CheckoutFunnel({
         // Stripe Embedded Checkout vorbereiten
         const built = buildStripeItems();
         setStripeItems(built.items);
-        setStep(3);
+        goTo("bezahlen");
       } else {
         // Klassisch: direkt zu Fertig
-        setStep(4);
+        goTo("fertig");
       }
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Fehler beim Abschicken";
@@ -261,8 +289,6 @@ export default function CheckoutFunnel({
   };
 
   if (!open) return null;
-
-  const stepLabels = ["Zahlung", "Extras", "Kontakt", "Bezahlen", "Fertig"];
 
   return (
     <div
@@ -319,9 +345,9 @@ export default function CheckoutFunnel({
           gap: 12,
           flexShrink: 0,
         }}>
-          {step > 0 && step < 3 && !submitting ? (
+          {step > 0 && currentKey !== "bezahlen" && currentKey !== "fertig" && !submitting ? (
             <button
-              onClick={() => setStep((s) => (s - 1) as Step)}
+              onClick={() => setStep((s) => Math.max(0, s - 1))}
               style={{
                 background: "transparent", border: "none", cursor: "pointer",
                 display: "inline-flex", alignItems: "center", gap: 4,
@@ -334,7 +360,7 @@ export default function CheckoutFunnel({
             </button>
           ) : <span />}
           <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_DARK, letterSpacing: "-0.01em" }}>
-            {paket.name}
+            {currentPaket.name}
           </div>
           <button
             onClick={onClose}
@@ -387,7 +413,7 @@ export default function CheckoutFunnel({
             marginTop: 8, fontSize: 12, fontWeight: 700,
             color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em",
           }}>
-            Schritt {step + 1} von 4 · {stepLabels[step]}
+            Schritt {step + 1} von {stepLabels.length - 1} · {stepLabels[step]}
           </div>
         </div>
 
@@ -396,9 +422,17 @@ export default function CheckoutFunnel({
           flex: 1, overflowY: "auto",
           padding: "20px",
         }}>
-          {step === 0 && (
+          {currentKey === "paket" && (
+            <StepPaket
+              pakete={allPakete}
+              selectedId={selectedPaketId}
+              onSelect={setSelectedPaketId}
+              paymentConfig={paymentConfig}
+            />
+          )}
+          {currentKey === "zahlung" && (
             <StepZahlung
-              paket={paket}
+              paket={currentPaket}
               paymentMode={paymentMode}
               setPaymentMode={setPaymentMode}
               paymentConfig={paymentConfig}
@@ -406,14 +440,14 @@ export default function CheckoutFunnel({
               mieteEnabled={mieteEnabled}
             />
           )}
-          {step === 1 && (
+          {currentKey === "extras" && (
             <StepAddOns
               addons={addons}
               selectedIds={selectedAddonIds}
               toggle={toggleAddon}
             />
           )}
-          {step === 2 && (
+          {currentKey === "kontakt" && (
             <StepKontakt
               vorname={vorname} setVorname={setVorname}
               nachname={nachname} setNachname={setNachname}
@@ -428,28 +462,28 @@ export default function CheckoutFunnel({
               stripeAvailable={stripeAvailable}
             />
           )}
-          {step === 3 && success && (
+          {currentKey === "bezahlen" && success && (
             <StepBezahlen
               items={stripeItems || []}
               mode={paymentMode === "miete" ? "subscription" : "payment"}
-              description={`Auftrag ${success.auftrags_nr} – ${paket.name}`}
+              description={`Auftrag ${success.auftrags_nr} – ${currentPaket.name}`}
               customerEmail={email}
               metadata={{
                 auftrags_nr: success.auftrags_nr,
                 angebots_id: angebots_id || "",
-                paket: paket.id,
+                paket: currentPaket.id,
                 payment_mode: paymentMode,
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
             />
           )}
-          {step === 4 && success && (
+          {currentKey === "fertig" && success && (
             <StepFertig auftragsNr={success.auftrags_nr} email={email} />
           )}
         </div>
 
         {/* FOOTER (Summary + CTA) */}
-        {step < 3 && (
+        {currentKey !== "bezahlen" && currentKey !== "fertig" && (
           <div style={{
             padding: "14px 20px 18px",
             borderTop: "1px solid rgba(79,63,240,0.1)",
@@ -462,23 +496,23 @@ export default function CheckoutFunnel({
             }}>
               <div>
                 <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                  {step === 2 ? "Heute zu zahlen" : "Ihre Auswahl"}
+                  {currentKey === "kontakt" ? "Heute zu zahlen" : "Ihre Auswahl"}
                 </div>
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                  {paymentMode === "miete" && step !== 2 ? (
+                  {paymentMode === "miete" && currentKey !== "kontakt" ? (
                     <>
                       {fmtEUR(gesamtMonatlich)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
                       {addonsEinmalig > 0 && (
                         <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}> · +{fmtEUR(addonsEinmalig)} einmalig</span>
                       )}
                     </>
-                  ) : step === 2 ? (
+                  ) : currentKey === "kontakt" ? (
                     fmtEUR(heuteZuZahlen)
                   ) : (
                     fmtEUR(gesamtEinmalig)
                   )}
                 </div>
-                {step === 2 && (
+                {currentKey === "kontakt" && (
                   <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
                 )}
               </div>
@@ -491,10 +525,10 @@ export default function CheckoutFunnel({
               type="button"
               onClick={() => {
                 if (!canProceedFromStep(step)) return;
-                if (step === 2) {
+                if (currentKey === "kontakt") {
                   handleSubmit();
                 } else {
-                  setStep((s) => (s + 1) as Step);
+                  setStep((s) => s + 1);
                 }
               }}
               disabled={!canProceedFromStep(step) || submitting}
@@ -514,7 +548,7 @@ export default function CheckoutFunnel({
             >
               {submitting ? (
                 <><Loader2 size={18} className="animate-spin" /> Wird abgeschickt…</>
-              ) : step === 2 ? (
+              ) : currentKey === "kontakt" ? (
                 <>{payMethod === "online" && stripeAvailable ? "Weiter zur Zahlung" : "Verbindlich beauftragen"} <ArrowRight size={18} /></>
               ) : (
                 <>Weiter <ArrowRight size={18} /></>
@@ -528,6 +562,86 @@ export default function CheckoutFunnel({
 }
 
 // ─── STEP 0: ZAHLUNGSMODELL ────────────────────────────
+function StepPaket({
+  pakete, selectedId, onSelect, paymentConfig,
+}: {
+  pakete: FunnelPaket[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+  paymentConfig: PaymentConfig;
+}) {
+  const mieteGloballyEnabled = !!paymentConfig.miete?.enabled;
+  return (
+    <div>
+      <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
+        Welches Paket darf es sein?
+      </h2>
+      <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
+        Wählen Sie das Paket, das am besten zu Ihnen passt.
+      </p>
+      <div style={{ display: "grid", gap: 12 }}>
+        {pakete.map((p, idx) => {
+          const active = p.id === selectedId;
+          const recommended = idx === pakete.length - 1 && pakete.length > 1;
+          const showMiete = mieteGloballyEnabled && p.miete_monatlich && Number(p.miete_monatlich) > 0;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => onSelect(p.id)}
+              className="funnel-paymode-card"
+              style={{
+                textAlign: "left", cursor: "pointer", fontFamily: "inherit",
+                background: active ? "linear-gradient(135deg, #F5F4FF 0%, #FFFFFF 100%)" : "#fff",
+                border: active ? `2px solid ${BRAND}` : "2px solid #E5E3FF",
+                borderRadius: 16, padding: "16px",
+                position: "relative",
+                boxShadow: active ? "0 8px 24px rgba(79,63,240,0.15)" : "0 1px 4px rgba(0,0,0,0.03)",
+                transition: "all 0.15s",
+              }}
+            >
+              {recommended && (
+                <span style={{
+                  position: "absolute", top: -10, right: 14,
+                  background: BRAND_GRADIENT, color: "#fff",
+                  fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
+                  padding: "4px 10px", borderRadius: 20,
+                }}>EMPFOHLEN</span>
+              )}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
+                    {p.name}
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10 }}>
+                    {showMiete && (
+                      <div style={{ fontSize: 20, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                        {fmtEUR(Number(p.miete_monatlich))}
+                        <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span>
+                      </div>
+                    )}
+                    <div style={{ fontSize: showMiete ? 13 : 20, fontWeight: showMiete ? 600 : 800, color: showMiete ? TEXT_MUTED : BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                      {showMiete ? `oder ${fmtEUR(p.preis)} einmalig` : fmtEUR(p.preis)}
+                    </div>
+                  </div>
+                </div>
+                <div style={{
+                  width: 22, height: 22, borderRadius: "50%",
+                  border: active ? `6px solid ${BRAND}` : "2px solid #D1CFEF",
+                  background: "#fff",
+                  flexShrink: 0,
+                  transition: "all 0.15s",
+                }} />
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── STEP 1: ZAHLUNGSMODELL ────────────────────────────
 function StepZahlung({
   paket, paymentMode, setPaymentMode, paymentConfig, kaufEnabled, mieteEnabled,
 }: {
@@ -538,6 +652,7 @@ function StepZahlung({
   kaufEnabled: boolean;
   mieteEnabled: boolean;
 }) {
+  // marker
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>

@@ -613,6 +613,12 @@ function AngebotPage({ data }: { data: AngebotData }) {
             preis: Number(funnelPaket.preis),
             miete_monatlich: funnelPaket.miete_monatlich ? Number(funnelPaket.miete_monatlich) : null,
           }}
+          pakete={pakete.map((p) => ({
+            id: p.id,
+            name: p.name,
+            preis: Number(p.preis),
+            miete_monatlich: p.miete_monatlich ? Number(p.miete_monatlich) : null,
+          }))}
           addons={funnelAddons}
           paymentConfig={funnelPaymentConfig}
           angebots_id={data.angebots_id}
