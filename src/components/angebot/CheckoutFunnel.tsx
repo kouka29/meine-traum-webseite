@@ -196,8 +196,8 @@ export default function CheckoutFunnel({
     if (paymentMode === "miete") {
       // Stripe subscription: base + monthly addons in einem Abo
       subItems.push({
-        name: `${paket.name} – Miete`,
-        amount_cents: Math.round(Number(paket.miete_monatlich || 0) * 100),
+        name: `${currentPaket.name} – Miete`,
+        amount_cents: Math.round(Number(currentPaket.miete_monatlich || 0) * 100),
         recurring: "month",
       });
       for (const a of selectedAddons.filter((a) => a.price_type === "monthly")) {
@@ -205,16 +205,16 @@ export default function CheckoutFunnel({
       }
       // Einmalige Add-ons in Miet-Modus: in Stripe Subscriptions nicht möglich → werden im Funnel zur Rechnung
       // Wir fügen sie als separate "Setup-Fee" nicht hinzu (Limitation); zeigen Hinweis im UI.
-      return { items: subItems, mode: "subscription", description: `Mietmodell – ${paket.name}` };
+      return { items: subItems, mode: "subscription", description: `Mietmodell – ${currentPaket.name}` };
     }
     // Kauf
     const items: StripeItem[] = [];
     const cfg = paymentConfig.kauf || { mode: "full" as const, enabled: true };
     if (cfg.mode === "deposit" && cfg.deposit_percent) {
       const depCents = Math.round((basisEinmalig * cfg.deposit_percent) / 100 * 100);
-      items.push({ name: `${paket.name} – Anzahlung ${cfg.deposit_percent}%`, amount_cents: depCents });
+      items.push({ name: `${currentPaket.name} – Anzahlung ${cfg.deposit_percent}%`, amount_cents: depCents });
     } else {
-      items.push({ name: paket.name, amount_cents: Math.round(basisEinmalig * 100) });
+      items.push({ name: currentPaket.name, amount_cents: Math.round(basisEinmalig * 100) });
     }
     for (const a of selectedAddons) {
       items.push({
@@ -222,7 +222,7 @@ export default function CheckoutFunnel({
         amount_cents: a.price_cents,
       });
     }
-    return { items, mode: "payment", description: `Auftrag ${paket.name}` };
+    return { items, mode: "payment", description: `Auftrag ${currentPaket.name}` };
   };
 
   const handleSubmit = async () => {
@@ -230,9 +230,9 @@ export default function CheckoutFunnel({
     try {
       const positions: { titel: string; preis: number }[] = [];
       if (paymentMode === "kauf") {
-        positions.push({ titel: `Paket: ${paket.name} (Einmalkauf)`, preis: paket.preis });
+        positions.push({ titel: `Paket: ${currentPaket.name} (Einmalkauf)`, preis: currentPaket.preis });
       } else {
-        positions.push({ titel: `Paket: ${paket.name} (Miete, erster Monat)`, preis: Number(paket.miete_monatlich || 0) });
+        positions.push({ titel: `Paket: ${currentPaket.name} (Miete, erster Monat)`, preis: Number(currentPaket.miete_monatlich || 0) });
       }
       for (const a of selectedAddons) {
         const preis = a.price_type === "monthly"
@@ -253,9 +253,9 @@ export default function CheckoutFunnel({
           payment_method: payMethod === "online" ? "stripe" : "rechnung",
           positions,
           pakete: [{
-            id: paket.id, name: paket.name,
-            preis: paket.preis,
-            miete_monatlich: paket.miete_monatlich || null,
+            id: currentPaket.id, name: currentPaket.name,
+            preis: currentPaket.preis,
+            miete_monatlich: currentPaket.miete_monatlich || null,
             payment_mode: paymentMode,
           }],
           addons: selectedAddons.map((a) => ({
@@ -275,10 +275,10 @@ export default function CheckoutFunnel({
         // Stripe Embedded Checkout vorbereiten
         const built = buildStripeItems();
         setStripeItems(built.items);
-        setStep(3);
+        goTo("bezahlen");
       } else {
         // Klassisch: direkt zu Fertig
-        setStep(4);
+        goTo("fertig");
       }
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Fehler beim Abschicken";
@@ -289,8 +289,6 @@ export default function CheckoutFunnel({
   };
 
   if (!open) return null;
-
-  const stepLabels = ["Zahlung", "Extras", "Kontakt", "Bezahlen", "Fertig"];
 
   return (
     <div
