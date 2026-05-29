@@ -424,7 +424,18 @@ function AngebotPage({ data }: { data: AngebotData }) {
     setFunnelOpen(true);
   };
 
-  const funnelAddons: FunnelAddon[] = data.addons ?? [];
+  const optionenToAddons = (opts?: AngebotOption[]): FunnelAddon[] =>
+    (opts ?? []).map((o) => ({
+      id: o.id,
+      name: o.titel,
+      description: o.beschreibung,
+      emoji: o.emoji,
+      price_cents: Math.round(Number(o.preis) * 100),
+      price_type: o.preis_typ === "monatlich" ? "monthly" : "one_time",
+    }));
+  const funnelAddons: FunnelAddon[] = (data.addons && data.addons.length > 0)
+    ? data.addons
+    : optionenToAddons(funnelPaket?.optionen);
   const funnelPaymentConfig: PaymentConfig = data.payment_config ?? {
     kauf: { enabled: true, mode: data.anzahlung ? "deposit" : "full", deposit_percent: data.anzahlung ? Math.round((Number(data.anzahlung) / Number(funnelPaket?.preis || data.preis)) * 100) : undefined },
     miete: funnelPaket?.miete_monatlich ? { enabled: true, monthly_cents: Math.round(Number(funnelPaket.miete_monatlich) * 100), min_months: 12 } : { enabled: false, monthly_cents: 0 },
@@ -618,6 +629,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
             name: p.name,
             preis: Number(p.preis),
             miete_monatlich: p.miete_monatlich ? Number(p.miete_monatlich) : null,
+            addons: optionenToAddons(p.optionen),
           }))}
           addons={funnelAddons}
           paymentConfig={funnelPaymentConfig}
