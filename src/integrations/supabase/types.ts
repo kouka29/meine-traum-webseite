@@ -31,6 +31,7 @@ export type Database = {
           short_id: string | null
           status: string
           stripe_link: string | null
+          user_id: string | null
         }
         Insert: {
           ablauf_datum?: string | null
@@ -48,6 +49,7 @@ export type Database = {
           short_id?: string | null
           status?: string
           stripe_link?: string | null
+          user_id?: string | null
         }
         Update: {
           ablauf_datum?: string | null
@@ -65,6 +67,7 @@ export type Database = {
           short_id?: string | null
           status?: string
           stripe_link?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -94,6 +97,7 @@ export type Database = {
           status: string
           updated_at: string
           user_agent: string | null
+          user_id: string | null
         }
         Insert: {
           addons?: Json | null
@@ -120,6 +124,7 @@ export type Database = {
           status?: string
           updated_at?: string
           user_agent?: string | null
+          user_id?: string | null
         }
         Update: {
           addons?: Json | null
@@ -146,6 +151,114 @@ export type Database = {
           status?: string
           updated_at?: string
           user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      customer_accounts: {
+        Row: {
+          company_name: string | null
+          created_at: string
+          email: string
+          first_name: string | null
+          phone: string | null
+          stripe_customer_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_name?: string | null
+          created_at?: string
+          email: string
+          first_name?: string | null
+          phone?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_name?: string | null
+          created_at?: string
+          email?: string
+          first_name?: string | null
+          phone?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      customer_ticket_messages: {
+        Row: {
+          attachments: Json
+          author_type: string
+          author_user_id: string | null
+          created_at: string
+          id: string
+          message: string
+          ticket_id: string
+        }
+        Insert: {
+          attachments?: Json
+          author_type: string
+          author_user_id?: string | null
+          created_at?: string
+          id?: string
+          message: string
+          ticket_id: string
+        }
+        Update: {
+          attachments?: Json
+          author_type?: string
+          author_user_id?: string | null
+          created_at?: string
+          id?: string
+          message?: string
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_ticket_messages_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "customer_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customer_tickets: {
+        Row: {
+          attachments: Json
+          created_at: string
+          id: string
+          message: string
+          priority: string
+          status: string
+          subject: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attachments?: Json
+          created_at?: string
+          id?: string
+          message: string
+          priority?: string
+          status?: string
+          subject: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attachments?: Json
+          created_at?: string
+          id?: string
+          message?: string
+          priority?: string
+          status?: string
+          subject?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -275,6 +388,7 @@ export type Database = {
           trade: string | null
           trade_other: string | null
           urgency: string | null
+          user_id: string | null
         }
         Insert: {
           booking_date?: string | null
@@ -296,6 +410,7 @@ export type Database = {
           trade?: string | null
           trade_other?: string | null
           urgency?: string | null
+          user_id?: string | null
         }
         Update: {
           booking_date?: string | null
@@ -317,6 +432,7 @@ export type Database = {
           trade?: string | null
           trade_other?: string | null
           urgency?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
