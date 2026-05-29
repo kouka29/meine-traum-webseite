@@ -83,6 +83,11 @@ export default function CheckoutFunnel({
   const [selectedPaketId, setSelectedPaketId] = useState<string>(paket.id);
   const currentPaket = allPakete.find((p) => p.id === selectedPaketId) ?? paket;
 
+  // Add-ons: bevorzugt paket-spezifisch, sonst globale Liste vom Angebot
+  const currentAddons: FunnelAddon[] = (currentPaket.addons && currentPaket.addons.length > 0)
+    ? currentPaket.addons
+    : addons;
+
   const kaufEnabled = paymentConfig.kauf?.enabled !== false;
   const mieteEnabled = !!paymentConfig.miete?.enabled && !!currentPaket.miete_monatlich;
 
@@ -90,7 +95,7 @@ export default function CheckoutFunnel({
   const currentKey = stepKeys[step] ?? "zahlung";
   const [paymentMode, setPaymentMode] = useState<PaymentMode>(mieteEnabled ? "miete" : "kauf");
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>(
-    () => addons.filter((a) => a.default_selected).map((a) => a.id),
+    () => (currentPaket.addons ?? addons).filter((a) => a.default_selected).map((a) => a.id),
   );
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<{ auftrags_nr: string } | null>(null);
@@ -115,7 +120,7 @@ export default function CheckoutFunnel({
       setSuccess(null);
       setSelectedPaketId(paket.id);
       setPaymentMode(mieteEnabled ? "miete" : "kauf");
-      setSelectedAddonIds(addons.filter((a) => a.default_selected).map((a) => a.id));
+      setSelectedAddonIds((paket.addons ?? addons).filter((a) => a.default_selected).map((a) => a.id));
       setPayMethod(stripeAvailable ? "online" : "rechnung");
       setStripeItems(null);
     }
@@ -126,6 +131,7 @@ export default function CheckoutFunnel({
   useEffect(() => {
     if (!open) return;
     setPaymentMode(mieteEnabled ? "miete" : "kauf");
+    setSelectedAddonIds(currentAddons.filter((a) => a.default_selected).map((a) => a.id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPaketId]);
 
@@ -138,8 +144,8 @@ export default function CheckoutFunnel({
   }, [open]);
 
   const selectedAddons = useMemo(
-    () => addons.filter((a) => selectedAddonIds.includes(a.id)),
-    [addons, selectedAddonIds],
+    () => currentAddons.filter((a) => selectedAddonIds.includes(a.id)),
+    [currentAddons, selectedAddonIds],
   );
 
   // Preisberechnung
@@ -443,7 +449,7 @@ export default function CheckoutFunnel({
           )}
           {currentKey === "extras" && (
             <StepAddOns
-              addons={addons}
+              addons={currentAddons}
               selectedIds={selectedAddonIds}
               toggle={toggleAddon}
             />
