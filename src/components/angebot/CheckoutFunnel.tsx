@@ -345,9 +345,9 @@ export default function CheckoutFunnel({
           gap: 12,
           flexShrink: 0,
         }}>
-          {step > 0 && step < 3 && !submitting ? (
+          {step > 0 && currentKey !== "bezahlen" && currentKey !== "fertig" && !submitting ? (
             <button
-              onClick={() => setStep((s) => (s - 1) as Step)}
+              onClick={() => setStep((s) => Math.max(0, s - 1))}
               style={{
                 background: "transparent", border: "none", cursor: "pointer",
                 display: "inline-flex", alignItems: "center", gap: 4,
@@ -360,7 +360,7 @@ export default function CheckoutFunnel({
             </button>
           ) : <span />}
           <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_DARK, letterSpacing: "-0.01em" }}>
-            {paket.name}
+            {currentPaket.name}
           </div>
           <button
             onClick={onClose}
@@ -413,7 +413,7 @@ export default function CheckoutFunnel({
             marginTop: 8, fontSize: 12, fontWeight: 700,
             color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em",
           }}>
-            Schritt {step + 1} von 4 · {stepLabels[step]}
+            Schritt {step + 1} von {stepLabels.length - 1} · {stepLabels[step]}
           </div>
         </div>
 
@@ -422,9 +422,17 @@ export default function CheckoutFunnel({
           flex: 1, overflowY: "auto",
           padding: "20px",
         }}>
-          {step === 0 && (
+          {currentKey === "paket" && (
+            <StepPaket
+              pakete={allPakete}
+              selectedId={selectedPaketId}
+              onSelect={setSelectedPaketId}
+              paymentConfig={paymentConfig}
+            />
+          )}
+          {currentKey === "zahlung" && (
             <StepZahlung
-              paket={paket}
+              paket={currentPaket}
               paymentMode={paymentMode}
               setPaymentMode={setPaymentMode}
               paymentConfig={paymentConfig}
@@ -432,14 +440,14 @@ export default function CheckoutFunnel({
               mieteEnabled={mieteEnabled}
             />
           )}
-          {step === 1 && (
+          {currentKey === "extras" && (
             <StepAddOns
               addons={addons}
               selectedIds={selectedAddonIds}
               toggle={toggleAddon}
             />
           )}
-          {step === 2 && (
+          {currentKey === "kontakt" && (
             <StepKontakt
               vorname={vorname} setVorname={setVorname}
               nachname={nachname} setNachname={setNachname}
@@ -454,28 +462,28 @@ export default function CheckoutFunnel({
               stripeAvailable={stripeAvailable}
             />
           )}
-          {step === 3 && success && (
+          {currentKey === "bezahlen" && success && (
             <StepBezahlen
               items={stripeItems || []}
               mode={paymentMode === "miete" ? "subscription" : "payment"}
-              description={`Auftrag ${success.auftrags_nr} – ${paket.name}`}
+              description={`Auftrag ${success.auftrags_nr} – ${currentPaket.name}`}
               customerEmail={email}
               metadata={{
                 auftrags_nr: success.auftrags_nr,
                 angebots_id: angebots_id || "",
-                paket: paket.id,
+                paket: currentPaket.id,
                 payment_mode: paymentMode,
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
             />
           )}
-          {step === 4 && success && (
+          {currentKey === "fertig" && success && (
             <StepFertig auftragsNr={success.auftrags_nr} email={email} />
           )}
         </div>
 
         {/* FOOTER (Summary + CTA) */}
-        {step < 3 && (
+        {currentKey !== "bezahlen" && currentKey !== "fertig" && (
           <div style={{
             padding: "14px 20px 18px",
             borderTop: "1px solid rgba(79,63,240,0.1)",
@@ -488,23 +496,23 @@ export default function CheckoutFunnel({
             }}>
               <div>
                 <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                  {step === 2 ? "Heute zu zahlen" : "Ihre Auswahl"}
+                  {currentKey === "kontakt" ? "Heute zu zahlen" : "Ihre Auswahl"}
                 </div>
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                  {paymentMode === "miete" && step !== 2 ? (
+                  {paymentMode === "miete" && currentKey !== "kontakt" ? (
                     <>
                       {fmtEUR(gesamtMonatlich)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
                       {addonsEinmalig > 0 && (
                         <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}> · +{fmtEUR(addonsEinmalig)} einmalig</span>
                       )}
                     </>
-                  ) : step === 2 ? (
+                  ) : currentKey === "kontakt" ? (
                     fmtEUR(heuteZuZahlen)
                   ) : (
                     fmtEUR(gesamtEinmalig)
                   )}
                 </div>
-                {step === 2 && (
+                {currentKey === "kontakt" && (
                   <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
                 )}
               </div>
@@ -517,10 +525,10 @@ export default function CheckoutFunnel({
               type="button"
               onClick={() => {
                 if (!canProceedFromStep(step)) return;
-                if (step === 2) {
+                if (currentKey === "kontakt") {
                   handleSubmit();
                 } else {
-                  setStep((s) => (s + 1) as Step);
+                  setStep((s) => s + 1);
                 }
               }}
               disabled={!canProceedFromStep(step) || submitting}
@@ -540,7 +548,7 @@ export default function CheckoutFunnel({
             >
               {submitting ? (
                 <><Loader2 size={18} className="animate-spin" /> Wird abgeschickt…</>
-              ) : step === 2 ? (
+              ) : currentKey === "kontakt" ? (
                 <>{payMethod === "online" && stripeAvailable ? "Weiter zur Zahlung" : "Verbindlich beauftragen"} <ArrowRight size={18} /></>
               ) : (
                 <>Weiter <ArrowRight size={18} /></>
