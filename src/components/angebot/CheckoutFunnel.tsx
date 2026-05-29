@@ -572,6 +572,7 @@ function StepZahlung({
   kaufEnabled: boolean;
   mieteEnabled: boolean;
 }) {
+  // marker
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
