@@ -973,6 +973,76 @@ Deno.serve(async (req) => {
       });
     }
 
+    // =================== TICKETS (Kundenwünsche) ===================
+    if (action === "tickets-list") {
+      const { data, error } = await supabase
+        .from("customer_tickets")
+        .select("*, customer_accounts(email, first_name, company_name)")
+        .order("created_at", { ascending: false })
+        .limit(500);
+      if (error) throw error;
+      return new Response(JSON.stringify({ tickets: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "ticket-update-status") {
+      const { ticketId, status } = body as { ticketId?: string; status?: string };
+      const allowed = ["open", "in_progress", "done"];
+      if (!ticketId || !status || !allowed.includes(status)) {
+        return new Response(JSON.stringify({ error: "Ungültige Parameter" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase
+        .from("customer_tickets")
+        .update({ status, updated_at: new Date().toISOString() })
+        .eq("id", ticketId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "ticket-respond") {
+      const { ticketId, message } = body as { ticketId?: string; message?: string };
+      if (!ticketId || !message || message.trim().length < 2) {
+        return new Response(JSON.stringify({ error: "Antwort fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error: msgErr } = await supabase
+        .from("customer_ticket_messages")
+        .insert({ ticket_id: ticketId, author_type: "admin", message: message.trim() });
+      if (msgErr) throw msgErr;
+      const { error: updErr } = await supabase
+        .from("customer_tickets")
+        .update({ admin_response: message.trim(), status: "in_progress", updated_at: new Date().toISOString() })
+        .eq("id", ticketId);
+      if (updErr) throw updErr;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "ticket-messages") {
+      const { ticketId } = body as { ticketId?: string };
+      if (!ticketId) {
+        return new Response(JSON.stringify({ error: "ticketId fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data, error } = await supabase
+        .from("customer_ticket_messages")
+        .select("*")
+        .eq("ticket_id", ticketId)
+        .order("created_at", { ascending: true });
+      if (error) throw error;
+      return new Response(JSON.stringify({ messages: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Ungültige Aktion" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
