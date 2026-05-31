@@ -8,16 +8,56 @@ import { toast } from "sonner";
 import { Loader2, Mail, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
+
+const hasAuthCallbackParams = () =>
+  /[?#&](code|access_token|token_hash)=/.test(window.location.search + window.location.hash);
+
 export default function KundenportalLogin() {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [checkingLink, setCheckingLink] = useState(() => hasAuthCallbackParams());
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate("/kundenportal", { replace: true });
+    let cancelled = false;
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) navigate("/kundenportal", { replace: true });
     });
+
+    const verifySession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (cancelled) return;
+
+      if (data.session) {
+        navigate("/kundenportal", { replace: true });
+        return;
+      }
+
+      if (!hasAuthCallbackParams()) {
+        setCheckingLink(false);
+        return;
+      }
+
+      window.setTimeout(async () => {
+        const { data: delayed } = await supabase.auth.getSession();
+        if (cancelled) return;
+
+        if (delayed.session) {
+          navigate("/kundenportal", { replace: true });
+        } else {
+          setCheckingLink(false);
+        }
+      }, 1200);
+    };
+
+    verifySession();
+
+    return () => {
+      cancelled = true;
+      sub.subscription.unsubscribe();
+    };
   }, [navigate]);
 
   const submit = async (e: React.FormEvent) => {
@@ -75,7 +115,17 @@ export default function KundenportalLogin() {
             </div>
           </Link>
           <div className="bg-card border border-border rounded-2xl shadow-lg p-8">
-            {sent ? (
+            {checkingLink ? (
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <Loader2 className="text-primary animate-spin" size={32} />
+                </div>
+                <h1 className="font-heading text-2xl font-bold">Login wird geprüft</h1>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Einen Moment bitte – dein Login-Link wird gerade bestätigt.
+                </p>
+              </div>
+            ) : sent ? (
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                   <CheckCircle2 className="text-primary" size={32} />
