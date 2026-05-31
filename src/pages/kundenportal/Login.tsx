@@ -48,11 +48,31 @@ export default function KundenportalLogin() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4 py-12">
         <div className="w-full max-w-md">
-          <Link to="/" className="flex items-center justify-center gap-3 mb-8">
-            <img src={logo} alt="Meine Traum Webseite" className="h-10 w-auto" />
-            <span className="font-heading text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Meine Traum Webseite
-            </span>
+          <Link to="/" className="block mb-10">
+            <div className="flex flex-col items-center space-y-6 text-center">
+              <div className="relative">
+                <div className="absolute -inset-10 bg-primary opacity-10 blur-[80px] rounded-full" />
+                <div className="relative w-32 h-32 bg-card shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] rounded-[2rem] flex items-center justify-center border border-border/60 transition-transform duration-500 hover:scale-105">
+                  <div className="absolute inset-2 border border-border/40 rounded-[1.5rem]" />
+                  <img src={logo} alt="Meine Traum Webseite" className="relative z-10 w-20 h-20 object-contain" />
+                  <div className="absolute -top-2 -right-2 w-7 h-7 bg-primary rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h1 className="font-heading text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-tr from-primary via-primary to-accent">
+                    Meine Traum
+                  </span>
+                  <br />
+                  <span className="relative text-foreground">
+                    Webseite
+                    <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-1 bg-primary/20 rounded-full" />
+                  </span>
+                </h1>
+              </div>
+            </div>
           </Link>
           <div className="bg-card border border-border rounded-2xl shadow-lg p-8">
             {sent ? (
