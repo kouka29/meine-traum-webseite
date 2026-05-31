@@ -64,6 +64,7 @@ const Angebot = lazy(() => import("./pages/Angebot.tsx"));
 const AGB = lazy(() => import("./pages/AGB.tsx"));
 const ZahlungErfolgreich = lazy(() => import("./pages/ZahlungErfolgreich.tsx"));
 const KundenportalLogin = lazy(() => import("./pages/kundenportal/Login.tsx"));
+const KundenportalResetPassword = lazy(() => import("./pages/kundenportal/ResetPassword.tsx"));
 const KundenportalLayout = lazy(() => import("./pages/kundenportal/Layout.tsx"));
 const KundenportalDashboard = lazy(() => import("./pages/kundenportal/Dashboard.tsx"));
 const KundenportalVertrag = lazy(() => import("./pages/kundenportal/Vertrag.tsx"));
@@ -196,6 +197,7 @@ const App = () => (
             <Route path="/agb" element={<AGB />} />
             <Route path="/zahlung-erfolgreich" element={<ZahlungErfolgreich />} />
             <Route path="/kundenportal/login" element={<KundenportalLogin />} />
+            <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
             <Route path="/kundenportal" element={<KundenportalLayout />}>
               <Route index element={<KundenportalDashboard />} />
               <Route path="vertrag" element={<KundenportalVertrag />} />
