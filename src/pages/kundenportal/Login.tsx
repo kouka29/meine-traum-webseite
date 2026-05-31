@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Loader2, Mail, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 export default function KundenportalLogin() {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
@@ -47,9 +48,10 @@ export default function KundenportalLogin() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4 py-12">
         <div className="w-full max-w-md">
-          <Link to="/" className="block text-center mb-8">
-            <span className="font-heading text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              QK Marketing
+          <Link to="/" className="flex items-center justify-center gap-3 mb-8">
+            <img src={logo} alt="Meine Traum Webseite" className="h-10 w-auto" />
+            <span className="font-heading text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Meine Traum Webseite
             </span>
           </Link>
           <div className="bg-card border border-border rounded-2xl shadow-lg p-8">
