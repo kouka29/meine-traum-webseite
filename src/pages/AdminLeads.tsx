@@ -980,6 +980,33 @@ const AdminLeads = () => {
                         >
                           <FileText size={12} /> Angebot erstellen
                         </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={updatingLeadId === lead.id}
+                          onClick={async () => {
+                            setUpdatingLeadId(lead.id);
+                            const { data, error } = await supabase.functions.invoke("customer-create-account", {
+                              body: {
+                                password,
+                                email: lead.email,
+                                first_name: lead.first_name,
+                                company_name: lead.company_name,
+                                phone: lead.phone,
+                                lead_id: lead.id,
+                                send_welcome: true,
+                              },
+                            });
+                            setUpdatingLeadId(null);
+                            if (error || data?.error) {
+                              toast.error(data?.error || error?.message || "Fehler");
+                            } else {
+                              toast.success(data?.new_account ? "Portal-Zugang angelegt & Mail gesendet" : "Bereits vorhanden – verknüpft");
+                            }
+                          }}
+                        >
+                          🔑 Portal-Zugang
+                        </Button>
                       </div>
                     </div>
                     {/* Funnel-Antworten: Branche, Webseite, Ziele, Dringlichkeit, Notizen */}
