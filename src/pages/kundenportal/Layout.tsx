@@ -30,7 +30,6 @@ export default function KundenportalLayout() {
         navigate("/kundenportal/login", { replace: true });
       }
     });
-    // Warte kurz, damit Supabase ggf. den ?code=... aus der URL gegen eine Session tauschen kann
     (async () => {
       const { data } = await supabase.auth.getSession();
       if (cancelled) return;
@@ -39,24 +38,7 @@ export default function KundenportalLayout() {
         setChecking(false);
         return;
       }
-      // Falls noch ein OAuth/Magic-Link Code in der URL ist, kurz warten und erneut prüfen
-      const hasAuthParams = /[?#&](code|access_token|token_hash)=/.test(
-        window.location.search + window.location.hash,
-      );
-      if (hasAuthParams) {
-        setTimeout(async () => {
-          const { data: d2 } = await supabase.auth.getSession();
-          if (cancelled) return;
-          if (d2.session) {
-            setEmail(d2.session.user.email || "");
-            setChecking(false);
-          } else {
-            navigate("/kundenportal/login", { replace: true });
-          }
-        }, 800);
-      } else {
-        navigate("/kundenportal/login", { replace: true });
-      }
+      navigate("/kundenportal/login", { replace: true });
     })();
     return () => {
       cancelled = true;
