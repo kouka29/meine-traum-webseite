@@ -1,88 +1,76 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Loader2, Mail, CheckCircle2 } from "lucide-react";
+import { Loader2, Mail, LockKeyhole, Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
-const hasAuthCallbackParams = () =>
-  /[?#&](code|access_token|token_hash)=/.test(window.location.search + window.location.hash);
-
 export default function KundenportalLogin() {
   const [email, setEmail] = useState("");
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [checkingLink, setCheckingLink] = useState(() => hasAuthCallbackParams());
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [resetting, setResetting] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    let cancelled = false;
-
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) navigate("/kundenportal", { replace: true });
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) navigate("/kundenportal", { replace: true });
     });
-
-    const verifySession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (cancelled) return;
-
-      if (data.session) {
-        navigate("/kundenportal", { replace: true });
-        return;
-      }
-
-      if (!hasAuthCallbackParams()) {
-        setCheckingLink(false);
-        return;
-      }
-
-      window.setTimeout(async () => {
-        const { data: delayed } = await supabase.auth.getSession();
-        if (cancelled) return;
-
-        if (delayed.session) {
-          navigate("/kundenportal", { replace: true });
-        } else {
-          setCheckingLink(false);
-        }
-      }, 1200);
-    };
-
-    verifySession();
-
-    return () => {
-      cancelled = true;
-      sub.subscription.unsubscribe();
-    };
   }, [navigate]);
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
     const clean = email.trim().toLowerCase();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(clean)) {
       toast.error("Bitte gültige E-Mail eingeben");
       return;
     }
-    setSending(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      email: clean,
-      options: {
-        emailRedirectTo: `${window.location.origin}/kundenportal`,
-        shouldCreateUser: false,
-      },
-    });
-    setSending(false);
-    if (error) {
-      toast.error(error.message.includes("not found") || error.message.includes("Signups")
-        ? "Für diese E-Mail wurde noch kein Portal-Zugang erstellt. Bitte kontaktiere uns."
-        : "Login-Link konnte nicht gesendet werden");
+    if (password.length < 6) {
+      toast.error("Bitte gib dein Passwort ein");
       return;
     }
-    setSent(true);
+
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: clean,
+      password,
+    });
+    setLoading(false);
+
+    if (error) {
+      toast.error("E-Mail oder Passwort stimmt nicht. Falls du noch kein Passwort hast, setze es über „Passwort vergessen“.");
+      return;
+    }
+
+    navigate("/kundenportal", { replace: true });
+  };
+
+  const requestPasswordReset = async () => {
+    const clean = email.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(clean)) {
+      toast.error("Bitte gib zuerst deine E-Mail-Adresse ein");
+      return;
+    }
+
+    setResetting(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(clean, {
+      redirectTo: `${window.location.origin}/kundenportal/passwort-zuruecksetzen`,
+    });
+    setResetting(false);
+
+    if (error) {
+      toast.error("E-Mail zum Zurücksetzen konnte nicht gesendet werden");
+      return;
+    }
+
+    setResetSent(true);
+    toast.success("E-Mail zum Passwort setzen wurde versendet");
   };
 
   return (
@@ -96,7 +84,7 @@ export default function KundenportalLogin() {
                   <div className="absolute inset-2 border border-border/40 rounded-[1.5rem]" />
                   <img src={logo} alt="Meine Traum Webseite" className="relative z-10 w-20 h-20 object-contain" />
                   <div className="absolute -top-2 -right-2 w-7 h-7 bg-primary rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                    <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full animate-pulse" />
                   </div>
                 </div>
               </div>
@@ -115,29 +103,19 @@ export default function KundenportalLogin() {
             </div>
           </Link>
           <div className="bg-card border border-border rounded-2xl shadow-lg p-8">
-            {checkingLink ? (
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <Loader2 className="text-primary animate-spin" size={32} />
-                </div>
-                <h1 className="font-heading text-2xl font-bold">Login wird geprüft</h1>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Einen Moment bitte – dein Login-Link wird gerade bestätigt.
-                </p>
-              </div>
-            ) : sent ? (
+            {resetSent ? (
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                   <CheckCircle2 className="text-primary" size={32} />
                 </div>
-                <h1 className="font-heading text-2xl font-bold">Check deine E-Mails</h1>
+                <h1 className="font-heading text-2xl font-bold">E-Mail versendet</h1>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Wir haben dir einen Login-Link an <strong className="text-foreground">{email}</strong> geschickt.
-                  Klicke einfach auf den Link in der Mail – fertig.
+                  Wir haben dir eine E-Mail an <strong className="text-foreground">{email}</strong> geschickt,
+                  damit du dein Passwort festlegen kannst.
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Keine Mail erhalten? Schau in den Spam-Ordner oder{" "}
-                  <button onClick={() => setSent(false)} className="text-primary underline">erneut anfordern</button>.
+                  <button type="button" onClick={() => setResetSent(false)} className="text-primary underline">erneut versuchen</button>.
                 </p>
               </div>
             ) : (
@@ -148,10 +126,10 @@ export default function KundenportalLogin() {
                   </div>
                   <h1 className="font-heading text-2xl font-bold mb-2">Kundenportal</h1>
                   <p className="text-sm text-muted-foreground">
-                    Login per E-Mail-Link – kein Passwort nötig.
+                    Melde dich mit deiner E-Mail und deinem Passwort an.
                   </p>
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="email">E-Mail-Adresse</Label>
                   <Input
                     id="email"
@@ -164,9 +142,41 @@ export default function KundenportalLogin() {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={sending}>
-                  {sending ? <Loader2 className="animate-spin" size={16} /> : "Login-Link senden"}
+                <div className="space-y-2">
+                  <Label htmlFor="password">Passwort</Label>
+                  <div className="relative">
+                    <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="current-password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Dein Passwort"
+                      className="pl-9 pr-10"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((value) => !value)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      aria-label={showPassword ? "Passwort ausblenden" : "Passwort anzeigen"}
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? <Loader2 className="animate-spin" size={16} /> : "Einloggen"}
                 </Button>
+                <button
+                  type="button"
+                  onClick={requestPasswordReset}
+                  disabled={resetting}
+                  className="w-full text-sm text-primary underline disabled:opacity-60"
+                >
+                  {resetting ? "E-Mail wird gesendet…" : "Passwort vergessen oder erstes Passwort setzen"}
+                </button>
                 <p className="text-xs text-center text-muted-foreground">
                   Noch kein Zugang? Dein Portal wird automatisch nach deiner Buchung erstellt –
                   oder <Link to="/kontakt" className="text-primary underline">kontaktiere uns</Link>.

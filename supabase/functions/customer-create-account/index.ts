@@ -24,7 +24,8 @@ function welcomeMail(name: string, redirect: string) {
         <a href="${redirect}" style="display:inline-block;padding:14px 28px;background:linear-gradient(135deg,#4F3FF0,#7B5EF8);color:#fff;text-decoration:none;border-radius:12px;font-weight:700">Zum Kundenportal</a>
       </p>
       <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0">
-        Der Login erfolgt ganz ohne Passwort: Einfach E-Mail eingeben, Login-Link aus deinem Postfach klicken, fertig.
+        Melde dich mit deiner E-Mail-Adresse und deinem Passwort an. Falls du noch kein Passwort hast,
+        kannst du es auf der Login-Seite über „Passwort vergessen oder erstes Passwort setzen“ festlegen.
       </p>
     </div>
     <div style="background:#1E1B4B;padding:24px;text-align:center;color:rgba(255,255,255,.6);font-size:12px">
