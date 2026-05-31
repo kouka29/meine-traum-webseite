@@ -21,16 +21,47 @@ export default function KundenportalLayout() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_evt, session) => {
-      if (!session) navigate("/kundenportal/login", { replace: true });
-      else setEmail(session.user.email || "");
+    let cancelled = false;
+    const { data: sub } = supabase.auth.onAuthStateChange((evt, session) => {
+      if (session) {
+        setEmail(session.user.email || "");
+        setChecking(false);
+      } else if (evt === "SIGNED_OUT") {
+        navigate("/kundenportal/login", { replace: true });
+      }
     });
-    supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) navigate("/kundenportal/login", { replace: true });
-      else setEmail(data.session.user.email || "");
-      setChecking(false);
-    });
-    return () => sub.subscription.unsubscribe();
+    // Warte kurz, damit Supabase ggf. den ?code=... aus der URL gegen eine Session tauschen kann
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      if (cancelled) return;
+      if (data.session) {
+        setEmail(data.session.user.email || "");
+        setChecking(false);
+        return;
+      }
+      // Falls noch ein OAuth/Magic-Link Code in der URL ist, kurz warten und erneut prüfen
+      const hasAuthParams = /[?#&](code|access_token|token_hash)=/.test(
+        window.location.search + window.location.hash,
+      );
+      if (hasAuthParams) {
+        setTimeout(async () => {
+          const { data: d2 } = await supabase.auth.getSession();
+          if (cancelled) return;
+          if (d2.session) {
+            setEmail(d2.session.user.email || "");
+            setChecking(false);
+          } else {
+            navigate("/kundenportal/login", { replace: true });
+          }
+        }, 800);
+      } else {
+        navigate("/kundenportal/login", { replace: true });
+      }
+    })();
+    return () => {
+      cancelled = true;
+      sub.subscription.unsubscribe();
+    };
   }, [navigate]);
 
   const logout = async () => {
