@@ -975,13 +975,26 @@ Deno.serve(async (req) => {
 
     // =================== TICKETS (Kundenwünsche) ===================
     if (action === "tickets-list") {
-      const { data, error } = await supabase
+      const { data: ticketsRaw, error } = await supabase
         .from("customer_tickets")
-        .select("*, customer_accounts(email, first_name, company_name)")
+        .select("*")
         .order("created_at", { ascending: false })
         .limit(500);
       if (error) throw error;
-      return new Response(JSON.stringify({ tickets: data }), {
+      const userIds = Array.from(new Set((ticketsRaw || []).map((t: any) => t.user_id).filter(Boolean)));
+      let accountsMap: Record<string, any> = {};
+      if (userIds.length > 0) {
+        const { data: accs } = await supabase
+          .from("customer_accounts")
+          .select("user_id, email, first_name, company_name")
+          .in("user_id", userIds);
+        accountsMap = Object.fromEntries((accs || []).map((a: any) => [a.user_id, a]));
+      }
+      const tickets = (ticketsRaw || []).map((t: any) => ({
+        ...t,
+        customer_accounts: accountsMap[t.user_id] || null,
+      }));
+      return new Response(JSON.stringify({ tickets }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -1017,7 +1030,7 @@ Deno.serve(async (req) => {
       if (msgErr) throw msgErr;
       const { error: updErr } = await supabase
         .from("customer_tickets")
-        .update({ admin_response: message.trim(), status: "in_progress", updated_at: new Date().toISOString() })
+        .update({ status: "in_progress", updated_at: new Date().toISOString() })
         .eq("id", ticketId);
       if (updErr) throw updErr;
       return new Response(JSON.stringify({ success: true }), {
