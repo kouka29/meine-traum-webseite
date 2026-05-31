@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const FROM = "QK Marketing Group <info@meine-traum-webseite.de>";
+const FROM = "Meine Traum Webseite <info@meine-traum-webseite.de>";
 const PORTAL_URL = "https://meine-traum-webseite.de/kundenportal";
 
 function welcomeMail(name: string, redirect: string) {
