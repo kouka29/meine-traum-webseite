@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader2, LockKeyhole, Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
@@ -44,7 +44,7 @@ export default function KundenportalResetPassword() {
     };
   }, [navigate]);
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (password.length < 8) {
