@@ -20,9 +20,30 @@ export default function KundenportalResetPassword() {
   useEffect(() => {
     let cancelled = false;
 
+    const params = new URLSearchParams(window.location.search);
+    const tokenHash = params.get("token_hash");
+    const type = params.get("type");
+
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session && !cancelled) setReady(true);
     });
+
+    if (tokenHash && type === "recovery") {
+      supabase.auth.verifyOtp({ token_hash: tokenHash, type: "recovery" }).then(({ error }) => {
+        if (cancelled) return;
+        if (error) {
+          toast.error("Der Link ist ungültig oder abgelaufen");
+          navigate("/kundenportal/login", { replace: true });
+          return;
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+        setReady(true);
+      });
+      return () => {
+        cancelled = true;
+        sub.subscription.unsubscribe();
+      };
+    }
 
     supabase.auth.getSession().then(({ data }) => {
       if (cancelled) return;
