@@ -59,8 +59,8 @@ export default function KundenportalLogin() {
     }
 
     setResetting(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(clean, {
-      redirectTo: `${window.location.origin}/kundenportal/passwort-zuruecksetzen`,
+    const { error } = await supabase.functions.invoke("send-password-reset", {
+      body: { email: clean },
     });
     setResetting(false);
 
