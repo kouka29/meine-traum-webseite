@@ -27,7 +27,8 @@ Deno.serve(async (req) => {
     const environment: StripeEnv = body.environment === "live" ? "live" : "sandbox";
     const returnUrl: string = body.returnUrl;
     const customerEmail: string | undefined = body.customerEmail;
-    const items: Item[] = Array.isArray(body.items) ? body.items : [];
+    let items: Item[] = Array.isArray(body.items) ? body.items : [];
+    const priceId: string | undefined = typeof body.priceId === "string" ? body.priceId : undefined;
     const mode: "payment" | "subscription" = body.mode === "subscription" ? "subscription" : "payment";
     const description: string = typeof body.description === "string" ? body.description.slice(0, 200) : "Webdesign-Auftrag";
     const metadata: Record<string, string> = (body.metadata && typeof body.metadata === "object") ? body.metadata : {};
@@ -37,6 +38,37 @@ Deno.serve(async (req) => {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    const stripe = createStripeClient(environment);
+
+    // Legacy path: resolve a single Stripe price via lookup_key when items[] not provided.
+    if (!items.length && priceId) {
+      if (!/^[a-zA-Z0-9_-]+$/.test(priceId)) {
+        return new Response(JSON.stringify({ error: "Invalid priceId" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const prices = await stripe.prices.list({ lookup_keys: [priceId], expand: ["data.product"] });
+      if (!prices.data.length) {
+        return new Response(JSON.stringify({ error: "Price not found" }), {
+          status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const p = prices.data[0];
+      const product: any = p.product;
+      const isRecurring = p.type === "recurring";
+      const session = await stripe.checkout.sessions.create({
+        line_items: [{ price: p.id, quantity: 1 }],
+        mode: isRecurring ? "subscription" : "payment",
+        ui_mode: "embedded_page",
+        return_url: returnUrl,
+        ...(customerEmail && { customer_email: customerEmail }),
+        ...(!isRecurring && { payment_intent_data: { description: product?.name || description } }),
+      });
+      return new Response(JSON.stringify({ clientSecret: session.client_secret, sessionId: session.id }), {
+        status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     if (!items.length) {
       return new Response(JSON.stringify({ error: "No items" }), {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -49,8 +81,6 @@ Deno.serve(async (req) => {
         });
       }
     }
-
-    const stripe = createStripeClient(environment);
 
     const lineItems = items.map((it) => ({
       price_data: {
