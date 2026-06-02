@@ -1,6 +1,7 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +17,7 @@ export default function KundenportalLogin() {
   const [loading, setLoading] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,6 +73,20 @@ export default function KundenportalLogin() {
 
     setResetSent(true);
     toast.success("E-Mail zum Passwort setzen wurde versendet");
+  };
+
+  const signInGoogle = async () => {
+    setGoogleLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: `${window.location.origin}/kundenportal`,
+    });
+    if (result.error) {
+      setGoogleLoading(false);
+      toast.error("Google-Login fehlgeschlagen. Bitte erneut versuchen.");
+      return;
+    }
+    if (result.redirected) return; // Browser leitet weiter
+    navigate("/kundenportal", { replace: true });
   };
 
   return (
