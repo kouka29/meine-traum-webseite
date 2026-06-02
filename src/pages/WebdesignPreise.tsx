@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
-import StripeCheckoutDialog from "@/components/StripeCheckoutDialog";
+import CheckoutFunnel, { type FunnelPaket } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 
 type Pkg = {
