@@ -748,13 +748,20 @@ const WebdesignPreise = () => {
     </button>
 
     <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
-    <StripeCheckoutDialog
-      open={checkoutPkg !== null}
-      onClose={() => setCheckoutPkg(null)}
-      priceId={checkoutPkg?.priceId ?? null}
-      packageName={checkoutPkg?.name ?? ""}
-      kind={checkoutPkg?.priceId?.includes("_rent_") ? "rent" : "deposit"}
-    />
+    {currentFunnelPaket && checkoutPkg && (
+      <CheckoutFunnel
+        open={checkoutPkg !== null}
+        onClose={() => setCheckoutPkg(null)}
+        paket={currentFunnelPaket}
+        pakete={funnelPakete}
+        addons={[]}
+        paymentConfig={{
+          kauf: { enabled: true, mode: "deposit", deposit_percent: 50 },
+          miete: { enabled: true, monthly_cents: (currentFunnelPaket.miete_monatlich || 0) * 100, min_months: 12 },
+        }}
+        defaultPaymentMode={checkoutPkg.mode}
+      />
+    )}
   </main>
   );
 };
