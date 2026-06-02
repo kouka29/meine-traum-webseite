@@ -56,8 +56,28 @@ Deno.serve(async (req) => {
       const p = prices.data[0];
       const product: any = p.product;
       const isRecurring = p.type === "recurring";
+      if (typeof p.unit_amount !== "number") {
+        return new Response(JSON.stringify({ error: "Price amount not found" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const vatCents = Math.round(p.unit_amount * 0.19);
+      const lineItems = [
+        { price: p.id, quantity: 1 },
+        {
+          price_data: {
+            currency: p.currency,
+            product_data: { name: "MwSt. 19%" },
+            unit_amount: vatCents,
+            ...(isRecurring && p.recurring?.interval
+              ? { recurring: { interval: p.recurring.interval } }
+              : {}),
+          },
+          quantity: 1,
+        },
+      ];
       const session = await stripe.checkout.sessions.create({
-        line_items: [{ price: p.id, quantity: 1 }],
+        line_items: lineItems,
         mode: isRecurring ? "subscription" : "payment",
         ui_mode: "embedded_page",
         return_url: returnUrl,
