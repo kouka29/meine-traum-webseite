@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
-import StripeCheckoutDialog from "@/components/StripeCheckoutDialog";
+import CheckoutFunnel, { type FunnelPaket } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 
 type Pkg = {
@@ -468,12 +468,33 @@ const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
-  const [checkoutPkg, setCheckoutPkg] = useState<{ name: string; priceId?: string } | null>(null);
+  const [checkoutPkg, setCheckoutPkg] = useState<
+    { name: string; priceId?: string; mode: "miete" | "kauf" } | null
+  >(null);
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
     setPopupOpen(true);
   };
-  const openCheckout = (pkg: { name: string; priceId?: string }) => setCheckoutPkg(pkg);
+  const openRentCheckout = (pkg: { name: string; priceId?: string }) =>
+    setCheckoutPkg({ ...pkg, mode: "miete" });
+  const openBuyCheckout = (pkg: { name: string; priceId?: string }) =>
+    setCheckoutPkg({ ...pkg, mode: "kauf" });
+
+  // Numeric price lookup pro Paketname (für Funnel)
+  const PAKET_NUMS: Record<string, { preis: number; miete: number }> = {
+    Starter: { preis: 990, miete: 59 },
+    Pro: { preis: 1990, miete: 99 },
+    Premium: { preis: 3590, miete: 159 },
+  };
+  const funnelPakete: FunnelPaket[] = Object.entries(PAKET_NUMS).map(([name, v]) => ({
+    id: name.toLowerCase(),
+    name,
+    preis: v.preis,
+    miete_monatlich: v.miete,
+  }));
+  const currentFunnelPaket = checkoutPkg
+    ? funnelPakete.find((p) => p.name === checkoutPkg.name) ?? funnelPakete[0]
+    : null;
 
   useEffect(() => {
     const ctaButtons = Array.from(
@@ -554,7 +575,7 @@ const WebdesignPreise = () => {
               Ihre neue Website kostet Sie ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openCheckout} />)}
+              {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
@@ -608,7 +629,7 @@ const WebdesignPreise = () => {
                   pkg={pkg}
                   i={i}
                   onOpen={openPopup}
-                  onCheckout={openCheckout}
+                  onCheckout={openBuyCheckout}
                 />
               ))}
             </div>
@@ -727,13 +748,20 @@ const WebdesignPreise = () => {
     </button>
 
     <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
-    <StripeCheckoutDialog
-      open={checkoutPkg !== null}
-      onClose={() => setCheckoutPkg(null)}
-      priceId={checkoutPkg?.priceId ?? null}
-      packageName={checkoutPkg?.name ?? ""}
-      kind={checkoutPkg?.priceId?.includes("_rent_") ? "rent" : "deposit"}
-    />
+    {currentFunnelPaket && checkoutPkg && (
+      <CheckoutFunnel
+        open={checkoutPkg !== null}
+        onClose={() => setCheckoutPkg(null)}
+        paket={currentFunnelPaket}
+        pakete={funnelPakete}
+        addons={[]}
+        paymentConfig={{
+          kauf: { enabled: true, mode: "deposit", deposit_percent: 50 },
+          miete: { enabled: true, monthly_cents: (currentFunnelPaket.miete_monatlich || 0) * 100, min_months: 12 },
+        }}
+        defaultPaymentMode={checkoutPkg.mode}
+      />
+    )}
   </main>
   );
 };

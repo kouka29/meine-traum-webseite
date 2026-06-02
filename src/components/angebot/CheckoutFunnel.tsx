@@ -54,6 +54,7 @@ interface Props {
   leadEmail?: string;
   leadName?: string;
   stripeLink?: string | null; // optional fallback for stripe payment
+  defaultPaymentMode?: PaymentMode;
 }
 
 type PaymentMode = "kauf" | "miete";
@@ -65,7 +66,7 @@ function fmtEUR(n: number) {
 }
 
 export default function CheckoutFunnel({
-  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink,
+  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode,
 }: Props) {
   const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
   const hasPaketStep = allPakete.length > 1;
@@ -93,7 +94,11 @@ export default function CheckoutFunnel({
 
   const [step, setStep] = useState<number>(0);
   const currentKey = stepKeys[step] ?? "zahlung";
-  const [paymentMode, setPaymentMode] = useState<PaymentMode>(mieteEnabled ? "miete" : "kauf");
+  const initialPaymentMode: PaymentMode =
+    defaultPaymentMode && ((defaultPaymentMode === "miete" && mieteEnabled) || (defaultPaymentMode === "kauf" && kaufEnabled))
+      ? defaultPaymentMode
+      : (mieteEnabled ? "miete" : "kauf");
+  const [paymentMode, setPaymentMode] = useState<PaymentMode>(initialPaymentMode);
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>(
     () => (currentPaket.addons ?? addons).filter((a) => a.default_selected).map((a) => a.id),
   );
@@ -119,7 +124,7 @@ export default function CheckoutFunnel({
       setStep(0);
       setSuccess(null);
       setSelectedPaketId(paket.id);
-      setPaymentMode(mieteEnabled ? "miete" : "kauf");
+      setPaymentMode(initialPaymentMode);
       setSelectedAddonIds((paket.addons ?? addons).filter((a) => a.default_selected).map((a) => a.id));
       setPayMethod(stripeAvailable ? "online" : "rechnung");
       setStripeItems(null);
