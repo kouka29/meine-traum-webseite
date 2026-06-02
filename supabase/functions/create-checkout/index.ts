@@ -126,6 +126,9 @@ Deno.serve(async (req) => {
       return_url: returnUrl,
       ...(customerEmail && { customer_email: customerEmail }),
       ...(mode === "payment"
+        ? { payment_method_types: ["card", "paypal", "sepa_debit", "klarna"] }
+        : {}),
+      ...(mode === "payment"
         ? { payment_intent_data: { description, metadata: safeMetadata } }
         : { subscription_data: { description, metadata: safeMetadata } }),
       metadata: safeMetadata,
