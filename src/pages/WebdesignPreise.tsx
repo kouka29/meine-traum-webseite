@@ -468,12 +468,33 @@ const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
-  const [checkoutPkg, setCheckoutPkg] = useState<{ name: string; priceId?: string } | null>(null);
+  const [checkoutPkg, setCheckoutPkg] = useState<
+    { name: string; priceId?: string; mode: "miete" | "kauf" } | null
+  >(null);
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
     setPopupOpen(true);
   };
-  const openCheckout = (pkg: { name: string; priceId?: string }) => setCheckoutPkg(pkg);
+  const openRentCheckout = (pkg: { name: string; priceId?: string }) =>
+    setCheckoutPkg({ ...pkg, mode: "miete" });
+  const openBuyCheckout = (pkg: { name: string; priceId?: string }) =>
+    setCheckoutPkg({ ...pkg, mode: "kauf" });
+
+  // Numeric price lookup pro Paketname (für Funnel)
+  const PAKET_NUMS: Record<string, { preis: number; miete: number }> = {
+    Starter: { preis: 990, miete: 59 },
+    Pro: { preis: 1990, miete: 99 },
+    Premium: { preis: 3590, miete: 159 },
+  };
+  const funnelPakete: FunnelPaket[] = Object.entries(PAKET_NUMS).map(([name, v]) => ({
+    id: name.toLowerCase(),
+    name,
+    preis: v.preis,
+    miete_monatlich: v.miete,
+  }));
+  const currentFunnelPaket = checkoutPkg
+    ? funnelPakete.find((p) => p.name === checkoutPkg.name) ?? funnelPakete[0]
+    : null;
 
   useEffect(() => {
     const ctaButtons = Array.from(
