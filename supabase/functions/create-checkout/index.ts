@@ -92,6 +92,27 @@ Deno.serve(async (req) => {
       quantity: Math.max(1, Math.min(100, it.quantity || 1)),
     }));
 
+    // 19% MwSt. als eigene Position hinzufügen (zzgl. auf Netto-Preise).
+    const subtotalCents = items.reduce(
+      (sum, it) => sum + Math.round(it.amount_cents) * Math.max(1, Math.min(100, it.quantity || 1)),
+      0,
+    );
+    const vatCents = Math.round(subtotalCents * 0.19);
+    if (vatCents > 0) {
+      const recurringItem = items.find((it) => it.recurring);
+      lineItems.push({
+        price_data: {
+          currency: "eur",
+          product_data: { name: "MwSt. 19%" },
+          unit_amount: vatCents,
+          ...(mode === "subscription" && recurringItem?.recurring
+            ? { recurring: { interval: recurringItem.recurring } }
+            : {}),
+        },
+        quantity: 1,
+      });
+    }
+
     // Stripe metadata: max 50 keys, max 500 chars per value
     const safeMetadata: Record<string, string> = {};
     for (const [k, v] of Object.entries(metadata)) {
