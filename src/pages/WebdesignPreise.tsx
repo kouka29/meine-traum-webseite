@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
-import CheckoutFunnel, { type FunnelPaket } from "@/components/angebot/CheckoutFunnel";
+import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 
 type Pkg = {
@@ -480,18 +480,40 @@ const WebdesignPreise = () => {
   const openBuyCheckout = (pkg: { name: string; priceId?: string }) =>
     setCheckoutPkg({ ...pkg, mode: "kauf" });
 
-  // Numeric price lookup pro Paketname (für Funnel)
-  const PAKET_NUMS: Record<string, { preis: number; miete: number }> = {
-    Starter: { preis: 990, miete: 59 },
-    Pro: { preis: 1990, miete: 99 },
-    Premium: { preis: 3590, miete: 159 },
+  // Numeric price lookup pro Paketname (für Funnel) inkl. Wachstumspaket
+  const PAKET_NUMS: Record<string, { preis: number; miete: number; growth: number; growthItems: string[] }> = {
+    Starter: {
+      preis: 990, miete: 59, growth: 29,
+      growthItems: ["1 Änderung pro Monat", "Updates & Wartung", "Support per WhatsApp"],
+    },
+    Pro: {
+      preis: 1990, miete: 99, growth: 49,
+      growthItems: ["Bis zu 3 Änderungen pro Monat", "Updates & Wartung", "Priority Support per WhatsApp"],
+    },
+    Premium: {
+      preis: 3590, miete: 159, growth: 79,
+      growthItems: ["Bis zu 5 Änderungen pro Monat", "Updates & Wartung", "Priority Support per WhatsApp", "Monatlicher Performance-Check"],
+    },
   };
-  const funnelPakete: FunnelPaket[] = Object.entries(PAKET_NUMS).map(([name, v]) => ({
-    id: name.toLowerCase(),
-    name,
-    preis: v.preis,
-    miete_monatlich: v.miete,
-  }));
+  const funnelPakete: FunnelPaket[] = Object.entries(PAKET_NUMS).map(([name, v]) => {
+    const growthAddon: FunnelAddon = {
+      id: `${name.toLowerCase()}_growth`,
+      name: "Wachstumspaket",
+      description: v.growthItems.join(" · ") + " — monatlich kündbar",
+      emoji: "🚀",
+      price_cents: v.growth * 100,
+      price_type: "monthly",
+      recommended: true,
+      social_proof: "Beliebt bei aktiven Betrieben",
+    };
+    return {
+      id: name.toLowerCase(),
+      name,
+      preis: v.preis,
+      miete_monatlich: v.miete,
+      addons: [growthAddon],
+    };
+  });
   const currentFunnelPaket = checkoutPkg
     ? funnelPakete.find((p) => p.name === checkoutPkg.name) ?? funnelPakete[0]
     : null;
