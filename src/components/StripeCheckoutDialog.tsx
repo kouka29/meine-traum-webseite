@@ -37,7 +37,7 @@ export default function StripeCheckoutDialog({
     setLoading(true);
     setError(null);
 
-    const returnUrl = `${window.location.origin}/kauf-erfolgreich?session_id={CHECKOUT_SESSION_ID}`;
+    const returnUrl = `${window.location.origin}/kauf-erfolgreich?session_id={CHECKOUT_SESSION_ID}&kind=${kind}`;
 
     supabase.functions
       .invoke("create-checkout", {
@@ -67,7 +67,7 @@ export default function StripeCheckoutDialog({
     return () => {
       cancelled = true;
     };
-  }, [open, priceId, customerEmail]);
+  }, [open, priceId, customerEmail, kind]);
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
