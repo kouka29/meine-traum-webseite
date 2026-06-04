@@ -156,6 +156,35 @@ Deno.serve(async (req) => {
       case "checkout.session.async_payment_succeeded":
         await handleCheckoutCompleted(event.data.object, env);
         break;
+      case "customer.subscription.created":
+      case "customer.subscription.updated": {
+        const sub = event.data.object;
+        const growthId = sub.metadata?.growth_subscription_id;
+        if (growthId) {
+          await getSupabase().from("growth_subscriptions").update({
+            stripe_subscription_id: sub.id,
+            stripe_customer_id: typeof sub.customer === "string" ? sub.customer : sub.customer?.id ?? null,
+            billing_mode: sub.status === "canceled" ? "cancelled" : "stripe_auto",
+            status: sub.status === "active" || sub.status === "trialing" ? "active"
+              : sub.status === "past_due" ? "past_due"
+              : sub.status === "canceled" ? "cancelled" : "active",
+            updated_at: new Date().toISOString(),
+          }).eq("id", growthId);
+        }
+        break;
+      }
+      case "customer.subscription.deleted": {
+        const sub = event.data.object;
+        const growthId = sub.metadata?.growth_subscription_id;
+        if (growthId) {
+          await getSupabase().from("growth_subscriptions").update({
+            billing_mode: "cancelled",
+            status: "cancelled",
+            updated_at: new Date().toISOString(),
+          }).eq("id", growthId);
+        }
+        break;
+      }
       case "invoice.payment_succeeded": {
         // Subscription-Renewal (Miete) – kein Auftrag-Update nötig, nur loggen
         console.log("Subscription invoice paid:", event.data.object?.id);
