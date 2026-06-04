@@ -50,9 +50,9 @@ const TestimonialBlock = () => (
         className="absolute -top-3 left-5 bg-background text-primary p-1 rounded"
         fill="currentColor"
       />
-      <div className="flex items-center gap-1 text-amber-500 mb-3">
+      <div className="flex items-center gap-1.5 text-yellow-400 mb-3">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={14} fill="currentColor" stroke="none" />
+          <Star key={i} size={18} fill="currentColor" stroke="none" />
         ))}
       </div>
       <p className="text-sm italic text-foreground/80 leading-relaxed mb-4">
