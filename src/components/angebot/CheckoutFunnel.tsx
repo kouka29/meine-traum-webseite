@@ -1062,6 +1062,25 @@ function StepKontakt({
             Mir ist bewusst, dass mit Bestätigung ein <strong>kostenpflichtiger Auftrag</strong> zustande kommt.
           </span>
         </label>
+        {growthCommitment && (
+          <label style={{
+            display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13,
+            color: TEXT_DARK, cursor: "pointer", lineHeight: 1.4,
+            padding: "10px 12px", background: "#FFF7ED",
+            border: "1px solid #FED7AA", borderRadius: 10,
+          }}>
+            <input type="checkbox" checked={growthCommitment.checked}
+              onChange={(e) => growthCommitment.setChecked(e.target.checked)}
+              style={{ marginTop: 3, accentColor: "#EA580C", width: 16, height: 16, flexShrink: 0 }} />
+            <span>
+              Ich bestelle das <strong>Wachstumspaket</strong> verbindlich für
+              <strong> {fmtEUR(growthCommitment.amountCents / 100)}/Monat netto</strong>.
+              Mindestlaufzeit 12 Monate ab Website-Go-Live, danach monatlich kündbar.
+              Abrechnung zunächst per Rechnung – Umstellung auf automatische Stripe-Zahlung
+              jederzeit im Kundenportal möglich.
+            </span>
+          </label>
+        )}
       </div>
     </div>
   );
