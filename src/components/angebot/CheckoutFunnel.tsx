@@ -234,11 +234,11 @@ export default function CheckoutFunnel({
     } else {
       items.push({ name: currentPaket.name, amount_cents: Math.round(basisEinmalig * 100) });
     }
-    for (const a of selectedAddons) {
-      items.push({
-        name: a.price_type === "monthly" ? `${a.name} (1. Monat)` : a.name,
-        amount_cents: a.price_cents,
-      });
+    // Im Kauf-Modus: nur einmalige Add-ons in Stripe abrechnen. Monatliche
+    // Add-ons (Wachstumspaket) werden verbindlich gebucht und ab Go-Live
+    // separat per Rechnung abgerechnet (siehe Webhook / growth_subscriptions).
+    for (const a of selectedAddons.filter((a) => a.price_type === "one_time")) {
+      items.push({ name: a.name, amount_cents: a.price_cents });
     }
     return { items, mode: "payment", description: `Auftrag ${currentPaket.name}` };
   };
