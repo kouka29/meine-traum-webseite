@@ -271,12 +271,16 @@ const PackageCard = ({
   i: number;
   onOpen: (badge: string) => void;
   onCheckout?: (pkg: Pkg) => void;
-}) => (
+}) => {
+  const [showAll, setShowAll] = useState(false);
+  const [growthSelected, setGrowthSelected] = useState(pkg.popular ?? false);
+  const visibleFeatures = showAll ? pkg.features : pkg.features.slice(0, 3);
+  return (
   <AnimatedSection delay={i * 0.08}>
     <div
       className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
         pkg.popular
-          ? "border-primary shadow-elevated"
+          ? "border-2 border-primary shadow-elevated md:scale-[1.03] z-10"
           : pkg.enterprise
             ? "border-foreground/40 bg-gradient-to-br from-card to-background"
             : "border-border"
@@ -305,10 +309,10 @@ const PackageCard = ({
         </>
       )}
       {pkg.desc && (
-        <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
+        <p className="text-xs text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
       )}
       <div className="space-y-3 flex-1 mb-8 mt-2">
-        {pkg.features.map((f) => {
+        {visibleFeatures.map((f) => {
           if (f.startsWith("__hint__")) {
             return (
               <p key={f} className="text-xs text-muted-foreground pl-[22px] -mt-2">
@@ -323,31 +327,49 @@ const PackageCard = ({
             </div>
           );
         })}
+        {pkg.features.length > 3 && (
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            className="text-xs font-semibold text-primary hover:underline pl-[22px]"
+          >
+            {showAll ? "Weniger anzeigen" : `Alle ${pkg.features.length} Leistungen anzeigen →`}
+          </button>
+        )}
       </div>
       {pkg.upgradeHint && (
         <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
       )}
       {pkg.growth && (
-        <div className="mb-5 rounded-xl bg-muted/50 border border-border/60 p-4">
-          <p className="text-xs font-semibold text-foreground/80 mb-2">
-            🚀 Wachstumspaket — für Betriebe die mehr wollen: {pkg.growth.price}
-          </p>
-          <ul className="space-y-1 mb-2">
-            {pkg.growth.items.map((g) => (
-              <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
-                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
-                <span>{g}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
-        </div>
+        <label
+          className={`mb-5 flex items-center gap-3 cursor-pointer rounded-xl border p-3 transition-colors ${
+            growthSelected
+              ? "border-primary/40 bg-primary/5"
+              : "border-border bg-muted/30 hover:bg-muted/50"
+          }`}
+        >
+          <input
+            type="checkbox"
+            checked={growthSelected}
+            onChange={(e) => setGrowthSelected(e.target.checked)}
+            className="w-4 h-4 rounded border-border accent-primary shrink-0"
+          />
+          <div className="text-xs leading-tight flex-1">
+            <span className="block font-semibold text-foreground">
+              + Wachstumspaket <span className="text-primary">{pkg.growth.price}</span>
+            </span>
+            <span className="text-muted-foreground">
+              {pkg.growth.items[0]}
+              {pkg.growth.items.length > 1 ? ` · +${pkg.growth.items.length - 1} weitere` : ""}
+            </span>
+          </div>
+        </label>
       )}
       <div className="space-y-2">
         <Button
-          variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
+          variant={pkg.enterprise ? "outline" : "default"}
           size="lg"
-          className="w-full"
+          className={`w-full ${pkg.popular ? "shadow-glow" : ""}`}
           onClick={() =>
             pkg.priceId && onCheckout
               ? onCheckout(pkg)
@@ -371,7 +393,8 @@ const PackageCard = ({
       {pkg.priceId && <PaymentTrustStrip kind="rent" />}
     </div>
   </AnimatedSection>
-);
+  );
+};
 
 const BuyCard = ({
   pkg,
