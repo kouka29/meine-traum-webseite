@@ -1,12 +1,116 @@
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import { ArrowRight, CheckCircle, Star, Lock, FileText, Target, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle,
+  Star,
+  Lock,
+  FileText,
+  Target,
+  Phone,
+  Handshake,
+  Award,
+  ChevronDown,
+  Quote,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
 import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
+
+const TrustStrip = () => (
+  <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto mb-8">
+    {[
+      { Icon: Handshake, num: "150+", label: "Handwerksbetriebe vertrauen uns" },
+      { Icon: Award, num: "6 Jahre", label: "Erfahrung im Handwerker-Webdesign" },
+    ].map(({ Icon, num, label }) => (
+      <div
+        key={num}
+        className="flex items-center gap-3 sm:gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 sm:px-5 sm:py-4"
+      >
+        <div className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+          <Icon size={20} strokeWidth={2} />
+        </div>
+        <div className="min-w-0">
+          <p className="font-heading text-lg sm:text-xl font-bold gradient-text leading-tight">{num}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground leading-tight">{label}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+const TestimonialBlock = () => (
+  <div className="max-w-xl mx-auto my-8">
+    <div className="relative rounded-2xl border border-border bg-background shadow-card p-6">
+      <Quote
+        size={28}
+        className="absolute -top-3 left-5 bg-background text-primary p-1 rounded"
+        fill="currentColor"
+      />
+      <div className="flex items-center gap-1 text-amber-500 mb-3">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} size={14} fill="currentColor" stroke="none" />
+        ))}
+      </div>
+      <p className="text-sm italic text-foreground/80 leading-relaxed mb-4">
+        „Innerhalb von 3 Wochen nach Launch kamen die ersten Anfragen über die Website.
+        Das hat sich sofort gerechnet."
+      </p>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-muted text-muted-foreground flex items-center justify-center text-sm font-semibold">
+          M.S.
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-foreground">Max S.</p>
+          <p className="text-xs text-muted-foreground">Sanitärbetrieb · Mainz</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] } }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mb-3">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="w-full flex items-center justify-between gap-2 text-sm font-medium text-primary hover:bg-primary/5 rounded-lg px-3 py-2 transition-colors"
+      >
+        <span>🚀 Mehr herausholen? Wachstumspaket ansehen</span>
+        <ChevronDown
+          size={16}
+          className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      <div
+        className={`grid transition-all duration-300 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-2">
+            <p className="text-sm font-semibold text-primary">Wachstumspaket {growth.price}</p>
+            <ul className="space-y-1.5">
+              {growth.items.map((it) => (
+                <li key={it} className="flex items-start gap-2 text-xs text-foreground/80">
+                  <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-[11px] text-muted-foreground italic pt-1">Monatlich kündbar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 type Pkg = {
   name: string;
