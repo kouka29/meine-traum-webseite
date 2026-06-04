@@ -171,11 +171,17 @@ export default function CheckoutFunnel({
   let heuteLabel = "";
   if (paymentMode === "kauf") {
     const cfg = paymentConfig.kauf || { mode: "full" as const, enabled: true };
+    // Im Kauf-Modus werden monatliche Add-ons (z. B. Wachstumspaket) NICHT mit
+    // bezahlt – sie werden verbindlich bestellt und ab Go-Live separat abgerechnet.
+    const einmaligOhneMonatlich = basisEinmalig + selectedAddons
+      .filter((a) => a.price_type === "one_time")
+      .reduce((s, a) => s + a.price_cents / 100, 0);
     if (cfg.mode === "deposit" && cfg.deposit_percent) {
-      heuteZuZahlen = Math.round((basisEinmalig * cfg.deposit_percent) / 100) + addonsEinmalig;
+      heuteZuZahlen = Math.round((basisEinmalig * cfg.deposit_percent) / 100)
+        + selectedAddons.filter((a) => a.price_type === "one_time").reduce((s, a) => s + a.price_cents / 100, 0);
       heuteLabel = `Anzahlung ${cfg.deposit_percent}% heute · Rest nach Lieferung`;
     } else {
-      heuteZuZahlen = gesamtEinmalig;
+      heuteZuZahlen = einmaligOhneMonatlich;
       heuteLabel = "Einmalig heute fällig";
     }
   } else {
