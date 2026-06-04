@@ -327,25 +327,9 @@ const PackageCard = ({
       {pkg.upgradeHint && (
         <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
       )}
-      {pkg.growth && (
-        <div className="mb-5 rounded-xl bg-muted/50 border border-border/60 p-4">
-          <p className="text-xs font-semibold text-foreground/80 mb-2">
-            🚀 Wachstumspaket — für Betriebe die mehr wollen: {pkg.growth.price}
-          </p>
-          <ul className="space-y-1 mb-2">
-            {pkg.growth.items.map((g) => (
-              <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
-                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
-                <span>{g}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
-        </div>
-      )}
       <div className="space-y-2">
         <Button
-          variant={pkg.popular ? "gradient" : pkg.enterprise ? "outline" : "outline-primary"}
+          variant={pkg.enterprise ? "outline" : "gradient"}
           size="lg"
           className="w-full"
           onClick={() =>
@@ -416,31 +400,9 @@ const BuyCard = ({
           </div>
         ))}
       </div>
-      {pkg.growth && (
-        <div className="mb-3 rounded-xl bg-muted/50 border border-border/60 p-4">
-          <p className="text-xs font-semibold text-foreground/80 mb-2">
-            🚀 Wachstumspaket — für Betriebe die mehr wollen: {pkg.growth.price}
-          </p>
-          <ul className="space-y-1 mb-2">
-            {pkg.growth.items.map((g) => (
-              <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
-                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
-                <span>{g}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="text-[11px] text-muted-foreground">Monatlich kündbar.</p>
-        </div>
-      )}
-      {pkg.comparison && (
-        <>
-          <div className="border-t border-border my-3" />
-          <p className="text-sm text-foreground/80 mb-5 whitespace-pre-line">{pkg.comparison}</p>
-        </>
-      )}
       <div className="space-y-2">
         <Button
-          variant={pkg.popular ? "gradient" : "outline-primary"}
+          variant="gradient"
           size="lg"
           className="w-full"
           onClick={() => (pkg.priceId ? onCheckout(pkg) : onOpen(pkg.badge ?? pkg.name))}
