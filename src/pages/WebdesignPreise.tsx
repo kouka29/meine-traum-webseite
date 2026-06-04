@@ -505,6 +505,7 @@ const BuyCard = ({
           </div>
         ))}
       </div>
+      {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
       <div className="space-y-2">
         <Button
           variant="gradient"
@@ -517,9 +518,9 @@ const BuyCard = ({
         </Button>
         {pkg.priceId && (
           <Button
-            variant="ghost"
-            size="sm"
-            className="w-full text-muted-foreground hover:text-foreground"
+            variant="outline"
+            size="lg"
+            className="w-full border-primary/40 text-primary hover:bg-primary/10 hover:text-primary hover:border-primary"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
             Kostenlos beraten lassen →
