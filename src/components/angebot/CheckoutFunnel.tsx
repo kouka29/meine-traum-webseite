@@ -931,6 +931,7 @@ function StepKontakt({
   agb, setAgb, kostenpflichtig, setKostenpflichtig,
   summary,
   payMethod, setPayMethod, stripeAvailable,
+  growthCommitment,
 }: {
   vorname: string; setVorname: (v: string) => void;
   nachname: string; setNachname: (v: string) => void;
@@ -942,6 +943,7 @@ function StepKontakt({
   summary: { heuteZuZahlen: number; heuteLabel: string; paymentMode: PaymentMode; gesamtMonatlich: number; gesamtEinmalig: number };
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
+  growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
 }) {
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "11px 14px",
