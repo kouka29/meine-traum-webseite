@@ -515,6 +515,11 @@ export default function CheckoutFunnel({
                 angebots_id: angebots_id || "",
                 paket: currentPaket.id,
                 payment_mode: paymentMode,
+                ...(hasGrowthCommitment && growthPackageKey ? {
+                  growth_package: growthPackageKey,
+                  growth_amount_cents: String(growthAddon!.price_cents),
+                  growth_min_term: "12",
+                } : {}),
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
             />
