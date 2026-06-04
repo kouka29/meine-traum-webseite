@@ -117,6 +117,7 @@ export default function CheckoutFunnel({
   const [telefon, setTelefon] = useState("");
   const [agb, setAgb] = useState(false);
   const [kostenpflichtig, setKostenpflichtig] = useState(false);
+  const [growthBindend, setGrowthBindend] = useState(false);
 
   // Reset on open
   useEffect(() => {
@@ -128,6 +129,7 @@ export default function CheckoutFunnel({
       setSelectedAddonIds((paket.addons ?? addons).filter((a) => a.default_selected).map((a) => a.id));
       setPayMethod(stripeAvailable ? "online" : "rechnung");
       setStripeItems(null);
+      setGrowthBindend(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, paket.id]);
@@ -153,6 +155,20 @@ export default function CheckoutFunnel({
     [currentAddons, selectedAddonIds],
   );
 
+  // Erkennung „Wachstumspaket im Kauf-Modus" → verbindlich gebucht, separat abgerechnet
+  const growthAddon = useMemo(
+    () => selectedAddons.find((a) => a.price_type === "monthly" && /wachstum/i.test(a.name)),
+    [selectedAddons],
+  );
+  const hasGrowthCommitment = paymentMode === "kauf" && !!growthAddon;
+  const growthPackageKey: "basic" | "plus" | "premium" | null = useMemo(() => {
+    if (!hasGrowthCommitment) return null;
+    const cents = growthAddon!.price_cents;
+    if (cents <= 4000) return "basic";   // ≤ 40 €  → Starter
+    if (cents <= 6500) return "plus";    // ≤ 65 €  → Pro
+    return "premium";                    //         → Premium
+  }, [hasGrowthCommitment, growthAddon]);
+
   // Preisberechnung
   const basisEinmalig = paymentMode === "kauf" ? currentPaket.preis : 0;
   const basisMonatlich = paymentMode === "miete" ? Number(currentPaket.miete_monatlich || 0) : 0;
@@ -171,11 +187,17 @@ export default function CheckoutFunnel({
   let heuteLabel = "";
   if (paymentMode === "kauf") {
     const cfg = paymentConfig.kauf || { mode: "full" as const, enabled: true };
+    // Im Kauf-Modus werden monatliche Add-ons (z. B. Wachstumspaket) NICHT mit
+    // bezahlt – sie werden verbindlich bestellt und ab Go-Live separat abgerechnet.
+    const einmaligOhneMonatlich = basisEinmalig + selectedAddons
+      .filter((a) => a.price_type === "one_time")
+      .reduce((s, a) => s + a.price_cents / 100, 0);
     if (cfg.mode === "deposit" && cfg.deposit_percent) {
-      heuteZuZahlen = Math.round((basisEinmalig * cfg.deposit_percent) / 100) + addonsEinmalig;
+      heuteZuZahlen = Math.round((basisEinmalig * cfg.deposit_percent) / 100)
+        + selectedAddons.filter((a) => a.price_type === "one_time").reduce((s, a) => s + a.price_cents / 100, 0);
       heuteLabel = `Anzahlung ${cfg.deposit_percent}% heute · Rest nach Lieferung`;
     } else {
-      heuteZuZahlen = gesamtEinmalig;
+      heuteZuZahlen = einmaligOhneMonatlich;
       heuteLabel = "Einmalig heute fällig";
     }
   } else {
@@ -194,11 +216,12 @@ export default function CheckoutFunnel({
     if (key === "zahlung") return (paymentMode === "kauf" && kaufEnabled) || (paymentMode === "miete" && mieteEnabled);
     if (key === "extras") return true;
     if (key === "kontakt") {
-      return vorname.trim().length >= 1
+      const baseOk = vorname.trim().length >= 1
         && nachname.trim().length >= 1
         && firma.trim().length >= 1
         && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())
         && agb && kostenpflichtig;
+      return baseOk && (!hasGrowthCommitment || growthBindend);
     }
     return true;
   };
@@ -228,11 +251,11 @@ export default function CheckoutFunnel({
     } else {
       items.push({ name: currentPaket.name, amount_cents: Math.round(basisEinmalig * 100) });
     }
-    for (const a of selectedAddons) {
-      items.push({
-        name: a.price_type === "monthly" ? `${a.name} (1. Monat)` : a.name,
-        amount_cents: a.price_cents,
-      });
+    // Im Kauf-Modus: nur einmalige Add-ons in Stripe abrechnen. Monatliche
+    // Add-ons (Wachstumspaket) werden verbindlich gebucht und ab Go-Live
+    // separat per Rechnung abgerechnet (siehe Webhook / growth_subscriptions).
+    for (const a of selectedAddons.filter((a) => a.price_type === "one_time")) {
+      items.push({ name: a.name, amount_cents: a.price_cents });
     }
     return { items, mode: "payment", description: `Auftrag ${currentPaket.name}` };
   };
@@ -274,6 +297,13 @@ export default function CheckoutFunnel({
             id: a.id, name: a.name,
             price_cents: a.price_cents, price_type: a.price_type,
           })),
+          ...(hasGrowthCommitment && growthPackageKey ? {
+            growth_commitment: {
+              package: growthPackageKey,
+              monthly_amount_cents: growthAddon!.price_cents,
+              min_term_months: 12,
+            },
+          } : {}),
           agb_akzeptiert: true,
           kostenpflichtig_bestaetigt: true,
         },
@@ -457,6 +487,7 @@ export default function CheckoutFunnel({
               addons={currentAddons}
               selectedIds={selectedAddonIds}
               toggle={toggleAddon}
+              growthHint={hasGrowthCommitment}
             />
           )}
           {currentKey === "kontakt" && (
@@ -472,6 +503,11 @@ export default function CheckoutFunnel({
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
+              growthCommitment={hasGrowthCommitment ? {
+                amountCents: growthAddon!.price_cents,
+                checked: growthBindend,
+                setChecked: setGrowthBindend,
+              } : null}
             />
           )}
           {currentKey === "bezahlen" && success && (
@@ -485,6 +521,11 @@ export default function CheckoutFunnel({
                 angebots_id: angebots_id || "",
                 paket: currentPaket.id,
                 payment_mode: paymentMode,
+                ...(hasGrowthCommitment && growthPackageKey ? {
+                  growth_package: growthPackageKey,
+                  growth_amount_cents: String(growthAddon!.price_cents),
+                  growth_min_term: "12",
+                } : {}),
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
             />
@@ -781,11 +822,12 @@ function PaymentCard({
 
 // ─── STEP 1: ADD-ONS ───────────────────────────────────
 function StepAddOns({
-  addons, selectedIds, toggle,
+  addons, selectedIds, toggle, growthHint,
 }: {
   addons: FunnelAddon[];
   selectedIds: string[];
   toggle: (id: string) => void;
+  growthHint?: boolean;
 }) {
   if (addons.length === 0) {
     return (
@@ -806,6 +848,18 @@ function StepAddOns({
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
         Optional — Sie können einzelne Extras dazubuchen oder direkt weiter.
       </p>
+      {growthHint && (
+        <div style={{
+          marginBottom: 14, padding: "12px 14px",
+          background: "#FFF7ED", border: "1px solid #FED7AA",
+          borderRadius: 12, fontSize: 12.5, color: "#9A3412", lineHeight: 1.5,
+        }}>
+          <strong>🚀 Wachstumspaket gewählt:</strong> Wird heute <strong>nicht</strong> mit
+          eingezogen. Sie erhalten Ihre erste Rechnung erst ab Website-Go-Live –
+          monatlich per E-Mail mit Bezahllink (Karte, SEPA, Überweisung). Im Kundenportal
+          können Sie jederzeit auf automatisches Stripe-Abo umstellen.
+        </div>
+      )}
       <div style={{ display: "grid", gap: 10 }}>
         {addons.map((a) => {
           const sel = selectedIds.includes(a.id);
@@ -877,6 +931,7 @@ function StepKontakt({
   agb, setAgb, kostenpflichtig, setKostenpflichtig,
   summary,
   payMethod, setPayMethod, stripeAvailable,
+  growthCommitment,
 }: {
   vorname: string; setVorname: (v: string) => void;
   nachname: string; setNachname: (v: string) => void;
@@ -888,6 +943,7 @@ function StepKontakt({
   summary: { heuteZuZahlen: number; heuteLabel: string; paymentMode: PaymentMode; gesamtMonatlich: number; gesamtEinmalig: number };
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
+  growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
 }) {
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "11px 14px",
@@ -1006,6 +1062,25 @@ function StepKontakt({
             Mir ist bewusst, dass mit Bestätigung ein <strong>kostenpflichtiger Auftrag</strong> zustande kommt.
           </span>
         </label>
+        {growthCommitment && (
+          <label style={{
+            display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13,
+            color: TEXT_DARK, cursor: "pointer", lineHeight: 1.4,
+            padding: "10px 12px", background: "#FFF7ED",
+            border: "1px solid #FED7AA", borderRadius: 10,
+          }}>
+            <input type="checkbox" checked={growthCommitment.checked}
+              onChange={(e) => growthCommitment.setChecked(e.target.checked)}
+              style={{ marginTop: 3, accentColor: "#EA580C", width: 16, height: 16, flexShrink: 0 }} />
+            <span>
+              Ich bestelle das <strong>Wachstumspaket</strong> verbindlich für
+              <strong> {fmtEUR(growthCommitment.amountCents / 100)}/Monat netto</strong>.
+              Mindestlaufzeit 12 Monate ab Website-Go-Live, danach monatlich kündbar.
+              Abrechnung zunächst per Rechnung – Umstellung auf automatische Stripe-Zahlung
+              jederzeit im Kundenportal möglich.
+            </span>
+          </label>
+        )}
       </div>
     </div>
   );

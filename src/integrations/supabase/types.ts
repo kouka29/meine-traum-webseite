@@ -367,6 +367,75 @@ export type Database = {
         }
         Relationships: []
       }
+      growth_subscriptions: {
+        Row: {
+          billing_mode: string
+          cancel_at: string | null
+          created_at: string
+          customer_email: string
+          environment: string
+          id: string
+          last_invoice_at: string | null
+          last_invoice_id: string | null
+          last_invoice_status: string | null
+          min_term_months: number
+          monthly_amount_cents: number
+          next_invoice_at: string | null
+          package: string
+          purchase_session_id: string | null
+          started_at: string | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          billing_mode?: string
+          cancel_at?: string | null
+          created_at?: string
+          customer_email: string
+          environment?: string
+          id?: string
+          last_invoice_at?: string | null
+          last_invoice_id?: string | null
+          last_invoice_status?: string | null
+          min_term_months?: number
+          monthly_amount_cents: number
+          next_invoice_at?: string | null
+          package: string
+          purchase_session_id?: string | null
+          started_at?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          billing_mode?: string
+          cancel_at?: string | null
+          created_at?: string
+          customer_email?: string
+          environment?: string
+          id?: string
+          last_invoice_at?: string | null
+          last_invoice_id?: string | null
+          last_invoice_status?: string | null
+          min_term_months?: number
+          monthly_amount_cents?: number
+          next_invoice_at?: string | null
+          package?: string
+          purchase_session_id?: string | null
+          started_at?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           booking_date: string | null

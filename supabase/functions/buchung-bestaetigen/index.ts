@@ -218,6 +218,20 @@ Deno.serve(async (req) => {
   const addonsRaw = Array.isArray(body.addons) ? (body.addons as Addon[]) : [];
   const { pakete, addons } = normalize(paketeRaw, addonsRaw);
 
+  // Verbindliche Wachstumspaket-Bestellung (nur bei Kauf-Modus, ohne Stripe-Zahlung)
+  const gc = body.growth_commitment as
+    | { package?: string; monthly_amount_cents?: number; min_term_months?: number }
+    | undefined;
+  const growthCommitment = gc && typeof gc === "object"
+    && ["basic", "plus", "premium"].includes(String(gc.package))
+    && Number(gc.monthly_amount_cents) > 0
+    ? {
+        package: String(gc.package) as "basic" | "plus" | "premium",
+        monthly_amount_cents: Math.round(Number(gc.monthly_amount_cents)),
+        min_term_months: Math.max(1, Math.round(Number(gc.min_term_months) || 12)),
+      }
+    : null;
+
   // Netto-Berechnung: erster Monat bei Miete, sonst einmaliger Betrag
   let netto = 0;
   for (const p of pakete) netto += p.typ === "miete" ? (p.mietpreis + (p.anzahlung || 0)) : p.preis;
@@ -266,6 +280,23 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: lastErr?.message || "Speichern fehlgeschlagen" }), {
       status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
+  }
+
+  // Wachstumspaket vormerken (status=pending_golive bis Admin auf Go-Live klickt)
+  if (growthCommitment) {
+    try {
+      await supabase.from("growth_subscriptions").insert({
+        customer_email: kunde_email,
+        package: growthCommitment.package,
+        monthly_amount_cents: growthCommitment.monthly_amount_cents,
+        min_term_months: growthCommitment.min_term_months,
+        billing_mode: "manual_invoice",
+        status: "pending_golive",
+        environment: "sandbox",
+      });
+    } catch (e) {
+      console.error("growth_subscriptions insert fehlgeschlagen:", e);
+    }
   }
 
   // E-Mails — Fehler nicht an Kunden weitergeben

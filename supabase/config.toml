@@ -25,3 +25,5 @@ project_id = "zwxucictfdbwhnnyemri"
     verify_jwt = true
   [functions.send-password-reset]
     verify_jwt = false
+  [functions.growth-invoice-create]
+    verify_jwt = false

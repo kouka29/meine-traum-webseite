@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { LayoutDashboard, FileText, Receipt, MessageSquare, Settings, LogOut, Loader2, Menu, X, FileCheck } from "lucide-react";
+import { LayoutDashboard, FileText, Receipt, MessageSquare, Settings, LogOut, Loader2, Menu, X, FileCheck, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { to: "/kundenportal", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/kundenportal/vertrag", label: "Vertrag & Paket", icon: FileText },
+  { to: "/kundenportal/wachstumspaket", label: "Wachstumspaket", icon: Rocket },
   { to: "/kundenportal/rechnungen", label: "Rechnungen", icon: Receipt },
   { to: "/kundenportal/wuensche", label: "Wünsche & Support", icon: MessageSquare },
   { to: "/kundenportal/angebote", label: "Angebote", icon: FileCheck },
