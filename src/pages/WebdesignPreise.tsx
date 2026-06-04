@@ -431,6 +431,7 @@ const PackageCard = ({
       {pkg.upgradeHint && (
         <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
       )}
+      {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
       <div className="space-y-2">
         <Button
           variant={pkg.enterprise ? "outline" : "gradient"}
@@ -447,9 +448,9 @@ const PackageCard = ({
         </Button>
         {pkg.priceId && onCheckout && (
           <Button
-            variant="ghost"
-            size="sm"
-            className="w-full text-muted-foreground hover:text-foreground"
+            variant="outline"
+            size="lg"
+            className="w-full border-primary/40 text-primary hover:bg-primary/10 hover:text-primary hover:border-primary"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
             Kostenlos beraten lassen →
