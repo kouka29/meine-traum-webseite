@@ -153,6 +153,20 @@ export default function CheckoutFunnel({
     [currentAddons, selectedAddonIds],
   );
 
+  // Erkennung „Wachstumspaket im Kauf-Modus" → verbindlich gebucht, separat abgerechnet
+  const growthAddon = useMemo(
+    () => selectedAddons.find((a) => a.price_type === "monthly" && /wachstum/i.test(a.name)),
+    [selectedAddons],
+  );
+  const hasGrowthCommitment = paymentMode === "kauf" && !!growthAddon;
+  const growthPackageKey: "basic" | "plus" | "premium" | null = useMemo(() => {
+    if (!hasGrowthCommitment) return null;
+    const cents = growthAddon!.price_cents;
+    if (cents <= 3500_00 / 100) return "basic";   // 29 €
+    if (cents <= 6000_00 / 100) return "plus";    // 49 €
+    return "premium";                              // 79 €+
+  }, [hasGrowthCommitment, growthAddon]);
+
   // Preisberechnung
   const basisEinmalig = paymentMode === "kauf" ? currentPaket.preis : 0;
   const basisMonatlich = paymentMode === "miete" ? Number(currentPaket.miete_monatlich || 0) : 0;
