@@ -117,6 +117,7 @@ export default function CheckoutFunnel({
   const [telefon, setTelefon] = useState("");
   const [agb, setAgb] = useState(false);
   const [kostenpflichtig, setKostenpflichtig] = useState(false);
+  const [growthBindend, setGrowthBindend] = useState(false);
 
   // Reset on open
   useEffect(() => {
@@ -128,6 +129,7 @@ export default function CheckoutFunnel({
       setSelectedAddonIds((paket.addons ?? addons).filter((a) => a.default_selected).map((a) => a.id));
       setPayMethod(stripeAvailable ? "online" : "rechnung");
       setStripeItems(null);
+      setGrowthBindend(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, paket.id]);
@@ -214,11 +216,12 @@ export default function CheckoutFunnel({
     if (key === "zahlung") return (paymentMode === "kauf" && kaufEnabled) || (paymentMode === "miete" && mieteEnabled);
     if (key === "extras") return true;
     if (key === "kontakt") {
-      return vorname.trim().length >= 1
+      const baseOk = vorname.trim().length >= 1
         && nachname.trim().length >= 1
         && firma.trim().length >= 1
         && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())
         && agb && kostenpflichtig;
+      return baseOk && (!hasGrowthCommitment || growthBindend);
     }
     return true;
   };
