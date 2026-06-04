@@ -83,6 +83,36 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
       .eq("angebots_nr", auftragsNr);
   }
 
+  // Wachstumspaket aus Metadata vormerken (verbindlich, aber NICHT hier abgerechnet).
+  // Erste Rechnung kommt erst nach Go-Live (Admin-Trigger).
+  const growthPackage = meta.growth_package as string | undefined;
+  const growthAmount = Number(meta.growth_amount_cents);
+  if (
+    growthPackage && ["basic", "plus", "premium"].includes(growthPackage)
+    && Number.isFinite(growthAmount) && growthAmount > 0
+    && customerEmail
+  ) {
+    // idempotent: nicht doppelt einfügen, wenn schon eins zur Session existiert
+    const { data: existing } = await getSupabase()
+      .from("growth_subscriptions")
+      .select("id")
+      .eq("purchase_session_id", session.id)
+      .maybeSingle();
+    if (!existing) {
+      await getSupabase().from("growth_subscriptions").insert({
+        customer_email: customerEmail,
+        purchase_session_id: session.id,
+        stripe_customer_id: typeof session.customer === "string" ? session.customer : session.customer?.id ?? null,
+        package: growthPackage,
+        monthly_amount_cents: growthAmount,
+        min_term_months: Math.max(1, Math.round(Number(meta.growth_min_term) || 12)),
+        billing_mode: "manual_invoice",
+        status: "pending_golive",
+        environment: env,
+      });
+    }
+  }
+
   // Kundenportal-Account anlegen (idempotent) + stripe_customer_id speichern
   if (customerEmail) {
     try {
