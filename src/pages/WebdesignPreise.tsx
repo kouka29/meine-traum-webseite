@@ -520,7 +520,7 @@ const BuyCard = ({
           <Button
             variant="outline"
             size="lg"
-            className="w-full border-primary/40 text-primary hover:bg-primary/10 hover:text-primary hover:border-primary"
+            className="w-full bg-white border-2 border-[#5B3DC8] text-[#5B3DC8] hover:bg-[#5B3DC8]/10 hover:text-[#5B3DC8]"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
             Kostenlos beraten lassen →
