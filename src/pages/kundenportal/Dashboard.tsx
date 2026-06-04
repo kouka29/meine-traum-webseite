@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Receipt, MessageSquare, FileCheck, Package, ArrowRight, Loader2 } from "lucide-react";
+import { Receipt, MessageSquare, FileCheck, Package, ArrowRight, Loader2, Rocket } from "lucide-react";
 
 export default function KundenportalDashboard() {
   const [loading, setLoading] = useState(true);
@@ -10,19 +10,22 @@ export default function KundenportalDashboard() {
   const [buchungen, setBuchungen] = useState<any[]>([]);
   const [tickets, setTickets] = useState<any[]>([]);
   const [angebote, setAngebote] = useState<any[]>([]);
+  const [growth, setGrowth] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
-      const [a, b, t, ang] = await Promise.all([
+      const [a, b, t, ang, g] = await Promise.all([
         supabase.from("customer_accounts").select("*").maybeSingle(),
         supabase.from("buchungen").select("id, angebots_nr, gebucht_am, status, gesamtbetrag_brutto, pakete").order("gebucht_am", { ascending: false }),
         supabase.from("customer_tickets").select("id, subject, status, created_at").order("created_at", { ascending: false }).limit(5),
         supabase.from("angebote").select("id, short_id, lead_name, preis, status, erstellt_am").order("erstellt_am", { ascending: false }).limit(5),
+        supabase.from("growth_subscriptions").select("*").order("created_at", { ascending: false }).limit(1).maybeSingle(),
       ]);
       setAccount(a.data);
       setBuchungen(b.data || []);
       setTickets(t.data || []);
       setAngebote(ang.data || []);
+      setGrowth(g.data);
       setLoading(false);
     })();
   }, []);
@@ -44,6 +47,30 @@ export default function KundenportalDashboard() {
         <StatCard icon={MessageSquare} label="Offene Wünsche" value={openTickets} to="/kundenportal/wuensche" />
         <StatCard icon={FileCheck} label="Angebote" value={angebote.length} to="/kundenportal/angebote" />
       </div>
+
+      {growth && (
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="flex items-center gap-2"><Rocket size={18} className="text-primary" /> Wachstumspaket</CardTitle>
+            <Link to="/kundenportal/wachstumspaket" className="text-xs text-primary inline-flex items-center gap-1">Verwalten <ArrowRight size={12} /></Link>
+          </CardHeader>
+          <CardContent className="text-sm flex items-center justify-between gap-4">
+            <div>
+              <div className="font-semibold capitalize">{growth.package}</div>
+              <div className="text-xs text-muted-foreground">
+                {(growth.monthly_amount_cents / 100).toLocaleString("de-DE")} €/Monat netto · {growth.billing_mode === "stripe_auto" ? "Automatisch (Stripe)" : "Rechnung"}
+              </div>
+            </div>
+            <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+              growth.status === "active" ? "bg-emerald-100 text-emerald-700"
+              : growth.status === "pending_golive" ? "bg-amber-100 text-amber-700"
+              : "bg-muted text-muted-foreground"
+            }`}>
+              {growth.status === "active" ? "Aktiv" : growth.status === "pending_golive" ? "Wartet auf Go-Live" : growth.status}
+            </span>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader><CardTitle>Aktuelle Buchungen</CardTitle></CardHeader>

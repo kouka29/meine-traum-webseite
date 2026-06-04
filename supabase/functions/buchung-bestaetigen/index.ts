@@ -297,6 +297,30 @@ Deno.serve(async (req) => {
     } catch (e) {
       console.error("growth_subscriptions insert fehlgeschlagen:", e);
     }
+
+    // Bestätigungsmail "vorgemerkt"
+    try {
+      const pkgLabel = growthCommitment.package === "premium" ? "Premium"
+        : growthCommitment.package === "plus" ? "Plus" : "Basic";
+      const monthly = (growthCommitment.monthly_amount_cents / 100).toLocaleString("de-DE");
+      await sendResend(
+        kunde_email,
+        `Wachstumspaket ${pkgLabel} vorgemerkt – startet mit Go-Live`,
+        `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;background:#F5F4FF;padding:24px">
+<div style="max-width:600px;margin:auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(79,63,240,0.08)">
+<div style="background:linear-gradient(135deg,#4F3FF0,#7B5EF8);padding:32px;text-align:center;color:#fff">
+<h1 style="margin:0;font-size:22px">Wachstumspaket ${pkgLabel} ist vorgemerkt</h1></div>
+<div style="padding:32px;color:#1E1B4B;font-size:15px;line-height:1.6">
+<p>Hallo ${kunde_vorname},</p>
+<p>du hast verbindlich das <strong>Wachstumspaket ${pkgLabel}</strong> (${monthly} €/Monat netto, Mindestlaufzeit ${growthCommitment.min_term_months} Monate) zu deiner Webseite dazugebucht.</p>
+<p><strong>Wann startet die Abrechnung?</strong> Sobald deine Webseite live geht. Erst dann erhältst du die erste Monatsrechnung per E‑Mail (zahlbar per Karte, SEPA oder Überweisung).</p>
+<p>Im <a href="https://meine-traum-webseite.de/kundenportal/wachstumspaket" style="color:#4F3FF0">Kundenportal</a> kannst du jederzeit auf automatische Stripe-Abbuchung umstellen.</p>
+<p style="color:#6B7280;font-size:13px">Auftrag: ${auftrags_nr}</p>
+</div></div></body></html>`,
+      );
+    } catch (e) {
+      console.error("Growth-Bestätigungsmail fehlgeschlagen:", e);
+    }
   }
 
   // E-Mails — Fehler nicht an Kunden weitergeben

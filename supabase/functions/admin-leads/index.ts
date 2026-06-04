@@ -1056,6 +1056,68 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "growth-list") {
+      const { data, error } = await supabase
+        .from("growth_subscriptions")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return new Response(JSON.stringify({ subscriptions: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "growth-golive") {
+      const { id, env } = body as { id?: string; env?: string };
+      if (!id) {
+        return new Response(JSON.stringify({ error: "id fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const now = new Date();
+      const next = new Date(now);
+      const { error: upErr } = await supabase
+        .from("growth_subscriptions")
+        .update({
+          status: "active",
+          started_at: now.toISOString(),
+          next_invoice_at: next.toISOString(),
+          updated_at: now.toISOString(),
+        })
+        .eq("id", id);
+      if (upErr) throw upErr;
+
+      // Sofort erste Rechnung erstellen (nur bei manual_invoice)
+      try {
+        await supabase.functions.invoke("growth-invoice-create", {
+          body: { env: env === "live" ? "live" : "sandbox", growth_subscription_id: id },
+        });
+      } catch (e) {
+        console.error("growth-invoice-create invoke fehlgeschlagen:", e);
+      }
+
+      return new Response(JSON.stringify({ ok: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "growth-cancel") {
+      const { id } = body as { id?: string };
+      if (!id) {
+        return new Response(JSON.stringify({ error: "id fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase
+        .from("growth_subscriptions")
+        .update({ status: "cancelled", cancel_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+        .eq("id", id);
+      if (error) throw error;
+      return new Response(JSON.stringify({ ok: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Ungültige Aktion" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },

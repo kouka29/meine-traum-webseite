@@ -73,6 +73,7 @@ const KundenportalTickets = lazy(() => import("./pages/kundenportal/Tickets.tsx"
 const KundenportalTicketDetail = lazy(() => import("./pages/kundenportal/TicketDetail.tsx"));
 const KundenportalAngebote = lazy(() => import("./pages/kundenportal/Angebote.tsx"));
 const KundenportalEinstellungen = lazy(() => import("./pages/kundenportal/Einstellungen.tsx"));
+const KundenportalWachstumspaket = lazy(() => import("./pages/kundenportal/Wachstumspaket.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -201,6 +202,7 @@ const App = () => (
             <Route path="/kundenportal" element={<KundenportalLayout />}>
               <Route index element={<KundenportalDashboard />} />
               <Route path="vertrag" element={<KundenportalVertrag />} />
+              <Route path="wachstumspaket" element={<KundenportalWachstumspaket />} />
               <Route path="rechnungen" element={<KundenportalRechnungen />} />
               <Route path="wuensche" element={<KundenportalTickets />} />
               <Route path="wuensche/:id" element={<KundenportalTicketDetail />} />
