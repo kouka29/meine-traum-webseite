@@ -487,6 +487,7 @@ export default function CheckoutFunnel({
               addons={currentAddons}
               selectedIds={selectedAddonIds}
               toggle={toggleAddon}
+              growthHint={hasGrowthCommitment}
             />
           )}
           {currentKey === "kontakt" && (
@@ -502,6 +503,11 @@ export default function CheckoutFunnel({
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
+              growthCommitment={hasGrowthCommitment ? {
+                amountCents: growthAddon!.price_cents,
+                checked: growthBindend,
+                setChecked: setGrowthBindend,
+              } : null}
             />
           )}
           {currentKey === "bezahlen" && success && (
