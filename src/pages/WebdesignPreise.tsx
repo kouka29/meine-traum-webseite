@@ -34,7 +34,7 @@ const TrustStrip = () => (
           <Icon size={20} strokeWidth={2} />
         </div>
         <div className="min-w-0">
-          <p className="font-heading text-lg sm:text-xl font-bold gradient-text leading-tight">{num}</p>
+          <p className="font-heading text-[2rem] font-bold text-[#5B3DC8] leading-tight">{num}</p>
           <p className="text-xs sm:text-sm text-muted-foreground leading-tight">{label}</p>
         </div>
       </div>
