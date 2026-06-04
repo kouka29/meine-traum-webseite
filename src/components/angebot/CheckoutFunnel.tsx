@@ -297,6 +297,13 @@ export default function CheckoutFunnel({
             id: a.id, name: a.name,
             price_cents: a.price_cents, price_type: a.price_type,
           })),
+          ...(hasGrowthCommitment && growthPackageKey ? {
+            growth_commitment: {
+              package: growthPackageKey,
+              monthly_amount_cents: growthAddon!.price_cents,
+              min_term_months: 12,
+            },
+          } : {}),
           agb_akzeptiert: true,
           kostenpflichtig_bestaetigt: true,
         },
