@@ -822,11 +822,12 @@ function PaymentCard({
 
 // ─── STEP 1: ADD-ONS ───────────────────────────────────
 function StepAddOns({
-  addons, selectedIds, toggle,
+  addons, selectedIds, toggle, growthHint,
 }: {
   addons: FunnelAddon[];
   selectedIds: string[];
   toggle: (id: string) => void;
+  growthHint?: boolean;
 }) {
   if (addons.length === 0) {
     return (
@@ -847,6 +848,18 @@ function StepAddOns({
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
         Optional — Sie können einzelne Extras dazubuchen oder direkt weiter.
       </p>
+      {growthHint && (
+        <div style={{
+          marginBottom: 14, padding: "12px 14px",
+          background: "#FFF7ED", border: "1px solid #FED7AA",
+          borderRadius: 12, fontSize: 12.5, color: "#9A3412", lineHeight: 1.5,
+        }}>
+          <strong>🚀 Wachstumspaket gewählt:</strong> Wird heute <strong>nicht</strong> mit
+          eingezogen. Sie erhalten Ihre erste Rechnung erst ab Website-Go-Live –
+          monatlich per E-Mail mit Bezahllink (Karte, SEPA, Überweisung). Im Kundenportal
+          können Sie jederzeit auf automatisches Stripe-Abo umstellen.
+        </div>
+      )}
       <div style={{ display: "grid", gap: 10 }}>
         {addons.map((a) => {
           const sel = selectedIds.includes(a.id);
