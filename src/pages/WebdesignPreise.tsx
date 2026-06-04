@@ -34,7 +34,7 @@ const TrustStrip = () => (
           <Icon size={20} strokeWidth={2} />
         </div>
         <div className="min-w-0">
-          <p className="font-heading text-lg sm:text-xl font-bold gradient-text leading-tight">{num}</p>
+          <p className="font-heading text-[2rem] font-bold text-[#5B3DC8] leading-tight">{num}</p>
           <p className="text-xs sm:text-sm text-muted-foreground leading-tight">{label}</p>
         </div>
       </div>
@@ -50,9 +50,9 @@ const TestimonialBlock = () => (
         className="absolute -top-3 left-5 bg-background text-primary p-1 rounded"
         fill="currentColor"
       />
-      <div className="flex items-center gap-1 text-amber-500 mb-3">
+      <div className="flex items-center gap-1.5 text-yellow-400 mb-3">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={14} fill="currentColor" stroke="none" />
+          <Star key={i} size={18} fill="currentColor" stroke="none" />
         ))}
       </div>
       <p className="text-sm italic text-foreground/80 leading-relaxed mb-4">
@@ -450,7 +450,7 @@ const PackageCard = ({
           <Button
             variant="outline"
             size="lg"
-            className="w-full border-primary/40 text-primary hover:bg-primary/10 hover:text-primary hover:border-primary"
+            className="w-full bg-white border-2 border-[#5B3DC8] text-[#5B3DC8] hover:bg-[#5B3DC8]/10 hover:text-[#5B3DC8]"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
             Kostenlos beraten lassen →
@@ -520,7 +520,7 @@ const BuyCard = ({
           <Button
             variant="outline"
             size="lg"
-            className="w-full border-primary/40 text-primary hover:bg-primary/10 hover:text-primary hover:border-primary"
+            className="w-full bg-white border-2 border-[#5B3DC8] text-[#5B3DC8] hover:bg-[#5B3DC8]/10 hover:text-[#5B3DC8]"
             onClick={() => onOpen(pkg.badge ?? pkg.name)}
           >
             Kostenlos beraten lassen →
