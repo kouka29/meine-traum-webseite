@@ -162,9 +162,9 @@ export default function CheckoutFunnel({
   const growthPackageKey: "basic" | "plus" | "premium" | null = useMemo(() => {
     if (!hasGrowthCommitment) return null;
     const cents = growthAddon!.price_cents;
-    if (cents <= 3500_00 / 100) return "basic";   // 29 €
-    if (cents <= 6000_00 / 100) return "plus";    // 49 €
-    return "premium";                              // 79 €+
+    if (cents <= 4000) return "basic";   // ≤ 40 €  → Starter
+    if (cents <= 6500) return "plus";    // ≤ 65 €  → Pro
+    return "premium";                    //         → Premium
   }, [hasGrowthCommitment, growthAddon]);
 
   // Preisberechnung
