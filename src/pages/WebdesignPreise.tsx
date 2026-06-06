@@ -21,21 +21,21 @@ import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 
 const TrustStrip = () => (
-  <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto mb-8">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto mb-8 mt-4">
     {[
       { Icon: Handshake, num: "150+", label: "Handwerksbetriebe vertrauen uns" },
       { Icon: Award, num: "6 Jahre", label: "Erfahrung im Handwerker-Webdesign" },
     ].map(({ Icon, num, label }) => (
       <div
         key={num}
-        className="flex items-center gap-3 sm:gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 sm:px-5 sm:py-4"
+        className="flex items-center gap-4 sm:gap-5 rounded-xl border border-primary/20 bg-primary/5 px-6 py-5 sm:px-7 sm:py-6"
       >
-        <div className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-          <Icon size={20} strokeWidth={2} />
+        <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+          <Icon size={24} strokeWidth={2} />
         </div>
-        <div className="min-w-0">
-          <p className="font-heading text-[2rem] font-bold text-[#5B3DC8] leading-tight">{num}</p>
-          <p className="text-xs sm:text-sm text-muted-foreground leading-tight">{label}</p>
+        <div className="min-w-0 flex-1">
+          <p className="font-heading text-[2rem] font-bold text-[#5B3DC8] leading-none mb-1.5 whitespace-nowrap">{num}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground leading-snug">{label}</p>
         </div>
       </div>
     ))}
