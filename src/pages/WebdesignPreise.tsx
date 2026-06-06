@@ -664,10 +664,10 @@ const WebdesignPreise = () => {
               Ein verlorener Auftrag kostet Sie im Schnitt 800 €.<br />
               Ihre neue Website kostet Sie ab 59 €/Monat.
             </p>
-            <TrustStrip />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
+            <TrustStrip />
             <TestimonialBlock />
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
