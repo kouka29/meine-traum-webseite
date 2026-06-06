@@ -84,8 +84,8 @@ const TestimonialBlock = () => {
   const pageCount = Math.max(1, items.length - visible + 1);
 
   useEffect(() => {
-    setIdx(0);
-  }, [visible]);
+    setIdx((i) => Math.min(i, Math.max(0, items.length - visible)));
+  }, [visible, items.length]);
 
   useEffect(() => {
     if (pageCount <= 1) return;
