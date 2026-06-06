@@ -84,8 +84,8 @@ const TestimonialBlock = () => {
   const pageCount = Math.max(1, items.length - visible + 1);
 
   useEffect(() => {
-    setIdx(0);
-  }, [visible]);
+    setIdx((i) => Math.min(i, Math.max(0, items.length - visible)));
+  }, [visible, items.length]);
 
   useEffect(() => {
     if (pageCount <= 1) return;
@@ -107,7 +107,7 @@ const TestimonialBlock = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-10 px-4">
-      <div className={`grid gap-5 ${visible === 3 ? "lg:grid-cols-3" : visible === 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
+      <div key={idx} className={`grid gap-5 animate-testimonial-enter ${visible === 3 ? "lg:grid-cols-3" : visible === 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
         {shown.map((t) => (
           <div
             key={t.id}
