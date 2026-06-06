@@ -54,6 +54,17 @@ type DbTestimonial = {
 const TestimonialBlock = () => {
   const [items, setItems] = useState<DbTestimonial[]>([]);
   const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(3);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setVisible(w >= 1024 ? 3 : w >= 640 ? 2 : 1);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -70,63 +81,82 @@ const TestimonialBlock = () => {
     };
   }, []);
 
+  const pageCount = Math.max(1, items.length - visible + 1);
+
   useEffect(() => {
-    if (items.length <= 1) return;
-    const t = setInterval(() => setIdx((i) => (i + 1) % items.length), 5000);
+    setIdx(0);
+  }, [visible]);
+
+  useEffect(() => {
+    if (pageCount <= 1) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % pageCount), 6000);
     return () => clearInterval(t);
-  }, [items.length]);
+  }, [pageCount]);
 
   if (items.length === 0) return null;
-  const t = items[idx];
-  const initials = t.name
-    .split(" ")
-    .map((p) => p[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join(".");
+
+  const shown = items.slice(idx, idx + visible);
+
+  const initialsFor = (name: string) =>
+    name
+      .split(" ")
+      .map((p) => p[0])
+      .filter(Boolean)
+      .slice(0, 2)
+      .join("");
 
   return (
-    <div className="max-w-xl mx-auto my-8">
-      <div className="relative rounded-2xl border border-border bg-background shadow-card p-6">
-        <Quote
-          size={28}
-          className="absolute -top-3 left-5 bg-background text-primary p-1 rounded"
-          fill="currentColor"
-        />
-        <div className="flex items-center gap-1.5 text-yellow-400 mb-3">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} size={18} fill="currentColor" stroke="none" />
+    <div className="max-w-6xl mx-auto my-10 px-4">
+      <div className={`grid gap-5 ${visible === 3 ? "lg:grid-cols-3" : visible === 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
+        {shown.map((t) => (
+          <div
+            key={t.id}
+            className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col"
+          >
+            <div className="p-7 md:p-8 flex-1 flex flex-col relative">
+              <Quote
+                size={80}
+                className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none"
+                fill="currentColor"
+                strokeWidth={0}
+              />
+              <div className="flex gap-1 mb-5 relative z-10">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" />
+                ))}
+              </div>
+              <blockquote className="font-heading text-base md:text-lg leading-snug text-foreground font-semibold mb-6 tracking-tight flex-1 relative z-10">
+                „{t.text}"
+              </blockquote>
+              <div className="flex items-center gap-3 relative z-10">
+                <div className="w-11 h-11 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm ring-4 ring-primary/10 shrink-0">
+                  {initialsFor(t.name)}
+                </div>
+                <div className="min-w-0">
+                  <p className="font-semibold text-foreground text-sm leading-tight">{t.name}</p>
+                  <p className="text-[11px] text-muted-foreground tracking-wider uppercase mt-0.5 truncate">{t.role}</p>
+                </div>
+              </div>
+            </div>
+            <div className="h-1.5 w-full bg-gradient-to-r from-primary to-[hsl(250,56%,65%)]" />
+          </div>
+        ))}
+      </div>
+
+      {pageCount > 1 && (
+        <div className="flex justify-center gap-2 mt-6">
+          {Array.from({ length: pageCount }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIdx(i)}
+              aria-label={`Seite ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all ${
+                i === idx ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30"
+              }`}
+            />
           ))}
         </div>
-        <p className="text-sm italic text-foreground/80 leading-relaxed mb-4 min-h-[4.5rem]">
-          „{t.text}"
-        </p>
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-muted text-muted-foreground flex items-center justify-center text-sm font-semibold">
-              {initials}
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-foreground">{t.name}</p>
-              <p className="text-xs text-muted-foreground">{t.role}</p>
-            </div>
-          </div>
-          {items.length > 1 && (
-            <div className="flex gap-1.5">
-              {items.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setIdx(i)}
-                  aria-label={`Stimme ${i + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    i === idx ? "w-5 bg-primary" : "w-2 bg-muted-foreground/30"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
