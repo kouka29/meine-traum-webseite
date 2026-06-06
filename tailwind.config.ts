@@ -109,6 +109,8 @@ export default {
         "fade-in": "fade-in 0.5s ease-out forwards",
         float: "float 6s ease-in-out infinite",
         "cta-pulse": "cta-pulse 7s ease-in-out infinite",
+        "testimonial-enter": "testimonial-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "testimonial-exit": "testimonial-exit 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards",
       },
     },
   },
