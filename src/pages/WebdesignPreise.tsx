@@ -107,7 +107,7 @@ const TestimonialBlock = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-10 px-4">
-      <div className={`grid gap-5 ${visible === 3 ? "lg:grid-cols-3" : visible === 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
+      <div key={idx} className={`grid gap-5 animate-testimonial-enter ${visible === 3 ? "lg:grid-cols-3" : visible === 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
         {shown.map((t) => (
           <div
             key={t.id}
