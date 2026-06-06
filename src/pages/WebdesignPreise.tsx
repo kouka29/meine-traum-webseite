@@ -19,6 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
 import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
+import { supabase } from "@/integrations/supabase/client";
 
 const TrustStrip = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto mb-8 mt-4">
@@ -42,35 +43,93 @@ const TrustStrip = () => (
   </div>
 );
 
-const TestimonialBlock = () => (
-  <div className="max-w-xl mx-auto my-8">
-    <div className="relative rounded-2xl border border-border bg-background shadow-card p-6">
-      <Quote
-        size={28}
-        className="absolute -top-3 left-5 bg-background text-primary p-1 rounded"
-        fill="currentColor"
-      />
-      <div className="flex items-center gap-1.5 text-yellow-400 mb-3">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={18} fill="currentColor" stroke="none" />
-        ))}
-      </div>
-      <p className="text-sm italic text-foreground/80 leading-relaxed mb-4">
-        „Innerhalb von 3 Wochen nach Launch kamen die ersten Anfragen über die Website.
-        Das hat sich sofort gerechnet."
-      </p>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-muted text-muted-foreground flex items-center justify-center text-sm font-semibold">
-          M.S.
+type DbTestimonial = {
+  id: string;
+  name: string;
+  role: string;
+  text: string;
+  result: string;
+};
+
+const TestimonialBlock = () => {
+  const [items, setItems] = useState<DbTestimonial[]>([]);
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .from("testimonials")
+      .select("id,name,role,text,result")
+      .eq("is_visible", true)
+      .order("sort_order", { ascending: true })
+      .then(({ data }) => {
+        if (!cancelled && data) setItems(data as DbTestimonial[]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (items.length <= 1) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % items.length), 5000);
+    return () => clearInterval(t);
+  }, [items.length]);
+
+  if (items.length === 0) return null;
+  const t = items[idx];
+  const initials = t.name
+    .split(" ")
+    .map((p) => p[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join(".");
+
+  return (
+    <div className="max-w-xl mx-auto my-8">
+      <div className="relative rounded-2xl border border-border bg-background shadow-card p-6">
+        <Quote
+          size={28}
+          className="absolute -top-3 left-5 bg-background text-primary p-1 rounded"
+          fill="currentColor"
+        />
+        <div className="flex items-center gap-1.5 text-yellow-400 mb-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} size={18} fill="currentColor" stroke="none" />
+          ))}
         </div>
-        <div>
-          <p className="text-sm font-semibold text-foreground">Max S.</p>
-          <p className="text-xs text-muted-foreground">Sanitärbetrieb · Mainz</p>
+        <p className="text-sm italic text-foreground/80 leading-relaxed mb-4 min-h-[4.5rem]">
+          „{t.text}"
+        </p>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-muted text-muted-foreground flex items-center justify-center text-sm font-semibold">
+              {initials}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">{t.name}</p>
+              <p className="text-xs text-muted-foreground">{t.role}</p>
+            </div>
+          </div>
+          {items.length > 1 && (
+            <div className="flex gap-1.5">
+              {items.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIdx(i)}
+                  aria-label={`Stimme ${i + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    i === idx ? "w-5 bg-primary" : "w-2 bg-muted-foreground/30"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] } }) => {
   const [open, setOpen] = useState(false);
