@@ -790,6 +790,10 @@ const WebdesignPreise = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
+            <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <Shield size={16} className="text-muted-foreground/80 shrink-0" />
+              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+            </p>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
@@ -848,6 +852,10 @@ const WebdesignPreise = () => {
                 />
               ))}
             </div>
+            <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <Shield size={16} className="text-muted-foreground/80 shrink-0" />
+              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+            </p>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
