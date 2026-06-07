@@ -24,7 +24,7 @@ import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 import { supabase } from "@/integrations/supabase/client";
 
 const TrustStrip = () => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto my-8">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
     {[
       { Icon: Handshake, num: "150+", label: "Handwerksbetriebe vertrauen uns" },
       { Icon: Award, num: "6 Jahre", label: "Erfahrung im Handwerker-Webdesign" },
