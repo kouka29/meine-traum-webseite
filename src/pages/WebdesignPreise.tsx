@@ -765,8 +765,6 @@ const WebdesignPreise = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
-            <TrustStrip />
-            <TestimonialBlock />
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
@@ -775,6 +773,8 @@ const WebdesignPreise = () => {
                 </span>
               </Button>
             </div>
+            <TrustStrip />
+            <TestimonialBlock />
             {rentPackages.filter(p => p.enterprise).map((pkg) => (
               <AnimatedSection key={pkg.name} delay={0.1}>
                 <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
@@ -823,8 +823,6 @@ const WebdesignPreise = () => {
                 />
               ))}
             </div>
-            <TrustStrip />
-            <TestimonialBlock />
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
@@ -833,6 +831,8 @@ const WebdesignPreise = () => {
                 </span>
               </Button>
             </div>
+            <TrustStrip />
+            <TestimonialBlock />
             <AnimatedSection delay={0.1}>
               <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex-1">
