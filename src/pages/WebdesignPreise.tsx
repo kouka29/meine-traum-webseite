@@ -256,16 +256,16 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     badge: "Starter Miete – 59 €/Monat netto",
     priceId: "starter_rent_monthly",
-    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
-      "Eine starke Seite — reicht für die meisten Betriebe",
+      "1 Seite vollständig ausgebaut — Leistungen, Kontakt, Anfrage",
       "Perfekt auf jedem Handy — auch auf der Baustelle",
       "Kunden können Sie direkt anfragen — rund um die Uhr",
       "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
       "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
     ],
-    cta: "Jetzt starten",
+    cta: "Jetzt Website sichern",
     upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
     growth: {
       price: "+29 €/Monat zubuchbar",
@@ -281,7 +281,7 @@ const rentPackages: Pkg[] = [
     price: "99 €/Monat",
     badge: "Pro Miete – 99 €/Monat netto",
     priceId: "pro_rent_monthly",
-    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
       "SEO-Grundlagen (Google findet Sie)",
@@ -291,7 +291,7 @@ const rentPackages: Pkg[] = [
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
     ],
     popular: true,
-    cta: "Jetzt starten",
+    cta: "Jetzt starten – Website sichern",
     growth: {
       price: "+49 €/Monat zubuchbar",
       items: [
@@ -306,7 +306,7 @@ const rentPackages: Pkg[] = [
     price: "159 €/Monat",
     badge: "Premium Miete – 159 €/Monat netto",
     priceId: "premium_rent_monthly",
-    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
       "Bis zu 10 Seiten — komplette Online-Präsenz",
       "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
@@ -315,7 +315,7 @@ const rentPackages: Pkg[] = [
       "Hosting & Domain inklusive",
       "Individuelle Umsetzung – Timing nach Absprache",
     ],
-    cta: "Jetzt starten",
+    cta: "Premium sichern – Jetzt starten",
     growth: {
       price: "+79 €/Monat zubuchbar",
       items: [
