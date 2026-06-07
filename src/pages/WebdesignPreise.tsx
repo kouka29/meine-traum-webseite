@@ -10,6 +10,7 @@ import {
   Phone,
   Handshake,
   Award,
+  Clock,
   ChevronDown,
   Quote,
   ThumbsUp,
@@ -23,11 +24,12 @@ import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 import { supabase } from "@/integrations/supabase/client";
 
 const TrustStrip = () => (
-  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto my-8">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto my-8">
     {[
       { Icon: Handshake, num: "150+", label: "Handwerksbetriebe vertrauen uns" },
       { Icon: Award, num: "6 Jahre", label: "Erfahrung im Handwerker-Webdesign" },
       { Icon: ThumbsUp, num: "98%", label: "Weiterempfehlungsrate" },
+      { Icon: Clock, num: "48h", label: "Erstes Konzept steht" },
     ].map(({ Icon, num, label }) => (
       <div
         key={num}
