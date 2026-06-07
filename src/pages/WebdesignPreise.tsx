@@ -23,14 +23,15 @@ import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 import { supabase } from "@/integrations/supabase/client";
 
 const TrustStrip = () => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto my-8">
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto my-8">
     {[
       { Icon: Handshake, num: "150+", label: "Handwerksbetriebe vertrauen uns" },
       { Icon: Award, num: "6 Jahre", label: "Erfahrung im Handwerker-Webdesign" },
+      { Icon: ThumbsUp, num: "98%", label: "Weiterempfehlungsrate" },
     ].map(({ Icon, num, label }) => (
       <div
         key={num}
-        className="flex items-center gap-4 sm:gap-5 rounded-xl border border-primary/20 bg-primary/5 px-6 py-5 sm:px-7 sm:py-6"
+        className="flex items-center gap-4 sm:gap-5 rounded-xl border border-primary/20 bg-primary/5 px-6 py-5 sm:px-5 sm:py-6"
       >
         <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center">
           <Icon size={24} strokeWidth={2} />
