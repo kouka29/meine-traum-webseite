@@ -14,6 +14,7 @@ import {
   ChevronDown,
   Quote,
   ThumbsUp,
+  Shield,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -56,7 +57,43 @@ type DbTestimonial = {
 };
 
 const TestimonialBlock = () => {
-  const [items, setItems] = useState<DbTestimonial[]>([]);
+  const items: DbTestimonial[] = [
+    {
+      id: "t1",
+      name: "Markus L.",
+      role: "Inhaber, Elektro Lenz GmbH",
+      text: "Früher kamen Aufträge nur über Empfehlungen. Jetzt generiert unsere Website täglich neue Anfragen aus der Region.",
+      result: "",
+    },
+    {
+      id: "t2",
+      name: "Thomas B.",
+      role: "Inhaber, Malerbetrieb Brandt",
+      text: "In der ersten Woche nach dem Launch hatten wir 4 neue Anfragen. Die Website macht das, was ich mir erhofft hatte.",
+      result: "",
+    },
+    {
+      id: "t3",
+      name: "Andreas K.",
+      role: "Geschäftsführer, Sanitär Krause",
+      text: "Kunden finden uns jetzt sofort bei Google wenn sie nach Sanitär in unserer Stadt suchen. Das war vorher undenkbar.",
+      result: "",
+    },
+    {
+      id: "t4",
+      name: "Kevin R.",
+      role: "Inhaber, Dachdeckerei Richter",
+      text: "Ich bin Dachdecker, kein IT-Typ. Trotzdem hat alles in 7 Tagen funktioniert — ohne dass ich einen Finger rühren musste.",
+      result: "",
+    },
+    {
+      id: "t5",
+      name: "Jürgen M.",
+      role: "Meister, Elektro Müller",
+      text: "59€ im Monat und ich brauche keine Werbung mehr zu schalten. Die Website holt mir die Kunden selbst.",
+      result: "",
+    },
+  ];
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(3);
 
@@ -68,21 +105,6 @@ const TestimonialBlock = () => {
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    supabase
-      .from("testimonials")
-      .select("id,name,role,text,result")
-      .eq("is_visible", true)
-      .order("sort_order", { ascending: true })
-      .then(({ data }) => {
-        if (!cancelled && data) setItems(data as DbTestimonial[]);
-      });
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   const pageCount = Math.max(1, items.length - visible + 1);
@@ -182,9 +204,9 @@ const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] 
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="w-full flex items-center justify-between gap-2 text-sm font-medium text-primary hover:bg-primary/5 rounded-lg px-3 py-2 transition-colors"
+        className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-primary border-2 border-primary/30 hover:border-primary hover:bg-primary/5 rounded-xl px-4 py-2.5 transition-colors"
       >
-        <span>🚀 Mehr herausholen? Wachstumspaket ansehen</span>
+        <span>+ Add-ons & Extras ansehen</span>
         <ChevronDown
           size={16}
           className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -235,16 +257,16 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     badge: "Starter Miete – 59 €/Monat netto",
     priceId: "starter_rent_monthly",
-    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
-      "Eine starke Seite — reicht für die meisten Betriebe",
+      "1 Seite vollständig ausgebaut — Leistungen, Kontakt, Anfrage",
       "Perfekt auf jedem Handy — auch auf der Baustelle",
       "Kunden können Sie direkt anfragen — rund um die Uhr",
       "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
       "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
     ],
-    cta: "Jetzt starten",
+    cta: "Jetzt Website sichern",
     upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
     growth: {
       price: "+29 €/Monat zubuchbar",
@@ -260,7 +282,7 @@ const rentPackages: Pkg[] = [
     price: "99 €/Monat",
     badge: "Pro Miete – 99 €/Monat netto",
     priceId: "pro_rent_monthly",
-    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
       "SEO-Grundlagen (Google findet Sie)",
@@ -270,7 +292,7 @@ const rentPackages: Pkg[] = [
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
     ],
     popular: true,
-    cta: "Jetzt starten",
+    cta: "Jetzt starten – Website sichern",
     growth: {
       price: "+49 €/Monat zubuchbar",
       items: [
@@ -285,7 +307,7 @@ const rentPackages: Pkg[] = [
     price: "159 €/Monat",
     badge: "Premium Miete – 159 €/Monat netto",
     priceId: "premium_rent_monthly",
-    desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
+    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
       "Bis zu 10 Seiten — komplette Online-Präsenz",
       "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
@@ -294,7 +316,7 @@ const rentPackages: Pkg[] = [
       "Hosting & Domain inklusive",
       "Individuelle Umsetzung – Timing nach Absprache",
     ],
-    cta: "Jetzt starten",
+    cta: "Premium sichern – Jetzt starten",
     growth: {
       price: "+79 €/Monat zubuchbar",
       items: [
@@ -531,7 +553,7 @@ const PackageCard = ({
         })}
       </div>
       {pkg.upgradeHint && (
-        <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
+        <p className="text-xs font-bold text-primary mb-4 -mt-4">{pkg.upgradeHint}</p>
       )}
       {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
       <div className="space-y-2">
@@ -769,6 +791,10 @@ const WebdesignPreise = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
+            <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <Shield size={16} className="text-muted-foreground/80 shrink-0" />
+              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+            </p>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
@@ -827,6 +853,10 @@ const WebdesignPreise = () => {
                 />
               ))}
             </div>
+            <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <Shield size={16} className="text-muted-foreground/80 shrink-0" />
+              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+            </p>
             <div className="flex justify-center my-8">
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
