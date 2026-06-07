@@ -33,14 +33,14 @@ const TrustStrip = () => (
     ].map(({ Icon, num, label }) => (
       <div
         key={num}
-        className="flex items-center gap-4 sm:gap-5 rounded-xl border border-primary/20 bg-primary/5 px-6 py-5 sm:px-5 sm:py-6"
+        className="flex items-center gap-3 sm:gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-4 sm:px-4 sm:py-5"
       >
-        <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-          <Icon size={24} strokeWidth={2} />
+        <div className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+          <Icon size={22} strokeWidth={2} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="font-heading text-[2rem] font-bold text-[#5B3DC8] leading-none mb-1.5 whitespace-nowrap">{num}</p>
-          <p className="text-xs sm:text-sm text-muted-foreground leading-snug">{label}</p>
+          <p className="font-heading text-2xl sm:text-[1.75rem] font-bold text-[#5B3DC8] leading-none mb-1 whitespace-nowrap">{num}</p>
+          <p className="text-xs text-muted-foreground leading-snug">{label}</p>
         </div>
       </div>
     ))}
