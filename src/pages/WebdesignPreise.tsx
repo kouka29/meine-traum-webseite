@@ -95,8 +95,6 @@ const TestimonialBlock = () => {
 
   if (items.length === 0) return null;
 
-  const shown = items.slice(idx, idx + visible);
-
   const initialsFor = (name: string) =>
     name
       .split(" ")
@@ -107,12 +105,21 @@ const TestimonialBlock = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-10 px-4">
-      <div key={idx} className={`grid gap-5 animate-testimonial-enter ${visible === 3 ? "lg:grid-cols-3" : visible === 2 ? "sm:grid-cols-2" : "grid-cols-1"}`}>
-        {shown.map((t) => (
-          <div
-            key={t.id}
-            className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col"
-          >
+      <div className="overflow-hidden">
+        <div
+          className="flex"
+          style={{
+            transform: `translateX(-${idx * (100 / visible)}%)`,
+            transition: "transform 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+          }}
+        >
+          {items.map((t) => (
+            <div
+              key={t.id}
+              className="shrink-0 px-2.5"
+              style={{ flex: `0 0 ${100 / visible}%` }}
+            >
+              <div className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
             <div className="p-7 md:p-8 flex-1 flex flex-col relative">
               <Quote
                 size={80}
@@ -139,8 +146,10 @@ const TestimonialBlock = () => {
               </div>
             </div>
             <div className="h-1.5 w-full bg-gradient-to-r from-primary to-[hsl(250,56%,65%)]" />
-          </div>
-        ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {pageCount > 1 && (
