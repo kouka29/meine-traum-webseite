@@ -552,7 +552,7 @@ const PackageCard = ({
         })}
       </div>
       {pkg.upgradeHint && (
-        <p className="text-xs text-muted-foreground mb-4 -mt-4">{pkg.upgradeHint}</p>
+        <p className="text-xs font-bold text-primary mb-4 -mt-4">{pkg.upgradeHint}</p>
       )}
       {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
       <div className="space-y-2">
