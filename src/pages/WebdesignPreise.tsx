@@ -12,6 +12,7 @@ import {
   Award,
   ChevronDown,
   Quote,
+  ThumbsUp,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
