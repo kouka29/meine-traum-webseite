@@ -56,7 +56,43 @@ type DbTestimonial = {
 };
 
 const TestimonialBlock = () => {
-  const [items, setItems] = useState<DbTestimonial[]>([]);
+  const items: DbTestimonial[] = [
+    {
+      id: "t1",
+      name: "Markus L.",
+      role: "Inhaber, Elektro Lenz GmbH",
+      text: "Früher kamen Aufträge nur über Empfehlungen. Jetzt generiert unsere Website täglich neue Anfragen aus der Region.",
+      result: "",
+    },
+    {
+      id: "t2",
+      name: "Thomas B.",
+      role: "Inhaber, Malerbetrieb Brandt",
+      text: "In der ersten Woche nach dem Launch hatten wir 4 neue Anfragen. Die Website macht das, was ich mir erhofft hatte.",
+      result: "",
+    },
+    {
+      id: "t3",
+      name: "Andreas K.",
+      role: "Geschäftsführer, Sanitär Krause",
+      text: "Kunden finden uns jetzt sofort bei Google wenn sie nach Sanitär in unserer Stadt suchen. Das war vorher undenkbar.",
+      result: "",
+    },
+    {
+      id: "t4",
+      name: "Kevin R.",
+      role: "Inhaber, Dachdeckerei Richter",
+      text: "Ich bin Dachdecker, kein IT-Typ. Trotzdem hat alles in 7 Tagen funktioniert — ohne dass ich einen Finger rühren musste.",
+      result: "",
+    },
+    {
+      id: "t5",
+      name: "Jürgen M.",
+      role: "Meister, Elektro Müller",
+      text: "59€ im Monat und ich brauche keine Werbung mehr zu schalten. Die Website holt mir die Kunden selbst.",
+      result: "",
+    },
+  ];
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(3);
 
@@ -68,21 +104,6 @@ const TestimonialBlock = () => {
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    supabase
-      .from("testimonials")
-      .select("id,name,role,text,result")
-      .eq("is_visible", true)
-      .order("sort_order", { ascending: true })
-      .then(({ data }) => {
-        if (!cancelled && data) setItems(data as DbTestimonial[]);
-      });
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   const pageCount = Math.max(1, items.length - visible + 1);
