@@ -203,9 +203,9 @@ const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] 
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="w-full flex items-center justify-between gap-2 text-sm font-medium text-primary hover:bg-primary/5 rounded-lg px-3 py-2 transition-colors"
+        className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-primary border-2 border-primary/30 hover:border-primary hover:bg-primary/5 rounded-xl px-4 py-2.5 transition-colors"
       >
-        <span>🚀 Mehr herausholen? Wachstumspaket ansehen</span>
+        <span>+ Add-ons & Extras ansehen</span>
         <ChevronDown
           size={16}
           className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
