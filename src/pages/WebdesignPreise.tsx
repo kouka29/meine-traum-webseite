@@ -437,6 +437,7 @@ type BuyPkg = {
   price: string;
   highlights?: string[];
   compare?: string;
+  includesHint?: string;
   features: string[];
   footnote?: string;
   comparison?: string;
