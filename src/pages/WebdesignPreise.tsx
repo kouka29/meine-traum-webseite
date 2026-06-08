@@ -694,8 +694,8 @@ const BuyCard = ({
   onOpen: (badge: string) => void;
   onCheckout: (pkg: BuyPkg) => void;
 }) => {
-  const visibleFeatures = pkg.features.slice(0, 3);
-  const hiddenFeatures = pkg.features.slice(3);
+  const visibleFeatures = pkg.features.slice(0, 4);
+  const hiddenFeatures = pkg.features.slice(4);
   return (
   <AnimatedSection delay={i * 0.08}>
     <div
