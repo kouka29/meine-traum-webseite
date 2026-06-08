@@ -735,6 +735,7 @@ function StepPaket({
           );
         })}
       </div>
+      <TrustBlock compact />
     </div>
   );
 }
