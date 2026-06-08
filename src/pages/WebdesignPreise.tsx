@@ -722,6 +722,9 @@ const BuyCard = ({
       {pkg.compare && (
         <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
       )}
+      {pkg.includesHint && (
+        <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
+      )}
       <div className="space-y-3 flex-1 mb-6">
         {visibleFeatures.map((f) => (
           <div key={f} className="flex items-start gap-2.5">
