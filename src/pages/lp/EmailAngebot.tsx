@@ -1,6 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, Star, Clock, ShieldCheck, Sparkles, ChevronDown } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle,
+  Star,
+  Clock,
+  Sparkles,
+  ShieldCheck,
+  ChevronDown,
+  Quote,
+  Handshake,
+  Award,
+  ThumbsUp,
+  Lock,
+  FileText,
+  Target,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -16,6 +31,10 @@ type Pkg = {
   includesHint?: string;
   features: string[];
   hidden: string[];
+  subPrice?: string;
+  desc?: string;
+  enterprise?: boolean;
+  compare?: string;
   popular?: boolean;
   cta: string;
 };
@@ -78,6 +97,29 @@ const rentPackages: Pkg[] = [
   },
 ];
 
+const enterprisePkg = {
+  name: "Enterprise",
+  subtitle: "Für Betriebe mit besonderen Anforderungen",
+  price: "Auf Anfrage – meist unter 300 €/Monat",
+  badge: "Enterprise – Auf Anfrage",
+  features: [
+    "Onlineshop möglich",
+    "Unbegrenzte Seiten",
+    "SEO-Strategie",
+    "Google Ads Setup",
+    "Persönlicher Ansprechpartner",
+    "Laufende Änderungen & Pflege inklusive",
+    "Wartung & Updates inklusive",
+  ],
+  cta: "Beratung anfragen",
+};
+
+const buyCompare: Record<string, string> = {
+  Starter: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 € (alle Preise netto)",
+  Pro: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 386 € (alle Preise netto)",
+  Premium: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 226 € (alle Preise netto)",
+};
+
 const buyPackages: Pkg[] = rentPackages.map((p) => {
   const buyPrices: Record<string, string> = {
     Starter: "990 € einmalig",
@@ -94,6 +136,7 @@ const buyPackages: Pkg[] = rentPackages.map((p) => {
     price: buyPrices[p.name],
     badge: buyBadges[p.name],
     priceId: `${p.name.toLowerCase()}_buy_onetime`,
+    compare: buyCompare[p.name],
     cta: p.name === "Pro" ? "Jetzt kaufen – Website sichern" : p.name === "Premium" ? "Premium kaufen – Jetzt starten" : "Jetzt Website kaufen",
   };
 });
@@ -135,19 +178,34 @@ const funnelPakete: FunnelPaket[] = Object.entries(PAKET_NUMS).map(([name, v]) =
 
 const testimonials = [
   {
-    text: "Früher kamen Aufträge nur über Empfehlungen. Jetzt generiert unsere Website täglich neue Anfragen.",
+    id: "t1",
     name: "Markus L.",
     role: "Inhaber, Elektro Lenz GmbH",
+    text: "Früher kamen Aufträge nur über Empfehlungen. Jetzt generiert unsere Website täglich neue Anfragen aus der Region.",
   },
   {
-    text: "In der ersten Woche nach dem Launch hatten wir 4 neue Anfragen. Die Website macht das, was ich mir erhofft hatte.",
+    id: "t2",
     name: "Thomas B.",
     role: "Inhaber, Malerbetrieb Brandt",
+    text: "In der ersten Woche nach dem Launch hatten wir 4 neue Anfragen. Die Website macht das, was ich mir erhofft hatte.",
   },
   {
-    text: "59€ im Monat und ich brauche keine Werbung mehr zu schalten. Die Website holt mir die Kunden selbst.",
+    id: "t3",
+    name: "Andreas K.",
+    role: "Geschäftsführer, Sanitär Krause",
+    text: "Kunden finden uns jetzt sofort bei Google wenn sie nach Sanitär in unserer Stadt suchen. Das war vorher undenkbar.",
+  },
+  {
+    id: "t4",
+    name: "Kevin R.",
+    role: "Inhaber, Dachdeckerei Richter",
+    text: "Ich bin Dachdecker, kein IT-Typ. Trotzdem hat alles in 7 Tagen funktioniert — ohne dass ich einen Finger rühren musste.",
+  },
+  {
+    id: "t5",
     name: "Jürgen M.",
     role: "Meister, Elektro Müller",
+    text: "59€ im Monat und ich brauche keine Werbung mehr zu schalten. Die Website holt mir die Kunden selbst.",
   },
 ];
 
@@ -184,6 +242,111 @@ const faqs = [
 
 const initialsFor = (name: string) =>
   name.split(" ").map((p) => p[0]).filter(Boolean).slice(0, 2).join("");
+
+const TrustStrip = () => (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
+    {[
+      { Icon: Handshake, num: "150+", label: "Betriebe vertrauen uns" },
+      { Icon: Award, num: "6 Jahre", label: "Erfahrung im Webdesign für Selbstständige" },
+      { Icon: ThumbsUp, num: "98%", label: "Weiterempfehlungsrate" },
+      { Icon: Clock, num: "48h", label: "Erstes Konzept steht" },
+    ].map(({ Icon, num, label }) => (
+      <div
+        key={num}
+        className="flex items-center gap-3 sm:gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-4 sm:px-4 sm:py-5"
+      >
+        <div className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+          <Icon size={22} strokeWidth={2} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="font-heading text-2xl sm:text-[1.75rem] font-bold text-[#5B3DC8] leading-none mb-1 whitespace-nowrap">{num}</p>
+          <p className="text-xs text-muted-foreground leading-snug">{label}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+const TestimonialCarousel = () => {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(3);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setVisible(w >= 1024 ? 3 : w >= 640 ? 2 : 1);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const pageCount = Math.max(1, testimonials.length - visible + 1);
+
+  useEffect(() => {
+    setIdx((i) => Math.min(i, Math.max(0, testimonials.length - visible)));
+  }, [visible]);
+
+  useEffect(() => {
+    if (pageCount <= 1) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % pageCount), 6000);
+    return () => clearInterval(t);
+  }, [pageCount]);
+
+  return (
+    <div className="max-w-6xl mx-auto my-16 px-4">
+      <div className="overflow-hidden">
+        <div
+          className="flex"
+          style={{
+            transform: `translateX(-${idx * (100 / visible)}%)`,
+            transition: "transform 800ms cubic-bezier(0.22, 1, 0.36, 1)",
+          }}
+        >
+          {testimonials.map((t) => (
+            <div key={t.id} className="shrink-0 px-2.5" style={{ flex: `0 0 ${100 / visible}%` }}>
+              <div className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
+                <div className="p-7 md:p-8 flex-1 flex flex-col relative">
+                  <Quote size={80} className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none" fill="currentColor" strokeWidth={0} />
+                  <div className="flex gap-1 mb-5 relative z-10">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" />
+                    ))}
+                  </div>
+                  <blockquote className="font-heading text-base md:text-lg leading-snug text-foreground font-semibold mb-6 tracking-tight flex-1 relative z-10">
+                    „{t.text}"
+                  </blockquote>
+                  <div className="flex items-center gap-3 relative z-10">
+                    <div className="w-11 h-11 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm ring-4 ring-primary/10 shrink-0">
+                      {initialsFor(t.name)}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-semibold text-foreground text-sm leading-tight">{t.name}</p>
+                      <p className="text-[11px] text-muted-foreground tracking-wider uppercase mt-0.5 truncate">{t.role}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="h-1.5 w-full bg-gradient-to-r from-primary to-[hsl(250,56%,65%)]" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {pageCount > 1 && (
+        <div className="flex justify-center gap-2 mt-6">
+          {Array.from({ length: pageCount }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIdx(i)}
+              aria-label={`Seite ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30"}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const HiddenFeaturesAccordion = ({ items }: { items: string[] }) => {
   const [open, setOpen] = useState(false);
@@ -278,6 +441,9 @@ const EmailAngebot = () => {
             Deine neue Website kostet dich ab 59 €/Monat.
           </p>
 
+      {/* TrustStrip */}
+      <TrustStrip />
+
           {/* BLOCK 3: Pricing */}
           <Tabs value={mode} onValueChange={(v) => setMode(v as "miete" | "kauf")} className="mb-8">
             <TabsList className="mx-auto flex w-full max-w-sm mb-6">
@@ -318,6 +484,9 @@ const EmailAngebot = () => {
                         )}
                         <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
                         <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
+                        {pkg.compare && (
+                          <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
+                        )}
                         {pkg.includesHint && (
                           <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
                         )}
@@ -350,6 +519,28 @@ const EmailAngebot = () => {
                       </div>
                     ))}
                   </div>
+                  {/* Enterprise Block */}
+                  <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
+                    <div className="flex-1">
+                      <h3 className="font-heading text-xl font-bold mb-1">{enterprisePkg.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">{enterprisePkg.subtitle}</p>
+                      <p className="font-heading text-2xl font-bold gradient-text mb-1">{enterprisePkg.price}</p>
+                      <p className="text-xs text-muted-foreground mb-5">zzgl. 19 % MwSt.</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {enterprisePkg.features.map((f) => (
+                          <div key={f} className="flex items-start gap-2.5">
+                            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                            <span className="text-sm">{f}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="md:w-auto">
+                      <Button variant="outline" size="lg" onClick={() => openPopup(enterprisePkg.badge)}>
+                        {enterprisePkg.cta} <ArrowRight size={16} />
+                      </Button>
+                    </div>
+                  </div>
                 </TabsContent>
               );
             })}
@@ -366,36 +557,8 @@ const EmailAngebot = () => {
             * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
           </p>
 
-          {/* BLOCK 4: Testimonials */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-20">
-            {testimonials.map((t) => (
-              <div
-                key={t.name}
-                className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col"
-              >
-                <div className="p-7 md:p-8 flex-1 flex flex-col">
-                  <div className="flex gap-1 mb-5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" />
-                    ))}
-                  </div>
-                  <blockquote className="font-heading text-base md:text-lg leading-snug text-foreground font-semibold mb-6 tracking-tight flex-1">
-                    „{t.text}"
-                  </blockquote>
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm ring-4 ring-primary/10 shrink-0">
-                      {initialsFor(t.name)}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-semibold text-foreground text-sm leading-tight">{t.name}</p>
-                      <p className="text-[11px] text-muted-foreground tracking-wider uppercase mt-0.5 truncate">{t.role}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="h-1.5 w-full bg-gradient-to-r from-primary to-[hsl(250,56%,65%)]" />
-              </div>
-            ))}
-          </div>
+          {/* BLOCK 4: Testimonials Carousel */}
+          <TestimonialCarousel />
 
           {/* BLOCK 5: FAQ */}
           <div className="max-w-3xl mx-auto mb-16">
@@ -417,23 +580,46 @@ const EmailAngebot = () => {
               ))}
             </Accordion>
           </div>
+
+          {/* Trust Badges */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
+            {[
+              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Du siehst ist was Du zahlst" },
+              { Icon: FileText, label: "Kein Kleingedrucktes", sub: "Einfache, klare Verträge" },
+              { Icon: Target, label: "Erst Demo – dann Entscheidung", sub: "Kostenlose Vorschau in 48 Stunden" },
+            ].map(({ Icon, label, sub }) => (
+              <div key={label} className="flex flex-col items-center text-center gap-3 px-2">
+                <Icon className="text-primary w-10 h-10 sm:w-12 sm:h-12" strokeWidth={1.8} />
+                <span className="text-base sm:text-[17px] font-bold leading-snug text-foreground">{label}</span>
+                <span className="text-xs sm:text-sm text-muted-foreground leading-[1.5]">{sub}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* BLOCK 6: Finaler CTA */}
       <section className="bg-primary/10 py-[60px]">
         <div className="container-narrow px-4 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-3">
-            Noch Fragen?
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
+            Mehr Aufträge. Weniger Aufwand.
           </h2>
-          <p className="text-muted-foreground text-base md:text-lg mb-7">
-            Ich berate dich kostenlos und unverbindlich.
+          <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
+            Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
+            Gefällt sie dir nicht — Du zahlst nichts.
           </p>
-          <Button variant="gradient" size="lg" asChild>
-            <Link to="/kontakt">
-              Kostenlos beraten lassen <ArrowRight size={18} />
-            </Link>
+          <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")}>
+            Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />
           </Button>
+          <p className="text-sm text-muted-foreground mt-5">
+            Fragen? Einfach anrufen:{" "}
+            <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">
+              06131 30 764 98
+            </a>
+          </p>
+          <p className="text-base md:text-lg font-bold text-primary mt-6">
+            ⭐⭐⭐⭐⭐ Bereits 150+ Handwerksbetriebe aus der Region vertrauen uns
+          </p>
         </div>
       </section>
 
