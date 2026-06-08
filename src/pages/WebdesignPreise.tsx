@@ -519,12 +519,15 @@ const PackageCard = ({
   i: number;
   onOpen: (badge: string) => void;
   onCheckout?: (pkg: Pkg) => void;
-}) => (
+}) => {
+  const visibleFeatures = pkg.enterprise ? pkg.features : pkg.features.slice(0, 3);
+  const hiddenFeatures = pkg.enterprise ? [] : pkg.features.slice(3);
+  return (
   <AnimatedSection delay={i * 0.08}>
     <div
-      className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
+      className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
         pkg.popular
-          ? "border-primary shadow-elevated"
+          ? "border-2 border-primary shadow-[0_24px_60px_-12px_hsl(var(--primary)/0.35)] lg:scale-[1.03] lg:z-10"
           : pkg.enterprise
             ? "border-foreground/40 bg-gradient-to-br from-card to-background"
             : "border-border"
@@ -546,7 +549,7 @@ const PackageCard = ({
       ) : (
         <>
           <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-          <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+          <p className="text-xs text-muted-foreground mb-6">zzgl. 19 % MwSt.</p>
           {pkg.subPrice && (
             <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
           )}
@@ -555,8 +558,8 @@ const PackageCard = ({
       {pkg.desc && (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
       )}
-      <div className="space-y-3 flex-1 mb-8 mt-2">
-        {pkg.features.map((f) => {
+      <div className="space-y-3 flex-1 mb-6">
+        {visibleFeatures.map((f) => {
           if (f.startsWith("__hint__")) {
             return (
               <p key={f} className="text-xs text-muted-foreground pl-[22px] -mt-2">
@@ -573,10 +576,12 @@ const PackageCard = ({
         })}
       </div>
       {pkg.upgradeHint && (
-        <p className="text-xs font-bold text-primary mb-4 -mt-4">{pkg.upgradeHint}</p>
+        <p className="text-xs font-bold text-primary mb-4">{pkg.upgradeHint}</p>
       )}
-      {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
-      <div className="space-y-2">
+      {(pkg.growth || hiddenFeatures.length > 0) && (
+        <GrowthAccordion growth={pkg.growth} extraFeatures={hiddenFeatures} />
+      )}
+      <div className="space-y-2 mt-6">
         <Button
           variant={pkg.enterprise ? "outline" : "gradient"}
           size="lg"
@@ -601,10 +606,10 @@ const PackageCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip kind="rent" />}
     </div>
   </AnimatedSection>
-);
+  );
+};
 
 const BuyCard = ({
   pkg,
@@ -616,11 +621,16 @@ const BuyCard = ({
   i: number;
   onOpen: (badge: string) => void;
   onCheckout: (pkg: BuyPkg) => void;
-}) => (
+}) => {
+  const visibleFeatures = pkg.features.slice(0, 3);
+  const hiddenFeatures = pkg.features.slice(3);
+  return (
   <AnimatedSection delay={i * 0.08}>
     <div
-      className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
-        pkg.popular ? "border-primary shadow-elevated" : "border-border"
+      className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
+        pkg.popular
+          ? "border-2 border-primary shadow-[0_24px_60px_-12px_hsl(var(--primary)/0.35)] lg:scale-[1.03] lg:z-10"
+          : "border-border"
       }`}
     >
       {pkg.popular && (
@@ -630,7 +640,7 @@ const BuyCard = ({
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
       <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-      <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+      <p className="text-xs text-muted-foreground mb-6">zzgl. 19 % MwSt.</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
           {pkg.highlights.map((h) => (
@@ -641,16 +651,18 @@ const BuyCard = ({
       {pkg.compare && (
         <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
       )}
-      <div className="space-y-3 flex-1 mb-4 mt-2">
-        {pkg.features.map((f) => (
+      <div className="space-y-3 flex-1 mb-6">
+        {visibleFeatures.map((f) => (
           <div key={f} className="flex items-start gap-2.5">
             <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
             <span className="text-sm">{f}</span>
           </div>
         ))}
       </div>
-      {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
-      <div className="space-y-2">
+      {(pkg.growth || hiddenFeatures.length > 0) && (
+        <GrowthAccordion growth={pkg.growth} extraFeatures={hiddenFeatures} />
+      )}
+      <div className="space-y-2 mt-6">
         <Button
           variant="gradient"
           size="lg"
@@ -671,10 +683,10 @@ const BuyCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip kind="deposit" />}
     </div>
   </AnimatedSection>
-);
+  );
+};
 
 const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
