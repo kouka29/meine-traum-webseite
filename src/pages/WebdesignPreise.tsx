@@ -331,12 +331,13 @@ const rentPackages: Pkg[] = [
     badge: "Premium Miete – 159 €/Monat netto",
     priceId: "premium_rent_monthly",
     features: [
-      "Bis zu 10 Seiten – komplette Online-Präsenz",
+      "Bis zu 10 Seiten – deine komplette Online-Präsenz",
       "Google-Optimierung die Anfragen bringt – nicht nur Besucher",
-      "Google Business Einrichtung inklusive",
+      "Google Business + Maps vollständig eingerichtet",
+      "Individuelle Umsetzung – Timing nach Absprache",
       "Design das mehr Anfragen bringt",
       "Hosting & Domain inklusive",
-      "Individuelle Umsetzung – Timing nach Absprache",
+      "Unbegrenzte Änderungen im ersten Monat",
     ],
     cta: "Premium sichern – Jetzt starten",
     growth: {
