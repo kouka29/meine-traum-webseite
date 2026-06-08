@@ -269,6 +269,7 @@ type Pkg = {
   enterprise?: boolean;
   cta: string;
   upgradeHint?: string;
+  includesHint?: string;
   growth?: { price: string; items: string[] };
   badge?: string;
   priceId?: string;
@@ -282,15 +283,13 @@ const rentPackages: Pkg[] = [
     priceId: "starter_rent_monthly",
     features: [
       "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
-      "Perfekt auf jedem Handy – auch auf der Baustelle",
-      "In 7 Tagen live – du machst weiter dein Geschäft",
-      "Hosting & Domain inklusive – keine Extra-Kosten",
-      "SSL-Zertifikat inklusive – professioneller Auftritt",
+      "Individuelle Texte & Inhalte – du lieferst die Infos, wir schreiben",
+      "Perfekt auf jedem Smartphone & Tablet",
+      "Hosting, Domain & SSL inklusive – keine Extra-Kosten",
       "Professionelles Design – kein Baukastensystem",
       "Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
     ],
     cta: "Jetzt Website sichern",
-    upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
     growth: {
       price: "+29 €/Monat zubuchbar",
       items: [
@@ -305,14 +304,14 @@ const rentPackages: Pkg[] = [
     price: "99 €/Monat",
     badge: "Pro Miete – 99 €/Monat netto",
     priceId: "pro_rent_monthly",
+    includesHint: "✓ Alles aus Starter inklusive – plus:",
     features: [
       "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
-      "Google Maps Eintrag eingerichtet – Kunden finden dich sofort",
-      "SEO-Grundlagen – Google zeigt dich wenn jemand sucht",
-      "Kontaktformular inklusive – Kunden können sofort anfragen",
-      "Perfekt auf jedem Handy – auch auf der Baustelle",
-      "Hosting & Domain inklusive",
+      "Google Maps & Google Business vollständig eingerichtet",
+      "SEO-Grundlagen – Google zeigt dich bei lokalen Suchanfragen",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
+      "Kontaktformular auf jeder Seite",
+      "Optimierte Ladezeiten durch Bildkomprimierung",
     ],
     popular: true,
     cta: "Jetzt starten – Website sichern",
@@ -330,14 +329,14 @@ const rentPackages: Pkg[] = [
     price: "159 €/Monat",
     badge: "Premium Miete – 159 €/Monat netto",
     priceId: "premium_rent_monthly",
+    includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
       "Bis zu 10 Seiten – deine komplette Online-Präsenz",
-      "Google-Optimierung die Anfragen bringt – nicht nur Besucher",
-      "Google Business + Maps vollständig eingerichtet",
-      "Individuelle Umsetzung – Timing nach Absprache",
-      "Design das mehr Anfragen bringt",
-      "Hosting & Domain inklusive",
+      "Tiefe Google-Optimierung – mehr Anfragen, nicht nur Besucher",
+      "Individuelle Umsetzung – Design & Timing nach deinen Wünschen",
       "Unbegrenzte Änderungen im ersten Monat",
+      "Google Ads Setup möglich",
+      "Persönlicher Ansprechpartner",
     ],
     cta: "Premium sichern – Jetzt starten",
     growth: {
@@ -523,8 +522,8 @@ const PackageCard = ({
   onOpen: (badge: string) => void;
   onCheckout?: (pkg: Pkg) => void;
 }) => {
-  const visibleFeatures = pkg.enterprise ? pkg.features : pkg.features.slice(0, 3);
-  const hiddenFeatures = pkg.enterprise ? [] : pkg.features.slice(3);
+  const visibleFeatures = pkg.enterprise ? pkg.features : pkg.features.slice(0, 4);
+  const hiddenFeatures = pkg.enterprise ? [] : pkg.features.slice(4);
   return (
   <AnimatedSection delay={i * 0.08}>
     <div
@@ -559,6 +558,9 @@ const PackageCard = ({
       )}
       {pkg.desc && (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
+      )}
+      {pkg.includesHint && (
+        <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
       )}
       <div className="space-y-3 flex-1 mb-6">
         {visibleFeatures.map((f) => {
