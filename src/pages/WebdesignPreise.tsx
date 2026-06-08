@@ -548,28 +548,32 @@ const buyEnterprise = {
 
 const faqs = [
   {
-    q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als Sie denken. Ein einziger neuer Auftrag reicht. Den Rest verdienst Du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    q: "Mieten oder kaufen – was passt zu mir?",
+    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
   },
   {
-    q: "Was passiert wenn mir die Vorschau nicht gefällt?",
-    a: "Gar nichts. Sie zahlen keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige Ihnen die Vorschau – gefällt sie Ihnen nicht, war es das. Kein unangenehmes Gespräch danach.",
+    q: "Wie lange dauert es bis meine Website fertig ist?",
+    a: "Beim Starter-Paket ist deine Website in 7 Tagen live. Beim Pro-Paket ca. 2 Wochen. Beim Premium-Paket besprechen wir Timing individuell nach deinen Wünschen.",
   },
   {
-    q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
-    a: "Nein. Sie füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Sie bekommen Ihre fertige Website – ohne einen einzigen technischen Handgriff.",
+    q: "Was passiert nach den 12 Monaten?",
+    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
   },
   {
-    q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    q: "Muss ich selbst Texte und Inhalte liefern?",
+    a: "Nein – du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
   },
   {
-    q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
-    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+    q: "Was ist wenn ich mit der Website nicht zufrieden bin?",
+    a: "Wir zeigen dir vor dem Launch eine Vorschau – erst wenn du zufrieden bist, gehen wir live. Beim Premium-Paket sind zusätzlich Korrekturen nach Launch inklusive.",
   },
   {
-    q: "Bekomme ich durch die Website wirklich mehr Kunden?",
-    a: "Das ist die wichtigste Frage — und wir verstehen sie. Wir können keine Garantie auf eine bestimmte Anzahl Anfragen geben, aber: Alle unsere Kunden haben eine Website, die auf Google gefunden wird, professionell wirkt und rund um die Uhr für Sie arbeitet. Betriebe ohne Website verlieren täglich potenzielle Kunden an Konkurrenten. Mit einer professionellen Website gewinnen Sie zurück.",
+    q: "Kann ich mein Paket später wechseln?",
+    a: "Ja – du kannst jederzeit auf ein höheres Paket upgraden, ohne neue Mindestlaufzeit. Ein Downgrade ist nach Ende des Startzeitraums möglich.",
+  },
+  {
+    q: "Ist die Website auch auf dem Handy nutzbar?",
+    a: "Ja – alle Websites sind vollständig für Smartphones und Tablets optimiert. Deine Kunden können dich von überall problemlos erreichen.",
   },
 ];
 
