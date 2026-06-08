@@ -630,7 +630,7 @@ function StepPaket({
         Welches Paket darf es sein?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Wählen Sie das Paket, das am besten zu Ihnen passt.
+        Wähle das Paket, das am besten zu dir passt.
       </p>
       <div style={{ display: "grid", gap: 12 }}>
         {pakete.map((p, idx) => {
@@ -709,10 +709,10 @@ function StepZahlung({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Wie möchten Sie zahlen?
+        Wie möchtest du zahlen?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Beide Wege — gleiches Ergebnis. Sie entscheiden.
+        Beide Wege — gleiches Ergebnis. Du entscheidest.
       </p>
 
       <div style={{ display: "grid", gap: 12 }}>
@@ -843,10 +843,10 @@ function StepAddOns({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Möchten Sie etwas hinzufügen?
+        Möchtest du noch etwas dazunehmen?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Optional — Sie können einzelne Extras dazubuchen oder direkt weiter.
+        Optional — direkt weiter oder Wachstumspaket dazunehmen.
       </p>
       {growthHint && (
         <div style={{
@@ -863,6 +863,10 @@ function StepAddOns({
       <div style={{ display: "grid", gap: 10 }}>
         {addons.map((a) => {
           const sel = selectedIds.includes(a.id);
+          const isGrowth = a.price_type === "monthly" && /wachstum/i.test(a.name);
+          if (isGrowth) {
+            return <GrowthAddonCard key={a.id} addon={a} selected={sel} onToggle={() => toggle(a.id)} />;
+          }
           return (
             <button
               key={a.id}
@@ -925,6 +929,104 @@ function StepAddOns({
 }
 
 // ─── STEP 2: KONTAKT ───────────────────────────────────
+function GrowthAddonCard({
+  addon, selected, onToggle,
+}: {
+  addon: FunnelAddon;
+  selected: boolean;
+  onToggle: () => void;
+}) {
+  const euro = addon.price_cents / 100;
+  const aenderungen = euro <= 35 ? 1 : euro <= 60 ? 3 : 5;
+  const features = [
+    `Bis zu ${aenderungen} Änderung${aenderungen === 1 ? "" : "en"} pro Monat`,
+    "Updates & Wartung inklusive",
+    "Priority Support per WhatsApp",
+  ];
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onToggle}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onToggle(); } }}
+      style={{
+        background: "#fff",
+        border: selected ? `2px solid ${BRAND}` : "2px solid #E5E3FF",
+        borderRadius: 16,
+        padding: 18,
+        boxShadow: selected ? "0 8px 24px rgba(79,63,240,0.18)" : "0 2px 10px rgba(15,12,41,0.06)",
+        cursor: "pointer",
+        transition: "all 0.15s",
+        fontFamily: "inherit",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+          <span style={{ fontSize: 22 }} aria-hidden="true">🚀</span>
+          <span style={{ fontSize: 17, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.01em" }}>
+            Wachstumspaket
+          </span>
+        </div>
+        <div style={{ textAlign: "right", flexShrink: 0 }}>
+          <div style={{ fontSize: 22, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+            +{fmtEUR(euro)}
+          </div>
+          <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}>/Monat</div>
+        </div>
+      </div>
+      <div style={{ marginTop: 10 }}>
+        <span style={{
+          display: "inline-block",
+          fontSize: 11, fontWeight: 800, letterSpacing: "0.06em",
+          color: BRAND, background: `${BRAND}15`,
+          padding: "4px 10px", borderRadius: 20,
+        }}>
+          BELIEBT BEI AKTIVEN BETRIEBEN
+        </span>
+      </div>
+      <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0", display: "grid", gap: 8 }}>
+        {features.map((f) => (
+          <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 14, color: TEXT_DARK }}>
+            <Check size={16} color="#059669" strokeWidth={3} style={{ marginTop: 2, flexShrink: 0 }} />
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+      <div style={{
+        marginTop: 14, paddingTop: 12,
+        borderTop: "1px solid #F1F0FF",
+        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+      }}>
+        <div style={{ fontSize: 12, color: TEXT_MUTED }}>
+          Monatlich kündbar — jederzeit
+        </div>
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+          aria-pressed={selected}
+          aria-label="Wachstumspaket aktivieren"
+          style={{
+            position: "relative",
+            width: 52, height: 30, borderRadius: 999,
+            border: "none", cursor: "pointer",
+            background: selected ? BRAND : "#D1CFEF",
+            transition: "background 0.15s",
+            flexShrink: 0,
+          }}
+        >
+          <span style={{
+            position: "absolute", top: 3, left: selected ? 25 : 3,
+            width: 24, height: 24, borderRadius: "50%",
+            background: "#fff",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+            transition: "left 0.15s",
+          }} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function StepKontakt({
   vorname, setVorname, nachname, setNachname, firma, setFirma,
   email, setEmail, telefon, setTelefon,
@@ -960,10 +1062,10 @@ function StepKontakt({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Ihre Kontaktdaten
+        Deine Kontaktdaten
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Damit wir Ihre Auftragsbestätigung und Rechnung senden können.
+        Damit wir dir Auftragsbestätigung und Rechnung zusenden können.
       </p>
 
       <div style={{ display: "grid", gap: 14 }}>
