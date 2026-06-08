@@ -1240,6 +1240,12 @@ function StepKontakt({
         <div style={{ fontSize: 12, color: TEXT_MUTED }}>
           {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(summary.heuteZuZahlen)}</strong>
         </div>
+        <div style={{ fontSize: 12, color: TEXT_MUTED, marginTop: 4 }}>
+          MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(Math.round(summary.heuteZuZahlen * 19) / 100)}</strong>
+        </div>
+        <div style={{ fontSize: 13, color: TEXT_DARK, marginTop: 6, fontWeight: 700 }}>
+          Gesamtpreis brutto: {fmtEUR(Math.round(summary.heuteZuZahlen * 119) / 100)}
+        </div>
       </div>
 
       {stripeAvailable && (
