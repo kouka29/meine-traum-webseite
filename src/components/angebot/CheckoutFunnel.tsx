@@ -539,6 +539,7 @@ export default function CheckoutFunnel({
               agb={agb} setAgb={setAgb}
               kostenpflichtig={kostenpflichtig} setKostenpflichtig={setKostenpflichtig}
               summary={{ heuteZuZahlen, heuteLabel, paymentMode, gesamtMonatlich, gesamtEinmalig }}
+              paketName={currentPaket.name}
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
