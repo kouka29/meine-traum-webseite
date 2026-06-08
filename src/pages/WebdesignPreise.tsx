@@ -269,6 +269,7 @@ type Pkg = {
   enterprise?: boolean;
   cta: string;
   upgradeHint?: string;
+  includesHint?: string;
   growth?: { price: string; items: string[] };
   badge?: string;
   priceId?: string;
