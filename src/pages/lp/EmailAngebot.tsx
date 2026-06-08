@@ -307,8 +307,8 @@ const EmailAngebot = () => {
                         key={pkg.name}
                         className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
                           pkg.popular
-                            ? "border-[3px] border-primary shadow-[0_32px_70px_-12px_hsl(var(--primary)/0.5)] lg:scale-[1.05] lg:z-10"
-                            : "border-2 border-primary"
+                            ? "border-[5px] border-primary shadow-[0_32px_70px_-12px_hsl(var(--primary)/0.5)] lg:scale-[1.05] lg:z-10"
+                            : "border-4 border-primary"
                         }`}
                       >
                         {pkg.popular && (
