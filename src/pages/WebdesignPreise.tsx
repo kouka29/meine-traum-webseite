@@ -906,7 +906,6 @@ const WebdesignPreise = () => {
               </Button>
             </div>
             <TrustStrip />
-            <AddonsSection />
             <TestimonialBlock />
             {rentPackages.filter(p => p.enterprise).map((pkg) => (
               <AnimatedSection key={pkg.name} delay={0.1}>
