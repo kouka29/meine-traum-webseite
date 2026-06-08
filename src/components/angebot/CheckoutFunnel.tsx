@@ -983,10 +983,15 @@ function GrowthAddonCard({
 }) {
   const euro = addon.price_cents / 100;
   const aenderungen = euro <= 35 ? 1 : euro <= 60 ? 3 : 5;
+  const isPremium = aenderungen === 5;
+  const isStarter = aenderungen === 1;
   const features = [
-    `Bis zu ${aenderungen} Änderung${aenderungen === 1 ? "" : "en"} pro Monat`,
-    "Updates & Wartung inklusive",
-    "Priority Support per WhatsApp",
+    isStarter
+      ? "1 Änderung pro Monat inklusive"
+      : `Bis zu ${aenderungen} Änderungen pro Monat`,
+    "Updates & Wartung",
+    isStarter ? "Support per WhatsApp" : "Priority Support per WhatsApp",
+    ...(isPremium ? ["Monatlicher Performance-Check"] : []),
   ];
   return (
     <div
@@ -1045,7 +1050,9 @@ function GrowthAddonCard({
         <div style={{ fontSize: 12, color: TEXT_MUTED }}>
           Monatlich kündbar — jederzeit
         </div>
-        <button
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 12, color: TEXT_MUTED }}>Zum Paket hinzufügen</span>
+          <button
           type="button"
           onClick={(e) => { e.stopPropagation(); onToggle(); }}
           aria-pressed={selected}
@@ -1066,7 +1073,8 @@ function GrowthAddonCard({
             boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
             transition: "left 0.15s",
           }} />
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   );
