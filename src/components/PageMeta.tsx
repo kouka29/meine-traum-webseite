@@ -204,6 +204,11 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: `Webdesign Preise für Dachdecker | ${BRAND}`,
     description: "Website für Dachdecker ab 59€/Monat. In 7 Tagen live. Google Maps, SEO & mehr inklusive.",
   },
+  "/lp/angebot": {
+    title: `Deine Website in 7 Tagen live | ${BRAND}`,
+    description:
+      "Professionelle Website ab 59€/Monat. In 7 Tagen live. Steuerlich absetzbar. Jetzt starten.",
+  },
 };
 
 const setMeta = (selector: string, attr: string, value: string) => {

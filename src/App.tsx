@@ -77,6 +77,7 @@ const KundenportalTicketDetail = lazy(() => import("./pages/kundenportal/TicketD
 const KundenportalAngebote = lazy(() => import("./pages/kundenportal/Angebote.tsx"));
 const KundenportalEinstellungen = lazy(() => import("./pages/kundenportal/Einstellungen.tsx"));
 const KundenportalWachstumspaket = lazy(() => import("./pages/kundenportal/Wachstumspaket.tsx"));
+const EmailAngebot = lazy(() => import("./pages/lp/EmailAngebot.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -98,6 +99,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
     pathname === "/a" ||
     pathname.startsWith("/a/") ||
     pathname === "/agb" ||
+    pathname.startsWith("/lp/") ||
     pathname.startsWith("/kundenportal");
   return (
     <>
@@ -200,6 +202,7 @@ const App = () => (
             <Route path="/a/:shortId" element={<Angebot />} />
             <Route path="/agb" element={<AGB />} />
             <Route path="/zahlung-erfolgreich" element={<ZahlungErfolgreich />} />
+            <Route path="/lp/angebot" element={<EmailAngebot />} />
             <Route path="/kundenportal/login" element={<KundenportalLogin />} />
             <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
             <Route path="/kundenportal" element={<KundenportalLayout />}>
