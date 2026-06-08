@@ -635,7 +635,7 @@ function StepPaket({
       <div style={{ display: "grid", gap: 12 }}>
         {pakete.map((p, idx) => {
           const active = p.id === selectedId;
-          const recommended = idx === pakete.length - 1 && pakete.length > 1;
+          const recommended = pakete.length >= 3 ? idx === 1 : (idx === pakete.length - 1 && pakete.length > 1);
           const showMiete = mieteGloballyEnabled && p.miete_monatlich && Number(p.miete_monatlich) > 0;
           return (
             <button
@@ -677,6 +677,11 @@ function StepPaket({
                       {showMiete ? `oder ${fmtEUR(p.preis)} einmalig` : fmtEUR(p.preis)}
                     </div>
                   </div>
+                  {showMiete && (
+                    <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 6, lineHeight: 1.4 }}>
+                      zzgl. 19% MwSt. · 12 Monate Laufzeit, danach monatlich kündbar
+                    </div>
+                  )}
                 </div>
                 <div style={{
                   width: 22, height: 22, borderRadius: "50%",
