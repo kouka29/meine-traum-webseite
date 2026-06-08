@@ -238,20 +238,7 @@ const GrowthAccordion = ({
                 </ul>
               </div>
             )}
-            {growth && (
-              <div className="space-y-2">
-                <p className="text-sm font-semibold text-primary">Wachstumspaket {growth.price}</p>
-                <ul className="space-y-1.5">
-                  {growth.items.map((it) => (
-                    <li key={it} className="flex items-start gap-2 text-xs text-foreground/80">
-                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
-                      <span>{it}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-[11px] text-muted-foreground italic pt-1">Monatlich kündbar.</p>
-              </div>
-            )}
+            {/* Wachstumspaket-Block entfernt */}
           </div>
         </div>
       </div>
@@ -820,8 +807,8 @@ const WebdesignPreise = () => {
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Ein verlorener Auftrag kostet Sie im Schnitt 800 €.<br />
-              Ihre neue Website kostet Sie ab 59 €/Monat.
+              Ein verlorener Auftrag kostet dich im Schnitt 800 €.<br />
+              Deine neue Website kostet dich ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
@@ -845,6 +832,7 @@ const WebdesignPreise = () => {
               </Button>
             </div>
             <TrustStrip />
+            <AddonsSection />
             <TestimonialBlock />
             {rentPackages.filter(p => p.enterprise).map((pkg) => (
               <AnimatedSection key={pkg.name} delay={0.1}>
