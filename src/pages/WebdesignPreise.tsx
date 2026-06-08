@@ -393,7 +393,7 @@ const rentPackages: Pkg[] = [
     includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
       "Bis zu 10 Seiten – deine komplette Online-Präsenz",
-      "Tiefe Google-Optimierung – mehr Anfragen, nicht nur Besucher",
+      "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
       "Individuelle Umsetzung – Design & Timing nach deinen Wünschen",
       "Unbegrenzte Änderungen im ersten Monat",
       "Google Ads Setup möglich",
