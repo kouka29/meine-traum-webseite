@@ -369,7 +369,7 @@ const rentPackages: Pkg[] = [
     features: [
       "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
       "Google Maps & Google Business vollständig eingerichtet",
-      "SEO-Grundlagen – Google zeigt dich bei lokalen Suchanfragen",
+      "Bei Google gefunden werden – wenn Kunden in deiner Stadt suchen",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
       "Kontaktformular auf jeder Seite",
       "Optimierte Ladezeiten durch Bildkomprimierung",
@@ -395,6 +395,7 @@ const rentPackages: Pkg[] = [
       "Bis zu 10 Seiten – deine komplette Online-Präsenz",
       "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
+      "Feinschliff nach Launch inklusive – damit alles genau passt",
       "Bis zu 3 Korrekturen nach Fertigstellung inklusive",
       "Google Ads Setup möglich",
       "Persönlicher Ansprechpartner",
@@ -422,7 +423,7 @@ const rentPackages: Pkg[] = [
       "SEO-Strategie",
       "Google Ads Setup",
       "Persönlicher Ansprechpartner",
-      "Unbegrenzte Änderungen inklusive",
+      "Laufende Änderungen & Pflege inklusive",
       "Wartung & Updates inklusive",
     ],
     enterprise: true,
@@ -537,7 +538,7 @@ const buyEnterprise = {
     "Unbegrenzte Seiten",
     "SEO-Strategie + Google Ads",
     "Persönlicher Ansprechpartner",
-    "Unbegrenzte Änderungen inklusive",
+    "Laufende Änderungen & Pflege inklusive",
     "Wartung & Support inklusive",
     "Individuelle Umsetzung",
   ],
@@ -853,7 +854,7 @@ const WebdesignPreise = () => {
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
               Ein Auftrag reicht.{" "}
-              <span className="gradient-text">Den Rest verdienen Sie.</span>
+              <span className="gradient-text">Den Rest verdienst du.</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-5">
               Professionell online — ohne großes Investment.
@@ -894,7 +895,7 @@ const WebdesignPreise = () => {
               <PaymentTrustStrip kind="rent" />
             </div>
             <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-              <Shield size={16} className="text-muted-foreground/80 shrink-0" />
+              <span>🛡️</span>
               <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
             </p>
             <div className="flex justify-center my-8">
@@ -962,7 +963,7 @@ const WebdesignPreise = () => {
               <PaymentTrustStrip kind="deposit" />
             </div>
             <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-              <Shield size={16} className="text-muted-foreground/80 shrink-0" />
+              <span>🛡️</span>
               <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
             </p>
             <div className="flex justify-center my-8">
