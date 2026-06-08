@@ -28,8 +28,8 @@ import { supabase } from "@/integrations/supabase/client";
 const TrustStrip = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
     {[
-      { Icon: Handshake, num: "150+", label: "Handwerksbetriebe vertrauen uns" },
-      { Icon: Award, num: "6 Jahre", label: "Erfahrung im Handwerker-Webdesign" },
+      { Icon: Handshake, num: "150+", label: "Betriebe vertrauen uns" },
+      { Icon: Award, num: "6 Jahre", label: "Erfahrung im Webdesign für Selbstständige" },
       { Icon: ThumbsUp, num: "98%", label: "Weiterempfehlungsrate" },
       { Icon: Clock, num: "48h", label: "Erstes Konzept steht" },
     ].map(({ Icon, num, label }) => (
@@ -548,28 +548,32 @@ const buyEnterprise = {
 
 const faqs = [
   {
-    q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als Sie denken. Ein einziger neuer Auftrag reicht. Den Rest verdienst Du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    q: "Mieten oder kaufen – was passt zu mir?",
+    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
   },
   {
-    q: "Was passiert wenn mir die Vorschau nicht gefällt?",
-    a: "Gar nichts. Sie zahlen keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige Ihnen die Vorschau – gefällt sie Ihnen nicht, war es das. Kein unangenehmes Gespräch danach.",
+    q: "Wie lange dauert es bis meine Website fertig ist?",
+    a: "Beim Starter-Paket ist deine Website in 7 Tagen live. Beim Pro-Paket ca. 2 Wochen. Beim Premium-Paket besprechen wir Timing individuell nach deinen Wünschen.",
   },
   {
-    q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
-    a: "Nein. Sie füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Sie bekommen Ihre fertige Website – ohne einen einzigen technischen Handgriff.",
+    q: "Was passiert nach den 12 Monaten?",
+    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
   },
   {
-    q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    q: "Muss ich selbst Texte und Inhalte liefern?",
+    a: "Nein – du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
   },
   {
-    q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
-    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+    q: "Was ist wenn ich mit der Website nicht zufrieden bin?",
+    a: "Wir zeigen dir vor dem Launch eine Vorschau – erst wenn du zufrieden bist, gehen wir live. Beim Premium-Paket sind zusätzlich Korrekturen nach Launch inklusive.",
   },
   {
-    q: "Bekomme ich durch die Website wirklich mehr Kunden?",
-    a: "Das ist die wichtigste Frage — und wir verstehen sie. Wir können keine Garantie auf eine bestimmte Anzahl Anfragen geben, aber: Alle unsere Kunden haben eine Website, die auf Google gefunden wird, professionell wirkt und rund um die Uhr für Sie arbeitet. Betriebe ohne Website verlieren täglich potenzielle Kunden an Konkurrenten. Mit einer professionellen Website gewinnen Sie zurück.",
+    q: "Kann ich mein Paket später wechseln?",
+    a: "Ja – du kannst jederzeit auf ein höheres Paket upgraden, ohne neue Mindestlaufzeit. Ein Downgrade ist nach Ende des Startzeitraums möglich.",
+  },
+  {
+    q: "Ist die Website auch auf dem Handy nutzbar?",
+    a: "Ja – alle Websites sind vollständig für Smartphones und Tablets optimiert. Deine Kunden können dich von überall problemlos erreichen.",
   },
 ];
 
@@ -866,6 +870,8 @@ const WebdesignPreise = () => {
           </div>
         </AnimatedSection>
 
+        <TrustStrip />
+
         <Tabs defaultValue="miete" className="mb-12">
           <TabsList className="mx-auto flex w-full max-w-sm mb-8">
             <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
@@ -888,29 +894,9 @@ const WebdesignPreise = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
-            <p className="mt-8 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
-            </p>
-            <div className="mt-4 flex justify-center">
-              <PaymentTrustStrip kind="rent" />
-            </div>
-            <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-              <span>🛡️</span>
-              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
-            </p>
-            <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-                <span className="flex items-center justify-center gap-2 leading-snug">
-                  <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
-                  <ArrowRight size={16} className="shrink-0" />
-                </span>
-              </Button>
-            </div>
-            <TrustStrip />
-            <TestimonialBlock />
             {rentPackages.filter(p => p.enterprise).map((pkg) => (
               <AnimatedSection key={pkg.name} delay={0.1}>
-                <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
+                <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
                     <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
                     <p className="text-sm text-muted-foreground mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
@@ -935,6 +921,16 @@ const WebdesignPreise = () => {
                 </div>
               </AnimatedSection>
             ))}
+            <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <span>🛡️</span>
+              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+            </p>
+            <div className="mt-4 flex justify-center">
+              <PaymentTrustStrip kind="rent" />
+            </div>
+            <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+            </p>
           </TabsContent>
 
           <TabsContent value="kauf">
@@ -956,28 +952,8 @@ const WebdesignPreise = () => {
                 />
               ))}
             </div>
-            <p className="mt-8 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
-            </p>
-            <div className="mt-4 flex justify-center">
-              <PaymentTrustStrip kind="deposit" />
-            </div>
-            <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-              <span>🛡️</span>
-              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
-            </p>
-            <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-                <span className="flex items-center justify-center gap-2 leading-snug">
-                  <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
-                  <ArrowRight size={16} className="shrink-0" />
-                </span>
-              </Button>
-            </div>
-            <TrustStrip />
-            <TestimonialBlock />
             <AnimatedSection delay={0.1}>
-              <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
+              <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex-1">
                   <h3 className="font-heading text-xl font-bold mb-1">{buyEnterprise.name}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
@@ -999,20 +975,34 @@ const WebdesignPreise = () => {
                 </div>
               </div>
             </AnimatedSection>
+            <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <span>🛡️</span>
+              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+            </p>
+            <div className="mt-4 flex justify-center">
+              <PaymentTrustStrip kind="deposit" />
+            </div>
+            <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+            </p>
           </TabsContent>
         </Tabs>
 
+        <TestimonialBlock />
+
         <AnimatedSection>
-          <div className="bg-card rounded-2xl p-8 md:p-10 border border-border text-center max-w-3xl mx-auto mb-10">
-            <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu Ihnen?</h3>
-            <p className="text-muted-foreground leading-relaxed mb-6">
-              Miete = sofort starten, kein großes Investment, maximale Flexibilität.<br />
-              Einmalkauf = einmal zahlen, Website gehört Ihnen, nach ca. 2 Jahren günstiger als die Miete.<br />
-              Nicht sicher? Ich berate Sie kurz und kostenlos.
-            </p>
-            <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-              Kostenlos beraten lassen <ArrowRight size={18} />
-            </Button>
+          <div className="text-center mb-10 max-w-3xl mx-auto mt-12">
+            <h2 className="mb-3 text-balance">Häufige Fragen</h2>
+          </div>
+          <div className="max-w-3xl mx-auto mb-12">
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqs.map((faq, i) => (
+                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+                  <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5 whitespace-pre-line">{faq.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
@@ -1028,24 +1018,6 @@ const WebdesignPreise = () => {
               </div>
             ))}
           </div>
-        </AnimatedSection>
-
-        <AnimatedSection>
-          <div className="text-center mb-10 max-w-3xl mx-auto">
-            <h2 className="mb-3 text-balance">Das fragen Handwerker am häufigsten</h2>
-            <p className="text-muted-foreground">Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.</p>
-          </div>
-          <div className="max-w-3xl mx-auto mb-12">
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
-                  <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5 whitespace-pre-line">{faq.a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-
         </AnimatedSection>
       </div>
     </section>
