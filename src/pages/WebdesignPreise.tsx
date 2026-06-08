@@ -395,7 +395,7 @@ const rentPackages: Pkg[] = [
       "Bis zu 10 Seiten – deine komplette Online-Präsenz",
       "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
       "Individuelle Umsetzung – Design & Timing nach deinen Wünschen",
-      "Unbegrenzte Änderungen im ersten Monat",
+      "Bis zu 3 Korrekturen nach Fertigstellung inklusive",
       "Google Ads Setup möglich",
       "Persönlicher Ansprechpartner",
     ],
