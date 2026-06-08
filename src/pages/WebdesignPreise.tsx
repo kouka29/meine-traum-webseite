@@ -28,8 +28,8 @@ import { supabase } from "@/integrations/supabase/client";
 const TrustStrip = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
     {[
-      { Icon: Handshake, num: "150+", label: "Handwerksbetriebe vertrauen uns" },
-      { Icon: Award, num: "6 Jahre", label: "Erfahrung im Handwerker-Webdesign" },
+      { Icon: Handshake, num: "150+", label: "Betriebe vertrauen uns" },
+      { Icon: Award, num: "6 Jahre", label: "Erfahrung im Webdesign für Selbstständige" },
       { Icon: ThumbsUp, num: "98%", label: "Weiterempfehlungsrate" },
       { Icon: Clock, num: "48h", label: "Erstes Konzept steht" },
     ].map(({ Icon, num, label }) => (
