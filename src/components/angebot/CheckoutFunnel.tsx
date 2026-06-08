@@ -1087,6 +1087,7 @@ function StepKontakt({
   email, setEmail, telefon, setTelefon,
   agb, setAgb, kostenpflichtig, setKostenpflichtig,
   summary,
+  paketName,
   payMethod, setPayMethod, stripeAvailable,
   growthCommitment,
 }: {
@@ -1098,6 +1099,7 @@ function StepKontakt({
   agb: boolean; setAgb: (v: boolean) => void;
   kostenpflichtig: boolean; setKostenpflichtig: (v: boolean) => void;
   summary: { heuteZuZahlen: number; heuteLabel: string; paymentMode: PaymentMode; gesamtMonatlich: number; gesamtEinmalig: number };
+  paketName: string;
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
   growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
