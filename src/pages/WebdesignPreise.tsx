@@ -853,7 +853,7 @@ const WebdesignPreise = () => {
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
               Ein Auftrag reicht.{" "}
-              <span className="gradient-text">Den Rest verdienen Sie.</span>
+              <span className="gradient-text">Den Rest verdienst du.</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-5">
               Professionell online — ohne großes Investment.
