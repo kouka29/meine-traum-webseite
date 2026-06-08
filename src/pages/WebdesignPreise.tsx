@@ -956,7 +956,7 @@ const WebdesignPreise = () => {
             <AnimatedSection delay={0.1}>
               <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex-1">
-                  <h3 className="font-heading text-xl font-bold mb-1">{buyEnterprise.name}</h3>
+                  <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(buyEnterprise.name)}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
                   <p className="font-heading text-2xl font-bold gradient-text mb-1">{buyEnterprise.price}</p>
                   <p className="text-xs text-muted-foreground mb-5">zzgl. MwSt.</p>
