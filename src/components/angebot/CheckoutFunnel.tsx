@@ -65,6 +65,45 @@ function fmtEUR(n: number) {
   return n.toLocaleString("de-DE") + " €";
 }
 
+function TrustBlock({ compact = false }: { compact?: boolean }) {
+  return (
+    <div style={{
+      marginTop: 16,
+      display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+      textAlign: "center",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, opacity: 0.7 }}>
+        <svg viewBox="0 0 48 16" style={{ height: 16 }} fill={TEXT_MUTED} aria-label="Visa">
+          <text x="0" y="13" fontFamily="Arial Black, sans-serif" fontSize="14" fontWeight="900" fontStyle="italic">VISA</text>
+        </svg>
+        <svg viewBox="0 0 36 22" style={{ height: 16 }} aria-label="Mastercard">
+          <circle cx="13" cy="11" r="9" fill={TEXT_MUTED} opacity="0.7" />
+          <circle cx="23" cy="11" r="9" fill={TEXT_MUTED} opacity="0.4" />
+        </svg>
+        <svg viewBox="0 0 48 16" style={{ height: 16 }} fill={TEXT_MUTED} aria-label="SEPA">
+          <text x="0" y="13" fontFamily="Arial, sans-serif" fontSize="12" fontWeight="700">SEPA</text>
+        </svg>
+        <svg viewBox="0 0 56 16" style={{ height: 16 }} fill={TEXT_MUTED} aria-label="Klarna">
+          <text x="0" y="13" fontFamily="Arial, sans-serif" fontSize="12" fontWeight="700">Klarna</text>
+        </svg>
+      </div>
+      <div style={{ fontSize: 11, color: TEXT_MUTED, lineHeight: 1.3 }}>
+        Erste Monatsmiete jetzt · danach automatisch monatlich
+      </div>
+      <div style={{ fontSize: 10, color: TEXT_MUTED, lineHeight: 1.3 }}>
+        * 12 Monate Startzeitraum – danach monatlich kündbar.{compact ? "" : " Alle Preise netto zzgl. 19% MwSt."}
+      </div>
+      <div style={{
+        marginTop: 2, fontSize: 12, fontWeight: 600,
+        color: BRAND, lineHeight: 1.35,
+        padding: "6px 10px", background: `${BRAND}10`, borderRadius: 10,
+      }}>
+        🛡️ Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.
+      </div>
+    </div>
+  );
+}
+
 export default function CheckoutFunnel({
   open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode,
 }: Props) {
