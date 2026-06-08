@@ -396,7 +396,7 @@ const rentPackages: Pkg[] = [
       "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
       "Feinschliff nach Launch inklusive – damit alles genau passt",
-      "Bis zu 3 Korrekturen nach Fertigstellung inklusive",
+      "Angebotsanfrage-Formular – Kunden liefern dir alle Projektinfos direkt",
       "Google Ads Setup möglich",
       "Persönlicher Ansprechpartner",
     ],
