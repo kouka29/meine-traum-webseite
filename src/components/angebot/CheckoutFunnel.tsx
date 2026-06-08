@@ -843,10 +843,10 @@ function StepAddOns({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Möchten Sie etwas hinzufügen?
+        Möchtest du noch etwas dazunehmen?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Optional — Sie können einzelne Extras dazubuchen oder direkt weiter.
+        Optional — direkt weiter oder Wachstumspaket dazunehmen.
       </p>
       {growthHint && (
         <div style={{
@@ -863,6 +863,10 @@ function StepAddOns({
       <div style={{ display: "grid", gap: 10 }}>
         {addons.map((a) => {
           const sel = selectedIds.includes(a.id);
+          const isGrowth = a.price_type === "monthly" && /wachstum/i.test(a.name);
+          if (isGrowth) {
+            return <GrowthAddonCard key={a.id} addon={a} selected={sel} onToggle={() => toggle(a.id)} />;
+          }
           return (
             <button
               key={a.id}
