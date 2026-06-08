@@ -281,12 +281,13 @@ const rentPackages: Pkg[] = [
     badge: "Starter Miete – 59 €/Monat netto",
     priceId: "starter_rent_monthly",
     features: [
-      "1 Seite vollständig ausgebaut – Leistungen, Kontakt, Anfrage",
-      "In 7 Tagen live – Sie machen weiter Ihr Handwerk",
-      "Kunden sehen kein 'Nicht sicher' im Browser – Vertrauen inklusive",
-      "Ideal für Betriebe die schnell professionell online wollen",
-      "Perfekt auf jedem Handy — auch auf der Baustelle",
-      "Kunden können Sie direkt anfragen — rund um die Uhr",
+      "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
+      "Perfekt auf jedem Handy – auch auf der Baustelle",
+      "In 7 Tagen live – du machst weiter dein Geschäft",
+      "Hosting & Domain inklusive – keine Extra-Kosten",
+      "SSL-Zertifikat inklusive – professioneller Auftritt",
+      "Professionelles Design – kein Baukastensystem",
+      "Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
     ],
     cta: "Jetzt Website sichern",
     upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
@@ -305,10 +306,11 @@ const rentPackages: Pkg[] = [
     badge: "Pro Miete – 99 €/Monat netto",
     priceId: "pro_rent_monthly",
     features: [
-      "Bis zu 5 Seiten – Leistungen, Referenzen, Kontakt",
-      "Google Maps Eintrag eingerichtet – Kunden finden Sie sofort",
-      "SEO-Grundlagen – Google findet Sie",
-      "Handy-optimiert & sicher — kein technisches Wissen nötig",
+      "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
+      "Google Maps Eintrag eingerichtet – Kunden finden dich sofort",
+      "SEO-Grundlagen – Google zeigt dich wenn jemand sucht",
+      "Kontaktformular inklusive – Kunden können sofort anfragen",
+      "Perfekt auf jedem Handy – auch auf der Baustelle",
       "Hosting & Domain inklusive",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
     ],
@@ -329,12 +331,13 @@ const rentPackages: Pkg[] = [
     badge: "Premium Miete – 159 €/Monat netto",
     priceId: "premium_rent_monthly",
     features: [
-      "Bis zu 10 Seiten – komplette Online-Präsenz",
+      "Bis zu 10 Seiten – deine komplette Online-Präsenz",
       "Google-Optimierung die Anfragen bringt – nicht nur Besucher",
-      "Google Business Einrichtung inklusive",
+      "Google Business + Maps vollständig eingerichtet",
+      "Individuelle Umsetzung – Timing nach Absprache",
       "Design das mehr Anfragen bringt",
       "Hosting & Domain inklusive",
-      "Individuelle Umsetzung – Timing nach Absprache",
+      "Unbegrenzte Änderungen im ersten Monat",
     ],
     cta: "Premium sichern – Jetzt starten",
     growth: {
@@ -548,8 +551,7 @@ const PackageCard = ({
         </>
       ) : (
         <>
-          <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-          <p className="text-xs text-muted-foreground mb-6">zzgl. 19 % MwSt.</p>
+          <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
           {pkg.subPrice && (
             <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
           )}
@@ -639,8 +641,7 @@ const BuyCard = ({
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-      <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-      <p className="text-xs text-muted-foreground mb-6">zzgl. 19 % MwSt.</p>
+      <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
           {pkg.highlights.map((h) => (
