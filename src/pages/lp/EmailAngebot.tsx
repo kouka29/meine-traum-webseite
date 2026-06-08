@@ -402,53 +402,134 @@ const EmailAngebot = () => {
   return (
     <main className="min-h-screen bg-background">
       {/* Minimal-Header */}
-      <header className="border-b border-border/50">
-        <div className="container-narrow px-4 py-4 flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center">
-            <Sparkles size={16} className="text-primary-foreground" />
+      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
+        <div className="container-narrow px-4 py-3.5 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center shadow-glow">
+              <Sparkles size={16} className="text-primary-foreground" />
+            </div>
+            <span className="font-heading font-semibold text-sm text-foreground">Meine Traum Webseite</span>
           </div>
-          <span className="font-heading font-semibold text-sm text-foreground">Meine Traum Webseite</span>
+          <a
+            href="tel:+4961313076498"
+            className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-foreground/80 hover:text-primary transition-colors"
+          >
+            <Phone size={14} /> 06131 30 764 98
+          </a>
         </div>
       </header>
 
-      <section className="section-padding pt-12">
-        <div className="container-narrow px-4">
-          {/* BLOCK 1: Hero */}
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <h1 className="mb-5 text-balance leading-[1.15] pb-2">
+      {/* ============ HERO ============ */}
+      <section className="relative overflow-hidden">
+        {/* Aurora glow background */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full blur-[120px] opacity-[0.18] bg-primary" />
+          <div className="absolute top-[10%] left-[-15%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-[0.14] bg-accent" />
+        </div>
+
+        <div className="container-narrow px-4 pt-16 md:pt-24 pb-12 md:pb-16">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-7 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              </span>
+              Exklusiv-Angebot für Handwerksbetriebe
+            </div>
+
+            <h1 className="mb-6 text-balance leading-[1.08] pb-2">
               Deine neue <span className="gradient-text inline-block pb-1">Website</span> —<br />
               in 7 Tagen live.
             </h1>
-            <p className="text-muted-foreground text-lg mb-8">
-              Professionell online. Steuerlich absetzbar.<br />
-              Ohne Technik-Stress.
+            <p className="text-muted-foreground text-lg md:text-xl mb-9 max-w-2xl mx-auto leading-relaxed">
+              Professionell online. Steuerlich absetzbar. Ohne Technik-Stress —
+              <span className="text-foreground font-semibold"> ab 59 €/Monat</span>.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 text-sm font-medium text-foreground/85">
-              <div className="flex items-center justify-center gap-2">
-                <Clock size={18} className="text-primary" />
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+              <Button
+                variant="gradient"
+                size="lg"
+                onClick={() => {
+                  const el = document.getElementById("pricing");
+                  el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+                className="animate-cta-pulse"
+              >
+                Pakete & Preise ansehen <ArrowRight size={18} />
+              </Button>
+              <Button
+                variant="outline-primary"
+                size="lg"
+                onClick={() => openPopup("Kostenlose Beratung")}
+              >
+                Kostenlos beraten lassen
+              </Button>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-7 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Clock size={16} className="text-primary" />
                 <span>In 7 Tagen live</span>
               </div>
-              <div className="flex items-center justify-center gap-2">
-                <CheckCircle size={18} className="text-primary" />
-                <span>Steuerlich voll absetzbar</span>
+              <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
+              <div className="flex items-center gap-2">
+                <CheckCircle size={16} className="text-primary" />
+                <span>Voll absetzbar</span>
               </div>
-              <div className="flex items-center justify-center gap-2">
-                <ShieldCheck size={18} className="text-primary" />
+              <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-primary" />
                 <span>Kein Technik-Wissen nötig</span>
               </div>
             </div>
           </div>
 
-          {/* BLOCK 2: Preisanker */}
-          <p className="text-center text-base md:text-lg italic text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Ein verlorener Auftrag kostet dich im Schnitt 800 €.<br />
-            Deine neue Website kostet dich ab 59 €/Monat.
-          </p>
+          {/* TrustStrip direkt im Hero */}
+          <TrustStrip />
+        </div>
+      </section>
 
-      {/* TrustStrip */}
-      <TrustStrip />
+      {/* ============ PAIN POINTS ============ */}
+      <section className="border-y border-border/60 bg-gradient-to-b from-secondary/40 to-background py-16 md:py-20">
+        <div className="container-narrow px-4">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Das Problem</p>
+            <h2 className="mb-4 text-balance">Warum die meisten Handwerker-Websites <span className="gradient-text">keine Anfragen bringen</span></h2>
+            <p className="text-muted-foreground text-base md:text-lg italic">
+              Ein verlorener Auftrag kostet dich im Schnitt 800 €. Deine neue Website ab 59 €/Monat.
+            </p>
+          </div>
 
-          {/* BLOCK 3: Pricing */}
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { Icon: XCircle, title: "Unsichtbar bei Google", text: "Kunden suchen 'Maler in deiner Stadt' — und finden den Wettbewerb. Du bleibst außen vor." },
+              { Icon: TrendingDown, title: "Veraltete Optik schreckt ab", text: "Eine Seite aus 2012 verliert Vertrauen, bevor ein Kunde überhaupt anruft. Premium-Kunden sind sofort weg." },
+              { Icon: Smartphone, title: "Auf dem Handy unbrauchbar", text: "80 % deiner Besucher kommen mobil. Wenn die Seite nicht funktioniert, sind sie in 3 Sekunden weg." },
+            ].map(({ Icon, title, text }) => (
+              <div key={title} className="group relative rounded-2xl bg-card border border-border p-7 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-5">
+                  <Icon size={22} strokeWidth={2} />
+                </div>
+                <h3 className="font-heading text-lg font-bold mb-2 text-foreground">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ PRICING ============ */}
+      <section id="pricing" className="section-padding pt-16 md:pt-20">
+        <div className="container-narrow px-4">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Die Lösung</p>
+            <h2 className="mb-4 text-balance">Wähle dein <span className="gradient-text">Paket</span></h2>
+            <p className="text-muted-foreground text-base md:text-lg">
+              Monatlich flexibel oder einmalig — beides voll absetzbar.
+            </p>
+          </div>
+
           <Tabs value={mode} onValueChange={(v) => setMode(v as "miete" | "kauf")} className="mb-8">
             <TabsList className="mx-auto flex w-full max-w-sm mb-6">
               <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
