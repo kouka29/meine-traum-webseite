@@ -17,6 +17,7 @@ import {
   Shield,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
@@ -238,26 +239,86 @@ const GrowthAccordion = ({
                 </ul>
               </div>
             )}
-            {growth && (
-              <div className="space-y-2">
-                <p className="text-sm font-semibold text-primary">Wachstumspaket {growth.price}</p>
-                <ul className="space-y-1.5">
-                  {growth.items.map((it) => (
-                    <li key={it} className="flex items-start gap-2 text-xs text-foreground/80">
-                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
-                      <span>{it}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-[11px] text-muted-foreground italic pt-1">Monatlich kündbar.</p>
-              </div>
-            )}
+            {/* Wachstumspaket-Block entfernt */}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+type Addon = {
+  name: string;
+  price: string;
+  features: string[];
+};
+
+const addons: Addon[] = [
+  {
+    name: "Starter Add-on",
+    price: "+29 €/Monat",
+    features: [
+      "1 Änderung pro Monat inklusive",
+      "Updates & Wartung",
+      "Support per WhatsApp",
+    ],
+  },
+  {
+    name: "Pro Add-on",
+    price: "+49 €/Monat",
+    features: [
+      "Bis zu 3 Änderungen pro Monat inklusive",
+      "Updates & Wartung",
+      "Priority Support per WhatsApp",
+    ],
+  },
+  {
+    name: "Premium Add-on",
+    price: "+79 €/Monat",
+    features: [
+      "Bis zu 5 Änderungen pro Monat inklusive",
+      "Updates & Wartung",
+      "Priority Support per WhatsApp",
+      "Monatlicher Performance-Check",
+    ],
+  },
+];
+
+const AddonsSection = () => (
+  <section className="my-16">
+    <p className="text-center text-sm text-muted-foreground mb-6">
+      Mehr herausholen? Add-ons zubuchbar – monatlich kündbar.
+    </p>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {addons.map((a) => (
+        <div
+          key={a.name}
+          className="rounded-2xl border border-border bg-muted/40 p-6 flex flex-col"
+        >
+          <h3 className="font-heading text-lg font-semibold mb-1">{a.name}</h3>
+          <p className="text-2xl font-bold text-foreground">{a.price}</p>
+          <p className="text-xs text-muted-foreground mt-1 mb-4">
+            zzgl. 19% MwSt. · monatlich kündbar
+          </p>
+          <ul className="space-y-2 mb-6 flex-1">
+            {a.features.map((f) => (
+              <li key={f} className="flex items-start gap-2 text-sm text-foreground/85">
+                <CheckCircle size={14} className="text-primary shrink-0 mt-0.5" />
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <Link
+            to="/kontakt"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 transition-colors px-5 py-2.5 text-sm font-semibold"
+          >
+            Add-on hinzufügen <ArrowRight size={16} />
+          </Link>
+        </div>
+      ))}
+    </div>
+  </section>
+);
 
 type Pkg = {
   name: string;
@@ -820,8 +881,8 @@ const WebdesignPreise = () => {
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Ein verlorener Auftrag kostet Sie im Schnitt 800 €.<br />
-              Ihre neue Website kostet Sie ab 59 €/Monat.
+              Ein verlorener Auftrag kostet dich im Schnitt 800 €.<br />
+              Deine neue Website kostet dich ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
@@ -845,6 +906,7 @@ const WebdesignPreise = () => {
               </Button>
             </div>
             <TrustStrip />
+            <AddonsSection />
             <TestimonialBlock />
             {rentPackages.filter(p => p.enterprise).map((pkg) => (
               <AnimatedSection key={pkg.name} delay={0.1}>
