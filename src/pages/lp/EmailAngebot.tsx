@@ -6,6 +6,7 @@ import {
   Star,
   Clock,
   Sparkles,
+  ShieldCheck,
   ChevronDown,
   Quote,
   Handshake,
