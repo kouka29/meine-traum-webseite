@@ -1170,10 +1170,24 @@ function StepKontakt({
           <strong style={{ fontWeight: 700 }}>{paketName}-Paket</strong>
           <span style={{ fontWeight: 600, color: TEXT_DARK, whiteSpace: "nowrap" }}>
             {summary.paymentMode === "miete"
-              ? `${fmtEUR(summary.gesamtMonatlich)}/Monat`
-              : `${fmtEUR(summary.gesamtEinmalig)} einmalig`}
+              ? `${fmtEUR(basisMonatlich)}/Monat`
+              : `${fmtEUR(basisEinmalig)} einmalig`}
           </span>
         </div>
+        {selectedAddons.length > 0 && (
+          <div style={{ marginTop: 6, display: "grid", gap: 4 }}>
+            {selectedAddons.map((a) => (
+              <div key={a.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, fontSize: 12 }}>
+                <span style={{ color: TEXT_DARK }}>+ {a.name}</span>
+                <span style={{ color: TEXT_DARK, whiteSpace: "nowrap" }}>
+                  {a.price_type === "monthly"
+                    ? `${fmtEUR(a.price_cents / 100)}/Monat`
+                    : `${fmtEUR(a.price_cents / 100)} einmalig`}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
         <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
         {(() => {
           const featuresByName: Record<string, string[]> = {
