@@ -539,6 +539,7 @@ export default function CheckoutFunnel({
               agb={agb} setAgb={setAgb}
               kostenpflichtig={kostenpflichtig} setKostenpflichtig={setKostenpflichtig}
               summary={{ heuteZuZahlen, heuteLabel, paymentMode, gesamtMonatlich, gesamtEinmalig }}
+              paketName={currentPaket.name}
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
@@ -1086,6 +1087,7 @@ function StepKontakt({
   email, setEmail, telefon, setTelefon,
   agb, setAgb, kostenpflichtig, setKostenpflichtig,
   summary,
+  paketName,
   payMethod, setPayMethod, stripeAvailable,
   growthCommitment,
 }: {
@@ -1097,6 +1099,7 @@ function StepKontakt({
   agb: boolean; setAgb: (v: boolean) => void;
   kostenpflichtig: boolean; setKostenpflichtig: (v: boolean) => void;
   summary: { heuteZuZahlen: number; heuteLabel: string; paymentMode: PaymentMode; gesamtMonatlich: number; gesamtEinmalig: number };
+  paketName: string;
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
   growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
@@ -1153,17 +1156,65 @@ function StepKontakt({
         border: `1px solid ${BRAND}22`,
         fontSize: 13, color: TEXT_DARK, lineHeight: 1.5,
       }}>
-        <div style={{ fontWeight: 700, marginBottom: 4 }}>Zusammenfassung</div>
-        {summary.paymentMode === "miete" ? (
-          <div>
-            Monatliche Miete: <strong>{fmtEUR(summary.gesamtMonatlich)}</strong>/Monat
-          </div>
-        ) : (
-          <div>
-            Einmalkauf: <strong>{fmtEUR(summary.gesamtEinmalig)}</strong>
-          </div>
-        )}
-        <div style={{ marginTop: 4, fontSize: 12, color: TEXT_MUTED }}>
+        <div style={{ fontWeight: 700, marginBottom: 10 }}>Deine Bestellung</div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+          <strong style={{ fontWeight: 700 }}>{paketName}-Paket</strong>
+          <span style={{ fontWeight: 600, color: TEXT_DARK, whiteSpace: "nowrap" }}>
+            {summary.paymentMode === "miete"
+              ? `${fmtEUR(summary.gesamtMonatlich)}/Monat`
+              : `${fmtEUR(summary.gesamtEinmalig)} einmalig`}
+          </span>
+        </div>
+        <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
+        {(() => {
+          const featuresByName: Record<string, string[]> = {
+            Starter: [
+              "1 Seite vollständig ausgebaut",
+              "Individuelle Texte & Inhalte",
+              "Mobil optimiert",
+              "Hosting, Domain & SSL",
+            ],
+            Pro: [
+              "Alles aus Starter inklusive",
+              "Bis zu 5 Seiten",
+              "Google Maps & Google Business",
+              "SEO-Grundlagen",
+              "Fertig in ca. 2 Wochen",
+            ],
+            Premium: [
+              "Alles aus Pro inklusive",
+              "Bis zu 10 Seiten – deine komplette Online-Präsenz",
+              "Google-Optimierung beim Launch",
+              "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
+              "Feinschliff nach Launch inklusive",
+              "Angebotsanfrage-Formular",
+              "Bis zu 3 zusätzliche Landingpages inklusive",
+              "Persönlicher Ansprechpartner",
+            ],
+          };
+          const feats = featuresByName[paketName] ?? [];
+          if (feats.length === 0) return null;
+          return (
+            <div>
+              <div style={{
+                fontSize: 11, fontWeight: 700, color: TEXT_MUTED,
+                textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6,
+              }}>
+                Was inklusive ist:
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 4 }}>
+                {feats.map((f) => (
+                  <li key={f} style={{ display: "flex", gap: 6, fontSize: 12, color: TEXT_DARK, lineHeight: 1.45 }}>
+                    <span style={{ color: BRAND, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })()}
+        <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
+        <div style={{ fontSize: 12, color: TEXT_MUTED }}>
           {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(summary.heuteZuZahlen)}</strong>
         </div>
       </div>
