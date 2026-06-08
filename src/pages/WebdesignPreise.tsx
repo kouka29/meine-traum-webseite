@@ -397,7 +397,7 @@ const rentPackages: Pkg[] = [
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
       "Feinschliff nach Launch inklusive – damit alles genau passt",
       "Angebotsanfrage-Formular – Kunden liefern dir alle Projektinfos direkt",
-      "1 zusätzliche Landingpage inklusive – ideal für Aktionen oder Werbekampagnen",
+      "Bis zu 3 zusätzliche Landingpage inklusive – ideal für Aktionen oder Werbekampagnen",
       "Persönlicher Ansprechpartner",
     ],
     cta: "Premium sichern – Jetzt starten",
