@@ -630,7 +630,7 @@ function StepPaket({
         Welches Paket darf es sein?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Wählen Sie das Paket, das am besten zu Ihnen passt.
+        Wähle das Paket, das am besten zu dir passt.
       </p>
       <div style={{ display: "grid", gap: 12 }}>
         {pakete.map((p, idx) => {
@@ -709,10 +709,10 @@ function StepZahlung({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Wie möchten Sie zahlen?
+        Wie möchtest du zahlen?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Beide Wege — gleiches Ergebnis. Sie entscheiden.
+        Beide Wege — gleiches Ergebnis. Du entscheidest.
       </p>
 
       <div style={{ display: "grid", gap: 12 }}>
