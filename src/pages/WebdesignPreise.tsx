@@ -24,6 +24,7 @@ import PricingLeadPopup from "@/components/PricingLeadPopup";
 import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 import { supabase } from "@/integrations/supabase/client";
+import { usePricingName, PricingName } from "@/lib/pricingNames";
 
 const TrustStrip = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
@@ -606,7 +607,7 @@ const PackageCard = ({
           <Star size={12} /> Beliebteste Wahl
         </span>
       )}
-      <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+      <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
       {pkg.price.toLowerCase().includes("anfrage") ? (
         <>
           <p className="text-sm text-muted-foreground mb-1">
@@ -708,7 +709,7 @@ const BuyCard = ({
           <Star size={12} /> Beliebteste Wahl
         </span>
       )}
-      <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+      <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
       <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
@@ -898,7 +899,7 @@ const WebdesignPreise = () => {
               <AnimatedSection key={pkg.name} delay={0.1}>
                 <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
-                    <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+                    <h3 className="font-heading text-xl font-bold mb-1"><PricingName name={pkg.name} /></h3>
                     <p className="text-sm text-muted-foreground mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
                     <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
                     {pkg.desc && (
@@ -955,7 +956,7 @@ const WebdesignPreise = () => {
             <AnimatedSection delay={0.1}>
               <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex-1">
-                  <h3 className="font-heading text-xl font-bold mb-1">{buyEnterprise.name}</h3>
+                  <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(buyEnterprise.name)}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
                   <p className="font-heading text-2xl font-bold gradient-text mb-1">{buyEnterprise.price}</p>
                   <p className="text-xs text-muted-foreground mb-5">zzgl. MwSt.</p>
