@@ -646,6 +646,7 @@ export default function CheckoutFunnel({
                 <>Weiter <ArrowRight size={18} /></>
               )}
             </button>
+            <TrustBlock />
           </div>
         )}
       </div>
