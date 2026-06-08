@@ -360,7 +360,7 @@ const EmailAngebot = () => {
             <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
           </p>
           <div className="mt-4 flex justify-center">
-            <PaymentTrustStrip kind={mode === "miete" ? "rent" : "buy"} />
+            <PaymentTrustStrip kind={mode === "miete" ? "rent" : "deposit"} />
           </div>
           <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
             * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
