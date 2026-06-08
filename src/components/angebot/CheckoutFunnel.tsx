@@ -540,6 +540,9 @@ export default function CheckoutFunnel({
               kostenpflichtig={kostenpflichtig} setKostenpflichtig={setKostenpflichtig}
               summary={{ heuteZuZahlen, heuteLabel, paymentMode, gesamtMonatlich, gesamtEinmalig }}
               paketName={currentPaket.name}
+              basisEinmalig={basisEinmalig}
+              basisMonatlich={basisMonatlich}
+              selectedAddons={selectedAddons}
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
