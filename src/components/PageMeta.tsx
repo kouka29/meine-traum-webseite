@@ -192,6 +192,18 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: `Website für Dachdecker | ${BRAND}`,
     description: "Websites speziell für Dachdecker. Sturmschaden-Seiten, Referenzgalerien, Google-Rankings. Kostenlose Vorschau in 48h.",
   },
+  "/elektriker/preise": {
+    title: `Webdesign Preise für Elektriker | ${BRAND}`,
+    description: "Website für Elektriker ab 59€/Monat. In 7 Tagen live. Google Maps, SEO & mehr inklusive.",
+  },
+  "/sanitaer/preise": {
+    title: `Webdesign Preise für Sanitärbetriebe | ${BRAND}`,
+    description: "Website für Sanitärbetriebe ab 59€/Monat. In 7 Tagen live. Google Maps, SEO & mehr inklusive.",
+  },
+  "/dachdecker/preise": {
+    title: `Webdesign Preise für Dachdecker | ${BRAND}`,
+    description: "Website für Dachdecker ab 59€/Monat. In 7 Tagen live. Google Maps, SEO & mehr inklusive.",
+  },
 };
 
 const setMeta = (selector: string, attr: string, value: string) => {
