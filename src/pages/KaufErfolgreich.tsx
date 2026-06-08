@@ -10,16 +10,16 @@ export default function KaufErfolgreich() {
   const isRent = kind === "rent";
 
   const heading = isRent
-    ? "Vielen Dank für Ihre Buchung!"
-    : "Vielen Dank für Ihre Anzahlung!";
+    ? "Vielen Dank für deine Buchung!"
+    : "Vielen Dank für deine Anzahlung!";
 
   const subline = isRent
-    ? "Ihr Miet-Abo ist aktiv. Wir starten jetzt mit Ihrer neuen Website."
-    : "Ihre 50 % Anzahlung ist eingegangen. Wir starten jetzt mit Ihrer neuen Website.";
+    ? "dein Miet-Abo ist aktiv. Wir starten jetzt mit deiner neuen Website."
+    : "deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit deiner neuen Website.";
 
   const emailText = isRent
-    ? "Sie erhalten in Kürze eine Bestätigung mit Ihrer ersten Monatsrechnung als PDF."
-    : "Sie erhalten in Kürze eine Bestätigung mit Ihrer Anzahlungs-Rechnung als PDF.";
+    ? "Du erhältst in Kürze eine Bestätigung mit deiner ersten Monatsrechnung als PDF."
+    : "Du erhältst in Kürze eine Bestätigung mit deiner Anzahlungs-Rechnung als PDF.";
 
   return (
     <main className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-background to-muted/30">
@@ -45,7 +45,7 @@ export default function KaufErfolgreich() {
             <div>
               <p className="font-semibold mb-1">Onboarding innerhalb von 24 h</p>
               <p className="text-sm text-muted-foreground">
-                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und Ihren
+                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und deinen
                 Onboarding-Fragebogen zu schicken.
               </p>
             </div>
@@ -67,7 +67,7 @@ export default function KaufErfolgreich() {
               <div>
                 <p className="font-semibold mb-1">Restzahlung bei Go-Live</p>
                 <p className="text-sm text-muted-foreground">
-                  Die restlichen 50 % werden erst fällig, wenn Ihre Website live geht – per Rechnung.
+                  Die restlichen 50 % werden erst fällig, wenn deine Website live geht – per Rechnung.
                 </p>
               </div>
             </div>

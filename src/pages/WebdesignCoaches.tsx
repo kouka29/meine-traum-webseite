@@ -6,25 +6,25 @@ import { ArrowRight, CheckCircle, Lightbulb, Search, Users, Smartphone, Trending
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
-  "Ihre Website vermittelt nicht die Expertise und Persönlichkeit, die Ihre Klienten erwarten",
-  "Sie gewinnen Klienten nur über Empfehlungen – Ihre Website bringt keine neuen Anfragen",
-  "Besucher verstehen nicht sofort, wie Sie ihnen helfen können, und springen ab",
-  "Sie haben kein System für automatisierte Terminbuchung oder Lead-Generierung",
+  "deine Website vermittelt nicht die Expertise und Persönlichkeit, die deine Klienten erwarten",
+  "Du gewinnst Klienten nur über Empfehlungen – deine Website bringt keine neuen Anfragen",
+  "Besucher verstehen nicht sofort, wie du ihnen helfen können, und springen ab",
+  "Du hast kein System für automatisierte Terminbuchung oder Lead-Generierung",
 ];
 
 const features = [
-  { icon: Lightbulb, title: "Persönliches Branding", desc: "Ihre Website wird zur Bühne für Ihre Expertise – mit einem Design, das Ihre Persönlichkeit und Methodik widerspiegelt." },
+  { icon: Lightbulb, title: "Persönliches Branding", desc: "deine Website wird zur Bühne für deine Expertise – mit einem Design, das deine Persönlichkeit und Methodik widerspiegelt." },
   { icon: Search, title: "SEO für Coaches", desc: 'Gefunden werden bei "Coach [Thema] [Stadt]", "Berater für [Thema]" und ähnlichen Suchanfragen.' },
-  { icon: Target, title: "Klare Positionierung", desc: "Ihre Zielgruppe erkennt sofort, ob Sie der richtige Coach oder Berater sind – durch gezielte Ansprache." },
+  { icon: Target, title: "Klare Positionierung", desc: "deine Zielgruppe erkennt sofort, ob du der richtige Coach oder Berater sind – durch gezielte Ansprache." },
   { icon: Users, title: "Vertrauensaufbau", desc: "Testimonials, Erfolgsgeschichten und Zertifizierungen werden professionell präsentiert." },
-  { icon: Smartphone, title: "Mobilfreundlich", desc: "Ihre Website sieht auf jedem Gerät professionell aus – wichtig, da viele Klienten unterwegs recherchieren." },
+  { icon: Smartphone, title: "Mobilfreundlich", desc: "deine Website sieht auf jedem Gerät professionell aus – wichtig, da viele Klienten unterwegs recherchieren." },
   { icon: TrendingUp, title: "Mehr Klienten gewinnen", desc: "Conversion-optimierter Aufbau mit klaren CTAs – von der Erstberatung bis zur Buchung." },
 ];
 
 const faqs = [
-  { q: "Warum brauche ich als Coach eine professionelle Website?", a: "Ihre Website ist Ihr digitales Aushängeschild. Potenzielle Klienten prüfen Ihre Online-Präsenz, bevor sie Kontakt aufnehmen. Eine professionelle Website schafft Vertrauen und positioniert Sie als Experte." },
+  { q: "Warum brauche ich als Coach eine professionelle Website?", a: "deine Website ist dein digitales Aushängeschild. Potenzielle Klienten prüfen deine Online-Präsenz, bevor sie Kontakt aufnehmen. Eine professionelle Website schafft Vertrauen und positioniert du als Experte." },
   { q: "Was kostet eine Coach-Website?", a: "Unsere Websites für Coaches und Berater starten ab 990 €. Inkl. persönlichem Branding, SEO und Conversion-Optimierung. Kostenlose Vorschau in 48 h." },
-  { q: "Kann ich Testimonials und Erfolgsgeschichten selbst einpflegen?", a: "Ja, wir richten Ihre Website so ein, dass Sie Inhalte wie Testimonials, Blog-Beiträge und Angebote einfach selbst aktualisieren können." },
+  { q: "Kann ich Testimonials und Erfolgsgeschichten selbst einpflegen?", a: "Ja, wir richten deine Website so ein, dass du Inhalte wie Testimonials, Blog-Beiträge und Angebote einfach selbst aktualisieren können." },
   { q: "Bietet ihr auch Landingpages für einzelne Angebote an?", a: "Ja! Für Webinare, Online-Kurse oder spezielle Programme erstellen wir gezielte Landingpages, die Teilnehmer und Klienten gewinnen." },
 ];
 
@@ -40,7 +40,7 @@ const WebdesignCoaches = () => (
               <span className="gradient-text">Die Website, die Klienten überzeugt</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Als Coach oder Berater sind Sie Experte auf Ihrem Gebiet. Ihre Website sollte das widerspiegeln –
+              Als Coach oder Berater bist du Experte auf deinem Gebiet. Deine Website sollte das widerspiegeln –
               professionell, vertrauenswürdig und mit einer klaren Botschaft, die Klienten gewinnt.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
@@ -56,7 +56,7 @@ const WebdesignCoaches = () => (
 
         <AnimatedSection>
           <div className="mb-20 max-w-3xl mx-auto">
-            <h2 className="text-center mb-10 text-balance">Kennen Sie diese Herausforderungen?</h2>
+            <h2 className="text-center mb-10 text-balance">Kennst du diese Herausforderungen?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
                 <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
@@ -71,7 +71,7 @@ const WebdesignCoaches = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">So positionieren wir Sie online als Experte</h2>
+          <h2 className="text-center mb-16 text-balance">So positionieren wir du online als Experte</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (

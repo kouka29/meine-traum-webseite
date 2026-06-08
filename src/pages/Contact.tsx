@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const trustPoints = [
   "15 Minuten Klarheit – kein Verkaufsgespräch",
-  "Konkrete Empfehlung für Ihr Projekt",
+  "Konkrete Empfehlung für dein Projekt",
   "Transparente Preisinfo direkt im Call",
   "Persönlicher Ansprechpartner – kein Callcenter",
 ];
@@ -96,7 +96,7 @@ const Contact = () => {
       setSubmitError(
         "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131/30 765 00",
       );
-      toast.error("Fehler beim Senden. Bitte versuchen Sie es erneut.");
+      toast.error("Fehler beim Senden. Bitte versuchen du es erneut.");
     } finally {
       setLoading(false);
     }
@@ -112,12 +112,12 @@ const Contact = () => {
                 Kostenloses Erstgespräch
               </span>
               <h1 className="mb-5 text-balance">
-                <span className="block">Ihr kostenloses Erstgespräch –</span>
+                <span className="block">dein kostenloses Erstgespräch –</span>
                 <span className="gradient-text block mt-3">in 15 Minuten zur Klarheit</span>
               </h1>
               <p className="text-muted-foreground text-lg">
-                Sie haben sich für ein persönliches Erstgespräch entschieden. Perfekt. In 15 Minuten besprechen
-                wir Ihr Projekt, klären Ihre Ziele und Sie erhalten eine konkrete Empfehlung – ohne Verkaufsdruck,
+                Du hast sich für ein persönliches Erstgespräch entschieden. Perfekt. In 15 Minuten besprechen
+                wir dein Projekt, klären deine Ziele und Du erhältst eine konkrete Empfehlung – ohne Verkaufsdruck,
                 ohne Verpflichtung.
               </p>
               <div className="flex flex-wrap justify-center gap-5 mt-8">
@@ -141,7 +141,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <label className="text-sm font-medium mb-2 block">Name *</label>
-                    <Input required placeholder="Ihr Name" className="bg-card h-12" />
+                    <Input required placeholder="dein Name" className="bg-card h-12" />
                   </div>
                   <div>
                     <label className="text-sm font-medium mb-2 block">E-Mail *</label>
@@ -163,7 +163,7 @@ const Contact = () => {
                   <Input placeholder="z. B. Malerbetrieb, Coaching, Steuerberatung..." className="bg-card h-12" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Wann passt es Ihnen am besten? (optional)</label>
+                  <label className="text-sm font-medium mb-2 block">Wann passt es dir am besten? (optional)</label>
                   <Input placeholder="z. B. Mo–Fr vormittags, oder Di nachmittag" className="bg-card h-12" />
                 </div>
                 <div>
@@ -197,7 +197,7 @@ const Contact = () => {
                   </p>
                 )}
                 <p className="text-xs text-muted-foreground">
-                  Kein Verkaufsgespräch. Keine versteckten Kosten. Wir melden uns persönlich bei Ihnen.
+                  Kein Verkaufsgespräch. Keine versteckten Kosten. Wir melden uns persönlich bei dir.
                 </p>
               </form>
             </AnimatedSection>
@@ -206,12 +206,12 @@ const Contact = () => {
               <div className="space-y-10">
                 <div className="p-8 rounded-2xl gradient-hero-bg">
                   <h2 className="font-heading font-semibold text-primary-foreground mb-4 text-lg">
-                    So läuft Ihr Erstgespräch ab
+                    So läuft dein Erstgespräch ab
                   </h2>
                   <ol className="space-y-4 text-sm text-primary-foreground/75">
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">1.</span>
-                      Sie füllen das Formular aus (2 Minuten)
+                      du füllen das Formular aus (2 Minuten)
                     </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">2.</span>
@@ -225,7 +225,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-heading font-semibold mb-5 text-lg">Das bekommen Sie</h3>
+                  <h3 className="font-heading font-semibold mb-5 text-lg">Das bekommst du</h3>
                   <div className="space-y-3.5">
                     {trustPoints.map((t) => (
                       <div key={t} className="flex items-center gap-3">

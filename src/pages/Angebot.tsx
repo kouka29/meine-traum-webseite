@@ -172,7 +172,7 @@ export default function Angebot() {
       <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: "100vh", background: BG_SOFT, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
         <div style={{ background: "#fff", borderRadius: 20, padding: 40, maxWidth: 480, textAlign: "center", boxShadow: "0 10px 40px rgba(79,63,240,0.1)" }}>
           <h1 style={{ color: TEXT_DARK, fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Ungültiger Link</h1>
-          <p style={{ color: TEXT_MUTED }}>{shortError || "Dieser Angebot-Link ist nicht gültig. Bitte prüfen Sie die URL oder kontaktieren Sie uns."}</p>
+          <p style={{ color: TEXT_MUTED }}>{shortError || "Dieser Angebot-Link ist nicht gültig. Bitte prüfen du die URL oder kontaktiere uns."}</p>
         </div>
       </div>
     );
@@ -236,10 +236,10 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
           <Lock size={28} color={BRAND} />
         </div>
         <h1 style={{ fontSize: 26, fontWeight: 800, color: TEXT_DARK, marginBottom: 8 }}>
-          Ihr persönliches Angebot wartet auf Sie
+          dein persönliches Angebot wartet auf du
         </h1>
         <p style={{ color: TEXT_MUTED, marginBottom: 28, fontSize: 15 }}>
-          Bitte geben Sie Ihren persönlichen Zugangscode ein.
+          Bitte gib deinen persönlichen Zugangscode ein.
         </p>
         <input
           type="password"
@@ -260,7 +260,7 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
         />
         {error && (
           <p style={{ color: "#EF4444", fontSize: 14, marginBottom: 16 }}>
-            Ungültiger Code. Bitte prüfen Sie Ihren Zugangscode.
+            Ungültiger Code. Bitte prüfen du deinen Zugangscode.
           </p>
         )}
         <button
@@ -526,7 +526,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
               Häufige <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Fragen</span>
             </h2>
             <p style={{ fontSize: 18, color: TEXT_MUTED, textAlign: "center", marginBottom: 48, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-              Alles was Sie wissen möchten — bevor Sie den nächsten Schritt gehen.
+              Alles was Du weißt möchten — bevor du den nächsten Schritt gehen.
             </p>
             <Accordion type="single" collapsible defaultValue="faq-0" className="angebot-faq-accordion">
               {displayFaqs.map((f, i) => (
@@ -590,7 +590,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── STICKY BOTTOM BAR ────────────────────────────── */}
       {showSticky && (
         <StickyBar
-          paketName={selectedPaket?.name || data.branche || "Ihr Angebot"}
+          paketName={selectedPaket?.name || data.branche || "dein Angebot"}
           preis={anzeigeGesamt}
           miete={aktiveMiete}
           priceMode={priceMode}
@@ -676,7 +676,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           textTransform: "uppercase", letterSpacing: "0.06em",
           marginBottom: 28,
         }}>
-          Persönliches Angebot — nur für Sie
+          Persönliches Angebot — nur für du
         </div>
 
         <h1 className="ang-reveal ang-d-4" style={{
@@ -684,7 +684,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           color: TEXT_DARK, marginBottom: 24, letterSpacing: "-0.025em",
           maxWidth: 800,
         }}>
-          Hallo {leadName},<br />hier ist Ihr{" "}
+          Hallo {leadName},<br />hier ist dein{" "}
           <span style={{
             background: "linear-gradient(135deg, #4F3FF0 0%, #7B5EF8 50%, #5B8DEF 100%)",
             WebkitBackgroundClip: "text",
@@ -702,7 +702,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         }}>
           {nachricht && nachricht.trim()
             ? nachricht
-            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Sie und Ihr Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}
+            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für du und dein Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}
         </p>
 
         {/* Countdown — Inline, kein Kasten */}
@@ -750,7 +750,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             }}>
               <span aria-hidden="true">💳</span>
               <strong style={{ color: BRAND, fontWeight: 700 }}>Einmalkauf</strong>
-              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— Website gehört Ihnen</span>
+              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— Website gehört dir</span>
             </span>
             <span style={{
               display: "inline-flex", alignItems: "center", gap: 8,
@@ -765,7 +765,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             </span>
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, fontStyle: "italic" }}>
-            Sie entscheiden nach dem Erstgespräch — wir beraten Sie ehrlich.
+            Du entscheidest nach dem Erstgespräch — wir beraten du ehrlich.
           </div>
         </div>
         </div>
@@ -776,7 +776,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
 
 function ProblemSection() {
   const problems = [
-    { titel: "Unsichtbar bei Google", text: "Kunden finden Ihre Mitbewerber — nicht Sie." },
+    { titel: "Unsichtbar bei Google", text: "Kunden finden deine Mitbewerber — nicht du." },
     { titel: "Kein Vertrauen auf den ersten Blick", text: "Interessenten springen ab, bevor sie überhaupt anrufen." },
     { titel: "Kein System für neue Anfragen", text: "Aufträge kommen per Zufall — nicht planbar." },
   ];
@@ -784,7 +784,7 @@ function ProblemSection() {
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-          Was Ihr Unternehmen gerade <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>kostet</span><br />ohne professionelle Website
+          Was dein Unternehmen gerade <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>kostet</span><br />ohne professionelle Website
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
           {problems.map((p, i) => (
@@ -808,7 +808,7 @@ function ProblemSection() {
           ))}
         </div>
         <p style={{ marginTop: 40, textAlign: "center", fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
-          Genau das ändern wir — mit Ihrem individuellen Projekt.
+          Genau das ändern wir — mit deinem individuellen Projekt.
         </p>
       </div>
     </section>
@@ -822,16 +822,16 @@ function nutzenFor(titel: string, beschreibung?: string): string {
     return b.startsWith("→") ? b : `→ ${b}`;
   }
   const t = (titel || "").toLowerCase();
-  if (t.includes("produkt") || t.includes("artikel")) return "→ Ihre Produkte sind sofort online kaufbar — rund um die Uhr.";
-  if (t.includes("kategor")) return "→ Kunden finden sich in Ihrem Shop sofort zurecht.";
-  if (t.includes("design") || t.includes("marke")) return "→ Kunden nehmen Sie auf den ersten Blick ernst.";
-  if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht Sie — egal von welchem Gerät.";
-  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ Ihr Shop läuft automatisch — Sie müssen nichts manuell tun.";
-  if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei Ihnen — ohne Umwege.";
-  if (t.includes("korrektur") || t.includes("runde")) return "→ Sie bekommen genau das, was Sie sich vorgestellt haben.";
+  if (t.includes("produkt") || t.includes("artikel")) return "→ deine Produkte sind sofort online kaufbar — rund um die Uhr.";
+  if (t.includes("kategor")) return "→ Kunden finden sich in deinem Shop sofort zurecht.";
+  if (t.includes("design") || t.includes("marke")) return "→ Kunden nimm auf den ersten Blick ernst.";
+  if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht du — egal von welchem Gerät.";
+  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ dein Shop läuft automatisch — du müssen nichts manuell tun.";
+  if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei dir — ohne Umwege.";
+  if (t.includes("korrektur") || t.includes("runde")) return "→ Du bekommst genau das, was du sich vorgestellt haben.";
   if (t.includes("impressum") || t.includes("datenschutz")) return "→ Rechtlich abgesichert — kein Stress mit Abmahnungen.";
-  if (t.includes("support") || t.includes("whatsapp")) return "→ Bei Fragen sind wir direkt für Sie da — ohne Warteschleife.";
-  if (t.includes("launch") || t.includes("live") || t.includes("veröffentlich")) return "→ Ihre Website geht pünktlich online — wir kümmern uns um alles.";
+  if (t.includes("support") || t.includes("whatsapp")) return "→ Bei Fragen sind wir direkt für du da — ohne Warteschleife.";
+  if (t.includes("launch") || t.includes("live") || t.includes("veröffentlich")) return "→ deine Website geht pünktlich online — wir kümmern uns um alles.";
   return "";
 }
 
@@ -840,12 +840,12 @@ function addonBeschreibungFor(titel: string, beschreibung?: string): string {
   if (beschreibung && beschreibung.trim()) return beschreibung.trim();
   const t = (titel || "").toLowerCase();
   if (t.includes("care") || t.includes("wartung") || t.includes("support")) {
-    return "Wir halten Ihre Website aktuell, sicher und fehlerfrei. Updates, Backups und technischer Support — monatlich gebucht, monatlich kündbar.";
+    return "Wir halten deine Website aktuell, sicher und fehlerfrei. Updates, Backups und technischer Support — monatlich gebucht, monatlich kündbar.";
   }
   if (t.includes("seo")) {
-    return "Mehr Sichtbarkeit bei Google — damit Kunden Sie finden, bevor sie zur Konkurrenz gehen.";
+    return "Mehr Sichtbarkeit bei Google — damit Kunden Du findest, bevor sie zur Konkurrenz gehen.";
   }
-  return "Auf Anfrage erfahren Sie mehr Details.";
+  return "Auf Anfrage erfahren du mehr Details.";
 }
 
 function badgeFor(index: number, total: number): string {
@@ -857,13 +857,13 @@ function badgeFor(index: number, total: number): string {
 
 // ─── Standard-FAQs (Fallback wenn Admin keine eingetragen hat) ──
 const STANDARD_FAQS: Faq[] = [
-  { frage: "Was passiert direkt nach der Beauftragung?", antwort: "Sobald Sie den Auftrag erteilt haben, erhalten Sie innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei Ihnen, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
-  { frage: "Wie lange dauert die Umsetzung?", antwort: "Die Umsetzung beginnt direkt nach Zahlungseingang. Je nach Paket und Ihrer Mitwirkung (Texte, Bilder, Inhalte) ist Ihre Website in der Regel innerhalb von 2–4 Wochen fertig und live. Wir halten Sie während des gesamten Prozesses auf dem Laufenden." },
-  { frage: "Was wenn das Ergebnis nicht den Erwartungen entspricht?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Sie sehen die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis Sie zufrieden sind — im Rahmen der vereinbarten Runden." },
-  { frage: "Besteht eine langfristige Bindung?", antwort: "Beim Einmalkauf gehört Ihnen die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben Sie flexibel." },
-  { frage: "Welche monatlichen Kosten entstehen nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei Ihrem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
-  { frage: "Kann die Website später selbst bearbeitet werden?", antwort: "Ja. Wir bauen Ihre Website so auf, dass Sie Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir Ihnen im Kickoff wie das funktioniert. Für alles Weitere steht Ihnen unser Care-Paket zur Verfügung." },
-  { frage: "Was ist der Unterschied zwischen Website kaufen und Website mieten?", antwort: "Beim Kauf zahlen Sie einmalig und die Website gehört Ihnen. Beim Mietmodell zahlen Sie eine monatliche Rate — dafür ist der Einstieg günstiger, und Wartung sowie Updates sind inklusive. Welches Modell besser zu Ihnen passt, hängt von Ihrem Budget und Ihren Zielen ab. Beides führt zum gleichen Ergebnis: eine professionelle Website die Kunden bringt." },
+  { frage: "Was passiert direkt nach der Beauftragung?", antwort: "Sobald du den Auftrag erteilt haben, erhältst du innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei dir, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
+  { frage: "Wie lange dauert die Umsetzung?", antwort: "Die Umsetzung beginnt direkt nach Zahlungseingang. Je nach Paket und deiner Mitwirkung (Texte, Bilder, Inhalte) ist deine Website in der Regel innerhalb von 2–4 Wochen fertig und live. Wir halten du während des gesamten Prozesses auf dem Laufenden." },
+  { frage: "Was wenn das Ergebnis nicht den Erwartungen entspricht?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Du siehst die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis du zufrieden sind — im Rahmen der vereinbarten Runden." },
+  { frage: "Besteht eine langfristige Bindung?", antwort: "Beim Einmalkauf gehört dir die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben du flexibel." },
+  { frage: "Welche monatlichen Kosten entstehen nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei deinem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
+  { frage: "Kann die Website später selbst bearbeitet werden?", antwort: "Ja. Wir bauen deine Website so auf, dass du Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir dir im Kickoff wie das funktioniert. Für alles Weitere steht dir unser Care-Paket zur Verfügung." },
+  { frage: "Was ist der Unterschied zwischen Website kaufen und Website mieten?", antwort: "Beim Kauf zahlst du einmalig und die Website gehört dir. Beim Mietmodell zahlst du eine monatliche Rate — dafür ist der Einstieg günstiger, und Wartung sowie Updates sind inklusive. Welches Modell besser zu dir passt, hängt von deinem Budget und deinen Zielen ab. Beides führt zum gleichen Ergebnis: eine professionelle Website die Kunden bringt." },
 ];
 
 function resolveFaqs(custom: Faq[] | undefined, hasMiete: boolean): Faq[] {
@@ -897,10 +897,10 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-            Welches <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Paket</span> passt zu Ihnen?
+            Welches <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Paket</span> passt zu dir?
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            Wählen Sie Ihre Variante — alle Inhalte unten passen sich automatisch an.
+            Wählen du deine Variante — alle Inhalte unten passen sich automatisch an.
           </p>
         </div>
 
@@ -916,7 +916,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
           }}>
             <span style={{ fontSize: 18 }}>💡</span>
             <span>
-              <strong style={{ color: BRAND }}>Zwei Wege zu Ihrer Website</strong> — mieten ab <strong>{minMiete} €/Monat</strong> oder einmalig kaufen. Sie entscheiden später.
+              <strong style={{ color: BRAND }}>Zwei Wege zu deiner Website</strong> — mieten ab <strong>{minMiete} €/Monat</strong> oder einmalig kaufen. Du entscheidest später.
             </span>
           </div>
         )}
@@ -1071,7 +1071,7 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             Was wir gemeinsam <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>umsetzen</span>
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, maxWidth: 560, margin: "0 auto" }}>
-            Jede Leistung — mit konkretem Nutzen für Sie.
+            Jede Leistung — mit konkretem Nutzen für du.
           </p>
         </div>
         <div className="angebot-leistungen-grid ang-stagger-leist" style={{
@@ -1131,13 +1131,13 @@ function PriceSection({
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
             {hasMiete ? (
-              <>Wie möchten Sie <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>zahlen</span>?</>
+              <>Wie möchtest du <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>zahlen</span>?</>
             ) : (
-              <>Ihr <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span></>
+              <>dein <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span></>
             )}
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            {hasMiete ? "Beide Wege — gleiches Ergebnis. Sie entscheiden." : "Einmalige Investition — Ihre Website gehört Ihnen."}
+            {hasMiete ? "Beide Wege — gleiches Ergebnis. Du entscheidest." : "Einmalige Investition — deine Website gehört dir."}
           </p>
         </div>
 
@@ -1175,7 +1175,7 @@ function PriceSection({
             mainPrice={`${Number(preis).toLocaleString("de-DE")} €`}
             mainSub={null}
             normalpreis={normalpreis ?? null}
-            tagline="Einmalige Investition. Website gehört Ihnen."
+            tagline="Einmalige Investition. Website gehört dir."
             bullets={[
               "Kein monatlicher Aufwand",
               "Vollständiges Eigentum",
@@ -1220,7 +1220,7 @@ function PriceSection({
             fontSize: 13.5, color: TEXT_MUTED, textAlign: "center",
             lineHeight: 1.6,
           }}>
-            <strong style={{ color: TEXT_DARK }}>Beides enthält:</strong> alle Leistungen aus Ihrem Paket · 2 Korrekturrunden · DSGVO-konform · Hosting & Domain
+            <strong style={{ color: TEXT_DARK }}>Beides enthält:</strong> alle Leistungen aus deinem Paket · 2 Korrekturrunden · DSGVO-konform · Hosting & Domain
           </div>
         )}
 
@@ -1243,7 +1243,7 @@ function PriceSection({
                 Optionale Erweiterungen
               </div>
               <h3 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
-                Stellen Sie Ihr Paket zusammen
+                Stellen du dein Paket zusammen
               </h3>
             </div>
             <div style={{ display: "grid", gap: 12 }}>
@@ -1302,7 +1302,7 @@ function PriceSection({
                 flexWrap: "wrap", gap: 8,
               }}>
                 <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
-                  Ihre Auswahl ({selectedOptionsCount} Option{selectedOptionsCount !== 1 ? "en" : ""})
+                  deine Auswahl ({selectedOptionsCount} Option{selectedOptionsCount !== 1 ? "en" : ""})
                 </div>
                 <div style={{ textAlign: "right" }}>
                   {priceMode === "miete" && miete ? (
@@ -1339,7 +1339,7 @@ function PriceSection({
                 background: "#FEF3C7", color: "#92400E",
                 borderRadius: 12, fontSize: 13, lineHeight: 1.5,
               }}>
-                Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen Sie uns kurz an, wir senden Ihnen einen passenden Zahlungslink.
+                Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen du uns kurz an, wir senden dir einen passenden Zahlungslink.
               </div>
             )}
           </div>
@@ -1484,7 +1484,7 @@ function TimelineSection() {
     {
       n: 1,
       titel: "Auftrag erteilen",
-      text: "Sie bestätigen heute verbindlich. Wir reservieren Ihre Kapazitäten und schalten den Zugang frei.",
+      text: "du bestätigen heute verbindlich. Wir reservieren deine Kapazitäten und schalten den Zugang frei.",
       badge: "Sofort",
       badgeTone: "primary" as const,
     },
@@ -1498,14 +1498,14 @@ function TimelineSection() {
     {
       n: 3,
       titel: "Umsetzung",
-      text: "Ihr Projekt wird nach höchsten Standards umgesetzt. Sie erhalten regelmäßige Updates zum Fortschritt.",
+      text: "dein Projekt wird nach höchsten Standards umgesetzt. Du erhältst regelmäßige Updates zum Fortschritt.",
       badge: "Hauptphase",
       badgeTone: "neutral" as const,
     },
     {
       n: 4,
       titel: "Live & fertig",
-      text: "Wir feiern den Launch gemeinsam und begleiten Sie auch danach, um den dauerhaften Erfolg zu sichern.",
+      text: "Wir feiern den Launch gemeinsam und begleiten du auch danach, um den dauerhaften Erfolg zu sichern.",
       badge: "Go-Live",
       badgeTone: "success" as const,
     },
@@ -1514,7 +1514,7 @@ function TimelineSection() {
     <section className="angebot-timeline-section" style={{ padding: "clamp(58px, 8vw, 92px) 16px", background: "#fff" }}>
       <div className="angebot-timeline-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-          Ihr Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
+          dein Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{ position: "relative" }}>
           {steps.map((s, i) => (
@@ -1803,7 +1803,7 @@ function FinalCtaSection({
           Bereit, loszulegen?
         </h2>
         <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 8, lineHeight: 1.6 }}>
-          {leadName ? `${leadName}, Ihr Projekt wartet auf den Startschuss.` : "Ihr Projekt wartet auf den Startschuss."}
+          {leadName ? `${leadName}, dein Projekt wartet auf den Startschuss.` : "dein Projekt wartet auf den Startschuss."}
         </p>
         <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", marginBottom: 32, lineHeight: 1.6 }}>
           Ein Klick — und wir kümmern uns um den Rest.
@@ -1954,7 +1954,7 @@ function ExpiredOverlay() {
           Dieses Angebot ist abgelaufen.
         </h2>
         <p style={{ color: TEXT_MUTED, marginBottom: 24, fontSize: 15 }}>
-          Sprechen Sie uns gerne an — wir erstellen ein aktuelles Angebot.
+          Sprechen du uns gerne an — wir erstellen ein aktuelles Angebot.
         </p>
         <a
           href="https://meine-traum-webseite.de/kontakt"
@@ -2021,7 +2021,7 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
       if (!r?.success || !r.auftrags_nr) throw new Error(r?.error || "Buchung fehlgeschlagen");
       onSuccess(r.auftrags_nr);
     } catch (err: any) {
-      setError(err?.message || "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.");
+      setError(err?.message || "Es ist ein Fehler aufgetreten. Bitte versuchen du es erneut.");
     } finally {
       setSubmitting(false);
     }
@@ -2104,7 +2104,7 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
           {submitting ? <><Loader2 size={16} className="animate-spin" /> Wird verarbeitet…</> : <>Zahlungspflichtig bestellen →</>}
         </button>
         <p style={{ marginTop: 12, fontSize: 11, color: TEXT_MUTED, textAlign: "center" }}>
-          Mit Klick erteilen Sie einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
+          Mit Klick erteilen du einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
         </p>
       </form>
     </div>
@@ -2165,10 +2165,10 @@ function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; on
           <CheckCheck size={32} />
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 10 }}>
-          Vielen Dank für Ihren Auftrag!
+          Vielen Dank für deinen Auftrag!
         </h2>
         <p style={{ color: TEXT_MUTED, fontSize: 15, marginBottom: 16 }}>
-          Ihre Bestellung wurde verbindlich erfasst. Sie erhalten in Kürze eine Bestätigung per E-Mail.
+          deine Bestellung wurde verbindlich erfasst. Du erhältst in Kürze eine Bestätigung per E-Mail.
         </p>
         <div style={{
           display: "inline-block", background: BG_SOFT, color: TEXT_DARK,

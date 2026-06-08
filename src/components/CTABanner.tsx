@@ -15,7 +15,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
               Jetzt kostenlose Strategie-Vorschau sichern
             </h2>
             <p className="text-primary-foreground/70 max-w-xl mx-auto mb-5 text-lg">
-              Sehen Sie schwarz auf weiß, wie Ihre neue Website aussehen kann –
+              Siehst du schwarz auf weiß, wie deine neue Website aussehen kann –
               und welche Ergebnisse sie bringen wird.
             </p>
             <p className="text-primary-foreground/50 text-sm mb-10">

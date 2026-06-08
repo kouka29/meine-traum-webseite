@@ -9,11 +9,11 @@ import {
 const faqs = [
   {
     q: "Was kostet eine conversion-optimierte Website?",
-    a: "Unsere Projekte starten ab 990 €. Der genaue Preis hängt vom Umfang ab – aber Sie sehen vorher im kostenlosen Konzept genau, was Sie bekommen. Keine Überraschungen.",
+    a: "Unsere Projekte starten ab 990 €. Der genaue Preis hängt vom Umfang ab – aber Du siehst vorher im kostenlosen Konzept genau, was Du bekommst. Keine Überraschungen.",
   },
   {
     q: "Wie schnell kann meine neue Website live gehen?",
-    a: "Die meisten Projekte sind in 2–4 Wochen fertig. Das erste Konzept mit Struktur und Textideen erhalten Sie bereits innerhalb von 48 Stunden – kostenlos und unverbindlich.",
+    a: "Die meisten Projekte sind in 2–4 Wochen fertig. Das erste Konzept mit Struktur und Textideen erhältst du bereits innerhalb von 48 Stunden – kostenlos und unverbindlich.",
   },
   {
     q: "Was ist der Unterschied zu einer normalen Webdesign-Agentur?",
@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "Ist das kostenlose Konzept wirklich ohne Haken?",
-    a: "Ja. Sie erhalten ein individuelles Konzept für Ihre Website – Struktur, Textideen, Empfehlungen. Wenn es Ihnen gefällt, können wir loslegen. Wenn nicht, behalten Sie die Ideen trotzdem. Kein Druck.",
+    a: "Ja. Du erhältst ein individuelles Konzept für deine Website – Struktur, Textideen, Empfehlungen. Wenn es dir gefällt, können wir loslegen. Wenn nicht, behalten du die Ideen trotzdem. Kein Druck.",
   },
   {
     q: "Für wen funktioniert das am besten?",
@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: "Kann ich meine bestehende Website überarbeiten lassen?",
-    a: "Absolut. Viele unserer Kunden kommen mit einer bestehenden Website, die nicht performt. Wir analysieren sie, zeigen Ihnen die Schwachstellen und erstellen ein Relaunch-Konzept – auf Wunsch komplett kostenlos.",
+    a: "Absolut. Viele unserer Kunden kommen mit einer bestehenden Website, die nicht performt. Wir analysieren sie, zeigen dir die Schwachstellen und erstellen ein Relaunch-Konzept – auf Wunsch komplett kostenlos.",
   },
 ];
 

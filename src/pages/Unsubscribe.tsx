@@ -71,7 +71,7 @@ const Unsubscribe = () => {
               <MailX className="w-12 h-12 mx-auto mb-4 text-primary" />
               <h1 className="text-2xl font-bold mb-2">E-Mails abbestellen?</h1>
               <p className="text-muted-foreground mb-6">
-                Klicken Sie auf bestätigen, um keine weiteren E-Mails von uns zu erhalten.
+                Klick auf bestätigen, um keine weiteren E-Mails von uns zu erhalten.
               </p>
               <Button variant="gradient" size="lg" onClick={confirm} className="w-full">
                 Abbestellung bestätigen
@@ -89,7 +89,7 @@ const Unsubscribe = () => {
               <CheckCircle className="w-12 h-12 mx-auto mb-4 text-primary" />
               <h1 className="text-2xl font-bold mb-2">Erfolgreich abgemeldet</h1>
               <p className="text-muted-foreground">
-                Sie erhalten keine weiteren E-Mails von uns.
+                Du erhältst keine weiteren E-Mails von uns.
               </p>
             </>
           )}

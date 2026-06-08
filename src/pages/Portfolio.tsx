@@ -151,7 +151,7 @@ const Portfolio = () => {
 
           <div className="text-center mt-16">
             <p className="text-muted-foreground mb-5 text-lg">
-              Wollen Sie ähnliche Ergebnisse? Lassen Sie Ihre Website von unserer Webdesign Agentur erstellen.
+              Willst du ähnliche Ergebnisse? Lass deine Website von unserer Webdesign Agentur erstellen.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="gradient" size="lg" asChild>

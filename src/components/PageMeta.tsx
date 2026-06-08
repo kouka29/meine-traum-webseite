@@ -20,7 +20,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/ueber-uns": {
     title: `Über uns – Webdesign Agentur | ${BRAND}`,
     description:
-      "Lernen Sie Meine Traum Webseite kennen – die Agentur, die Websites zu Verkaufsinstrumenten macht. 150+ Kunden im DACH-Raum.",
+      "Lernen du Meine Traum Webseite kennen – die Agentur, die Websites zu Verkaufsinstrumenten macht. 150+ Kunden im DACH-Raum.",
   },
   "/portfolio": {
     title: `Webdesign Portfolio & Referenzen | ${BRAND}`,
@@ -30,7 +30,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/kontakt": {
     title: `Kontakt – Vorschau in 48 h | ${BRAND}`,
     description:
-      "Sichern Sie sich Ihre kostenlose Website-Vorschau in 48 h. Unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
+      "Sichere sich deine kostenlose Website-Vorschau in 48 h. Unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
   },
   "/webdesign-agentur": {
     title: `Webdesign Agentur für moderne Websites | ${BRAND}`,
@@ -40,7 +40,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/website-erstellen-lassen": {
     title: `Website erstellen lassen ab 990 € | ${BRAND}`,
     description:
-      "Moderne Website für Ihr Unternehmen erstellen lassen. Conversion-optimiert, mobilfreundlich, SEO-ready. Vorschau in 48 h.",
+      "Moderne Website für dein Unternehmen erstellen lassen. Conversion-optimiert, mobilfreundlich, SEO-ready. Vorschau in 48 h.",
   },
   "/landingpage-erstellen-lassen": {
     title: `Landingpage erstellen lassen | ${BRAND}`,
@@ -55,7 +55,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/conversion-optimierung": {
     title: `Conversion Optimierung Agentur | ${BRAND}`,
     description:
-      "Conversion-Optimierung für mehr Anfragen und Umsatz. Datengetrieben – bis zu 400 % mehr Conversions aus Ihrer Website.",
+      "Conversion-Optimierung für mehr Anfragen und Umsatz. Datengetrieben – bis zu 400 % mehr Conversions aus deiner Website.",
   },
   "/kostenloser-website-check": {
     title: `Kostenloser Website-Check | ${BRAND}`,
@@ -65,17 +65,17 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/kostenlose-vorschau": {
     title: `Kostenlose Webseiten-Vorschau in 48 h | ${BRAND}`,
     description:
-      "Handwerker: Sichern Sie sich einen von 5 Plätzen pro Monat. Kostenlose Vorschau in 48 h. Ohne Risiko und Verpflichtung.",
+      "Handwerker: Sichere sich einen von 5 Plätzen pro Monat. Kostenlose Vorschau in 48 h. Ohne Risiko und Verpflichtung.",
   },
   "/kostenlose-vorschau2": {
     title: `Vorschau in 48 h für Handwerker | ${BRAND}`,
     description:
-      "Handwerksbetrieb? Erhalten Sie in 48 h eine kostenlose Vorschau Ihrer neuen Website. Ohne Risiko, ohne Kosten.",
+      "Handwerksbetrieb? Erhältst du in 48 h eine kostenlose Vorschau deiner neuen Website. Ohne Risiko, ohne Kosten.",
   },
   "/kostenlose-vorschau-v2": {
     title: `Kostenlose Website-Vorschau in 48 h | ${BRAND}`,
     description:
-      "Kostenlose Vorschau Ihrer neuen Website in 48 h. Sehen Sie Ihr Design, bevor Sie sich entscheiden – unverbindlich.",
+      "Kostenlose Vorschau deiner neuen Website in 48 h. Siehst du dein Design, bevor du sich entscheiden – unverbindlich.",
   },
   "/webdesign-preise": {
     title: `Webdesign Preise & Kosten | ${BRAND}`,
@@ -115,17 +115,17 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/individuelle-software": {
     title: `Individuelle Software-Entwicklung | ${BRAND}`,
     description:
-      "Maßgeschneiderte Webanwendungen und individuelle Software-Lösungen für Ihr Unternehmen. Beratung, Konzept und Umsetzung aus einer Hand.",
+      "Maßgeschneiderte Webanwendungen und individuelle Software-Lösungen für dein Unternehmen. Beratung, Konzept und Umsetzung aus einer Hand.",
   },
   "/empfehlung": {
     title: `Empfehlungsprogramm | ${BRAND}`,
     description:
-      "Empfehlen Sie Meine Traum Webseite und profitieren Sie von attraktiven Prämien für jeden vermittelten Neukunden.",
+      "Empfehlen du Meine Traum Webseite und profitierst du von attraktiven Prämien für jeden vermittelten Neukunden.",
   },
   "/erstgespraech": {
     title: `Erstgespräch buchen | ${BRAND}`,
     description:
-      "Buchen Sie Ihr kostenloses Erstgespräch. Gemeinsam klären wir Ziele, Zielgruppe und Strategie für Ihre neue Website.",
+      "Buchst du dein kostenloses Erstgespräch. Gemeinsam klären wir Ziele, Zielgruppe und Strategie für deine neue Website.",
   },
   "/starter": {
     title: `Starter-Paket Website | ${BRAND}`,
@@ -150,7 +150,7 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   },
   "/unsubscribe": {
     title: `E-Mail-Abmeldung | ${BRAND}`,
-    description: "Vom Newsletter abmelden. Sie können sich jederzeit wieder anmelden.",
+    description: "Vom Newsletter abmelden. Du kannst sich jederzeit wieder anmelden.",
   },
   "/handwerker": {
     title: `Website für Handwerker | ${BRAND}`,
