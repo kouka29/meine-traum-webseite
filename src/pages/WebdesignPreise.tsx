@@ -952,28 +952,8 @@ const WebdesignPreise = () => {
                 />
               ))}
             </div>
-            <p className="mt-8 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
-            </p>
-            <div className="mt-4 flex justify-center">
-              <PaymentTrustStrip kind="deposit" />
-            </div>
-            <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-              <span>🛡️</span>
-              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
-            </p>
-            <div className="flex justify-center my-8">
-              <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-                <span className="flex items-center justify-center gap-2 leading-snug">
-                  <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
-                  <ArrowRight size={16} className="shrink-0" />
-                </span>
-              </Button>
-            </div>
-            <TrustStrip />
-            <TestimonialBlock />
             <AnimatedSection delay={0.1}>
-              <div className="rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
+              <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                 <div className="flex-1">
                   <h3 className="font-heading text-xl font-bold mb-1">{buyEnterprise.name}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
@@ -995,20 +975,34 @@ const WebdesignPreise = () => {
                 </div>
               </div>
             </AnimatedSection>
+            <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <span>🛡️</span>
+              <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+            </p>
+            <div className="mt-4 flex justify-center">
+              <PaymentTrustStrip kind="deposit" />
+            </div>
+            <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+            </p>
           </TabsContent>
         </Tabs>
 
+        <TestimonialBlock />
+
         <AnimatedSection>
-          <div className="bg-card rounded-2xl p-8 md:p-10 border border-border text-center max-w-3xl mx-auto mb-10">
-            <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu Ihnen?</h3>
-            <p className="text-muted-foreground leading-relaxed mb-6">
-              Miete = sofort starten, kein großes Investment, maximale Flexibilität.<br />
-              Einmalkauf = einmal zahlen, Website gehört Ihnen, nach ca. 2 Jahren günstiger als die Miete.<br />
-              Nicht sicher? Ich berate Sie kurz und kostenlos.
-            </p>
-            <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-              Kostenlos beraten lassen <ArrowRight size={18} />
-            </Button>
+          <div className="text-center mb-10 max-w-3xl mx-auto mt-12">
+            <h2 className="mb-3 text-balance">Häufige Fragen</h2>
+          </div>
+          <div className="max-w-3xl mx-auto mb-12">
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqs.map((faq, i) => (
+                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+                  <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5 whitespace-pre-line">{faq.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
@@ -1024,24 +1018,6 @@ const WebdesignPreise = () => {
               </div>
             ))}
           </div>
-        </AnimatedSection>
-
-        <AnimatedSection>
-          <div className="text-center mb-10 max-w-3xl mx-auto">
-            <h2 className="mb-3 text-balance">Das fragen Handwerker am häufigsten</h2>
-            <p className="text-muted-foreground">Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.</p>
-          </div>
-          <div className="max-w-3xl mx-auto mb-12">
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
-                  <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5 whitespace-pre-line">{faq.a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-
         </AnimatedSection>
       </div>
     </section>
