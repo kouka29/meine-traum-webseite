@@ -963,7 +963,7 @@ const WebdesignPreise = () => {
               <PaymentTrustStrip kind="deposit" />
             </div>
             <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-              <Shield size={16} className="text-muted-foreground/80 shrink-0" />
+              <span>🛡️</span>
               <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
             </p>
             <div className="flex justify-center my-8">
