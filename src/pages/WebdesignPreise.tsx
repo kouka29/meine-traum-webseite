@@ -196,7 +196,13 @@ const TestimonialBlock = () => {
   );
 };
 
-const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] } }) => {
+const GrowthAccordion = ({
+  growth,
+  extraFeatures,
+}: {
+  growth?: { price: string; items: string[] };
+  extraFeatures?: string[];
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="mb-3">
@@ -206,7 +212,7 @@ const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] 
         aria-expanded={open}
         className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-primary border-2 border-primary/30 hover:border-primary hover:bg-primary/5 rounded-xl px-4 py-2.5 transition-colors"
       >
-        <span>+ Add-ons & Extras ansehen</span>
+        <span>Alle Leistungen anzeigen</span>
         <ChevronDown
           size={16}
           className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -218,17 +224,34 @@ const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] 
         }`}
       >
         <div className="overflow-hidden">
-          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-2">
-            <p className="text-sm font-semibold text-primary">Wachstumspaket {growth.price}</p>
-            <ul className="space-y-1.5">
-              {growth.items.map((it) => (
-                <li key={it} className="flex items-start gap-2 text-xs text-foreground/80">
-                  <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
-                  <span>{it}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-[11px] text-muted-foreground italic pt-1">Monatlich kündbar.</p>
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-4">
+            {extraFeatures && extraFeatures.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-primary">Weitere Leistungen</p>
+                <ul className="space-y-1.5">
+                  {extraFeatures.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
+                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {growth && (
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-primary">Wachstumspaket {growth.price}</p>
+                <ul className="space-y-1.5">
+                  {growth.items.map((it) => (
+                    <li key={it} className="flex items-start gap-2 text-xs text-foreground/80">
+                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[11px] text-muted-foreground italic pt-1">Monatlich kündbar.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -257,14 +280,13 @@ const rentPackages: Pkg[] = [
     price: "59 €/Monat",
     badge: "Starter Miete – 59 €/Monat netto",
     priceId: "starter_rent_monthly",
-    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
+      "1 Seite vollständig ausgebaut – Leistungen, Kontakt, Anfrage",
+      "In 7 Tagen live – Sie machen weiter Ihr Handwerk",
+      "Kunden sehen kein 'Nicht sicher' im Browser – Vertrauen inklusive",
       "Ideal für Betriebe die schnell professionell online wollen",
-      "1 Seite vollständig ausgebaut — Leistungen, Kontakt, Anfrage",
       "Perfekt auf jedem Handy — auch auf der Baustelle",
       "Kunden können Sie direkt anfragen — rund um die Uhr",
-      "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
-      "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
     ],
     cta: "Jetzt Website sichern",
     upgradeHint: "↑ Upgrade auf Pro jederzeit – ohne neue Mindestlaufzeit",
@@ -282,11 +304,10 @@ const rentPackages: Pkg[] = [
     price: "99 €/Monat",
     badge: "Pro Miete – 99 €/Monat netto",
     priceId: "pro_rent_monthly",
-    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
-      "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
-      "SEO-Grundlagen (Google findet Sie)",
-      "Google Maps Eintrag eingerichtet — Kunden finden Sie sofort",
+      "Bis zu 5 Seiten – Leistungen, Referenzen, Kontakt",
+      "Google Maps Eintrag eingerichtet – Kunden finden Sie sofort",
+      "SEO-Grundlagen – Google findet Sie",
       "Handy-optimiert & sicher — kein technisches Wissen nötig",
       "Hosting & Domain inklusive",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
@@ -307,12 +328,11 @@ const rentPackages: Pkg[] = [
     price: "159 €/Monat",
     badge: "Premium Miete – 159 €/Monat netto",
     priceId: "premium_rent_monthly",
-    desc: "12 Monate Startzeitraum – danach monatlich kündbar ✓",
     features: [
-      "Bis zu 10 Seiten — komplette Online-Präsenz",
-      "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
+      "Bis zu 10 Seiten – komplette Online-Präsenz",
+      "Google-Optimierung die Anfragen bringt – nicht nur Besucher",
+      "Google Business Einrichtung inklusive",
       "Design das mehr Anfragen bringt",
-      "Google Business Einrichtung",
       "Hosting & Domain inklusive",
       "Individuelle Umsetzung – Timing nach Absprache",
     ],
@@ -499,12 +519,15 @@ const PackageCard = ({
   i: number;
   onOpen: (badge: string) => void;
   onCheckout?: (pkg: Pkg) => void;
-}) => (
+}) => {
+  const visibleFeatures = pkg.enterprise ? pkg.features : pkg.features.slice(0, 3);
+  const hiddenFeatures = pkg.enterprise ? [] : pkg.features.slice(3);
+  return (
   <AnimatedSection delay={i * 0.08}>
     <div
-      className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
+      className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
         pkg.popular
-          ? "border-primary shadow-elevated"
+          ? "border-2 border-primary shadow-[0_24px_60px_-12px_hsl(var(--primary)/0.35)] lg:scale-[1.03] lg:z-10"
           : pkg.enterprise
             ? "border-foreground/40 bg-gradient-to-br from-card to-background"
             : "border-border"
@@ -526,7 +549,7 @@ const PackageCard = ({
       ) : (
         <>
           <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-          <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+          <p className="text-xs text-muted-foreground mb-6">zzgl. 19 % MwSt.</p>
           {pkg.subPrice && (
             <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
           )}
@@ -535,8 +558,8 @@ const PackageCard = ({
       {pkg.desc && (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
       )}
-      <div className="space-y-3 flex-1 mb-8 mt-2">
-        {pkg.features.map((f) => {
+      <div className="space-y-3 flex-1 mb-6">
+        {visibleFeatures.map((f) => {
           if (f.startsWith("__hint__")) {
             return (
               <p key={f} className="text-xs text-muted-foreground pl-[22px] -mt-2">
@@ -553,10 +576,12 @@ const PackageCard = ({
         })}
       </div>
       {pkg.upgradeHint && (
-        <p className="text-xs font-bold text-primary mb-4 -mt-4">{pkg.upgradeHint}</p>
+        <p className="text-xs font-bold text-primary mb-4">{pkg.upgradeHint}</p>
       )}
-      {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
-      <div className="space-y-2">
+      {(pkg.growth || hiddenFeatures.length > 0) && (
+        <GrowthAccordion growth={pkg.growth} extraFeatures={hiddenFeatures} />
+      )}
+      <div className="space-y-2 mt-6">
         <Button
           variant={pkg.enterprise ? "outline" : "gradient"}
           size="lg"
@@ -581,10 +606,10 @@ const PackageCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip kind="rent" />}
     </div>
   </AnimatedSection>
-);
+  );
+};
 
 const BuyCard = ({
   pkg,
@@ -596,11 +621,16 @@ const BuyCard = ({
   i: number;
   onOpen: (badge: string) => void;
   onCheckout: (pkg: BuyPkg) => void;
-}) => (
+}) => {
+  const visibleFeatures = pkg.features.slice(0, 3);
+  const hiddenFeatures = pkg.features.slice(3);
+  return (
   <AnimatedSection delay={i * 0.08}>
     <div
-      className={`relative rounded-2xl p-8 h-full flex flex-col border bg-background ${
-        pkg.popular ? "border-primary shadow-elevated" : "border-border"
+      className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
+        pkg.popular
+          ? "border-2 border-primary shadow-[0_24px_60px_-12px_hsl(var(--primary)/0.35)] lg:scale-[1.03] lg:z-10"
+          : "border-border"
       }`}
     >
       {pkg.popular && (
@@ -610,7 +640,7 @@ const BuyCard = ({
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
       <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-      <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
+      <p className="text-xs text-muted-foreground mb-6">zzgl. 19 % MwSt.</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
           {pkg.highlights.map((h) => (
@@ -621,16 +651,18 @@ const BuyCard = ({
       {pkg.compare && (
         <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
       )}
-      <div className="space-y-3 flex-1 mb-4 mt-2">
-        {pkg.features.map((f) => (
+      <div className="space-y-3 flex-1 mb-6">
+        {visibleFeatures.map((f) => (
           <div key={f} className="flex items-start gap-2.5">
             <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
             <span className="text-sm">{f}</span>
           </div>
         ))}
       </div>
-      {pkg.growth && <GrowthAccordion growth={pkg.growth} />}
-      <div className="space-y-2">
+      {(pkg.growth || hiddenFeatures.length > 0) && (
+        <GrowthAccordion growth={pkg.growth} extraFeatures={hiddenFeatures} />
+      )}
+      <div className="space-y-2 mt-6">
         <Button
           variant="gradient"
           size="lg"
@@ -651,10 +683,10 @@ const BuyCard = ({
           </Button>
         )}
       </div>
-      {pkg.priceId && <PaymentTrustStrip kind="deposit" />}
     </div>
   </AnimatedSection>
-);
+  );
+};
 
 const WebdesignPreise = () => {
   const [showFloating, setShowFloating] = useState(true);
@@ -791,6 +823,12 @@ const WebdesignPreise = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
+            <p className="mt-8 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+            </p>
+            <div className="mt-4 flex justify-center">
+              <PaymentTrustStrip kind="rent" />
+            </div>
             <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
               <Shield size={16} className="text-muted-foreground/80 shrink-0" />
               <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
@@ -852,6 +890,12 @@ const WebdesignPreise = () => {
                   onCheckout={openBuyCheckout}
                 />
               ))}
+            </div>
+            <p className="mt-8 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+            </p>
+            <div className="mt-4 flex justify-center">
+              <PaymentTrustStrip kind="deposit" />
             </div>
             <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
               <Shield size={16} className="text-muted-foreground/80 shrink-0" />
