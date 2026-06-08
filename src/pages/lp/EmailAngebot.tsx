@@ -132,20 +132,32 @@ const testimonials = [
 
 const faqs = [
   {
+    q: "Mieten oder kaufen – was passt zu mir?",
+    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
+  },
+  {
     q: "Wie lange dauert es bis meine Website fertig ist?",
-    a: "Beim Starter-Paket ist deine Website in 7 Tagen live. Beim Pro-Paket ca. 2 Wochen. Beim Premium-Paket besprechen wir Timing individuell.",
+    a: "Beim Starter-Paket ist deine Website in 7 Tagen live. Beim Pro-Paket ca. 2 Wochen. Beim Premium-Paket besprechen wir Timing individuell nach deinen Wünschen.",
   },
   {
     q: "Was passiert nach den 12 Monaten?",
-    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – du kannst jederzeit kündigen.",
+    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
   },
   {
-    q: "Muss ich selbst Texte liefern?",
-    a: "Nein – du lieferst uns deine Infos und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
+    q: "Muss ich selbst Texte und Inhalte liefern?",
+    a: "Nein – du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
   },
   {
-    q: "Was wenn ich mit der Website nicht zufrieden bin?",
-    a: "Wir zeigen dir vor dem Launch eine Vorschau – erst wenn du zufrieden bist, gehen wir live.",
+    q: "Was ist wenn ich mit der Website nicht zufrieden bin?",
+    a: "Wir zeigen dir vor dem Launch eine Vorschau – erst wenn du zufrieden bist, gehen wir live. Beim Premium-Paket sind zusätzlich Korrekturen nach Launch inklusive.",
+  },
+  {
+    q: "Kann ich mein Paket später wechseln?",
+    a: "Ja – du kannst jederzeit auf ein höheres Paket upgraden, ohne neue Mindestlaufzeit. Ein Downgrade ist nach Ende des Startzeitraums möglich.",
+  },
+  {
+    q: "Ist die Website auch auf dem Handy nutzbar?",
+    a: "Ja – alle Websites sind vollständig für Smartphones und Tablets optimiert. Deine Kunden können dich von überall problemlos erreichen.",
   },
 ];
 
@@ -214,8 +226,8 @@ const EmailAngebot = () => {
         <div className="container-narrow px-4">
           {/* BLOCK 1: Hero */}
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <h1 className="mb-5 text-balance">
-              Deine neue <span className="gradient-text">Website</span> —<br />
+            <h1 className="mb-5 text-balance leading-[1.15] pb-2">
+              Deine neue <span className="gradient-text inline-block pb-1">Website</span> —<br />
               in 7 Tagen live.
             </h1>
             <p className="text-muted-foreground text-lg mb-8">
