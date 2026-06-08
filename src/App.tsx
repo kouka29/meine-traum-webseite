@@ -60,6 +60,9 @@ const ElektrikerHub = lazy(() => import("./pages/trade/ElektrikerHub.tsx"));
 const MalerHub = lazy(() => import("./pages/trade/MalerHub.tsx"));
 const SanitaerHub = lazy(() => import("./pages/trade/SanitaerHub.tsx"));
 const DachdeckerHub = lazy(() => import("./pages/trade/DachdeckerHub.tsx"));
+const ElektrikerPreise = lazy(() => import("./pages/trade/ElektrikerPreise.tsx"));
+const SanitaerPreise = lazy(() => import("./pages/trade/SanitaerPreise.tsx"));
+const DachdeckerPreise = lazy(() => import("./pages/trade/DachdeckerPreise.tsx"));
 const Angebot = lazy(() => import("./pages/Angebot.tsx"));
 const AGB = lazy(() => import("./pages/AGB.tsx"));
 const ZahlungErfolgreich = lazy(() => import("./pages/ZahlungErfolgreich.tsx"));
@@ -162,7 +165,7 @@ const App = () => (
             <Route path="/handwerker/*" element={<Navigate to="/handwerker" replace />} />
 
             <Route path="/elektriker" element={<ElektrikerHub />} />
-            <Route path="/elektriker/preise" element={<Navigate to="/handwerker/preise" replace />} />
+            <Route path="/elektriker/preise" element={<ElektrikerPreise />} />
             <Route path="/elektriker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
             <Route path="/elektriker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
             <Route path="/elektriker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
@@ -178,7 +181,7 @@ const App = () => (
             <Route path="/maler/*" element={<Navigate to="/maler" replace />} />
 
             <Route path="/sanitaer" element={<SanitaerHub />} />
-            <Route path="/sanitaer/preise" element={<Navigate to="/handwerker/preise" replace />} />
+            <Route path="/sanitaer/preise" element={<SanitaerPreise />} />
             <Route path="/sanitaer/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
             <Route path="/sanitaer/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
             <Route path="/sanitaer/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
@@ -186,7 +189,7 @@ const App = () => (
             <Route path="/sanitaer/*" element={<Navigate to="/sanitaer" replace />} />
 
             <Route path="/dachdecker" element={<DachdeckerHub />} />
-            <Route path="/dachdecker/preise" element={<Navigate to="/handwerker/preise" replace />} />
+            <Route path="/dachdecker/preise" element={<DachdeckerPreise />} />
             <Route path="/dachdecker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
             <Route path="/dachdecker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
             <Route path="/dachdecker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
