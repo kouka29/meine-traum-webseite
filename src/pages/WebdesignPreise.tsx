@@ -480,6 +480,7 @@ const buyPackages: BuyPkg[] = [
     badge: "Pro Kauf – 1.990 € netto",
     priceId: "pro_purchase_deposit",
     compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
+    includesHint: "✓ Alles aus Starter inklusive – plus:",
     features: [
       "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
       "Google Maps & Google Business vollständig eingerichtet",
@@ -506,6 +507,7 @@ const buyPackages: BuyPkg[] = [
     badge: "Premium Kauf – 3.590 € netto",
     priceId: "premium_purchase_deposit",
     compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
+    includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
       "Bis zu 10 Seiten – deine komplette Online-Präsenz",
       "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
