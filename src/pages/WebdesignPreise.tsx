@@ -246,6 +246,79 @@ const GrowthAccordion = ({
   );
 };
 
+type Addon = {
+  name: string;
+  price: string;
+  features: string[];
+};
+
+const addons: Addon[] = [
+  {
+    name: "Starter Add-on",
+    price: "+29 €/Monat",
+    features: [
+      "1 Änderung pro Monat inklusive",
+      "Updates & Wartung",
+      "Support per WhatsApp",
+    ],
+  },
+  {
+    name: "Pro Add-on",
+    price: "+49 €/Monat",
+    features: [
+      "Bis zu 3 Änderungen pro Monat inklusive",
+      "Updates & Wartung",
+      "Priority Support per WhatsApp",
+    ],
+  },
+  {
+    name: "Premium Add-on",
+    price: "+79 €/Monat",
+    features: [
+      "Bis zu 5 Änderungen pro Monat inklusive",
+      "Updates & Wartung",
+      "Priority Support per WhatsApp",
+      "Monatlicher Performance-Check",
+    ],
+  },
+];
+
+const AddonsSection = () => (
+  <section className="my-16">
+    <p className="text-center text-sm text-muted-foreground mb-6">
+      Mehr herausholen? Add-ons zubuchbar – monatlich kündbar.
+    </p>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {addons.map((a) => (
+        <div
+          key={a.name}
+          className="rounded-2xl border border-border bg-muted/40 p-6 flex flex-col"
+        >
+          <h3 className="font-heading text-lg font-semibold mb-1">{a.name}</h3>
+          <p className="text-2xl font-bold text-foreground">{a.price}</p>
+          <p className="text-xs text-muted-foreground mt-1 mb-4">
+            zzgl. 19% MwSt. · monatlich kündbar
+          </p>
+          <ul className="space-y-2 mb-6 flex-1">
+            {a.features.map((f) => (
+              <li key={f} className="flex items-start gap-2 text-sm text-foreground/85">
+                <CheckCircle size={14} className="text-primary shrink-0 mt-0.5" />
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <Link
+            to="/kontakt"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 transition-colors px-5 py-2.5 text-sm font-semibold"
+          >
+            Add-on hinzufügen <ArrowRight size={16} />
+          </Link>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
 type Pkg = {
   name: string;
   price: string;
