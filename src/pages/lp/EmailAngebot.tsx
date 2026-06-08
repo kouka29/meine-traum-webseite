@@ -684,27 +684,42 @@ const EmailAngebot = () => {
       </section>
 
       {/* BLOCK 6: Finaler CTA */}
-      <section className="bg-primary/10 py-[60px]">
-        <div className="container-narrow px-4 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
-            Mehr Aufträge. Weniger Aufwand.
-          </h2>
-          <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
-            Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
-            Gefällt sie dir nicht — Du zahlst nichts.
-          </p>
-          <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")}>
-            Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />
-          </Button>
-          <p className="text-sm text-muted-foreground mt-5">
-            Fragen? Einfach anrufen:{" "}
-            <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">
-              06131 30 764 98
-            </a>
-          </p>
-          <p className="text-base md:text-lg font-bold text-primary mt-6">
-            ⭐⭐⭐⭐⭐ Bereits 150+ Handwerksbetriebe aus der Region vertrauen uns
-          </p>
+      <section className="py-16 md:py-24 px-4">
+        <div className="container-narrow">
+          <div className="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] gradient-hero-bg p-10 md:p-16 text-center text-primary-foreground shadow-elevated">
+            {/* Decorative glows */}
+            <div className="pointer-events-none absolute -top-32 -right-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
+
+            <div className="relative">
+              <h2 className="font-heading text-3xl md:text-5xl font-bold mb-5 text-white text-balance">
+                Mehr Aufträge. Weniger Aufwand.
+              </h2>
+              <p className="text-white/85 text-base md:text-lg mb-9 leading-relaxed max-w-2xl mx-auto">
+                Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
+                Gefällt sie dir nicht — du zahlst nichts.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button
+                  size="lg"
+                  onClick={() => openPopup("Kostenlose Beratung")}
+                  className="bg-white text-primary hover:bg-white/90 shadow-xl"
+                >
+                  Kostenlose Demo anfordern <ArrowRight size={18} />
+                </Button>
+                <a
+                  href="tel:+4961313076498"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg px-6 h-12 font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors"
+                >
+                  <Phone size={16} /> 06131 30 764 98
+                </a>
+              </div>
+              <p className="text-sm text-white/80 mt-7 flex items-center justify-center gap-2 flex-wrap">
+                <span className="text-yellow-300 tracking-tight">★★★★★</span>
+                <span>Bereits 150+ Handwerksbetriebe aus der Region vertrauen uns</span>
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
