@@ -960,10 +960,10 @@ function StepKontakt({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Ihre Kontaktdaten
+        Deine Kontaktdaten
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Damit wir Ihre Auftragsbestätigung und Rechnung senden können.
+        Damit wir dir Auftragsbestätigung und Rechnung zusenden können.
       </p>
 
       <div style={{ display: "grid", gap: 14 }}>
