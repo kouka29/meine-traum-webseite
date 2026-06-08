@@ -709,7 +709,7 @@ const BuyCard = ({
           <Star size={12} /> Beliebteste Wahl
         </span>
       )}
-      <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+      <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
       <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
