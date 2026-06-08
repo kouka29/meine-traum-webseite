@@ -196,7 +196,13 @@ const TestimonialBlock = () => {
   );
 };
 
-const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] } }) => {
+const GrowthAccordion = ({
+  growth,
+  extraFeatures,
+}: {
+  growth?: { price: string; items: string[] };
+  extraFeatures?: string[];
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="mb-3">
@@ -206,7 +212,7 @@ const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] 
         aria-expanded={open}
         className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-primary border-2 border-primary/30 hover:border-primary hover:bg-primary/5 rounded-xl px-4 py-2.5 transition-colors"
       >
-        <span>+ Add-ons & Extras ansehen</span>
+        <span>Alle Leistungen anzeigen</span>
         <ChevronDown
           size={16}
           className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -218,17 +224,34 @@ const GrowthAccordion = ({ growth }: { growth: { price: string; items: string[] 
         }`}
       >
         <div className="overflow-hidden">
-          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-2">
-            <p className="text-sm font-semibold text-primary">Wachstumspaket {growth.price}</p>
-            <ul className="space-y-1.5">
-              {growth.items.map((it) => (
-                <li key={it} className="flex items-start gap-2 text-xs text-foreground/80">
-                  <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
-                  <span>{it}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-[11px] text-muted-foreground italic pt-1">Monatlich kündbar.</p>
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-4">
+            {extraFeatures && extraFeatures.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-primary">Weitere Leistungen</p>
+                <ul className="space-y-1.5">
+                  {extraFeatures.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
+                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {growth && (
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-primary">Wachstumspaket {growth.price}</p>
+                <ul className="space-y-1.5">
+                  {growth.items.map((it) => (
+                    <li key={it} className="flex items-start gap-2 text-xs text-foreground/80">
+                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[11px] text-muted-foreground italic pt-1">Monatlich kündbar.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
