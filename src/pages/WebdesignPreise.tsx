@@ -24,7 +24,7 @@ import PricingLeadPopup from "@/components/PricingLeadPopup";
 import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 import { supabase } from "@/integrations/supabase/client";
-import { usePricingName } from "@/lib/pricingNames";
+import { usePricingName, PricingName } from "@/lib/pricingNames";
 
 const TrustStrip = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
@@ -899,7 +899,7 @@ const WebdesignPreise = () => {
               <AnimatedSection key={pkg.name} delay={0.1}>
                 <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
-                    <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
+                    <h3 className="font-heading text-xl font-bold mb-1"><PricingName name={pkg.name} /></h3>
                     <p className="text-sm text-muted-foreground mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
                     <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
                     {pkg.desc && (
