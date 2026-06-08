@@ -522,8 +522,8 @@ const PackageCard = ({
   onOpen: (badge: string) => void;
   onCheckout?: (pkg: Pkg) => void;
 }) => {
-  const visibleFeatures = pkg.enterprise ? pkg.features : pkg.features.slice(0, 3);
-  const hiddenFeatures = pkg.enterprise ? [] : pkg.features.slice(3);
+  const visibleFeatures = pkg.enterprise ? pkg.features : pkg.features.slice(0, 4);
+  const hiddenFeatures = pkg.enterprise ? [] : pkg.features.slice(4);
   return (
   <AnimatedSection delay={i * 0.08}>
     <div
@@ -558,6 +558,9 @@ const PackageCard = ({
       )}
       {pkg.desc && (
         <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
+      )}
+      {pkg.includesHint && (
+        <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
       )}
       <div className="space-y-3 flex-1 mb-6">
         {visibleFeatures.map((f) => {
