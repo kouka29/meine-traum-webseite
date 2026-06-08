@@ -34,9 +34,9 @@ const rentPackages: Pkg[] = [
       "Ideal für Betriebe die schnell professionell online wollen",
       "Eine starke Seite — reicht für die meisten Betriebe",
       "Perfekt auf jedem Handy — auch auf der Baustelle",
-      "Kunden können Sie direkt anfragen — rund um die Uhr",
+      "Kunden kannst du direkt anfragen — rund um die Uhr",
       "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
-      "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
+      "In 7 Tagen live — Du machst weiter dein Handwerk",
     ],
     cta: "Website jetzt sichern",
     upgradeHint: "↑ Upgrade auf Wachstums-Betrieb jederzeit – ohne neue Mindestlaufzeit",
@@ -57,8 +57,8 @@ const rentPackages: Pkg[] = [
     desc: "Mindestlaufzeit: 12 Monate, danach monatlich kündbar",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
-      "SEO-Grundlagen (Google findet Sie)",
-      "Google Maps Eintrag eingerichtet — Kunden finden Sie sofort",
+      "SEO-Grundlagen (Google findet du)",
+      "Google Maps Eintrag eingerichtet — Kunden findest du sofort",
       "Handy-optimiert & sicher — kein technisches Wissen nötig",
       "Hosting & Domain inklusive",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
@@ -140,15 +140,15 @@ const buyPackages: BuyPkg[] = [
     price: "990 € einmalig",
     badge: "Einzelkämpfer Kauf – 990 € netto",
     priceId: "starter_purchase_deposit",
-    compare: "Miete Einzelkämpfer: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
+    compare: "Miete Einzelkämpfer: 59 € × 24 = 1.416 € — hier sparst du 426 € (alle Preise netto)",
     features: [
       "Ideal für Betriebe die schnell professionell online wollen",
       "Eine starke Seite — reicht für die meisten Betriebe",
       "Perfekt auf jedem Handy — auch auf der Baustelle",
-      "Kunden können Sie direkt anfragen — rund um die Uhr",
+      "Kunden kannst du direkt anfragen — rund um die Uhr",
       "Kunden sehen kein 'Nicht sicher' im Browser — Vertrauen inklusive",
-      "In 7 Tagen live — Sie machen weiter Ihr Handwerk",
-      "Website gehört Ihnen – kein Vertrag",
+      "In 7 Tagen live — Du machst weiter dein Handwerk",
+      "Website gehört dir – kein Vertrag",
     ],
     growth: {
       price: "+29 €/Monat zubuchbar",
@@ -166,15 +166,15 @@ const buyPackages: BuyPkg[] = [
     price: "1.990 € einmalig",
     badge: "Wachstums-Betrieb Kauf – 1.990 € netto",
     priceId: "pro_purchase_deposit",
-    compare: "Miete Wachstums-Betrieb: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
+    compare: "Miete Wachstums-Betrieb: 99 € × 24 = 2.376 € — hier sparst du 386 € (alle Preise netto)",
     features: [
       "Bis zu 5 Seiten — Leistungen, Referenzen, Kontakt",
-      "SEO-Grundlagen (Google findet Sie)",
-      "Google Maps Eintrag eingerichtet — Kunden finden Sie sofort",
+      "SEO-Grundlagen (Google findet du)",
+      "Google Maps Eintrag eingerichtet — Kunden findest du sofort",
       "30 Tage Support nach Start",
       "Handy-optimiert & sicher — kein technisches Wissen nötig",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
-      "Website gehört Ihnen – kein Vertrag",
+      "Website gehört dir – kein Vertrag",
     ],
     growth: {
       price: "+49 €/Monat zubuchbar",
@@ -193,7 +193,7 @@ const buyPackages: BuyPkg[] = [
     price: "3.590 € einmalig",
     badge: "Marktführer Kauf – 3.590 € netto",
     priceId: "premium_purchase_deposit",
-    compare: "Miete Marktführer: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
+    compare: "Miete Marktführer: 159 € × 24 = 3.816 € — hier sparst du 226 € (alle Preise netto)",
     features: [
       "Bis zu 10 Seiten — komplette Online-Präsenz",
       "Google-Optimierung die Anfragen bringt — nicht nur Besucher",
@@ -201,7 +201,7 @@ const buyPackages: BuyPkg[] = [
       "60 Tage Priority Support",
       "Handy-optimiert & sicher — kein technisches Wissen nötig",
       "Individuelle Umsetzung – Timing nach Absprache",
-      "Website gehört Ihnen – kein Vertrag",
+      "Website gehört dir – kein Vertrag",
     ],
     growth: {
       price: "+79 €/Monat zubuchbar",
@@ -237,27 +237,27 @@ const buyEnterprise = {
 const faqs = [
   {
     q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als Sie denken. Ein einziger neuer Auftrag reicht. Den Rest verdienst Du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    a: "Ja – und zwar schneller als du denken. Ein einziger neuer Auftrag reicht. Den Rest verdienst Du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
     q: "Was passiert wenn mir die Vorschau nicht gefällt?",
-    a: "Gar nichts. Sie zahlen keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige Ihnen die Vorschau – gefällt sie Ihnen nicht, war es das. Kein unangenehmes Gespräch danach.",
+    a: "Gar nichts. Du zahlst keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige dir die Vorschau – gefällt sie dir nicht, war es das. Kein unangenehmes Gespräch danach.",
   },
   {
     q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
-    a: "Nein. Sie füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Sie bekommen Ihre fertige Website – ohne einen einzigen technischen Handgriff.",
+    a: "Nein. Du füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst deine fertige Website – ohne einen einzigen technischen Handgriff.",
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    a: "Nach den 12 Monaten läuft dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
-    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von deiner Region und deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
   {
     q: "Bekomme ich durch die Website wirklich mehr Kunden?",
-    a: "Das ist die wichtigste Frage — und wir verstehen sie. Wir können keine Garantie auf eine bestimmte Anzahl Anfragen geben, aber: Alle unsere Kunden haben eine Website, die auf Google gefunden wird, professionell wirkt und rund um die Uhr für Sie arbeitet. Betriebe ohne Website verlieren täglich potenzielle Kunden an Konkurrenten. Mit einer professionellen Website gewinnen Sie zurück.",
+    a: "Das ist die wichtigste Frage — und wir verstehen sie. Wir können keine Garantie auf eine bestimmte Anzahl Anfragen geben, aber: Alle unsere Kunden haben eine Website, die auf Google gefunden wird, professionell wirkt und rund um die Uhr für du arbeitet. Betriebe ohne Website verlieren täglich potenzielle Kunden an Konkurrenten. Mit einer professionellen Website gewinnst du zurück.",
   },
 ];
 
@@ -522,7 +522,7 @@ const WebdesignPreise2 = () => {
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
               Ein Auftrag reicht.{" "}
-              <span className="gradient-text">Den Rest verdienen Sie.</span>
+              <span className="gradient-text">Den Rest verdienen du.</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-5">
               Professionell online — ohne großes Investment.
@@ -550,8 +550,8 @@ const WebdesignPreise2 = () => {
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Ein verlorener Auftrag kostet Sie im Schnitt 800 €.<br />
-              Ihre neue Website kostet Sie ab 59 €/Monat.
+              Ein verlorener Auftrag kostet du im Schnitt 800 €.<br />
+              deine neue Website kostet du ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openCheckout} />)}
@@ -595,10 +595,10 @@ const WebdesignPreise2 = () => {
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer Ihr. Nach ca. 2 Jahren günstiger als die Miete.
+              💡 Einmal zahlen. Für immer dein. Nach ca. 2 Jahren günstiger als die Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Sie haben Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
+              Du hast Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
               Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -648,11 +648,11 @@ const WebdesignPreise2 = () => {
 
         <AnimatedSection>
           <div className="bg-card rounded-2xl p-8 md:p-10 border border-border text-center max-w-3xl mx-auto mb-10">
-            <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu Ihnen?</h3>
+            <h3 className="font-heading text-xl font-bold mb-4">Mieten oder kaufen – was passt zu dir?</h3>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Miete = sofort starten, kein großes Investment, maximale Flexibilität.<br />
-              Einmalkauf = einmal zahlen, Website gehört Ihnen, nach ca. 2 Jahren günstiger als die Miete.<br />
-              Nicht sicher? Ich berate Sie kurz und kostenlos.
+              Einmalkauf = einmal zahlen, Website gehört dir, nach ca. 2 Jahren günstiger als die Miete.<br />
+              Nicht sicher? Ich berate du kurz und kostenlos.
             </p>
             <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
               Kostenlos beraten lassen <ArrowRight size={18} />
@@ -661,7 +661,7 @@ const WebdesignPreise2 = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
             {[
-              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Sie sehen ist was Sie zahlen" },
+              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Du siehst ist was Du zahlst" },
               { Icon: FileText, label: "Kein Kleingedrucktes", sub: "Einfache, klare Verträge" },
               { Icon: Target, label: "Erst Demo – dann Entscheidung", sub: "Kostenlose Vorschau in 48 Stunden" },
             ].map(({ Icon, label, sub }) => (
@@ -701,7 +701,7 @@ const WebdesignPreise2 = () => {
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
           Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
-          Gefällt sie Ihnen nicht — Sie zahlen nichts.
+          Gefällt sie dir nicht — Du zahlst nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
           Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />

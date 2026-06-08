@@ -5,22 +5,22 @@ const painPoints = [
   {
     icon: TrendingDown,
     problem: "Schickes Design – null Anfragen?",
-    detail: "Ihre Website sieht gut aus, aber es meldet sich niemand. Das liegt nicht am Markt – sondern an fehlender Verkaufsstruktur.",
+    detail: "deine Website sieht gut aus, aber es meldet sich niemand. Das liegt nicht am Markt – sondern an fehlender Verkaufsstruktur.",
   },
   {
     icon: EyeOff,
     problem: "Besucher scrollen – und gehen wieder?",
-    detail: "Ohne klare Nutzerführung wissen Besucher nicht, was sie tun sollen. Sie verlassen die Seite – und rufen bei Ihrem Wettbewerber an.",
+    detail: "Ohne klare Nutzerführung wissen Besucher nicht, was sie tun sollen. Du verlassen die Seite – und rufen bei deinem Wettbewerber an.",
   },
   {
     icon: AlertTriangle,
     problem: "Die falschen Leute fühlen sich angesprochen?",
-    detail: "Wenn Ihre Texte alle ansprechen, überzeugen sie niemanden. Ihre Zielgruppe muss sich sofort wiedererkennen.",
+    detail: "Wenn deine Texte alle ansprechen, überzeugen sie niemanden. Deine Zielgruppe muss sich sofort wiedererkennen.",
   },
   {
     icon: XCircle,
     problem: "Kein klarer nächster Schritt?",
-    detail: "Ohne eine eindeutige Handlungsaufforderung verlieren Sie jeden zweiten Interessenten – obwohl er bereit wäre, Kontakt aufzunehmen.",
+    detail: "Ohne eine eindeutige Handlungsaufforderung verlierst du jeden zweiten Interessenten – obwohl er bereit wäre, Kontakt aufzunehmen.",
   },
 ];
 
@@ -33,7 +33,7 @@ const PainPoints = () => (
             Warum die meisten Webseiten keine Kunden bringen
           </h2>
           <p className="painpoints-sub text-background/50 max-w-xl mx-auto text-lg">
-            Es liegt selten am Traffic. Es liegt fast immer an diesen vier Fehlern – und jeder einzelne kostet Sie bares Geld.
+            Es liegt selten am Traffic. Es liegt fast immer an diesen vier Fehlern – und jeder einzelne kostet du bares Geld.
           </p>
         </div>
       </AnimatedSection>

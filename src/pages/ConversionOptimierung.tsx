@@ -6,14 +6,14 @@ import { ArrowRight, CheckCircle, TrendingUp, BarChart3, MousePointer, Target } 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
-  { icon: BarChart3, title: "Conversion-Analyse", desc: "Wir analysieren Ihre Website mit bewährten Methoden und identifizieren, wo Besucher abspringen und warum." },
-  { icon: MousePointer, title: "Optimierte Landingpages", desc: "Wir optimieren Ihre wichtigsten Seiten mit verkaufspsychologischen Elementen für maximale Conversion-Raten." },
+  { icon: BarChart3, title: "Conversion-Analyse", desc: "Wir analysieren deine Website mit bewährten Methoden und identifizieren, wo Besucher abspringen und warum." },
+  { icon: MousePointer, title: "Optimierte Landingpages", desc: "Wir optimieren deine wichtigsten Seiten mit verkaufspsychologischen Elementen für maximale Conversion-Raten." },
   { icon: Target, title: "A/B Testing", desc: "Wir testen verschiedene Varianten und implementieren datengetrieben die beste Lösung." },
   { icon: TrendingUp, title: "Laufende Optimierung", desc: "Conversion-Optimierung ist kein einmaliges Projekt – wir optimieren kontinuierlich für wachsende Ergebnisse." },
 ];
 
 const faqs = [
-  { q: "Was ist Conversion-Optimierung?", a: "Conversion-Optimierung (CRO) bedeutet, Ihre bestehende Website so zu verbessern, dass mehr Besucher zu Kunden werden – durch bessere Texte, Layouts, Call-to-Actions und User Experience." },
+  { q: "Was ist Conversion-Optimierung?", a: "Conversion-Optimierung (CRO) bedeutet, deine bestehende Website so zu verbessern, dass mehr Besucher zu Kunden werden – durch bessere Texte, Layouts, Call-to-Actions und User Experience." },
   { q: "Lohnt sich Conversion-Optimierung für kleine Unternehmen?", a: "Absolut! Gerade bei kleinen Budgets ist es entscheidend, das Maximum aus jedem Besucher herauszuholen. Unsere Kunden berichten von bis zu 400% mehr Conversions." },
   { q: "Wie schnell sehe ich Ergebnisse?", a: "Erste Verbesserungen sind oft schon nach 2–4 Wochen messbar. Langfristige Optimierung liefert kontinuierlich steigende Ergebnisse." },
 ];
@@ -27,11 +27,11 @@ const ConversionOptimierung = () => (
             <span className="badge-label bg-primary/10 text-primary mb-5">Conversion Optimierung</span>
             <h1 className="mb-5 text-balance">
               Conversion Optimierung –{" "}
-              <span className="gradient-text">mehr Kunden aus Ihren bestehenden Besuchern</span>
+              <span className="gradient-text">mehr Kunden aus deinen bestehenden Besuchern</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Ihre Website hat Besucher, aber keine Anfragen? Als Conversion Optimierung Agentur verwandeln wir
-              Ihre bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
+              deine Website hat Besucher, aber keine Anfragen? Als Conversion Optimierung Agentur verwandeln wir
+              deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
               <Link to="/kontakt">Website optimieren lassen <ArrowRight size={18} /></Link>

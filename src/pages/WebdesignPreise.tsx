@@ -454,7 +454,7 @@ const buyPackages: BuyPkg[] = [
     price: "990 € einmalig",
     badge: "Starter Kauf – 990 € netto",
     priceId: "starter_purchase_deposit",
-    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparen Sie 426 € (alle Preise netto)",
+    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 € (alle Preise netto)",
     features: [
       "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
       "Individuelle Texte & Inhalte – du lieferst die Infos, wir schreiben",
@@ -479,7 +479,7 @@ const buyPackages: BuyPkg[] = [
     price: "1.990 € einmalig",
     badge: "Pro Kauf – 1.990 € netto",
     priceId: "pro_purchase_deposit",
-    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparen Sie 386 € (alle Preise netto)",
+    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 386 € (alle Preise netto)",
     includesHint: "✓ Alles aus Starter inklusive – plus:",
     features: [
       "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
@@ -506,7 +506,7 @@ const buyPackages: BuyPkg[] = [
     price: "3.590 € einmalig",
     badge: "Premium Kauf – 3.590 € netto",
     priceId: "premium_purchase_deposit",
-    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparen Sie 226 € (alle Preise netto)",
+    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 226 € (alle Preise netto)",
     includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
       "Bis zu 10 Seiten – deine komplette Online-Präsenz",
@@ -940,10 +940,10 @@ const WebdesignPreise = () => {
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer Ihr. Nach ca. 2 Jahren günstiger als die Miete.
+              💡 Einmal zahlen. Für immer dein. Nach ca. 2 Jahren günstiger als die Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Sie haben Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
+              Du hast Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
               Hier ist die Antwort: Wer länger als 20 Monate plant, fährt mit Einmalkauf günstiger.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1012,7 +1012,7 @@ const WebdesignPreise = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
             {[
-              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Sie sehen ist was Sie zahlen" },
+              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Du siehst ist was Du zahlst" },
               { Icon: FileText, label: "Kein Kleingedrucktes", sub: "Einfache, klare Verträge" },
               { Icon: Target, label: "Erst Demo – dann Entscheidung", sub: "Kostenlose Vorschau in 48 Stunden" },
             ].map(({ Icon, label, sub }) => (
@@ -1034,7 +1034,7 @@ const WebdesignPreise = () => {
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
           Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
-          Gefällt sie Ihnen nicht — Sie zahlen nichts.
+          Gefällt sie dir nicht — Du zahlst nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
           Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />

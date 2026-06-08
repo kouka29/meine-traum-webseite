@@ -6,26 +6,26 @@ import { ArrowRight, CheckCircle, Home, Search, Camera, Smartphone, TrendingUp, 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
-  "Verkäufer und Käufer finden Sie nicht über Google, sondern gehen zur Konkurrenz",
-  "Ihre Website präsentiert Ihre Objekte nicht ansprechend genug",
-  "Sie haben keine automatisierte Wertermittlung oder Lead-Generierung auf Ihrer Seite",
-  "Ihre Online-Präsenz vermittelt nicht das Vertrauen, das Eigentümer erwarten",
+  "Verkäufer und Käufer findest du nicht über Google, sondern gehen zur Konkurrenz",
+  "deine Website präsentiert deine Objekte nicht ansprechend genug",
+  "Du hast keine automatisierte Wertermittlung oder Lead-Generierung auf deiner Seite",
+  "deine Online-Präsenz vermittelt nicht das Vertrauen, das Eigentümer erwarten",
 ];
 
 const features = [
-  { icon: Home, title: "Immobilien-Design", desc: "Hochwertige Objektpräsentation mit großen Bildern, virtuellen Rundgängen und übersichtlicher Darstellung Ihrer Angebote." },
+  { icon: Home, title: "Immobilien-Design", desc: "Hochwertige Objektpräsentation mit großen Bildern, virtuellen Rundgängen und übersichtlicher Darstellung deiner Angebote." },
   { icon: Search, title: "SEO für Immobilienmakler", desc: 'Gefunden werden bei "Immobilienmakler [Stadt]", "Haus verkaufen" und lokalen Suchanfragen.' },
-  { icon: Camera, title: "Objekt-Präsentation", desc: "Ihre Immobilien werden professionell in Szene gesetzt – mit Bildergalerien und strukturierten Exposés." },
-  { icon: MapPin, title: "Regionale Sichtbarkeit", desc: "Lokale SEO-Optimierung sorgt dafür, dass Eigentümer und Käufer aus Ihrer Region Sie finden." },
-  { icon: Smartphone, title: "Mobile Optimierung", desc: "Immobiliensuche findet unterwegs statt – Ihre Website funktioniert perfekt auf jedem Gerät." },
+  { icon: Camera, title: "Objekt-Präsentation", desc: "deine Immobilien werden professionell in Szene gesetzt – mit Bildergalerien und strukturierten Exposés." },
+  { icon: MapPin, title: "Regionale Sichtbarkeit", desc: "Lokale SEO-Optimierung sorgt dafür, dass Eigentümer und Käufer aus deiner Region Du findest." },
+  { icon: Smartphone, title: "Mobile Optimierung", desc: "Immobiliensuche findet unterwegs statt – deine Website funktioniert perfekt auf jedem Gerät." },
   { icon: TrendingUp, title: "Lead-Generierung", desc: "Wertermittlungs-Formulare und Kontaktmöglichkeiten, die Eigentümer-Leads generieren." },
 ];
 
 const faqs = [
-  { q: "Warum braucht ein Immobilienmakler eine professionelle Website?", a: "Vertrauen ist im Immobiliengeschäft alles. Eine professionelle Website zeigt Kompetenz, präsentiert Ihre Objekte hochwertig und generiert kontinuierlich neue Eigentümer- und Käufer-Leads." },
+  { q: "Warum braucht ein Immobilienmakler eine professionelle Website?", a: "Vertrauen ist im Immobiliengeschäft alles. Eine professionelle Website zeigt Kompetenz, präsentiert deine Objekte hochwertig und generiert kontinuierlich neue Eigentümer- und Käufer-Leads." },
   { q: "Was kostet eine Makler-Website?", a: "Unsere Websites für Immobilienmakler starten ab 990 €. Je nach Funktionsumfang (Objektlisten, Wertermittlung, etc.) variiert der Preis. Kostenlose Vorschau in 48 h." },
-  { q: "Kann ich Immobilien selbst auf der Website einpflegen?", a: "Ja, wir richten eine einfache Verwaltung ein, mit der Sie Objekte, Bilder und Beschreibungen selbst aktualisieren können." },
-  { q: "Bietet ihr auch Landingpages für Wertermittlung an?", a: "Ja! Spezielle Landingpages für kostenlose Wertermittlung sind einer der besten Wege, um Eigentümer-Leads zu generieren. Wir erstellen diese gerne für Sie." },
+  { q: "Kann ich Immobilien selbst auf der Website einpflegen?", a: "Ja, wir richten eine einfache Verwaltung ein, mit der du Objekte, Bilder und Beschreibungen selbst aktualisieren können." },
+  { q: "Bietet ihr auch Landingpages für Wertermittlung an?", a: "Ja! Spezielle Landingpages für kostenlose Wertermittlung sind einer der besten Wege, um Eigentümer-Leads zu generieren. Wir erstellen diese gerne für du." },
 ];
 
 const WebdesignImmobilienmakler = () => (
@@ -40,7 +40,7 @@ const WebdesignImmobilienmakler = () => (
               <span className="gradient-text">Mehr Eigentümer-Leads durch eine starke Website</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Als Immobilienmakler brauchen Sie eine Website, die Vertrauen schafft, Ihre Objekte hochwertig präsentiert
+              Als Immobilienmakler brauchst du eine Website, die Vertrauen schafft, deine Objekte hochwertig präsentiert
               und kontinuierlich neue Leads generiert. Genau das liefern wir.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
@@ -56,7 +56,7 @@ const WebdesignImmobilienmakler = () => (
 
         <AnimatedSection>
           <div className="mb-20 max-w-3xl mx-auto">
-            <h2 className="text-center mb-10 text-balance">Kennen Sie diese Herausforderungen?</h2>
+            <h2 className="text-center mb-10 text-balance">Kennst du diese Herausforderungen?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
                 <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
@@ -71,7 +71,7 @@ const WebdesignImmobilienmakler = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">So machen wir Sie zum Makler Nr. 1 in Ihrer Region</h2>
+          <h2 className="text-center mb-16 text-balance">So machen wir du zum Makler Nr. 1 in deiner Region</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (

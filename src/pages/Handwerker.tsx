@@ -33,7 +33,7 @@ import { toast } from "@/hooks/use-toast";
 
 const painPoints = [
   { title: "Auf Google unsichtbar", text: "Wenn jemand „Elektriker Mainz“ sucht — erscheinst Du auf Seite 3. Dein Konkurrent auf Seite 1 bekommt den Auftrag." },
-  { title: "Kein Auftrag über die Website", text: "Du hast eine Website, aber sie bringt keine Anfragen. Sie sieht zwar aus — aber sie verkauft nicht." },
+  { title: "Kein Auftrag über die Website", text: "Du hast eine Website, aber sie bringt keine Anfragen. Du sieht zwar aus — aber sie verkauft nicht." },
   { title: "Keine Zeit für so einen Kram", text: "Du bist auf der Baustelle, nicht am PC. Wer soll sich um die Website kümmern? Das übernehmen wir komplett." },
   { title: "Veraltete oder keine Website", text: "Kunden googeln Dich — und finden entweder nichts oder eine Seite aus 2015. Erster Eindruck verloren." },
 ];

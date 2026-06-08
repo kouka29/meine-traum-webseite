@@ -103,17 +103,17 @@ const painPoints = [
   {
     icon: AlertTriangle,
     title: "Veraltete Webseite",
-    text: "Sie verlieren Aufträge, weil Ihr Auftritt online nicht überzeugt.",
+    text: "Du verlierst Aufträge, weil dein Auftritt online nicht überzeugt.",
   },
   {
     icon: Clock,
     title: "Keine Zeit",
-    text: "Sie haben genug mit Ihrem Kerngeschäft zu tun – die Webseite bleibt liegen.",
+    text: "Du hast genug mit deinem Kerngeschäft zu tun – die Webseite bleibt liegen.",
   },
   {
     icon: Trophy,
     title: "Konkurrenz zieht vorbei",
-    text: "Andere Betriebe in Ihrer Region sind online besser aufgestellt als Sie.",
+    text: "Andere Betriebe in deiner Region sind online besser aufgestellt als du.",
   },
 ];
 
@@ -121,17 +121,17 @@ const processSteps = [
   {
     icon: ClipboardList,
     title: "Formular ausfüllen (2 Min.)",
-    text: "Sag mir kurz, was Ihr Betrieb macht.",
+    text: "Sag mir kurz, was dein Betrieb macht.",
   },
   {
     icon: Wand2,
-    title: "Ich baue Ihre Vorschau (48 h)",
-    text: "Sie lehnen sich zurück, ich arbeite.",
+    title: "Ich baue deine Vorschau (48 h)",
+    text: "du lehnen sich zurück, ich arbeite.",
   },
   {
     icon: Sparkles,
-    title: "Sie entscheiden – ohne Druck",
-    text: "Gefällt sie Ihnen? Dann reden wir. Wenn nicht, zahlen Sie nichts.",
+    title: "Du entscheidest – ohne Druck",
+    text: "Gefällt sie dir? Dann reden wir. Wenn nicht, zahlst du nichts.",
   },
 ];
 
@@ -165,27 +165,27 @@ const testimonials = [
 const faqs = [
   {
     q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als Sie denken. Ein einziger neuer Auftrag reicht. Den Rest verdienen Sie. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    a: "Ja – und zwar schneller als du denken. Ein einziger neuer Auftrag reicht. Den Rest verdienen du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
     q: "Was passiert wenn mir die Vorschau nicht gefällt?",
-    a: "Gar nichts. Sie zahlen keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige Ihnen die Vorschau – gefällt sie Ihnen nicht, war es das. Kein unangenehmes Gespräch danach.",
+    a: "Gar nichts. Du zahlst keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige dir die Vorschau – gefällt sie dir nicht, war es das. Kein unangenehmes Gespräch danach.",
   },
   {
     q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
-    a: "Nein. Sie füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Sie bekommen Ihre fertige Website – ohne einen einzigen technischen Handgriff.",
+    a: "Nein. Du füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst deine fertige Website – ohne einen einzigen technischen Handgriff.",
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft Ihr Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    a: "Nach den 12 Monaten läuft dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Warum gibt es eine 12-monatige Mindestlaufzeit?",
-    a: "Eine Website ist kein Sprint, sondern ein Marathon. Google braucht 3–6 Monate, um Sie für lokale Suchanfragen ernst zu nehmen. Erst nach diesem Zeitraum sehen Sie die volle Wirkung. Mit der Laufzeit stellen wir sicher, dass Sie nicht zu früh aufgeben – und tatsächlich Ergebnisse sehen.",
+    a: "Eine Website ist kein Sprint, sondern ein Marathon. Google braucht 3–6 Monate, um du für lokale Suchanfragen ernst zu nehmen. Erst nach diesem Zeitraum siehst du die volle Wirkung. Mit der Laufzeit stellen wir sicher, dass du nicht zu früh aufgeben – und tatsächlich Ergebnisse sehen.",
   },
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
-    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Ihrer Region und Ihrem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von deiner Region und deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
 ];
 
@@ -637,8 +637,8 @@ const SuccessScreen = ({
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-3">
           {isWaitlist
-            ? `Danke ${firstName}! Ihr Wunschtermin ist auf der ${nextMonthLabel}-Warteliste.`
-            : `Danke ${firstName}! Ihr Termin steht – Platz vorgemerkt.`}
+            ? `Danke ${firstName}! Dein Wunschtermin ist auf der ${nextMonthLabel}-Warteliste.`
+            : `Danke ${firstName}! Dein Termin steht – Platz vorgemerkt.`}
         </h3>
         <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
           <CalendarIcon className="w-4 h-4" />
@@ -650,28 +650,28 @@ const SuccessScreen = ({
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
           Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.{" "}
           {isWaitlist
-            ? `Sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei Ihnen, um den Termin zu bestätigen.`
-            : "Ihr Platz ist für Sie vorgemerkt – nach unserem kurzen Gespräch ist er fix Ihrer."}
+            ? `Sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir, um den Termin zu bestätigen.`
+            : "dein Platz ist für du vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
         </p>
         <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
           <p className="font-bold mb-4 text-center">So geht's weiter:</p>
           <ol className="space-y-3 text-sm">
             <li className="flex gap-3">
               <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">1</span>
-              <span><strong>Kurzes Gespräch (5–10 Min.)</strong> – telefonisch oder per Online-Meeting. Ich stelle Ihnen ein paar Fragen, damit Ihre Vorschau perfekt zu Ihrem Betrieb passt.</span>
+              <span><strong>Kurzes Gespräch (5–10 Min.)</strong> – telefonisch oder per Online-Meeting. Ich stelle dir ein paar Fragen, damit deine Vorschau perfekt zu deinem Betrieb passt.</span>
             </li>
             <li className="flex gap-3">
               <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">2</span>
-              <span><strong>Ich baue Ihre Vorschau (kostenlos, 48 h)</strong> – maßgeschneidert für Ihren Betrieb.</span>
+              <span><strong>Ich baue deine Vorschau (kostenlos, 48 h)</strong> – maßgeschneidert für deinen Betrieb.</span>
             </li>
             <li className="flex gap-3">
               <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">3</span>
-              <span><strong>Wir schauen sie gemeinsam an</strong> – Sie entscheiden in Ruhe, ob Sie weitermachen wollen. Ohne Druck, ohne Verpflichtung.</span>
+              <span><strong>Wir schauen sie gemeinsam an</strong> – Du entscheidest in Ruhe, ob du weitermachen wollen. Ohne Druck, ohne Verpflichtung.</span>
             </li>
           </ol>
         </div>
         <p className="text-xs text-muted-foreground mt-6">
-          📧 Falls Sie keine E-Mail bekommen, schau bitte in Ihren Spam-Ordner.
+          📧 Falls du keine E-Mail bekommen, schau bitte in deinen Spam-Ordner.
         </p>
       </div>
     );
@@ -686,7 +686,7 @@ const SuccessScreen = ({
             <CalendarIcon className="w-7 h-7 text-primary" />
           </div>
           <h3 className="text-xl sm:text-2xl font-bold mb-2">
-            Wann passt es Ihnen am besten?
+            Wann passt es dir am besten?
           </h3>
           <p className="text-sm text-muted-foreground">
             Wähle Datum & Uhrzeit – das Gespräch dauert nur 5–10 Minuten.
@@ -739,7 +739,7 @@ const SuccessScreen = ({
           {bookingDate && bookingTime && (
             <div className="animate-in fade-in slide-in-from-top-2 duration-300">
               <label className="text-sm font-medium mb-2 block">
-                Wie möchten Sie das Gespräch führen?
+                Wie möchtest du das Gespräch führen?
               </label>
               <div className="grid grid-cols-2 gap-2">
                 <button
@@ -801,14 +801,14 @@ const SuccessScreen = ({
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-2">
           {isWaitlist
-            ? `Danke ${firstName}! Sie stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
-            : `Danke ${firstName}! Ihre Anfrage ist da. 🙌`}
+            ? `Danke ${firstName}! Du stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
+            : `Danke ${firstName}! Deine Anfrage ist da. 🙌`}
         </h3>
         <p className="text-muted-foreground max-w-md mx-auto">
           {isWaitlist ? (
-            <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei Ihnen. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+            <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei dir. Eine Bestätigung kommt an <strong>{email}</strong>.</>
           ) : (
-            <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir Ihren Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+            <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
           )}
         </p>
       </div>
@@ -825,15 +825,15 @@ const SuccessScreen = ({
           <ol className="space-y-2.5 text-sm text-muted-foreground mb-4 flex-1">
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">1.</span>
-              <span>Ich melde mich <strong className="text-foreground">am nächsten Werktag</strong> bei Ihnen.</span>
+              <span>Ich melde mich <strong className="text-foreground">am nächsten Werktag</strong> bei dir.</span>
             </li>
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">2.</span>
-              <span>Wir führen ein <strong className="text-foreground">5–10 Min. Telefonat</strong>, in dem ich kurz ein paar Fragen stelle, damit Ihre Vorschau zu 100 % zu Ihrem Betrieb passt.</span>
+              <span>Wir führen ein <strong className="text-foreground">5–10 Min. Telefonat</strong>, in dem ich kurz ein paar Fragen stelle, damit deine Vorschau zu 100 % zu deinem Betrieb passt.</span>
             </li>
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">3.</span>
-              <span>Innerhalb von <strong className="text-foreground">48 Stunden</strong> bekommen Sie Ihre fertige Vorschau – kostenlos.</span>
+              <span>Innerhalb von <strong className="text-foreground">48 Stunden</strong> bekommst du deine fertige Vorschau – kostenlos.</span>
             </li>
           </ol>
           <div className="bg-secondary/40 rounded-lg px-3 py-3 mt-auto space-y-2">
@@ -884,7 +884,7 @@ const SuccessScreen = ({
             <h4 className="font-bold text-base sm:text-lg">Lieber direkt Termin buchen?</h4>
           </div>
           <p className="text-sm text-muted-foreground mb-4 flex-1">
-            Wähle direkt Datum und Uhrzeit für Ihr 5–10 Min. Gespräch – telefonisch oder per Online-Meeting. Sie sparen sich das Hin und Her.
+            Wähle direkt Datum und Uhrzeit für dein 5–10 Min. Gespräch – telefonisch oder per Online-Meeting. Du sparst sich das Hin und Her.
           </p>
           <Button
             type="button"
@@ -904,7 +904,7 @@ const SuccessScreen = ({
 
       <p className="text-xs text-muted-foreground text-center mt-6 flex items-center justify-center gap-1.5">
         <MessageCircle className="w-3.5 h-3.5" />
-        Schau auch in Ihren Spam-Ordner – manchmal landet die Bestätigung dort.
+        Schau auch in deinen Spam-Ordner – manchmal landet die Bestätigung dort.
       </p>
     </div>
   );
@@ -1211,7 +1211,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {/* Step 1 */}
       {state.step === 1 && (
         <div className="space-y-5">
-          <h3 className="text-xl sm:text-2xl font-bold">Was machen Sie beruflich?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">Was machst du beruflich?</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {tradeOptions.map((opt) => (
               <TileButton
@@ -1231,7 +1231,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           {state.trade === "Sonstiges" && (
             <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
               <label className="text-sm font-medium block">
-                Beschreibe kurz, was Sie beruflich machen *
+                Beschreibe kurz, was du beruflich machen *
               </label>
               <Input
                 value={state.tradeOther}
@@ -1257,7 +1257,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {/* Step 2 */}
       {state.step === 2 && (
         <div className="space-y-5">
-          <h3 className="text-xl sm:text-2xl font-bold">Haben Sie aktuell eine Webseite?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">Hast du aktuell eine Webseite?</h3>
           <div className="grid grid-cols-1 gap-3">
             {websiteOptions.map((opt) => (
               <TileButton
@@ -1284,10 +1284,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 style={{ backgroundColor: "#F0FFF4", borderColor: "#C6F6D5" }}
               >
                 <p className="text-emerald-800 leading-relaxed">
-                  💡 Gut! Wusstest Sie dass man auch eine bestehende Website noch
+                  💡 Gut! Wusstest du dass man auch eine bestehende Website noch
                   deutlich mehr Kunden bringen kann?
                   <br />
-                  Wir zeigen Ihnen kostenlos was möglich ist.
+                  Wir zeigen dir kostenlos was möglich ist.
                 </p>
               </div>
               <Button
@@ -1306,7 +1306,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {/* Step 3 */}
       {state.step === 3 && (
         <div className="space-y-5">
-          <h3 className="text-xl sm:text-2xl font-bold">Was ist Ihr wichtigstes Ziel?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">Was ist dein wichtigstes Ziel?</h3>
           <p className="text-sm text-muted-foreground">Mehrfachauswahl möglich.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {goalOptions.map((opt) => (
@@ -1334,7 +1334,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {/* Step 4 */}
       {state.step === 4 && (
         <div className="space-y-5">
-          <h3 className="text-xl sm:text-2xl font-bold">Wie dringend ist das Thema für Sie?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">Wie dringend ist das Thema für du?</h3>
           <div className="grid grid-cols-1 gap-3">
             {urgencyOptions.map((opt) => (
               <TileButton
@@ -1356,7 +1356,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {state.step === 5 && (
         <form onSubmit={handleSubmit} className="space-y-5">
           <h3 className="text-xl sm:text-2xl font-bold">
-            Fast geschafft! Wie kann ich Sie erreichen?
+            Fast geschafft! Wie kann ich du erreichen?
           </h3>
           <div className="grid grid-cols-1 gap-4">
             <div>
@@ -1431,7 +1431,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           <p className="text-xs text-muted-foreground flex items-start gap-2">
             <Lock className="w-3.5 h-3.5 mt-0.5 shrink-0" />
             <span>
-              Ihre Daten sind sicher. Kein Spam. Keine Verpflichtung. Sie können jederzeit zurückgehen und Antworten ändern.
+              deine Daten sind sicher. Kein Spam. Keine Verpflichtung. Du kannst jederzeit zurückgehen und Antworten ändern.
             </span>
           </p>
         </form>
@@ -1507,7 +1507,7 @@ const KostenloseVorschauV2 = () => {
   // Identische FAQs wie auf /preise – DB-FAQs hier bewusst nicht überschreiben lassen.
   const activeFaqs = faqs;
   const heroBadge = isWaitlist
-    ? `Alle Plätze im ${monatName} vergeben – sichern Sie sich jetzt einen Platz für ${nextMonthLabel}`
+    ? `Alle Plätze im ${monatName} vergeben – sichere sich jetzt einen Platz für ${nextMonthLabel}`
     : (settings?.hero_badge_text ?? "Nur noch {remaining} von {total} Plätzen im {month} verfügbar")
         .replace("{remaining}", String(remainingSlots))
         .replace("{total}", String(totalSlots))
@@ -1554,7 +1554,7 @@ const KostenloseVorschauV2 = () => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
-              {settings?.hero_h1_line1 ?? "Ihr Handwerksbetrieb."}
+              {settings?.hero_h1_line1 ?? "dein Handwerksbetrieb."}
               <br />
               {settings?.hero_h1_line2 ?? "Eine neue Webseite."}
               <br />
@@ -1564,7 +1564,7 @@ const KostenloseVorschauV2 = () => {
             </h1>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              Ich zeige Ihnen in 48 Stunden, wie Ihr Betrieb online wirkt – speziell für Handwerksbetriebe. Kostenlos. Unverbindlich. Ohne Risiko.
+              Ich zeige dir in 48 Stunden, wie dein Betrieb online wirkt – speziell für Handwerksbetriebe. Kostenlos. Unverbindlich. Ohne Risiko.
             </p>
 
             {/* Countdown */}
@@ -1647,7 +1647,7 @@ const KostenloseVorschauV2 = () => {
       <section className="py-16 sm:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            Erkennen Sie sich wieder?
+            Erkennst du sich wieder?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {painPoints.map((p) => (
@@ -1674,7 +1674,7 @@ const KostenloseVorschauV2 = () => {
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            In 3 Schritten zu Ihrer Vorschau
+            In 3 Schritten zu deiner Vorschau
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 max-w-5xl mx-auto items-stretch">
             {processSteps.map((s, i) => (
@@ -1712,7 +1712,7 @@ const KostenloseVorschauV2 = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold mb-3">
-              {isWaitlist ? `Jetzt für ${nextMonthLabel} vormerken lassen` : "Jetzt Ihren Platz sichern"}
+              {isWaitlist ? `Jetzt für ${nextMonthLabel} vormerken lassen` : "Jetzt deinen Platz sichern"}
             </h2>
             {isWaitlist ? (
               <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 px-4 py-1.5 text-sm font-semibold">
@@ -1734,7 +1734,7 @@ const KostenloseVorschauV2 = () => {
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">So könnte Ihre Webseite aussehen</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">So könnte deine Webseite aussehen</h2>
             <p className="text-muted-foreground">Echte Vorschauen – in 48 Stunden erstellt.</p>
           </div>
           <Carousel
@@ -1916,13 +1916,13 @@ const KostenloseVorschauV2 = () => {
             )}
             <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight">
               {isWaitlist
-                ? `${monatName} ist ausgebucht – sichern Sie sich ${nextMonthLabel}.`
-                : (settings?.final_cta_headline ?? "Warte nicht, bis es Ihr Mitbewerber tut.")}
+                ? `${monatName} ist ausgebucht – sichere sich ${nextMonthLabel}.`
+                : (settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut.")}
             </h2>
             <p className="text-base sm:text-xl text-primary-foreground/85 mb-8">
               {isWaitlist
-                ? `Lassen Sie sich auf die Warteliste setzen – sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei Ihnen.`
-                : (settings?.final_cta_subtext ?? "Ihre kostenlose Webseiten-Vorschau wartet.")}
+                ? `Lass sich auf die Warteliste setzen – sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir.`
+                : (settings?.final_cta_subtext ?? "deine kostenlose Webseiten-Vorschau wartet.")}
             </p>
             <Button
               size="lg"
@@ -1950,8 +1950,8 @@ const KostenloseVorschauV2 = () => {
               Live-Vorschau von {previewDemo?.company}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-center">
-              Die Vorschau öffnet sich in einem neuen Tab. So bleibt diese Seite für Sie offen –
-              und Sie können danach direkt Ihre eigene Vorschau anfordern.
+              Die Vorschau öffnet sich in einem neuen Tab. So bleibt diese Seite für du offen –
+              und Du kannst danach direkt deine eigene Vorschau anfordern.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="sm:flex-col sm:space-x-0 gap-2">

@@ -6,26 +6,26 @@ import { ArrowRight, CheckCircle, Heart, Search, Shield, Smartphone, Clock, Tren
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
-  "Patienten finden Sie online nicht – aber Ihre Kollegen in der Nachbarschaft schon",
-  "Ihre Website wirkt veraltet und vermittelt nicht den professionellen Eindruck Ihrer Praxis",
+  "Patienten findest du online nicht – aber deine Kollegen in der Nachbarschaft schon",
+  "deine Website wirkt veraltet und vermittelt nicht den professionellen Eindruck deiner Praxis",
   "Neue Patienten informieren sich online, bevor sie einen Termin buchen – und springen ab",
-  "Sie haben keine Online-Terminbuchung und verlieren Patienten an modernere Praxen",
+  "Du hast keine Online-Terminbuchung und verlieren Patienten an modernere Praxen",
 ];
 
 const features = [
-  { icon: Heart, title: "Praxis-gerechtes Design", desc: "Ihre Website vermittelt Vertrauen und Kompetenz – mit einem Design, das Ihre Praxis professionell repräsentiert." },
-  { icon: Search, title: "Lokales SEO für Ärzte", desc: 'Gefunden werden bei "Arzt [Stadt]", "Zahnarzt in der Nähe" und ähnlichen Suchanfragen Ihrer Patienten.' },
+  { icon: Heart, title: "Praxis-gerechtes Design", desc: "deine Website vermittelt Vertrauen und Kompetenz – mit einem Design, das deine Praxis professionell repräsentiert." },
+  { icon: Search, title: "Lokales SEO für Ärzte", desc: 'Gefunden werden bei "Arzt [Stadt]", "Zahnarzt in der Nähe" und ähnlichen Suchanfragen deiner Patienten.' },
   { icon: Clock, title: "Online-Terminbuchung", desc: "Integration einer Online-Terminbuchung – damit Patienten rund um die Uhr Termine vereinbaren können." },
-  { icon: Shield, title: "DSGVO-konform", desc: "Ihre Praxis-Website erfüllt alle Datenschutz-Anforderungen – inklusive Impressum und Datenschutzerklärung." },
-  { icon: Smartphone, title: "Mobilfreundlich", desc: "Patienten suchen unterwegs – Ihre Website sieht auf jedem Gerät professionell aus." },
+  { icon: Shield, title: "DSGVO-konform", desc: "deine Praxis-Website erfüllt alle Datenschutz-Anforderungen – inklusive Impressum und Datenschutzerklärung." },
+  { icon: Smartphone, title: "Mobilfreundlich", desc: "Patienten suchen unterwegs – deine Website sieht auf jedem Gerät professionell aus." },
   { icon: TrendingUp, title: "Mehr Patienten gewinnen", desc: "Conversion-optimierter Aufbau sorgt dafür, dass Besucher zu Patienten werden." },
 ];
 
 const faqs = [
   { q: "Warum braucht meine Arztpraxis eine professionelle Website?", a: "Über 70% der Patienten suchen online nach Ärzten, bevor sie einen Termin buchen. Eine professionelle, vertrauenswürdige Website ist heute entscheidend für die Patientengewinnung." },
-  { q: "Was kostet eine Website für Ärzte?", a: "Unsere Praxis-Websites starten ab 990 €. Sie erhalten ein individuelles, DSGVO-konformes Design mit lokaler SEO-Optimierung. Kostenlose Vorschau in 48 h." },
+  { q: "Was kostet eine Website für Ärzte?", a: "Unsere Praxis-Websites starten ab 990 €. Du erhältst ein individuelles, DSGVO-konformes Design mit lokaler SEO-Optimierung. Kostenlose Vorschau in 48 h." },
   { q: "Ist die Website DSGVO-konform?", a: "Ja, selbstverständlich. Wir achten besonders auf Datenschutz – gerade im medizinischen Bereich ist das essentiell. Impressum, Datenschutzerklärung und Cookie-Banner sind inklusive." },
-  { q: "Können Patienten online Termine buchen?", a: "Ja, wir können eine Online-Terminbuchung integrieren. So können Patienten rund um die Uhr Termine vereinbaren – das entlastet Ihr Praxisteam." },
+  { q: "Können Patienten online Termine buchen?", a: "Ja, wir können eine Online-Terminbuchung integrieren. So können Patienten rund um die Uhr Termine vereinbaren – das entlastet dein Praxisteam." },
 ];
 
 const WebdesignAerzte = () => (
@@ -71,7 +71,7 @@ const WebdesignAerzte = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">Was wir für Ihre Arztpraxis tun</h2>
+          <h2 className="text-center mb-16 text-balance">Was wir für deine Arztpraxis tun</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (

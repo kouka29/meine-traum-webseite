@@ -592,7 +592,7 @@ export default function CheckoutFunnel({
             }}>
               <div>
                 <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                  {currentKey === "kontakt" ? "Heute zu zahlen" : "Ihre Auswahl"}
+                  {currentKey === "kontakt" ? "Heute zu zahlen" : "deine Auswahl"}
                 </div>
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
                   {paymentMode === "miete" && currentKey !== "kontakt" ? (
@@ -794,7 +794,7 @@ function StepZahlung({
                 : "Komplett heute fällig"
             }
             benefits={[
-              "Die Website gehört Ihnen",
+              "Die Website gehört dir",
               "Keine laufenden Kosten",
               "Einmaliges Investment",
             ]}
@@ -885,7 +885,7 @@ function StepAddOns({
         <Sparkles size={32} color={BRAND} style={{ margin: "0 auto 12px" }} />
         <h2 style={{ fontSize: 18, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>Alles drin!</h2>
         <p style={{ fontSize: 14, color: TEXT_MUTED }}>
-          Ihr Paket enthält bereits alles, was Sie brauchen. Weiter zum nächsten Schritt.
+          dein Paket enthält bereits alles, was Du brauchst. Weiter zum nächsten Schritt.
         </p>
       </div>
     );
@@ -905,9 +905,9 @@ function StepAddOns({
           borderRadius: 12, fontSize: 12.5, color: "#9A3412", lineHeight: 1.5,
         }}>
           <strong>🚀 Wachstumspaket gewählt:</strong> Wird heute <strong>nicht</strong> mit
-          eingezogen. Sie erhalten Ihre erste Rechnung erst ab Website-Go-Live –
+          eingezogen. Du erhältst deine erste Rechnung erst ab Website-Go-Live –
           monatlich per E-Mail mit Bezahllink (Karte, SEPA, Überweisung). Im Kundenportal
-          können Sie jederzeit auf automatisches Stripe-Abo umstellen.
+          kannst du jederzeit auf automatisches Stripe-Abo umstellen.
         </div>
       )}
       <div style={{ display: "grid", gap: 10 }}>
@@ -1330,7 +1330,7 @@ function StepBezahlen(props: React.ComponentProps<typeof StripeEmbeddedCheckoutB
         Sichere Bezahlung
       </h2>
       <p style={{ fontSize: 13, color: TEXT_MUTED, marginBottom: 16 }}>
-        Ihre Buchung ist registriert. Schließen Sie nun die Zahlung ab — sicher über Stripe.
+        deine Buchung ist registriert. Schließen du nun die Zahlung ab — sicher über Stripe.
       </p>
       <StripeEmbeddedCheckoutBox {...props} />
     </div>
@@ -1352,7 +1352,7 @@ function StepFertig({ auftragsNr, email }: { auftragsNr: string; email: string }
         Vielen Dank!
       </h2>
       <p style={{ fontSize: 15, color: TEXT_MUTED, marginBottom: 16, lineHeight: 1.5 }}>
-        Ihr Auftrag <strong style={{ color: TEXT_DARK }}>{auftragsNr}</strong> wurde verbindlich angenommen.
+        dein Auftrag <strong style={{ color: TEXT_DARK }}>{auftragsNr}</strong> wurde verbindlich angenommen.
       </p>
       <p style={{ fontSize: 13, color: TEXT_MUTED }}>
         Eine Bestätigung wurde an <strong style={{ color: TEXT_DARK }}>{email}</strong> versendet.

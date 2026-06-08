@@ -27,7 +27,7 @@ const Index = () => (
         <AnimatedSection>
           <div className="max-w-3xl">
             <span className="badge-label bg-destructive/10 text-destructive mb-6 sm:mb-8 text-[10px] sm:text-xs">
-              Ihre Website bringt keine Kunden? Das ändern wir.
+              deine Website bringt keine Kunden? Das ändern wir.
             </span>
             <h1 className="mb-4 sm:mb-6 text-balance">
               Webseiten, die planbar Kundenanfragen bringen –{" "}

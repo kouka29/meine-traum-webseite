@@ -225,7 +225,7 @@ const sections: Section[] = [
     content: (
       <>
         <P n="1">Nach Fertigstellung fordert der Auftragnehmer den Auftraggeber zur Abnahme auf. Die Abnahme hat innerhalb von <Highlight>7 Werktagen</Highlight> zu erfolgen.</P>
-        <P n="2">Die Abnahme erfolgt schriftlich oder per E-Mail. Sie gilt auch als erteilt, wenn der Auftraggeber die Leistung ohne begründete Mängelrüge produktiv nutzt oder innerhalb der 7-Tage-Frist keine begründete Ablehnung erklärt.</P>
+        <P n="2">Die Abnahme erfolgt schriftlich oder per E-Mail. Du gilt auch als erteilt, wenn der Auftraggeber die Leistung ohne begründete Mängelrüge produktiv nutzt oder innerhalb der 7-Tage-Frist keine begründete Ablehnung erklärt.</P>
         <P n="3">Mängel sind konkret zu benennen. Unwesentliche Mängel berechtigen nicht zur Abnahmeverweigerung.</P>
         <P n="4">Das Mietmodell nach § 7 unterliegt keiner gesonderten Abnahme; mit Inbetriebnahme gilt die Mietwebseite als vertragsgemäß zur Verfügung gestellt.</P>
       </>

@@ -6,18 +6,18 @@ import { ArrowRight, CheckCircle, RefreshCw, TrendingUp, Zap, Search } from "luc
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const signs = [
-  "Ihre Website sieht veraltet aus und schreckt Kunden ab",
-  "Sie bekommen kaum Anfragen über Ihre aktuelle Website",
-  "Ihre Website lädt langsam (über 3 Sekunden)",
-  "Ihre Website ist nicht mobilfreundlich",
-  "Ihre Konkurrenz wirkt online deutlich professioneller",
-  "Sie können Inhalte nicht selbst aktualisieren",
+  "deine Website sieht veraltet aus und schreckt Kunden ab",
+  "Du bekommst kaum Anfragen über deine aktuelle Website",
+  "deine Website lädt langsam (über 3 Sekunden)",
+  "deine Website ist nicht mobilfreundlich",
+  "deine Konkurrenz wirkt online deutlich professioneller",
+  "Du kannst Inhalte nicht selbst aktualisieren",
 ];
 
 const faqs = [
-  { q: "Was kostet ein Website Relaunch?", a: "Ein professioneller Website Relaunch startet ab 990 €. Der Preis hängt vom Umfang der bestehenden Seite und den gewünschten Funktionen ab. Wir erstellen Ihnen ein individuelles Angebot." },
-  { q: "Verliere ich mein Google-Ranking beim Relaunch?", a: "Nein! Wir setzen saubere Weiterleitungen (301-Redirects) und optimieren Ihre neue Website von Anfang an für Suchmaschinen. In der Regel verbessern sich die Rankings nach einem professionellen Relaunch sogar." },
-  { q: "Wie lange dauert ein Website Relaunch?", a: "Ein typischer Relaunch dauert 3–5 Wochen, abhängig vom Umfang. Sie erhalten vorab eine kostenlose Vorschau innerhalb von 48 Stunden." },
+  { q: "Was kostet ein Website Relaunch?", a: "Ein professioneller Website Relaunch startet ab 990 €. Der Preis hängt vom Umfang der bestehenden Seite und den gewünschten Funktionen ab. Wir erstellen dir ein individuelles Angebot." },
+  { q: "Verliere ich mein Google-Ranking beim Relaunch?", a: "Nein! Wir setzen saubere Weiterleitungen (301-Redirects) und optimieren deine neue Website von Anfang an für Suchmaschinen. In der Regel verbessern sich die Rankings nach einem professionellen Relaunch sogar." },
+  { q: "Wie lange dauert ein Website Relaunch?", a: "Ein typischer Relaunch dauert 3–5 Wochen, abhängig vom Umfang. Du erhältst vorab eine kostenlose Vorschau innerhalb von 48 Stunden." },
 ];
 
 const WebsiteRelaunch = () => (
@@ -29,10 +29,10 @@ const WebsiteRelaunch = () => (
             <span className="badge-label bg-primary/10 text-primary mb-5">Website Relaunch</span>
             <h1 className="mb-5 text-balance">
               Website Relaunch –{" "}
-              <span className="gradient-text">Ihre veraltete Website wird zum Kundenmagnet</span>
+              <span className="gradient-text">deine veraltete Website wird zum Kundenmagnet</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Ihre Website bringt keine Anfragen mehr? Ein professioneller Website Relaunch verwandelt Ihre veraltete
+              deine Website bringt keine Anfragen mehr? Ein professioneller Website Relaunch verwandelt deine veraltete
               Online-Präsenz in ein modernes Verkaufsinstrument – mit mehr Anfragen, besserem Design und schnelleren Ladezeiten.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
@@ -44,7 +44,7 @@ const WebsiteRelaunch = () => (
         <AnimatedSection>
           <h2 className="text-center mb-5 text-balance">Wann ist ein Website Relaunch notwendig?</h2>
           <p className="text-muted-foreground text-center max-w-2xl mx-auto text-lg mb-12">
-            Erkennen Sie eines dieser Anzeichen? Dann wird es Zeit für einen professionellen Relaunch.
+            Erkennst du eines dieser Anzeichen? Dann wird es Zeit für einen professionellen Relaunch.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-20">
             {signs.map((s) => (
@@ -78,7 +78,7 @@ const WebsiteRelaunch = () => (
           <h2 className="text-center mb-5 text-balance">Was bei unserem Website Relaunch inklusive ist</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-20">
             {[
-              "Analyse Ihrer bestehenden Website",
+              "Analyse deiner bestehenden Website",
               "Conversion-optimiertes Redesign",
               "SEO-Optimierung & 301-Weiterleitungen",
               "Mobile-First Responsive Design",
