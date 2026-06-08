@@ -18,3 +18,5 @@ export const usePricingName = (original: string) => {
   const map = useContext(PricingNamesContext);
   return map[original] ?? original;
 };
+
+export const PricingName = ({ name }: { name: string }) => <>{usePricingName(name)}</>;
