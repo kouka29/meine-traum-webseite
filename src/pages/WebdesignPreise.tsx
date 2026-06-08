@@ -823,6 +823,12 @@ const WebdesignPreise = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
             </div>
+            <p className="mt-8 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+            </p>
+            <div className="mt-4 flex justify-center">
+              <PaymentTrustStrip kind="rent" />
+            </div>
             <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
               <Shield size={16} className="text-muted-foreground/80 shrink-0" />
               <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
@@ -884,6 +890,12 @@ const WebdesignPreise = () => {
                   onCheckout={openBuyCheckout}
                 />
               ))}
+            </div>
+            <p className="mt-8 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+            </p>
+            <div className="mt-4 flex justify-center">
+              <PaymentTrustStrip kind="deposit" />
             </div>
             <p className="mt-6 mb-2 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
               <Shield size={16} className="text-muted-foreground/80 shrink-0" />
