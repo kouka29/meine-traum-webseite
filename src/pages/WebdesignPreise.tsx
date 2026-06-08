@@ -870,6 +870,8 @@ const WebdesignPreise = () => {
           </div>
         </AnimatedSection>
 
+        <TrustStrip />
+
         <Tabs defaultValue="miete" className="mb-12">
           <TabsList className="mx-auto flex w-full max-w-sm mb-8">
             <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
