@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Star, Clock, ShieldCheck, Sparkles, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
 import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
@@ -19,7 +20,7 @@ type Pkg = {
   cta: string;
 };
 
-const packages: Pkg[] = [
+const rentPackages: Pkg[] = [
   {
     name: "Starter",
     price: "59 €/Monat",
@@ -76,6 +77,26 @@ const packages: Pkg[] = [
     cta: "Premium sichern – Jetzt starten",
   },
 ];
+
+const buyPackages: Pkg[] = rentPackages.map((p) => {
+  const buyPrices: Record<string, string> = {
+    Starter: "990 € einmalig",
+    Pro: "1.990 € einmalig",
+    Premium: "3.590 € einmalig",
+  };
+  const buyBadges: Record<string, string> = {
+    Starter: "Starter Kauf – 990 € einmalig",
+    Pro: "Pro Kauf – 1.990 € einmalig",
+    Premium: "Premium Kauf – 3.590 € einmalig",
+  };
+  return {
+    ...p,
+    price: buyPrices[p.name],
+    badge: buyBadges[p.name],
+    priceId: `${p.name.toLowerCase()}_buy_onetime`,
+    cta: p.name === "Pro" ? "Jetzt kaufen – Website sichern" : p.name === "Premium" ? "Premium kaufen – Jetzt starten" : "Jetzt Website kaufen",
+  };
+});
 
 const PAKET_NUMS: Record<string, { preis: number; miete: number; growth: number; growthItems: string[] }> = {
   Starter: {
@@ -200,6 +221,7 @@ const EmailAngebot = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
   const [checkoutPkg, setCheckoutPkg] = useState<{ name: string } | null>(null);
+  const [mode, setMode] = useState<"miete" | "kauf">("miete");
 
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
@@ -257,62 +279,88 @@ const EmailAngebot = () => {
           </p>
 
           {/* BLOCK 3: Pricing */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 lg:px-4">
-            {packages.map((pkg) => (
-              <div
-                key={pkg.name}
-                className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
-                  pkg.popular
-                    ? "border-[3px] border-primary shadow-[0_32px_70px_-12px_hsl(var(--primary)/0.5)] lg:scale-[1.05] lg:z-10"
-                    : "border-border"
-                }`}
-              >
-                {pkg.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-                    <Star size={12} /> Beliebteste Wahl
-                  </span>
-                )}
-                <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-                <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
-                {pkg.includesHint && (
-                  <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
-                )}
-                <div className="space-y-3 flex-1 mb-6">
-                  {pkg.features.map((f) => (
-                    <div key={f} className="flex items-start gap-2.5">
-                      <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
-                      <span className="text-sm">{f}</span>
-                    </div>
-                  ))}
-                </div>
-                <HiddenFeaturesAccordion items={pkg.hidden} />
-                <div className="space-y-2 mt-6">
-                  <Button
-                    variant="gradient"
-                    size="lg"
-                    className="w-full"
-                    onClick={() => setCheckoutPkg({ name: pkg.name })}
-                  >
-                    {pkg.cta} <ArrowRight size={16} />
-                  </Button>
-                  <button
-                    type="button"
-                    onClick={() => openPopup(pkg.badge)}
-                    className="w-full text-sm font-semibold text-primary hover:underline pt-1"
-                  >
-                    Kostenlos beraten lassen →
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Tabs value={mode} onValueChange={(v) => setMode(v as "miete" | "kauf")} className="mb-8">
+            <TabsList className="mx-auto flex w-full max-w-sm mb-6">
+              <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
+              <TabsTrigger value="kauf" className="flex-1">Einmalig kaufen</TabsTrigger>
+            </TabsList>
+
+            <p className="text-xs text-muted-foreground text-center italic mb-6 max-w-2xl mx-auto">
+              Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
+              Für Gewerbetreibende voll absetzbar.
+            </p>
+
+            {(["miete", "kauf"] as const).map((m) => {
+              const list = m === "miete" ? rentPackages : buyPackages;
+              return (
+                <TabsContent key={m} value={m}>
+                  <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium" style={m === "miete"
+                    ? { background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))", borderColor: "hsl(var(--primary) / 0.2)" }
+                    : { background: "#F0FFF4", color: "#166534", borderColor: "rgba(22,101,52,0.2)" }}>
+                    {m === "miete"
+                      ? "✓ Meistgewählt – kein großes Investment, sofort loslegen"
+                      : "💡 Einmal zahlen. Für immer dein. Nach ca. 2 Jahren günstiger als die Miete."}
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:px-4">
+                    {list.map((pkg) => (
+                      <div
+                        key={pkg.name}
+                        className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
+                          pkg.popular
+                            ? "border-[3px] border-primary shadow-[0_32px_70px_-12px_hsl(var(--primary)/0.5)] lg:scale-[1.05] lg:z-10"
+                            : "border-border"
+                        }`}
+                      >
+                        {pkg.popular && (
+                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
+                            <Star size={12} /> Beliebteste Wahl
+                          </span>
+                        )}
+                        <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+                        <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
+                        {pkg.includesHint && (
+                          <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
+                        )}
+                        <div className="space-y-3 flex-1 mb-6">
+                          {pkg.features.map((f) => (
+                            <div key={f} className="flex items-start gap-2.5">
+                              <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                              <span className="text-sm">{f}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <HiddenFeaturesAccordion items={pkg.hidden} />
+                        <div className="space-y-2 mt-6">
+                          <Button
+                            variant="gradient"
+                            size="lg"
+                            className="w-full"
+                            onClick={() => setCheckoutPkg({ name: pkg.name })}
+                          >
+                            {pkg.cta} <ArrowRight size={16} />
+                          </Button>
+                          <button
+                            type="button"
+                            onClick={() => openPopup(pkg.badge)}
+                            className="w-full text-sm font-semibold text-primary hover:underline pt-1"
+                          >
+                            Kostenlos beraten lassen →
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+              );
+            })}
+          </Tabs>
 
           <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
             <span>🛡️</span>
             <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
           </p>
           <div className="mt-4 flex justify-center">
-            <PaymentTrustStrip kind="rent" />
+            <PaymentTrustStrip kind={mode === "miete" ? "rent" : "buy"} />
           </div>
           <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
             * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
@@ -410,7 +458,7 @@ const EmailAngebot = () => {
             kauf: { enabled: true, mode: "deposit", deposit_percent: 50 },
             miete: { enabled: true, monthly_cents: (currentFunnelPaket.miete_monatlich || 0) * 100, min_months: 12 },
           }}
-          defaultPaymentMode="miete"
+          defaultPaymentMode={mode}
         />
       )}
     </main>
