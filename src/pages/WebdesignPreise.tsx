@@ -551,8 +551,7 @@ const PackageCard = ({
         </>
       ) : (
         <>
-          <p className="font-heading text-3xl font-bold gradient-text mb-1">{pkg.price}</p>
-          <p className="text-xs text-muted-foreground mb-6">zzgl. 19 % MwSt.</p>
+          <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
           {pkg.subPrice && (
             <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
           )}
