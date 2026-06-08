@@ -24,6 +24,7 @@ import PricingLeadPopup from "@/components/PricingLeadPopup";
 import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components/angebot/CheckoutFunnel";
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 import { supabase } from "@/integrations/supabase/client";
+import { usePricingName } from "@/lib/pricingNames";
 
 const TrustStrip = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
@@ -606,7 +607,7 @@ const PackageCard = ({
           <Star size={12} /> Beliebteste Wahl
         </span>
       )}
-      <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+      <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
       {pkg.price.toLowerCase().includes("anfrage") ? (
         <>
           <p className="text-sm text-muted-foreground mb-1">
