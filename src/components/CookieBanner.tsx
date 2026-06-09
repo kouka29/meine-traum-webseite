@@ -47,6 +47,7 @@ const CookieBanner = () => {
 
   const saveConsent = (consent: ConsentState) => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify(consent));
+    window.dispatchEvent(new Event("cookieConsentUpdated"));
     setVisible(false);
   };
 
