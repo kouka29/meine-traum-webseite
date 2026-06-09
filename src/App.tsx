@@ -78,6 +78,7 @@ const KundenportalAngebote = lazy(() => import("./pages/kundenportal/Angebote.ts
 const KundenportalEinstellungen = lazy(() => import("./pages/kundenportal/Einstellungen.tsx"));
 const KundenportalWachstumspaket = lazy(() => import("./pages/kundenportal/Wachstumspaket.tsx"));
 const EmailAngebot = lazy(() => import("./pages/lp/EmailAngebot.tsx"));
+const LpGesetz = lazy(() => import("./pages/lp/Gesetz.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -203,6 +204,8 @@ const App = () => (
             <Route path="/agb" element={<AGB />} />
             <Route path="/zahlung-erfolgreich" element={<ZahlungErfolgreich />} />
             <Route path="/lp/angebot" element={<EmailAngebot />} />
+            <Route path="/lp/gesetz" element={<LpGesetz />} />
+            <Route path="/lp/compliance" element={<LpGesetz />} />
             <Route path="/kundenportal/login" element={<KundenportalLogin />} />
             <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
             <Route path="/kundenportal" element={<KundenportalLayout />}>
