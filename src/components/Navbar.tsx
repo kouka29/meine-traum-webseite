@@ -35,7 +35,7 @@ const Navbar = () => {
   const ctaPath = trade ? "/handwerker/kontakt" : "/kontakt";
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
+    <header role="banner" className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       {trade && (
         <Link
           to="/handwerker/kontakt"
@@ -45,7 +45,7 @@ const Navbar = () => {
           {trade.bannerText}
         </Link>
       )}
-      <div className="container-narrow flex items-center justify-between gap-6 h-[72px] px-4">
+      <nav aria-label="Hauptnavigation" className="container-narrow flex items-center justify-between gap-6 h-[72px] px-4">
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img src={logo} alt="Meine Traum Webseite Logo" width={40} height={40} className="h-10 w-10 shrink-0" />
           <span className="font-heading text-base lg:text-lg font-bold gradient-text tracking-tight whitespace-nowrap">
@@ -93,13 +93,15 @@ const Navbar = () => {
           className="lg:hidden p-2 text-foreground"
           onClick={() => setOpen(!open)}
           aria-label="Menü"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </div>
+      </nav>
 
       {open && (
-        <div className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
+        <div id="mobile-nav" className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
           <div className="container-narrow px-4 py-6 flex flex-col gap-5">
             {navItems.map((item) => (
               <Link
@@ -138,7 +140,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 

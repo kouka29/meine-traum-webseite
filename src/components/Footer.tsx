@@ -72,6 +72,9 @@ const Footer = () => (
               <Link to="/agb" className="hover:text-background transition-colors">AGB</Link>
             </li>
             <li>
+              <Link to="/barrierefreiheit" className="hover:text-background transition-colors">Barrierefreiheit</Link>
+            </li>
+            <li>
               <button
                 type="button"
                 onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}

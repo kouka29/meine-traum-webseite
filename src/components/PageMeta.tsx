@@ -6,7 +6,7 @@ const BRAND = "Meine Traum Webseite";
 const DEFAULT_DESCRIPTION =
   "Professionelle Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker.";
 
-const pageMeta: Record<string, { title: string; description: string }> = {
+const pageMeta: Record<string, { title: string; description: string; noindex?: boolean }> = {
   "/": {
     title: `Website erstellen lassen | ${BRAND}`,
     description:
@@ -135,10 +135,21 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   "/datenschutz": {
     title: `Datenschutzerklärung | ${BRAND}`,
     description: "Datenschutzerklärung gemäß DSGVO, BDSG und TDDDG für meine-traum-webseite.de.",
+    noindex: true,
   },
   "/impressum": {
     title: `Impressum | ${BRAND}`,
     description: "Impressum gemäß § 5 DDG für Meine Traum Webseite – Webdesign Agentur.",
+    noindex: true,
+  },
+  "/agb": {
+    title: `AGB | ${BRAND}`,
+    description: "Allgemeine Geschäftsbedingungen von Meine Traum Webseite (Muad Amar – QK Marketing).",
+    noindex: true,
+  },
+  "/barrierefreiheit": {
+    title: `Erklärung zur Barrierefreiheit | ${BRAND}`,
+    description: "Erklärung zur Barrierefreiheit gemäß Barrierefreiheitsstärkungsgesetz (BFSG) und WCAG 2.1 AA.",
   },
   "/admin": {
     title: `Admin – Lead-Übersicht | ${BRAND}`,
@@ -216,6 +227,21 @@ const setMeta = (selector: string, attr: string, value: string) => {
   if (tag) tag.setAttribute(attr, value);
 };
 
+const setRobots = (noindex: boolean) => {
+  let tag = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("name", "robots");
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute(
+    "content",
+    noindex
+      ? "noindex, nofollow"
+      : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+  );
+};
+
 const PageMeta = () => {
   const { pathname } = useLocation();
 
@@ -234,6 +260,7 @@ const PageMeta = () => {
     setMeta('meta[name="twitter:title"]', "content", meta.title);
     setMeta('meta[name="twitter:description"]', "content", meta.description);
     setMeta('link[rel="canonical"]', "href", url);
+    setRobots(meta.noindex === true);
   }, [pathname]);
 
   return null;

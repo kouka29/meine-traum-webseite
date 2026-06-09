@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 import MetaPixel from "@/components/MetaPixel";
+import SkipLink from "@/components/SkipLink";
 import GlobalCtaPopup from "@/components/GlobalCtaPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
@@ -80,6 +81,7 @@ const KundenportalEinstellungen = lazy(() => import("./pages/kundenportal/Einste
 const KundenportalWachstumspaket = lazy(() => import("./pages/kundenportal/Wachstumspaket.tsx"));
 const EmailAngebot = lazy(() => import("./pages/lp/EmailAngebot.tsx"));
 const LpGesetz = lazy(() => import("./pages/lp/Gesetz.tsx"));
+const Barrierefreiheit = lazy(() => import("./pages/Barrierefreiheit.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -105,6 +107,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
     pathname.startsWith("/kundenportal");
   return (
     <>
+      <SkipLink />
       {!standalone && <Navbar />}
       {children}
       {!standalone && <Footer />}
@@ -154,6 +157,7 @@ const App = () => (
             <Route path="/individuelle-software" element={<IndividuelleSoftware />} />
             <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="/impressum" element={<Impressum />} />
+            <Route path="/barrierefreiheit" element={<Barrierefreiheit />} />
             <Route path="/admin" element={<AdminLeads />} />
             <Route path="/original" element={<IndexOriginal />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
