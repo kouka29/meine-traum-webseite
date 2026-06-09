@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
+import MetaPixel from "@/components/MetaPixel";
 import GlobalCtaPopup from "@/components/GlobalCtaPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
@@ -108,6 +109,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
       {children}
       {!standalone && <Footer />}
       <CookieBanner />
+      <MetaPixel />
       {!standalone && <GlobalCtaPopup />}
     </>
   );
