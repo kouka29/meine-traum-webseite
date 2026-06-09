@@ -120,7 +120,7 @@ export default function KundenportalLayout() {
           </Button>
         </header>
 
-        <main className="flex-1 p-4 md:p-8 max-w-5xl w-full mx-auto">
+        <main id="main-content" className="flex-1 p-4 md:p-8 max-w-5xl w-full mx-auto">
           <Outlet />
         </main>
       </div>

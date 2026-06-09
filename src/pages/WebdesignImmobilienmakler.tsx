@@ -29,7 +29,7 @@ const faqs = [
 ];
 
 const WebdesignImmobilienmakler = () => (
-  <main className="pt-20">
+  <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>

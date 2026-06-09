@@ -1,7 +1,7 @@
 import AnimatedSection from "@/components/AnimatedSection";
 
 const Impressum = () => (
-  <main className="pt-20">
+  <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4 max-w-3xl mx-auto">
         <AnimatedSection>

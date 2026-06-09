@@ -22,7 +22,7 @@ const testimonials = [
 ];
 
 const HandwerkerUeberUns = () => (
-  <main className="pt-[110px]">
+  <main id="main-content" className="pt-[110px]">
     <section className="py-16 md:py-20" style={{ background: "var(--dark-bg)" }}>
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <TradeBreadcrumbs />

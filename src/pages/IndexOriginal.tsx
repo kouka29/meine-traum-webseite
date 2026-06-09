@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 const Index = () => (
-  <main>
+  <main id="main-content">
     {/* Hero */}
     <section className="relative min-h-[92vh] flex items-center section-padding pt-28 sm:pt-36 overflow-hidden">
       <div className="absolute inset-0">

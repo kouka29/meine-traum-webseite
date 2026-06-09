@@ -400,7 +400,7 @@ const EmailAngebot = () => {
     : null;
 
   return (
-    <main className="min-h-screen bg-background">
+    <main id="main-content" className="min-h-screen bg-background">
       {/* Minimal-Header */}
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="container-narrow px-4 py-3.5 flex items-center justify-between gap-3">

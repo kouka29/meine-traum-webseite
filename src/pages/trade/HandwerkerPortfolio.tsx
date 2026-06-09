@@ -18,7 +18,7 @@ const HandwerkerPortfolio = () => {
   const filtered = active === "Alle" ? projects : projects.filter((p) => p.trade === active);
 
   return (
-    <main className="pt-[110px] pb-20" style={{ background: "var(--light-bg)" }}>
+    <main id="main-content" className="pt-[110px] pb-20" style={{ background: "var(--light-bg)" }}>
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <TradeBreadcrumbs />
         <div className="text-center mt-8 mb-10 max-w-3xl mx-auto">

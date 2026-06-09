@@ -7,7 +7,7 @@ export default function ZahlungErfolgreich() {
   const sessionId = params.get("session_id");
 
   return (
-    <main style={{
+    <main id="main-content" style={{
       minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
       padding: "40px 20px", background: "linear-gradient(135deg,#F5F4FF 0%,#FFFFFF 100%)",
       fontFamily: "'Plus Jakarta Sans', Inter, system-ui, sans-serif",

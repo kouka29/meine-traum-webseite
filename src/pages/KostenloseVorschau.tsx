@@ -294,7 +294,7 @@ const KostenloseVorschau = () => {
   };
 
   return (
-    <main className="pt-20">
+    <main id="main-content" className="pt-20">
       {/* HERO */}
       <section className="section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.08),transparent_60%)] pointer-events-none" />

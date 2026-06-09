@@ -56,7 +56,7 @@ const Unsubscribe = () => {
   };
 
   return (
-    <main className="pt-20 min-h-screen flex items-center">
+    <main id="main-content" className="pt-20 min-h-screen flex items-center">
       <div className="container-narrow px-4 w-full">
         <div className="max-w-md mx-auto bg-card rounded-2xl border border-border p-8 text-center">
           {state.status === "loading" && (

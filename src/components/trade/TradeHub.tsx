@@ -48,7 +48,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const TradeHub = ({ config }: { config: TradeHubConfig }) => (
-  <main className="pt-[110px]">
+  <main id="main-content" className="pt-[110px]">
     {/* HERO */}
     <Section bg="dark">
       <Container>

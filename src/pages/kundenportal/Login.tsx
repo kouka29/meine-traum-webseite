@@ -90,7 +90,7 @@ export default function KundenportalLogin() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4 py-12">
+    <main id="main-content" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4 py-12">
         <div className="w-full max-w-md">
           <Link to="/" className="block mb-10">
             <div className="flex flex-col items-center space-y-6 text-center">
