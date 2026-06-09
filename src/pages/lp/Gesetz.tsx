@@ -11,9 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
 import { ShieldCheck, ArrowRight, Check, Star, Lock } from "lucide-react";
-import PageMeta from "@/components/PageMeta";
+import { Card } from "@/components/ui/card";
 
 type Grund = "bfsg" | "cookie" | "design";
 
@@ -123,16 +122,18 @@ const Gesetz = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const metaTitle = useMemo(() => {
-    if (grund === "bfsg") return "BFSG-Check: Ist Ihre Webseite gesetzeskonform?";
-    if (grund === "cookie") return "Cookie-Banner Check: DSGVO-konform?";
-    return "Webseiten-Check: Verlieren Sie Kunden durch veraltetes Design?";
+  useEffect(() => {
+    const title =
+      grund === "bfsg"
+        ? "BFSG-Check: Ist Ihre Webseite gesetzeskonform?"
+        : grund === "cookie"
+        ? "Cookie-Banner Check: DSGVO-konform?"
+        : "Webseiten-Check: Verlieren Sie Kunden durch veraltetes Design?";
+    document.title = title;
   }, [grund]);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <PageMeta title={metaTitle} description={c.sub} />
-
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div
