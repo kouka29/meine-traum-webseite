@@ -469,7 +469,7 @@ const AGB = () => {
           </aside>
 
           {/* Content */}
-          <main className="min-w-0 max-w-3xl">
+          <main id="main-content" className="min-w-0 max-w-3xl">
             {sections.map((s, i) => {
               const Icon = s.icon;
               return (

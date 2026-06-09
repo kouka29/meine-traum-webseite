@@ -111,7 +111,7 @@ const Handwerker = () => {
   };
 
   return (
-    <main className="pt-20 overflow-x-hidden">
+    <main id="main-content" className="pt-20 overflow-x-hidden">
       {/* Top banner */}
       <button
         onClick={scrollToForm}

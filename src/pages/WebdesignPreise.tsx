@@ -838,7 +838,7 @@ const WebdesignPreise = () => {
   }, []);
 
   return (
-  <main className="pt-20">
+  <main id="main-content" className="pt-20">
     {/* Dezenter Demo-Banner ganz oben */}
     <div
       className="w-full border-b text-center px-4 py-2.5 text-sm"

@@ -268,7 +268,7 @@ const faqs = [
 ];
 
 const Starter = () => (
-  <main>
+  <main id="main-content">
     {/* 1. Hero */}
     <section className="relative section-padding pt-28 sm:pt-36">
       <div className="container-narrow px-4">

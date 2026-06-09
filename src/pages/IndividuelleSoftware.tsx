@@ -101,7 +101,7 @@ const results = [
 ];
 
 const IndividuelleSoftware = () => (
-  <main>
+  <main id="main-content">
     {/* Hero */}
     <section className="relative min-h-[90vh] flex items-center section-padding pt-28 sm:pt-36 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
       <div className="container-narrow px-4 relative z-10">

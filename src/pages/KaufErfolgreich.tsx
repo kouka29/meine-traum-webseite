@@ -22,7 +22,7 @@ export default function KaufErfolgreich() {
     : "Du erhältst in Kürze eine Bestätigung mit deiner Anzahlungs-Rechnung als PDF.";
 
   return (
-    <main className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-background to-muted/30">
+    <main id="main-content" className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-background to-muted/30">
       <div className="max-w-2xl mx-auto px-4 text-center">
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
           <CheckCircle2 className="text-primary" size={48} />
