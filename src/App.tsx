@@ -82,6 +82,7 @@ const KundenportalWachstumspaket = lazy(() => import("./pages/kundenportal/Wachs
 const EmailAngebot = lazy(() => import("./pages/lp/EmailAngebot.tsx"));
 const LpGesetz = lazy(() => import("./pages/lp/Gesetz.tsx"));
 const Barrierefreiheit = lazy(() => import("./pages/Barrierefreiheit.tsx"));
+const Premium = lazy(() => import("./pages/Premium.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -103,6 +104,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
     pathname === "/a" ||
     pathname.startsWith("/a/") ||
     pathname === "/agb" ||
+    pathname === "/premium" ||
     pathname.startsWith("/lp/") ||
     pathname.startsWith("/kundenportal");
   return (
@@ -212,6 +214,7 @@ const App = () => (
             <Route path="/lp/angebot" element={<EmailAngebot />} />
             <Route path="/lp/gesetz" element={<LpGesetz />} />
             <Route path="/lp/compliance" element={<LpGesetz />} />
+            <Route path="/premium" element={<Premium />} />
             <Route path="/kundenportal/login" element={<KundenportalLogin />} />
             <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
             <Route path="/kundenportal" element={<KundenportalLayout />}>

@@ -220,6 +220,11 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
     description:
       "Professionelle Website ab 59€/Monat. In 7 Tagen live. Steuerlich absetzbar. Jetzt starten.",
   },
+  "/premium": {
+    title: `Premium Webseiten für anspruchsvolle Unternehmen | ${BRAND}`,
+    description:
+      "Premium Webdesign für anspruchsvolle Unternehmen im DACH-Raum. Individuell, strategisch, limitiert auf 5 Projekte pro Monat.",
+  },
 };
 
 const setMeta = (selector: string, attr: string, value: string) => {
