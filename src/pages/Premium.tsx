@@ -527,9 +527,140 @@ const Premium = () => {
         </div>
       </section>
 
-      {/* CTA — LIGHT BOOKEND */}
+      {/* APPLICATION FORM */}
       <section
         id="bewerbung"
+        className="border-t border-white/[0.06] bg-[#0C0C1E] px-8 py-32"
+      >
+        <div className="mx-auto max-w-[680px]">
+          {submitted ? (
+            <motion.div {...fadeUp} className="flex flex-col items-center text-center">
+              <CheckCircle2
+                className="h-12 w-12 text-[color:var(--mtw-brand)]"
+                aria-hidden={true}
+                focusable={false}
+              />
+              <h2
+                className="mt-6 text-3xl text-white"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Vielen Dank.
+              </h2>
+              <p className="mt-4 text-base leading-[1.7] text-white/60">
+                Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 24
+                Stunden persönlich bei Ihnen.
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div {...fadeUp}>
+              <div className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/30">
+                Projekt anfragen
+              </div>
+              <h2
+                className="text-4xl font-normal leading-[1.15] text-white md:text-5xl"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Erzählen Sie uns von{" "}
+                <em className="italic text-[color:var(--mtw-brand)]">Ihrem</em>{" "}
+                Projekt.
+              </h2>
+              <p className="mb-12 mt-6 text-base text-white/55">
+                Wir melden uns innerhalb von 24 Stunden — persönlich, nicht
+                automatisiert.
+              </p>
+
+              <div className="flex flex-col gap-8">
+                {[
+                  { key: "name", label: "IHR NAME", type: "text", placeholder: "Max Mustermann" },
+                  { key: "company", label: "UNTERNEHMEN", type: "text", placeholder: "Mustermann GmbH" },
+                  { key: "website", label: "WEBSITE (FALLS VORHANDEN)", type: "url", placeholder: "https://ihre-webseite.de" },
+                  { key: "email", label: "E-MAIL", type: "email", placeholder: "max@mustermann.de" },
+                  { key: "phone", label: "TELEFON", type: "tel", placeholder: "+49 ..." },
+                ].map((f) => {
+                  const hasError = errors[f.key as keyof typeof errors];
+                  return (
+                    <div key={f.key}>
+                      <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/35">
+                        {f.label}
+                      </label>
+                      <input
+                        type={f.type}
+                        value={formData[f.key as keyof typeof formData]}
+                        onChange={(e) =>
+                          setFormData({ ...formData, [f.key]: e.target.value })
+                        }
+                        placeholder={f.placeholder}
+                        className={`w-full border-0 border-b bg-transparent py-4 text-base text-white placeholder:text-white/25 outline-none transition-colors focus:border-[color:var(--mtw-brand)] ${
+                          hasError ? "border-red-500/70" : "border-white/[0.12]"
+                        }`}
+                      />
+                    </div>
+                  );
+                })}
+
+                <div>
+                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/35">
+                    WAS MÖCHTEN SIE ERREICHEN?
+                  </label>
+                  <textarea
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                    placeholder="Beschreiben Sie kurz Ihr Ziel — was soll Ihre neue Webseite bewirken?"
+                    className={`w-full resize-none border-0 border-b bg-transparent py-4 text-base text-white placeholder:text-white/25 outline-none transition-colors focus:border-[color:var(--mtw-brand)] ${
+                      errors.message ? "border-red-500/70" : "border-white/[0.12]"
+                    }`}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/35">
+                    WIE HABEN SIE UNS GEFUNDEN?
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={formData.source}
+                      onChange={(e) =>
+                        setFormData({ ...formData, source: e.target.value })
+                      }
+                      className="w-full appearance-none border-0 border-b border-white/[0.12] bg-transparent py-4 pr-8 text-base text-white outline-none transition-colors focus:border-[color:var(--mtw-brand)] [&>option]:bg-[#0C0C1E] [&>option]:text-white"
+                    >
+                      <option value="" disabled>
+                        Bitte wählen...
+                      </option>
+                      <option value="google">Google-Suche</option>
+                      <option value="empfehlung">Empfehlung</option>
+                      <option value="social">Social Media</option>
+                      <option value="sonstiges">Sonstiges</option>
+                    </select>
+                    <ChevronDown
+                      className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40"
+                      aria-hidden={true}
+                      focusable={false}
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="mt-12 w-full rounded-none bg-[color:var(--mtw-brand)] py-5 text-sm uppercase tracking-widest text-white transition-all duration-200 hover:opacity-90"
+                >
+                  Projekt einreichen →
+                </button>
+                <p className="mt-4 text-center text-xs text-white/25">
+                  🔒 Ihre Daten werden vertraulich behandelt. Kein Spam, keine Weitergabe.
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* CTA — LIGHT BOOKEND */}
+      <section
         className="bg-[#F0EFFF] px-6 py-32 text-[#0A0A1F] md:px-12 md:py-40"
       >
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
@@ -556,7 +687,7 @@ const Premium = () => {
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              to="/kontakt"
+              to="#bewerbung"
               className="inline-flex items-center gap-3 rounded-none bg-[#08081A] px-10 py-4 text-sm uppercase tracking-[0.2em] text-white transition-all hover:bg-[color:var(--mtw-brand)]"
             >
               Projekt jetzt anfragen
