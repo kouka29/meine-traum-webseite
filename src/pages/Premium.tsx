@@ -286,7 +286,7 @@ const Premium = () => {
                     />
                   </div>
                   <h3 className="mt-6 text-xl text-white">{c.title}</h3>
-                  <p className="mt-4 text-sm leading-[1.9] text-white/75">
+                  <p className="mt-4 text-sm leading-[1.9] text-white/70">
                     {c.body}
                   </p>
                 </div>
@@ -353,7 +353,7 @@ const Premium = () => {
                   <h3 className="text-2xl text-white">{s.t}</h3>
                 </div>
                 <div className="col-span-12 md:col-span-6">
-                  <p className="text-base leading-[1.9] text-white/65">{s.d}</p>
+                  <p className="text-base leading-[1.9] text-white/70">{s.d}</p>
                 </div>
               </motion.div>
             ))}
