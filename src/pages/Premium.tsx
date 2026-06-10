@@ -580,7 +580,7 @@ const Premium = () => {
                   const hasError = errors[f.key as keyof typeof errors];
                   return (
                     <div key={f.key}>
-                      <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/35">
+                      <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/70">
                         {f.label}
                       </label>
                       <input
@@ -590,7 +590,7 @@ const Premium = () => {
                           setFormData({ ...formData, [f.key]: e.target.value })
                         }
                         placeholder={f.placeholder}
-                        className={`w-full border-0 border-b bg-transparent py-4 text-base text-white placeholder:text-white/25 outline-none transition-colors focus:border-[color:var(--mtw-brand)] ${
+                        className={`w-full border-0 border-b bg-transparent py-4 text-base text-white placeholder:text-white/45 outline-none transition-colors focus:border-[color:var(--mtw-brand)] ${
                           hasError ? "border-red-500/70" : "border-white/[0.12]"
                         }`}
                       />
@@ -599,7 +599,7 @@ const Premium = () => {
                 })}
 
                 <div>
-                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/35">
+                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/70">
                     WAS MÖCHTEN SIE ERREICHEN?
                   </label>
                   <textarea
@@ -609,14 +609,14 @@ const Premium = () => {
                       setFormData({ ...formData, message: e.target.value })
                     }
                     placeholder="Beschreiben Sie kurz Ihr Ziel — was soll Ihre neue Webseite bewirken?"
-                    className={`w-full resize-none border-0 border-b bg-transparent py-4 text-base text-white placeholder:text-white/25 outline-none transition-colors focus:border-[color:var(--mtw-brand)] ${
+                    className={`w-full resize-none border-0 border-b bg-transparent py-4 text-base text-white placeholder:text-white/45 outline-none transition-colors focus:border-[color:var(--mtw-brand)] ${
                       errors.message ? "border-red-500/70" : "border-white/[0.12]"
                     }`}
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/35">
+                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/70">
                     WIE HABEN SIE UNS GEFUNDEN?
                   </label>
                   <div className="relative">
