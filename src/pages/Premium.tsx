@@ -686,13 +686,13 @@ const Premium = () => {
           </div>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              to="#bewerbung"
+            <a
+              href="#bewerbung"
               className="inline-flex items-center gap-3 rounded-none bg-[#08081A] px-10 py-4 text-sm uppercase tracking-[0.2em] text-white transition-all hover:bg-[color:var(--mtw-brand)]"
             >
               Projekt jetzt anfragen
               <ArrowRight className="h-4 w-4" aria-hidden={true} focusable={false} />
-            </Link>
+            </a>
             <a
               href="tel:+4961313076498"
               className="inline-flex items-center gap-3 rounded-none border border-[#0A0A1F]/30 px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#0A0A1F]/70 transition-all hover:border-[#0A0A1F] hover:text-[#0A0A1F]"
