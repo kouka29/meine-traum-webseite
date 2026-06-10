@@ -77,6 +77,32 @@ const DotPattern = () => (
 );
 
 const Premium = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    website: "",
+    email: "",
+    phone: "",
+    message: "",
+    source: "",
+  });
+  const [errors, setErrors] = useState<{ name?: boolean; email?: boolean; message?: boolean }>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    const newErrors: typeof errors = {};
+    if (!formData.name.trim()) newErrors.name = true;
+    if (!formData.email.trim()) newErrors.email = true;
+    if (!formData.message.trim()) newErrors.message = true;
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+    console.log("Premium application:", formData);
+    setSubmitted(true);
+  };
+
   useEffect(() => {
     const link = document.createElement("link");
     link.href =
