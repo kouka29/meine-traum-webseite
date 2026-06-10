@@ -516,7 +516,7 @@ const Premium = () => {
             Bereit für eine Webseite, die wirklich{" "}
             <em className="italic text-[color:var(--mtw-brand)]">arbeitet?</em>
           </h2>
-          <p className="mx-auto mt-8 max-w-xl text-base leading-[1.9] text-[#0A0A1F]">
+          <p className="mx-auto mt-8 max-w-xl text-base leading-[1.9] text-[#0A0A1F]/70">
             Wir nehmen uns Zeit für jedes Projekt — deshalb limitieren wir uns
             auf 5 neue Kunden pro Monat. Wenn Sie ernsthaft über einen neuen
             Webauftritt nachdenken, sprechen Sie jetzt mit uns.
@@ -537,14 +537,14 @@ const Premium = () => {
             </Link>
             <a
               href="tel:+4961313076498"
-              className="inline-flex items-center gap-3 rounded-none border border-[#0A0A1F]/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#0A0A1F] transition-all hover:border-[#0A0A1F]"
+              className="inline-flex items-center gap-3 rounded-none border border-[#0A0A1F]/30 px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#0A0A1F]/70 transition-all hover:border-[#0A0A1F] hover:text-[#0A0A1F]"
             >
               <Phone className="h-4 w-4" aria-hidden={true} focusable={false} />
               06131 30 764 98
             </a>
           </div>
 
-          <p className="mt-8 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/45">
+          <p className="mt-8 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/50">
             Kein Verkaufsgespräch · Kein Druck
           </p>
         </motion.div>
