@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Check,
   X,
@@ -10,6 +10,7 @@ import {
   ChevronDown,
   Phone,
   ArrowRight,
+  CheckCircle2,
 } from "lucide-react";
 import {
   Accordion,
