@@ -1,15 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import {
-  Check,
-  X,
-  TrendingUp,
-  ShieldCheck,
-  Zap,
-  ChevronDown,
-  Phone,
-  ArrowRight,
-} from "lucide-react";
+import { useEffect } from "react";
+import { Check, X, ChevronDown, Phone, ArrowRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -24,469 +16,483 @@ const fadeUp = {
   transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-const Section = ({
-  children,
-  className = "",
-  bg = "#050510",
-  id,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  bg?: string;
-  id?: string;
-}) => (
-  <section
-    id={id}
-    style={{ backgroundColor: bg }}
-    className={`relative w-full px-6 py-24 md:py-32 text-white ${className}`}
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <div className="mb-6 text-[10px] uppercase tracking-[0.25em] text-[#6B6B6B]">
+    {children}
+  </div>
+);
+
+const ChessKing = ({ className = "" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 100 140"
+    fill="currentColor"
+    className={className}
+    aria-hidden={true}
+    focusable={false}
   >
-    <div className="mx-auto max-w-6xl">{children}</div>
-  </section>
+    <rect x="42" y="0" width="16" height="16" />
+    <rect x="35" y="8" width="30" height="8" />
+    <rect x="38" y="20" width="24" height="12" />
+    <ellipse cx="50" cy="48" rx="18" ry="16" />
+    <path d="M32 64 Q30 100 20 120 L80 120 Q70 100 68 64 Z" />
+    <rect x="15" y="120" width="70" height="12" rx="6" />
+  </svg>
+);
+
+const DotPattern = () => (
+  <svg
+    className="absolute bottom-6 right-6 h-16 w-16 text-[#C9A96E]/20"
+    viewBox="0 0 60 60"
+    aria-hidden={true}
+    focusable={false}
+  >
+    {[...Array(6)].map((_, r) =>
+      [...Array(6)].map((_, c) => (
+        <circle key={`${r}-${c}`} cx={4 + c * 10} cy={4 + r * 10} r="1.2" fill="currentColor" />
+      ))
+    )}
+  </svg>
 );
 
 const Premium = () => {
+  useEffect(() => {
+    const id = "premium-playfair-font";
+    if (!document.getElementById(id)) {
+      const link = document.createElement("link");
+      link.id = id;
+      link.rel = "stylesheet";
+      link.href =
+        "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap";
+      document.head.appendChild(link);
+    }
+  }, []);
+
   return (
-    <main id="main-content" className="min-h-screen bg-[#050510]">
+    <main
+      id="main-content"
+      className="premium-page min-h-screen bg-[#0A0A0A] text-[#F5F0E8]"
+    >
+      <style>{`
+        .premium-page h1, .premium-page h2, .premium-page h3 {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-weight: 400;
+        }
+        .premium-page .serif-num {
+          font-family: 'Playfair Display', Georgia, serif;
+        }
+      `}</style>
+
       {/* HERO */}
-      <section
-        className="relative bg-[#050510] text-white min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
-      >
-        {/* radial purple glow behind hero */}
-        <div
-          aria-hidden={true}
-          className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-600/20 blur-[120px]"
-        />
-        <div
-          aria-hidden={true}
-          className="pointer-events-none absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full opacity-30 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, hsl(270 70% 50% / 0.5), transparent 70%)",
-          }}
-        />
-        <div
-          aria-hidden={true}
-          className="pointer-events-none absolute -bottom-32 -right-32 h-[480px] w-[480px] rounded-full opacity-25 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, hsl(220 80% 50% / 0.5), transparent 70%)",
-          }}
-        />
+      <section className="relative min-h-screen overflow-hidden bg-[#0A0A0A] px-6 md:px-12">
+        <ChessKing className="pointer-events-none absolute right-4 top-1/2 hidden h-[400px] w-[300px] -translate-y-1/2 text-[#C9A96E] opacity-[0.06] md:block" />
 
-        <motion.div
-          {...fadeUp}
-          className="relative z-10 mx-auto max-w-4xl text-center"
-        >
-          <span className="inline-block rounded-full border border-purple-500/40 bg-purple-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-purple-300">
-            Limitiert auf 5 Projekte pro Monat
-          </span>
+        <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center">
+          <motion.div {...fadeUp} className="max-w-3xl">
+            <Eyebrow>Limitiert auf 5 Projekte pro Monat</Eyebrow>
 
-          <h1 className="mt-8 bg-gradient-to-br from-white via-white to-purple-300 bg-clip-text text-7xl font-black leading-none tracking-tight text-transparent md:text-8xl">
-            Webseiten, die Ihr Unternehmen
-            <br />
-            auf ein neues Level bringen.
-          </h1>
+            <h1 className="text-[56px] leading-[1.05] tracking-tight text-[#F5F0E8] md:text-[88px] lg:text-[100px]">
+              Webseiten, die Ihr Unternehmen auf ein neues{" "}
+              <em className="italic text-[#C9A96E]">Level</em> bringen.
+            </h1>
 
-          <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-zinc-400">
-            Wir entwickeln digitale Präsenzen für Unternehmen, die nicht nach
-            Kompromissen suchen — sondern nach Ergebnissen.
-          </p>
-
-          <div className="mt-12">
-            <a
-              href="#bewerbung"
-              className="group inline-flex items-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-8 py-3 font-medium text-white backdrop-blur transition-all duration-300 hover:bg-white hover:text-black"
-            >
-              Projekt anfragen
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                aria-hidden={true}
-                focusable={false}
-              />
-            </a>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <ChevronDown
-            className="h-6 w-6 animate-bounce text-white/40"
-            aria-hidden={true}
-            focusable={false}
-          />
-        </motion.div>
-      </section>
-
-      {/* SECTION 2 — FÜR WEN */}
-      <Section bg="#0D0D1F">
-        <motion.div {...fadeUp} className="grid gap-16 md:grid-cols-2 md:gap-20">
-          <div>
-            <h2 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-              Für wen wir arbeiten
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-zinc-400">
-              Wir arbeiten nicht mit jedem. Unsere Kapazität ist bewusst
-              begrenzt — damit jedes Projekt die Aufmerksamkeit bekommt, die es
-              verdient.
+            <p className="mt-10 max-w-[500px] text-base leading-[1.8] text-[#F5F0E8]/60">
+              Wir entwickeln digitale Präsenzen für Unternehmen, die nicht nach
+              Kompromissen suchen — sondern nach Ergebnissen.
             </p>
-          </div>
-          <div className="space-y-10">
-            <div>
-              <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-purple-400">
-                Das sind unsere Kunden:
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  "Unternehmen mit klaren Wachstumszielen",
-                  "Marken, die online als Marktführer wahrgenommen werden wollen",
-                  "Gründer und Geschäftsführer, die Qualität über Preis stellen",
-                  "Betriebe, die eine langfristige digitale Partnerschaft suchen",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-zinc-200">
-                    <Check
-                      className="mt-1 h-5 w-5 flex-shrink-0 text-purple-400"
-                      aria-hidden={true}
-                      focusable={false}
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-red-400">
-                Das sind nicht unsere Kunden:
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  "Wer hauptsächlich nach dem günstigsten Anbieter sucht",
-                  "Wer eine Webseite in 3 Tagen braucht",
-                  "Wer keine klare Vision für sein Unternehmen hat",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-zinc-500">
-                    <X
-                      className="mt-1 h-5 w-5 flex-shrink-0 text-red-400/60"
-                      aria-hidden={true}
-                      focusable={false}
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </motion.div>
-      </Section>
 
-      {/* SECTION 3 — ERGEBNISSE */}
-      <Section bg="#050510">
-        <motion.div {...fadeUp}>
-          <h2 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-            Was wirklich entsteht
-          </h2>
-        </motion.div>
-
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {[
-            {
-              Icon: TrendingUp,
-              title: "Mehr qualifizierte Anfragen",
-              body:
-                "Keine Website die nur gut aussieht. Jede Seite ist strategisch aufgebaut, um genau die Kunden anzuziehen, die zu Ihnen passen.",
-            },
-            {
-              Icon: ShieldCheck,
-              title: "Positionierung als Marktführer",
-              body:
-                "Ihr digitaler Auftritt signalisiert vom ersten Moment: Hier arbeiten Profis. Das schafft Vertrauen — bevor das erste Gespräch stattfindet.",
-            },
-            {
-              Icon: Zap,
-              title: "Messbare Geschäftsergebnisse",
-              body:
-                "Wir bauen nicht für Ästhetik. Wir bauen für Conversions, Sichtbarkeit und Wachstum — mit klaren KPIs von Anfang an.",
-            },
-          ].map(({ Icon, title, body }, i) => (
-            <motion.div
-              key={title}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.1 }}
-              className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-all duration-500 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(124,58,237,0.1)]"
-            >
-              <div className="inline-flex rounded-xl bg-purple-500/10 p-3">
-                <Icon
-                  className="h-6 w-6 text-purple-400"
+            <div className="mt-12">
+              <a
+                href="#bewerbung"
+                className="group inline-flex items-center gap-3 rounded-none border border-[#C9A96E]/40 px-8 py-3 text-sm uppercase tracking-[0.2em] text-[#C9A96E] transition-all duration-300 hover:bg-[#C9A96E] hover:text-black"
+              >
+                Projekt anfragen
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   aria-hidden={true}
                   focusable={false}
                 />
-              </div>
-              <h3 className="mt-6 text-xl font-bold tracking-tight text-white">
-                {title}
-              </h3>
-              <p className="mt-4 text-sm leading-relaxed text-zinc-400">{body}</p>
-            </motion.div>
-          ))}
+              </a>
+            </div>
+          </motion.div>
         </div>
-      </Section>
 
-      {/* SECTION 4 — PROZESS */}
-      <Section bg="#0D0D1F">
-        <motion.div {...fadeUp} className="max-w-2xl">
-          <h2 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-            Wie wir arbeiten
-          </h2>
-          <p className="mt-6 text-lg text-zinc-400">
-            Kein Template. Kein Copy-Paste. Jedes Projekt beginnt mit Verstehen.
-          </p>
-        </motion.div>
+        <div className="absolute bottom-0 left-0 right-0 border-t border-[#C9A96E]/20" />
+        <ChevronDown
+          className="absolute bottom-8 left-1/2 h-5 w-5 -translate-x-1/2 animate-bounce text-[#C9A96E]/40"
+          aria-hidden={true}
+          focusable={false}
+        />
+      </section>
 
-        <div className="relative mt-16 grid gap-12 md:grid-cols-4 md:gap-8 md:before:absolute md:before:top-10 md:before:left-0 md:before:right-0 md:before:h-px md:before:bg-gradient-to-r md:before:from-transparent md:before:via-purple-500/30 md:before:to-transparent">
-          {[
-            {
-              n: "01",
-              t: "Strategiegespräch",
-              d: "Wir lernen Ihr Unternehmen, Ihre Ziele und Ihre Zielgruppe kennen. Erst dann beginnt die Arbeit.",
-            },
-            {
-              n: "02",
-              t: "Konzept & Design",
-              d: "Individuelles Design — kein Template. Wir entwickeln einen Auftritt, der Ihre Marke widerspiegelt und Besucher in Kunden verwandelt.",
-            },
-            {
-              n: "03",
-              t: "Entwicklung & Optimierung",
-              d: "Technisch sauber, schnell, DSGVO-konform und barrierefrei. Mit SEO-Fundament von Anfang an.",
-            },
-            {
-              n: "04",
-              t: "Launch & Begleitung",
-              d: "Nach dem Launch lassen wir Sie nicht allein. Wir begleiten, optimieren und wachsen mit Ihnen.",
-            },
-          ].map((s, i) => (
-            <motion.div
-              key={s.n}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-              className="relative"
-            >
-              <div className="text-6xl font-black leading-none text-purple-500/20">
-                {s.n}
+      {/* FÜR WEN — CREAM */}
+      <section className="bg-[#F5F0E8] px-6 py-24 text-[#0A0A0A] md:px-12 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <motion.div {...fadeUp} className="grid gap-16 md:grid-cols-2 md:gap-20">
+            <div>
+              <div className="mb-6 text-[10px] uppercase tracking-[0.25em] text-[#6B6B6B]">
+                Wir arbeiten selektiv
               </div>
-              <h3 className="mt-4 text-lg font-semibold tracking-tight text-white">
-                {s.t}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-400">{s.d}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
-
-      {/* SECTION 5 — PORTFOLIO */}
-      <Section bg="#050510">
-        <motion.div {...fadeUp} className="max-w-2xl">
-          <h2 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-            Ausgewählte Projekte
-          </h2>
-          <p className="mt-6 text-lg text-zinc-400">
-            Jedes Projekt ist einzigartig. Hier ein Einblick in unsere Arbeit.
-          </p>
-        </motion.div>
-
-        <div className="mt-16 grid gap-8 md:grid-cols-2">
-          {[
-            {
-              gradient: "linear-gradient(135deg, #7C3AED, #2563EB)",
-              label: "HANDWERKSBETRIEB · MAINZ",
-              title: "Kompletter Neuauftritt mit 3× mehr Anfragen",
-            },
-            {
-              gradient: "linear-gradient(135deg, #2563EB, #0891B2)",
-              label: "BERATUNG · FRANKFURT",
-              title: "Premium-Positionierung im B2B-Markt",
-            },
-          ].map((p, i) => (
-            <motion.article
-              key={p.label}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.1 }}
-              className="overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-purple-900/20 to-blue-900/20"
-            >
-              <div
-                className="relative aspect-video w-full"
-                style={{ background: p.gradient }}
-                aria-hidden={true}
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-6 right-6 text-lg font-semibold text-white">
-                  {p.title}
+              <h2 className="text-4xl leading-[1.1] tracking-tight text-[#0A0A0A] md:text-[56px]">
+                Für wen wir{" "}
+                <em className="italic text-[#C9A96E]">arbeiten</em>
+              </h2>
+              <p className="mt-8 max-w-md text-base leading-[1.8] text-[#0A0A0A]/70">
+                Wir arbeiten nicht mit jedem. Unsere Kapazität ist bewusst
+                begrenzt — damit jedes Projekt die Aufmerksamkeit bekommt, die
+                es verdient.
+              </p>
+            </div>
+            <div className="space-y-12">
+              <div>
+                <div className="mb-5 text-[10px] uppercase tracking-[0.25em] text-[#6B6B6B]">
+                  Das sind unsere Kunden
                 </div>
-              </div>
-              <div className="p-8">
-                <div className="text-xs font-semibold uppercase tracking-widest text-purple-400">
-                  {p.label}
-                </div>
-                <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-white">
-                  {p.title}
-                </h3>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {["Custom Design", "SEO", "DSGVO-konform"].map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-400"
-                    >
-                      {t}
-                    </span>
+                <ul className="space-y-4">
+                  {[
+                    "Unternehmen mit klaren Wachstumszielen",
+                    "Marken, die online als Marktführer wahrgenommen werden wollen",
+                    "Gründer und Geschäftsführer, die Qualität über Preis stellen",
+                    "Betriebe, die eine langfristige digitale Partnerschaft suchen",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-[#0A0A0A]">
+                      <Check
+                        className="mt-1 h-4 w-4 flex-shrink-0 text-[#C9A96E]"
+                        aria-hidden={true}
+                        focusable={false}
+                      />
+                      <span className="text-base leading-relaxed">{item}</span>
+                    </li>
                   ))}
+                </ul>
+              </div>
+              <div>
+                <div className="mb-5 text-[10px] uppercase tracking-[0.25em] text-[#6B6B6B]">
+                  Das sind nicht unsere Kunden
+                </div>
+                <ul className="space-y-4">
+                  {[
+                    "Wer hauptsächlich nach dem günstigsten Anbieter sucht",
+                    "Wer eine Webseite in 3 Tagen braucht",
+                    "Wer keine klare Vision für sein Unternehmen hat",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-[#0A0A0A]/50"
+                    >
+                      <X
+                        className="mt-1 h-4 w-4 flex-shrink-0"
+                        aria-hidden={true}
+                        focusable={false}
+                      />
+                      <span className="text-base leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ERGEBNISSE */}
+      <section className="bg-[#0A0A0A] px-6 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <motion.div {...fadeUp} className="max-w-2xl">
+            <Eyebrow>Was wir liefern</Eyebrow>
+            <h2 className="text-4xl leading-[1.1] tracking-tight text-[#F5F0E8] md:text-[56px]">
+              Was wirklich{" "}
+              <em className="italic text-[#C9A96E]">entsteht</em>
+            </h2>
+          </motion.div>
+
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                n: "01",
+                title: "Mehr qualifizierte Anfragen",
+                body:
+                  "Keine Website die nur gut aussieht. Jede Seite ist strategisch aufgebaut, um genau die Kunden anzuziehen, die zu Ihnen passen.",
+              },
+              {
+                n: "02",
+                title: "Positionierung als Marktführer",
+                body:
+                  "Ihr digitaler Auftritt signalisiert vom ersten Moment: Hier arbeiten Profis. Das schafft Vertrauen — bevor das erste Gespräch stattfindet.",
+              },
+              {
+                n: "03",
+                title: "Messbare Geschäftsergebnisse",
+                body:
+                  "Wir bauen nicht für Ästhetik. Wir bauen für Conversions, Sichtbarkeit und Wachstum — mit klaren KPIs von Anfang an.",
+              },
+            ].map((c, i) => (
+              <motion.div
+                key={c.n}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+                className="group relative overflow-hidden border border-white/[0.06] bg-[#111111] p-10 transition-colors duration-500 hover:border-[#C9A96E]/30"
+              >
+                <div className="serif-num absolute left-8 top-6 text-6xl text-white/[0.06]">
+                  {c.n}
+                </div>
+                <div className="relative pt-16">
+                  <h3 className="text-xl tracking-tight text-[#F5F0E8]">
+                    {c.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-[1.8] text-[#F5F0E8]/60">
+                    {c.body}
+                  </p>
+                </div>
+                <DotPattern />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROZESS */}
+      <section className="bg-[#0A0A0A] px-6 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <motion.div {...fadeUp} className="max-w-2xl">
+            <Eyebrow>Unser Prozess</Eyebrow>
+            <h2 className="text-4xl leading-[1.1] tracking-tight text-[#F5F0E8] md:text-[56px]">
+              Wie wir{" "}
+              <em className="italic text-[#C9A96E]">arbeiten</em>
+            </h2>
+            <p className="mt-6 text-base leading-[1.8] text-[#F5F0E8]/60">
+              Kein Template. Kein Copy-Paste. Jedes Projekt beginnt mit
+              Verstehen.
+            </p>
+          </motion.div>
+
+          <div className="mt-16 space-y-0">
+            {[
+              {
+                n: "01",
+                t: "Strategiegespräch",
+                d: "Wir lernen Ihr Unternehmen, Ihre Ziele und Ihre Zielgruppe kennen. Erst dann beginnt die Arbeit.",
+              },
+              {
+                n: "02",
+                t: "Konzept & Design",
+                d: "Individuelles Design — kein Template. Wir entwickeln einen Auftritt, der Ihre Marke widerspiegelt und Besucher in Kunden verwandelt.",
+              },
+              {
+                n: "03",
+                t: "Entwicklung & Optimierung",
+                d: "Technisch sauber, schnell, DSGVO-konform und barrierefrei. Mit SEO-Fundament von Anfang an.",
+              },
+              {
+                n: "04",
+                t: "Launch & Begleitung",
+                d: "Nach dem Launch lassen wir Sie nicht allein. Wir begleiten, optimieren und wachsen mit Ihnen.",
+              },
+            ].map((s, i) => (
+              <motion.div
+                key={s.n}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.05 }}
+                className="grid grid-cols-12 gap-6 border-t border-[#C9A96E]/20 py-10"
+              >
+                <div className="serif-num col-span-12 text-5xl italic text-[#C9A96E] md:col-span-2 md:text-6xl">
+                  {s.n}
+                </div>
+                <div className="col-span-12 md:col-span-4">
+                  <h3 className="text-2xl tracking-tight text-[#F5F0E8]">
+                    {s.t}
+                  </h3>
+                </div>
+                <div className="col-span-12 md:col-span-6">
+                  <p className="text-base leading-[1.8] text-[#F5F0E8]/60">
+                    {s.d}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="bg-[#0A0A0A] px-6 py-24 md:px-12">
+        <div className="mx-auto max-w-6xl border-t border-b border-white/[0.06]">
+          <div className="grid grid-cols-1 divide-y divide-white/[0.06] md:grid-cols-3 md:divide-x md:divide-y-0">
+            {[
+              { n: "5", l: "Projekte pro Monat (max.)" },
+              { n: "48h", l: "Bis zur ersten Vorschau" },
+              { n: "100%", l: "Individuelle Umsetzung" },
+            ].map((s) => (
+              <div key={s.n} className="px-6 py-12 text-center">
+                <div className="serif-num text-7xl text-[#C9A96E]">{s.n}</div>
+                <div className="mt-4 text-xs uppercase tracking-[0.25em] text-[#6B6B6B]">
+                  {s.l}
                 </div>
               </div>
-            </motion.article>
-          ))}
+            ))}
+          </div>
         </div>
+      </section>
 
-        <motion.div {...fadeUp} className="mt-16 text-center">
-          <p className="text-lg text-zinc-400">
-            Ihr Projekt könnte das nächste sein.
-          </p>
-          <a
-            href="#bewerbung"
-            className="group mt-6 inline-flex items-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-8 py-3 font-medium text-white backdrop-blur transition-all duration-300 hover:bg-white hover:text-black"
-          >
-            Projekt anfragen
-            <ArrowRight
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              aria-hidden={true}
-              focusable={false}
-            />
-          </a>
-        </motion.div>
-      </Section>
-
-      {/* SECTION 6 — ÜBER UNS */}
-      <Section bg="#0D0D1F">
-        <div className="grid items-center gap-16 md:grid-cols-2">
-          <motion.div {...fadeUp}>
-            <h2 className="text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-              Warum Meine Traum Webseite
+      {/* PORTFOLIO */}
+      <section className="bg-[#0A0A0A] px-6 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <motion.div {...fadeUp} className="max-w-2xl">
+            <Eyebrow>Ausgewählte Projekte</Eyebrow>
+            <h2 className="text-4xl leading-[1.1] tracking-tight text-[#F5F0E8] md:text-[56px]">
+              Ausgewählte{" "}
+              <em className="italic text-[#C9A96E]">Projekte</em>
             </h2>
-            <div className="mt-6 space-y-5 text-lg leading-relaxed text-zinc-400">
-              <p>
-                Wir sind keine große Agentur mit 50 Mitarbeitern und
-                Standardprozessen. Wir sind ein spezialisiertes Team, das
-                bewusst klein bleibt — damit jedes Projekt persönliche
-                Aufmerksamkeit bekommt.
-              </p>
-              <p>
-                Unsere Kunden wählen uns nicht wegen des Preises. Sie wählen
-                uns wegen der Ergebnisse.
-              </p>
-            </div>
+            <p className="mt-6 text-base leading-[1.8] text-[#F5F0E8]/60">
+              Jedes Projekt ist einzigartig. Hier ein Einblick in unsere Arbeit.
+            </p>
+          </motion.div>
 
-            <div className="mt-10 grid grid-cols-3 gap-6">
-              {[
-                { n: "5", l: "Projekte pro Monat (max.)" },
-                { n: "48h", l: "Bis zur ersten Vorschau" },
-                { n: "100%", l: "Individuelle Umsetzung" },
-              ].map((s) => (
-                <div key={s.n}>
-                  <div className="text-3xl font-bold text-purple-400 md:text-4xl">
-                    {s.n}
+          <div className="mt-16 space-y-6">
+            {[
+              {
+                n: "01",
+                gradient:
+                  "linear-gradient(135deg, #C9A96E 0%, #8a7142 60%, #2a2014 100%)",
+                label: "Handwerksbetrieb · Mainz",
+                title: "Kompletter Neuauftritt mit 3× mehr Anfragen",
+              },
+              {
+                n: "02",
+                gradient:
+                  "linear-gradient(135deg, #2a2014 0%, #8a7142 50%, #C9A96E 100%)",
+                label: "Beratung · Frankfurt",
+                title: "Premium-Positionierung im B2B-Markt",
+              },
+            ].map((p, i) => (
+              <motion.article
+                key={p.n}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.1 }}
+                className="grid grid-cols-1 border border-white/[0.06] bg-[#111111] transition-colors duration-500 hover:border-[#C9A96E]/30 md:grid-cols-2"
+              >
+                <div className="p-10">
+                  <div className="serif-num text-6xl text-white/[0.08]">
+                    {p.n}
                   </div>
-                  <div className="mt-2 text-sm text-zinc-500">{s.l}</div>
+                  <div className="mt-6 text-[10px] uppercase tracking-[0.25em] text-[#6B6B6B]">
+                    {p.label}
+                  </div>
+                  <h3 className="mt-4 text-2xl leading-tight tracking-tight text-[#F5F0E8] md:text-3xl">
+                    {p.title}
+                  </h3>
+                  <div className="mt-8 flex flex-wrap gap-2">
+                    {["Custom Design", "SEO", "DSGVO-konform"].map((t) => (
+                      <span
+                        key={t}
+                        className="border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[#6B6B6B]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.15 }}
-            className="relative aspect-square w-full max-w-md justify-self-center md:justify-self-end"
-          >
-            <div
-              className="absolute inset-0 rounded-3xl opacity-90"
-              style={{
-                background:
-                  "linear-gradient(135deg, hsl(250 56% 48%), hsl(220 80% 50%))",
-              }}
-              aria-hidden={true}
-            />
-            <div
-              className="absolute inset-6 rounded-3xl border border-white/30 backdrop-blur-sm"
-              aria-hidden={true}
-            />
-            <div
-              className="absolute inset-14 rounded-3xl border border-white/20"
-              aria-hidden={true}
-            />
-          </motion.div>
+                <div
+                  className="relative min-h-[280px] md:min-h-full"
+                  style={{ background: p.gradient }}
+                  aria-hidden={true}
+                />
+              </motion.article>
+            ))}
+          </div>
         </div>
-      </Section>
+      </section>
 
-      {/* SECTION 7 — BEWERBUNGS-CTA */}
+      {/* ÜBER UNS */}
+      <section className="bg-[#0A0A0A] px-6 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-center gap-16 md:grid-cols-2">
+            <motion.div {...fadeUp}>
+              <Eyebrow>Über uns</Eyebrow>
+              <h2 className="text-4xl leading-[1.1] tracking-tight text-[#F5F0E8] md:text-[56px]">
+                Warum Meine{" "}
+                <em className="italic text-[#C9A96E]">Traum Webseite</em>
+              </h2>
+              <div className="mt-8 space-y-5 text-base leading-[1.8] text-[#F5F0E8]/60">
+                <p>
+                  Wir sind keine große Agentur mit 50 Mitarbeitern und
+                  Standardprozessen. Wir sind ein spezialisiertes Team, das
+                  bewusst klein bleibt — damit jedes Projekt persönliche
+                  Aufmerksamkeit bekommt.
+                </p>
+                <p>
+                  Unsere Kunden wählen uns nicht wegen des Preises. Sie wählen
+                  uns wegen der Ergebnisse.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: 0.15 }}
+              className="relative flex aspect-square w-full max-w-md items-center justify-center justify-self-center border border-[#C9A96E]/20 bg-[#111111] md:justify-self-end"
+            >
+              <ChessKing className="h-2/3 w-2/3 text-[#C9A96E] opacity-80" />
+              <div className="absolute inset-4 border border-[#C9A96E]/10" aria-hidden={true} />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* BEWERBUNGS-CTA — CREAM */}
       <section
         id="bewerbung"
-        className="relative bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/40 via-[#050510] to-[#050510] px-6 py-32 text-white md:py-40"
+        className="bg-[#F5F0E8] px-6 py-32 text-[#0A0A0A] md:px-12 md:py-40"
       >
-        <motion.div
-          {...fadeUp}
-          className="relative mx-auto max-w-3xl text-center"
-        >
-          <h2 className="text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-6xl">
-            Bereit für eine Webseite,
-            <br />
-            die wirklich arbeitet?
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+          <div className="mb-6 text-[10px] uppercase tracking-[0.25em] text-[#6B6B6B]">
+            Jetzt bewerben
+          </div>
+          <h2 className="text-4xl leading-[1.1] tracking-tight text-[#0A0A0A] md:text-[64px]">
+            Bereit für eine Webseite, die wirklich{" "}
+            <em className="italic text-[#C9A96E]">arbeitet?</em>
           </h2>
-          <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-zinc-400">
+          <p className="mx-auto mt-8 max-w-xl text-base leading-[1.8] text-[#0A0A0A]/70">
             Wir nehmen uns Zeit für jedes Projekt — deshalb limitieren wir uns
             auf 5 neue Kunden pro Monat. Wenn Sie ernsthaft über einen neuen
             Webauftritt nachdenken, sprechen Sie jetzt mit uns.
           </p>
 
-          <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/10 px-4 py-2 text-sm text-green-400">
-            <span
-              className="h-2 w-2 rounded-full bg-green-400"
-              aria-hidden={true}
-            />
-            3 von 5 Plätzen für Juli noch verfügbar
+          <div className="mt-10 text-sm text-[#C9A96E]">
+            ● 3 von 5 Plätzen für Juli noch verfügbar
           </div>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               to="/kontakt"
-              className="inline-flex items-center gap-2 rounded-full bg-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-[0_0_30px_rgba(124,58,237,0.3)] transition-all hover:bg-purple-500 hover:shadow-[0_0_40px_rgba(124,58,237,0.5)]"
+              className="inline-flex items-center gap-3 rounded-none bg-[#0A0A0A] px-10 py-4 text-sm uppercase tracking-[0.2em] text-[#F5F0E8] transition-all hover:bg-[#C9A96E] hover:text-black"
             >
               Projekt jetzt anfragen
-              <ArrowRight
-                className="ml-1 h-4 w-4"
-                aria-hidden={true}
-                focusable={false}
-              />
+              <ArrowRight className="h-4 w-4" aria-hidden={true} focusable={false} />
             </Link>
             <a
               href="tel:+4961313076498"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 font-medium text-white transition-all hover:bg-white/5"
+              className="inline-flex items-center gap-3 rounded-none border border-[#0A0A0A]/20 px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#0A0A0A] transition-all hover:border-[#0A0A0A]"
             >
               <Phone className="h-4 w-4" aria-hidden={true} focusable={false} />
               06131 30 764 98
             </a>
           </div>
 
-          <p className="mt-8 text-sm text-zinc-500">
-            Kein Verkaufsgespräch. Kein Druck. Wir prüfen gemeinsam ob wir
-            zueinander passen.
+          <p className="mt-8 text-xs uppercase tracking-[0.2em] text-[#6B6B6B]">
+            Kein Verkaufsgespräch · Kein Druck
           </p>
         </motion.div>
       </section>
 
-      {/* SECTION 8 — FAQ */}
-      <Section bg="#0D0D1F">
+      {/* FAQ */}
+      <section className="bg-[#0A0A0A] px-6 py-24 md:px-12 md:py-32">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl">
-          <h2 className="text-center text-4xl font-bold tracking-tight text-white md:text-5xl">
+          <div className="mb-6 text-center text-[10px] uppercase tracking-[0.25em] text-[#6B6B6B]">
             Häufige Fragen
+          </div>
+          <h2 className="text-center text-4xl leading-[1.1] tracking-tight text-[#F5F0E8] md:text-[56px]">
+            Häufige{" "}
+            <em className="italic text-[#C9A96E]">Fragen</em>
           </h2>
           <Accordion type="single" collapsible className="mt-12">
             {[
@@ -503,28 +509,32 @@ const Premium = () => {
                 a: "Kein Problem. Viele unserer Kunden kommen mit bestehenden Seiten zu uns. Wir analysieren was da ist und entwickeln daraus — oder bauen komplett neu, wenn das sinnvoller ist.",
               },
             ].map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-white/[0.08]">
-                <AccordionTrigger className="text-left text-lg font-medium text-white [&>svg]:text-purple-400">
+              <AccordionItem
+                key={i}
+                value={`item-${i}`}
+                className="border-white/[0.08]"
+              >
+                <AccordionTrigger className="text-left text-lg text-[#F5F0E8] [&>svg]:text-[#C9A96E]">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-base leading-relaxed text-zinc-400">
+                <AccordionContent className="text-base leading-[1.8] text-[#F5F0E8]/60">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         </motion.div>
-      </Section>
+      </section>
 
-      {/* MINIMAL FOOTER */}
-      <footer className="border-t border-white/5 bg-[#050510] px-6 py-8 text-sm text-zinc-600">
+      {/* FOOTER */}
+      <footer className="border-t border-white/[0.06] bg-[#0A0A0A] px-6 py-10 text-xs uppercase tracking-[0.2em] text-[#6B6B6B] md:px-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 md:flex-row">
           <div>© 2026 Meine Traum Webseite – QK Marketing</div>
-          <div className="flex items-center gap-6">
-            <Link to="/impressum" className="text-zinc-500 transition-colors hover:text-white">
+          <div className="flex items-center gap-8">
+            <Link to="/impressum" className="transition-colors hover:text-[#C9A96E]">
               Impressum
             </Link>
-            <Link to="/datenschutz" className="text-zinc-500 transition-colors hover:text-white">
+            <Link to="/datenschutz" className="transition-colors hover:text-[#C9A96E]">
               Datenschutz
             </Link>
           </div>
