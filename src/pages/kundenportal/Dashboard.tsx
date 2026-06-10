@@ -30,7 +30,7 @@ export default function KundenportalDashboard() {
     })();
   }, []);
 
-  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
   const openTickets = tickets.filter((t) => t.status === "open" || t.status === "in_progress").length;
   const aktiveBuchungen = buchungen.filter((b) => b.status === "bezahlt" || b.status === "neu");
@@ -51,8 +51,8 @@ export default function KundenportalDashboard() {
       {growth && (
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="flex items-center gap-2"><Rocket size={18} className="text-primary" /> Wachstumspaket</CardTitle>
-            <Link to="/kundenportal/wachstumspaket" className="text-xs text-primary inline-flex items-center gap-1">Verwalten <ArrowRight size={12} /></Link>
+            <CardTitle className="flex items-center gap-2"><Rocket size={18} className="text-primary" aria-hidden={true} focusable={false} /> Wachstumspaket</CardTitle>
+            <Link to="/kundenportal/wachstumspaket" className="text-xs text-primary inline-flex items-center gap-1">Verwalten <ArrowRight size={12} aria-hidden={true} focusable={false} /></Link>
           </CardHeader>
           <CardContent className="text-sm flex items-center justify-between gap-4">
             <div>
@@ -98,7 +98,7 @@ export default function KundenportalDashboard() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Letzte Wünsche</CardTitle>
-          <Link to="/kundenportal/wuensche" className="text-xs text-primary inline-flex items-center gap-1">Alle <ArrowRight size={12} /></Link>
+          <Link to="/kundenportal/wuensche" className="text-xs text-primary inline-flex items-center gap-1">Alle <ArrowRight size={12} aria-hidden={true} focusable={false} /></Link>
         </CardHeader>
         <CardContent>
           {tickets.length === 0 ? (

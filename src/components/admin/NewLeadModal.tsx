@@ -110,7 +110,7 @@ export default function NewLeadModal({ open, onOpenChange, onCreated }: Props) {
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>Abbrechen</Button>
           <Button onClick={submit} disabled={saving}>
-            {saving ? <Loader2 className="animate-spin" size={16} /> : "Lead anlegen"}
+            {saving ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : "Lead anlegen"}
           </Button>
         </DialogFooter>
       </DialogContent>

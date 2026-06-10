@@ -162,7 +162,7 @@ const Gesetz = () => {
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold shadow-xl" onClick={() => scrollTo("form-card")}>
-                Jetzt kostenlose Vorschau anfordern <ArrowRight className="ml-1" />
+                Jetzt kostenlose Vorschau anfordern <ArrowRight className="ml-1" aria-hidden={true} focusable={false} />
               </Button>
               <button onClick={() => scrollTo("problem")} className="text-white/80 hover:text-white text-sm underline-offset-4 hover:underline">
                 {c.secondary}
@@ -199,7 +199,7 @@ const Gesetz = () => {
             <Card className="p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
               <div className="flex items-start gap-4 mb-4">
                 <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                  <ShieldCheck className="w-6 h-6" />
+                  <ShieldCheck className="w-6 h-6" aria-hidden={true} focusable={false} />
                 </div>
                 <div className="font-semibold text-lg">{c.source.name}</div>
               </div>
@@ -230,7 +230,7 @@ const Gesetz = () => {
                 "Kein Risiko — keine Verpflichtung",
               ].map((t) => (
                 <li key={t} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-primary mt-1 shrink-0" />
+                  <Check className="w-5 h-5 text-primary mt-1 shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-foreground/90">{t}</span>
                 </li>
               ))}
@@ -259,7 +259,7 @@ const Gesetz = () => {
               {submitted ? (
                 <div className="text-center py-8">
                   <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
-                    <Check className="w-8 h-8" />
+                    <Check className="w-8 h-8" aria-hidden={true} focusable={false} />
                   </div>
                   <h2 className="font-display text-2xl font-bold mb-2">✓ Vielen Dank!</h2>
                   <p className="text-muted-foreground">Wir melden uns innerhalb von 48 Stunden.</p>
@@ -318,7 +318,7 @@ const Gesetz = () => {
                 <Card className="p-6 h-full rounded-2xl bg-card border">
                   <div className="flex gap-1 mb-3 text-yellow-500">
                     {Array.from({ length: 5 }).map((_, k) => (
-                      <Star key={k} className="w-4 h-4 fill-current" />
+                      <Star key={k} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
                     ))}
                   </div>
                   <p className="text-foreground/90 italic mb-4">„{t.quote}"</p>
@@ -370,9 +370,9 @@ const Gesetz = () => {
               Zur kostenlosen Vorschau →
             </Button>
             <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-white/80 text-sm">
-              <span className="flex items-center gap-1.5"><Lock className="w-4 h-4" /> SSL-gesichert</span>
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4" /> Kein Spam</span>
-              <span className="flex items-center gap-1.5"><Star className="w-4 h-4 fill-current text-yellow-300" /> 5-Sterne bewertet</span>
+              <span className="flex items-center gap-1.5"><Lock className="w-4 h-4" aria-hidden={true} focusable={false} /> SSL-gesichert</span>
+              <span className="flex items-center gap-1.5"><Check className="w-4 h-4" aria-hidden={true} focusable={false} /> Kein Spam</span>
+              <span className="flex items-center gap-1.5"><Star className="w-4 h-4 fill-current text-yellow-300" aria-hidden={true} focusable={false} /> 5-Sterne bewertet</span>
             </div>
           </motion.div>
         </div>

@@ -126,7 +126,7 @@ const IndividuelleSoftware = () => (
                 "Für dein Business entwickelt",
               ].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
-                  <CheckCircle size={14} className="text-primary shrink-0" />
+                  <CheckCircle size={14} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span>{t}</span>
                 </div>
               ))}
@@ -134,12 +134,12 @@ const IndividuelleSoftware = () => (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  Kostenlose Erstberatung sichern <ArrowRight size={18} />
+                  Kostenlose Erstberatung sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button variant="outline-primary" size="lg" className="text-sm sm:text-base py-5 sm:py-6 w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  <PhoneCall size={18} /> Projekt anfragen
+                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Projekt anfragen
                 </Link>
               </Button>
             </div>
@@ -315,7 +315,7 @@ const IndividuelleSoftware = () => (
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8" asChild>
                 <Link to="/kontakt">
-                  Kostenlose Erstberatung sichern <ArrowRight size={18} />
+                  Kostenlose Erstberatung sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
             </div>

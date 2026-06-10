@@ -318,7 +318,7 @@ const KostenloseVorschau = () => {
                 onClick={scrollToForm}
                 className="text-base sm:text-lg px-6 sm:px-10 h-auto min-h-14 py-4 w-full sm:w-auto whitespace-normal text-center leading-tight font-bold animate-cta-pulse"
               >
-                Jetzt kostenlose Vorschau anfordern <ArrowRight size={18} />
+                Jetzt kostenlose Vorschau anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} />
               </Button>
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 mt-8">
                 {[
@@ -398,7 +398,7 @@ const KostenloseVorschau = () => {
                 </div>
                 {i < steps.length - 1 && (
                   <div className="hidden md:flex absolute top-1/2 -right-2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background border border-border items-center justify-center text-primary">
-                    <ArrowRight size={16} />
+                    <ArrowRight size={16} aria-hidden={true} focusable={false} />
                   </div>
                 )}
               </AnimatedSection>
@@ -457,7 +457,7 @@ const KostenloseVorschau = () => {
           <AnimatedSection>
             <div className="text-center mt-10">
               <Button variant="outline-primary" size="lg" onClick={scrollToForm}>
-                So eine Vorschau für meinen Betrieb <ArrowDown size={18} />
+                So eine Vorschau für meinen Betrieb <ArrowDown size={18} aria-hidden={true} focusable={false} />
               </Button>
             </div>
           </AnimatedSection>
@@ -481,7 +481,7 @@ const KostenloseVorschau = () => {
                 <div className="bg-card border border-border rounded-2xl p-6 h-full">
                   <div className="flex gap-0.5 mb-3">
                     {[...Array(5)].map((_, j) => (
-                      <Star key={j} size={16} className="fill-amber-400 text-amber-400" />
+                      <Star key={j} size={16} className="fill-amber-400 text-amber-400" aria-hidden={true} focusable={false} />
                     ))}
                   </div>
                   <p className="text-sm text-foreground/90 leading-relaxed mb-5 italic">
@@ -689,7 +689,7 @@ const KostenloseVorschau = () => {
                       "Wird gesendet..."
                     ) : (
                       <>
-                        Kostenlose Vorschau jetzt anfordern <ArrowRight size={18} />
+                        Kostenlose Vorschau jetzt anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} />
                       </>
                     )}
                   </Button>
@@ -712,7 +712,7 @@ const KostenloseVorschau = () => {
                   )}
 
                   <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1.5">
-                    <Lock size={12} />
+                    <Lock size={12} aria-hidden={true} focusable={false} />
                     deine Daten sind sicher. Kein Spam. Keine Verpflichtung.
                   </p>
                   <p className="text-xs text-muted-foreground/80 text-center">
@@ -775,7 +775,7 @@ const KostenloseVorschau = () => {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.06),transparent_60%)]" />
               <div className="relative z-10">
                 <div className="inline-flex items-center gap-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-full px-4 py-1.5 mb-5">
-                  <CheckCircle2 size={14} className="text-primary-foreground" />
+                  <CheckCircle2 size={14} className="text-primary-foreground" aria-hidden={true} focusable={false} />
                   <span className="text-xs font-semibold text-primary-foreground">
                     100 % kostenlos · 0 € · 0 Risiko
                   </span>
@@ -791,7 +791,7 @@ const KostenloseVorschau = () => {
                   onClick={scrollToForm}
                   className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-bold shadow-elevated animate-cta-pulse w-full sm:w-auto text-sm sm:text-base px-6 sm:px-10 h-auto min-h-14 py-4 whitespace-normal text-center leading-tight"
                 >
-                  Jetzt starten <ArrowRight size={18} />
+                  Jetzt starten <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </Button>
               </div>
             </div>

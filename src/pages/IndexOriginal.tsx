@@ -41,7 +41,7 @@ const Index = () => (
             <div className="flex items-center gap-3 sm:gap-5 mb-8 sm:mb-10 flex-wrap">
               {["Kostenlose Vorschau", "Keine Verpflichtung", "In 48 h fertig"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
-                  <CheckCircle size={14} className="text-primary shrink-0" />
+                  <CheckCircle size={14} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span>{t}</span>
                 </div>
               ))}
@@ -49,12 +49,12 @@ const Index = () => (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 animate-cta-pulse w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  Kostenlose Vorschau sichern <ArrowRight size={18} />
+                  Kostenlose Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button variant="outline-primary" size="lg" className="text-sm sm:text-base py-5 sm:py-6 w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  <PhoneCall size={18} /> Rückruf vereinbaren
+                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>

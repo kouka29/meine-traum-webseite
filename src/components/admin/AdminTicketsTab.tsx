@@ -127,15 +127,15 @@ export default function AdminTicketsTab({ password }: { password: string }) {
           ))}
         </div>
         <Button variant="outline" size="sm" onClick={fetchTickets} disabled={loading}>
-          <RefreshCw size={14} className={loading ? "animate-spin mr-1" : "mr-1"} /> Aktualisieren
+          <RefreshCw size={14} className={loading ? "animate-spin mr-1" : "mr-1"} aria-hidden={true} focusable={false} /> Aktualisieren
         </Button>
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary" /></div>
+        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>
       ) : filtered.length === 0 ? (
         <Card><CardContent className="py-16 text-center">
-          <MessageSquare size={40} className="mx-auto text-muted-foreground mb-3" />
+          <MessageSquare size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Keine Tickets in dieser Ansicht.</p>
         </CardContent></Card>
       ) : (
@@ -194,7 +194,7 @@ export default function AdminTicketsTab({ password }: { password: string }) {
               <div className="space-y-2">
                 <div className="text-xs font-semibold text-muted-foreground">Verlauf</div>
                 {loadingMessages ? (
-                  <div className="flex justify-center py-4"><Loader2 className="animate-spin" size={18} /></div>
+                  <div className="flex justify-center py-4"><Loader2 className="animate-spin" size={18} aria-hidden={true} focusable={false} /></div>
                 ) : messages.length === 0 ? (
                   <p className="text-xs text-muted-foreground text-center py-4">Noch keine Antworten.</p>
                 ) : (
@@ -221,7 +221,7 @@ export default function AdminTicketsTab({ password }: { password: string }) {
           <DialogFooter>
             <Button variant="outline" onClick={() => setSelected(null)}>Schließen</Button>
             <Button onClick={sendReply} disabled={sending || reply.trim().length < 2}>
-              {sending ? <Loader2 className="animate-spin" size={16} /> : <><Send size={14} className="mr-1" /> Antwort senden</>}
+              {sending ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : <><Send size={14} className="mr-1" aria-hidden={true} focusable={false} /> Antwort senden</>}
             </Button>
           </DialogFooter>
         </DialogContent>

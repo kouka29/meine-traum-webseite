@@ -122,7 +122,7 @@ export default function KundenportalLogin() {
             {resetSent ? (
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <CheckCircle2 className="text-primary" size={32} />
+                  <CheckCircle2 className="text-primary" size={32} aria-hidden={true} focusable={false} />
                 </div>
                 <h1 className="font-heading text-2xl font-bold">E-Mail versendet</h1>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -138,7 +138,7 @@ export default function KundenportalLogin() {
               <form onSubmit={submit} className="space-y-5">
                 <div className="text-center mb-6">
                   <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                    <Mail className="text-primary" size={24} />
+                    <Mail className="text-primary" size={24} aria-hidden={true} focusable={false} />
                   </div>
                   <h1 className="font-heading text-2xl font-bold mb-2">Kundenportal</h1>
                   <p className="text-sm text-muted-foreground">
@@ -161,7 +161,7 @@ export default function KundenportalLogin() {
                 <div className="space-y-2">
                   <Label htmlFor="password">Passwort</Label>
                   <div className="relative">
-                    <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+                    <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} aria-hidden={true} focusable={false} />
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
@@ -178,12 +178,12 @@ export default function KundenportalLogin() {
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                       aria-label={showPassword ? "Passwort ausblenden" : "Passwort anzeigen"}
                     >
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      {showPassword ? <EyeOff size={16} aria-hidden={true} focusable={false} /> : <Eye size={16} aria-hidden={true} focusable={false} />}
                     </button>
                   </div>
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? <Loader2 className="animate-spin" size={16} /> : "Einloggen"}
+                  {loading ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : "Einloggen"}
                 </Button>
                 <div className="relative my-2">
                   <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
@@ -197,7 +197,7 @@ export default function KundenportalLogin() {
                   onClick={signInGoogle}
                 >
                   {googleLoading ? (
-                    <Loader2 className="animate-spin" size={16} />
+                    <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} />
                   ) : (
                     <>
                       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">

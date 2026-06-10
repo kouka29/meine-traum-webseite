@@ -431,7 +431,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   if (loading || !settings) {
     return (
       <div className="text-center py-20">
-        <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
+        <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
         <p className="text-muted-foreground">Lade Vorschau-Einstellungen...</p>
       </div>
     );
@@ -461,7 +461,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
 
       {/* Hint banner */}
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 flex items-start gap-3">
-        <Sparkles className="text-primary shrink-0 mt-0.5" size={18} />
+        <Sparkles className="text-primary shrink-0 mt-0.5" size={18} aria-hidden={true} focusable={false} />
         <div className="text-sm">
           <p className="font-medium text-foreground">Live-Vorschau aktiv</p>
           <p className="text-muted-foreground">
@@ -478,7 +478,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Users size={16} className="text-primary" /> Plätze (Verknappung)
+            <Users size={16} className="text-primary" aria-hidden={true} focusable={false} /> Plätze (Verknappung)
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -515,7 +515,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Clock size={16} className="text-primary" /> Countdown
+            <Clock size={16} className="text-primary" aria-hidden={true} focusable={false} /> Countdown
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -560,7 +560,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Sparkles size={16} className="text-primary" /> Hero-Texte
+            <Sparkles size={16} className="text-primary" aria-hidden={true} focusable={false} /> Hero-Texte
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -633,7 +633,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label htmlFor="phone" className="flex items-center gap-2"><Phone size={14} /> Telefonnummer im Header</Label>
+            <Label htmlFor="phone" className="flex items-center gap-2"><Phone size={14} aria-hidden={true} focusable={false} /> Telefonnummer im Header</Label>
             <Input id="phone" value={settings.phone_number}
               onChange={e => updateSettings({ phone_number: e.target.value })}
               placeholder="+49 170 123 45 67" />
@@ -658,7 +658,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       {/* SAVE BUTTON */}
       <div className="sticky bottom-4 z-10 flex justify-end">
         <Button variant="gradient" size="lg" onClick={saveSettings} disabled={saving} className="shadow-xl">
-          {saving ? <Loader2 className="animate-spin" size={18} /> : <><Save size={16} /> Einstellungen speichern</>}
+          {saving ? <Loader2 className="animate-spin" size={18} aria-hidden={true} focusable={false} /> : <><Save size={16} aria-hidden={true} focusable={false} /> Einstellungen speichern</>}
         </Button>
       </div>
 
@@ -666,10 +666,10 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <Card>
         <CardHeader className="pb-3 flex-row items-center justify-between">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <ImageIcon size={16} className="text-primary" /> Demo-Beispiele ({demos.length})
+            <ImageIcon size={16} className="text-primary" aria-hidden={true} focusable={false} /> Demo-Beispiele ({demos.length})
           </CardTitle>
           <Button variant="gradient" size="sm" onClick={openNewDemo}>
-            <Plus size={14} /> Neue Demo
+            <Plus size={14} aria-hidden={true} focusable={false} /> Neue Demo
           </Button>
         </CardHeader>
         <CardContent>
@@ -682,7 +682,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                   <div className="w-16 h-12 rounded-md overflow-hidden bg-muted shrink-0">
                     {d.image_url
                       ? <img src={d.image_url} alt={d.company} className="w-full h-full object-cover" />
-                      : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={16} className="text-muted-foreground" /></div>}
+                      : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={16} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
@@ -692,13 +692,13 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                     <p className="text-xs text-muted-foreground truncate">{d.trade} {d.description && `· ${d.description}`}</p>
                   </div>
                   <div className="flex items-center gap-1 shrink-0">
-                    <Button variant="ghost" size="icon" onClick={() => moveDemo(i, "up")} disabled={i === 0} className="h-8 w-8"><ChevronUp size={14} /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => moveDemo(i, "down")} disabled={i === demos.length - 1} className="h-8 w-8"><ChevronDown size={14} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => moveDemo(i, "up")} disabled={i === 0} className="h-8 w-8"><ChevronUp size={14} aria-hidden={true} focusable={false} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => moveDemo(i, "down")} disabled={i === demos.length - 1} className="h-8 w-8"><ChevronDown size={14} aria-hidden={true} focusable={false} /></Button>
                     <Button variant="ghost" size="icon" onClick={() => toggleDemoVisibility(d)} className="h-8 w-8">
-                      {d.is_visible ? <Eye size={14} /> : <EyeOff size={14} />}
+                      {d.is_visible ? <Eye size={14} aria-hidden={true} focusable={false} /> : <EyeOff size={14} aria-hidden={true} focusable={false} />}
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => openEditDemo(d)} className="h-8 w-8"><Pencil size={14} /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => deleteDemo(d.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"><Trash2 size={14} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => openEditDemo(d)} className="h-8 w-8"><Pencil size={14} aria-hidden={true} focusable={false} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => deleteDemo(d.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"><Trash2 size={14} aria-hidden={true} focusable={false} /></Button>
                   </div>
                 </div>
               ))}
@@ -711,7 +711,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Briefcase size={16} className="text-primary" /> Portfolio-Projekte als Demos verwenden
+            <Briefcase size={16} className="text-primary" aria-hidden={true} focusable={false} /> Portfolio-Projekte als Demos verwenden
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -730,7 +730,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                       {(p.mockup_desktop_url || p.image_url) ? (
                         <img src={p.mockup_desktop_url || p.image_url} alt={p.title} className="w-full h-full object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center"><ImageIcon size={14} className="text-muted-foreground" /></div>
+                        <div className="w-full h-full flex items-center justify-center"><ImageIcon size={14} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -756,10 +756,10 @@ export default function AdminVorschauTab({ password }: { password: string }) {
       <Card>
         <CardHeader className="pb-3 flex-row items-center justify-between">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <HelpCircle size={16} className="text-primary" /> FAQs ({faqs.length})
+            <HelpCircle size={16} className="text-primary" aria-hidden={true} focusable={false} /> FAQs ({faqs.length})
           </CardTitle>
           <Button variant="gradient" size="sm" onClick={openNewFaq}>
-            <Plus size={14} /> Neue Frage
+            <Plus size={14} aria-hidden={true} focusable={false} /> Neue Frage
           </Button>
         </CardHeader>
         <CardContent>
@@ -769,7 +769,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
             <div className="grid gap-3">
               {faqs.map((f, i) => (
                 <div key={f.id} className={`flex items-start gap-3 rounded-lg border border-border p-3 ${!f.is_visible ? "opacity-60" : ""}`}>
-                  <MessageSquare size={16} className="text-primary mt-1 shrink-0" />
+                  <MessageSquare size={16} className="text-primary mt-1 shrink-0" aria-hidden={true} focusable={false} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <h4 className="font-semibold truncate">{f.question}</h4>
@@ -778,13 +778,13 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                     <p className="text-xs text-muted-foreground line-clamp-2">{f.answer}</p>
                   </div>
                   <div className="flex items-center gap-1 shrink-0">
-                    <Button variant="ghost" size="icon" onClick={() => moveFaq(i, "up")} disabled={i === 0} className="h-8 w-8"><ChevronUp size={14} /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => moveFaq(i, "down")} disabled={i === faqs.length - 1} className="h-8 w-8"><ChevronDown size={14} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => moveFaq(i, "up")} disabled={i === 0} className="h-8 w-8"><ChevronUp size={14} aria-hidden={true} focusable={false} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => moveFaq(i, "down")} disabled={i === faqs.length - 1} className="h-8 w-8"><ChevronDown size={14} aria-hidden={true} focusable={false} /></Button>
                     <Button variant="ghost" size="icon" onClick={() => toggleFaqVisibility(f)} className="h-8 w-8">
-                      {f.is_visible ? <Eye size={14} /> : <EyeOff size={14} />}
+                      {f.is_visible ? <Eye size={14} aria-hidden={true} focusable={false} /> : <EyeOff size={14} aria-hidden={true} focusable={false} />}
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => openEditFaq(f)} className="h-8 w-8"><Pencil size={14} /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => deleteFaq(f.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"><Trash2 size={14} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => openEditFaq(f)} className="h-8 w-8"><Pencil size={14} aria-hidden={true} focusable={false} /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => deleteFaq(f.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"><Trash2 size={14} aria-hidden={true} focusable={false} /></Button>
                   </div>
                 </div>
               ))}
@@ -801,7 +801,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label className="flex items-center gap-2"><Link2 size={14} /> Aus Portfolio übernehmen (optional)</Label>
+              <Label className="flex items-center gap-2"><Link2 size={14} aria-hidden={true} focusable={false} /> Aus Portfolio übernehmen (optional)</Label>
               <select
                 value={demoForm.portfolio_project_id}
                 onChange={e => {
@@ -848,7 +848,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                   onClick={generateDescription}
                   disabled={genDescLoading || !demoForm.company.trim()}
                 >
-                  {genDescLoading ? <Loader2 className="animate-spin" size={12} /> : <Sparkles size={12} />}
+                  {genDescLoading ? <Loader2 className="animate-spin" size={12} aria-hidden={true} focusable={false} /> : <Sparkles size={12} aria-hidden={true} focusable={false} />}
                   Mit KI generieren
                 </Button>
               </div>
@@ -872,7 +872,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                       disabled={genShotLoading || !screenshotUrl.trim()}
                       className="shrink-0"
                     >
-                      {genShotLoading ? <Loader2 className="animate-spin" size={14} /> : <Sparkles size={14} />}
+                      {genShotLoading ? <Loader2 className="animate-spin" size={14} aria-hidden={true} focusable={false} /> : <Sparkles size={14} aria-hidden={true} focusable={false} />}
                       Screenshot
                     </Button>
                   </div>
@@ -905,7 +905,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowDemoDialog(false)}>Abbrechen</Button>
             <Button variant="gradient" onClick={saveDemo} disabled={savingDemo}>
-              {savingDemo ? <Loader2 className="animate-spin" size={16} /> : (editingDemo ? "Speichern" : "Erstellen")}
+              {savingDemo ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : (editingDemo ? "Speichern" : "Erstellen")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -934,7 +934,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowFaqDialog(false)}>Abbrechen</Button>
             <Button variant="gradient" onClick={saveFaq} disabled={savingFaq}>
-              {savingFaq ? <Loader2 className="animate-spin" size={16} /> : (editingFaq ? "Speichern" : "Erstellen")}
+              {savingFaq ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : (editingFaq ? "Speichern" : "Erstellen")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -36,7 +36,7 @@ const WebsiteRelaunch = () => (
               Online-Präsenz in ein modernes Verkaufsinstrument – mit mehr Anfragen, besserem Design und schnelleren Ladezeiten.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten <ArrowRight size={18} /></Link>
+              <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>
@@ -49,7 +49,7 @@ const WebsiteRelaunch = () => (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-20">
             {signs.map((s) => (
               <div key={s} className="flex items-center gap-3">
-                <RefreshCw size={17} className="text-destructive shrink-0" />
+                <RefreshCw size={17} className="text-destructive shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{s}</span>
               </div>
             ))}
@@ -88,7 +88,7 @@ const WebsiteRelaunch = () => (
               "Einweisung & Support nach Launch",
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
-                <CheckCircle size={17} className="text-primary shrink-0" />
+                <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{item}</span>
               </div>
             ))}

@@ -60,7 +60,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           <p className="text-lg max-w-2xl mx-auto mb-8" style={{ color: "var(--text-muted)" }}>{config.heroSub}</p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white mb-8">
             {config.trustBadges.map((b) => (
-              <span key={b} className="flex items-center gap-2"><Check size={16} style={{ color: "var(--success)" }} /> {b}</span>
+              <span key={b} className="flex items-center gap-2"><Check size={16} style={{ color: "var(--success)" }} aria-hidden={true} focusable={false} /> {b}</span>
             ))}
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -68,7 +68,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
               Kostenlose Vorschau anfordern →
             </button>
             <a href="tel:+4961313076498" className="rounded-xl px-7 py-3.5 text-sm font-semibold text-white border border-white/30 hover:bg-white/10 transition inline-flex items-center justify-center gap-2">
-              <Phone size={16} /> 06131 30 764 98
+              <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
           </div>
           <p className="mt-6 text-sm" style={{ color: "var(--text-muted)" }}>{config.socialProof}</p>
@@ -196,12 +196,12 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <ul className="space-y-3 mb-8">
               {["Individuell für Deinen Betrieb", "Ich melde mich innerhalb von 2 Stunden", "Kein Risiko — Du entscheidest danach frei", "Kostenlos — auch wenn Du nicht kaufst"].map((t) => (
                 <li key={t} className="flex items-start gap-2 text-sm">
-                  <Check size={18} style={{ color: "var(--success)" }} className="mt-0.5 shrink-0" /> {t}
+                  <Check size={18} style={{ color: "var(--success)" }} className="mt-0.5 shrink-0" aria-hidden={true} focusable={false} /> {t}
                 </li>
               ))}
             </ul>
             <a href="tel:+4961313076498" className="inline-flex items-center gap-3 text-2xl font-bold text-white hover:underline">
-              <Phone size={24} /> 06131 30 764 98
+              <Phone size={24} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
             <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Mo–Fr 9–18 Uhr</p>
           </div>
@@ -224,7 +224,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
               Kostenlose Vorschau anfordern →
             </button>
             <a href="tel:+4961313076498" className="rounded-xl px-7 py-3.5 text-sm font-semibold text-white border border-white/30 hover:bg-white/10 transition inline-flex items-center justify-center gap-2">
-              <Phone size={16} /> 06131 30 764 98
+              <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
           </div>
         </div>

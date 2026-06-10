@@ -45,7 +45,7 @@ const WebdesignSHK = () => (
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
-                <Link to="/kontakt">Kostenlose Website-Vorschau für SHK sichern <ArrowRight size={18} /></Link>
+                <Link to="/kontakt">Kostenlose Website-Vorschau für SHK sichern <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
               </Button>
               <Button variant="outline-primary" size="lg" asChild>
                 <Link to="/kostenloser-website-check">Website-Check für SHK-Betriebe</Link>
@@ -125,9 +125,9 @@ const WebdesignSHK = () => (
                 { label: "Webdesign Preise", to: "/webdesign-preise" },
               ].map((l) => (
                 <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
-                  <CheckCircle size={17} className="text-primary shrink-0" />
+                  <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm font-medium">{l.label}</span>
-                  <ArrowRight size={14} className="text-muted-foreground ml-auto" />
+                  <ArrowRight size={14} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
                 </Link>
               ))}
             </div>

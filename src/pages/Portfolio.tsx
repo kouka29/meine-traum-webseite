@@ -105,11 +105,11 @@ const Portfolio = () => {
                             <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                           ) : null}
                           <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
-                            <ExternalLink size={24} className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+                            <ExternalLink size={24} className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" aria-hidden={true} focusable={false} />
                           </div>
                           {p.result && (
                             <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5 z-10">
-                              <TrendingUp size={12} /> {p.result}
+                              <TrendingUp size={12} aria-hidden={true} focusable={false} /> {p.result}
                             </span>
                           )}
                         </div>
@@ -132,7 +132,7 @@ const Portfolio = () => {
                         ) : null}
                         {p.result && (
                           <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
-                            <TrendingUp size={12} /> {p.result}
+                            <TrendingUp size={12} aria-hidden={true} focusable={false} /> {p.result}
                           </span>
                         )}
                       </div>
@@ -155,7 +155,7 @@ const Portfolio = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="gradient" size="lg" asChild>
-                <Link to="/kontakt">Kostenlose Vorschau anfordern <ArrowRight size={18} /></Link>
+                <Link to="/kontakt">Kostenlose Vorschau anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
               </Button>
               <Button variant="outline-primary" size="lg" asChild>
                 <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten</Link>

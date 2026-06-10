@@ -93,12 +93,12 @@ export default function AdminWachstumTab({ password }: { password: string }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-heading text-2xl font-bold flex items-center gap-2">
-            <Rocket size={22} className="text-primary" /> Wachstumspakete
+            <Rocket size={22} className="text-primary" aria-hidden={true} focusable={false} /> Wachstumspakete
           </h2>
           <p className="text-sm text-muted-foreground">Verwalte vorgemerkte und aktive Wachstumspaket-Abos. Klicke „Go-Live" um die monatliche Rechnungsstellung zu starten.</p>
         </div>
         <Button variant="outline" size="sm" onClick={fetchRows} disabled={loading}>
-          {loading ? <Loader2 size={14} className="animate-spin" /> : "Neu laden"}
+          {loading ? <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} /> : "Neu laden"}
         </Button>
       </div>
 
@@ -143,18 +143,18 @@ export default function AdminWachstumTab({ password }: { password: string }) {
                     <div className="flex justify-end gap-2">
                       {r.status === "pending_golive" && (
                         <Button size="sm" onClick={() => goLive(r)} disabled={busy === r.id}>
-                          {busy === r.id ? <Loader2 size={14} className="animate-spin" /> : <Play size={14} />}
+                          {busy === r.id ? <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} /> : <Play size={14} aria-hidden={true} focusable={false} />}
                           <span className="ml-1">Go-Live</span>
                         </Button>
                       )}
                       {r.status === "active" && r.billing_mode === "manual_invoice" && (
                         <Button size="sm" variant="outline" onClick={() => triggerInvoice(r)} disabled={busy === r.id}>
-                          <Receipt size={14} className="mr-1" /> Rechnung jetzt
+                          <Receipt size={14} className="mr-1" aria-hidden={true} focusable={false} /> Rechnung jetzt
                         </Button>
                       )}
                       {r.status !== "cancelled" && (
                         <Button size="sm" variant="ghost" onClick={() => cancel(r)} disabled={busy === r.id}>
-                          <XCircle size={14} />
+                          <XCircle size={14} aria-hidden={true} focusable={false} />
                         </Button>
                       )}
                     </div>

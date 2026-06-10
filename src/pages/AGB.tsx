@@ -398,14 +398,14 @@ const AGB = () => {
       <header className="bg-[#0d0d10] text-white print:bg-white print:text-black">
         <div className="container-narrow px-4 py-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors">
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4" aria-hidden={true} focusable={false} />
             <span className="font-heading font-bold text-lg tracking-tight">Meine-Traum-Webseite</span>
           </Link>
           <button
             onClick={() => window.print()}
             className="hidden sm:inline-flex items-center gap-2 text-sm text-white/80 hover:text-white border border-white/15 hover:border-white/40 rounded-lg px-3 py-1.5 transition-all print:hidden"
           >
-            <Printer className="w-4 h-4" />
+            <Printer className="w-4 h-4" aria-hidden={true} focusable={false} />
             Drucken
           </button>
         </div>
@@ -443,7 +443,7 @@ const AGB = () => {
           className="container-narrow px-4 py-3 flex items-center justify-between w-full text-sm font-semibold"
         >
           <span className="flex items-center gap-2">
-            <Menu className="w-4 h-4" />
+            <Menu className="w-4 h-4" aria-hidden={true} focusable={false} />
             Inhaltsverzeichnis
           </span>
           <span className="text-muted-foreground text-xs">
@@ -539,7 +539,7 @@ const AGB = () => {
           aria-label="Nach oben"
           className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-accent-agb text-white shadow-lg hover:scale-105 transition-transform flex items-center justify-center print:hidden"
         >
-          <ArrowUp className="w-5 h-5" />
+          <ArrowUp className="w-5 h-5" aria-hidden={true} focusable={false} />
         </button>
       )}
     </div>

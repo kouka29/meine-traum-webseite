@@ -275,7 +275,7 @@ const Starter = () => (
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center">
             <span className="badge-label bg-primary/10 text-primary mb-6 sm:mb-8">
-              <Zap size={12} className="inline mr-1" /> Starter Paket ab 990 € einmalig
+              <Zap size={12} className="inline mr-1" aria-hidden={true} focusable={false} /> Starter Paket ab 990 € einmalig
             </span>
             <h1 className="mb-6 text-balance">
               Keine Website? Veraltete Website?{" "}
@@ -293,7 +293,7 @@ const Starter = () => (
                 asChild
               >
                 <a href={TERMIN_LINK}>
-                  Kostenloses Erstgespräch buchen <ArrowRight size={18} />
+                  Kostenloses Erstgespräch buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </a>
               </Button>
               <Button
@@ -302,7 +302,7 @@ const Starter = () => (
                 className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 h-auto min-h-12 w-full sm:w-auto whitespace-normal text-center leading-tight"
                 onClick={scrollTo("paket")}
               >
-                Was ist enthalten? <ArrowDown size={18} />
+                Was ist enthalten? <ArrowDown size={18} aria-hidden={true} focusable={false} />
               </Button>
             </div>
           </div>
@@ -342,7 +342,7 @@ const Starter = () => (
                     onClick={scrollTo("paket")}
                     className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all self-start"
                   >
-                    {c.cta} <ArrowRight size={18} />
+                    {c.cta} <ArrowRight size={18} aria-hidden={true} focusable={false} />
                   </button>
                 </CardContent>
               </Card>
@@ -436,7 +436,7 @@ const Starter = () => (
                   {[...includedLeft, ...includedRight].map((item) => (
                     <div key={item} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                        <Check size={14} />
+                        <Check size={14} aria-hidden={true} focusable={false} />
                       </div>
                       <span className="text-foreground/90 text-sm sm:text-base">
                         {item}
@@ -458,7 +458,7 @@ const Starter = () => (
                     asChild
                   >
                     <a href={TERMIN_LINK}>
-                      Kostenloses Erstgespräch buchen <ArrowRight size={18} />
+                      Kostenloses Erstgespräch buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
                     </a>
                   </Button>
                 </div>
@@ -541,7 +541,7 @@ const Starter = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              <Clock size={12} className="inline mr-1" /> 14 Tage von Null zu Online
+              <Clock size={12} className="inline mr-1" aria-hidden={true} focusable={false} /> 14 Tage von Null zu Online
             </span>
             <h2 className="mb-4 text-balance">
               dein Weg zur fertigen Website — Schritt für Schritt
@@ -587,7 +587,7 @@ const Starter = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              <Star size={12} className="inline mr-1" /> Echte Kunden, echte Ergebnisse
+              <Star size={12} className="inline mr-1" aria-hidden={true} focusable={false} /> Echte Kunden, echte Ergebnisse
             </span>
             <h2 className="mb-4 text-balance">
               Was Starter-Kunden über uns sagen
@@ -649,7 +649,7 @@ const Starter = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
-              <Shield size={26} />
+              <Shield size={26} aria-hidden={true} focusable={false} />
             </div>
             <h2 className="mb-4 text-balance">3 Garantien — du gehen null Risiko</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -694,12 +694,12 @@ const Starter = () => (
             <Card className="h-full border-primary/30">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-primary flex items-center gap-2">
-                  <Check size={22} /> Starter passt, wenn …
+                  <Check size={22} aria-hidden={true} focusable={false} /> Starter passt, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitYes.map((y) => (
                     <li key={y} className="flex items-start gap-3">
-                      <Check size={18} className="text-primary shrink-0 mt-1" />
+                      <Check size={18} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                       <span className="text-foreground/90">{y}</span>
                     </li>
                   ))}
@@ -711,12 +711,12 @@ const Starter = () => (
             <Card className="h-full border-destructive/20">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-muted-foreground flex items-center gap-2">
-                  <X size={22} /> Starter passt nicht, wenn …
+                  <X size={22} aria-hidden={true} focusable={false} /> Starter passt nicht, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitNo.map((n) => (
                     <li key={n} className="flex items-start gap-3">
-                      <X size={18} className="text-destructive shrink-0 mt-1" />
+                      <X size={18} className="text-destructive shrink-0 mt-1" aria-hidden={true} focusable={false} />
                       <span className="text-muted-foreground">{n}</span>
                     </li>
                   ))}
@@ -737,7 +737,7 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center py-8 sm:py-16">
-            <Quote size={48} className="text-primary/30 mx-auto mb-8" />
+            <Quote size={48} className="text-primary/30 mx-auto mb-8" aria-hidden={true} focusable={false} />
             <blockquote className="text-2xl sm:text-3xl md:text-4xl font-heading font-medium leading-relaxed text-foreground mb-10 text-balance">
               „Endlich eine Website, die so professionell aussieht wie mein
               Studio. Die Neukundengewinnung läuft jetzt automatisch."
@@ -805,7 +805,7 @@ const Starter = () => (
                 asChild
               >
                 <a href={TERMIN_LINK}>
-                  Jetzt Termin buchen <ArrowRight size={18} />
+                  Jetzt Termin buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </a>
               </Button>
               <div className="mt-8 flex flex-col items-center gap-2">
@@ -813,7 +813,7 @@ const Starter = () => (
                   href="tel:+4961313076500"
                   className="inline-flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 font-semibold text-base sm:text-lg transition-colors"
                 >
-                  <Phone size={18} /> 06131 / 30 765 00
+                  <Phone size={18} aria-hidden={true} focusable={false} /> 06131 / 30 765 00
                 </a>
                 <p className="text-primary-foreground/60 text-xs sm:text-sm">
                   Mo–Fr 9–18 Uhr · Auch per WhatsApp

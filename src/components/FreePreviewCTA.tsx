@@ -41,7 +41,7 @@ const FreePreviewCTA = () => (
                 asChild
               >
                 <Link to="/kontakt">
-                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} />
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button
@@ -51,7 +51,7 @@ const FreePreviewCTA = () => (
                 asChild
               >
                 <Link to="/kontakt">
-                  <PhoneCall size={18} /> Rückruf vereinbaren
+                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>

@@ -34,7 +34,7 @@ const ConversionOptimierung = () => (
               deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kontakt">Website optimieren lassen <ArrowRight size={18} /></Link>
+              <Link to="/kontakt">Website optimieren lassen <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>

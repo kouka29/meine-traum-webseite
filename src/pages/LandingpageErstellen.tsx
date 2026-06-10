@@ -35,7 +35,7 @@ const LandingpageErstellen = () => (
               Landingpages mit verkaufspsychologischem Aufbau – perfekt für Google Ads, Social Media und Lead-Generierung.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kontakt">Landingpage anfragen <ArrowRight size={18} /></Link>
+              <Link to="/kontakt">Landingpage anfragen <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>
@@ -74,7 +74,7 @@ const LandingpageErstellen = () => (
                 "DSGVO-konforme Umsetzung",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <CheckCircle size={17} className="text-primary shrink-0" />
+                  <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm">{item}</span>
                 </div>
               ))}

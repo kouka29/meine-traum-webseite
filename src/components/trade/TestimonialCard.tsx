@@ -13,7 +13,7 @@ const TestimonialCard = ({ stars = 5, badge, badgeColor = "#5B5FEF", quote, name
   <div className="rounded-2xl border border-border bg-card p-6 shadow-card flex flex-col gap-4">
     <div className="flex items-center gap-1 text-amber-500">
       {Array.from({ length: stars }).map((_, i) => (
-        <Star key={i} size={16} fill="currentColor" stroke="none" />
+        <Star key={i} size={16} fill="currentColor" stroke="none" aria-hidden={true} focusable={false} />
       ))}
     </div>
     {badge && (
@@ -27,7 +27,7 @@ const TestimonialCard = ({ stars = 5, badge, badgeColor = "#5B5FEF", quote, name
     <p className="text-sm italic text-foreground/80 leading-relaxed">"{quote}"</p>
     <div className="flex items-center gap-3 mt-2">
       <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-        <User size={18} />
+        <User size={18} aria-hidden={true} focusable={false} />
       </div>
       <div>
         <p className="text-sm font-semibold text-foreground">{name}</p>

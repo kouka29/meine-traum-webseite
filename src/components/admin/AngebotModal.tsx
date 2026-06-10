@@ -87,7 +87,7 @@ function RephraseButton({
   return (
     <Button type="button" size="sm" variant="ghost" disabled={busy || disabled} onClick={handle}
       className="h-7 px-2 text-xs" style={{ color: BRAND }} title="KI-Neuformulierung">
-      {busy ? <Loader2 size={12} className="animate-spin" /> : <Sparkles size={12} />}
+      {busy ? <Loader2 size={12} className="animate-spin" aria-hidden={true} focusable={false} /> : <Sparkles size={12} aria-hidden={true} focusable={false} />}
       KI
     </Button>
   );
@@ -537,7 +537,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            {editing ? <Pencil size={20} style={{ color: BRAND }} /> : <FileText size={20} style={{ color: BRAND }} />}
+            {editing ? <Pencil size={20} style={{ color: BRAND }} aria-hidden={true} focusable={false} /> : <FileText size={20} style={{ color: BRAND }} aria-hidden={true} focusable={false} />}
             {editing ? `Angebot für ${lead.first_name} bearbeiten` : `Angebot für ${lead.first_name} erstellen`}
           </DialogTitle>
         </DialogHeader>
@@ -545,24 +545,24 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
         {result ? (
           <div className="space-y-5">
             <div className="flex items-center gap-2 text-emerald-600">
-              <CheckCircle2 size={20} /><span className="font-semibold">Angebot erfolgreich generiert</span>
+              <CheckCircle2 size={20} aria-hidden={true} focusable={false} /><span className="font-semibold">Angebot erfolgreich generiert</span>
             </div>
             <div className="rounded-lg border-2 border-emerald-500/40 bg-emerald-50 p-4 dark:bg-emerald-950/20">
               <div className="text-xs font-semibold uppercase text-emerald-700 dark:text-emerald-400 mb-2">Angebot-Link</div>
               <div className="flex items-center gap-2">
                 <code className="flex-1 text-xs bg-background rounded px-2 py-1.5 border border-emerald-200 break-all">{result.link}</code>
-                <Button size="sm" variant="outline" onClick={() => copy(result.link, "Link")}><Copy size={14} /> Kopieren</Button>
+                <Button size="sm" variant="outline" onClick={() => copy(result.link, "Link")}><Copy size={14} aria-hidden={true} focusable={false} /> Kopieren</Button>
               </div>
             </div>
             <div className="rounded-lg p-4" style={{ background: `${BRAND}10`, border: `2px solid ${BRAND}40` }}>
               <div className="text-xs font-semibold uppercase mb-2" style={{ color: BRAND }}>Kunden-PIN für {lead.first_name}</div>
               <div className="flex items-center gap-3">
                 <div className="text-3xl font-bold tracking-[0.4em] flex-1" style={{ color: BRAND, fontVariantNumeric: "tabular-nums" }}>{result.pin}</div>
-                <Button size="sm" variant="outline" onClick={() => copy(result.pin, "PIN")}><Copy size={14} /> Kopieren</Button>
+                <Button size="sm" variant="outline" onClick={() => copy(result.pin, "PIN")}><Copy size={14} aria-hidden={true} focusable={false} /> Kopieren</Button>
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" onClick={() => window.open(result.link, "_blank")} className="flex-1"><ExternalLink size={14} /> Vorschau</Button>
+              <Button variant="outline" onClick={() => window.open(result.link, "_blank")} className="flex-1"><ExternalLink size={14} aria-hidden={true} focusable={false} /> Vorschau</Button>
               <Button onClick={() => onOpenChange(false)} className="flex-1">Schließen</Button>
             </div>
           </div>
@@ -577,14 +577,14 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               style={{ borderColor: `${BRAND}40`, background: `${BRAND}08` }}>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: BRAND }}>
-                  <Sparkles size={14} /> Angebot per KI auslesen
+                  <Sparkles size={14} aria-hidden={true} focusable={false} /> Angebot per KI auslesen
                 </div>
                 <div className="text-xs text-muted-foreground mt-0.5">
                   PDF/Bild hochladen — Felder werden befüllt UND das Original ist später vom Kunden downloadbar.
                 </div>
                 {pdfPath && (
                   <div className="text-xs mt-1 flex items-center gap-1.5" style={{ color: BRAND }}>
-                    <FileDown size={12} /> {pdfFilename} hochgeladen
+                    <FileDown size={12} aria-hidden={true} focusable={false} /> {pdfFilename} hochgeladen
                   </div>
                 )}
               </div>
@@ -594,7 +594,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                   onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) handleUpload(f); }} />
                 <span className={`inline-flex items-center gap-1.5 text-sm font-medium rounded-md px-3 py-2 cursor-pointer ${parsing ? "opacity-60 pointer-events-none" : ""}`}
                   style={{ background: BRAND, color: "#fff" }}>
-                  {parsing ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+                  {parsing ? <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} /> : <Upload size={14} aria-hidden={true} focusable={false} />}
                   {uploading ? "Lade hoch…" : parsing ? "Lese aus…" : "Datei wählen"}
                 </span>
               </label>
@@ -618,7 +618,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 <div className="flex gap-2">
                   <Input value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 5))}
                     maxLength={5} inputMode="numeric" className="font-mono tracking-widest" />
-                  <Button type="button" variant="outline" size="icon" onClick={() => setPin(genPin())} title="Zufällig"><Shuffle size={14} /></Button>
+                  <Button type="button" variant="outline" size="icon" onClick={() => setPin(genPin())} title="Zufällig"><Shuffle size={14} aria-hidden={true} focusable={false} /></Button>
                 </div>
               </div>
               <div className="space-y-1.5">
@@ -637,7 +637,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
             {/* Modus-Toggle */}
             <div className="flex items-center justify-between rounded-lg border p-3" style={{ borderColor: `${BRAND}30`, background: `${BRAND}05` }}>
               <div className="flex items-center gap-2">
-                <Package size={16} style={{ color: BRAND }} />
+                <Package size={16} style={{ color: BRAND }} aria-hidden={true} focusable={false} />
                 <div>
                   <div className="text-sm font-semibold">Mehrere Pakete anbieten</div>
                   <div className="text-xs text-muted-foreground">z.B. Starter / Pro — Kunde wählt eines</div>
@@ -653,12 +653,12 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 <button type="button" onClick={() => setPaymentMethod("stripe")}
                   className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "stripe" ? "text-white" : "bg-background text-muted-foreground"}`}
                   style={paymentMethod === "stripe" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
-                  <CreditCard size={14} /> Stripe Checkout
+                  <CreditCard size={14} aria-hidden={true} focusable={false} /> Stripe Checkout
                 </button>
                 <button type="button" onClick={() => setPaymentMethod("rechnung")}
                   className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "rechnung" ? "text-white" : "bg-background text-muted-foreground"}`}
                   style={paymentMethod === "rechnung" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
-                  <Receipt size={14} /> Zahlung per Rechnung
+                  <Receipt size={14} aria-hidden={true} focusable={false} /> Zahlung per Rechnung
                 </button>
               </div>
               {paymentMethod === "rechnung" && (
@@ -685,7 +685,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 <div className="flex items-center justify-between">
                   <Label>Pakete ({pakete.length}/3)</Label>
                   <Button type="button" size="sm" variant="outline" onClick={addPaket} disabled={pakete.length >= 3}>
-                    <Plus size={14} /> Paket hinzufügen
+                    <Plus size={14} aria-hidden={true} focusable={false} /> Paket hinzufügen
                   </Button>
                 </div>
                 {pakete.map((p, pi) => (
@@ -724,7 +724,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               <div className="flex items-center justify-between">
                 <Label>FAQs ({faqs.length}/5)</Label>
                 <Button type="button" size="sm" variant="outline" onClick={addFaq} disabled={faqs.length >= 5}>
-                  <Plus size={14} /> FAQ hinzufügen
+                  <Plus size={14} aria-hidden={true} focusable={false} /> FAQ hinzufügen
                 </Button>
               </div>
               {faqs.map((f, i) => (
@@ -733,7 +733,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                     <Input value={f.frage} onChange={(e) => updateFaq(i, { frage: e.target.value })}
                       placeholder="Frage" className="flex-1" maxLength={200} />
                     <Button type="button" variant="ghost" size="icon" onClick={() => removeFaq(i)}
-                      className="text-destructive hover:text-destructive hover:bg-destructive/10"><Trash2 size={14} /></Button>
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10"><Trash2 size={14} aria-hidden={true} focusable={false} /></Button>
                   </div>
                   <Textarea value={f.antwort} onChange={(e) => updateFaq(i, { antwort: e.target.value })}
                     placeholder="Antwort" rows={2} maxLength={600} />
@@ -747,12 +747,12 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
             {/* Buttons */}
             <div className="flex gap-2 sticky bottom-0 pt-3 bg-background border-t">
               <Button type="button" variant="outline" onClick={handlePreview} className="flex-1">
-                <Eye size={16} /> Kundenansicht
+                <Eye size={16} aria-hidden={true} focusable={false} /> Kundenansicht
               </Button>
               <Button type="button" onClick={handleGenerate} disabled={saving}
                 className="flex-[2] text-white"
                 style={{ background: `linear-gradient(135deg, ${BRAND}, #7B5EF8)` }}>
-                {saving ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
+                {saving ? <Loader2 size={16} className="animate-spin" aria-hidden={true} focusable={false} /> : <FileText size={16} aria-hidden={true} focusable={false} />}
                 {editing ? "Änderungen speichern" : "Angebot-Link generieren"}
               </Button>
             </div>
@@ -815,7 +815,7 @@ function SingleEditor(props: {
         <div className="flex items-center justify-between">
           <Label>Leistungen ({props.leistungen.length}/6)</Label>
           <Button type="button" size="sm" variant="outline" onClick={props.addLeistung} disabled={props.leistungen.length >= 6}>
-            <Plus size={14} /> Leistung
+            <Plus size={14} aria-hidden={true} focusable={false} /> Leistung
           </Button>
         </div>
         {props.leistungen.map((l, i) => (
@@ -826,7 +826,7 @@ function SingleEditor(props: {
               <Input value={l.titel} onChange={(e) => props.updateLeistung(i, { titel: e.target.value })}
                 placeholder="Titel" className="flex-1" maxLength={100} />
               <Button type="button" variant="ghost" size="icon" onClick={() => props.removeLeistung(i)}
-                className="text-destructive"><Trash2 size={14} /></Button>
+                className="text-destructive"><Trash2 size={14} aria-hidden={true} focusable={false} /></Button>
             </div>
             <div className="flex gap-1 items-start">
               <Textarea value={l.beschreibung} onChange={(e) => props.updateLeistung(i, { beschreibung: e.target.value })}
@@ -842,7 +842,7 @@ function SingleEditor(props: {
         <div className="flex items-center justify-between">
           <Label>Optionale Positionen ({props.optionen.length}/4)</Label>
           <Button type="button" size="sm" variant="outline" onClick={props.addOption} disabled={props.optionen.length >= 4}>
-            <Plus size={14} /> Option
+            <Plus size={14} aria-hidden={true} focusable={false} /> Option
           </Button>
         </div>
         <p className="text-xs text-muted-foreground -mt-1">Add-ons per Checkbox dazubuchbar. Eigener Stripe-Link pro Option.</p>
@@ -854,7 +854,7 @@ function SingleEditor(props: {
               <Input value={o.titel} onChange={(e) => props.updateOption(i, { titel: e.target.value })}
                 placeholder="Titel" className="flex-1" maxLength={100} />
               <Button type="button" variant="ghost" size="icon" onClick={() => props.removeOption(i)}
-                className="text-destructive"><Trash2 size={14} /></Button>
+                className="text-destructive"><Trash2 size={14} aria-hidden={true} focusable={false} /></Button>
             </div>
             <div className="flex gap-1 items-start">
               <Textarea value={o.beschreibung} onChange={(e) => props.updateOption(i, { beschreibung: e.target.value })}
@@ -883,7 +883,7 @@ function SingleEditor(props: {
           <div className="flex items-center justify-between">
             <Label>Bundle-Links ({props.bundles.length}/6)</Label>
             <Button type="button" size="sm" variant="outline" onClick={props.addBundle} disabled={props.bundles.length >= 6}>
-              <Plus size={14} /> Bundle
+              <Plus size={14} aria-hidden={true} focusable={false} /> Bundle
             </Button>
           </div>
           {props.bundles.map((b, bi) => (
@@ -892,7 +892,7 @@ function SingleEditor(props: {
                 <Input value={b.label} onChange={(e) => props.updateBundle(bi, { label: e.target.value })}
                   placeholder="Bundle-Name" className="flex-1" maxLength={100} />
                 <Button type="button" variant="ghost" size="icon" onClick={() => props.removeBundle(bi)}
-                  className="text-destructive"><Trash2 size={14} /></Button>
+                  className="text-destructive"><Trash2 size={14} aria-hidden={true} focusable={false} /></Button>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {props.optionen.map((o) => {
@@ -945,7 +945,7 @@ function PaketEditor({
             placeholder="Badge (opt.)" maxLength={30} className="w-32" />
         </div>
         <Button type="button" variant="ghost" size="icon" onClick={remove}
-          className="text-destructive shrink-0"><Trash2 size={14} /></Button>
+          className="text-destructive shrink-0"><Trash2 size={14} aria-hidden={true} focusable={false} /></Button>
       </div>
 
       <div className="space-y-1.5">
@@ -979,7 +979,7 @@ function PaketEditor({
         <div className="flex items-center justify-between">
           <Label className="text-xs">Leistungen ({paket.leistungen.length}/8)</Label>
           <Button type="button" size="sm" variant="outline" onClick={addLeistung} disabled={paket.leistungen.length >= 8} className="h-7 text-xs">
-            <Plus size={12} /> Leistung
+            <Plus size={12} aria-hidden={true} focusable={false} /> Leistung
           </Button>
         </div>
         {paket.leistungen.map((l, li) => (
@@ -987,7 +987,7 @@ function PaketEditor({
             <div className="flex gap-1.5">
               <Input value={l.emoji} onChange={(e) => updateLeistung(li, { emoji: e.target.value })} placeholder="🚀" className="w-12 text-center" maxLength={4} />
               <Input value={l.titel} onChange={(e) => updateLeistung(li, { titel: e.target.value })} placeholder="Titel" className="flex-1" maxLength={100} />
-              <Button type="button" variant="ghost" size="icon" onClick={() => removeLeistung(li)} className="text-destructive h-9 w-9"><Trash2 size={12} /></Button>
+              <Button type="button" variant="ghost" size="icon" onClick={() => removeLeistung(li)} className="text-destructive h-9 w-9"><Trash2 size={12} aria-hidden={true} focusable={false} /></Button>
             </div>
             <div className="flex gap-1 items-start">
               <Textarea value={l.beschreibung} onChange={(e) => updateLeistung(li, { beschreibung: e.target.value })}
@@ -1003,7 +1003,7 @@ function PaketEditor({
         <div className="flex items-center justify-between">
           <Label className="text-xs">Add-ons in diesem Paket ({paket.optionen.length}/4)</Label>
           <Button type="button" size="sm" variant="outline" onClick={addOption} disabled={paket.optionen.length >= 4} className="h-7 text-xs">
-            <Plus size={12} /> Option
+            <Plus size={12} aria-hidden={true} focusable={false} /> Option
           </Button>
         </div>
         {paket.optionen.map((o, oi) => (
@@ -1011,7 +1011,7 @@ function PaketEditor({
             <div className="flex gap-1.5">
               <Input value={o.emoji} onChange={(e) => updateOption(oi, { emoji: e.target.value })} placeholder="✨" className="w-12 text-center" maxLength={4} />
               <Input value={o.titel} onChange={(e) => updateOption(oi, { titel: e.target.value })} placeholder="Titel" className="flex-1" maxLength={100} />
-              <Button type="button" variant="ghost" size="icon" onClick={() => removeOption(oi)} className="text-destructive h-9 w-9"><Trash2 size={12} /></Button>
+              <Button type="button" variant="ghost" size="icon" onClick={() => removeOption(oi)} className="text-destructive h-9 w-9"><Trash2 size={12} aria-hidden={true} focusable={false} /></Button>
             </div>
             <Textarea value={o.beschreibung} onChange={(e) => updateOption(oi, { beschreibung: e.target.value })} placeholder="Beschreibung" rows={1} maxLength={200} />
             <div className="grid grid-cols-[1fr,110px] gap-1.5">

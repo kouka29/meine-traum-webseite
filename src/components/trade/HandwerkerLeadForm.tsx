@@ -56,7 +56,7 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
   if (submitted) {
     return (
       <div className="rounded-2xl border border-border bg-card p-8 text-center flex flex-col items-center gap-4 shadow-card">
-        <CheckCircle2 size={48} style={{ color: "#10B981" }} />
+        <CheckCircle2 size={48} style={{ color: "#10B981" }} aria-hidden={true} focusable={false} />
         <p className="text-base font-semibold text-foreground">
           ✅ Super! Ich melde mich innerhalb von 2 Stunden bei Dir. Schau kurz auf Dein Handy!
         </p>
@@ -65,7 +65,7 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
           className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
           style={{ color: "#5B5FEF" }}
         >
-          <Phone size={16} /> Lieber direkt anrufen? 06131 30 764 98
+          <Phone size={16} aria-hidden={true} focusable={false} /> Lieber direkt anrufen? 06131 30 764 98
         </a>
       </div>
     );

@@ -52,7 +52,7 @@ const DesignToggleBanner = ({ password }: { password: string }) => {
     <div className="mb-6 rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div className="flex items-center gap-4">
         <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-          <SparklesIcon size={20} className="text-primary" />
+          <SparklesIcon size={20} className="text-primary" aria-hidden={true} focusable={false} />
         </div>
         <div>
           <div className="font-heading font-semibold text-base flex items-center gap-2">
@@ -162,9 +162,9 @@ const PAGE_NAMES: Record<string, string> = {
 };
 
 const DeviceIcon = ({ type }: { type: string }) => {
-  if (type === "mobile") return <Smartphone size={14} />;
-  if (type === "tablet") return <Tablet size={14} />;
-  return <Monitor size={14} />;
+  if (type === "mobile") return <Smartphone size={14} aria-hidden={true} focusable={false} />;
+  if (type === "tablet") return <Tablet size={14} aria-hidden={true} focusable={false} />;
+  return <Monitor size={14} aria-hidden={true} focusable={false} />;
 };
 
 const AdminLeads = () => {
@@ -590,7 +590,7 @@ const AdminLeads = () => {
         <form onSubmit={handleLogin} className="w-full max-w-sm space-y-4">
           <div className="text-center mb-6">
             <div className="w-14 h-14 rounded-2xl gradient-bg flex items-center justify-center mx-auto mb-4">
-              <Lock size={24} className="text-primary-foreground" />
+              <Lock size={24} className="text-primary-foreground" aria-hidden={true} focusable={false} />
             </div>
             <h1 className="font-heading text-2xl font-bold text-foreground">Admin-Bereich</h1>
             <p className="text-sm text-muted-foreground mt-1">Passwort eingeben, um zu verwalten</p>
@@ -603,7 +603,7 @@ const AdminLeads = () => {
             className="h-12"
           />
           <Button type="submit" variant="gradient" className="w-full h-12" disabled={loading}>
-            {loading ? <Loader2 className="animate-spin" size={18} /> : "Anmelden"}
+            {loading ? <Loader2 className="animate-spin" size={18} aria-hidden={true} focusable={false} /> : "Anmelden"}
           </Button>
         </form>
       </div>
@@ -634,7 +634,7 @@ const AdminLeads = () => {
             <p className="text-muted-foreground mt-1">Übersicht, Leads & Portfolio</p>
           </div>
           <Button variant="outline-primary" size="sm" onClick={refreshAll} disabled={loading}>
-            <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
+            <RefreshCw size={14} className={loading ? "animate-spin" : ""} aria-hidden={true} focusable={false} />
             Aktualisieren
           </Button>
         </div>
@@ -769,7 +769,7 @@ const AdminLeads = () => {
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base font-semibold flex items-center gap-2"><Globe size={16} className="text-primary" />Traffic-Quellen</CardTitle>
+                  <CardTitle className="text-base font-semibold flex items-center gap-2"><Globe size={16} className="text-primary" aria-hidden={true} focusable={false} />Traffic-Quellen</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -796,7 +796,7 @@ const AdminLeads = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base font-semibold flex items-center gap-2"><Clock size={16} className="text-primary" />Besucherzeiten (Uhrzeit)</CardTitle>
+                  <CardTitle className="text-base font-semibold flex items-center gap-2"><Clock size={16} className="text-primary" aria-hidden={true} focusable={false} />Besucherzeiten (Uhrzeit)</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-[220px]">
@@ -815,7 +815,7 @@ const AdminLeads = () => {
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base font-semibold flex items-center gap-2"><Globe size={16} className="text-primary" />Regionen (Zeitzonen)</CardTitle>
+                  <CardTitle className="text-base font-semibold flex items-center gap-2"><Globe size={16} className="text-primary" aria-hidden={true} focusable={false} />Regionen (Zeitzonen)</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -843,7 +843,7 @@ const AdminLeads = () => {
 
         {activeTab === "dashboard" && !analytics && (
           <div className="text-center py-20">
-            <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
+            <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
             <p className="text-muted-foreground">Lade Analytics...</p>
           </div>
         )}
@@ -855,10 +855,10 @@ const AdminLeads = () => {
               <p className="text-muted-foreground">{leads.length} Lead{leads.length !== 1 ? "s" : ""} insgesamt</p>
               <div className="flex items-center gap-2">
                 <Button type="button" variant="default" size="sm" onClick={() => setNewLeadOpen(true)}>
-                  <Plus size={14} /> Lead manuell hinzufügen
+                  <Plus size={14} aria-hidden={true} focusable={false} /> Lead manuell hinzufügen
                 </Button>
                 <Button variant="outline-primary" size="sm" onClick={exportCSV} disabled={leads.length === 0}>
-                  <FileDown size={14} /> CSV Export
+                  <FileDown size={14} aria-hidden={true} focusable={false} /> CSV Export
                 </Button>
               </div>
             </div>
@@ -916,13 +916,13 @@ const AdminLeads = () => {
                   <div key={lead.id} className="bg-card rounded-xl border border-border p-5 hover:shadow-card transition-shadow flex flex-col gap-3">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 grid grid-cols-1 sm:grid-cols-5 gap-3">
-                        <div className="flex items-center gap-2"><User size={15} className="text-primary shrink-0" /><span className="font-medium text-foreground truncate">{lead.first_name}</span></div>
-                        <div className="flex items-center gap-2"><Building2 size={15} className="text-primary shrink-0" /><span className="text-sm text-muted-foreground truncate">{lead.company_name || "–"}</span></div>
-                        <div className="flex items-center gap-2"><Mail size={15} className="text-primary shrink-0" /><a href={`mailto:${lead.email}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.email}</a></div>
-                        <div className="flex items-center gap-2"><Phone size={15} className="text-primary shrink-0" /><a href={`tel:${lead.phone}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.phone}</a></div>
-                        <div className="flex items-center gap-2"><Calendar size={15} className="text-muted-foreground shrink-0" /><span className="text-sm text-muted-foreground">{new Date(lead.created_at).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span></div>
+                        <div className="flex items-center gap-2"><User size={15} className="text-primary shrink-0" aria-hidden={true} focusable={false} /><span className="font-medium text-foreground truncate">{lead.first_name}</span></div>
+                        <div className="flex items-center gap-2"><Building2 size={15} className="text-primary shrink-0" aria-hidden={true} focusable={false} /><span className="text-sm text-muted-foreground truncate">{lead.company_name || "–"}</span></div>
+                        <div className="flex items-center gap-2"><Mail size={15} className="text-primary shrink-0" aria-hidden={true} focusable={false} /><a href={`mailto:${lead.email}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.email}</a></div>
+                        <div className="flex items-center gap-2"><Phone size={15} className="text-primary shrink-0" aria-hidden={true} focusable={false} /><a href={`tel:${lead.phone}`} className="text-sm text-muted-foreground hover:text-primary truncate transition-colors">{lead.phone}</a></div>
+                        <div className="flex items-center gap-2"><Calendar size={15} className="text-muted-foreground shrink-0" aria-hidden={true} focusable={false} /><span className="text-sm text-muted-foreground">{new Date(lead.created_at).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span></div>
                       </div>
-                      <Button variant="ghost" size="icon" onClick={() => deleteLead(lead.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10 shrink-0"><Trash2 size={16} /></Button>
+                      <Button variant="ghost" size="icon" onClick={() => deleteLead(lead.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10 shrink-0"><Trash2 size={16} aria-hidden={true} focusable={false} /></Button>
                     </div>
                     {/* Status & Aktionen */}
                     <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
@@ -936,7 +936,7 @@ const AdminLeads = () => {
                       )}
                       {lead.slot_reserved && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
-                          <CheckCircle2 size={11} /> Platz reserviert
+                          <CheckCircle2 size={11} aria-hidden={true} focusable={false} /> Platz reserviert
                         </span>
                       )}
                       <div className="ml-auto flex flex-wrap gap-1.5">
@@ -944,7 +944,7 @@ const AdminLeads = () => {
                           <>
                             <Button size="sm" variant="default" disabled={isUpdating}
                               onClick={() => updateLeadStatus(lead.id, "qualified", true)}>
-                              {isUpdating ? <Loader2 size={12} className="animate-spin" /> : "Platz reservieren + Mail"}
+                              {isUpdating ? <Loader2 size={12} className="animate-spin" aria-hidden={true} focusable={false} /> : "Platz reservieren + Mail"}
                             </Button>
                             <Button size="sm" variant="outline" disabled={isUpdating}
                               onClick={() => updateLeadStatus(lead.id, "qualified", false)}>
@@ -980,7 +980,7 @@ const AdminLeads = () => {
                           onClick={() => setAngebotModalLead(lead)}
                           className="border-[#4F3FF0] text-[#4F3FF0] bg-transparent hover:bg-[#4F3FF0]/10 hover:text-[#4F3FF0]"
                         >
-                          <FileText size={12} /> Angebot erstellen
+                          <FileText size={12} aria-hidden={true} focusable={false} /> Angebot erstellen
                         </Button>
                         <Button
                           size="sm"
@@ -1014,7 +1014,7 @@ const AdminLeads = () => {
                     {/* Funnel-Antworten: Branche, Webseite, Ziele, Dringlichkeit, Notizen */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-3 border-t border-border text-sm">
                       <div className="flex items-start gap-2">
-                        <Briefcase size={14} className="text-primary mt-0.5 shrink-0" />
+                        <Briefcase size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                         <div>
                           <div className="text-xs text-muted-foreground uppercase tracking-wide">Branche</div>
                           <div className="text-foreground">
@@ -1027,14 +1027,14 @@ const AdminLeads = () => {
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Globe size={14} className="text-primary mt-0.5 shrink-0" />
+                        <Globe size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                         <div>
                           <div className="text-xs text-muted-foreground uppercase tracking-wide">Aktuelle Webseite</div>
                           <div className="text-foreground">{lead.has_website || "Nicht angegeben"}</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Target size={14} className="text-primary mt-0.5 shrink-0" />
+                        <Target size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                         <div>
                           <div className="text-xs text-muted-foreground uppercase tracking-wide">Wichtigste Ziele</div>
                           {lead.goals && lead.goals.length > 0 ? (
@@ -1051,14 +1051,14 @@ const AdminLeads = () => {
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Flame size={14} className="text-primary mt-0.5 shrink-0" />
+                        <Flame size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                         <div>
                           <div className="text-xs text-muted-foreground uppercase tracking-wide">Dringlichkeit</div>
                           <div className="text-foreground">{lead.urgency || "Nicht angegeben"}</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-2 md:col-span-2">
-                        <LinkIcon size={14} className="text-primary mt-0.5 shrink-0" />
+                        <LinkIcon size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                         <div className="min-w-0 flex-1">
                           <div className="text-xs text-muted-foreground uppercase tracking-wide">Webseiten-URL</div>
                           {lead.current_website ? (
@@ -1075,7 +1075,7 @@ const AdminLeads = () => {
                         </div>
                       </div>
                       <div className="flex items-start gap-2 md:col-span-2">
-                        <FileText size={14} className="text-primary mt-0.5 shrink-0" />
+                        <FileText size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                         <div className="min-w-0 flex-1">
                           <div className="text-xs text-muted-foreground uppercase tracking-wide">Sonstige Anmerkungen</div>
                           <div className="text-foreground whitespace-pre-wrap break-words">{lead.notes || "Nicht angegeben"}</div>
@@ -1085,28 +1085,28 @@ const AdminLeads = () => {
                     {(lead.booking_date || lead.booking_time || lead.contact_method) ? (
                       <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 text-xs font-semibold">
-                          <CheckCircle2 size={12} /> Termin gebucht
+                          <CheckCircle2 size={12} aria-hidden={true} focusable={false} /> Termin gebucht
                         </span>
                         {lead.booking_date && (
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
-                            <Calendar size={12} /> {new Date(lead.booking_date).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}
+                            <Calendar size={12} aria-hidden={true} focusable={false} /> {new Date(lead.booking_date).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}
                           </span>
                         )}
                         {lead.booking_time && (
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
-                            <Clock size={12} /> {lead.booking_time} Uhr
+                            <Clock size={12} aria-hidden={true} focusable={false} /> {lead.booking_time} Uhr
                           </span>
                         )}
                         {lead.contact_method && (
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 text-accent border border-accent/20 px-2.5 py-1 text-xs font-medium">
-                            {lead.contact_method === "online" ? (<><Monitor size={12} /> Online-Meeting</>) : (<><Phone size={12} /> Telefonat</>)}
+                            {lead.contact_method === "online" ? (<><Monitor size={12} aria-hidden={true} focusable={false} /> Online-Meeting</>) : (<><Phone size={12} aria-hidden={true} focusable={false} /> Telefonat</>)}
                           </span>
                         )}
                       </div>
                     ) : (
                       <div className="pt-3 border-t border-border">
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-muted text-muted-foreground border border-border px-2.5 py-1 text-xs">
-                          <Clock size={12} /> Kein Termin gebucht
+                          <Clock size={12} aria-hidden={true} focusable={false} /> Kein Termin gebucht
                         </span>
                       </div>
                     )}
@@ -1124,18 +1124,18 @@ const AdminLeads = () => {
             <div className="flex items-center justify-between mb-6">
               <p className="text-muted-foreground">{projects.length} Projekt{projects.length !== 1 ? "e" : ""}</p>
               <Button variant="gradient" size="sm" onClick={openNewProject}>
-                <Plus size={14} /> Neues Projekt
+                <Plus size={14} aria-hidden={true} focusable={false} /> Neues Projekt
               </Button>
             </div>
 
             {portfolioLoading ? (
               <div className="text-center py-20">
-                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
+                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
                 <p className="text-muted-foreground">Lade Projekte...</p>
               </div>
             ) : projects.length === 0 ? (
               <div className="text-center py-20 text-muted-foreground">
-                <FolderOpen size={48} className="mx-auto mb-4 opacity-50" />
+                <FolderOpen size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
                 <p className="text-lg mb-2">Noch keine Projekte vorhanden.</p>
                 <p className="text-sm">Erstellen du dein erstes Portfolio-Projekt.</p>
               </div>
@@ -1148,7 +1148,7 @@ const AdminLeads = () => {
                       {p.image_url ? (
                         <img src={p.image_url} alt={p.title} className="w-full h-full object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center"><Image size={20} className="text-muted-foreground" /></div>
+                        <div className="w-full h-full flex items-center justify-center"><Image size={20} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
                       )}
                     </div>
 
@@ -1164,24 +1164,24 @@ const AdminLeads = () => {
                     {/* Actions */}
                     <div className="flex items-center gap-1 shrink-0">
                       <Button variant="ghost" size="icon" onClick={() => moveProject(i, "up")} disabled={i === 0} className="h-8 w-8">
-                        <ChevronUp size={14} />
+                        <ChevronUp size={14} aria-hidden={true} focusable={false} />
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => moveProject(i, "down")} disabled={i === projects.length - 1} className="h-8 w-8">
-                        <ChevronDown size={14} />
+                        <ChevronDown size={14} aria-hidden={true} focusable={false} />
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => toggleVisibility(p)} className="h-8 w-8">
-                        {p.is_visible ? <Eye size={14} /> : <EyeOff size={14} />}
+                        {p.is_visible ? <Eye size={14} aria-hidden={true} focusable={false} /> : <EyeOff size={14} aria-hidden={true} focusable={false} />}
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => openEditProject(p)} className="h-8 w-8">
-                        <Pencil size={14} />
+                        <Pencil size={14} aria-hidden={true} focusable={false} />
                       </Button>
                       {p.external_url && (
                         <Button variant="ghost" size="icon" onClick={() => generateMockup(p)} disabled={generatingMockup} className="h-8 w-8" title="Mockup generieren">
-                          {generatingMockup ? <Loader2 size={14} className="animate-spin" /> : <Monitor size={14} />}
+                          {generatingMockup ? <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} /> : <Monitor size={14} aria-hidden={true} focusable={false} />}
                         </Button>
                       )}
                       <Button variant="ghost" size="icon" onClick={() => deleteProject(p.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
-                        <Trash2 size={14} />
+                        <Trash2 size={14} aria-hidden={true} focusable={false} />
                       </Button>
                     </div>
                   </div>
@@ -1197,18 +1197,18 @@ const AdminLeads = () => {
             <div className="flex items-center justify-between mb-6">
               <p className="text-muted-foreground">{testimonials.length} Referenz{testimonials.length !== 1 ? "en" : ""}</p>
               <Button variant="gradient" size="sm" onClick={openNewTestimonial}>
-                <Plus size={14} /> Neue Referenz
+                <Plus size={14} aria-hidden={true} focusable={false} /> Neue Referenz
               </Button>
             </div>
 
             {testimonialsLoading ? (
               <div className="text-center py-20">
-                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
+                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
                 <p className="text-muted-foreground">Lade Referenzen...</p>
               </div>
             ) : testimonials.length === 0 ? (
               <div className="text-center py-20 text-muted-foreground">
-                <MessageSquare size={48} className="mx-auto mb-4 opacity-50" />
+                <MessageSquare size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
                 <p className="text-lg mb-2">Noch keine Referenzen vorhanden.</p>
                 <p className="text-sm">Erstellen du deine erste Kundenreferenz.</p>
               </div>
@@ -1217,7 +1217,7 @@ const AdminLeads = () => {
                 {testimonials.map((t, i) => (
                   <div key={t.id} className={`bg-card rounded-xl border border-border p-4 flex items-center gap-4 transition-all ${!t.is_visible ? "opacity-60" : ""}`}>
                     <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
-                      <Star size={16} className="text-primary-foreground" />
+                      <Star size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
@@ -1230,19 +1230,19 @@ const AdminLeads = () => {
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
                       <Button variant="ghost" size="icon" onClick={() => moveTestimonial(i, "up")} disabled={i === 0} className="h-8 w-8">
-                        <ChevronUp size={14} />
+                        <ChevronUp size={14} aria-hidden={true} focusable={false} />
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => moveTestimonial(i, "down")} disabled={i === testimonials.length - 1} className="h-8 w-8">
-                        <ChevronDown size={14} />
+                        <ChevronDown size={14} aria-hidden={true} focusable={false} />
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => toggleTestimonialVisibility(t)} className="h-8 w-8">
-                        {t.is_visible ? <Eye size={14} /> : <EyeOff size={14} />}
+                        {t.is_visible ? <Eye size={14} aria-hidden={true} focusable={false} /> : <EyeOff size={14} aria-hidden={true} focusable={false} />}
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => openEditTestimonial(t)} className="h-8 w-8">
-                        <Pencil size={14} />
+                        <Pencil size={14} aria-hidden={true} focusable={false} />
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => deleteTestimonial(t.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
-                        <Trash2 size={14} />
+                        <Trash2 size={14} aria-hidden={true} focusable={false} />
                       </Button>
                     </div>
                   </div>
@@ -1331,7 +1331,7 @@ const AdminLeads = () => {
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowProjectDialog(false)}>Abbrechen</Button>
             <Button variant="gradient" onClick={saveProject} disabled={savingProject}>
-              {savingProject ? <Loader2 className="animate-spin" size={16} /> : (editingProject ? "Speichern" : "Erstellen")}
+              {savingProject ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : (editingProject ? "Speichern" : "Erstellen")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1368,7 +1368,7 @@ const AdminLeads = () => {
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowTestimonialDialog(false)}>Abbrechen</Button>
             <Button variant="gradient" onClick={saveTestimonial} disabled={savingTestimonial}>
-              {savingTestimonial ? <Loader2 className="animate-spin" size={16} /> : (editingTestimonial ? "Speichern" : "Erstellen")}
+              {savingTestimonial ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : (editingTestimonial ? "Speichern" : "Erstellen")}
             </Button>
           </DialogFooter>
         </DialogContent>

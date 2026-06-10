@@ -55,7 +55,7 @@ export default function KundenportalLayout() {
   if (checking) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-primary" size={32} />
+        <Loader2 className="animate-spin text-primary" size={32} aria-hidden={true} focusable={false} />
       </div>
     );
   }
@@ -88,7 +88,7 @@ export default function KundenportalLayout() {
       <div className="p-3 border-t border-border">
         <div className="px-3 py-2 mb-2 text-xs text-muted-foreground truncate" title={email}>{email}</div>
         <Button variant="ghost" className="w-full justify-start" onClick={logout}>
-          <LogOut size={16} className="mr-2" /> Abmelden
+          <LogOut size={16} className="mr-2" aria-hidden={true} focusable={false} /> Abmelden
         </Button>
       </div>
     </>
@@ -116,7 +116,7 @@ export default function KundenportalLayout() {
         <header className="lg:hidden flex items-center justify-between px-4 h-14 bg-card border-b border-border sticky top-0 z-30">
           <Link to="/kundenportal" className="font-heading font-bold">Kundenportal</Link>
           <Button variant="ghost" size="icon" onClick={() => setOpen(!open)}>
-            {open ? <X size={20} /> : <Menu size={20} />}
+            {open ? <X size={20} aria-hidden={true} focusable={false} /> : <Menu size={20} aria-hidden={true} focusable={false} />}
           </Button>
         </header>
 

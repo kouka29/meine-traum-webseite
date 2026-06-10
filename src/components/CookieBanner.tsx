@@ -86,12 +86,12 @@ const CookieBanner = () => {
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <Shield size={20} className="text-primary" />
+              <Shield size={20} className="text-primary" aria-hidden={true} focusable={false} />
             </div>
             <h3 className="font-heading text-lg font-semibold">Cookie-Einstellungen</h3>
           </div>
           <button onClick={rejectAll} className="text-muted-foreground hover:text-foreground p-1" aria-label="Schließen">
-            <X size={18} />
+            <X size={18} aria-hidden={true} focusable={false} />
           </button>
         </div>
 
@@ -154,7 +154,7 @@ const CookieBanner = () => {
               className="flex-1"
               onClick={() => setShowDetails(true)}
             >
-              <Settings size={16} /> Einstellungen
+              <Settings size={16} aria-hidden={true} focusable={false} /> Einstellungen
             </Button>
           )}
           <Button variant="outline" className="flex-1" onClick={rejectAll}>

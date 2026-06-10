@@ -49,7 +49,7 @@ export default function KundenportalEinstellungen() {
     window.open(data.url, "_blank");
   };
 
-  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
   return (
     <div className="space-y-6">
@@ -81,7 +81,7 @@ export default function KundenportalEinstellungen() {
             <Input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} />
           </div>
           <Button onClick={save} disabled={saving}>
-            {saving ? <Loader2 className="animate-spin" size={16} /> : <><Save size={14} className="mr-1" /> Speichern</>}
+            {saving ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : <><Save size={14} className="mr-1" aria-hidden={true} focusable={false} /> Speichern</>}
           </Button>
         </CardContent>
       </Card>
@@ -94,7 +94,7 @@ export default function KundenportalEinstellungen() {
             Rechnungen herunterladen und dein Abo verwalten.
           </p>
           <Button variant="outline" onClick={openStripePortal} disabled={portalLoading}>
-            {portalLoading ? <Loader2 className="animate-spin" size={16} /> : <><ExternalLink size={14} className="mr-1" /> Stripe-Kundenportal öffnen</>}
+            {portalLoading ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : <><ExternalLink size={14} className="mr-1" aria-hidden={true} focusable={false} /> Stripe-Kundenportal öffnen</>}
           </Button>
         </CardContent>
       </Card>

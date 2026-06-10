@@ -14,7 +14,7 @@ export default function KundenportalAngebote() {
       .then(({ data }) => { setAngebote(data || []); setLoading(false); });
   }, []);
 
-  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
   return (
     <div className="space-y-6">
@@ -25,7 +25,7 @@ export default function KundenportalAngebote() {
 
       {angebote.length === 0 ? (
         <Card><CardContent className="py-16 text-center">
-          <FileCheck size={40} className="mx-auto text-muted-foreground mb-3" />
+          <FileCheck size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Aktuell keine Angebote.</p>
         </CardContent></Card>
       ) : (
@@ -43,7 +43,7 @@ export default function KundenportalAngebote() {
                 </div>
                 {a.short_id && (
                   <Button asChild size="sm" variant="outline">
-                    <a href={`/a/${a.short_id}`} target="_blank" rel="noreferrer"><ExternalLink size={14} className="mr-1" /> Ansehen</a>
+                    <a href={`/a/${a.short_id}`} target="_blank" rel="noreferrer"><ExternalLink size={14} className="mr-1" aria-hidden={true} focusable={false} /> Ansehen</a>
                   </Button>
                 )}
               </CardContent>
