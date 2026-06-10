@@ -553,7 +553,7 @@ const Premium = () => {
             </motion.div>
           ) : (
             <motion.div {...fadeUp}>
-              <div className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/30">
+              <div className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/60">
                 Projekt anfragen
               </div>
               <h2
@@ -564,7 +564,7 @@ const Premium = () => {
                 <em className="italic text-[color:var(--mtw-brand)]">Ihrem</em>{" "}
                 Projekt.
               </h2>
-              <p className="mb-12 mt-6 text-base text-white/55">
+              <p className="mb-12 mt-6 text-base text-white/75">
                 Wir melden uns innerhalb von 24 Stunden — persönlich, nicht
                 automatisiert.
               </p>
