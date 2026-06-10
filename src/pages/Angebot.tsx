@@ -161,7 +161,7 @@ export default function Angebot() {
     return (
       <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: "100vh", background: BG_SOFT, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, color: TEXT_MUTED }}>
-          <Loader2 size={20} className="animate-spin" /> Angebot wird geladen…
+          <Loader2 size={20} className="animate-spin" aria-hidden={true} focusable={false} /> Angebot wird geladen…
         </div>
       </div>
     );
@@ -198,7 +198,7 @@ export default function Angebot() {
           fontSize: 13, fontWeight: 600,
           borderBottom: "1px solid #FCD34D",
         }}>
-          <Eye size={14} style={{ display: "inline", marginRight: 6, verticalAlign: "-2px" }} />
+          <Eye size={14} style={{ display: "inline", marginRight: 6, verticalAlign: "-2px" }} aria-hidden={true} focusable={false} />
           Vorschau-Modus — so wird der Kunde das Angebot sehen
         </div>
       )}
@@ -233,7 +233,7 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
           display: "flex", alignItems: "center", justifyContent: "center",
           margin: "0 auto 24px",
         }}>
-          <Lock size={28} color={BRAND} />
+          <Lock size={28} color={BRAND} aria-hidden={true} focusable={false} />
         </div>
         <h1 style={{ fontSize: 26, fontWeight: 800, color: TEXT_DARK, marginBottom: 8 }}>
           dein persönliches Angebot wartet auf du
@@ -276,7 +276,7 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
           Angebot anzeigen →
         </button>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 20, color: TEXT_MUTED, fontSize: 12 }}>
-          <Shield size={12} /> SSL-verschlüsselt · Vertraulich
+          <Shield size={12} aria-hidden={true} focusable={false} /> SSL-verschlüsselt · Vertraulich
         </div>
       </form>
     </div>
@@ -708,7 +708,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         {/* Countdown — Inline, kein Kasten */}
         <div className="ang-reveal ang-d-6 ang-count-wrap" style={{ maxWidth: 640, marginBottom: 28 }}>
           <div className="ang-count-pill">
-            <Clock size={14} color="#4F3FF0" strokeWidth={2.5} />
+            <Clock size={14} color="#4F3FF0" strokeWidth={2.5} aria-hidden={true} focusable={false} />
             <span>Reserviert bis <strong>{ablaufStr}</strong></span>
           </div>
           <div className="ang-count-row">
@@ -800,7 +800,7 @@ function ProblemSection() {
                 display: "flex", alignItems: "center", justifyContent: "center",
                 marginBottom: 16,
               }}>
-                <AlertTriangle size={20} />
+                <AlertTriangle size={20} aria-hidden={true} focusable={false} />
               </div>
               <h3 style={{ fontSize: 18, fontWeight: 700, color: TEXT_DARK, marginBottom: 8 }}>{p.titel}</h3>
               <p style={{ fontSize: 15, color: TEXT_MUTED, lineHeight: 1.6, margin: 0 }}>{p.text}</p>
@@ -999,7 +999,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                         <ul style={{ listStyle: "none", padding: 0, margin: "8px 0 0", display: "grid", gap: 10 }}>
                           {p.leistungen.map((l, i) => (
                             <li key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-                              <CheckIcon size={14} color="#059669" style={{ marginTop: 4, flexShrink: 0 }} />
+                              <CheckIcon size={14} color="#059669" style={{ marginTop: 4, flexShrink: 0 }} aria-hidden={true} focusable={false} />
                               <div>
                                 <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK }}>{l.titel}</div>
                                 {nutzenFor(l.titel, l.beschreibung) && (
@@ -1017,7 +1017,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                 )}
                 {active && (
                   <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, color: BRAND, fontSize: 13, fontWeight: 700 }}>
-                    <CheckCircle2 size={16} /> Ausgewählt
+                    <CheckCircle2 size={16} aria-hidden={true} focusable={false} /> Ausgewählt
                   </div>
                 )}
                 {onChoose && (
@@ -1040,7 +1040,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                       transition: "all 0.15s",
                     }}
                   >
-                    Dieses Paket wählen <ChevronRight size={16} />
+                    Dieses Paket wählen <ChevronRight size={16} aria-hidden={true} focusable={false} />
                   </div>
                 )}
               </button>
@@ -1273,7 +1273,7 @@ function PriceSection({
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0, marginTop: 2,
                     }}>
-                      {active && <CheckIcon size={14} color="#fff" />}
+                      {active && <CheckIcon size={14} color="#fff" aria-hidden={true} focusable={false} />}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 4 }}>
@@ -1404,7 +1404,7 @@ function PriceCard({
           background: BRAND, color: "#fff",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
-          <CheckIcon size={16} />
+          <CheckIcon size={16} aria-hidden={true} focusable={false} />
         </div>
       )}
 
@@ -1450,7 +1450,7 @@ function PriceCard({
       <ul style={{ listStyle: "none", padding: 0, margin: "0 0 20px", display: "grid", gap: 10, flex: 1 }}>
         {bullets.map((b, i) => (
           <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 14, color: TEXT_DARK, lineHeight: 1.5 }}>
-            <CheckIcon size={16} color="#059669" style={{ marginTop: 2, flexShrink: 0 }} />
+            <CheckIcon size={16} color="#059669" style={{ marginTop: 2, flexShrink: 0 }} aria-hidden={true} focusable={false} />
             <span>{b}</span>
           </li>
         ))}
@@ -1825,7 +1825,7 @@ function FinalCtaSection({
           </a>
         )}
         <div style={{ marginTop: 18, fontSize: 13, color: "rgba(255,255,255,0.85)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-          <Shield size={13} />
+          <Shield size={13} aria-hidden={true} focusable={false} />
           {isRechnung
             ? "Zahlung per Rechnung · 14 Tage Zahlungsziel · B2B · Kein Widerrufsrecht"
             : "Sichere Zahlung via Stripe · SSL-verschlüsselt"}
@@ -1900,15 +1900,15 @@ function StickyBar({
       </div>
       {ctaLink ? (
         <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={btnStyle}>
-          {btnLabel} <ChevronRight size={16} />
+          {btnLabel} <ChevronRight size={16} aria-hidden={true} focusable={false} />
         </a>
       ) : isRechnung && ctaMode !== "anfrage" ? (
         <button type="button" onClick={openBooking} style={btnStyle}>
-          {btnLabel} <ChevronRight size={16} />
+          {btnLabel} <ChevronRight size={16} aria-hidden={true} focusable={false} />
         </button>
       ) : (
         <a href="mailto:hallo@meine-traum-webseite.de" style={btnStyle}>
-          Auf Anfrage <ChevronRight size={16} />
+          Auf Anfrage <ChevronRight size={16} aria-hidden={true} focusable={false} />
         </a>
       )}
       <style>{`
@@ -1948,7 +1948,7 @@ function ExpiredOverlay() {
           display: "flex", alignItems: "center", justifyContent: "center",
           margin: "0 auto 20px",
         }}>
-          <Clock size={28} color={TEXT_MUTED} />
+          <Clock size={28} color={TEXT_MUTED} aria-hidden={true} focusable={false} />
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 12 }}>
           Dieses Angebot ist abgelaufen.
@@ -2041,7 +2041,7 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
           <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, margin: 0 }}>Verbindlich buchen</h2>
           <button type="button" onClick={onClose} style={{ background: "transparent", border: "none", cursor: "pointer", color: TEXT_MUTED, padding: 4 }}>
-            <X size={20} />
+            <X size={20} aria-hidden={true} focusable={false} />
           </button>
         </div>
         <p style={{ color: TEXT_MUTED, fontSize: 14, marginBottom: 20 }}>
@@ -2101,7 +2101,7 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
             display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
           }}
         >
-          {submitting ? <><Loader2 size={16} className="animate-spin" /> Wird verarbeitet…</> : <>Zahlungspflichtig bestellen →</>}
+          {submitting ? <><Loader2 size={16} className="animate-spin" aria-hidden={true} focusable={false} /> Wird verarbeitet…</> : <>Zahlungspflichtig bestellen →</>}
         </button>
         <p style={{ marginTop: 12, fontSize: 11, color: TEXT_MUTED, textAlign: "center" }}>
           Mit Klick erteilen du einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
@@ -2162,7 +2162,7 @@ function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; on
           display: "flex", alignItems: "center", justifyContent: "center",
           margin: "0 auto 20px",
         }}>
-          <CheckCheck size={32} />
+          <CheckCheck size={32} aria-hidden={true} focusable={false} />
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 10 }}>
           Vielen Dank für deinen Auftrag!

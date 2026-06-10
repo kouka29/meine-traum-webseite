@@ -176,7 +176,7 @@ const Contact = () => {
                 </div>
                 <Button variant="gradient" size="lg" type="submit" disabled={loading} className="w-full sm:w-auto text-base py-6 px-8">
                   {loading ? "Wird gesendet..." : (
-                    <>Erstgespräch anfragen <Send size={18} /></>
+                    <>Erstgespräch anfragen <Send size={18} aria-hidden={true} focusable={false} /></>
                   )}
                 </Button>
                 {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
@@ -229,7 +229,7 @@ const Contact = () => {
                   <div className="space-y-3.5">
                     {trustPoints.map((t) => (
                       <div key={t} className="flex items-center gap-3">
-                        <CheckCircle size={17} className="text-primary shrink-0" />
+                        <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                         <span className="text-sm">{t}</span>
                       </div>
                     ))}

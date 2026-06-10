@@ -38,7 +38,7 @@ const WebdesignAgentur = () => (
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
-                <Link to="/kontakt">Kostenlose Website-Vorschau sichern <ArrowRight size={18} /></Link>
+                <Link to="/kontakt">Kostenlose Website-Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
               </Button>
               <Button variant="outline-primary" size="lg" asChild>
                 <Link to="/webdesign-preise">Webdesign Preise ansehen</Link>
@@ -93,7 +93,7 @@ const WebdesignAgentur = () => (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
                {["Professioneller Online-Auftritt ab 990 €", "Kostenlose Vorschau in 48 Stunden", "Keine laufenden Agenturkosten", "Persönlicher Ansprechpartner", "SEO-Grundlagen inklusive", "Mobile-optimiert"].map((p) => (
                 <div key={p} className="flex items-center gap-3">
-                  <CheckCircle size={17} className="text-primary shrink-0" />
+                  <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm">{p}</span>
                 </div>
               ))}

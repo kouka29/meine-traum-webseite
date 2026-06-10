@@ -38,13 +38,13 @@ export default function TicketDetail() {
     setReply(""); load();
   };
 
-  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
   if (!ticket) return <p>Wunsch nicht gefunden.</p>;
 
   return (
     <div className="space-y-6 max-w-3xl">
       <Link to="/kundenportal/wuensche" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-        <ArrowLeft size={14} /> Zurück
+        <ArrowLeft size={14} aria-hidden={true} focusable={false} /> Zurück
       </Link>
       <div>
         <h1 className="font-heading text-2xl font-bold">{ticket.subject}</h1>
@@ -72,7 +72,7 @@ export default function TicketDetail() {
         <div className="space-y-2">
           <Textarea rows={4} value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Antworten oder Ergänzung..." maxLength={5000} />
           <Button onClick={send} disabled={sending}>
-            {sending ? <Loader2 className="animate-spin" size={16} /> : <><Send size={14} className="mr-1" /> Senden</>}
+            {sending ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : <><Send size={14} className="mr-1" aria-hidden={true} focusable={false} /> Senden</>}
           </Button>
         </div>
       )}

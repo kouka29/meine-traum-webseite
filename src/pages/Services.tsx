@@ -95,7 +95,7 @@ const Services = () => (
                   <div className="flex flex-wrap gap-4">
                     {s.features.map((f) => (
                       <span key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <CheckCircle size={14} className="text-primary" />
+                        <CheckCircle size={14} className="text-primary" aria-hidden={true} focusable={false} />
                         {f}
                       </span>
                     ))}

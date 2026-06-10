@@ -86,13 +86,13 @@ export default function StripeCheckoutDialog({
         <div className="px-2 pb-4 min-h-[400px]">
           {loading && (
             <div className="flex items-center justify-center py-20 text-muted-foreground">
-              <Loader2 className="animate-spin mr-2" size={20} />
+              <Loader2 className="animate-spin mr-2" size={20} aria-hidden={true} focusable={false} />
               Checkout wird geladen…
             </div>
           )}
           {error && (
             <div className="flex items-start gap-3 mx-6 p-4 rounded-lg border border-destructive/30 bg-destructive/5 text-sm">
-              <AlertCircle size={18} className="text-destructive shrink-0 mt-0.5" />
+              <AlertCircle size={18} className="text-destructive shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
               <div>
                 <p className="font-medium text-destructive">Fehler</p>
                 <p className="text-muted-foreground mt-1">{error}</p>

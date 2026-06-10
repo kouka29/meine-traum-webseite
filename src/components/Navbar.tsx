@@ -75,7 +75,7 @@ const Navbar = () => {
             href="tel:+4961313076498"
             className="hidden xl:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground whitespace-nowrap hover:text-primary transition-colors"
           >
-            <Phone size={14} className="text-primary" />
+            <Phone size={14} className="text-primary" aria-hidden={true} focusable={false} />
             06131 30 764 98
           </a>
           <Button
@@ -96,7 +96,7 @@ const Navbar = () => {
           aria-expanded={open}
           aria-controls="mobile-nav"
         >
-          {open ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={24} aria-hidden={true} focusable={false} /> : <Menu size={24} aria-hidden={true} focusable={false} />}
         </button>
       </nav>
 
@@ -124,7 +124,7 @@ const Navbar = () => {
               className="inline-flex items-center gap-2 text-sm font-semibold text-foreground"
               onClick={() => setOpen(false)}
             >
-              <Phone size={14} className="text-primary" />
+              <Phone size={14} className="text-primary" aria-hidden={true} focusable={false} />
               06131 30 764 98
             </a>
             <Button

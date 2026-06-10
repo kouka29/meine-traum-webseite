@@ -6,14 +6,14 @@ const UrgencyBanner = () => (
   <div className="bg-destructive/8 border-y border-destructive/15 py-4">
     <div className="container-narrow px-4 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
       <div className="flex items-center gap-2.5">
-        <Clock size={16} className="text-destructive" />
+        <Clock size={16} className="text-destructive" aria-hidden={true} focusable={false} />
         <span className="text-sm font-medium text-foreground">
           Jeden Tag ohne professionelle Website = verlorene Kunden.
         </span>
       </div>
       <Button variant="gradient" size="sm" className="text-xs" asChild>
         <Link to="/kontakt">
-          Jetzt handeln <ArrowRight size={14} />
+          Jetzt handeln <ArrowRight size={14} aria-hidden={true} focusable={false} />
         </Link>
       </Button>
     </div>

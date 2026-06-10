@@ -85,12 +85,12 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
 
       {loading ? (
         <div className="text-center py-20">
-          <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
+          <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Lade Angebote...</p>
         </div>
       ) : angebote.length === 0 ? (
         <div className="text-center py-20 text-muted-foreground">
-          <FileText size={48} className="mx-auto mb-4 opacity-50" />
+          <FileText size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
           <p className="text-lg mb-2">Noch keine Angebote vorhanden.</p>
           <p className="text-sm">Erstellen du ein Angebot aus dem Leads-Tab.</p>
         </div>
@@ -138,16 +138,16 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-end gap-1">
                         <Button variant="ghost" size="icon" onClick={() => window.open(linkFor(a), "_blank")} title="Öffnen" className="h-8 w-8">
-                          <ExternalLink size={14} />
+                          <ExternalLink size={14} aria-hidden={true} focusable={false} />
                         </Button>
                         <Button variant="ghost" size="icon" onClick={() => copyLink(a)} title="Link kopieren" className="h-8 w-8">
-                          <Copy size={14} />
+                          <Copy size={14} aria-hidden={true} focusable={false} />
                         </Button>
                         <Button variant="ghost" size="icon" onClick={() => setEditing(a)} title="Bearbeiten" className="h-8 w-8" disabled={!a.base64_data}>
-                          <Pencil size={14} />
+                          <Pencil size={14} aria-hidden={true} focusable={false} />
                         </Button>
                         <Button variant="ghost" size="icon" onClick={() => del(a.id)} title="Löschen" className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
-                          <Trash2 size={14} />
+                          <Trash2 size={14} aria-hidden={true} focusable={false} />
                         </Button>
                       </div>
                     </td>

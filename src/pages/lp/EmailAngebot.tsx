@@ -311,10 +311,10 @@ const TestimonialCarousel = () => {
             <div key={t.id} className="shrink-0 px-2.5" style={{ flex: `0 0 ${100 / visible}%` }}>
               <div className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
                 <div className="p-7 md:p-8 flex-1 flex flex-col relative">
-                  <Quote size={80} className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none" fill="currentColor" strokeWidth={0} />
+                  <Quote size={80} className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none" fill="currentColor" strokeWidth={0} aria-hidden={true} focusable={false} />
                   <div className="flex gap-1 mb-5 relative z-10">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" />
+                      <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" aria-hidden={true} focusable={false} />
                     ))}
                   </div>
                   <blockquote className="font-heading text-base md:text-lg leading-snug text-foreground font-semibold mb-6 tracking-tight flex-1 relative z-10">
@@ -364,7 +364,7 @@ const HiddenFeaturesAccordion = ({ items }: { items: string[] }) => {
         className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-primary border-2 border-primary/30 hover:border-primary hover:bg-primary/5 rounded-xl px-4 py-2.5 transition-colors"
       >
         <span>Alle Leistungen anzeigen</span>
-        <ChevronDown size={16} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        <ChevronDown size={16} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden={true} focusable={false} />
       </button>
       <div className={`grid transition-all duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
         <div className="overflow-hidden">
@@ -372,7 +372,7 @@ const HiddenFeaturesAccordion = ({ items }: { items: string[] }) => {
             <ul className="space-y-1.5">
               {items.map((f) => (
                 <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                  <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
+                  <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                   <span>{f}</span>
                 </li>
               ))}
@@ -406,7 +406,7 @@ const EmailAngebot = () => {
         <div className="container-narrow px-4 py-3.5 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center shadow-glow">
-              <Sparkles size={16} className="text-primary-foreground" />
+              <Sparkles size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
             </div>
             <span className="font-heading font-semibold text-sm text-foreground">Meine Traum Webseite</span>
           </div>
@@ -414,7 +414,7 @@ const EmailAngebot = () => {
             href="tel:+4961313076498"
             className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-foreground/80 hover:text-primary transition-colors"
           >
-            <Phone size={14} /> 06131 30 764 98
+            <Phone size={14} aria-hidden={true} focusable={false} /> 06131 30 764 98
           </a>
         </div>
       </header>
@@ -456,7 +456,7 @@ const EmailAngebot = () => {
                 }}
                 className="animate-cta-pulse"
               >
-                Pakete & Preise ansehen <ArrowRight size={18} />
+                Pakete & Preise ansehen <ArrowRight size={18} aria-hidden={true} focusable={false} />
               </Button>
               <Button
                 variant="outline-primary"
@@ -469,17 +469,17 @@ const EmailAngebot = () => {
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-7 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <Clock size={16} className="text-primary" />
+                <Clock size={16} className="text-primary" aria-hidden={true} focusable={false} />
                 <span>In 7 Tagen live</span>
               </div>
               <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
               <div className="flex items-center gap-2">
-                <CheckCircle size={16} className="text-primary" />
+                <CheckCircle size={16} className="text-primary" aria-hidden={true} focusable={false} />
                 <span>Voll absetzbar</span>
               </div>
               <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
               <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-primary" />
+                <ShieldCheck size={16} className="text-primary" aria-hidden={true} focusable={false} />
                 <span>Kein Technik-Wissen nötig</span>
               </div>
             </div>
@@ -564,7 +564,7 @@ const EmailAngebot = () => {
                       >
                         {pkg.popular && (
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-                            <Star size={12} /> Beliebteste Wahl
+                            <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
                           </span>
                         )}
                         <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
@@ -578,7 +578,7 @@ const EmailAngebot = () => {
                         <div className="space-y-3 flex-1 mb-6">
                           {pkg.features.map((f) => (
                             <div key={f} className="flex items-start gap-2.5">
-                              <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                              <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                               <span className="text-sm">{f}</span>
                             </div>
                           ))}
@@ -591,7 +591,7 @@ const EmailAngebot = () => {
                             className="w-full"
                             onClick={() => setCheckoutPkg({ name: pkg.name })}
                           >
-                            {pkg.cta} <ArrowRight size={16} />
+                            {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
                           </Button>
                           <button
                             type="button"
@@ -614,7 +614,7 @@ const EmailAngebot = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {enterprisePkg.features.map((f) => (
                           <div key={f} className="flex items-start gap-2.5">
-                            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                            <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                             <span className="text-sm">{f}</span>
                           </div>
                         ))}
@@ -622,7 +622,7 @@ const EmailAngebot = () => {
                     </div>
                     <div className="md:w-auto">
                       <Button variant="outline" size="lg" onClick={() => openPopup(enterprisePkg.badge)}>
-                        {enterprisePkg.cta} <ArrowRight size={16} />
+                        {enterprisePkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
                       </Button>
                     </div>
                   </div>
@@ -705,13 +705,13 @@ const EmailAngebot = () => {
                   onClick={() => openPopup("Kostenlose Beratung")}
                   className="bg-white text-primary hover:bg-white/90 shadow-xl"
                 >
-                  Kostenlose Demo anfordern <ArrowRight size={18} />
+                  Kostenlose Demo anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </Button>
                 <a
                   href="tel:+4961313076498"
                   className="inline-flex items-center justify-center gap-2 rounded-lg px-6 h-12 font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors"
                 >
-                  <Phone size={16} /> 06131 30 764 98
+                  <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
                 </a>
               </div>
               <p className="text-sm text-white/80 mt-7 flex items-center justify-center gap-2 flex-wrap">

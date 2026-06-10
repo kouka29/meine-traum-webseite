@@ -32,7 +32,7 @@ const PricingTeaserCard = ({ name, price, description, features, highlighted, ct
     <ul className="space-y-2 text-sm">
       {features.map((f) => (
         <li key={f} className="flex items-start gap-2">
-          <Check size={16} className="mt-0.5 shrink-0" style={{ color: "#10B981" }} />
+          <Check size={16} className="mt-0.5 shrink-0" style={{ color: "#10B981" }} aria-hidden={true} focusable={false} />
           <span className="text-foreground/80">{f}</span>
         </li>
       ))}

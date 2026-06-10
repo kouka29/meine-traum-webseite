@@ -14,7 +14,7 @@ export default function KundenportalVertrag() {
     });
   }, []);
 
-  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
   return (
     <div className="space-y-6">
@@ -29,7 +29,7 @@ export default function KundenportalVertrag() {
         <Card key={b.id}>
           <CardHeader>
             <CardTitle className="flex items-center justify-between flex-wrap gap-2">
-              <span className="flex items-center gap-2"><Package size={18} className="text-primary" /> Buchung {b.angebots_nr}</span>
+              <span className="flex items-center gap-2"><Package size={18} className="text-primary" aria-hidden={true} focusable={false} /> Buchung {b.angebots_nr}</span>
               <span className="text-xs font-normal text-muted-foreground">{new Date(b.gebucht_am).toLocaleDateString("de-DE")}</span>
             </CardTitle>
           </CardHeader>

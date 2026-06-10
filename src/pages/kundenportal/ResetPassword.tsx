@@ -115,7 +115,7 @@ export default function KundenportalResetPassword() {
           {!ready ? (
             <div className="text-center space-y-4">
               <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                <Loader2 className="text-primary animate-spin" size={32} />
+                <Loader2 className="text-primary animate-spin" size={32} aria-hidden={true} focusable={false} />
               </div>
               <h2 className="font-heading text-2xl font-bold">Link wird geprüft</h2>
               <p className="text-muted-foreground text-sm">Einen Moment bitte.</p>
@@ -123,7 +123,7 @@ export default function KundenportalResetPassword() {
           ) : done ? (
             <div className="text-center space-y-4">
               <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                <CheckCircle2 className="text-primary" size={32} />
+                <CheckCircle2 className="text-primary" size={32} aria-hidden={true} focusable={false} />
               </div>
               <h2 className="font-heading text-2xl font-bold">Passwort gespeichert</h2>
               <p className="text-muted-foreground text-sm">Du kannst dich jetzt im Kundenportal anmelden.</p>
@@ -135,7 +135,7 @@ export default function KundenportalResetPassword() {
             <form onSubmit={submit} className="space-y-5">
               <div className="text-center mb-6">
                 <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                  <LockKeyhole className="text-primary" size={24} />
+                  <LockKeyhole className="text-primary" size={24} aria-hidden={true} focusable={false} />
                 </div>
                 <h2 className="font-heading text-2xl font-bold mb-2">Passwort setzen</h2>
                 <p className="text-sm text-muted-foreground">Wähle ein neues Passwort für dein Kundenportal.</p>
@@ -160,7 +160,7 @@ export default function KundenportalResetPassword() {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                     aria-label={showPassword ? "Passwort ausblenden" : "Passwort anzeigen"}
                   >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    {showPassword ? <EyeOff size={16} aria-hidden={true} focusable={false} /> : <Eye size={16} aria-hidden={true} focusable={false} />}
                   </button>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default function KundenportalResetPassword() {
               </div>
 
               <Button type="submit" className="w-full" disabled={saving}>
-                {saving ? <Loader2 className="animate-spin" size={16} /> : "Passwort speichern"}
+                {saving ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : "Passwort speichern"}
               </Button>
             </form>
           )}

@@ -53,16 +53,16 @@ export default function KundenportalTickets() {
           <h1 className="font-heading text-3xl font-bold">Wünsche & Support</h1>
           <p className="text-muted-foreground mt-1">Änderungswünsche, Support-Anfragen, alles an einem Ort.</p>
         </div>
-        <Button onClick={() => setOpen(true)}><Plus size={16} className="mr-1" /> Neuer Wunsch</Button>
+        <Button onClick={() => setOpen(true)}><Plus size={16} className="mr-1" aria-hidden={true} focusable={false} /> Neuer Wunsch</Button>
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary" /></div>
+        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>
       ) : tickets.length === 0 ? (
         <Card><CardContent className="py-16 text-center">
-          <MessageSquare size={40} className="mx-auto text-muted-foreground mb-3" />
+          <MessageSquare size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Noch keine Wünsche eingereicht.</p>
-          <Button className="mt-4" onClick={() => setOpen(true)}><Plus size={16} className="mr-1" /> Ersten Wunsch senden</Button>
+          <Button className="mt-4" onClick={() => setOpen(true)}><Plus size={16} className="mr-1" aria-hidden={true} focusable={false} /> Ersten Wunsch senden</Button>
         </CardContent></Card>
       ) : (
         <Card><CardContent className="p-0">
@@ -100,7 +100,7 @@ export default function KundenportalTickets() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)}>Abbrechen</Button>
-            <Button onClick={submit} disabled={saving}>{saving ? <Loader2 className="animate-spin" size={16} /> : "Wunsch senden"}</Button>
+            <Button onClick={submit} disabled={saving}>{saving ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : "Wunsch senden"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

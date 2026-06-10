@@ -36,7 +36,7 @@ export default function KundenportalRechnungen() {
     })();
   }, []);
 
-  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
   return (
     <div className="space-y-6">
@@ -48,7 +48,7 @@ export default function KundenportalRechnungen() {
       {invoices.length === 0 ? (
         <Card>
           <CardContent className="py-16 text-center">
-            <Receipt size={40} className="mx-auto text-muted-foreground mb-3" />
+            <Receipt size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
             <p className="text-muted-foreground">Noch keine Rechnungen vorhanden.</p>
             <p className="text-xs text-muted-foreground mt-2">Sobald eine Zahlung erfolgt ist, findest du hier alle Rechnungen.</p>
           </CardContent>
@@ -72,12 +72,12 @@ export default function KundenportalRechnungen() {
                   <div className="flex gap-2">
                     {inv.invoice_pdf && (
                       <Button asChild size="sm" variant="outline">
-                        <a href={inv.invoice_pdf} target="_blank" rel="noreferrer"><Download size={14} className="mr-1" /> PDF</a>
+                        <a href={inv.invoice_pdf} target="_blank" rel="noreferrer"><Download size={14} className="mr-1" aria-hidden={true} focusable={false} /> PDF</a>
                       </Button>
                     )}
                     {inv.hosted_invoice_url && (
                       <Button asChild size="sm" variant="ghost">
-                        <a href={inv.hosted_invoice_url} target="_blank" rel="noreferrer"><ExternalLink size={14} /></a>
+                        <a href={inv.hosted_invoice_url} target="_blank" rel="noreferrer"><ExternalLink size={14} aria-hidden={true} focusable={false} /></a>
                       </Button>
                     )}
                   </div>

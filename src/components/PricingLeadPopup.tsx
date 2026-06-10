@@ -311,7 +311,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
           className="absolute top-3 right-3 z-20 w-10 h-10 rounded-full bg-muted/80 hover:bg-muted flex items-center justify-center transition-colors"
           aria-label="Schließen"
         >
-          <X size={20} className="text-muted-foreground" />
+          <X size={20} className="text-muted-foreground" aria-hidden={true} focusable={false} />
         </button>
 
         {submitted ? (
@@ -336,7 +336,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   animation: "pricing-popup-success-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
                 }}
               >
-                <CheckCircle2 size={64} strokeWidth={2.2} style={{ color: "#22C55E" }} />
+                <CheckCircle2 size={64} strokeWidth={2.2} style={{ color: "#22C55E" }} aria-hidden={true} focusable={false} />
               </div>
 
               <h3 className="font-heading text-xl sm:text-3xl font-bold leading-tight mb-3 text-foreground">
@@ -355,7 +355,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   "Schritt 3: deine Demo ist in 48 h fertig",
                 ].map((step) => (
                   <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
-                    <CheckCircle2 size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                     <span>{step}</span>
                   </div>
                 ))}
@@ -373,7 +373,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   href="tel:+4961313076498"
                   className="inline-flex items-center gap-1.5 text-primary font-bold text-sm sm:text-base hover:underline"
                 >
-                  <Phone size={14} />
+                  <Phone size={14} aria-hidden={true} focusable={false} />
                   06131 30 764 98
                 </a>
               </div>
@@ -464,7 +464,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
             {showScrollHint && (
               <div className="sm:hidden pointer-events-none absolute left-0 right-0 bottom-[88px] flex flex-col items-center gap-0.5 animate-in fade-in duration-200">
                 <span className="text-[11px] text-muted-foreground/80">Noch ein Feld</span>
-                <ChevronDown size={14} className="text-muted-foreground/70 animate-bounce" />
+                <ChevronDown size={14} className="text-muted-foreground/70 animate-bounce" aria-hidden={true} focusable={false} />
               </div>
             )}
 
@@ -479,10 +479,10 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               >
                 {loading ? (
                   <>
-                    <Loader2 size={18} className="animate-spin" /> Wird gesendet...
+                    <Loader2 size={18} className="animate-spin" aria-hidden={true} focusable={false} /> Wird gesendet...
                   </>
                 ) : (
-                  <>{ctaLabel} <ArrowRight size={18} /></>
+                  <>{ctaLabel} <ArrowRight size={18} aria-hidden={true} focusable={false} /></>
                 )}
               </Button>
 
@@ -499,7 +499,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 ⏱ Ich melde mich innerhalb von 2 Stunden bei dir — Mo–Fr 9–18 Uhr
               </p>
               <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1.5">
-                <ShieldCheck size={13} />
+                <ShieldCheck size={13} aria-hidden={true} focusable={false} />
                 Kostenlos & unverbindlich – kein Spam, keine Verpflichtung
               </p>
               <p className="text-center text-xs text-muted-foreground/80 mt-1.5">

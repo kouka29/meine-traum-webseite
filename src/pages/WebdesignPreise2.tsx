@@ -284,7 +284,7 @@ const PackageCard = ({
     >
       {pkg.popular && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-          <Star size={12} /> Beliebteste Wahl
+          <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
@@ -318,7 +318,7 @@ const PackageCard = ({
           }
           return (
             <div key={f} className="flex items-start gap-2.5">
-              <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+              <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
               <span className="text-sm">{f}</span>
             </div>
           );
@@ -335,7 +335,7 @@ const PackageCard = ({
           <ul className="space-y-1 mb-2">
             {pkg.growth.items.map((g) => (
               <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
-                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
+                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                 <span>{g}</span>
               </li>
             ))}
@@ -355,7 +355,7 @@ const PackageCard = ({
           }
           data-pricing-cta="true"
         >
-          {pkg.cta} <ArrowRight size={16} />
+          {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
         </Button>
         {pkg.priceId && onCheckout && (
           <Button
@@ -392,7 +392,7 @@ const BuyCard = ({
     >
       {pkg.popular && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-          <Star size={12} /> Beliebteste Wahl
+          <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
@@ -411,7 +411,7 @@ const BuyCard = ({
       <div className="space-y-3 flex-1 mb-4 mt-2">
         {pkg.features.map((f) => (
           <div key={f} className="flex items-start gap-2.5">
-            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+            <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
             <span className="text-sm">{f}</span>
           </div>
         ))}
@@ -424,7 +424,7 @@ const BuyCard = ({
           <ul className="space-y-1 mb-2">
             {pkg.growth.items.map((g) => (
               <li key={g} className="flex items-start gap-2 text-xs text-muted-foreground">
-                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" />
+                <CheckCircle size={12} className="text-muted-foreground shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                 <span>{g}</span>
               </li>
             ))}
@@ -446,7 +446,7 @@ const BuyCard = ({
           onClick={() => (pkg.priceId ? onCheckout(pkg) : onOpen(pkg.badge ?? pkg.name))}
           data-pricing-cta="true"
         >
-          {pkg.cta} <ArrowRight size={16} />
+          {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
         </Button>
         {pkg.priceId && (
           <Button
@@ -511,7 +511,7 @@ const WebdesignPreise2 = () => {
         onClick={() => openPopup("Kostenlose Demo")}
         className="font-semibold text-primary hover:underline inline-flex items-center gap-1"
       >
-        Kostenlose Demo anfordern <ArrowRight size={14} />
+        Kostenlose Demo anfordern <ArrowRight size={14} aria-hidden={true} focusable={false} />
       </button>
     </div>
 
@@ -528,7 +528,7 @@ const WebdesignPreise2 = () => {
               Professionell online — ohne großes Investment.
             </p>
             <p className="inline-flex items-center gap-2 text-base md:text-lg font-bold text-primary bg-primary/10 px-4 py-2 rounded-full">
-              <CheckCircle size={20} className="text-primary shrink-0" />
+              <CheckCircle size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
               Für Gewerbetreibende voll steuerlich absetzbar
             </p>
           </div>
@@ -560,7 +560,7 @@ const WebdesignPreise2 = () => {
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
-                  <ArrowRight size={16} className="shrink-0" />
+                  <ArrowRight size={16} className="shrink-0" aria-hidden={true} focusable={false} />
                 </span>
               </Button>
             </div>
@@ -577,7 +577,7 @@ const WebdesignPreise2 = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {pkg.features.map((f) => (
                         <div key={f} className="flex items-start gap-2.5">
-                          <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                          <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                           <span className="text-sm">{f}</span>
                         </div>
                       ))}
@@ -585,7 +585,7 @@ const WebdesignPreise2 = () => {
                   </div>
                   <div className="md:w-auto">
                     <Button variant="gradient" size="lg" onClick={() => openPopup(pkg.badge ?? "Enterprise – Auf Anfrage")} data-pricing-cta="true">
-                      {pkg.cta} <ArrowRight size={16} />
+                      {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
                     </Button>
                   </div>
                 </div>
@@ -616,7 +616,7 @@ const WebdesignPreise2 = () => {
               <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="h-auto min-h-12 max-w-full whitespace-normal text-center py-3 px-6 bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
                 <span className="flex items-center justify-center gap-2 leading-snug">
                   <span>Nicht sicher welches Paket passt? Kostenlos beraten lassen</span>
-                  <ArrowRight size={16} className="shrink-0" />
+                  <ArrowRight size={16} className="shrink-0" aria-hidden={true} focusable={false} />
                 </span>
               </Button>
             </div>
@@ -630,7 +630,7 @@ const WebdesignPreise2 = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {buyEnterprise.features.map((f) => (
                       <div key={f} className="flex items-start gap-2.5">
-                        <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                        <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                         <span className="text-sm">{f}</span>
                       </div>
                     ))}
@@ -638,7 +638,7 @@ const WebdesignPreise2 = () => {
                 </div>
                 <div className="md:w-auto">
                   <Button variant="outline" size="lg" onClick={() => openPopup(buyEnterprise.badge)} data-pricing-cta="true">
-                    {buyEnterprise.cta} <ArrowRight size={16} />
+                    {buyEnterprise.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
                   </Button>
                 </div>
               </div>
@@ -655,7 +655,7 @@ const WebdesignPreise2 = () => {
               Nicht sicher? Ich berate du kurz und kostenlos.
             </p>
             <Button variant="outline" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true" className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary">
-              Kostenlos beraten lassen <ArrowRight size={18} />
+              Kostenlos beraten lassen <ArrowRight size={18} aria-hidden={true} focusable={false} />
             </Button>
           </div>
 
@@ -704,7 +704,7 @@ const WebdesignPreise2 = () => {
           Gefällt sie dir nicht — Du zahlst nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
-          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />
+          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} aria-hidden={true} focusable={false} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
           Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 30 764 98</a>

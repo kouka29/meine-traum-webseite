@@ -58,7 +58,7 @@ const About = () => (
               <div className="space-y-3.5">
                 {reasons.map((r) => (
                   <div key={r} className="flex items-center gap-3">
-                    <CheckCircle size={17} className="text-primary shrink-0" />
+                    <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                     <span className="text-sm">{r}</span>
                   </div>
                 ))}
@@ -66,7 +66,7 @@ const About = () => (
               <div className="mt-10 flex flex-col sm:flex-row gap-4">
                 <Button variant="gradient" asChild>
                   <Link to="/kontakt">
-                    Kostenlose Vorschau anfordern <ArrowRight size={18} />
+                    Kostenlose Vorschau anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} />
                   </Link>
                 </Button>
                 <Button variant="outline-primary" asChild>
@@ -76,7 +76,7 @@ const About = () => (
             </div>
             <div className="aspect-square rounded-3xl gradient-hero-bg flex items-center justify-center">
               <div className="text-center text-primary-foreground">
-                <Users size={64} className="mx-auto mb-4 opacity-40" />
+                <Users size={64} className="mx-auto mb-4 opacity-40" aria-hidden={true} focusable={false} />
                 <span className="font-heading text-5xl font-bold block tracking-tight">150+</span>
                 <span className="text-primary-foreground/60 text-sm mt-1 block">Zufriedene Kunden</span>
               </div>

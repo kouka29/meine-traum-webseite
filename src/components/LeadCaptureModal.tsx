@@ -173,7 +173,7 @@ const LeadCaptureModal = () => {
           className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-muted/80 hover:bg-muted flex items-center justify-center transition-colors"
           aria-label="Schließen"
         >
-          <X size={16} className="text-muted-foreground" />
+          <X size={16} className="text-muted-foreground" aria-hidden={true} focusable={false} />
         </button>
 
         <div className="h-1.5 w-full gradient-bg" />
@@ -182,7 +182,7 @@ const LeadCaptureModal = () => {
           {submitted ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5">
-                <CheckCircle size={32} className="text-primary" />
+                <CheckCircle size={32} className="text-primary" aria-hidden={true} focusable={false} />
               </div>
               <h3 className="font-heading text-2xl font-bold mb-3 text-foreground">
                 Fast geschafft! 🎉
@@ -233,7 +233,7 @@ const LeadCaptureModal = () => {
               </p>
 
               <div className="flex items-center gap-2 bg-primary/5 border border-primary/15 rounded-lg px-4 py-2.5 mb-5">
-                <Gift size={16} className="text-primary shrink-0" />
+                <Gift size={16} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm font-medium text-foreground">
                   Bonus: Die perfekte Webseiten-Checkliste (sofort umsetzbar)
                 </span>
@@ -337,7 +337,7 @@ const LeadCaptureModal = () => {
                 >
                   {loading ? (
                     <>
-                      <Loader2 size={18} className="animate-spin" /> Wird gesendet...
+                      <Loader2 size={18} className="animate-spin" aria-hidden={true} focusable={false} /> Wird gesendet...
                     </>
                   ) : (
                     "Jetzt kostenlos herunterladen und direkt starten"
@@ -365,7 +365,7 @@ const LeadCaptureModal = () => {
               </form>
 
               <p className="text-center text-xs text-muted-foreground mt-4 flex items-center justify-center gap-1.5">
-                <ShieldCheck size={13} />
+                <ShieldCheck size={13} aria-hidden={true} focusable={false} />
                 100 % kostenlos. Kein Spam.
               </p>
 

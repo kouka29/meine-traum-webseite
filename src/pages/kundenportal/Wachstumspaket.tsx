@@ -39,7 +39,7 @@ export default function KundenportalWachstumspaket() {
 
   useEffect(() => { reload(); }, []);
 
-  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
   if (!row) {
     return (
@@ -70,7 +70,7 @@ export default function KundenportalWachstumspaket() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Rocket size={20} className="text-primary" />
+            <Rocket size={20} className="text-primary" aria-hidden={true} focusable={false} />
             {PACKAGE_LABELS[row.package] || row.package}
           </CardTitle>
         </CardHeader>
@@ -86,15 +86,15 @@ export default function KundenportalWachstumspaket() {
                 {isCancelled ? <span className="text-red-600">Gekündigt</span>
                   : isPending ? <span className="text-amber-600">Wartet auf Go-Live</span>
                   : row.status === "past_due" ? <span className="text-orange-600">Zahlung überfällig</span>
-                  : <span className="text-emerald-600 inline-flex items-center gap-1"><CheckCircle2 size={14} /> Aktiv</span>}
+                  : <span className="text-emerald-600 inline-flex items-center gap-1"><CheckCircle2 size={14} aria-hidden={true} focusable={false} /> Aktiv</span>}
               </div>
             </div>
             <div>
               <div className="text-xs text-muted-foreground">Abrechnung</div>
               <div className="text-sm font-semibold inline-flex items-center gap-1">
                 {isStripeAuto
-                  ? <><CreditCard size={14} className="text-primary" /> Automatisch (Stripe)</>
-                  : <><FileText size={14} className="text-muted-foreground" /> Per Rechnung</>}
+                  ? <><CreditCard size={14} className="text-primary" aria-hidden={true} focusable={false} /> Automatisch (Stripe)</>
+                  : <><FileText size={14} className="text-muted-foreground" aria-hidden={true} focusable={false} /> Per Rechnung</>}
               </div>
             </div>
             <div>
@@ -112,7 +112,7 @@ export default function KundenportalWachstumspaket() {
           {!isStripeAuto && !isCancelled && (
             <div className="rounded-lg bg-primary/5 border border-primary/20 p-4">
               <div className="font-semibold text-sm mb-1 inline-flex items-center gap-2">
-                <CreditCard size={16} className="text-primary" />
+                <CreditCard size={16} className="text-primary" aria-hidden={true} focusable={false} />
                 Auf automatische Stripe-Zahlung umstellen
               </div>
               <p className="text-xs text-muted-foreground mb-3">

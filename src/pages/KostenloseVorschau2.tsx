@@ -339,7 +339,7 @@ const TileButton = ({
           {label}
         </span>
         {selected && (
-          <CheckCircle2 className="w-5 h-5 text-primary-foreground shrink-0" />
+          <CheckCircle2 className="w-5 h-5 text-primary-foreground shrink-0" aria-hidden={true} focusable={false} />
         )}
       </div>
     </button>
@@ -553,7 +553,7 @@ const SuccessScreen = ({
     return (
       <div ref={screenRef} className="text-center py-8 px-2 sm:px-4 scroll-mt-20">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
+          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-3">
           {isWaitlist
@@ -561,10 +561,10 @@ const SuccessScreen = ({
             : `Danke ${firstName}! Dein Termin steht – Platz vorgemerkt.`}
         </h3>
         <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-4 py-2 text-sm font-semibold mb-6">
-          <CalendarIcon className="w-4 h-4" />
+          <CalendarIcon className="w-4 h-4" aria-hidden={true} focusable={false} />
           {dateLabel} · {bookingTime} Uhr
           <span className="opacity-60">·</span>
-          {contactMethod === "online" ? <Video className="w-4 h-4" /> : <PhoneCall className="w-4 h-4" />}
+          {contactMethod === "online" ? <Video className="w-4 h-4" aria-hidden={true} focusable={false} /> : <PhoneCall className="w-4 h-4" aria-hidden={true} focusable={false} />}
           {methodLabel}
         </div>
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
@@ -603,7 +603,7 @@ const SuccessScreen = ({
       <div ref={screenRef} className="py-2 px-1 sm:px-2 scroll-mt-20">
         <div className="text-center mb-6">
           <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-            <CalendarIcon className="w-7 h-7 text-primary" />
+            <CalendarIcon className="w-7 h-7 text-primary" aria-hidden={true} focusable={false} />
           </div>
           <h3 className="text-xl sm:text-2xl font-bold mb-2">
             Wann passt es dir am besten?
@@ -671,7 +671,7 @@ const SuccessScreen = ({
                       : "border-border bg-card hover:border-primary/40"
                   }`}
                 >
-                  <PhoneCall className="w-4 h-4" /> Telefonat
+                  <PhoneCall className="w-4 h-4" aria-hidden={true} focusable={false} /> Telefonat
                 </button>
                 <button
                   type="button"
@@ -682,7 +682,7 @@ const SuccessScreen = ({
                       : "border-border bg-card hover:border-primary/40"
                   }`}
                 >
-                  <Video className="w-4 h-4" /> Online-Meeting
+                  <Video className="w-4 h-4" aria-hidden={true} focusable={false} /> Online-Meeting
                 </button>
               </div>
             </div>
@@ -696,7 +696,7 @@ const SuccessScreen = ({
             className="w-full"
           >
             {bookingSubmitting ? "Wird gebucht..." : (
-              <>Termin verbindlich sichern <ArrowRight className="ml-2 w-4 h-4" /></>
+              <>Termin verbindlich sichern <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} /></>
             )}
           </Button>
 
@@ -705,7 +705,7 @@ const SuccessScreen = ({
             onClick={() => setBookingMode(false)}
             className="w-full text-sm text-muted-foreground hover:text-foreground inline-flex items-center justify-center gap-1 underline-offset-4 hover:underline"
           >
-            <ArrowLeft className="w-3.5 h-3.5" /> Zurück zur Übersicht
+            <ArrowLeft className="w-3.5 h-3.5" aria-hidden={true} focusable={false} /> Zurück zur Übersicht
           </button>
         </div>
       </div>
@@ -717,7 +717,7 @@ const SuccessScreen = ({
     <div ref={screenRef} className="py-6 px-2 sm:px-4 scroll-mt-20">
       <div className="text-center mb-8">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-5 animate-in zoom-in duration-500">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} />
+          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-2">
           {isWaitlist
@@ -738,7 +738,7 @@ const SuccessScreen = ({
         <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6 flex flex-col">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <PhoneCall className="w-5 h-5 text-primary" />
+              <PhoneCall className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
             </div>
             <h4 className="font-bold text-base sm:text-lg">Was jetzt passiert</h4>
           </div>
@@ -770,7 +770,7 @@ const SuccessScreen = ({
                     : "border-border bg-card hover:border-primary/40"
                 }`}
               >
-                <PhoneCall className="w-3 h-3" /> Telefonat
+                <PhoneCall className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefonat
               </button>
               <button
                 type="button"
@@ -781,12 +781,12 @@ const SuccessScreen = ({
                     : "border-border bg-card hover:border-primary/40"
                 }`}
               >
-                <Video className="w-3 h-3" /> Online-Meeting
+                <Video className="w-3 h-3" aria-hidden={true} focusable={false} /> Online-Meeting
               </button>
             </div>
             {contactMethod && (
               <p className="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1 pt-1">
-                <CheckCircle2 className="w-3 h-3" /> Notiert – wir melden uns wie gewünscht.
+                <CheckCircle2 className="w-3 h-3" aria-hidden={true} focusable={false} /> Notiert – wir melden uns wie gewünscht.
               </p>
             )}
           </div>
@@ -799,7 +799,7 @@ const SuccessScreen = ({
           </div>
           <div className="flex items-center gap-3 mb-3 mt-2">
             <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
-              <CalendarIcon className="w-5 h-5 text-primary" />
+              <CalendarIcon className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
             </div>
             <h4 className="font-bold text-base sm:text-lg">Lieber direkt Termin buchen?</h4>
           </div>
@@ -812,18 +812,18 @@ const SuccessScreen = ({
             onClick={() => setBookingMode(true)}
             className="w-full shadow-md"
           >
-            <CalendarIcon className="mr-2 w-4 h-4" />
+            <CalendarIcon className="mr-2 w-4 h-4" aria-hidden={true} focusable={false} />
             Termin jetzt auswählen
           </Button>
           <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1"><PhoneCall className="w-3 h-3" /> Telefon</span>
-            <span className="inline-flex items-center gap-1"><Video className="w-3 h-3" /> oder Online</span>
+            <span className="inline-flex items-center gap-1"><PhoneCall className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefon</span>
+            <span className="inline-flex items-center gap-1"><Video className="w-3 h-3" aria-hidden={true} focusable={false} /> oder Online</span>
           </div>
         </div>
       </div>
 
       <p className="text-xs text-muted-foreground text-center mt-6 flex items-center justify-center gap-1.5">
-        <MessageCircle className="w-3.5 h-3.5" />
+        <MessageCircle className="w-3.5 h-3.5" aria-hidden={true} focusable={false} />
         Schau auch in deinen Spam-Ordner – manchmal landet die Bestätigung dort.
       </p>
     </div>
@@ -1128,7 +1128,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 onClick={next}
                 className="w-full sm:w-auto"
               >
-                Weiter <ArrowRight className="ml-2 w-4 h-4" />
+                Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
               </Button>
             </div>
           )}
@@ -1180,7 +1180,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
             onClick={next}
             className="w-full sm:w-auto"
           >
-            Weiter <ArrowRight className="ml-2 w-4 h-4" />
+            Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
           </Button>
         </div>
       )}
@@ -1288,7 +1288,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           </div>
           <Button type="submit" size="lg" className="w-full" disabled={submitting}>
             {submitting ? "Wird gesendet..." : (
-              <>Kostenlose Vorschau jetzt anfordern <ArrowRight className="ml-2 w-4 h-4" /></>
+              <>Kostenlose Vorschau jetzt anfordern <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} /></>
             )}
           </Button>
           {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
@@ -1311,7 +1311,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
             </p>
           )}
           <p className="text-xs text-muted-foreground flex items-start gap-2">
-            <Lock className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+            <Lock className="w-3.5 h-3.5 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
             <span>
               deine Daten sind sicher. Kein Spam. Keine Verpflichtung. Du kannst jederzeit zurückgehen und Antworten ändern.
             </span>
@@ -1327,7 +1327,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
             onClick={prev}
             className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1 underline-offset-4 hover:underline"
           >
-            <ArrowLeft className="w-3.5 h-3.5" /> Zurück
+            <ArrowLeft className="w-3.5 h-3.5" aria-hidden={true} focusable={false} /> Zurück
           </button>
         </div>
       )}
@@ -1405,7 +1405,7 @@ const KostenloseVorschau2 = () => {
             href={`tel:${(settings?.phone_number ?? "+49 170 123 45 67").replace(/\s/g, "")}`}
             className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors"
           >
-            <Phone className="w-4 h-4" />
+            <Phone className="w-4 h-4" aria-hidden={true} focusable={false} />
             <span className="hidden sm:inline">{settings?.phone_number ?? "+49 170 123 45 67"}</span>
             <span className="sm:hidden">Anrufen</span>
           </a>
@@ -1466,12 +1466,12 @@ const KostenloseVorschau2 = () => {
               {isWaitlist
                 ? `Jetzt für ${nextMonthLabel} vormerken lassen`
                 : (settings?.hero_cta_label ?? "Jetzt kostenlose Vorschau sichern")}
-              {" "}<ArrowRight className="ml-2 w-5 h-5" />
+              {" "}<ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
 
             {/* Social Proof: 150+ Webseiten */}
             <div className="mt-6 inline-flex items-center gap-3 rounded-full bg-card border border-border px-4 py-2 text-sm font-medium shadow-sm">
-              <Award className="w-4 h-4 text-primary" />
+              <Award className="w-4 h-4 text-primary" aria-hidden={true} focusable={false} />
               <span>
                 <strong className="text-foreground">Über 150 Webseiten</strong>{" "}
                 <span className="text-muted-foreground">erfolgreich umgesetzt</span>
@@ -1515,7 +1515,7 @@ const KostenloseVorschau2 = () => {
           </div>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              Jetzt kostenlose Vorschau sichern <ArrowRight className="ml-2 w-5 h-5" />
+              Jetzt kostenlose Vorschau sichern <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -1543,14 +1543,14 @@ const KostenloseVorschau2 = () => {
                   <p className="text-muted-foreground text-sm">{s.text}</p>
                 </div>
                 {i < processSteps.length - 1 && (
-                  <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 text-primary/40 z-10" />
+                  <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 text-primary/40 z-10" aria-hidden={true} focusable={false} />
                 )}
               </div>
             ))}
           </div>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              Schritt 1 starten – Formular ausfüllen <ArrowRight className="ml-2 w-5 h-5" />
+              Schritt 1 starten – Formular ausfüllen <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -1566,7 +1566,7 @@ const KostenloseVorschau2 = () => {
             </h2>
             {isWaitlist ? (
               <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 px-4 py-1.5 text-sm font-semibold">
-                <CalendarClock className="w-4 h-4" />
+                <CalendarClock className="w-4 h-4" aria-hidden={true} focusable={false} />
                 {monatName} ist ausgebucht – Warteliste für {nextMonthLabel}
               </div>
             ) : (
@@ -1623,7 +1623,7 @@ const KostenloseVorschau2 = () => {
                       <p className="text-sm text-muted-foreground mb-3 flex-1">{(d as any).desc ?? (d as any).description}</p>
                       <div className="flex items-center gap-1 text-amber-500 text-sm">
                         {Array.from({ length: 5 }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-current" />
+                          <Star key={i} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
                         ))}
                         <span className="ml-1 text-muted-foreground">Kunde ist begeistert</span>
                       </div>
@@ -1635,7 +1635,7 @@ const KostenloseVorschau2 = () => {
           </Carousel>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              So eine Vorschau für meinen Betrieb <ArrowRight className="ml-2 w-5 h-5" />
+              So eine Vorschau für meinen Betrieb <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -1660,7 +1660,7 @@ const KostenloseVorschau2 = () => {
                   <div className="h-full bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col">
                     <div className="flex items-center gap-1 text-amber-500 mb-3">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-current" />
+                        <Star key={i} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
                       ))}
                     </div>
                     <blockquote className="text-foreground/90 mb-4 flex-1">
@@ -1684,7 +1684,7 @@ const KostenloseVorschau2 = () => {
           </Carousel>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              Jetzt meine kostenlose Vorschau anfordern <ArrowRight className="ml-2 w-5 h-5" />
+              Jetzt meine kostenlose Vorschau anfordern <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -1745,7 +1745,7 @@ const KostenloseVorschau2 = () => {
               {isWaitlist
                 ? `Auf die ${nextMonthLabel}-Warteliste`
                 : (settings?.final_cta_button ?? "Jetzt letzten Platz sichern")}
-              {" "}<ArrowRight className="ml-2 w-5 h-5" />
+              {" "}<ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>

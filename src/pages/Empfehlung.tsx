@@ -159,7 +159,7 @@ const Empfehlung = () => (
               asChild
             >
               <a href={TERMIN_LINK}>
-                Kostenloses Erstgespräch buchen <ArrowRight size={18} />
+                Kostenloses Erstgespräch buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
               </a>
             </Button>
           </div>
@@ -210,7 +210,7 @@ const Empfehlung = () => (
               <CardContent className="p-6 sm:p-10">
                 <div className="flex items-start gap-4 mb-5">
                   <div className="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-primary-foreground shrink-0">
-                    <Heart size={22} />
+                    <Heart size={22} aria-hidden={true} focusable={false} />
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
@@ -242,7 +242,7 @@ const Empfehlung = () => (
                       "Keine Ausreden, falls wir nicht passen — wir empfehlen dir dann jemand anderen.",
                     ].map((p) => (
                       <li key={p} className="flex items-start gap-3">
-                        <Check size={20} className="text-primary shrink-0 mt-1" />
+                        <Check size={20} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                         <span>{p}</span>
                       </li>
                     ))}
@@ -261,7 +261,7 @@ const Empfehlung = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              <Sparkles size={12} className="inline mr-1" /> dein Empfehlungs-Bonus
+              <Sparkles size={12} className="inline mr-1" aria-hidden={true} focusable={false} /> dein Empfehlungs-Bonus
             </span>
             <h2 className="mb-4 text-balance">
               3 Vorteile, die du nur als Empfehlung bekommen
@@ -305,7 +305,7 @@ const Empfehlung = () => (
           <Card className="overflow-hidden border-primary/20">
             <div className="grid md:grid-cols-5">
               <div className="md:col-span-2 gradient-hero-bg p-8 sm:p-10 text-primary-foreground flex flex-col justify-center">
-                <Quote size={32} className="text-primary-foreground/40 mb-4" />
+                <Quote size={32} className="text-primary-foreground/40 mb-4" aria-hidden={true} focusable={false} />
                 <p className="text-lg sm:text-xl leading-relaxed mb-6">
                   „Vor dem Relaunch hatten wir 2 Anfragen pro Monat. Heute sind es
                   über 15 — und sie kommen automatisch rein."
@@ -367,7 +367,7 @@ const Empfehlung = () => (
                 <ul className="space-y-4">
                   {fitYes.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <Check size={20} className="text-primary shrink-0 mt-0.5" />
+                      <Check size={20} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                       <span className="text-foreground/90">{item}</span>
                     </li>
                   ))}
@@ -384,7 +384,7 @@ const Empfehlung = () => (
                 <ul className="space-y-4">
                   {fitNo.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <X size={20} className="text-destructive shrink-0 mt-0.5" />
+                      <X size={20} className="text-destructive shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                       <span className="text-muted-foreground">{item}</span>
                     </li>
                   ))}
@@ -434,7 +434,7 @@ const Empfehlung = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
-              <Shield size={26} />
+              <Shield size={26} aria-hidden={true} focusable={false} />
             </div>
             <h2 className="mb-4 text-balance">du gehen null Risiko ein</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -451,7 +451,7 @@ const Empfehlung = () => (
                   {guarantees.map((g) => (
                     <li key={g} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                        <Check size={14} />
+                        <Check size={14} aria-hidden={true} focusable={false} />
                       </div>
                       <span className="text-foreground/90">{g}</span>
                     </li>
@@ -517,7 +517,7 @@ const Empfehlung = () => (
                 asChild
               >
                 <a href={TERMIN_LINK}>
-                  Jetzt Termin buchen <ArrowRight size={18} />
+                  Jetzt Termin buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
                 </a>
               </Button>
               <p className="text-primary-foreground/60 text-xs sm:text-sm mt-6">

@@ -61,14 +61,14 @@ const Unsubscribe = () => {
         <div className="max-w-md mx-auto bg-card rounded-2xl border border-border p-8 text-center">
           {state.status === "loading" && (
             <>
-              <Loader2 className="w-12 h-12 mx-auto mb-4 text-primary animate-spin" />
+              <Loader2 className="w-12 h-12 mx-auto mb-4 text-primary animate-spin" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Einen Moment...</h1>
               <p className="text-muted-foreground">Link wird geprüft.</p>
             </>
           )}
           {state.status === "valid" && (
             <>
-              <MailX className="w-12 h-12 mx-auto mb-4 text-primary" />
+              <MailX className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">E-Mails abbestellen?</h1>
               <p className="text-muted-foreground mb-6">
                 Klick auf bestätigen, um keine weiteren E-Mails von uns zu erhalten.
@@ -80,13 +80,13 @@ const Unsubscribe = () => {
           )}
           {state.status === "submitting" && (
             <>
-              <Loader2 className="w-12 h-12 mx-auto mb-4 text-primary animate-spin" />
+              <Loader2 className="w-12 h-12 mx-auto mb-4 text-primary animate-spin" aria-hidden={true} focusable={false} />
               <p className="text-muted-foreground">Wird verarbeitet...</p>
             </>
           )}
           {state.status === "success" && (
             <>
-              <CheckCircle className="w-12 h-12 mx-auto mb-4 text-primary" />
+              <CheckCircle className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Erfolgreich abgemeldet</h1>
               <p className="text-muted-foreground">
                 Du erhältst keine weiteren E-Mails von uns.
@@ -95,7 +95,7 @@ const Unsubscribe = () => {
           )}
           {state.status === "already" && (
             <>
-              <CheckCircle className="w-12 h-12 mx-auto mb-4 text-primary" />
+              <CheckCircle className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Bereits abgemeldet</h1>
               <p className="text-muted-foreground">
                 Diese E-Mail-Adresse wurde bereits abgemeldet.
@@ -104,7 +104,7 @@ const Unsubscribe = () => {
           )}
           {state.status === "invalid" && (
             <>
-              <XCircle className="w-12 h-12 mx-auto mb-4 text-destructive" />
+              <XCircle className="w-12 h-12 mx-auto mb-4 text-destructive" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Ungültiger Link</h1>
               <p className="text-muted-foreground">
                 Dieser Abmelde-Link ist ungültig oder abgelaufen.
@@ -113,7 +113,7 @@ const Unsubscribe = () => {
           )}
           {state.status === "error" && (
             <>
-              <XCircle className="w-12 h-12 mx-auto mb-4 text-destructive" />
+              <XCircle className="w-12 h-12 mx-auto mb-4 text-destructive" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Fehler</h1>
               <p className="text-muted-foreground">{state.message}</p>
             </>

@@ -153,11 +153,10 @@ const TestimonialBlock = () => {
                 size={80}
                 className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none"
                 fill="currentColor"
-                strokeWidth={0}
-              />
+                strokeWidth={0} aria-hidden={true} focusable={false} />
               <div className="flex gap-1 mb-5 relative z-10">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" />
+                  <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" aria-hidden={true} focusable={false} />
                 ))}
               </div>
               <blockquote className="font-heading text-base md:text-lg leading-snug text-foreground font-semibold mb-6 tracking-tight flex-1 relative z-10">
@@ -217,8 +216,7 @@ const GrowthAccordion = ({
         <span>Alle Leistungen anzeigen</span>
         <ChevronDown
           size={16}
-          className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-        />
+          className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden={true} focusable={false} />
       </button>
       <div
         className={`grid transition-all duration-300 ease-out ${
@@ -233,7 +231,7 @@ const GrowthAccordion = ({
                 <ul className="space-y-1.5">
                   {extraFeatures.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" />
+                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                       <span>{f}</span>
                     </li>
                   ))}
@@ -304,7 +302,7 @@ const AddonsSection = () => (
           <ul className="space-y-2 mb-6 flex-1">
             {a.features.map((f) => (
               <li key={f} className="flex items-start gap-2 text-sm text-foreground/85">
-                <CheckCircle size={14} className="text-primary shrink-0 mt-0.5" />
+                <CheckCircle size={14} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                 <span>{f}</span>
               </li>
             ))}
@@ -313,7 +311,7 @@ const AddonsSection = () => (
             to="/kontakt"
             className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 transition-colors px-5 py-2.5 text-sm font-semibold"
           >
-            Add-on hinzufügen <ArrowRight size={16} />
+            Add-on hinzufügen <ArrowRight size={16} aria-hidden={true} focusable={false} />
           </Link>
         </div>
       ))}
@@ -605,7 +603,7 @@ const PackageCard = ({
     >
       {pkg.popular && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-          <Star size={12} /> Beliebteste Wahl
+          <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
@@ -641,7 +639,7 @@ const PackageCard = ({
           }
           return (
             <div key={f} className="flex items-start gap-2.5">
-              <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+              <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
               <span className="text-sm">{f}</span>
             </div>
           );
@@ -665,7 +663,7 @@ const PackageCard = ({
           }
           data-pricing-cta="true"
         >
-          {pkg.cta} <ArrowRight size={16} />
+          {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
         </Button>
         {pkg.priceId && onCheckout && (
           <Button
@@ -707,7 +705,7 @@ const BuyCard = ({
     >
       {pkg.popular && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-          <Star size={12} /> Beliebteste Wahl
+          <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
@@ -728,7 +726,7 @@ const BuyCard = ({
       <div className="space-y-3 flex-1 mb-6">
         {visibleFeatures.map((f) => (
           <div key={f} className="flex items-start gap-2.5">
-            <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+            <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
             <span className="text-sm">{f}</span>
           </div>
         ))}
@@ -744,7 +742,7 @@ const BuyCard = ({
           onClick={() => (pkg.priceId ? onCheckout(pkg) : onOpen(pkg.badge ?? pkg.name))}
           data-pricing-cta="true"
         >
-          {pkg.cta} <ArrowRight size={16} />
+          {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
         </Button>
         {pkg.priceId && (
           <Button
@@ -852,7 +850,7 @@ const WebdesignPreise = () => {
         onClick={() => openPopup("Kostenlose Demo")}
         className="font-semibold text-primary hover:underline inline-flex items-center gap-1"
       >
-        Kostenlose Demo anfordern <ArrowRight size={14} />
+        Kostenlose Demo anfordern <ArrowRight size={14} aria-hidden={true} focusable={false} />
       </button>
     </div>
 
@@ -869,7 +867,7 @@ const WebdesignPreise = () => {
               Professionell online — ohne großes Investment.
             </p>
             <p className="inline-flex items-center gap-2 text-base md:text-lg font-bold text-primary bg-primary/10 px-4 py-2 rounded-full">
-              <CheckCircle size={20} className="text-primary shrink-0" />
+              <CheckCircle size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
               Für Gewerbetreibende voll steuerlich absetzbar
             </p>
           </div>
@@ -912,7 +910,7 @@ const WebdesignPreise = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {pkg.features.map((f) => (
                         <div key={f} className="flex items-start gap-2.5">
-                          <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                          <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                           <span className="text-sm">{f}</span>
                         </div>
                       ))}
@@ -920,7 +918,7 @@ const WebdesignPreise = () => {
                   </div>
                   <div className="md:w-auto">
                     <Button variant="gradient" size="lg" onClick={() => openPopup(pkg.badge ?? "Enterprise – Auf Anfrage")} data-pricing-cta="true">
-                      {pkg.cta} <ArrowRight size={16} />
+                      {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
                     </Button>
                   </div>
                 </div>
@@ -967,7 +965,7 @@ const WebdesignPreise = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {buyEnterprise.features.map((f) => (
                       <div key={f} className="flex items-start gap-2.5">
-                        <CheckCircle size={15} className="text-primary shrink-0 mt-1" />
+                        <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                         <span className="text-sm">{f}</span>
                       </div>
                     ))}
@@ -975,7 +973,7 @@ const WebdesignPreise = () => {
                 </div>
                 <div className="md:w-auto">
                   <Button variant="outline" size="lg" onClick={() => openPopup(buyEnterprise.badge)} data-pricing-cta="true">
-                    {buyEnterprise.cta} <ArrowRight size={16} />
+                    {buyEnterprise.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
                   </Button>
                 </div>
               </div>
@@ -1037,7 +1035,7 @@ const WebdesignPreise = () => {
           Gefällt sie dir nicht — Du zahlst nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
-          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} />
+          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} aria-hidden={true} focusable={false} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
           Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 30 764 98</a>
