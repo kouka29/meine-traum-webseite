@@ -36,7 +36,7 @@ const Eyebrow = ({
 }) => (
   <div
     className={`mb-4 text-[10px] font-sans uppercase tracking-[0.3em] ${
-      light ? "text-[color:var(--mtw-brand)]/60" : "text-white/30"
+      light ? "text-[color:var(--mtw-brand)]/70" : "text-white/65"
     }`}
   >
     {children}
@@ -90,7 +90,7 @@ const Premium = () => {
   return (
     <main
       id="main-content"
-      className="premium-page min-h-screen text-[#F8F8FF]"
+      className="premium-page min-h-screen text-white"
       style={
         {
           backgroundColor: "#08081A",
@@ -126,7 +126,7 @@ const Premium = () => {
             <Eyebrow>Limitiert auf 5 Projekte</Eyebrow>
 
             <h1
-              className="text-[#F8F8FF] leading-[1.05]"
+              className="text-white leading-[1.05]"
               style={{ fontSize: "clamp(56px, 7vw, 96px)" }}
             >
               Webseiten, die Ihr Unternehmen auf ein neues{" "}
@@ -134,7 +134,7 @@ const Premium = () => {
               bringen.
             </h1>
 
-            <p className="mt-10 max-w-[480px] text-base leading-[1.9] text-white/55">
+            <p className="mt-10 max-w-[480px] text-base leading-[1.9] text-white/75">
               Wir entwickeln digitale Präsenzen für Unternehmen, die nicht nach
               Kompromissen suchen — sondern nach Ergebnissen.
             </p>
@@ -175,7 +175,7 @@ const Premium = () => {
                 Für wen wir{" "}
                 <em className="italic text-[color:var(--mtw-brand)]">arbeiten</em>
               </h2>
-              <p className="mt-8 max-w-md text-base leading-[1.9] text-[#0A0A1F]/65">
+              <p className="mt-8 max-w-md text-base leading-[1.9] text-[#0A0A1F]">
                 Wir arbeiten nicht mit jedem. Unsere Kapazität ist bewusst
                 begrenzt — damit jedes Projekt die Aufmerksamkeit bekommt, die
                 es verdient.
@@ -205,7 +205,7 @@ const Premium = () => {
                 </ul>
               </div>
               <div>
-                <div className="mb-5 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/40">
+                <div className="mb-5 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/45">
                   Das sind nicht unsere Kunden
                 </div>
                 <ul className="space-y-4">
@@ -214,7 +214,7 @@ const Premium = () => {
                     "Wer eine Webseite in 3 Tagen braucht",
                     "Wer keine klare Vision für sein Unternehmen hat",
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[#0A0A1F]/55">
+                    <li key={item} className="flex items-start gap-3 text-[#0A0A1F]/45">
                       <X
                         className="mt-1 h-4 w-4 flex-shrink-0"
                         aria-hidden={true}
@@ -236,7 +236,7 @@ const Premium = () => {
           <motion.div {...fadeUp} className="max-w-2xl">
             <Eyebrow>Ergebnisse statt Versprechen</Eyebrow>
             <h2
-              className="leading-[1.1] text-[#F8F8FF]"
+              className="leading-[1.1] text-white"
               style={{ fontSize: "clamp(36px, 4.5vw, 56px)" }}
             >
               Was wirklich{" "}
@@ -272,21 +272,21 @@ const Premium = () => {
                 key={c.n}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-                className="card-noise group relative overflow-hidden rounded-none border border-white/[0.06] bg-[#0F0F2A] p-10 transition-colors duration-300 hover:border-[color:var(--mtw-brand)]/25"
+                className="card-noise group relative overflow-hidden rounded-none border border-white/[0.12] bg-[#0F0F2A] p-10 transition-colors duration-300 hover:border-[color:var(--mtw-brand)]/25"
               >
-                <div className="serif-num absolute left-8 top-4 text-7xl text-white/[0.04]">
+                <div className="serif-num absolute left-8 top-4 text-7xl text-white/[0.08]">
                   {c.n}
                 </div>
                 <div className="relative pt-20">
                   <div className="inline-flex rounded-sm bg-[color:var(--mtw-brand)]/[0.08] p-3">
                     <c.Icon
-                      className="h-5 w-5 text-[color:var(--mtw-brand)]/80"
+                      className="h-5 w-5 text-[color:var(--mtw-brand)]"
                       aria-hidden={true}
                       focusable={false}
                     />
                   </div>
-                  <h3 className="mt-6 text-xl text-[#F8F8FF]">{c.title}</h3>
-                  <p className="mt-4 text-sm leading-[1.9] text-white/55">
+                  <h3 className="mt-6 text-xl text-white">{c.title}</h3>
+                  <p className="mt-4 text-sm leading-[1.9] text-white/75">
                     {c.body}
                   </p>
                 </div>
@@ -303,13 +303,13 @@ const Premium = () => {
           <motion.div {...fadeUp} className="max-w-2xl">
             <Eyebrow>Unser Prozess</Eyebrow>
             <h2
-              className="leading-[1.1] text-[#F8F8FF]"
+              className="leading-[1.1] text-white"
               style={{ fontSize: "clamp(36px, 4.5vw, 56px)" }}
             >
               Wie wir{" "}
               <em className="italic text-[color:var(--mtw-brand)]">arbeiten</em>
             </h2>
-            <p className="mt-6 text-base leading-[1.9] text-white/55">
+            <p className="mt-6 text-base leading-[1.9] text-white/75">
               Kein Template. Kein Copy-Paste. Jedes Projekt beginnt mit
               Verstehen.
             </p>
@@ -342,18 +342,18 @@ const Premium = () => {
                 key={s.n}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-                className={`group grid grid-cols-12 items-start gap-6 border-t border-white/[0.06] pt-8 pb-8 ${
+                className={`group grid grid-cols-12 items-start gap-6 border-t border-white/[0.12] pt-8 pb-8 ${
                   i === arr.length - 1 ? "border-b" : ""
                 }`}
               >
-                <div className="serif-num col-span-12 text-5xl italic text-[color:var(--mtw-brand)]/20 transition-colors duration-300 group-hover:text-[color:var(--mtw-brand)]/60 md:col-span-2">
+                <div className="serif-num col-span-12 text-5xl italic text-[color:var(--mtw-brand)]/50 transition-colors duration-300 group-hover:text-[color:var(--mtw-brand)] md:col-span-2">
                   {s.n}
                 </div>
                 <div className="col-span-12 md:col-span-4">
-                  <h3 className="text-2xl text-[#F8F8FF]">{s.t}</h3>
+                  <h3 className="text-2xl text-white">{s.t}</h3>
                 </div>
                 <div className="col-span-12 md:col-span-6">
-                  <p className="text-base leading-[1.9] text-white/50">{s.d}</p>
+                  <p className="text-base leading-[1.9] text-white/65">{s.d}</p>
                 </div>
               </motion.div>
             ))}
@@ -363,8 +363,8 @@ const Premium = () => {
 
       {/* STATS */}
       <section className="bg-[#08081A] px-6 py-24 md:px-12">
-        <div className="mx-auto max-w-6xl border-y border-white/[0.06]">
-          <div className="grid grid-cols-1 divide-y divide-white/[0.06] md:grid-cols-3 md:divide-x md:divide-y-0">
+        <div className="mx-auto max-w-6xl border-y border-white/[0.12]">
+          <div className="grid grid-cols-1 divide-y divide-white/[0.10] md:grid-cols-3 md:divide-x md:divide-y-0">
             {[
               { n: "5", l: "Projekte pro Monat (max.)" },
               { n: "48h", l: "Bis zur ersten Vorschau" },
@@ -392,13 +392,13 @@ const Premium = () => {
           <motion.div {...fadeUp} className="max-w-2xl">
             <Eyebrow>Referenzen</Eyebrow>
             <h2
-              className="leading-[1.1] text-[#F8F8FF]"
+              className="leading-[1.1] text-white"
               style={{ fontSize: "clamp(36px, 4.5vw, 56px)" }}
             >
               Ausgewählte{" "}
               <em className="italic text-[color:var(--mtw-brand)]">Projekte</em>
             </h2>
-            <p className="mt-6 text-base leading-[1.9] text-white/55">
+            <p className="mt-6 text-base leading-[1.9] text-white/75">
               Jedes Projekt ist einzigartig. Hier ein Einblick in unsere Arbeit.
             </p>
           </motion.div>
@@ -424,21 +424,21 @@ const Premium = () => {
                 key={p.n}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.1 }}
-                className="card-noise group relative grid grid-cols-1 overflow-hidden rounded-none border border-white/[0.06] bg-[#0F0F2A] transition-colors duration-300 hover:border-[color:var(--mtw-brand)]/25 md:grid-cols-2"
+                className="card-noise group relative grid grid-cols-1 overflow-hidden rounded-none border border-white/[0.12] bg-[#0F0F2A] transition-colors duration-300 hover:border-[color:var(--mtw-brand)]/25 md:grid-cols-2"
               >
                 <div className="relative p-10">
-                  <div className="serif-num text-6xl text-white/[0.06]">{p.n}</div>
+                  <div className="serif-num text-6xl text-white/[0.10]">{p.n}</div>
                   <div className="mt-6 text-[10px] uppercase tracking-[0.3em] text-white/30">
                     {p.label}
                   </div>
-                  <h3 className="mt-4 text-2xl leading-tight text-[#F8F8FF] md:text-3xl">
+                  <h3 className="mt-4 text-2xl leading-tight text-white md:text-3xl">
                     {p.title}
                   </h3>
                   <div className="mt-8 flex flex-wrap gap-2">
                     {["Custom Design", "SEO", "DSGVO-konform"].map((t) => (
                       <span
                         key={t}
-                        className="border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/40"
+                        className="border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/55"
                       >
                         {t}
                       </span>
@@ -463,7 +463,7 @@ const Premium = () => {
             <motion.div {...fadeUp}>
               <Eyebrow>Wer wir sind</Eyebrow>
               <h2
-                className="leading-[1.1] text-[#F8F8FF]"
+                className="leading-[1.1] text-white"
                 style={{ fontSize: "clamp(36px, 4.5vw, 56px)" }}
               >
                 Warum Meine{" "}
@@ -471,7 +471,7 @@ const Premium = () => {
                   Traum Webseite
                 </em>
               </h2>
-              <div className="mt-8 space-y-5 text-base leading-[1.9] text-white/55">
+              <div className="mt-8 space-y-5 text-base leading-[1.9] text-white/75">
                 <p>
                   Wir sind keine große Agentur mit 50 Mitarbeitern und
                   Standardprozessen. Wir sind ein spezialisiertes Team, das
@@ -516,13 +516,13 @@ const Premium = () => {
             Bereit für eine Webseite, die wirklich{" "}
             <em className="italic text-[color:var(--mtw-brand)]">arbeitet?</em>
           </h2>
-          <p className="mx-auto mt-8 max-w-xl text-base leading-[1.9] text-[#0A0A1F]/65">
+          <p className="mx-auto mt-8 max-w-xl text-base leading-[1.9] text-[#0A0A1F]">
             Wir nehmen uns Zeit für jedes Projekt — deshalb limitieren wir uns
             auf 5 neue Kunden pro Monat. Wenn Sie ernsthaft über einen neuen
             Webauftritt nachdenken, sprechen Sie jetzt mit uns.
           </p>
 
-          <div className="mt-10 inline-flex items-center gap-2 rounded-none border border-[color:var(--mtw-brand)]/30 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[color:var(--mtw-brand)]/80">
+          <div className="mt-10 inline-flex items-center gap-2 rounded-none border border-[color:var(--mtw-brand)]/30 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[color:var(--mtw-brand)]">
             <span className="text-[color:var(--mtw-brand)]">●</span>
             3 von 5 Plätzen für Juli verfügbar
           </div>
@@ -544,7 +544,7 @@ const Premium = () => {
             </a>
           </div>
 
-          <p className="mt-8 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/40">
+          <p className="mt-8 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/45">
             Kein Verkaufsgespräch · Kein Druck
           </p>
         </motion.div>
@@ -557,7 +557,7 @@ const Premium = () => {
             Häufige Fragen
           </div>
           <h2
-            className="text-center leading-[1.1] text-[#F8F8FF]"
+            className="text-center leading-[1.1] text-white"
             style={{ fontSize: "clamp(36px, 4.5vw, 56px)" }}
           >
             Häufige{" "}
@@ -581,12 +581,12 @@ const Premium = () => {
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="border-white/[0.07]"
+                className="border-white/[0.12]"
               >
-                <AccordionTrigger className="text-left text-lg text-[#F8F8FF] [&>svg]:text-[color:var(--mtw-brand)]">
+                <AccordionTrigger className="text-left text-lg text-white [&>svg]:text-[color:var(--mtw-brand)]">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-base leading-[1.9] text-white/55">
+                <AccordionContent className="text-base leading-[1.9] text-white/75">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
@@ -596,7 +596,7 @@ const Premium = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/[0.07] bg-[#08081A] px-6 py-10 text-xs uppercase tracking-[0.2em] text-white/40 md:px-12">
+      <footer className="border-t border-white/[0.12] bg-[#08081A] px-6 py-10 text-xs uppercase tracking-[0.2em] text-white/55 md:px-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 md:flex-row">
           <div>© 2026 Meine Traum Webseite – QK Marketing</div>
           <div className="flex items-center gap-8">
