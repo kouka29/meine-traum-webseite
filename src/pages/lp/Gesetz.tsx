@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldCheck, ArrowRight, Check, Star, Lock } from "lucide-react";
+import { ShieldCheck, ArrowRight, Check, Star, Lock, Gavel, Building2, TrendingDown, AlertTriangle, X, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 type Grund = "bfsg" | "cookie" | "design";
@@ -26,10 +26,10 @@ const CONTENT: Record<Grund, {
   faq: { q: string; a: string }[];
 }> = {
   bfsg: {
-    badge: { text: "⚠️ Neues Gesetz seit 28. Juni 2025", tone: "bg-red-100 text-red-700 border-red-200" },
-    h1: "Ihre Webseite verstößt möglicherweise gegen das neue Barrierefreiheitsgesetz",
-    sub: "Das BFSG verpflichtet viele Betriebe zur barrierefreien Webseite — bei Verstoß drohen Abmahnungen und Bußgelder bis 100.000 €. Wir prüfen Ihre Seite kostenlos.",
-    secondary: "Was ist das BFSG? ↓",
+    badge: { text: "⚠️ Abmahnwelle seit Juni 2025 — betrifft auch Ihren Betrieb", tone: "bg-red-50 text-red-700 border-red-200" },
+    h1: "Erste Abmahnungen wurden bereits verschickt. Ist Ihre Webseite dabei?",
+    sub: "Seit dem 28. Juni 2025 gilt das Barrierefreiheitsstärkungsgesetz (BFSG). Betriebe mit Kontaktformular, Buchungsfunktion oder Download auf ihrer Webseite sind betroffen — ob groß oder klein. Wir prüfen Ihre Seite kostenlos.",
+    secondary: "Was passiert wenn Sie nichts tun? ↓",
     problems: [
       { icon: "⚖️", title: "Gesetzliche Pflicht", text: "Seit 28.06.2025 gilt das BFSG. Betroffen ist jede Webseite mit Kontaktformular, Buchung oder Download." },
       { icon: "💸", title: "Bußgeld bis 100.000 €", text: "Bei Verstoß können Behörden und Mitbewerber abmahnen. Die ersten Abmahnungen wurden bereits verschickt." },
