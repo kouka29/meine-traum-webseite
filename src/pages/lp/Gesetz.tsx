@@ -28,7 +28,7 @@ const CONTENT: Record<Grund, {
   bfsg: {
     badge: { text: "⚠️ Abmahnwelle seit Juni 2025 — betrifft auch Ihren Betrieb", tone: "bg-red-50 text-red-700 border-red-200" },
     h1: "Erste Abmahnungen wurden bereits verschickt. Ist Ihre Webseite dabei?",
-    sub: "Seit dem 28. Juni 2025 gilt das Barrierefreiheitsstärkungsgesetz (BFSG). Betriebe mit Kontaktformular, Buchungsfunktion oder Download auf ihrer Webseite sind betroffen — ob groß oder klein. Wir prüfen Ihre Seite kostenlos.",
+    sub: "Seit dem 28. Juni 2025 gilt das Barrierefreiheitsstärkungsgesetz (BFSG). Betriebe mit Kontaktformular, Buchungsfunktion oder Download sind betroffen. Wir prüfen Ihre Seite kostenlos — Ergebnis in 48 Stunden.",
     secondary: "Was passiert wenn Sie nichts tun? ↓",
     problems: [
       { icon: "⚖️", title: "Gesetzliche Pflicht", text: "Seit 28.06.2025 gilt das BFSG. Betroffen ist jede Webseite mit Kontaktformular, Buchung oder Download." },
@@ -91,10 +91,10 @@ const CONTENT: Record<Grund, {
 };
 
 const fadeUp = {
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 16 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.55, ease: "easeOut" },
+  viewport: { once: true, margin: "0px 0px -5% 0px", amount: 0.05 },
+  transition: { duration: 0.3, ease: "easeOut" },
 };
 
 const TESTIMONIALS = [
@@ -160,7 +160,7 @@ const Gesetz = () => {
   const allFaq = isBfsg ? [...c.faq, ...extraFaq] : c.faq;
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
+    <div className="bg-background text-foreground font-sans">
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div
@@ -184,11 +184,11 @@ const Gesetz = () => {
             <h1 className="font-display text-4xl md:text-6xl font-bold text-white mt-6 leading-tight tracking-tight">
               {c.h1}
             </h1>
-            <p className="text-lg md:text-xl text-white/80 mt-6 max-w-2xl mx-auto">
+            <p className="text-lg text-white/85 max-w-2xl mx-auto mt-6 mb-8">
               {c.sub}
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold shadow-xl" onClick={() => scrollTo("form-card")}>
+            <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button size="lg" className="text-white hover:opacity-90 font-semibold shadow-xl" style={{ backgroundColor: "var(--brand-purple)" }} onClick={() => scrollTo("form-card")}>
                 {isBfsg ? "Jetzt kostenlos prüfen lassen" : "Jetzt kostenlose Vorschau anfordern"} <ArrowRight className="ml-1" aria-hidden={true} focusable={false} />
               </Button>
               <button onClick={() => scrollTo("problem")} className="text-white/80 hover:text-white text-sm underline-offset-4 hover:underline">
@@ -211,7 +211,7 @@ const Gesetz = () => {
             </motion.h2>
             <div className="grid md:grid-cols-3 gap-6">
               {scenarios.map(({ Icon, title, text }, i) => (
-                <motion.div key={i} {...fadeUp} transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}>
+                <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
                   <Card className="p-6 h-full rounded-2xl border-2 bg-card">
                     <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6" aria-hidden={true} focusable={false} />
@@ -231,7 +231,7 @@ const Gesetz = () => {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-6 md:gap-8">
             {c.problems.map((p, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}>
+              <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
                 <Card className="p-8 h-full rounded-2xl border-2 hover:border-primary/40 transition-colors">
                   <div className="text-5xl mb-4">{p.icon}</div>
                   <h3 className="font-display text-xl font-bold mb-3">{p.title}</h3>
@@ -354,7 +354,7 @@ const Gesetz = () => {
               Jetzt kostenlose Vorschau anfordern →
             </Button>
           </motion.div>
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}>
+          <motion.div {...fadeUp} transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}>
             {isBfsg ? (
               <div className="rounded-2xl border-2 border-primary/20 shadow-xl p-6 md:p-8 text-white"
                 style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))" }}>
@@ -401,9 +401,10 @@ const Gesetz = () => {
         <div className="container mx-auto px-4">
           <motion.div {...fadeUp} className="max-w-[560px] mx-auto">
             {isBfsg && !submitted && (
-              <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 flex items-start gap-2 text-amber-900">
-                <Clock className="w-5 h-5 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
-                <span className="text-sm font-medium">Die Abmahnwelle läuft bereits. Jeden Tag ohne konforme Webseite ist ein Risikotag.</span>
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8 text-center">
+                <p className="text-amber-800 text-sm font-medium">
+                  🕐 Die Abmahnwelle läuft bereits. Jeden Tag ohne konforme Webseite ist ein Risikotag.
+                </p>
               </div>
             )}
             <Card className="p-8 md:p-10 rounded-2xl shadow-xl border-2 border-primary/20">
@@ -469,7 +470,7 @@ const Gesetz = () => {
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}>
+              <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
                 <Card className="p-6 h-full rounded-2xl bg-card border">
                   <div className="flex gap-1 mb-3 text-yellow-500">
                     {Array.from({ length: 5 }).map((_, k) => (
