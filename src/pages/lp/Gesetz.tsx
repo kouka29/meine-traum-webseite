@@ -162,26 +162,26 @@ const Gesetz = () => {
   return (
     <div className="bg-background text-foreground font-sans">
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <section className="relative isolate overflow-hidden">
         <div
-          className="absolute inset-0 -z-10"
+          className="absolute inset-0 z-0"
           style={{
             background:
               "linear-gradient(135deg, hsl(250 56% 22%) 0%, hsl(250 56% 30%) 40%, hsl(228 24% 10%) 100%)",
           }}
         />
-        <div className="absolute inset-0 -z-10 opacity-40"
+        <div className="absolute inset-0 z-0 opacity-40"
           style={{
             background:
               "radial-gradient(ellipse 60% 50% at 80% 20%, hsl(215 100% 60% / 0.35), transparent 60%), radial-gradient(ellipse 50% 50% at 10% 80%, hsl(270 70% 65% / 0.3), transparent 60%)",
           }}
         />
-        <div className="container mx-auto px-4 py-20 md:py-28 max-w-4xl text-center">
+        <div className="relative z-10 container mx-auto px-4 py-20 md:py-28 max-w-4xl text-center">
           <motion.div {...fadeUp}>
             <span className={`inline-block text-sm font-semibold px-4 py-1.5 rounded-full border ${c.badge.tone}`}>
               {c.badge.text}
             </span>
-            <h1 className="font-display text-4xl md:text-6xl font-bold text-white mt-6 leading-tight tracking-tight">
+            <h1 className="font-display text-4xl md:text-6xl font-bold mt-6 leading-tight tracking-tight" style={{ color: "#ffffff", backgroundImage: "none", WebkitBackgroundClip: "border-box", backgroundClip: "border-box", WebkitTextFillColor: "#ffffff" }}>
               {c.h1}
             </h1>
             <p className="text-lg text-white/85 max-w-2xl mx-auto mt-6 mb-8">
