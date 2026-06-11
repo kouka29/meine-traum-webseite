@@ -356,8 +356,8 @@ const Gesetz = () => {
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}>
             {isBfsg ? (
-              <div className="rounded-2xl border-2 border-primary/20 shadow-xl p-6 md:p-8 text-white"
-                style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))" }}>
+              <div className="rounded-[20px] shadow-xl p-6 md:p-8 text-white"
+                style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))", border: "2px solid hsl(250 56% 48% / 0.3)" }}>
                 <div className="flex items-center gap-2 text-green-400 font-semibold mb-5">
                   <Check className="w-5 h-5" aria-hidden={true} focusable={false} />
                   Analyse abgeschlossen
