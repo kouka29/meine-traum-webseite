@@ -98,9 +98,9 @@ const fadeUp = {
 };
 
 const TESTIMONIALS = [
-  { quote: "Wir hatten keine Ahnung vom neuen Gesetz. Muad hat alles erklärt und uns eine tolle neue Seite gebaut.", name: "Thomas K., Elektriker aus Mainz" },
-  { quote: "Innerhalb von 48 Stunden hatten wir eine Vorschau unserer neuen Webseite. Genau so haben wir uns das vorgestellt.", name: "Sandra M., Malerbetrieb Frankfurt" },
-  { quote: "Endlich eine Webseite die auf dem Handy funktioniert. Kunden rufen jetzt viel öfter an.", name: "Ali B., Sanitärbetrieb Wiesbaden" },
+  { quote: "Ich hatte keine Ahnung dass mein Cookie-Banner nicht korrekt war. Muad hat das sofort erkannt und innerhalb von 3 Wochen hatten wir eine komplett neue, konforme Webseite.", name: "Thomas K., Elektriker aus Mainz" },
+  { quote: "Das Gesetz hat mich wirklich überrascht. Dass es eine kostenlose Vorschau gibt, hat mir die Entscheidung leicht gemacht. Sehr professionelle Arbeit.", name: "Sandra M., Malerbetrieb Frankfurt" },
+  { quote: "Schnell, unkompliziert, und das Ergebnis überzeugt. Meine neue Webseite ist jetzt gesetzeskonform und sieht besser aus als vorher.", name: "Ali B., Sanitärbetrieb Wiesbaden" },
 ];
 
 const Gesetz = () => {
@@ -131,6 +131,33 @@ const Gesetz = () => {
         : "Webseiten-Check: Verlieren Sie Kunden durch veraltetes Design?";
     document.title = title;
   }, [grund]);
+
+  const isBfsg = grund === "bfsg";
+
+  const scenarios = [
+    { Icon: Gavel, title: "Abmahnung durch Mitbewerber", text: "Mitbewerber können ab sofort abmahnen. Die Anwaltskosten für eine einzige Abmahnung: typischerweise 1.000 bis 5.000 €. Dazu kommt die Pflicht zur sofortigen Nachbesserung." },
+    { Icon: Building2, title: "Bußgeld durch Behörden", text: "Die staatliche Marktüberwachungsstelle (MLBF) führt bereits Stichproben durch. Bei festgestelltem Verstoß drohen Bußgelder bis zu 100.000 € und im schlimmsten Fall die Abschaltung Ihrer Webseite." },
+    { Icon: TrendingDown, title: "Reputationsschaden", text: "Eine abgemahnte oder behördlich beanstandete Webseite schadet Ihrem Ruf — besonders bei Geschäftskunden und öffentlichen Auftraggebern, die auf Compliance achten." },
+  ];
+
+  const checklist = [
+    "Meine Webseite hat ein Kontaktformular",
+    "Ich verwende Google Maps, YouTube oder Google Fonts",
+    "Mein Cookie-Banner hat kein echtes 'Ablehnen'-Feld",
+    "Bilder auf meiner Webseite haben keine Bildbeschreibungen (Alt-Texte)",
+    "Meine Webseite ist nicht für Tastatur-Navigation optimiert",
+    "Meine Webseite ist älter als 3 Jahre",
+    "Ich habe keine Barrierefreiheitserklärung auf meiner Webseite",
+    "Ich nutze Google Analytics oder Meta Pixel ohne korrekten Consent",
+  ];
+
+  const extraFaq = [
+    { q: "Was genau prüft ihr bei meiner Webseite?", a: "Wir prüfen: Cookie-Banner und DSGVO-Konformität, Barrierefreiheit nach BFSG (Kontaktformular, Alt-Texte, Tastatur-Navigation), technische Grundlagen und ob eine Barrierefreiheitserklärung vorhanden ist. Das Ergebnis bekommen Sie schriftlich." },
+    { q: "Muss ich danach eine neue Webseite kaufen?", a: "Nein. Die Prüfung ist komplett kostenlos und unverbindlich. Wir zeigen Ihnen was fehlt — was Sie daraus machen, entscheiden Sie selbst. Viele Kunden entscheiden sich für uns. Aber niemand muss." },
+    { q: "Gilt das BFSG auch für meine Branche?", a: "Das BFSG gilt branchenübergreifend für alle Betriebe mit interaktiven Webseiten — also Handwerker, Dienstleister, Einzelhändler, Gastronomen und mehr. Ausgenommen sind nur Kleinstbetriebe unter 10 Mitarbeitern UND unter 2 Mio. € Umsatz, deren Webseite keinerlei interaktive Funktionen hat." },
+    { q: "Wie schnell kann ich abgemahnt werden?", a: "Sofort — das Gesetz gilt seit dem 28. Juni 2025. Mitbewerber und Abmahnvereine können ab diesem Datum klagen. Die ersten Abmahnungen wurden bereits in den ersten Wochen nach Inkrafttreten des Gesetzes verschickt." },
+  ];
+  const allFaq = isBfsg ? [...c.faq, ...extraFaq] : c.faq;
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
