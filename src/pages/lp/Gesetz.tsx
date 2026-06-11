@@ -189,15 +189,42 @@ const Gesetz = () => {
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold shadow-xl" onClick={() => scrollTo("form-card")}>
-                Jetzt kostenlose Vorschau anfordern <ArrowRight className="ml-1" aria-hidden={true} focusable={false} />
+                {isBfsg ? "Jetzt kostenlos prüfen lassen" : "Jetzt kostenlose Vorschau anfordern"} <ArrowRight className="ml-1" aria-hidden={true} focusable={false} />
               </Button>
               <button onClick={() => scrollTo("problem")} className="text-white/80 hover:text-white text-sm underline-offset-4 hover:underline">
                 {c.secondary}
               </button>
             </div>
+            {isBfsg && (
+              <p className="text-white/70 text-sm mt-4">Keine Verpflichtung. Ergebnis in 48 Stunden.</p>
+            )}
           </motion.div>
         </div>
       </section>
+
+      {/* SCHMERZ-SEKTION */}
+      {isBfsg && (
+        <section className="py-20 md:py-24 bg-muted/40">
+          <div className="container mx-auto px-4 max-w-[800px]">
+            <motion.h2 {...fadeUp} className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
+              Was passiert, wenn Sie nichts tun?
+            </motion.h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {scenarios.map(({ Icon, title, text }, i) => (
+                <motion.div key={i} {...fadeUp} transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}>
+                  <Card className="p-6 h-full rounded-2xl border-2 bg-card">
+                    <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-4">
+                      <Icon className="w-6 h-6" aria-hidden={true} focusable={false} />
+                    </div>
+                    <h3 className="font-display text-lg font-bold mb-2">{title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{text}</p>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* PROBLEM */}
       <section id="problem" className="py-20 md:py-28 bg-background">
@@ -237,9 +264,64 @@ const Gesetz = () => {
                 <Button variant="outline-primary">Offizielle Quelle ansehen →</Button>
               </a>
             </Card>
+            {isBfsg && (
+              <Card className="mt-6 p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    <ShieldCheck className="w-6 h-6" aria-hidden={true} focusable={false} />
+                  </div>
+                  <div className="font-semibold text-lg">Bundesbeauftragte für den Datenschutz (BfDI)</div>
+                </div>
+                <blockquote className="text-muted-foreground italic border-l-4 border-primary/40 pl-4 mb-6">
+                  „Für Cookies und Tracking-Tools gilt: Ohne aktive Einwilligung des Nutzers ist der Einsatz illegal. Falsche Cookie-Banner führen zu Abmahnungen und DSGVO-Bußgeldern."
+                </blockquote>
+                <a href="https://www.bfdi.bund.de/DE/Buerger/Inhalte/Telemedien/Cookie-Banner.html" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline-primary">Offizielle Quelle ansehen →</Button>
+                </a>
+              </Card>
+            )}
           </motion.div>
         </div>
       </section>
+
+      {/* CHECKLISTE */}
+      {isBfsg && (
+        <section className="py-20 md:py-28 bg-background">
+          <div className="container mx-auto px-4 max-w-[680px]">
+            <motion.div {...fadeUp} className="text-center mb-10">
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+                Wie viele dieser Punkte treffen auf Ihre Webseite zu?
+              </h2>
+              <p className="text-muted-foreground">
+                Jeder Punkt ist ein potenzielles Risiko. Je mehr zutreffen, desto dringender besteht Handlungsbedarf.
+              </p>
+            </motion.div>
+            <motion.div {...fadeUp}>
+              <Card className="p-6 md:p-8 rounded-2xl border-2">
+                <ul className="space-y-4">
+                  {checklist.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <AlertTriangle className="w-5 h-5 text-destructive mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                      <span className="text-foreground/90">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </motion.div>
+            <motion.div {...fadeUp} className="mt-8">
+              <div className="rounded-2xl p-8 text-center shadow-xl"
+                style={{ background: "linear-gradient(135deg, hsl(250 56% 30%), hsl(250 56% 48%))" }}>
+                <p className="text-white text-lg mb-6">
+                  Wenn Sie auch nur 2 dieser Punkte mit Ja beantwortet haben — lassen Sie Ihre Webseite jetzt kostenlos prüfen.
+                </p>
+                <Button size="lg" onClick={() => scrollTo("form-card")} className="bg-white text-primary hover:bg-white/90 font-semibold shadow-lg">
+                  Kostenlose Prüfung anfordern →
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* LÖSUNG */}
       <section className="py-20 md:py-28">
@@ -247,15 +329,21 @@ const Gesetz = () => {
           <motion.div {...fadeUp}>
             <div className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Unsere Lösung</div>
             <h2 className="font-display text-3xl md:text-4xl font-bold leading-tight mb-6">
-              Neue, gesetzeskonforme Webseite — wir zeigen Ihnen kostenlos wie sie aussieht
+              {isBfsg ? "Wir lösen das Problem für Sie — kostenlos und unverbindlich" : "Neue, gesetzeskonforme Webseite — wir zeigen Ihnen kostenlos wie sie aussieht"}
             </h2>
             <ul className="space-y-3 mb-8">
-              {[
+              {(isBfsg ? [
+                "Wir analysieren Ihre aktuelle Webseite auf BFSG- und DSGVO-Verstöße",
+                "Sie erhalten einen konkreten Bericht: was fehlt, was zu tun ist",
+                "Wir zeigen Ihnen kostenlos wie Ihre neue, konforme Webseite aussehen würde",
+                "Kein Anwaltsrisiko — Sie handeln bevor jemand abmahnt",
+                "Umsetzung in 2–4 Wochen möglich",
+              ] : [
                 "Kostenlose Vorab-Analyse Ihrer aktuellen Webseite",
                 "Kostenlose Design-Vorschau Ihrer neuen Webseite",
                 "BFSG- und DSGVO-konform von Anfang an",
                 "Kein Risiko — keine Verpflichtung",
-              ].map((t) => (
+              ]).map((t) => (
                 <li key={t} className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-primary mt-1 shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-foreground/90">{t}</span>
@@ -267,13 +355,43 @@ const Gesetz = () => {
             </Button>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}>
-            <div className="relative aspect-[4/3] rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-muted to-muted/40 overflow-hidden shadow-xl">
-              <div className="absolute inset-0 -translate-x-full animate-[shimmer_2.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-muted-foreground font-medium">Ihre neue Webseite</div>
+            {isBfsg ? (
+              <div className="rounded-2xl border-2 border-primary/20 shadow-xl p-6 md:p-8 text-white"
+                style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))" }}>
+                <div className="flex items-center gap-2 text-green-400 font-semibold mb-5">
+                  <Check className="w-5 h-5" aria-hidden={true} focusable={false} />
+                  Analyse abgeschlossen
+                </div>
+                <ul className="space-y-3 mb-5">
+                  {[
+                    "Cookie-Banner nicht konform",
+                    "Alt-Texte fehlen (12 Bilder)",
+                    "Barrierefreiheitserklärung fehlt",
+                  ].map((t) => (
+                    <li key={t} className="flex items-start gap-3 bg-white/5 rounded-lg px-3 py-2.5">
+                      <X className="w-5 h-5 text-red-400 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                      <span className="text-white/90 text-sm">{t}</span>
+                    </li>
+                  ))}
+                  <li className="flex items-start gap-3 bg-white/5 rounded-lg px-3 py-2.5">
+                    <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                    <span className="text-white/90 text-sm">SSL-Zertifikat: aktiv</span>
+                  </li>
+                </ul>
+                <div className="border-t border-white/10 pt-4">
+                  <div className="text-red-400 font-semibold">3 kritische Probleme gefunden</div>
+                  <div className="text-white/50 text-xs mt-2">So könnte Ihr Analysebericht aussehen</div>
+                </div>
               </div>
-            </div>
-            <style>{`@keyframes shimmer { 100% { transform: translateX(200%); } }`}</style>
+            ) : (
+              <div className="relative aspect-[4/3] rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-muted to-muted/40 overflow-hidden shadow-xl">
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_2.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-muted-foreground font-medium">Ihre neue Webseite</div>
+                </div>
+                <style>{`@keyframes shimmer { 100% { transform: translateX(200%); } }`}</style>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
@@ -282,6 +400,12 @@ const Gesetz = () => {
       <section id="form-card" className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4">
           <motion.div {...fadeUp} className="max-w-[560px] mx-auto">
+            {isBfsg && !submitted && (
+              <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 flex items-start gap-2 text-amber-900">
+                <Clock className="w-5 h-5 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                <span className="text-sm font-medium">Die Abmahnwelle läuft bereits. Jeden Tag ohne konforme Webseite ist ein Risikotag.</span>
+              </div>
+            )}
             <Card className="p-8 md:p-10 rounded-2xl shadow-xl border-2 border-primary/20">
               {submitted ? (
                 <div className="text-center py-8">
@@ -293,9 +417,13 @@ const Gesetz = () => {
                 </div>
               ) : (
                 <>
-                  <h2 className="font-display text-3xl font-bold text-center mb-3">Kostenlose Vorschau anfordern</h2>
+                  <h2 className="font-display text-3xl font-bold text-center mb-3">
+                    {isBfsg ? "Jetzt kostenlos prüfen lassen" : "Kostenlose Vorschau anfordern"}
+                  </h2>
                   <p className="text-muted-foreground text-center mb-8">
-                    Wir analysieren Ihre aktuelle Webseite und erstellen eine kostenlose Vorschau Ihrer neuen — innerhalb von 48 Stunden.
+                    {isBfsg
+                      ? "Geben Sie uns Ihre Webseiten-URL — wir analysieren sie und melden uns innerhalb von 48 Stunden mit konkreten Ergebnissen. Kostenlos. Unverbindlich."
+                      : "Wir analysieren Ihre aktuelle Webseite und erstellen eine kostenlose Vorschau Ihrer neuen — innerhalb von 48 Stunden."}
                   </p>
                   <div className="space-y-4">
                     {[
@@ -364,7 +492,7 @@ const Gesetz = () => {
             Häufige Fragen
           </motion.h2>
           <Accordion type="single" collapsible className="w-full">
-            {c.faq.map((item, i) => (
+            {allFaq.map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`}>
                 <AccordionTrigger className="text-left font-semibold text-base md:text-lg">
                   {item.q}
