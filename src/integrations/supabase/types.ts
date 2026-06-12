@@ -705,6 +705,45 @@ export type Database = {
         }
         Relationships: []
       }
+      vorschau_anfragen: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          month_key: string
+          name: string
+          phone: string | null
+          source_page: string
+          status: string
+          website_url: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          month_key: string
+          name: string
+          phone?: string | null
+          source_page: string
+          status?: string
+          website_url?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          month_key?: string
+          name?: string
+          phone?: string | null
+          source_page?: string
+          status?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       vorschau_demos: {
         Row: {
           company: string

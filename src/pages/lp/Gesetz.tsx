@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShieldCheck, ArrowRight, Check, Star, Lock, Gavel, Building2, TrendingDown, AlertTriangle, X, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
+import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
 import bmasLogo from "@/assets/bmas-logo.svg.asset.json";
 import bfdiLogo from "@/assets/bfdi-logo.svg.asset.json";
 
@@ -113,9 +115,31 @@ const Gesetz = () => {
 
   const [form, setForm] = useState({ name: "", firma: "", url: "", email: "", telefon: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"slot_assigned" | "waitlist" | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = () => {
-    console.log("[Vorschau Anfrage]", { grund, ...form });
+  const handleSubmit = async () => {
+    setSubmitError(null);
+    if (!form.name.trim() || !form.email.trim()) {
+      setSubmitError("Bitte Name und E-Mail angeben.");
+      return;
+    }
+    setSubmitting(true);
+    const result = await submitVorschauAnfrage({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      company: form.firma.trim() || null,
+      website_url: form.url.trim() || null,
+      phone: form.telefon.trim() || null,
+      source_page: `/lp/gesetz?grund=${grund}`,
+    });
+    setSubmitting(false);
+    if (!result.ok) {
+      setSubmitError("Etwas ist schiefgelaufen. Bitte rufen Sie uns an: 06131 30 764 98");
+      return;
+    }
+    setSubmitStatus(result.status);
     setSubmitted(true);
     document.getElementById("form-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -189,6 +213,9 @@ const Gesetz = () => {
             <p className="text-lg text-white/85 max-w-2xl mx-auto mt-6 mb-8">
               {c.sub}
             </p>
+            <div className="flex justify-center mb-6">
+              <VorschauVerfuegbarkeit variant="dark" />
+            </div>
             <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="text-white hover:opacity-90 font-semibold shadow-xl" style={{ backgroundColor: "var(--brand-purple)" }} onClick={() => scrollTo("form-card")}>
                 {isBfsg ? "Jetzt kostenlos prüfen lassen" : "Jetzt kostenlose Vorschau anfordern"} <ArrowRight className="ml-1" aria-hidden={true} focusable={false} />
@@ -435,8 +462,24 @@ const Gesetz = () => {
                   <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
                     <Check className="w-8 h-8" aria-hidden={true} focusable={false} />
                   </div>
-                  <h2 className="font-display text-2xl font-bold mb-2">✓ Vielen Dank!</h2>
-                  <p className="text-muted-foreground">Wir melden uns innerhalb von 48 Stunden.</p>
+                  {submitStatus === "waitlist" ? (
+                    <>
+                      <h2 className="font-display text-2xl font-bold mb-2">✓ Sie stehen auf der Warteliste</h2>
+                      <p className="text-muted-foreground">
+                        Die 10 kostenlosen Vorschau-Plätze für diesen Monat sind bereits vergeben.
+                        Wir haben Ihre Anfrage vermerkt und melden uns, sobald wieder ein Platz frei wird —
+                        meist innerhalb der ersten Tage des nächsten Monats. Sie können uns auch direkt anrufen:{" "}
+                        <a href="tel:+4961313076498" className="font-semibold underline">06131 30 764 98</a>.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="font-display text-2xl font-bold mb-2">✓ Ihr Platz ist reserviert!</h2>
+                      <p className="text-muted-foreground">
+                        Wir melden uns innerhalb von 48 Stunden mit Ihrer kostenlosen Vorschau.
+                      </p>
+                    </>
+                  )}
                 </div>
               ) : (
                 <>
@@ -469,10 +512,14 @@ const Gesetz = () => {
                     <Button
                       size="lg"
                       onClick={handleSubmit}
+                      disabled={submitting}
                       className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg mt-2"
                     >
-                      Kostenlose Vorschau anfordern
+                      {submitting ? "Wird gesendet…" : "Kostenlose Vorschau anfordern"}
                     </Button>
+                    {submitError && (
+                      <p className="text-sm text-destructive text-center">{submitError}</p>
+                    )}
                     <p className="text-xs text-muted-foreground text-center">
                       Kein Spam. Keine Verpflichtung. Ihre Daten werden vertraulich behandelt.
                     </p>
