@@ -48,6 +48,7 @@ const KostenloseVorschau = lazy(() => import("./pages/KostenloseVorschau.tsx"));
 const KostenloseVorschau2 = lazy(() => import("./pages/KostenloseVorschau2.tsx"));
 const KostenloseVorschauV2 = lazy(() => import("./pages/KostenloseVorschauV2.tsx"));
 const Empfehlung = lazy(() => import("./pages/Empfehlung.tsx"));
+const DesignVorschau = lazy(() => import("./pages/DesignVorschau.tsx"));
 const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 const Starter = lazy(() => import("./pages/Starter.tsx"));
 const KaufErfolgreich = lazy(() => import("./pages/KaufErfolgreich.tsx"));
