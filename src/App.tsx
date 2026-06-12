@@ -82,6 +82,7 @@ const KundenportalEinstellungen = lazy(() => import("./pages/kundenportal/Einste
 const KundenportalWachstumspaket = lazy(() => import("./pages/kundenportal/Wachstumspaket.tsx"));
 const EmailAngebot = lazy(() => import("./pages/lp/EmailAngebot.tsx"));
 const LpGesetz = lazy(() => import("./pages/lp/Gesetz.tsx"));
+const EinEuroAngebot = lazy(() => import("./pages/EinEuroAngebot.tsx"));
 const Barrierefreiheit = lazy(() => import("./pages/Barrierefreiheit.tsx"));
 const Premium = lazy(() => import("./pages/Premium.tsx"));
 
@@ -106,6 +107,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
     pathname.startsWith("/a/") ||
     pathname === "/agb" ||
     pathname === "/premium" ||
+    pathname === "/1euro-angebot" ||
     pathname.startsWith("/lp/") ||
     pathname.startsWith("/kundenportal");
   return (
@@ -215,6 +217,7 @@ const App = () => (
             <Route path="/lp/angebot" element={<EmailAngebot />} />
             <Route path="/lp/gesetz" element={<LpGesetz />} />
             <Route path="/lp/compliance" element={<LpGesetz />} />
+            <Route path="/1euro-angebot" element={<EinEuroAngebot />} />
             <Route path="/premium" element={<Premium />} />
             <Route path="/kundenportal/login" element={<KundenportalLogin />} />
             <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
