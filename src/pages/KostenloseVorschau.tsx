@@ -535,6 +535,38 @@ const KostenloseVorschau = () => {
       <section id="formular" className="section-padding bg-muted/30 scroll-mt-24">
         <div className="container-narrow px-4">
           <div className="max-w-2xl mx-auto">
+            {vorschauStatus && (
+              <AnimatedSection>
+                <div
+                  className={`mb-8 rounded-2xl border p-6 sm:p-8 text-center ${
+                    vorschauStatus === "waitlist"
+                      ? "bg-amber-50 border-amber-200 text-amber-900"
+                      : "bg-green-50 border-green-200 text-green-900"
+                  }`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  {vorschauStatus === "waitlist" ? (
+                    <>
+                      <h2 className="text-2xl font-bold mb-2">✓ du stehst auf der Warteliste</h2>
+                      <p className="text-sm sm:text-base">
+                        Die 10 kostenlosen Vorschau-Plätze für diesen Monat sind bereits vergeben.
+                        Wir haben deine Anfrage vermerkt und melden uns, sobald wieder ein Platz frei wird —
+                        meist innerhalb der ersten Tage des nächsten Monats. du kannst uns auch direkt anrufen:{" "}
+                        <a href="tel:+4961313076498" className="font-semibold underline">06131 30 764 98</a>.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="text-2xl font-bold mb-2">✓ dein Platz ist reserviert!</h2>
+                      <p className="text-sm sm:text-base">
+                        Wir melden uns innerhalb von 48 Stunden mit deiner kostenlosen Vorschau.
+                      </p>
+                    </>
+                  )}
+                </div>
+              </AnimatedSection>
+            )}
             <AnimatedSection>
               <div className="text-center mb-10">
                 <span className="badge-label bg-primary/10 text-primary mb-4 inline-block">
