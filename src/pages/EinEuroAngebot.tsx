@@ -217,11 +217,11 @@ const EinEuroAngebot = () => {
               </ul>
             </div>
             <div
-              className="rounded-2xl p-6 bg-white"
-              style={{ border: "2px solid var(--brand-purple)", color: "var(--brand-purple)" }}
+              className="rounded-2xl p-6 bg-white/10"
+              style={{ border: "2px solid var(--brand-purple)" }}
             >
-              <h3 className="font-bold text-xl mb-4" style={{ color: "var(--brand-purple)" }}>Unser Angebot</h3>
-              <ul className="space-y-2">
+              <h3 className="font-bold text-xl mb-4 text-white">Unser Angebot</h3>
+              <ul className="space-y-2 text-white">
                 <li>Einrichtung: 1 € (statt 59 €)</li>
                 <li>Danach: 59 €/Monat — alles inklusive</li>
                 <li>Fertig in 2-4 Wochen</li>
