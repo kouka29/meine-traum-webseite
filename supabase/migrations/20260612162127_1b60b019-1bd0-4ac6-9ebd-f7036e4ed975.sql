@@ -1,0 +1,3 @@
+CREATE POLICY "Deny select for non-service roles" ON public.vorschau_anfragen FOR SELECT TO anon, authenticated USING (false);
+
+CREATE POLICY "Users update own ticket attachments" ON storage.objects FOR UPDATE TO authenticated USING (bucket_id = 'ticket-attachments' AND (auth.uid())::text = (storage.foldername(name))[1]) WITH CHECK (bucket_id = 'ticket-attachments' AND (auth.uid())::text = (storage.foldername(name))[1]);
