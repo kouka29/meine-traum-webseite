@@ -337,6 +337,9 @@ const KostenloseVorschau = () => {
               >
                 Jetzt kostenlose Vorschau anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} />
               </Button>
+              <div className="flex justify-center mt-5">
+                <VorschauVerfuegbarkeit variant="light" />
+              </div>
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 mt-8">
                 {[
                   { icon: Gift, text: "Kostenlos & unverbindlich" },
