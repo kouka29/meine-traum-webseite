@@ -225,7 +225,10 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   };
 
   useEffect(() => {
-    if (password) load();
+    if (password) {
+      load();
+      loadGlobal();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password, pageKey]);
 
