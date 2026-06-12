@@ -228,8 +228,8 @@ const App = () => (
               <Route path="angebote" element={<KundenportalAngebote />} />
               <Route path="einstellungen" element={<KundenportalEinstellungen />} />
             </Route>
-            <Route path="*" element={<NotFound />} />
             <Route path="/design-vorschau" element={<DesignVorschau />} />
+            <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
           </ChromeWrapper>
