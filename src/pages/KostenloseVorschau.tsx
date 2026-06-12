@@ -38,6 +38,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
+import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
 
 const trades = [
   "Elektriker",
@@ -174,6 +176,7 @@ const KostenloseVorschau = () => {
   const [urgency, setUrgency] = useState("");
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [vorschauStatus, setVorschauStatus] = useState<"slot_assigned" | "waitlist" | null>(null);
 
   const toggleGoal = (g: string) => {
     setSelectedGoals((prev) =>
