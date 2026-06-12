@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShieldCheck, ArrowRight, Check, Star, Lock, Gavel, Building2, TrendingDown, AlertTriangle, X, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import bmasLogo from "@/assets/bmas-logo.svg.asset.json";
+import bfdiLogo from "@/assets/bfdi-logo.svg.asset.json";
 
 type Grund = "bfsg" | "cookie" | "design";
 
@@ -268,9 +270,9 @@ const Gesetz = () => {
               Das sagt der Staat — keine Meinung, Fakten
             </h2>
             <Card className="p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                  <ShieldCheck className="w-6 h-6" aria-hidden={true} focusable={false} />
+              <div className="flex items-center gap-5 mb-5 flex-wrap">
+                <div className="shrink-0 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100 flex items-center justify-center">
+                  <img src={bmasLogo.url} alt="Logo Bundesministerium für Arbeit und Soziales" className="h-10 md:h-12 w-auto" loading="lazy" />
                 </div>
                 <div className="font-semibold text-lg">{c.source.name}</div>
               </div>
@@ -283,9 +285,9 @@ const Gesetz = () => {
             </Card>
             {isBfsg && (
               <Card className="mt-6 p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                    <ShieldCheck className="w-6 h-6" aria-hidden={true} focusable={false} />
+                <div className="flex items-center gap-5 mb-5 flex-wrap">
+                  <div className="shrink-0 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100 flex items-center justify-center">
+                    <img src={bfdiLogo.url} alt="Logo Bundesbeauftragte für den Datenschutz und die Informationsfreiheit" className="h-10 md:h-12 w-auto" loading="lazy" />
                   </div>
                   <div className="font-semibold text-lg">Bundesbeauftragte für den Datenschutz (BfDI)</div>
                 </div>
