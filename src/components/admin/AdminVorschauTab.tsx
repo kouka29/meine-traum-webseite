@@ -119,6 +119,11 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [saving, setSaving] = useState(false);
   const [pageKey, setPageKey] = useState<"v1" | "v2">("v2");
   const [settings, setSettings] = useState<Settings | null>(null);
+
+  // Global slot settings (used by /lp/gesetz etc. via check-vorschau-availability)
+  const [globalSettings, setGlobalSettings] = useState<Settings | null>(null);
+  const [globalLoading, setGlobalLoading] = useState(true);
+  const [globalSaving, setGlobalSaving] = useState(false);
   const [demos, setDemos] = useState<Demo[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);
