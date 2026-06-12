@@ -3,7 +3,8 @@ import { Phone, Check } from "lucide-react";
 import HandwerkerLeadForm from "@/components/trade/HandwerkerLeadForm";
 import FeatureCard from "@/components/trade/FeatureCard";
 import TestimonialCard from "@/components/trade/TestimonialCard";
-import PricingTeaserCard from "@/components/trade/PricingTeaserCard";
+import { PackageCard, rentPackages } from "@/pages/WebdesignPreise";
+import { PricingNamesProvider } from "@/lib/pricingNames";
 
 export interface TradeHubConfig {
   branche: string;
@@ -31,11 +32,12 @@ const STEPS = [
   { emoji: "🚀", title: "Gefällt sie Dir — geht sie live", text: "Gefällt sie nicht — zahlst Du nichts. Gefällt sie Dir → wir schalten sie live." },
 ];
 
-const PRICING = [
-  { name: "Einzelkämpfer", price: "59 €/Monat", description: "Schnell professionell online", features: ["1-Seite Website", "Mobil-optimiert", "Online in 7 Tagen"], highlighted: false, ctaLink: "/handwerker/preise" },
-  { name: "Wachstums-Betrieb", price: "99 €/Monat", description: "Für Betriebe die wachsen wollen", features: ["Bis zu 5 Seiten", "Google-Optimierung", "Google Maps Einrichtung"], highlighted: true, ctaLink: "/handwerker/preise" },
-  { name: "Marktführer", price: "159 €/Monat", description: "Für Betriebe die dominieren wollen", features: ["Bis zu 10 Seiten", "SEO + Seitenstruktur", "Individuelle Umsetzung"], highlighted: false, ctaLink: "/handwerker/preise" },
-];
+const TRADE_NAMES = {
+  Starter: "Einzelkämpfer",
+  Pro: "Wachstums-Betrieb",
+  Premium: "Marktführer",
+};
+const TRADE_RENT_PACKAGES = rentPackages.filter((p) => !p.enterprise);
 
 const scrollToForm = () => document.getElementById("vorschau-formular")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -155,9 +157,13 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-3">Was kostet Deine neue Website?</h2>
           <p className="text-muted-foreground">Keine versteckten Kosten. Für Gewerbetreibende voll steuerlich absetzbar. ✅</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-5 mb-8">
-          {PRICING.map((p) => <PricingTeaserCard key={p.name} {...p} />)}
-        </div>
+        <PricingNamesProvider names={TRADE_NAMES}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {TRADE_RENT_PACKAGES.map((pkg, i) => (
+              <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={scrollToForm} />
+            ))}
+          </div>
+        </PricingNamesProvider>
         <div className="text-center">
           <Link to="/handwerker/kontakt" className="text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
             Nicht sicher welches Paket passt? → Kostenlos beraten lassen
