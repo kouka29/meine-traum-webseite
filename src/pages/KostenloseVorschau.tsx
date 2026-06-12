@@ -261,6 +261,20 @@ const KostenloseVorschau = () => {
         console.warn("Lead konnte nicht in der DB gespeichert werden", error);
       }
 
+      // Persist into monthly vorschau_anfragen + decide slot vs. waitlist
+      const vorschauRes = await submitVorschauAnfrage({
+        name: firstName,
+        email,
+        company: companyName,
+        phone: phone || null,
+        source_page: "/kostenlose-vorschau",
+      });
+      if (vorschauRes.ok) {
+        setVorschauStatus(vorschauRes.status);
+      } else {
+        setVorschauStatus("slot_assigned");
+      }
+
       supabase.functions.invoke("send-transactional-email", {
         body: {
           templateName: "lead-notification",
