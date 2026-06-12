@@ -204,23 +204,40 @@ const Gesetz = () => {
 
       {/* SCHMERZ-SEKTION */}
       {isBfsg && (
-        <section className="py-20 md:py-24 bg-muted/40">
-          <div className="container mx-auto px-4 max-w-[800px]">
-            <motion.h2 {...fadeUp} className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
+        <section className="py-20 md:py-28 bg-muted/40">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <motion.h2 {...fadeUp} className="font-display text-3xl md:text-4xl font-bold text-center mb-14">
               Was passiert, wenn Sie nichts tun?
             </motion.h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {scenarios.map(({ Icon, title, text }, i) => (
-                <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
-                  <Card className="p-6 h-full rounded-2xl border-2 bg-card">
-                    <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-4">
-                      <Icon className="w-6 h-6" aria-hidden={true} focusable={false} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {scenarios.map(({ Icon, title, text }, i) => {
+                const variants = [
+                  { glow: "from-indigo-500 to-purple-600", iconBg: "bg-indigo-50", iconColor: "text-indigo-600", tag: "text-indigo-500", tagText: "Rechtliches Risiko" },
+                  { glow: "from-purple-500 to-pink-500", iconBg: "bg-purple-50", iconColor: "text-purple-600", tag: "text-purple-500", tagText: "Finanzielles Risiko" },
+                  { glow: "from-blue-500 to-indigo-500", iconBg: "bg-blue-50", iconColor: "text-blue-600", tag: "text-blue-500", tagText: "Marken-Risiko" },
+                ];
+                const v = variants[i] ?? variants[0];
+                return (
+                  <motion.div
+                    key={i}
+                    {...fadeUp}
+                    transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+                    className="relative group"
+                  >
+                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${v.glow} rounded-3xl blur opacity-10 group-hover:opacity-25 transition duration-500`} aria-hidden="true" />
+                    <div className="relative bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
+                      <div className={`w-12 h-12 ${v.iconBg} rounded-2xl flex items-center justify-center mb-6`}>
+                        <Icon className={`w-6 h-6 ${v.iconColor}`} aria-hidden={true} focusable={false} />
+                      </div>
+                      <h3 className="font-display text-xl font-bold text-slate-900 mb-4 leading-tight">{title}</h3>
+                      <p className="text-slate-600 text-[15px] leading-relaxed flex-grow">{text}</p>
+                      <div className="mt-6 pt-6 border-t border-slate-100">
+                        <span className={`text-[10px] uppercase tracking-wider font-bold ${v.tag}`}>{v.tagText}</span>
+                      </div>
                     </div>
-                    <h3 className="font-display text-lg font-bold mb-2">{title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{text}</p>
-                  </Card>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
