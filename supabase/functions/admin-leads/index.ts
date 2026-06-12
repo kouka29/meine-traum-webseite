@@ -592,7 +592,8 @@ Deno.serve(async (req) => {
 
     if (action === "vorschau-update-settings") {
       const { settings } = body;
-      const pageKey = (body as { pageKey?: string }).pageKey === "v2" ? "v2" : "v1";
+      const rawPageKey = (body as { pageKey?: string }).pageKey;
+      const pageKey = rawPageKey === "v2" ? "v2" : rawPageKey === "global" ? "global" : "v1";
       if (!settings || typeof settings !== "object") {
         return new Response(JSON.stringify({ error: "settings fehlt" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
