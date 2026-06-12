@@ -177,13 +177,10 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <Link
               key={t.label}
               to={t.to}
-              className="group rounded-2xl p-7 flex flex-col items-center gap-3 shadow-card border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent"
-              style={{ backgroundColor: "#FFFFFF" }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#5B5FEF")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#FFFFFF")}
+              className="group rounded-2xl bg-white p-7 flex flex-col items-center gap-3 shadow-card border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-[#5B5FEF]"
             >
               <span className="text-4xl">{t.icon}</span>
-              <span className="text-base font-semibold text-center text-[#0A0A1F] group-hover:text-white transition-colors">{t.label}</span>
+              <span className="text-base font-semibold text-center text-[#0A0A1F] group-hover:text-[#5B5FEF] transition-colors">{t.label}</span>
             </Link>
           ))}
         </div>
