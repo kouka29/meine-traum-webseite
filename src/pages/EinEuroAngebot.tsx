@@ -217,8 +217,8 @@ const EinEuroAngebot = () => {
             Was würde das normalerweise kosten?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-2xl p-6" style={{ color: "var(--brand-purple)", backgroundColor: "#ffffff" }}>
-              <h3 className="font-semibold text-xl mb-4" style={{ color: "var(--brand-purple)" }}>Klassische Agentur</h3>
+            <div className="rounded-2xl p-6" style={{ color: "hsl(228 24% 12%)", backgroundColor: "#ffffff" }}>
+              <h3 className="font-semibold text-xl mb-4" style={{ color: "hsl(228 24% 12%)" }}>Klassische Agentur</h3>
               <ul className="space-y-2">
                 <li>Einrichtung: 1.500€ - 5.000€ einmalig</li>
                 <li>Laufende Kosten: 80-150€/Monat</li>
