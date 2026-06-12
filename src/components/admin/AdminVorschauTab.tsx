@@ -233,6 +233,38 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     setSettings(s => (s ? { ...s, ...patch } : s));
   };
 
+  const loadGlobal = async () => {
+    setGlobalLoading(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "vorschau-get", pageKey: "global" },
+    });
+    setGlobalLoading(false);
+    if (error || data?.error) {
+      // Silently ignore — global may not exist yet
+      return;
+    }
+    setGlobalSettings(data.settings);
+  };
+
+  const updateGlobalSettings = (patch: Partial<Settings>) => {
+    setGlobalSettings(s => (s ? { ...s, ...patch } : s));
+  };
+
+  const saveGlobalSettings = async () => {
+    if (!globalSettings) return;
+    setGlobalSaving(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "vorschau-update-settings", settings: { total_slots: globalSettings.total_slots }, pageKey: "global" },
+    });
+    setGlobalSaving(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Speichern");
+      return;
+    }
+    setGlobalSettings(data.settings);
+    toast.success("Globale Plätze gespeichert – sofort live auf allen Seiten!");
+  };
+
   const saveSettings = async () => {
     if (!settings) return;
     if (settings.taken_slots > settings.total_slots) {
