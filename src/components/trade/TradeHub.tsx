@@ -84,10 +84,14 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {config.painPoints.map((p) => (
-            <div key={p.title} className="rounded-2xl border border-white/10 p-6 flex flex-col gap-3" style={{ background: "var(--dark-card)" }}>
+            <div
+              key={p.title}
+              className="rounded-2xl p-6 flex flex-col gap-3 transition duration-300 hover:-translate-y-0.5"
+              style={{ background: "#FFFFFF", boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}
+            >
               <div className="text-3xl">{p.icon}</div>
-              <h3 className="text-base font-semibold text-white">{p.title}</h3>
-              <p className="text-sm leading-relaxed text-white/85">{p.description}</p>
+              <h3 className="text-base font-semibold" style={{ color: "#0A0A1F" }}>{p.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(10,10,31,0.65)" }}>{p.description}</p>
             </div>
           ))}
         </div>

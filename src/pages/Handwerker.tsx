@@ -351,13 +351,15 @@ const Handwerker = () => {
           <div className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
             {painPoints.map((p, i) => (
               <AnimatedSection key={p.title} delay={i * 0.06}>
-                <div className="group relative p-8 rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-xl h-full transition-all hover:border-white/20 hover:bg-white/[0.06]">
-                  <div className="absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-red-500/20 to-orange-500/10 border border-red-500/20 flex items-center justify-center mb-5">
-                    <AlertCircle size={20} className="text-red-400" aria-hidden={true} focusable={false} />
+                <div
+                  className="group relative p-8 rounded-3xl h-full transition-all duration-300 hover:-translate-y-0.5"
+                  style={{ background: "#FFFFFF", boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}
+                >
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-red-500/15 to-orange-500/10 border border-red-500/20 flex items-center justify-center mb-5">
+                    <AlertCircle size={20} className="text-red-500" aria-hidden={true} focusable={false} />
                   </div>
-                  <h3 className="font-heading font-semibold text-xl mb-3 tracking-tight">{p.title}</h3>
-                  <p className="text-[15px] text-white/65 leading-relaxed">{p.text}</p>
+                  <h3 className="font-heading font-semibold text-xl mb-3 tracking-tight" style={{ color: "#0A0A1F" }}>{p.title}</h3>
+                  <p className="text-[15px] leading-relaxed" style={{ color: "rgba(10,10,31,0.65)" }}>{p.text}</p>
                 </div>
               </AnimatedSection>
             ))}
