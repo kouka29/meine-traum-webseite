@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TestimonialCard = ({ stars = 5, badge, badgeColor = "#5B5FEF", quote, name, business }: Props) => (
-  <div className="rounded-2xl border border-border bg-gradient-to-b from-white to-gray-50 p-6 shadow-card flex flex-col gap-4">
+  <div className="rounded-2xl border border-border bg-white p-6 shadow-card flex flex-col gap-4">
     <div className="flex items-center gap-1 text-amber-500">
       {Array.from({ length: stars }).map((_, i) => (
         <Star key={i} size={16} fill="currentColor" stroke="none" aria-hidden={true} focusable={false} />
