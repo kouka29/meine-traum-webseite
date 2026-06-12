@@ -520,7 +520,7 @@ const EmailAngebot = () => {
       </section>
 
       {/* ============ PRICING ============ */}
-      <section id="pricing" className="section-padding pt-16 md:pt-20">
+      <section id="pricing" className="px-4 pt-16 md:pt-20 pb-10 md:pb-14">
         <div className="container-narrow px-4">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Die Lösung</p>
