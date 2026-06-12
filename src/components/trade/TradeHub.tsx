@@ -199,28 +199,28 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
     </Section>
 
     {/* LEAD FORM */}
-    <Section bg="dark" id="vorschau-formular">
+    <Section bg="white" id="vorschau-formular">
       <Container>
         <div className="grid lg:grid-cols-2 gap-10 items-start">
-          <div className="text-white">
+          <div className="text-foreground">
             <span className="inline-block text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full text-white mb-5" style={{ background: "var(--amber)" }}>
               Kostenlos & unverbindlich
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">{config.formH2}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">{config.formH2}</h2>
             <ul className="space-y-3 mb-8">
               {["Individuell für Deinen Betrieb", "Ich melde mich innerhalb von 2 Stunden", "Kein Risiko — Du entscheidest danach frei", "Kostenlos — auch wenn Du nicht kaufst"].map((t) => (
-                <li key={t} className="flex items-start gap-2 text-sm">
+                <li key={t} className="flex items-start gap-2 text-sm text-foreground">
                   <Check size={18} style={{ color: "var(--success)" }} className="mt-0.5 shrink-0" aria-hidden={true} focusable={false} /> {t}
                 </li>
               ))}
             </ul>
-            <a href="tel:+4961313076498" className="inline-flex items-center gap-3 text-2xl font-bold text-white hover:underline">
+            <a href="tel:+4961313076498" className="inline-flex items-center gap-3 text-2xl font-bold text-foreground hover:underline">
               <Phone size={24} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
-            <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Mo–Fr 9–18 Uhr</p>
+            <p className="text-sm mt-1 text-muted-foreground">Mo–Fr 9–18 Uhr</p>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-white mb-4">Vorschau jetzt anfordern</h3>
+            <h3 className="text-xl font-bold text-search text-foreground mb-4">Vorschau jetzt anfordern</h3>
             <HandwerkerLeadForm branche={config.branche} />
           </div>
         </div>
