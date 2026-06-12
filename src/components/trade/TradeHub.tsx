@@ -220,7 +220,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <p className="text-sm mt-1 text-muted-foreground">Mo–Fr 9–18 Uhr</p>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-search text-foreground mb-4">Vorschau jetzt anfordern</h3>
+            <h3 className="text-xl font-bold text-foreground mb-4">Vorschau jetzt anfordern</h3>
             <HandwerkerLeadForm branche={config.branche} />
           </div>
         </div>
