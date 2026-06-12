@@ -91,10 +91,19 @@ const EinEuroAngebot = () => {
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none hidden lg:block"
           style={{
             background:
               "radial-gradient(ellipse 55% 45% at 5% 15%, hsl(270 70% 55% / 0.45), transparent 65%), radial-gradient(ellipse 50% 50% at 30% 70%, hsl(215 100% 45% / 0.25), transparent 65%)",
+          }}
+        />
+        {/* Mobile / Tablet: gradient verschoben aus dem Textbereich heraus für bessere Lesbarkeit */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none lg:hidden"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 35% at 100% 100%, hsl(270 70% 55% / 0.40), transparent 70%), radial-gradient(ellipse 60% 30% at 0% 100%, hsl(215 100% 45% / 0.22), transparent 70%)",
           }}
         />
         <div className="relative max-w-5xl mx-auto px-4 py-20 md:py-28 text-center">
