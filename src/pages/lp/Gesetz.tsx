@@ -462,8 +462,24 @@ const Gesetz = () => {
                   <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
                     <Check className="w-8 h-8" aria-hidden={true} focusable={false} />
                   </div>
-                  <h2 className="font-display text-2xl font-bold mb-2">✓ Vielen Dank!</h2>
-                  <p className="text-muted-foreground">Wir melden uns innerhalb von 48 Stunden.</p>
+                  {submitStatus === "waitlist" ? (
+                    <>
+                      <h2 className="font-display text-2xl font-bold mb-2">✓ Sie stehen auf der Warteliste</h2>
+                      <p className="text-muted-foreground">
+                        Die 10 kostenlosen Vorschau-Plätze für diesen Monat sind bereits vergeben.
+                        Wir haben Ihre Anfrage vermerkt und melden uns, sobald wieder ein Platz frei wird —
+                        meist innerhalb der ersten Tage des nächsten Monats. Sie können uns auch direkt anrufen:{" "}
+                        <a href="tel:+4961313076498" className="font-semibold underline">06131 30 764 98</a>.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="font-display text-2xl font-bold mb-2">✓ Ihr Platz ist reserviert!</h2>
+                      <p className="text-muted-foreground">
+                        Wir melden uns innerhalb von 48 Stunden mit Ihrer kostenlosen Vorschau.
+                      </p>
+                    </>
+                  )}
                 </div>
               ) : (
                 <>
@@ -496,10 +512,14 @@ const Gesetz = () => {
                     <Button
                       size="lg"
                       onClick={handleSubmit}
+                      disabled={submitting}
                       className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg mt-2"
                     >
-                      Kostenlose Vorschau anfordern
+                      {submitting ? "Wird gesendet…" : "Kostenlose Vorschau anfordern"}
                     </Button>
+                    {submitError && (
+                      <p className="text-sm text-destructive text-center">{submitError}</p>
+                    )}
                     <p className="text-xs text-muted-foreground text-center">
                       Kein Spam. Keine Verpflichtung. Ihre Daten werden vertraulich behandelt.
                     </p>
