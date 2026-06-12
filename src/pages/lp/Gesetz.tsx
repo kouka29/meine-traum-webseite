@@ -213,6 +213,9 @@ const Gesetz = () => {
             <p className="text-lg text-white/85 max-w-2xl mx-auto mt-6 mb-8">
               {c.sub}
             </p>
+            <div className="flex justify-center mb-6">
+              <VorschauVerfuegbarkeit variant="dark" />
+            </div>
             <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="text-white hover:opacity-90 font-semibold shadow-xl" style={{ backgroundColor: "var(--brand-purple)" }} onClick={() => scrollTo("form-card")}>
                 {isBfsg ? "Jetzt kostenlos prüfen lassen" : "Jetzt kostenlose Vorschau anfordern"} <ArrowRight className="ml-1" aria-hidden={true} focusable={false} />
