@@ -514,6 +514,57 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         </div>
       </div>
 
+      {/* GLOBAL SLOTS — used by /lp/gesetz etc. */}
+      {(globalLoading || globalSettings) && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base font-semibold flex items-center gap-2">
+              <Globe size={16} className="text-primary" aria-hidden={true} focusable={false} /> Globale Vorschau-Plätze
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {globalLoading ? (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 className="animate-spin" size={16} /> Lade globale Einstellungen…
+              </div>
+            ) : globalSettings ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="global-total-slots">Plätze gesamt</Label>
+                    <Input id="global-total-slots" type="number" min={1} max={999}
+                      value={globalSettings.total_slots}
+                      onChange={e => updateGlobalSettings({ total_slots: Math.max(1, parseInt(e.target.value) || 1) })}
+                    />
+                  </div>
+                  <div>
+                    <Label>Davon vergeben (automatisch)</Label>
+                    <div className="h-10 flex items-center px-3 rounded-md border border-input bg-muted/40 font-semibold text-foreground">
+                      Wird aus Anfragen gezählt
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Verfügbar</Label>
+                    <div className="h-10 flex items-center px-3 rounded-md border border-input bg-muted/40 font-semibold text-foreground">
+                      Dynamisch
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Button onClick={saveGlobalSettings} disabled={globalSaving} variant="gradient" size="sm">
+                    {globalSaving ? <Loader2 className="animate-spin mr-2" size={16} /> : <Save className="mr-2" size={16} />}
+                    Globale Plätze speichern
+                  </Button>
+                  <span className="text-xs text-muted-foreground">Wirkt sich sofort auf alle Landingpages aus (z. B. /lp/gesetz)</span>
+                </div>
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground">Globale Einstellungen konnten nicht geladen werden.</p>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* SLOTS */}
       <Card>
         <CardHeader className="pb-3">
