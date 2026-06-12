@@ -9,6 +9,7 @@ import IndexTestimonials from "@/components/IndexTestimonials";
 import IndexServices from "@/components/IndexServices";
 import IndexBenefits from "@/components/IndexBenefits";
 import IndexFAQ from "@/components/IndexFAQ";
+import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
 import heroBg from "@/assets/hero-bg.jpg";
 import {
   ArrowRight,
@@ -44,6 +45,9 @@ const Index = () => (
                   <span>{t}</span>
                 </div>
               ))}
+            </div>
+            <div className="mb-5">
+              <VorschauVerfuegbarkeit variant="light" />
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button variant="gradient" size="lg" className="text-xs sm:text-base py-5 sm:py-6 px-4 sm:px-8 h-auto min-h-12 animate-cta-pulse w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
