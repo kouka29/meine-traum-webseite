@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShieldCheck, ArrowRight, Check, Star, Lock, Gavel, Building2, TrendingDown, AlertTriangle, X, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
+import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
 import bmasLogo from "@/assets/bmas-logo.svg.asset.json";
 import bfdiLogo from "@/assets/bfdi-logo.svg.asset.json";
 
@@ -113,9 +115,31 @@ const Gesetz = () => {
 
   const [form, setForm] = useState({ name: "", firma: "", url: "", email: "", telefon: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"slot_assigned" | "waitlist" | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = () => {
-    console.log("[Vorschau Anfrage]", { grund, ...form });
+  const handleSubmit = async () => {
+    setSubmitError(null);
+    if (!form.name.trim() || !form.email.trim()) {
+      setSubmitError("Bitte Name und E-Mail angeben.");
+      return;
+    }
+    setSubmitting(true);
+    const result = await submitVorschauAnfrage({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      company: form.firma.trim() || null,
+      website_url: form.url.trim() || null,
+      phone: form.telefon.trim() || null,
+      source_page: `/lp/gesetz?grund=${grund}`,
+    });
+    setSubmitting(false);
+    if (!result.ok) {
+      setSubmitError("Etwas ist schiefgelaufen. Bitte rufen Sie uns an: 06131 30 764 98");
+      return;
+    }
+    setSubmitStatus(result.status);
     setSubmitted(true);
     document.getElementById("form-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
