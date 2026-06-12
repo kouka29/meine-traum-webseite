@@ -520,7 +520,7 @@ const Gesetz = () => {
                 <AccordionTrigger className="text-left font-semibold text-base md:text-lg">
                   {item.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
+                <AccordionContent className="text-muted-foreground leading-relaxed whitespace-pre-line">
                   {item.a}
                 </AccordionContent>
               </AccordionItem>
