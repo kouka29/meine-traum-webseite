@@ -103,7 +103,7 @@ const EinEuroAngebot = () => {
           className="absolute inset-0 pointer-events-none lg:hidden"
           style={{
             background:
-              "radial-gradient(ellipse 70% 35% at 100% 100%, hsl(270 70% 55% / 0.40), transparent 70%), radial-gradient(ellipse 60% 30% at 0% 100%, hsl(215 100% 45% / 0.22), transparent 70%)",
+              "radial-gradient(ellipse 80% 40% at 50% 100%, hsl(270 70% 55% / 0.45), transparent 70%), radial-gradient(ellipse 90% 35% at 50% 18%, hsl(228 30% 4% / 0.65), transparent 75%)",
           }}
         />
         <div className="relative max-w-5xl mx-auto px-4 py-20 md:py-28 text-center">
