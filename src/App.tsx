@@ -173,7 +173,7 @@ const App = () => (
             <Route path="/handwerker" element={<HandwerkerRoute />} />
             <Route path="/handwerker/preise" element={<HandwerkerPreise />} />
             <Route path="/handwerker/leistungen" element={<HandwerkerLeistungen />} />
-            <Route path="/handwerker/portfolio" element={<HandwerkerPortfolio />} />
+            <Route path="/handwerker/portfolio" element={<Portfolio />} />
             <Route path="/handwerker/ueber-uns" element={<HandwerkerUeberUns />} />
             <Route path="/handwerker/kontakt" element={<HandwerkerKontakt />} />
             <Route path="/handwerker/*" element={<Navigate to="/handwerker" replace />} />
