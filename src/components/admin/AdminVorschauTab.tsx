@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import {
   Loader2, Save, Plus, Pencil, Trash2, ChevronUp, ChevronDown,
   Eye, EyeOff, Image as ImageIcon, Sparkles, Clock, Users,
-  HelpCircle, Phone, MessageSquare, Briefcase, Link2,
+  HelpCircle, Phone, MessageSquare, Briefcase, Link2, Globe,
 } from "lucide-react";
 
 type Settings = {
