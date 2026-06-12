@@ -319,7 +319,7 @@ const AddonsSection = () => (
   </section>
 );
 
-type Pkg = {
+export type Pkg = {
   name: string;
   price: string;
   subPrice?: string;
@@ -335,7 +335,7 @@ type Pkg = {
   priceId?: string;
 };
 
-const rentPackages: Pkg[] = [
+export const rentPackages: Pkg[] = [
   {
     name: "Starter",
     price: "59 €/Monat",
@@ -577,7 +577,7 @@ const faqs = [
   },
 ];
 
-const PackageCard = ({
+export const PackageCard = ({
   pkg,
   i,
   onOpen,
