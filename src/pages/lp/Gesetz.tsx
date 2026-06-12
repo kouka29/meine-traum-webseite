@@ -167,13 +167,13 @@ const Gesetz = () => {
           className="absolute inset-0 z-0"
           style={{
             background:
-              "linear-gradient(135deg, hsl(250 56% 22%) 0%, hsl(250 56% 30%) 40%, hsl(228 24% 10%) 100%)",
+              "linear-gradient(115deg, hsl(250 56% 14%) 0%, hsl(250 56% 18%) 35%, hsl(228 30% 8%) 75%, hsl(228 30% 5%) 100%)",
           }}
         />
         <div className="absolute inset-0 z-0 opacity-40"
           style={{
             background:
-              "radial-gradient(ellipse 60% 50% at 80% 20%, hsl(215 100% 60% / 0.35), transparent 60%), radial-gradient(ellipse 50% 50% at 10% 80%, hsl(270 70% 65% / 0.3), transparent 60%)",
+              "radial-gradient(ellipse 55% 45% at 5% 15%, hsl(270 70% 55% / 0.45), transparent 65%), radial-gradient(ellipse 50% 50% at 30% 70%, hsl(215 100% 45% / 0.25), transparent 65%)",
           }}
         />
         <div className="relative z-10 container mx-auto px-4 py-20 md:py-28 max-w-4xl text-center">
