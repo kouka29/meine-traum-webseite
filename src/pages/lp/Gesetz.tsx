@@ -273,21 +273,23 @@ const Gesetz = () => {
       )}
 
       {/* PROBLEM */}
-      <section id="problem" className="py-20 md:py-28 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-            {c.problems.map((p, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
-                <Card className="p-8 h-full rounded-2xl border-2 hover:border-primary/40 transition-colors">
-                  <div className="text-5xl mb-4">{p.icon}</div>
-                  <h3 className="font-display text-xl font-bold mb-3">{p.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{p.text}</p>
-                </Card>
-              </motion.div>
-            ))}
+      {!isBfsg && (
+        <section id="problem" className="py-20 md:py-28 bg-background">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              {c.problems.map((p, i) => (
+                <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
+                  <Card className="p-8 h-full rounded-2xl border-2 hover:border-primary/40 transition-colors">
+                    <div className="text-5xl mb-4">{p.icon}</div>
+                    <h3 className="font-display text-xl font-bold mb-3">{p.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{p.text}</p>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* STAATLICHE QUELLE */}
       <section className="py-20 md:py-28 bg-muted/40">
@@ -483,6 +485,17 @@ const Gesetz = () => {
                 </div>
               ) : (
                 <>
+                  <div className="flex items-center justify-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: "var(--brand-purple)" }}>
+                      MA
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      <span className="text-foreground font-medium">Muad Amar antwortet persönlich</span>
+                      <span className="mx-1">—</span>
+                      kein Callcenter, keine Bots.
+                      <a href="tel:+4961313076498" className="ml-1 font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>06131 30 764 98</a>
+                    </div>
+                  </div>
                   <h2 className="font-display text-3xl font-bold text-center mb-3">
                     {isBfsg ? "Jetzt kostenlos prüfen lassen" : "Kostenlose Vorschau anfordern"}
                   </h2>
@@ -580,13 +593,16 @@ const Gesetz = () => {
       <section className="py-20 md:py-28 relative overflow-hidden"
         style={{ background: "linear-gradient(135deg, hsl(250 56% 30%), hsl(250 56% 48%) 60%, hsl(215 100% 50%))" }}>
         <div className="container mx-auto px-4 text-center max-w-3xl">
-          <motion.div {...fadeUp}>
+          <div>
             <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-4">
               Jetzt kostenlose Vorschau anfordern
             </h2>
-            <p className="text-white/85 text-lg mb-8">
+            <p className="text-white/85 text-lg mb-6">
               Unverbindlich. Kostenlos. Innerhalb von 48 Stunden.
             </p>
+            <div className="flex justify-center mb-8">
+              <VorschauVerfuegbarkeit variant="dark" />
+            </div>
             <Button
               size="lg"
               onClick={() => scrollTo("form-card")}
@@ -599,7 +615,7 @@ const Gesetz = () => {
               <span className="flex items-center gap-1.5"><Check className="w-4 h-4" aria-hidden={true} focusable={false} /> Kein Spam</span>
               <span className="flex items-center gap-1.5"><Star className="w-4 h-4 fill-current text-yellow-300" aria-hidden={true} focusable={false} /> 5-Sterne bewertet</span>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
