@@ -174,9 +174,13 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
         </div>
         <div className="grid sm:grid-cols-3 gap-5 mb-6">
           {config.crossLinks.map((t) => (
-            <Link key={t.label} to={t.to} className="group rounded-2xl bg-white p-7 flex flex-col items-center gap-3 shadow-card border border-border hover:border-transparent hover:text-white transition-all hover:[background:var(--brand-purple)]">
+            <Link
+              key={t.label}
+              to={t.to}
+              className="group rounded-2xl bg-white hover:bg-[var(--brand-purple)] p-7 flex flex-col items-center gap-3 shadow-card border border-border hover:border-transparent transition-all duration-300 hover:-translate-y-0.5"
+            >
               <span className="text-4xl">{t.icon}</span>
-              <span className="text-base font-semibold text-center">{t.label}</span>
+              <span className="text-base font-semibold text-center text-foreground group-hover:text-white transition-colors">{t.label}</span>
             </Link>
           ))}
         </div>
