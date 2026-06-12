@@ -577,7 +577,8 @@ Deno.serve(async (req) => {
 
     // =================== VORSCHAU SETTINGS ===================
     if (action === "vorschau-get") {
-      const pageKey = (body as { pageKey?: string }).pageKey === "v2" ? "v2" : "v1";
+      const rawPageKey = (body as { pageKey?: string }).pageKey;
+      const pageKey = rawPageKey === "v2" ? "v2" : rawPageKey === "global" ? "global" : "v1";
       const [{ data: settings }, { data: demos }, { data: faqs }, { data: portfolio }] = await Promise.all([
         supabase.from("vorschau_settings").select("*").eq("page_key", pageKey).maybeSingle(),
         supabase.from("vorschau_demos").select("*").eq("page_key", pageKey).order("sort_order", { ascending: true }),
