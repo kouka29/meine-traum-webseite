@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import {
   Loader2, Save, Plus, Pencil, Trash2, ChevronUp, ChevronDown,
   Eye, EyeOff, Image as ImageIcon, Sparkles, Clock, Users,
-  HelpCircle, Phone, MessageSquare, Briefcase, Link2,
+  HelpCircle, Phone, MessageSquare, Briefcase, Link2, Globe,
 } from "lucide-react";
 
 type Settings = {
@@ -119,6 +119,11 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [saving, setSaving] = useState(false);
   const [pageKey, setPageKey] = useState<"v1" | "v2">("v2");
   const [settings, setSettings] = useState<Settings | null>(null);
+
+  // Global slot settings (used by /lp/gesetz etc. via check-vorschau-availability)
+  const [globalSettings, setGlobalSettings] = useState<Settings | null>(null);
+  const [globalLoading, setGlobalLoading] = useState(true);
+  const [globalSaving, setGlobalSaving] = useState(false);
   const [demos, setDemos] = useState<Demo[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);
@@ -220,12 +225,47 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   };
 
   useEffect(() => {
-    if (password) load();
+    if (password) {
+      load();
+      loadGlobal();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password, pageKey]);
 
   const updateSettings = (patch: Partial<Settings>) => {
     setSettings(s => (s ? { ...s, ...patch } : s));
+  };
+
+  const loadGlobal = async () => {
+    setGlobalLoading(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "vorschau-get", pageKey: "global" },
+    });
+    setGlobalLoading(false);
+    if (error || data?.error) {
+      // Silently ignore — global may not exist yet
+      return;
+    }
+    setGlobalSettings(data.settings);
+  };
+
+  const updateGlobalSettings = (patch: Partial<Settings>) => {
+    setGlobalSettings(s => (s ? { ...s, ...patch } : s));
+  };
+
+  const saveGlobalSettings = async () => {
+    if (!globalSettings) return;
+    setGlobalSaving(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: { password, action: "vorschau-update-settings", settings: { total_slots: globalSettings.total_slots }, pageKey: "global" },
+    });
+    setGlobalSaving(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Speichern");
+      return;
+    }
+    setGlobalSettings(data.settings);
+    toast.success("Globale Plätze gespeichert – sofort live auf allen Seiten!");
   };
 
   const saveSettings = async () => {
@@ -473,6 +513,57 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           </p>
         </div>
       </div>
+
+      {/* GLOBAL SLOTS — used by /lp/gesetz etc. */}
+      {(globalLoading || globalSettings) && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base font-semibold flex items-center gap-2">
+              <Globe size={16} className="text-primary" aria-hidden={true} focusable={false} /> Globale Vorschau-Plätze
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {globalLoading ? (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 className="animate-spin" size={16} /> Lade globale Einstellungen…
+              </div>
+            ) : globalSettings ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="global-total-slots">Plätze gesamt</Label>
+                    <Input id="global-total-slots" type="number" min={1} max={999}
+                      value={globalSettings.total_slots}
+                      onChange={e => updateGlobalSettings({ total_slots: Math.max(1, parseInt(e.target.value) || 1) })}
+                    />
+                  </div>
+                  <div>
+                    <Label>Davon vergeben (automatisch)</Label>
+                    <div className="h-10 flex items-center px-3 rounded-md border border-input bg-muted/40 font-semibold text-foreground">
+                      Wird aus Anfragen gezählt
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Verfügbar</Label>
+                    <div className="h-10 flex items-center px-3 rounded-md border border-input bg-muted/40 font-semibold text-foreground">
+                      Dynamisch
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Button onClick={saveGlobalSettings} disabled={globalSaving} variant="gradient" size="sm">
+                    {globalSaving ? <Loader2 className="animate-spin mr-2" size={16} /> : <Save className="mr-2" size={16} />}
+                    Globale Plätze speichern
+                  </Button>
+                  <span className="text-xs text-muted-foreground">Wirkt sich sofort auf alle Landingpages aus (z. B. /lp/gesetz)</span>
+                </div>
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground">Globale Einstellungen konnten nicht geladen werden.</p>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* SLOTS */}
       <Card>
