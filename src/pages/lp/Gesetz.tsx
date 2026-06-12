@@ -299,6 +299,9 @@ const Gesetz = () => {
                 </a>
               </Card>
             )}
+            <p className="text-xs text-muted-foreground/80 italic mt-6 text-center">
+              Hinweis: Die Nutzung der Logos dient ausschließlich der Quellenangabe. Es besteht keine Verbindung, Kooperation oder Empfehlung durch die genannten Behörden.
+            </p>
           </motion.div>
         </div>
       </section>
