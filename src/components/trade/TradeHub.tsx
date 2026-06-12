@@ -237,7 +237,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <button onClick={scrollToForm} className="rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-110" style={{ background: "var(--brand-purple)" }}>
               Kostenlose Vorschau anfordern →
             </button>
-            <a href="tel:+4961313076498" className="rounded-xl px-7 py-3.5 text-sm font-semibold text-white border border-white/30 hover:bg-white/10 transition inline-flex items-center justify-center gap-2">
+            <a href="tel:+4961313076498" className="rounded-xl px-7 py-3.5 text-sm font-semibold transition inline-flex items-center justify-center gap-2" style={{ backgroundColor: "#ffffff", color: "var(--brand-purple)" }}>
               <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
           </div>
