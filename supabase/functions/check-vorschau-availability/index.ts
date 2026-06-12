@@ -7,8 +7,6 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
 
-const TOTAL_SLOTS = 10;
-
 function currentMonthKey(): string {
   const d = new Date();
   const y = d.getUTCFullYear();
@@ -28,6 +26,22 @@ Deno.serve(async (req) => {
     );
 
     const monthKey = currentMonthKey();
+
+    // Read total_slots from global settings (page_key = 'global')
+    const { data: settingsData, error: settingsError } = await supabase
+      .from("vorschau_settings")
+      .select("total_slots")
+      .eq("page_key", "global")
+      .maybeSingle();
+
+    if (settingsError) {
+      return new Response(JSON.stringify({ error: settingsError.message }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const TOTAL_SLOTS = settingsData?.total_slots ?? 10;
 
     const { count, error } = await supabase
       .from("vorschau_anfragen")
