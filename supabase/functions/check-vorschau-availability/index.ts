@@ -27,10 +27,11 @@ Deno.serve(async (req) => {
 
     const monthKey = currentMonthKey();
 
-    // Read total_slots from global settings (page_key = 'global')
+    // Read total_slots + taken_slots from global settings (page_key = 'global')
+    // These are the single source of truth for ALL components showing slot availability.
     const { data: settingsData, error: settingsError } = await supabase
       .from("vorschau_settings")
-      .select("total_slots")
+      .select("total_slots, taken_slots")
       .eq("page_key", "global")
       .maybeSingle();
 
@@ -42,22 +43,8 @@ Deno.serve(async (req) => {
     }
 
     const TOTAL_SLOTS = settingsData?.total_slots ?? 10;
-
-    const { count, error } = await supabase
-      .from("vorschau_anfragen")
-      .select("id", { count: "exact", head: true })
-      .eq("month_key", monthKey)
-      .eq("status", "slot_assigned");
-
-    if (error) {
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const used = count ?? 0;
-    const available = Math.max(TOTAL_SLOTS - used, 0);
+    const TAKEN_SLOTS = Math.min(settingsData?.taken_slots ?? 0, TOTAL_SLOTS);
+    const available = Math.max(TOTAL_SLOTS - TAKEN_SLOTS, 0);
 
     return new Response(
       JSON.stringify({

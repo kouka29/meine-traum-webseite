@@ -56,8 +56,8 @@ const VorschauVerfuegbarkeit = ({ variant = "light", className = "" }: Props) =>
   })();
 
   const text = isFull
-    ? "Alle 10 Plätze diesen Monat vergeben — jetzt für Warteliste eintragen"
-    : `Noch ${data.available} von 10 Plätzen frei diesen Monat`;
+    ? `Alle ${data.total} Plätze diesen Monat vergeben — jetzt für Warteliste eintragen`
+    : `Noch ${data.available} von ${data.total} Plätzen frei diesen Monat`;
 
   return (
     <div
