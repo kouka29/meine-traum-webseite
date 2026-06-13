@@ -92,16 +92,25 @@ export function useVorschauSettings(pageKey: string = "v1"): VorschauData {
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      const [settingsRes, demosRes, faqsRes, portfolioRes, testimonialsRes] = await Promise.all([
+      const [settingsRes, globalRes, demosRes, faqsRes, portfolioRes, testimonialsRes] = await Promise.all([
         supabase.from("vorschau_settings").select("*").eq("page_key", pageKey).maybeSingle(),
+        supabase.from("vorschau_settings").select("total_slots,taken_slots").eq("page_key", "global").maybeSingle(),
         supabase.from("vorschau_demos").select("*").eq("page_key", pageKey).eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("vorschau_faqs").select("*").eq("page_key", pageKey).eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("portfolio_projects").select("id,title,category,description,image_url,mockup_desktop_url,mockup_mobile_url,external_url,result").eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("testimonials").select("id,name,role,text,result").eq("is_visible", true).order("sort_order", { ascending: true }),
       ]);
       if (cancelled) return;
+      const pageSettings = (settingsRes.data as VorschauSettings | null) ?? null;
+      const globalSlots = (globalRes.data as { total_slots: number; taken_slots: number } | null) ?? null;
+      // Slots werden global verwaltet: total_slots/taken_slots aus der "global"-Zeile
+      // überschreiben die seiten-spezifischen Werte, damit alle Seiten dieselben
+      // Platz-Zahlen anzeigen. show_slots bleibt pro Seite konfigurierbar.
+      const mergedSettings = pageSettings && globalSlots
+        ? { ...pageSettings, total_slots: globalSlots.total_slots, taken_slots: Math.min(globalSlots.taken_slots, globalSlots.total_slots) }
+        : pageSettings;
       setData({
-        settings: (settingsRes.data as VorschauSettings | null) ?? null,
+        settings: mergedSettings,
         demos: (demosRes.data as VorschauDemo[] | null) ?? [],
         faqs: (faqsRes.data as VorschauFaq[] | null) ?? [],
         portfolio: (portfolioRes.data as VorschauPortfolioProject[] | null) ?? [],
