@@ -579,91 +579,132 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         </div>
       </div>
 
-      {/* GLOBAL SLOTS — used by /lp/gesetz etc. */}
-      {(globalLoading || globalSettings) && (
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold flex items-center gap-2">
-              <Globe size={16} className="text-primary" aria-hidden={true} focusable={false} /> Globale Vorschau-Plätze
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {globalLoading ? (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Loader2 className="animate-spin" size={16} /> Lade globale Einstellungen…
-              </div>
-            ) : globalSettings ? (
+      {/* SLOTS — combined page + global */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base font-semibold flex items-center gap-2">
+            <Users size={16} className="text-primary" aria-hidden={true} focusable={false} /> Plätze &amp; Verknappung
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          {/* Scope switch */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-medium mr-1">Gilt für:</span>
+            <Button
+              type="button"
+              size="sm"
+              variant={slotScope === "page" ? "gradient" : "outline"}
+              onClick={() => setSlotScope("page")}
+            >
+              Diese Seite ({pageKey === "v2" ? "/kostenlose-vorschau" : "/kostenlose-vorschau-v2"})
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant={slotScope === "global" ? "gradient" : "outline"}
+              onClick={() => setSlotScope("global")}
+              disabled={!globalSettings && !globalLoading}
+            >
+              <Globe size={14} className="mr-1" aria-hidden={true} focusable={false} />
+              Global (alle Landingpages)
+            </Button>
+          </div>
+
+          {slotScope === "global" && globalLoading ? (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="animate-spin" size={16} /> Lade globale Einstellungen…
+            </div>
+          ) : (() => {
+            const active = slotScope === "global" ? globalSettings : settings;
+            if (!active) {
+              return <p className="text-sm text-muted-foreground">Einstellungen konnten nicht geladen werden.</p>;
+            }
+            const avail = Math.max(0, active.total_slots - active.taken_slots);
+            return (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="global-total-slots">Plätze gesamt</Label>
-                    <Input id="global-total-slots" type="number" min={1} max={999}
-                      value={globalSettings.total_slots}
-                      onChange={e => updateGlobalSettings({ total_slots: Math.max(1, parseInt(e.target.value) || 1) })}
+                    <Label htmlFor="combined-total-slots">Plätze gesamt</Label>
+                    <Input
+                      id="combined-total-slots"
+                      type="number"
+                      min={1}
+                      max={999}
+                      value={active.total_slots}
+                      onChange={e => {
+                        const v = Math.max(1, parseInt(e.target.value) || 1);
+                        slotScope === "global" ? updateGlobalSettings({ total_slots: v }) : updateSettings({ total_slots: v });
+                      }}
                     />
                   </div>
                   <div>
-                    <Label>Davon vergeben (automatisch)</Label>
-                    <div className="h-10 flex items-center px-3 rounded-md border border-input bg-muted/40 font-semibold text-foreground">
-                      Wird aus Anfragen gezählt
+                    <Label htmlFor="combined-taken-slots">Davon vergeben</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="combined-taken-slots"
+                        type="number"
+                        min={0}
+                        max={active.total_slots}
+                        value={active.taken_slots}
+                        onChange={e => {
+                          const v = Math.max(0, parseInt(e.target.value) || 0);
+                          slotScope === "global" ? updateGlobalSettings({ taken_slots: v }) : updateSettings({ taken_slots: v });
+                        }}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={autoCountTaken}
+                        disabled={autoCountLoading}
+                        title="Aus echten Anfragen (Status slot_assigned) im aktuellen Monat zählen"
+                      >
+                        {autoCountLoading ? <Loader2 className="animate-spin" size={14} /> : <><Sparkles size={14} className="mr-1" />Auto</>}
+                      </Button>
                     </div>
                   </div>
                   <div>
                     <Label>Verfügbar</Label>
                     <div className="h-10 flex items-center px-3 rounded-md border border-input bg-muted/40 font-semibold text-foreground">
-                      Dynamisch
+                      {avail} {avail === 1 ? "Platz" : "Plätze"}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Button onClick={saveGlobalSettings} disabled={globalSaving} variant="gradient" size="sm">
-                    {globalSaving ? <Loader2 className="animate-spin mr-2" size={16} /> : <Save className="mr-2" size={16} />}
-                    Globale Plätze speichern
+
+                <p className="text-xs text-muted-foreground">
+                  Beide Werte sind manuell editierbar. Der <strong>Auto-Button</strong> trägt automatisch die echten Anfragen
+                  (Status <code>slot_assigned</code>, aktueller Monat) ein – danach kannst du den Wert noch von Hand anpassen.
+                </p>
+
+                <div className="flex items-center gap-3 pt-1">
+                  <Switch
+                    checked={settings.show_slots}
+                    onCheckedChange={v => updateSettings({ show_slots: v })}
+                  />
+                  <Label>Plätze-Anzeige auf der Seite einblenden (gilt pro Seite)</Label>
+                </div>
+
+                <div className="flex items-center gap-3 pt-1">
+                  <Button
+                    onClick={saveSlots}
+                    disabled={slotScope === "global" ? globalSaving : saving}
+                    variant="gradient"
+                    size="sm"
+                  >
+                    {(slotScope === "global" ? globalSaving : saving)
+                      ? <Loader2 className="animate-spin mr-2" size={16} />
+                      : <Save className="mr-2" size={16} />}
+                    {slotScope === "global" ? "Globale Plätze speichern" : "Plätze für diese Seite speichern"}
                   </Button>
-                  <span className="text-xs text-muted-foreground">Wirkt sich sofort auf alle Landingpages aus (z. B. /lp/gesetz)</span>
+                  <span className="text-xs text-muted-foreground">
+                    {slotScope === "global"
+                      ? "Wirkt sich sofort auf alle Landingpages aus (z. B. /lp/gesetz)."
+                      : "Wirkt sich sofort auf die ausgewählte Seite aus."}
+                  </span>
                 </div>
               </>
-            ) : (
-              <p className="text-sm text-muted-foreground">Globale Einstellungen konnten nicht geladen werden.</p>
-            )}
-          </CardContent>
-        </Card>
-      )}
-
-      {/* SLOTS */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Users size={16} className="text-primary" aria-hidden={true} focusable={false} /> Plätze (Verknappung)
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="total-slots">Plätze gesamt</Label>
-              <Input id="total-slots" type="number" min={1} max={999}
-                value={settings.total_slots}
-                onChange={e => updateSettings({ total_slots: Math.max(1, parseInt(e.target.value) || 1) })}
-              />
-            </div>
-            <div>
-              <Label htmlFor="taken-slots">Davon vergeben</Label>
-              <Input id="taken-slots" type="number" min={0} max={settings.total_slots}
-                value={settings.taken_slots}
-                onChange={e => updateSettings({ taken_slots: Math.max(0, parseInt(e.target.value) || 0) })}
-              />
-            </div>
-            <div>
-              <Label>Verfügbar</Label>
-              <div className="h-10 flex items-center px-3 rounded-md border border-input bg-muted/40 font-semibold text-foreground">
-                {remaining} {remaining === 1 ? "Platz" : "Plätze"}
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 pt-2">
-            <Switch checked={settings.show_slots} onCheckedChange={v => updateSettings({ show_slots: v })} />
-            <Label>Plätze-Anzeige auf der Seite einblenden</Label>
-          </div>
+            );
+          })()}
         </CardContent>
       </Card>
 
