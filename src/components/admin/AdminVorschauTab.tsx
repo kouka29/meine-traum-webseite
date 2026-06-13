@@ -139,6 +139,10 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
   const [genShotLoading, setGenShotLoading] = useState(false);
 
+  // Combined slot section: which scope are we editing?
+  const [slotScope, setSlotScope] = useState<"page" | "global">("page");
+  const [autoCountLoading, setAutoCountLoading] = useState(false);
+
   const generateScreenshot = async () => {
     const url = screenshotUrl.trim();
     if (!url) {
