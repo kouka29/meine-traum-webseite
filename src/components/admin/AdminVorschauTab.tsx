@@ -291,6 +291,67 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     toast.success("Einstellungen gespeichert – live auf der Seite!");
   };
 
+  // Save just the slot fields for the currently selected scope.
+  const saveSlots = async () => {
+    const target = slotScope === "global" ? globalSettings : settings;
+    if (!target) return;
+    if (target.taken_slots > target.total_slots) {
+      toast.error("Vergebene Plätze dürfen nicht größer als die Gesamtanzahl sein.");
+      return;
+    }
+    if (slotScope === "global") {
+      setGlobalSaving(true);
+      const { data, error } = await supabase.functions.invoke("admin-leads", {
+        body: {
+          password,
+          action: "vorschau-update-settings",
+          settings: { total_slots: target.total_slots, taken_slots: target.taken_slots },
+          pageKey: "global",
+        },
+      });
+      setGlobalSaving(false);
+      if (error || data?.error) { toast.error(data?.error || "Fehler beim Speichern"); return; }
+      setGlobalSettings(data.settings);
+      toast.success("Globale Plätze gespeichert – sofort live auf allen Seiten!");
+    } else {
+      setSaving(true);
+      const { data, error } = await supabase.functions.invoke("admin-leads", {
+        body: {
+          password,
+          action: "vorschau-update-settings",
+          settings: { ...settings!, total_slots: target.total_slots, taken_slots: target.taken_slots, show_slots: settings!.show_slots },
+          pageKey,
+        },
+      });
+      setSaving(false);
+      if (error || data?.error) { toast.error(data?.error || "Fehler beim Speichern"); return; }
+      setSettings(data.settings);
+      toast.success("Plätze gespeichert – live auf der Seite!");
+    }
+  };
+
+  // Auto-count: read real "slot_assigned" count for current month and write into the selected scope.
+  const autoCountTaken = async () => {
+    setAutoCountLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("check-vorschau-availability", { body: {} });
+      if (error || !data) throw new Error(error?.message || "Konnte Anfragen nicht zählen");
+      const total = (data as any).total as number;
+      const available = (data as any).available as number;
+      const taken = Math.max(0, total - available);
+      if (slotScope === "global") {
+        updateGlobalSettings({ taken_slots: taken });
+      } else {
+        updateSettings({ taken_slots: taken });
+      }
+      toast.success(`Aktuell ${taken} echte Anfrage${taken === 1 ? "" : "n"} diesen Monat gezählt`);
+    } catch (e: any) {
+      toast.error(e?.message || "Auto-Zählen fehlgeschlagen");
+    } finally {
+      setAutoCountLoading(false);
+    }
+  };
+
   // ===== Demo actions =====
   const openNewDemo = () => {
     setEditingDemo(null);
