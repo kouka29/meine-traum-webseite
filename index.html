@@ -13,21 +13,8 @@
     <link rel="dns-prefetch" href="https://zwxucictfdbwhnnyemri.supabase.co" />
     <!-- Stripe preconnect is injected dynamically by src/lib/stripe.ts when checkout actually mounts -->
 
-    <!-- Fonts: preconnect + non-blocking preload of only the weights we actually use -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap"
-      />
-    </noscript>
+    <!-- Fonts are self-hosted via @fontsource packages (no Google Fonts CDN in critical path). -->
+    <!-- Preload links for above-the-fold woff2 files are injected from src/main.tsx where Vite knows the hashed URLs. -->
     <meta name="description" content="Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h.">
     <meta name="author" content="Meine Traum Webseite" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
