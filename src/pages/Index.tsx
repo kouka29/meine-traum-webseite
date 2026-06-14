@@ -1,9 +1,13 @@
 import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, CheckCircle, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
 import SocialProofBar from "@/components/SocialProofBar";
+import Picture from "@/components/Picture";
+// Build-time responsive image (AVIF + WebP + JPG fallback) via vite-imagetools.
+import heroBg from "@/assets/hero-bg.jpg?w=640;1024;1440;1920&format=avif;webp;jpg&as=picture";
 
 // Heavy / below-the-fold sections are loaded on demand so the LCP hero ships first.
 const PainPoints = lazy(() => import("@/components/PainPoints"));
@@ -16,14 +20,6 @@ const IndexFAQ = lazy(() => import("@/components/IndexFAQ"));
 
 // Reserve vertical space while a section loads so we don't trigger CLS.
 const SectionPlaceholder = () => <div className="min-h-[200px]" aria-hidden="true" />;
-import Picture from "@/components/Picture";
-// Build-time responsive image (AVIF + WebP + JPG fallback) via vite-imagetools.
-import heroBg from "@/assets/hero-bg.jpg?w=640;1024;1440;1920&format=avif;webp;jpg&as=picture";
-import {
-  ArrowRight,
-  CheckCircle,
-  PhoneCall,
-} from "lucide-react";
 
 const Index = () => (
   <main id="main-content">
