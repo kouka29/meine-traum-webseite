@@ -80,6 +80,8 @@ export const template = {
   subject: (d: Record<string, any>) =>
     `Neue Buchung: ${d.kundeName || 'Kunde'} — ${d.auftragsNr || ''}`,
   displayName: 'Buchung – Admin-Benachrichtigung',
+  // Fixed recipient — prevents the function from being used as an open mail relay.
+  to: 'info@qkmarketing.de',
   previewData: {
     auftragsNr: 'AB-2026-4821',
     kundeName: 'Max Mustermann',
