@@ -115,6 +115,7 @@ Deno.serve(async (req) => {
   //   the recipient from a server-side leads.id lookup. This prevents anonymous
   //   callers from sending mail from our verified domain to arbitrary third parties.
   const RECIPIENT_FROM_LEAD = new Set(['booking-confirmation', 'lead-qualified'])
+  const RECIPIENT_FROM_BUCHUNG = new Set(['buchung-kunde-bestaetigung'])
   let effectiveRecipient: string | undefined = template.to
 
   if (!effectiveRecipient) {
@@ -147,6 +148,37 @@ Deno.serve(async (req) => {
         )
       }
       effectiveRecipient = lead.email
+    } else if (RECIPIENT_FROM_BUCHUNG.has(templateName)) {
+      const buchungId = (templateData as any)?.buchungId
+        || (typeof leadId === 'string' ? undefined : undefined)
+      if (!buchungId || typeof buchungId !== 'string') {
+        return new Response(
+          JSON.stringify({ error: 'buchungId is required for this template' }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
+      const { data: buchung, error: bErr } = await supabase
+        .from('buchungen')
+        .select('kunde_email')
+        .eq('id', buchungId)
+        .maybeSingle()
+      if (bErr || !buchung?.kunde_email) {
+        console.error('Buchung lookup failed for recipient resolution', {
+          error: bErr,
+          buchungId,
+        })
+        return new Response(
+          JSON.stringify({ error: 'Recipient could not be resolved' }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
+      effectiveRecipient = buchung.kunde_email
     } else {
       effectiveRecipient = recipientEmail
     }
