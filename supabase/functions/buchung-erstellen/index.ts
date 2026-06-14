@@ -168,6 +168,7 @@ Deno.serve(async (req) => {
       auftragsNr: auftrags_nr,
       kundeVorname: kunde_vorname, kundeNachname: kunde_nachname,
       positions, netto, mwst, brutto, gebuchtAm,
+      buchungId: inserted.id,
     }, "kunde");
   }
 
