@@ -11,6 +11,10 @@
     <link rel="preconnect" href="https://zwxucictfdbwhnnyemri.supabase.co" crossorigin />
     <link rel="dns-prefetch" href="https://zwxucictfdbwhnnyemri.supabase.co" />
 
+    <!-- Stripe (lazily loaded; preconnect shaves the TLS handshake when checkout opens) -->
+    <link rel="preconnect" href="https://js.stripe.com" crossorigin />
+    <link rel="dns-prefetch" href="https://js.stripe.com" />
+
     <!-- Fonts: preconnect + non-blocking preload of only the weights we actually use -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
