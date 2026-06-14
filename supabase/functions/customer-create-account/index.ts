@@ -58,10 +58,21 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
 
-  // Optionaler Admin-Schutz für manuelle Aufrufe vom Admin-UI
-  // (Server-to-Server-Aufrufe aus anderen Edge Functions benutzen die Service-Key-URL und brauchen kein Passwort)
-  if (body.password !== undefined && body.password !== ADMIN_PASSWORD) {
-    return new Response(JSON.stringify({ error: "Ungültiges Passwort" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  // Auth-Guard: Aufrufer muss entweder den Service-Role-Key (Server-to-Server aus anderen
+  // Edge Functions) ODER das ADMIN_PASSWORD (Admin-UI) mitschicken. Anonyme Aufrufe
+  // mit dem öffentlichen Anon-Key werden abgelehnt, um Account-Anlage durch Dritte zu verhindern.
+  const authHeader = req.headers.get("Authorization") ?? "";
+  const bearer = authHeader.toLowerCase().startsWith("bearer ")
+    ? authHeader.slice(7).trim()
+    : "";
+  const isServiceRole = !!SERVICE_KEY && bearer === SERVICE_KEY;
+  if (!isServiceRole) {
+    if (!ADMIN_PASSWORD || body.password !== ADMIN_PASSWORD) {
+      return new Response(
+        JSON.stringify({ error: "Nicht autorisiert" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
   }
 
   const email = String(body.email || "").trim().toLowerCase();

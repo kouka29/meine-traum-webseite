@@ -66,13 +66,30 @@ async function processOne(sb: any, env: StripeEnv, row: any) {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  const sb = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  );
+  const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const ADMIN_PASSWORD = Deno.env.get("ADMIN_PASSWORD");
+
+  const sb = createClient(Deno.env.get("SUPABASE_URL")!, SERVICE_KEY);
 
   let body: any = {};
   try { body = await req.json(); } catch {}
+
+  // Auth-Guard: nur Service-Role-Calls (z. B. aus admin-leads/growth-golive) oder
+  // Aufrufe mit gültigem ADMIN_PASSWORD dürfen Rechnungen auslösen.
+  const authHeader = req.headers.get("Authorization") ?? "";
+  const bearer = authHeader.toLowerCase().startsWith("bearer ")
+    ? authHeader.slice(7).trim()
+    : "";
+  const isServiceRole = !!SERVICE_KEY && bearer === SERVICE_KEY;
+  if (!isServiceRole) {
+    if (!ADMIN_PASSWORD || body.password !== ADMIN_PASSWORD) {
+      return new Response(
+        JSON.stringify({ error: "Nicht autorisiert" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+  }
+
   const env: StripeEnv = body.env === "live" ? "live" : "sandbox";
   const singleId: string | undefined = body.growth_subscription_id;
 
