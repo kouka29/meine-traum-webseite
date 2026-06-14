@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import DeviceMockup from "@/components/DeviceMockup";
+import { supabaseImage, supabaseImageSrcSet } from "@/lib/supabaseImage";
 import { ExternalLink, ArrowRight, TrendingUp } from "lucide-react";
 import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
