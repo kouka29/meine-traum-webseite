@@ -34,6 +34,9 @@ export default defineConfig(({ mode }) => ({
     dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
   },
   build: {
+    // Target moderne Browser → keine Legacy-Polyfills, kleinerer Bundle.
+    target: "es2020",
+    cssCodeSplit: true,
     // Code-Splitting: schwere Drittanbieter-Bibliotheken in eigene Chunks legen,
     // damit sie unabhängig vom App-Code geladen und gecached werden können.
     rollupOptions: {
@@ -51,5 +54,10 @@ export default defineConfig(({ mode }) => ({
     },
     // Inhalt-Hashing für aggressives CDN-Caching.
     chunkSizeWarningLimit: 800,
+  },
+  esbuild: {
+    target: "es2020",
+    // Strip console/debugger in production for smaller bundles.
+    drop: mode === "production" ? ["console", "debugger"] : [],
   },
 }));
