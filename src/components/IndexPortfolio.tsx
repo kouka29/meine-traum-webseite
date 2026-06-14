@@ -9,6 +9,7 @@ import yogastudioImg from "@/assets/portfolio/yogastudio.jpg?w=400;800&format=av
 import digitalboostImg from "@/assets/portfolio/digitalboost.jpg?w=400;800&format=avif;webp;jpg&as=picture";
 import Picture from "@/components/Picture";
 import type { PictureSource } from "@/components/Picture";
+import { supabaseImage, supabaseImageSrcSet } from "@/lib/supabaseImage";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -115,7 +116,17 @@ const IndexPortfolio = () => {
                         className="w-full h-full object-cover rounded-lg"
                       />
                     ) : p.image_url ? (
-                      <img src={p.image_url as string} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                      <img
+                        src={supabaseImage(p.image_url as string, { width: 600, quality: 70 })}
+                        srcSet={supabaseImageSrcSet(p.image_url as string, [400, 600, 800], { quality: 70 })}
+                        sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                        alt={`${p.title} – ${p.category} | Website erstellen lassen`}
+                        loading="lazy"
+                        decoding="async"
+                        width={800}
+                        height={600}
+                        className="w-full h-full object-cover rounded-lg"
+                      />
                     ) : p.mockup_desktop_url ? (
                       <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                     ) : null}

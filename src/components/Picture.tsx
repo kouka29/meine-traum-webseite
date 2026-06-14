@@ -35,6 +35,11 @@ const Picture = ({
   ...rest
 }: Props) => {
   const { sources, img } = source;
+  // React <19 doesn't recognize camelCase `fetchPriority` — emit lowercase
+  // attribute so the browser hint is applied without dev-time warnings.
+  const fetchPriorityAttr = fetchPriority
+    ? ({ fetchpriority: fetchPriority } as Record<string, string>)
+    : {};
   return (
     <picture>
       {Object.entries(sources).map(([type, srcSet]) => (
@@ -47,10 +52,10 @@ const Picture = ({
         alt={alt}
         loading={loading}
         decoding={loading === "eager" ? "sync" : "async"}
-        fetchPriority={fetchPriority}
         sizes={sizes}
         className={className}
         style={style}
+        {...fetchPriorityAttr}
         {...rest}
       />
     </picture>
