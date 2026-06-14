@@ -101,7 +101,18 @@ const Portfolio = () => {
                       <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
                         <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                           {p.image_url ? (
-                            <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading={i < 3 ? "eager" : "lazy"} fetchPriority={i < 3 ? "high" : "auto"} decoding="async" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                            <img
+                              src={supabaseImage(p.image_url, { width: 600, quality: 72 })}
+                              srcSet={supabaseImageSrcSet(p.image_url, [400, 600, 800], { quality: 72 })}
+                              sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+                              alt={`${p.title} – ${p.category} | Webdesign Referenz`}
+                              loading={i < 3 ? "eager" : "lazy"}
+                              {...(i < 3 ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
+                              decoding="async"
+                              width={800}
+                              height={600}
+                              className="w-full h-full object-cover rounded-lg"
+                            />
                           ) : p.mockup_desktop_url ? (
                             <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                           ) : null}
@@ -127,7 +138,18 @@ const Portfolio = () => {
                     <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
                       <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                         {p.image_url ? (
-                          <img src={p.image_url} alt={`${p.title} – ${p.category} | Webdesign Referenz`} loading={i < 3 ? "eager" : "lazy"} fetchPriority={i < 3 ? "high" : "auto"} decoding="async" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                          <img
+                            src={supabaseImage(p.image_url, { width: 600, quality: 72 })}
+                            srcSet={supabaseImageSrcSet(p.image_url, [400, 600, 800], { quality: 72 })}
+                            sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+                            alt={`${p.title} – ${p.category} | Webdesign Referenz`}
+                            loading={i < 3 ? "eager" : "lazy"}
+                            {...(i < 3 ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
+                            decoding="async"
+                            width={800}
+                            height={600}
+                            className="w-full h-full object-cover rounded-lg"
+                          />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                         ) : null}
