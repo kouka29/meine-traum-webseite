@@ -29,7 +29,7 @@ const IndexTestimonials = () => {
     const load = async () => {
       const { data } = await supabase
         .from("testimonials")
-        .select("*")
+        .select("id,name,role,text,result")
         .eq("is_visible", true)
         .order("sort_order", { ascending: true });
       if (data && data.length > 0) {
