@@ -10,7 +10,9 @@ import IndexServices from "@/components/IndexServices";
 import IndexBenefits from "@/components/IndexBenefits";
 import IndexFAQ from "@/components/IndexFAQ";
 import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
-import heroBg from "@/assets/hero-bg.jpg";
+import Picture from "@/components/Picture";
+// Build-time responsive image (AVIF + WebP + JPG fallback) via vite-imagetools.
+import heroBg from "@/assets/hero-bg.jpg?w=640;1024;1440;1920&format=avif;webp;jpg&as=picture";
 import {
   ArrowRight,
   CheckCircle,
@@ -22,7 +24,14 @@ const Index = () => (
     {/* Hero */}
     <section className="relative min-h-[92vh] flex items-center section-padding pt-28 sm:pt-36 overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Webdesign das Kunden bringt" width={1920} height={1080} className="w-full h-full object-cover" fetchPriority="high" />
+        <Picture
+          source={heroBg}
+          alt="Webdesign das Kunden bringt"
+          loading="eager"
+          fetchPriority="high"
+          sizes="100vw"
+          className="w-full h-full object-cover"
+        />
       </div>
       <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
