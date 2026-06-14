@@ -1765,7 +1765,17 @@ const KostenloseVorschauV2 = () => {
                           <span className="w-2 h-2 rounded-full bg-emerald-400" />
                         </div>
                         {d.image_url ? (
-                          <img src={d.image_url} alt={d.company} className="aspect-video w-full object-cover" loading="lazy" />
+                          <img
+                            src={supabaseImage(d.image_url, { width: 600, quality: 72 })}
+                            srcSet={supabaseImageSrcSet(d.image_url, [400, 600, 800], { quality: 72 })}
+                            sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                            alt={d.company}
+                            className="aspect-video w-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                            width={800}
+                            height={450}
+                          />
                         ) : (
                           <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
                             <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
