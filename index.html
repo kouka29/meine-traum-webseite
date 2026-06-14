@@ -8,12 +8,10 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="preconnect" href="https://zwxucictfdbwhnnyemri.supabase.co" crossorigin />
+    <!-- Supabase: CORS API requests (REST/Storage/Auth) need crossorigin="anonymous" -->
+    <link rel="preconnect" href="https://zwxucictfdbwhnnyemri.supabase.co" crossorigin="anonymous" />
     <link rel="dns-prefetch" href="https://zwxucictfdbwhnnyemri.supabase.co" />
-
-    <!-- Stripe (lazily loaded; preconnect shaves the TLS handshake when checkout opens) -->
-    <link rel="preconnect" href="https://js.stripe.com" crossorigin />
-    <link rel="dns-prefetch" href="https://js.stripe.com" />
+    <!-- Stripe preconnect is injected dynamically by src/lib/stripe.ts when checkout actually mounts -->
 
     <!-- Fonts: preconnect + non-blocking preload of only the weights we actually use -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
