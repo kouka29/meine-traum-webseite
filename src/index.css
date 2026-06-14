@@ -213,8 +213,8 @@ html.apple-mode .pain-card .pain-card-text {
     --shadow-elevated: 0 4px 16px hsl(228 24% 10% / 0.06), 0 20px 50px hsl(228 24% 10% / 0.1);
     --shadow-glow: 0 0 50px hsl(250 56% 48% / 0.2);
 
-    --font-heading: 'Poppins', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Poppins', system-ui, sans-serif;
+    --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
