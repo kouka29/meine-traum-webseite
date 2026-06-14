@@ -65,7 +65,7 @@ export default function AdminWachstumTab({ password }: { password: string }) {
     if (!confirm(`Jetzt manuell eine Rechnung für ${row.customer_email} erstellen?`)) return;
     setBusy(row.id);
     const { data, error } = await supabase.functions.invoke("growth-invoice-create", {
-      body: { env: row.environment === "live" ? "live" : "sandbox", growth_subscription_id: row.id },
+      body: { password, env: row.environment === "live" ? "live" : "sandbox", growth_subscription_id: row.id },
     });
     setBusy(null);
     if (error) { toast.error(error.message); return; }
