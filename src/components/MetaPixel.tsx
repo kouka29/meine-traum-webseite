@@ -48,11 +48,24 @@ const initializePixel = () => {
 
 const MetaPixel = () => {
   useEffect(() => {
-    if (hasMarketingConsent()) initializePixel();
-
-    const handleConsentUpdate = () => {
-      if (hasMarketingConsent()) initializePixel();
+    // Defer init off the critical path so it never blocks rendering / LCP.
+    const idle = (cb: () => void) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const w = window as any;
+      if (typeof w.requestIdleCallback === "function") {
+        w.requestIdleCallback(cb, { timeout: 3000 });
+      } else {
+        setTimeout(cb, 1500);
+      }
     };
+
+    const tryInit = () => {
+      if (hasMarketingConsent()) idle(initializePixel);
+    };
+
+    tryInit();
+
+    const handleConsentUpdate = () => tryInit();
 
     window.addEventListener("cookieConsentUpdated", handleConsentUpdate);
     return () =>
