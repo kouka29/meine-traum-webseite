@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
 import DeviceMockup from "./DeviceMockup";
 import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
-import techstartImg from "@/assets/portfolio/techstart.jpg";
-import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
-import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
+import techstartImg from "@/assets/portfolio/techstart.jpg?w=400;800&format=avif;webp;jpg&as=picture";
+import yogastudioImg from "@/assets/portfolio/yogastudio.jpg?w=400;800&format=avif;webp;jpg&as=picture";
+import digitalboostImg from "@/assets/portfolio/digitalboost.jpg?w=400;800&format=avif;webp;jpg&as=picture";
+import Picture from "@/components/Picture";
+import type { PictureSource } from "@/components/Picture";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -16,7 +18,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const FALLBACK_IMAGES: Record<string, string> = {
+const FALLBACK_IMAGES: Record<string, PictureSource> = {
   "TechStart GmbH": techstartImg,
   "Studio Flow": yogastudioImg,
   "Yoga Studio Flow": yogastudioImg,
@@ -28,7 +30,7 @@ type PortfolioItem = {
   title: string;
   category: string;
   result: string;
-  image_url: string;
+  image_url: string | PictureSource;
   external_url: string;
   mockup_desktop_url: string;
   mockup_mobile_url: string;
@@ -104,8 +106,16 @@ const IndexPortfolio = () => {
               const Inner = (
                 <>
                   <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
-                    {p.image_url ? (
-                      <img src={p.image_url} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
+                    {p.image_url && typeof p.image_url === "object" ? (
+                      <Picture
+                        source={p.image_url}
+                        alt={`${p.title} – ${p.category} | Website erstellen lassen`}
+                        loading="lazy"
+                        sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    ) : p.image_url ? (
+                      <img src={p.image_url as string} alt={`${p.title} – ${p.category} | Website erstellen lassen`} loading="lazy" width={800} height={600} className="w-full h-full object-cover rounded-lg" />
                     ) : p.mockup_desktop_url ? (
                       <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                     ) : null}
