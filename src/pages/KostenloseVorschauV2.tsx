@@ -55,6 +55,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { supabaseImage, supabaseImageSrcSet } from "@/lib/supabaseImage";
 import { useVorschauSettings, type VorschauSettings, type VorschauDemo, type VorschauFaq } from "@/hooks/useVorschauSettings";
 import {
   Carousel,
