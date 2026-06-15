@@ -125,122 +125,124 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <DesignModeProvider>
-          <ScrollToTop />
-          <PageMeta />
-          <StructuredData />
-          <PageTracker />
-          <ChromeWrapper>
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/leistungen" element={<Services />} />
-            <Route path="/ueber-uns" element={<About />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/kontakt" element={<Contact />} />
-            <Route path="/webdesign-agentur" element={<WebdesignAgentur />} />
-            <Route path="/website-erstellen-lassen" element={<WebsiteErstellenLassen />} />
-            <Route path="/landingpage-erstellen-lassen" element={<LandingpageErstellen />} />
-            <Route path="/website-relaunch" element={<WebsiteRelaunch />} />
-            <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
-            <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
-            <Route path="/kostenlose-vorschau" element={<KostenloseVorschauV2 />} />
-            <Route path="/kostenlose-vorschau-v2" element={<KostenloseVorschau2 />} />
-            <Route path="/kostenlose-vorschau2" element={<KostenloseVorschau />} />
-            <Route path="/webdesign-preise" element={<WebdesignPreise />} />
-            <Route path="/preise" element={<WebdesignPreise />} />
-            <Route path="/preise2" element={<WebdesignPreise2 />} />
-            <Route path="/webdesign-shk" element={<WebdesignSHK />} />
-            <Route path="/webdesign-handwerker" element={<WebdesignHandwerker />} />
-            <Route path="/webdesign-aerzte" element={<WebdesignAerzte />} />
-            <Route path="/webdesign-immobilienmakler" element={<WebdesignImmobilienmakler />} />
-            <Route path="/webdesign-coaches" element={<WebdesignCoaches />} />
-            <Route path="/individuelle-software" element={<IndividuelleSoftware />} />
-            <Route path="/datenschutz" element={<Datenschutz />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/barrierefreiheit" element={<Barrierefreiheit />} />
-            <Route path="/admin" element={<AdminLeads />} />
-            <Route path="/original" element={<IndexOriginal />} />
-            <Route path="/unsubscribe" element={<Unsubscribe />} />
-            <Route path="/empfehlung" element={<Empfehlung />} />
-            <Route path="/erstgespraech" element={<Erstgespraech />} />
-            <Route path="/starter" element={<Starter />} />
-            <Route path="/kauf-erfolgreich" element={<KaufErfolgreich />} />
-            <Route path="/handwerker" element={<HandwerkerRoute />} />
-            <Route path="/handwerker/preise" element={<HandwerkerPreise />} />
-            <Route path="/handwerker/leistungen" element={<HandwerkerLeistungen />} />
-            <Route path="/handwerker/portfolio" element={<Portfolio />} />
-            <Route path="/handwerker/ueber-uns" element={<HandwerkerUeberUns />} />
-            <Route path="/handwerker/kontakt" element={<HandwerkerKontakt />} />
-            <Route path="/handwerker/*" element={<Navigate to="/handwerker" replace />} />
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <DesignModeProvider>
+            <ScrollToTop />
+            <PageMeta />
+            <StructuredData />
+            <PageTracker />
+            <ChromeWrapper>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/leistungen" element={<Services />} />
+              <Route path="/ueber-uns" element={<About />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/kontakt" element={<Contact />} />
+              <Route path="/webdesign-agentur" element={<WebdesignAgentur />} />
+              <Route path="/website-erstellen-lassen" element={<WebsiteErstellenLassen />} />
+              <Route path="/landingpage-erstellen-lassen" element={<LandingpageErstellen />} />
+              <Route path="/website-relaunch" element={<WebsiteRelaunch />} />
+              <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
+              <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
+              <Route path="/kostenlose-vorschau" element={<KostenloseVorschauV2 />} />
+              <Route path="/kostenlose-vorschau-v2" element={<KostenloseVorschau2 />} />
+              <Route path="/kostenlose-vorschau2" element={<KostenloseVorschau />} />
+              <Route path="/webdesign-preise" element={<WebdesignPreise />} />
+              <Route path="/preise" element={<WebdesignPreise />} />
+              <Route path="/preise2" element={<WebdesignPreise2 />} />
+              <Route path="/webdesign-shk" element={<WebdesignSHK />} />
+              <Route path="/webdesign-handwerker" element={<WebdesignHandwerker />} />
+              <Route path="/webdesign-aerzte" element={<WebdesignAerzte />} />
+              <Route path="/webdesign-immobilienmakler" element={<WebdesignImmobilienmakler />} />
+              <Route path="/webdesign-coaches" element={<WebdesignCoaches />} />
+              <Route path="/individuelle-software" element={<IndividuelleSoftware />} />
+              <Route path="/datenschutz" element={<Datenschutz />} />
+              <Route path="/impressum" element={<Impressum />} />
+              <Route path="/barrierefreiheit" element={<Barrierefreiheit />} />
+              <Route path="/admin" element={<AdminLeads />} />
+              <Route path="/original" element={<IndexOriginal />} />
+              <Route path="/unsubscribe" element={<Unsubscribe />} />
+              <Route path="/empfehlung" element={<Empfehlung />} />
+              <Route path="/erstgespraech" element={<Erstgespraech />} />
+              <Route path="/starter" element={<Starter />} />
+              <Route path="/kauf-erfolgreich" element={<KaufErfolgreich />} />
+              <Route path="/handwerker" element={<HandwerkerRoute />} />
+              <Route path="/handwerker/preise" element={<HandwerkerPreise />} />
+              <Route path="/handwerker/leistungen" element={<HandwerkerLeistungen />} />
+              <Route path="/handwerker/portfolio" element={<Portfolio />} />
+              <Route path="/handwerker/ueber-uns" element={<HandwerkerUeberUns />} />
+              <Route path="/handwerker/kontakt" element={<HandwerkerKontakt />} />
+              <Route path="/handwerker/*" element={<Navigate to="/handwerker" replace />} />
 
-            <Route path="/elektriker" element={<ElektrikerHub />} />
-            <Route path="/elektriker/preise" element={<ElektrikerPreise />} />
-            <Route path="/elektriker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-            <Route path="/elektriker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-            <Route path="/elektriker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-            <Route path="/elektriker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-            <Route path="/elektriker/*" element={<Navigate to="/elektriker" replace />} />
+              <Route path="/elektriker" element={<ElektrikerHub />} />
+              <Route path="/elektriker/preise" element={<ElektrikerPreise />} />
+              <Route path="/elektriker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+              <Route path="/elektriker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+              <Route path="/elektriker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+              <Route path="/elektriker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+              <Route path="/elektriker/*" element={<Navigate to="/elektriker" replace />} />
 
-            <Route path="/maler" element={<MalerHub />} />
-            <Route path="/maler/preise" element={<Navigate to="/handwerker/preise" replace />} />
-            <Route path="/maler/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-            <Route path="/maler/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-            <Route path="/maler/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-            <Route path="/maler/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-            <Route path="/maler/*" element={<Navigate to="/maler" replace />} />
+              <Route path="/maler" element={<MalerHub />} />
+              <Route path="/maler/preise" element={<Navigate to="/handwerker/preise" replace />} />
+              <Route path="/maler/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+              <Route path="/maler/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+              <Route path="/maler/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+              <Route path="/maler/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+              <Route path="/maler/*" element={<Navigate to="/maler" replace />} />
 
-            <Route path="/sanitaer" element={<SanitaerHub />} />
-            <Route path="/sanitaer/preise" element={<SanitaerPreise />} />
-            <Route path="/sanitaer/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-            <Route path="/sanitaer/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-            <Route path="/sanitaer/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-            <Route path="/sanitaer/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-            <Route path="/sanitaer/*" element={<Navigate to="/sanitaer" replace />} />
+              <Route path="/sanitaer" element={<SanitaerHub />} />
+              <Route path="/sanitaer/preise" element={<SanitaerPreise />} />
+              <Route path="/sanitaer/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+              <Route path="/sanitaer/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+              <Route path="/sanitaer/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+              <Route path="/sanitaer/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+              <Route path="/sanitaer/*" element={<Navigate to="/sanitaer" replace />} />
 
-            <Route path="/dachdecker" element={<DachdeckerHub />} />
-            <Route path="/dachdecker/preise" element={<DachdeckerPreise />} />
-            <Route path="/dachdecker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-            <Route path="/dachdecker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-            <Route path="/dachdecker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-            <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-            <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
-            <Route path="/angebot" element={<Angebot />} />
-            <Route path="/a" element={<Angebot />} />
-            <Route path="/a/:shortId" element={<Angebot />} />
-            <Route path="/agb" element={<AGB />} />
-            <Route path="/zahlung-erfolgreich" element={<ZahlungErfolgreich />} />
-            <Route path="/lp/angebot" element={<EmailAngebot />} />
-            <Route path="/lp/gesetz" element={<LpGesetz />} />
-            <Route path="/lp/compliance" element={<LpGesetz />} />
-            <Route path="/1euro-angebot" element={<EinEuroAngebot />} />
-            <Route path="/premium" element={<Premium />} />
-            <Route path="/kundenportal/login" element={<KundenportalLogin />} />
-            <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
-            <Route path="/kundenportal" element={<KundenportalLayout />}>
-              <Route index element={<KundenportalDashboard />} />
-              <Route path="vertrag" element={<KundenportalVertrag />} />
-              <Route path="wachstumspaket" element={<KundenportalWachstumspaket />} />
-              <Route path="rechnungen" element={<KundenportalRechnungen />} />
-              <Route path="wuensche" element={<KundenportalTickets />} />
-              <Route path="wuensche/:id" element={<KundenportalTicketDetail />} />
-              <Route path="angebote" element={<KundenportalAngebote />} />
-              <Route path="einstellungen" element={<KundenportalEinstellungen />} />
-            </Route>
-            <Route path="/design-vorschau" element={<DesignVorschau />} />
-            <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </ChromeWrapper>
-        </DesignModeProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+              <Route path="/dachdecker" element={<DachdeckerHub />} />
+              <Route path="/dachdecker/preise" element={<DachdeckerPreise />} />
+              <Route path="/dachdecker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
+              <Route path="/dachdecker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
+              <Route path="/dachdecker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
+              <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
+              <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
+              <Route path="/angebot" element={<Angebot />} />
+              <Route path="/a" element={<Angebot />} />
+              <Route path="/a/:shortId" element={<Angebot />} />
+              <Route path="/agb" element={<AGB />} />
+              <Route path="/zahlung-erfolgreich" element={<ZahlungErfolgreich />} />
+              <Route path="/lp/angebot" element={<EmailAngebot />} />
+              <Route path="/lp/gesetz" element={<LpGesetz />} />
+              <Route path="/lp/compliance" element={<LpGesetz />} />
+              <Route path="/1euro-angebot" element={<EinEuroAngebot />} />
+              <Route path="/premium" element={<Premium />} />
+              <Route path="/kundenportal/login" element={<KundenportalLogin />} />
+              <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
+              <Route path="/kundenportal" element={<KundenportalLayout />}>
+                <Route index element={<KundenportalDashboard />} />
+                <Route path="vertrag" element={<KundenportalVertrag />} />
+                <Route path="wachstumspaket" element={<KundenportalWachstumspaket />} />
+                <Route path="rechnungen" element={<KundenportalRechnungen />} />
+                <Route path="wuensche" element={<KundenportalTickets />} />
+                <Route path="wuensche/:id" element={<KundenportalTicketDetail />} />
+                <Route path="angebote" element={<KundenportalAngebote />} />
+                <Route path="einstellungen" element={<KundenportalEinstellungen />} />
+              </Route>
+              <Route path="/design-vorschau" element={<DesignVorschau />} />
+              <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </ChromeWrapper>
+          </DesignModeProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default App;
