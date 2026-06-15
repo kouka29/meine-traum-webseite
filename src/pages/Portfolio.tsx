@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -76,7 +77,17 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <main id="main-content" className="pt-20">
+    <>
+      <SEOHead
+        title="Webdesign Portfolio & Referenzen | Meine Traum Webseite"
+        description="Referenzen & Ergebnisse: Website-Projekte für Selbstständige, KMUs und Handwerksbetriebe – bis zu +700% mehr Anfragen durch conversion-optimiertes Design."
+        path="/portfolio"
+        breadcrumbs={[
+          { name: "Start", url: "/" },
+          { name: "Portfolio", url: "/portfolio" }
+        ]}
+      />
+      <main id="main-content" className="pt-20">
       <section className="section-padding">
         <div className="container-narrow px-4">
           <AnimatedSection>
@@ -189,6 +200,7 @@ const Portfolio = () => {
       </section>
       <CTABanner />
     </main>
+    </>
   );
 };
 
