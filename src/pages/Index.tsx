@@ -6,6 +6,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
 import SocialProofBar from "@/components/SocialProofBar";
 import Picture from "@/components/Picture";
+import SEOHead from "@/components/SEOHead";
 // Build-time responsive image (AVIF + WebP + JPG fallback) via vite-imagetools.
 import heroBg from "@/assets/hero-bg.jpg?w=640;1024;1440;1920&format=avif;webp;jpg&as=picture";
 
