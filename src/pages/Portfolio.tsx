@@ -200,6 +200,7 @@ const Portfolio = () => {
       </section>
       <CTABanner />
     </main>
+    </>
   );
 };
 
