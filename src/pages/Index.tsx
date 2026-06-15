@@ -24,6 +24,14 @@ const SectionPlaceholder = () => <div className="min-h-[200px]" aria-hidden="tru
 
 const Index = () => (
   <main id="main-content">
+    <SEOHead
+      title="Website erstellen lassen | Meine Traum Webseite"
+      description="Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h."
+      path="/"
+      structuredData={{
+        type: "ProfessionalService",
+      }}
+    />
     {/* Hero */}
     <section className="relative min-h-[92vh] flex items-center section-padding pt-28 sm:pt-36 overflow-hidden">
       <div className="absolute inset-0">
