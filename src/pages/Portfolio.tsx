@@ -87,6 +87,11 @@ const Portfolio = () => {
           { name: "Portfolio", url: "/portfolio" }
         ]}
       />
+      <style>{`
+        .group:hover .portfolio-scroll-img {
+          transform: translateY(calc(-100% + 100cqh));
+        }
+      `}</style>
       <main id="main-content" className="pt-20">
       <section className="section-padding">
         <div className="container-narrow px-4">
