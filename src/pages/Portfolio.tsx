@@ -113,7 +113,7 @@ const Portfolio = () => {
                         <div className="aspect-[4/3] relative overflow-hidden rounded-2xl bg-muted/30">
                           {p.image_url ? (
                             <img
-                              src={supabaseImage(p.image_url, { width: 640, quality: 72 })}
+                            src={supabaseImage(p.image_url, { width: 400, quality: 72 })}
                               srcSet={supabaseImageSrcSet(p.image_url, [640, 800, 1200], { quality: 72 })}
                               sizes="(min-width: 1024px) 640px, (min-width: 768px) 50vw, 100vw"
                               alt={`${p.title} – ${p.category} | Webdesign Referenz`}
@@ -122,7 +122,7 @@ const Portfolio = () => {
                               decoding="async"
                               width={800}
                               height={600}
-                              className="absolute top-0 left-0 w-full h-auto object-top transition-transform duration-[3000ms] ease-in-out group-hover:translate-y-[calc(232px_-_100%)]"
+                              className="absolute top-0 left-0 w-full h-auto object-center transition-transform duration-[3000ms] ease-in-out group-hover:translate-y-[calc(232px_-_100%)]"
                             />
                           ) : p.mockup_desktop_url ? (
                             <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
@@ -150,7 +150,7 @@ const Portfolio = () => {
                       <div className="aspect-[4/3] relative overflow-hidden rounded-2xl bg-muted/30">
                         {p.image_url ? (
                           <img
-                            src={supabaseImage(p.image_url, { width: 640, quality: 72 })}
+                            src={supabaseImage(p.image_url, { width: 400, quality: 72 })}
                             srcSet={supabaseImageSrcSet(p.image_url, [640, 800, 1200], { quality: 72 })}
                             sizes="(min-width: 1024px) 640px, (min-width: 768px) 50vw, 100vw"
                             alt={`${p.title} – ${p.category} | Webdesign Referenz`}
@@ -159,7 +159,7 @@ const Portfolio = () => {
                             decoding="async"
                             width={800}
                             height={600}
-                            className="absolute top-0 left-0 w-full h-auto object-top transition-transform duration-[3000ms] ease-in-out group-hover:translate-y-[calc(232px_-_100%)]"
+                            className="absolute top-0 left-0 w-full h-auto object-center transition-transform duration-[3000ms] ease-in-out group-hover:translate-y-[calc(232px_-_100%)]"
                           />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
