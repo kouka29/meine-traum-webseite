@@ -87,11 +87,6 @@ const Portfolio = () => {
           { name: "Portfolio", url: "/portfolio" }
         ]}
       />
-      <style>{`
-        .group:hover .portfolio-scroll-img {
-          transform: translateY(calc(-100% + 100cqh));
-        }
-      `}</style>
       <main id="main-content" className="pt-20">
       <section className="section-padding">
         <div className="container-narrow px-4">
@@ -115,7 +110,7 @@ const Portfolio = () => {
                   {p.external_url ? (
                     <a href={normalizeUrl(p.external_url)} target="_blank" rel="noopener noreferrer" className="block h-full">
                       <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
-                        <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30" style={{ containerType: 'size' }}>
+                        <div className="aspect-[4/3] relative overflow-hidden rounded-2xl bg-muted/30">
                           {p.image_url ? (
                             <img
                               src={supabaseImage(p.image_url, { width: 640, quality: 72 })}
@@ -127,7 +122,7 @@ const Portfolio = () => {
                               decoding="async"
                               width={800}
                               height={600}
-                              className="w-full h-auto absolute top-0 left-0 object-cover object-top transition-transform duration-[3000ms] ease-in-out portfolio-scroll-img"
+                              className="absolute top-0 left-0 w-full h-auto object-top transition-transform duration-[3000ms] ease-in-out group-hover:translate-y-[calc(232px_-_100%)]"
                             />
                           ) : p.mockup_desktop_url ? (
                             <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
@@ -152,7 +147,7 @@ const Portfolio = () => {
                     </a>
                   ) : (
                     <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
-                      <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30" style={{ containerType: 'size' }}>
+                      <div className="aspect-[4/3] relative overflow-hidden rounded-2xl bg-muted/30">
                         {p.image_url ? (
                           <img
                             src={supabaseImage(p.image_url, { width: 640, quality: 72 })}
@@ -164,7 +159,7 @@ const Portfolio = () => {
                             decoding="async"
                             width={800}
                             height={600}
-                            className="w-full h-auto absolute top-0 left-0 object-cover object-top transition-transform duration-[3000ms] ease-in-out portfolio-scroll-img"
+                            className="absolute top-0 left-0 w-full h-auto object-top transition-transform duration-[3000ms] ease-in-out group-hover:translate-y-[calc(232px_-_100%)]"
                           />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
