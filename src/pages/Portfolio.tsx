@@ -113,16 +113,16 @@ const Portfolio = () => {
                         <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                           {p.image_url ? (
                             <img
-                              src={supabaseImage(p.image_url, { width: 600, quality: 72 })}
-                              srcSet={supabaseImageSrcSet(p.image_url, [400, 600, 800], { quality: 72 })}
-                              sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+                              src={supabaseImage(p.image_url, { width: 640, quality: 72 })}
+                              srcSet={supabaseImageSrcSet(p.image_url, [640, 800, 1200], { quality: 72 })}
+                              sizes="(min-width: 1024px) 640px, (min-width: 768px) 50vw, 100vw"
                               alt={`${p.title} – ${p.category} | Webdesign Referenz`}
                               loading={i < 3 ? "eager" : "lazy"}
                               {...(i < 3 ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
                               decoding="async"
                               width={800}
                               height={600}
-                              className="w-full h-full object-cover rounded-lg"
+                              className="w-full h-full object-cover object-top rounded-lg"
                             />
                           ) : p.mockup_desktop_url ? (
                             <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
@@ -150,16 +150,16 @@ const Portfolio = () => {
                       <div className="aspect-[4/3] relative overflow-hidden p-4 bg-muted/30">
                         {p.image_url ? (
                           <img
-                            src={supabaseImage(p.image_url, { width: 600, quality: 72 })}
-                            srcSet={supabaseImageSrcSet(p.image_url, [400, 600, 800], { quality: 72 })}
-                            sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+                            src={supabaseImage(p.image_url, { width: 640, quality: 72 })}
+                            srcSet={supabaseImageSrcSet(p.image_url, [640, 800, 1200], { quality: 72 })}
+                            sizes="(min-width: 1024px) 640px, (min-width: 768px) 50vw, 100vw"
                             alt={`${p.title} – ${p.category} | Webdesign Referenz`}
                             loading={i < 3 ? "eager" : "lazy"}
                             {...(i < 3 ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
                             decoding="async"
                             width={800}
                             height={600}
-                            className="w-full h-full object-cover rounded-lg"
+                            className="w-full h-full object-cover object-top rounded-lg"
                           />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
