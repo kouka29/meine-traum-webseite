@@ -1,38 +1,23 @@
-## Ziel
-Im Admin → „Kostenlose Vorschau" gibt es einen **globalen Countdown-Block** (analog zu „Plätze & Verknappung Global"), der für alle Landingpages gilt. Die bisherige seiten-spezifische Countdown-Sektion wird entfernt. Zusätzlich wird der Bug behoben, dass auf `/kostenlose-vorschau` täglich „1 Tag …" steht.
+## Problem
 
-## Ursache des Bugs
-`src/pages/KostenloseVorschauV2.tsx` ignoriert die in der DB gepflegten Countdown-Felder. `getEndOfMonth()` liefert dort `Date.now() + 47 h 59 min` und der `<Countdown>` wird mit hartem `mode="end_of_month"` gerendert → bei jedem Seitenaufruf wieder „1 Tag 23 Std 59 Min", deshalb wirkt es statisch.
+Im Funnel auf `/kostenlose-vorschau` werden Auswahl-Kacheln (Branche, Webseite-Status, Ziel, Dringlichkeit) beim Anklicken komplett weiß — Text und Icon verschwinden.
 
-## Umsetzung
+**Ursache:** In `src/pages/KostenloseVorschauV2.tsx` Zeile 351 hat die `TileButton`-Klasse sowohl `bg-card` als auch `data-[selected=true]:bg-primary`. Wenn ausgewählt, wird der Text per `text-primary-foreground` auf weiß gesetzt — aber der lila Primary-Hintergrund schlägt in einigen Render-Pfaden nicht durch (Tailwind Source-Order / globales `apple-mode` CSS für `[class*="bg-primary"]`). Ergebnis: weißer Text auf weißer Card.
 
-### 1. Globaler Countdown im Admin
-`src/components/admin/AdminVorschauTab.tsx`
+## Fix
 
-- Neuer Block **„Countdown (Global)"** direkt unter „Plätze & Verknappung Global". Felder:
-  - **Modus**: `Monatsende` | `Fester Zeitpunkt`
-  - **Ziel-Zeitpunkt** (nur bei `fixed_date`): datetime-local
-  - **Label über dem Countdown** (Text)
-  - **Anzeigen auf der Seite** (Switch)
-  - Speichern-Button „Globalen Countdown speichern" → schreibt `countdown_mode`, `countdown_target`, `countdown_label`, `show_countdown` auf die Zeile `vorschau_settings.page_key = 'global'`.
-- Bestehender Countdown-Block in der per-Seite-Sektion wird **entfernt**.
+Eine einzige Datei, eine Komponente (`TileButton` in `src/pages/KostenloseVorschauV2.tsx`):
 
-### 2. Globale Werte ausspielen
-`src/hooks/useVorschauSettings.ts`
+1. **Klassenliste in zwei Zustände trennen** statt `bg-card` + Override mit data-attribute. Per Template-Literal je nach `selected` entweder `bg-card text-foreground` oder `bg-primary text-primary-foreground border-primary shadow-lg` anwenden — keine Kollision mehr.
+2. Innen-Icon-Container und Icon ebenfalls auf `selected`-Prop umschalten (statt `group-data-[selected=true]:…`), damit Icon + Check garantiert sichtbar bleiben.
+3. Span-Label bekommt explizit `text-inherit` — Verhalten bleibt, aber kein Vererbungsproblem mehr.
 
-- Das `global`-Select erweitert um `countdown_mode, countdown_target, countdown_label, show_countdown`.
-- Beim Merge überschreiben diese vier Felder die seiten-spezifischen Werte (gleiches Muster wie heute schon `total_slots`/`taken_slots`).
+Kein anderer Funnel-Code, kein State, keine sonstigen Buttons werden angefasst. Die anderen vier CTA-Buttons im Funnel (`Weiter`, `Zurück`) nutzen shadcn `<Button>` und sind nicht betroffen.
 
-### 3. Countdown auf den Landingpages korrekt rendern
-`src/pages/KostenloseVorschauV2.tsx`, `src/pages/KostenloseVorschau2.tsx`
+## Verifikation
 
-- `getEndOfMonth()` liefert wieder den **echten Monatsletzten 23:59:59 lokal** (`new Date(y, m+1, 0, 23, 59, 59)`).
-- `useCountdown` nutzt die aus `settings` durchgereichten `countdown_mode` + `countdown_target` (V2 ruft `<Countdown>` aktuell ohne `targetISO` auf – wird angepasst).
-- Label kommt aus `settings.countdown_label`, Sichtbarkeit aus `settings.show_countdown`.
-
-### 4. Keine Schemaänderung
-Spalten `countdown_mode`, `countdown_target`, `countdown_label`, `show_countdown` existieren bereits in `vorschau_settings`. Es ist nur ein einmaliges `UPDATE` auf die `global`-Zeile nötig, damit sinnvolle Defaults gesetzt sind (Modus `end_of_month`, Label „Aktion endet in:", `show_countdown = true`).
-
-## Nicht angefasst
-- Slot-/Verfügbarkeits-Logik, Edge Functions, Portfolio.
-- Andere Seiten als die beiden Vorschau-Landingpages.
+- Step 1 (Branche): jede Kachel beim Klick → lila Hintergrund, weißer Text + Check sichtbar.
+- Step 2 (Webseite?): selektierte Option bleibt 200 ms sichtbar bevor `next()` triggert.
+- Step 3 (Ziele, Mehrfachauswahl): mehrere lila Kacheln sichtbar.
+- Step 4 (Dringlichkeit): wie Step 2.
+- Nicht-selektierte Kacheln unverändert (weiße Card, Hover-Lift).

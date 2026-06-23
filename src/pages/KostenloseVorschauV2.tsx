@@ -335,30 +335,48 @@ const TileButton = ({
   label: string;
   tone?: "success" | "warning" | "danger";
 }) => {
-  const toneRing =
-    tone === "success"
-      ? "data-[selected=true]:ring-emerald-500"
+  const toneRing = selected
+    ? tone === "success"
+      ? "ring-2 ring-emerald-500"
       : tone === "warning"
-      ? "data-[selected=true]:ring-amber-500"
+      ? "ring-2 ring-amber-500"
       : tone === "danger"
-      ? "data-[selected=true]:ring-rose-500"
-      : "";
+      ? "ring-2 ring-rose-500"
+      : ""
+    : "";
+  const baseCls =
+    "relative w-full text-left rounded-2xl border-2 p-4 sm:p-5 transition-all hover:-translate-y-0.5";
+  const stateCls = selected
+    ? "border-primary bg-primary text-primary-foreground shadow-lg"
+    : "border-border bg-card text-foreground hover:border-primary/40 hover:shadow-md";
   return (
     <button
       type="button"
       onClick={onClick}
       data-selected={selected}
-      className={`group relative w-full text-left rounded-2xl border-2 border-border bg-card p-4 sm:p-5 transition-all hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5 data-[selected=true]:border-primary data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground data-[selected=true]:shadow-lg ${toneRing}`}
+      className={`${baseCls} ${stateCls} ${toneRing}`}
     >
       <div className="flex items-center gap-3">
-        <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 group-data-[selected=true]:bg-primary-foreground/20 flex items-center justify-center">
-          <Icon className="w-5 h-5 text-primary group-data-[selected=true]:text-primary-foreground" />
+        <div
+          className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
+            selected ? "bg-primary-foreground/20" : "bg-primary/10"
+          }`}
+        >
+          <Icon
+            className={`w-5 h-5 ${
+              selected ? "text-primary-foreground" : "text-primary"
+            }`}
+          />
         </div>
-        <span className="font-semibold text-sm sm:text-base flex-1 break-words">
+        <span className="font-semibold text-sm sm:text-base flex-1 break-words text-inherit">
           {label}
         </span>
         {selected && (
-          <CheckCircle2 className="w-5 h-5 text-primary-foreground shrink-0" aria-hidden={true} focusable={false} />
+          <CheckCircle2
+            className="w-5 h-5 text-primary-foreground shrink-0"
+            aria-hidden={true}
+            focusable={false}
+          />
         )}
       </div>
     </button>
