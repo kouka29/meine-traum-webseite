@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link, useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { submitLead } from "@/lib/submitLead";
 
 const STORAGE_KEY = "lead-modal-dismissed";
 const DELAY_MS = 8000;
@@ -79,70 +79,22 @@ const LeadCaptureModal = () => {
 
     setLoading(true);
     setSubmitError(null);
-    const leadId = crypto.randomUUID();
-
-    // Primär: an Formspree senden
-    let formspreeOk = false;
-    try {
-      const res = await fetch("https://formspree.io/f/xojrerqe", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: firstName.trim(),
-          phone: phone.trim(),
-          company: companyName.trim(),
-          email: email.trim(),
-          _subject: `🔔 Neuer Lead (Pop-up Leitfaden): ${companyName.trim()}`,
-          _replyto: email.trim(),
-          _gotcha: honeypot,
-          quelle: "Pop-up Lead-Magnet (7 Schritte Leitfaden)",
-          seite: location.pathname,
-        }),
-      });
-      formspreeOk = res.ok;
-    } catch {
-      formspreeOk = false;
-    }
-
-    if (!formspreeOk) {
+    const ok = await submitLead({
+      name: firstName.trim(),
+      phone: phone.trim(),
+      email: email.trim(),
+      branche: companyName.trim(),
+      source_cta: "popup_leitfaden",
+      company: honeypot,
+    });
+    if (!ok) {
       setLoading(false);
       setSubmitError(
         "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 30 764 98",
       );
       return;
     }
-
-    // Backup für Admin-Backend – Fehler hier blockieren die Erfolgs-Ansicht nicht.
-    const { error } = await supabase.from("leads").insert({
-      id: leadId,
-      first_name: firstName.trim(),
-      company_name: companyName.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-    });
     setLoading(false);
-    if (error) {
-      console.warn("Lead konnte nicht in der DB gespeichert werden", error);
-    }
-
-    // Fire-and-forget: notify admin of new lead
-    supabase.functions.invoke("send-transactional-email", {
-      body: {
-        templateName: "lead-notification",
-        idempotencyKey: `lead-modal-${leadId}`,
-        templateData: {
-          source: "Pop-up Lead-Magnet (7 Schritte Leitfaden)",
-          firstName: firstName.trim(),
-          companyName: companyName.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
-          submittedAt: new Date().toLocaleString("de-DE"),
-        },
-      },
-    });
 
     setSubmitted(true);
     sessionStorage.setItem(STORAGE_KEY, "1");
