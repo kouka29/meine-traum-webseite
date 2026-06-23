@@ -724,8 +724,19 @@ const Handwerker = () => {
                           <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">E-Mail (optional)</Label>
                           <Input id="email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-2 h-12 rounded-xl border-border/60 focus-visible:border-primary" />
                         </div>
-                        <Button type="submit" size="lg" className="w-full h-14 rounded-full bg-gradient-to-r from-primary to-accent text-white hover:brightness-110 font-semibold text-base shadow-[0_15px_40px_-10px_hsl(250_56%_48%/0.5)] group">
-                          Kostenlose Vorschau anfordern
+                        {/* Honeypot */}
+                        <input
+                          type="text"
+                          name="company"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          aria-hidden="true"
+                          value={form.company}
+                          onChange={(e) => setForm({ ...form, company: e.target.value })}
+                          style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+                        />
+                        <Button type="submit" size="lg" disabled={loading} className="w-full h-14 rounded-full bg-gradient-to-r from-primary to-accent text-white hover:brightness-110 font-semibold text-base shadow-[0_15px_40px_-10px_hsl(250_56%_48%/0.5)] group disabled:opacity-60">
+                          {loading ? "Wird gesendet…" : "Kostenlose Vorschau anfordern"}
                           <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
                         </Button>
                         <div className="space-y-2 pt-3 border-t border-border/60">
