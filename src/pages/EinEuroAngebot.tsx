@@ -62,6 +62,15 @@ const EinEuroAngebot = () => {
       return;
     }
     setSubmitting(true);
+    // Telegram-Ping (Fire-and-forget)
+    submitLead({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.telefon.trim(),
+      branche: form.firma.trim(),
+      message: "1€-Angebot Anfrage",
+      source_cta: "ein_euro_angebot",
+    });
     const result = await submitVorschauAnfrage({
       name: form.name.trim(),
       email: form.email.trim(),
