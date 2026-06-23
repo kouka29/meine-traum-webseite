@@ -1577,7 +1577,7 @@ const KostenloseVorschauV2 = () => {
                 <div className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wide">
                   {settings?.countdown_label ?? "Aktion endet in:"}
                 </div>
-                <Countdown mode="end_of_month" />
+                <Countdown targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
               </div>
             )}
 
