@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
+import { submitLead } from "@/lib/submitLead";
 
 const testimonials = [
   { quote: "Ich hatte keine Ahnung dass mein Cookie-Banner nicht korrekt war. Muad hat das sofort erkannt und innerhalb von 3 Wochen hatten wir eine komplett neue, konforme Webseite.", name: "Thomas K., Elektriker aus Mainz" },
