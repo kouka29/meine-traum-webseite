@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link, useLocation } from "react-router-dom";
-import { toast } from "sonner";
 import { submitLead } from "@/lib/submitLead";
 
 const STORAGE_KEY = "lead-modal-dismissed";
