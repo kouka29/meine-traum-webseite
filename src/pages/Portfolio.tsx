@@ -122,7 +122,7 @@ const Portfolio = () => {
                               decoding="async"
                               width={800}
                               height={600}
-                              className="absolute inset-0 w-full h-full object-contain"
+                              className="absolute inset-0 w-full h-full object-cover object-top"
                             />
                           ) : p.mockup_desktop_url ? (
                             <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
@@ -159,7 +159,7 @@ const Portfolio = () => {
                             decoding="async"
                             width={800}
                             height={600}
-                            className="absolute inset-0 w-full h-full object-contain"
+                            className="absolute inset-0 w-full h-full object-cover object-top"
                           />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
