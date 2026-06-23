@@ -195,8 +195,11 @@ const faqs = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 function getEndOfMonth(): Date {
-  // V2: Countdown immer 47h 59min ab Mount-Zeitpunkt (dynamisch laufend).
-  return new Date(Date.now() + (47 * 60 + 59) * 60 * 1000);
+  // Echter Monatsletzter, lokal 23:59:59. So tickt der Countdown wirklich runter
+  // (Tage werden nach Mitternacht jeweils kleiner) statt bei jedem Aufruf neu
+  // auf "1 Tag 23 Std" zu springen.
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
 }
 
 function useCountdown(targetISO?: string | null, mode: string = "end_of_month") {
