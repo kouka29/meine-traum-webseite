@@ -440,19 +440,24 @@ export type Database = {
         Row: {
           booking_date: string | null
           booking_time: string | null
-          company_name: string
+          branche: string | null
+          company_name: string | null
           contact_method: string | null
           created_at: string
           current_website: string | null
-          email: string
-          first_name: string
+          email: string | null
+          first_name: string | null
           goals: string[] | null
           has_website: string | null
           id: string
           is_waitlist: boolean
+          message: string | null
           notes: string | null
-          phone: string
+          ort: string | null
+          phone: string | null
           slot_reserved: boolean
+          source_cta: string | null
+          source_page: string | null
           status: string
           trade: string | null
           trade_other: string | null
@@ -462,19 +467,24 @@ export type Database = {
         Insert: {
           booking_date?: string | null
           booking_time?: string | null
-          company_name?: string
+          branche?: string | null
+          company_name?: string | null
           contact_method?: string | null
           created_at?: string
           current_website?: string | null
-          email: string
-          first_name: string
+          email?: string | null
+          first_name?: string | null
           goals?: string[] | null
           has_website?: string | null
           id?: string
           is_waitlist?: boolean
+          message?: string | null
           notes?: string | null
-          phone: string
+          ort?: string | null
+          phone?: string | null
           slot_reserved?: boolean
+          source_cta?: string | null
+          source_page?: string | null
           status?: string
           trade?: string | null
           trade_other?: string | null
@@ -484,19 +494,24 @@ export type Database = {
         Update: {
           booking_date?: string | null
           booking_time?: string | null
-          company_name?: string
+          branche?: string | null
+          company_name?: string | null
           contact_method?: string | null
           created_at?: string
           current_website?: string | null
-          email?: string
-          first_name?: string
+          email?: string | null
+          first_name?: string | null
           goals?: string[] | null
           has_website?: string | null
           id?: string
           is_waitlist?: boolean
+          message?: string | null
           notes?: string | null
-          phone?: string
+          ort?: string | null
+          phone?: string | null
           slot_reserved?: boolean
+          source_cta?: string | null
+          source_page?: string | null
           status?: string
           trade?: string | null
           trade_other?: string | null
