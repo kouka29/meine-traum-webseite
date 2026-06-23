@@ -30,6 +30,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { submitLead } from "@/lib/submitLead";
 
 const painPoints = [
   { title: "Auf Google unsichtbar", text: "Wenn jemand „Elektriker Mainz“ sucht — erscheinst Du auf Seite 3. Dein Konkurrent auf Seite 1 bekommt den Auftrag." },
