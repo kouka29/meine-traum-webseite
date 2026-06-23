@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { X, CheckCircle2, ShieldCheck, Loader2, ArrowRight, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { submitLead } from "@/lib/submitLead";
 
 interface PricingLeadPopupProps {
   open: boolean;
