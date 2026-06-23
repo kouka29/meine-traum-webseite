@@ -1920,7 +1920,7 @@ const KostenloseVorschauV2 = () => {
           <div className="max-w-3xl mx-auto">
             {(settings?.show_countdown ?? true) && (
               <div className="mb-6">
-                <Countdown inverse mode="end_of_month" />
+                <Countdown inverse targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
               </div>
             )}
             {(settings?.show_slots ?? true) && (
