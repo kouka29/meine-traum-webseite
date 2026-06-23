@@ -147,6 +147,14 @@ const Contact = () => {
                   style={{ display: "none" }}
                   aria-hidden="true"
                 />
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+                />
                 {submitError && (
                   <p className="text-sm text-destructive">
                     Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
