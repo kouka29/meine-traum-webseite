@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Send, CheckCircle, Shield, Clock, CalendarCheck, PhoneCall, Target } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { submitLead } from "@/lib/submitLead";
 
 const trustPoints = [
   "15 Minuten Klarheit – kein Verkaufsgespräch",
@@ -25,71 +25,30 @@ const Contact = () => {
     setLoading(true);
     const form = e.target as HTMLFormElement;
     const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-      "input:not([name='_gotcha']), textarea",
+      "input:not([name='_gotcha']):not([name='company']), textarea",
     );
     const v = Array.from(inputs).map(
       (el) => (el as HTMLInputElement | HTMLTextAreaElement).value.trim()
     );
     const [name, email, phone, website, company, message] = v;
     const honeypot = (form.querySelector("input[name='_gotcha']") as HTMLInputElement | null)?.value || "";
-    if (honeypot) {
+    const companyHp = (form.querySelector("input[name='company']") as HTMLInputElement | null)?.value || "";
+    if (honeypot || companyHp) {
       setLoading(false);
       return;
     }
 
     try {
-      const leadId = crypto.randomUUID();
-
-      // Primär: an Formspree senden
-      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          phone,
-          company: company || website || "",
-          email,
-          _subject: `📞 Erstgespräch-Anfrage: ${company || name}`,
-          _replyto: email,
-          _gotcha: honeypot,
-          website: website || "",
-          nachricht: message || "",
-          seite: "erstgespraech-kontakt",
-        }),
+      const ok = await submitLead({
+        name,
+        email,
+        phone,
+        branche: company,
+        message: [website && `Website: ${website}`, message].filter(Boolean).join("\n"),
+        source_cta: "kontakt_hauptformular",
+        company: companyHp,
       });
-      if (!formspreeRes.ok) throw new Error(`Formspree ${formspreeRes.status}`);
-
-      const { error } = await supabase.from("leads").insert({
-        id: leadId,
-        first_name: name || "Unbekannt",
-        email: email,
-        phone: phone || "n/a",
-        company_name: company || website || "",
-      });
-      if (error) {
-        console.warn("Lead konnte nicht in der DB gespeichert werden", error);
-      }
-
-      supabase.functions.invoke("send-transactional-email", {
-        body: {
-          templateName: "lead-notification",
-          idempotencyKey: `contact-${leadId}`,
-          templateData: {
-            source: "Kontaktformular",
-            firstName: name,
-            companyName: company,
-            email,
-            phone,
-            website,
-            message,
-            submittedAt: new Date().toLocaleString("de-DE"),
-          },
-        },
-      });
-
+      if (!ok) throw new Error("submitLead failed");
       toast.success("Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden mit Terminvorschlägen.");
       form.reset();
     } catch {
@@ -187,6 +146,14 @@ const Contact = () => {
                   autoComplete="off"
                   style={{ display: "none" }}
                   aria-hidden="true"
+                />
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
                 />
                 {submitError && (
                   <p className="text-sm text-destructive">

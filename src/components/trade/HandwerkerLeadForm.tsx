@@ -1,6 +1,8 @@
 import { useState, FormEvent } from "react";
 import { CheckCircle2, Phone } from "lucide-react";
 import { z } from "zod";
+import { submitLead } from "@/lib/submitLead";
+import { toast } from "sonner";
 
 interface Props {
   branche?: string;
@@ -28,12 +30,12 @@ const schema = z.object({
 });
 
 const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
-  const [form, setForm] = useState({ vorname: "", telefon: "", branche, ort: "", email: "", nachricht: "" });
+  const [form, setForm] = useState({ vorname: "", telefon: "", branche, ort: "", email: "", nachricht: "", company: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const result = schema.safeParse(form);
     if (!result.success) {
@@ -46,11 +48,22 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
     }
     setErrors({});
     setLoading(true);
-    // TODO: backend lead submission wired up in Part 2
-    setTimeout(() => {
-      setLoading(false);
+    const ok = await submitLead({
+      name: form.vorname,
+      phone: form.telefon,
+      email: form.email,
+      branche: form.branche,
+      ort: form.ort,
+      message: form.nachricht,
+      company: form.company,
+      source_cta: withMessage ? "kontakt_hauptformular" : "hero_vorschau",
+    });
+    setLoading(false);
+    if (ok) {
       setSubmitted(true);
-    }, 400);
+    } else {
+      toast.error("Bitte ruf kurz an: 06131 30 764 98");
+    }
   };
 
   if (submitted) {
@@ -142,6 +155,17 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
         />
         {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
       </div>
+      {/* Honeypot */}
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={form.company}
+        onChange={(e) => setForm({ ...form, company: e.target.value })}
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+      />
       <button
         type="submit"
         disabled={loading}

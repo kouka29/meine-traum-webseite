@@ -27,3 +27,5 @@ project_id = "zwxucictfdbwhnnyemri"
     verify_jwt = false
   [functions.growth-invoice-create]
     verify_jwt = false
+  [functions.notify-lead]
+    verify_jwt = false

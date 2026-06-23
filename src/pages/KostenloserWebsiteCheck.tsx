@@ -6,7 +6,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import { CheckCircle, Gift, Shield, Clock, Search, Send, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { submitLead } from "@/lib/submitLead";
 
 const checkPoints = [
   "Performance & Ladegeschwindigkeit",
@@ -28,65 +28,27 @@ const KostenloserWebsiteCheck = () => {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const honeypot = (formData.get("_gotcha") as string) || "";
-    if (honeypot) {
+    const company = (formData.get("company") as string) || "";
+    if (honeypot || company) {
       setLoading(false);
       return;
     }
 
     try {
-      const leadId = crypto.randomUUID();
       const name = formData.get("name") as string;
       const email = formData.get("email") as string;
       const phone = (formData.get("phone") as string) || "";
       const website = (formData.get("website") as string) || "";
 
-      // Primär: an Formspree senden
-      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          phone,
-          company: website,
-          email,
-          _subject: `🔔 Neuer Website-Check: ${website || name}`,
-          _replyto: email,
-          _gotcha: honeypot,
-          website,
-          seite: "kostenloser-website-check",
-        }),
+      const ok = await submitLead({
+        name,
+        email,
+        phone,
+        message: website ? `Website: ${website}` : "",
+        source_cta: "website_check",
+        company,
       });
-      if (!formspreeRes.ok) throw new Error(`Formspree ${formspreeRes.status}`);
-
-      const { error } = await supabase.from("leads").insert({
-        id: leadId,
-        first_name: name,
-        email: email,
-        phone: phone,
-        company_name: website,
-      });
-      if (error) {
-        console.warn("Lead konnte nicht in der DB gespeichert werden", error);
-      }
-
-      supabase.functions.invoke("send-transactional-email", {
-        body: {
-          templateName: "lead-notification",
-          idempotencyKey: `website-check-${leadId}`,
-          templateData: {
-            source: "Kostenloser Website-Check",
-            firstName: name,
-            email: email,
-            phone: phone,
-            website: website,
-            submittedAt: new Date().toLocaleString("de-DE"),
-          },
-        },
-      });
-
+      if (!ok) throw new Error("submitLead failed");
       toast.success("Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden mit deiner Website-Analyse.");
       form.reset();
     } catch {
@@ -162,6 +124,14 @@ const KostenloserWebsiteCheck = () => {
                     autoComplete="off"
                     style={{ display: "none" }}
                     aria-hidden="true"
+                  />
+                  <input
+                    type="text"
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
                   />
                   {submitError && (
                     <p className="text-sm text-destructive text-center">

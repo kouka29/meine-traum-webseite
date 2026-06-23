@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
+import { submitLead } from "@/lib/submitLead";
 
 const testimonials = [
   { quote: "Ich hatte keine Ahnung dass mein Cookie-Banner nicht korrekt war. Muad hat das sofort erkannt und innerhalb von 3 Wochen hatten wir eine komplett neue, konforme Webseite.", name: "Thomas K., Elektriker aus Mainz" },
@@ -62,6 +63,15 @@ const EinEuroAngebot = () => {
       return;
     }
     setSubmitting(true);
+    // Telegram-Ping (Fire-and-forget)
+    submitLead({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.telefon.trim(),
+      branche: form.firma.trim(),
+      message: "1€-Angebot Anfrage",
+      source_cta: "ein_euro_angebot",
+    });
     const result = await submitVorschauAnfrage({
       name: form.name.trim(),
       email: form.email.trim(),
