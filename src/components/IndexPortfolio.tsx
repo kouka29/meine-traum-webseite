@@ -106,14 +106,14 @@ const IndexPortfolio = () => {
             {items.map((p, i) => {
               const Inner = (
                 <>
-                  <div className="aspect-[4/3] rounded-2xl mb-5 group-hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden bg-muted/30 p-3">
+                  <div className="aspect-[10/7] rounded-2xl mb-5 relative overflow-hidden bg-muted/30">
                     {p.image_url && typeof p.image_url === "object" ? (
                       <Picture
                         source={p.image_url}
                         alt={`${p.title} – ${p.category} | Website erstellen lassen`}
                         loading="lazy"
                         sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover object-center rounded-lg"
                       />
                     ) : p.image_url ? (
                       <img
@@ -125,7 +125,7 @@ const IndexPortfolio = () => {
                         decoding="async"
                         width={800}
                         height={600}
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover object-center rounded-lg"
                       />
                     ) : p.mockup_desktop_url ? (
                       <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
