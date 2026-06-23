@@ -68,8 +68,8 @@ html.apple-mode .bg-background {
   position: relative;
 }
 
-html.apple-mode [class*="rounded-2xl"][class*="border"],
-html.apple-mode [class*="rounded-xl"][class*="border"] {
+html.apple-mode [class*="rounded-2xl"][class*="border"]:not([class*="bg-primary"]):not([data-apple-skip]),
+html.apple-mode [class*="rounded-xl"][class*="border"]:not([class*="bg-primary"]):not([data-apple-skip]) {
   background: hsl(0 0% 100% / 0.65) !important;
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
@@ -78,8 +78,8 @@ html.apple-mode [class*="rounded-xl"][class*="border"] {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
 }
 
-html.apple-mode [class*="rounded-2xl"][class*="border"]:hover,
-html.apple-mode [class*="rounded-xl"][class*="border"]:hover {
+html.apple-mode [class*="rounded-2xl"][class*="border"]:not([class*="bg-primary"]):not([data-apple-skip]):hover,
+html.apple-mode [class*="rounded-xl"][class*="border"]:not([class*="bg-primary"]):not([data-apple-skip]):hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-elevated);
 }
