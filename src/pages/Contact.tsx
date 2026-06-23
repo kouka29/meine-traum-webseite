@@ -25,7 +25,7 @@ const Contact = () => {
     setLoading(true);
     const form = e.target as HTMLFormElement;
     const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-      "input:not([name='_gotcha']), textarea",
+      "input:not([name='_gotcha']):not([name='company']), textarea",
     );
     const v = Array.from(inputs).map(
       (el) => (el as HTMLInputElement | HTMLTextAreaElement).value.trim()
