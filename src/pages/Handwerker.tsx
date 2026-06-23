@@ -90,7 +90,8 @@ const pricingTiers = [
 const Handwerker = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ vorname: "", telefon: "", branche: "", ort: "", email: "" });
+  const [form, setForm] = useState({ vorname: "", telefon: "", branche: "", ort: "", email: "", company: "" });
+  const [loading, setLoading] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -101,13 +102,25 @@ const Handwerker = () => {
 
   const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.vorname || !form.telefon || !form.branche || !form.ort) {
       toast({ title: "Bitte alle Pflichtfelder ausfüllen", variant: "destructive" });
       return;
     }
-    setSubmitted(true);
+    setLoading(true);
+    const ok = await submitLead({
+      name: form.vorname,
+      phone: form.telefon,
+      email: form.email,
+      branche: form.branche,
+      ort: form.ort,
+      company: form.company,
+      source_cta: "hero_vorschau",
+    });
+    setLoading(false);
+    if (ok) setSubmitted(true);
+    else toast({ title: "Bitte ruf kurz an: 06131 30 764 98", variant: "destructive" });
   };
 
   return (
