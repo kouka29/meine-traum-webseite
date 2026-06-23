@@ -94,7 +94,7 @@ export function useVorschauSettings(pageKey: string = "v1"): VorschauData {
     const load = async () => {
       const [settingsRes, globalRes, demosRes, faqsRes, portfolioRes, testimonialsRes] = await Promise.all([
         supabase.from("vorschau_settings").select("*").eq("page_key", pageKey).maybeSingle(),
-        supabase.from("vorschau_settings").select("total_slots,taken_slots").eq("page_key", "global").maybeSingle(),
+        supabase.from("vorschau_settings").select("total_slots,taken_slots,countdown_mode,countdown_target,countdown_label,show_countdown").eq("page_key", "global").maybeSingle(),
         supabase.from("vorschau_demos").select("*").eq("page_key", pageKey).eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("vorschau_faqs").select("*").eq("page_key", pageKey).eq("is_visible", true).order("sort_order", { ascending: true }),
         supabase.from("portfolio_projects").select("id,title,category,description,image_url,mockup_desktop_url,mockup_mobile_url,external_url,result").eq("is_visible", true).order("sort_order", { ascending: true }),
@@ -102,12 +102,28 @@ export function useVorschauSettings(pageKey: string = "v1"): VorschauData {
       ]);
       if (cancelled) return;
       const pageSettings = (settingsRes.data as VorschauSettings | null) ?? null;
-      const globalSlots = (globalRes.data as { total_slots: number; taken_slots: number } | null) ?? null;
-      // Slots werden global verwaltet: total_slots/taken_slots aus der "global"-Zeile
-      // überschreiben die seiten-spezifischen Werte, damit alle Seiten dieselben
-      // Platz-Zahlen anzeigen. show_slots bleibt pro Seite konfigurierbar.
-      const mergedSettings = pageSettings && globalSlots
-        ? { ...pageSettings, total_slots: globalSlots.total_slots, taken_slots: Math.min(globalSlots.taken_slots, globalSlots.total_slots) }
+      const globalRow = (globalRes.data as {
+        total_slots: number;
+        taken_slots: number;
+        countdown_mode: string;
+        countdown_target: string | null;
+        countdown_label: string;
+        show_countdown: boolean;
+      } | null) ?? null;
+      // Slots UND Countdown werden global verwaltet: die entsprechenden Felder aus
+      // der "global"-Zeile überschreiben die seiten-spezifischen Werte, damit alle
+      // Landingpages dieselben Platz-Zahlen und denselben Countdown anzeigen.
+      // show_slots bleibt pro Seite konfigurierbar.
+      const mergedSettings = pageSettings && globalRow
+        ? {
+            ...pageSettings,
+            total_slots: globalRow.total_slots,
+            taken_slots: Math.min(globalRow.taken_slots, globalRow.total_slots),
+            countdown_mode: globalRow.countdown_mode,
+            countdown_target: globalRow.countdown_target,
+            countdown_label: globalRow.countdown_label,
+            show_countdown: globalRow.show_countdown,
+          }
         : pageSettings;
       setData({
         settings: mergedSettings,
