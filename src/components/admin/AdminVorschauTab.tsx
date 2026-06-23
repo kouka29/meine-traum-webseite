@@ -257,6 +257,32 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     setGlobalSettings(s => (s ? { ...s, ...patch } : s));
   };
 
+  const [globalCountdownSaving, setGlobalCountdownSaving] = useState(false);
+  const saveGlobalCountdown = async () => {
+    if (!globalSettings) return;
+    setGlobalCountdownSaving(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: {
+        password,
+        action: "vorschau-update-settings",
+        settings: {
+          countdown_mode: globalSettings.countdown_mode,
+          countdown_target: globalSettings.countdown_target,
+          countdown_label: globalSettings.countdown_label,
+          show_countdown: globalSettings.show_countdown,
+        },
+        pageKey: "global",
+      },
+    });
+    setGlobalCountdownSaving(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Speichern");
+      return;
+    }
+    setGlobalSettings(data.settings);
+    toast.success("Globaler Countdown gespeichert – sofort live auf allen Seiten!");
+  };
+
   const saveGlobalSettings = async () => {
     if (!globalSettings) return;
     setGlobalSaving(true);
@@ -708,48 +734,84 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         </CardContent>
       </Card>
 
-      {/* COUNTDOWN */}
+      {/* COUNTDOWN — global für alle Landingpages */}
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Clock size={16} className="text-primary" aria-hidden={true} focusable={false} /> Countdown
+            <Clock size={16} className="text-primary" aria-hidden={true} focusable={false} />
+            Countdown
+            <span className="ml-1 inline-flex items-center gap-1 text-xs font-medium text-primary">
+              <Globe size={12} aria-hidden={true} focusable={false} /> Global
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="countdown-mode">Modus</Label>
-              <select
-                id="countdown-mode"
-                value={settings.countdown_mode}
-                onChange={e => updateSettings({ countdown_mode: e.target.value })}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              >
-                <option value="end_of_month">Automatisch: Monatsende (23:59)</option>
-                <option value="fixed_date">Festes Datum / Uhrzeit</option>
-              </select>
+          {globalLoading ? (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="animate-spin" size={16} /> Lade globalen Countdown…
             </div>
-            {settings.countdown_mode === "fixed_date" && (
+          ) : !globalSettings ? (
+            <p className="text-sm text-muted-foreground">Globale Einstellungen konnten nicht geladen werden.</p>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="countdown-mode">Modus</Label>
+                  <select
+                    id="countdown-mode"
+                    value={globalSettings.countdown_mode}
+                    onChange={e => updateGlobalSettings({ countdown_mode: e.target.value })}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  >
+                    <option value="end_of_month">Automatisch: Monatsende (23:59)</option>
+                    <option value="fixed_date">Festes Datum / Uhrzeit</option>
+                  </select>
+                </div>
+                {globalSettings.countdown_mode === "fixed_date" && (
+                  <div>
+                    <Label htmlFor="countdown-target">Ziel-Zeitpunkt</Label>
+                    <Input
+                      id="countdown-target"
+                      type="datetime-local"
+                      value={isoToLocal(globalSettings.countdown_target)}
+                      onChange={e => updateGlobalSettings({ countdown_target: localToISO(e.target.value) })}
+                    />
+                  </div>
+                )}
+              </div>
               <div>
-                <Label htmlFor="countdown-target">Ziel-Zeitpunkt</Label>
+                <Label htmlFor="countdown-label">Label über dem Countdown</Label>
                 <Input
-                  id="countdown-target"
-                  type="datetime-local"
-                  value={isoToLocal(settings.countdown_target)}
-                  onChange={e => updateSettings({ countdown_target: localToISO(e.target.value) })}
+                  id="countdown-label"
+                  value={globalSettings.countdown_label}
+                  onChange={e => updateGlobalSettings({ countdown_label: e.target.value })}
                 />
               </div>
-            )}
-          </div>
-          <div>
-            <Label htmlFor="countdown-label">Label über dem Countdown</Label>
-            <Input id="countdown-label" value={settings.countdown_label}
-              onChange={e => updateSettings({ countdown_label: e.target.value })} />
-          </div>
-          <div className="flex items-center gap-3">
-            <Switch checked={settings.show_countdown} onCheckedChange={v => updateSettings({ show_countdown: v })} />
-            <Label>Countdown auf der Seite einblenden</Label>
-          </div>
+              <div className="flex items-center gap-3">
+                <Switch
+                  checked={globalSettings.show_countdown}
+                  onCheckedChange={v => updateGlobalSettings({ show_countdown: v })}
+                />
+                <Label>Countdown auf allen Landingpages einblenden</Label>
+              </div>
+              <div className="flex items-center gap-3 pt-1">
+                <Button
+                  onClick={saveGlobalCountdown}
+                  disabled={globalCountdownSaving}
+                  variant="gradient"
+                  size="sm"
+                >
+                  {globalCountdownSaving
+                    ? <Loader2 className="animate-spin mr-2" size={16} />
+                    : <Save className="mr-2" size={16} />}
+                  Globalen Countdown speichern
+                </Button>
+                <span className="text-xs text-muted-foreground">
+                  Wirkt sich sofort auf alle Landingpages aus (z. B. /kostenlose-vorschau, /lp/gesetz).
+                </span>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
 
