@@ -200,69 +200,21 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     setLoading(true);
     setSubmitError(null);
 
-    const leadId = crypto.randomUUID();
-    const finalEmail = email.trim() || `noemail+${leadId}@popup.local`;
-
-    // Primär: an Formspree senden (bestimmt Erfolg/Fehler des Submits).
-    let formspreeOk = false;
-    try {
-      const res = await fetch("https://formspree.io/f/xojrerqe", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: firstName.trim(),
-          phone: phone.trim(),
-          email: email.trim(),
-          _subject: `🔔 Neue Preisanfrage: ${badge} - ${firstName.trim()}`,
-          _replyto: email.trim(),
-          _gotcha: honeypot,
-          paket: badge,
-          seite: "preise",
-        }),
-      });
-      formspreeOk = res.ok;
-    } catch {
-      formspreeOk = false;
-    }
-
-    if (!formspreeOk) {
+    const ok = await submitLead({
+      name: firstName.trim(),
+      phone: phone.trim(),
+      email: email.trim(),
+      message: `Paket: ${badge}`,
+      source_cta: `preise_${badge}`,
+      company: honeypot,
+    });
+    if (!ok) {
       setLoading(false);
       setSubmitError(
         "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 30 764 98",
       );
       return;
     }
-
-    // Backup für das Admin-Backend – Fehler hier blockieren die Erfolgs-Ansicht nicht.
-    const { error } = await supabase.from("leads").insert({
-      id: leadId,
-      first_name: firstName.trim(),
-      company_name: "",
-      phone: phone.trim(),
-      email: finalEmail,
-      notes: `Pop-up Anfrage von Preisseite – Paket: ${badge}`,
-    });
-    if (error) {
-      console.warn("Lead konnte nicht in der DB gespeichert werden", error);
-    }
-
-    supabase.functions.invoke("send-transactional-email", {
-      body: {
-        templateName: "lead-notification",
-        idempotencyKey: `pricing-popup-${leadId}`,
-        templateData: {
-          source: `Preisseite Pop-up (${badge})`,
-          firstName: firstName.trim(),
-          companyName: "(nicht angegeben)",
-          email: email.trim() || "(keine E-Mail – nur Telefon)",
-          phone: phone.trim(),
-          submittedAt: new Date().toLocaleString("de-DE"),
-        },
-      },
-    });
 
     setLoading(false);
     setSuccessData({
