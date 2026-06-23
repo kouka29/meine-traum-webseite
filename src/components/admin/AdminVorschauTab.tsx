@@ -257,6 +257,32 @@ export default function AdminVorschauTab({ password }: { password: string }) {
     setGlobalSettings(s => (s ? { ...s, ...patch } : s));
   };
 
+  const [globalCountdownSaving, setGlobalCountdownSaving] = useState(false);
+  const saveGlobalCountdown = async () => {
+    if (!globalSettings) return;
+    setGlobalCountdownSaving(true);
+    const { data, error } = await supabase.functions.invoke("admin-leads", {
+      body: {
+        password,
+        action: "vorschau-update-settings",
+        settings: {
+          countdown_mode: globalSettings.countdown_mode,
+          countdown_target: globalSettings.countdown_target,
+          countdown_label: globalSettings.countdown_label,
+          show_countdown: globalSettings.show_countdown,
+        },
+        pageKey: "global",
+      },
+    });
+    setGlobalCountdownSaving(false);
+    if (error || data?.error) {
+      toast.error(data?.error || "Fehler beim Speichern");
+      return;
+    }
+    setGlobalSettings(data.settings);
+    toast.success("Globaler Countdown gespeichert – sofort live auf allen Seiten!");
+  };
+
   const saveGlobalSettings = async () => {
     if (!globalSettings) return;
     setGlobalSaving(true);
