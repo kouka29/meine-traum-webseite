@@ -1322,8 +1322,27 @@ const AdminLeads = () => {
             </div>
             <div>
               <Label htmlFor="proj-image">Bild</Label>
-              <Input id="proj-image" type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} />
-              {editingProject?.image_url && !imageFile && (
+              {editingProject?.image_url && !clearImage && !imageFile && (
+                <div className="flex items-center gap-3 mb-2 p-2 border border-border rounded-md">
+                  <img src={editingProject.image_url} alt="Aktuelles Bild" className="w-20 h-14 object-cover rounded" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-muted-foreground truncate">Aktuelles Bild</p>
+                  </div>
+                  <Button type="button" variant="outline" size="sm" onClick={() => { setClearImage(true); setImageFile(null); }}>
+                    <Trash2 size={14} aria-hidden={true} focusable={false} /> Entfernen
+                  </Button>
+                </div>
+              )}
+              {clearImage && !imageFile && (
+                <div className="flex items-center gap-3 mb-2 p-2 border border-destructive/40 bg-destructive/5 rounded-md">
+                  <p className="text-xs text-destructive flex-1">Bild wird beim Speichern entfernt.</p>
+                  <Button type="button" variant="ghost" size="sm" onClick={() => setClearImage(false)}>
+                    Rückgängig
+                  </Button>
+                </div>
+              )}
+              <Input id="proj-image" type="file" accept="image/*" onChange={e => { setImageFile(e.target.files?.[0] || null); setClearImage(false); }} />
+              {editingProject?.image_url && !imageFile && !clearImage && (
                 <p className="text-xs text-muted-foreground mt-1">Aktuelles Bild bleibt bestehen, wenn kein neues hochgeladen wird.</p>
               )}
             </div>
