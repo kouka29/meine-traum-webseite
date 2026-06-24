@@ -430,6 +430,7 @@ const AdminLeads = () => {
         ...(editingProject ? { projectId: editingProject.id } : {}),
         ...projectForm,
         ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
+        ...(clearImage && !uploadedImageUrl ? { clear_image: true, image_url: "" } : {}),
       },
     });
 
