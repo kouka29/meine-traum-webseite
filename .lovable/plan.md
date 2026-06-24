@@ -1,23 +1,25 @@
 ## Problem
 
-Im Funnel auf `/kostenlose-vorschau` werden Auswahl-Kacheln (Branche, Webseite-Status, Ziel, Dringlichkeit) beim Anklicken komplett weiß — Text und Icon verschwinden.
+Auf `/kostenlose-vorschau` zeigt das Testimonial-Carousel nur **eine** Karte rechts (Thomas M.) – die zwei weiteren Slots im 3-spaltigen Grid bleiben optisch leer, obwohl in der DB 12 sichtbare Testimonials vorhanden sind und die Dots korrekt 12 Stück anzeigen.
 
-**Ursache:** In `src/pages/KostenloseVorschauV2.tsx` Zeile 351 hat die `TileButton`-Klasse sowohl `bg-card` als auch `data-[selected=true]:bg-primary`. Wenn ausgewählt, wird der Text per `text-primary-foreground` auf weiß gesetzt — aber der lila Primary-Hintergrund schlägt in einigen Render-Pfaden nicht durch (Tailwind Source-Order / globales `apple-mode` CSS für `[class*="bg-primary"]`). Ergebnis: weißer Text auf weißer Card.
+## Ursache
+
+In `src/pages/KostenloseVorschauV2.tsx` (Zeile 1860–1865) wird das Carousel mit
+```ts
+opts={{ align: "start", loop: …, direction: "rtl" as const }}
+```
+initialisiert. Die `direction: "rtl"`-Option in Embla zusammen mit `align: "start"` positioniert den ersten Slide am rechten Rand und stapelt die weiteren Slides **außerhalb** des sichtbaren Viewports nach links/rechts – im Zusammenspiel mit `basis-1/3` werden die anderen zwei Karten dadurch nicht im sichtbaren Track gerendert. Das Demos-Carousel direkt darüber nutzt **kein** RTL und funktioniert einwandfrei – das bestätigt die Ursache.
 
 ## Fix
 
-Eine einzige Datei, eine Komponente (`TileButton` in `src/pages/KostenloseVorschauV2.tsx`):
+In `src/pages/KostenloseVorschauV2.tsx`, Zeile 1861, `direction: "rtl" as const` aus dem opts-Objekt entfernen:
 
-1. **Klassenliste in zwei Zustände trennen** statt `bg-card` + Override mit data-attribute. Per Template-Literal je nach `selected` entweder `bg-card text-foreground` oder `bg-primary text-primary-foreground border-primary shadow-lg` anwenden — keine Kollision mehr.
-2. Innen-Icon-Container und Icon ebenfalls auf `selected`-Prop umschalten (statt `group-data-[selected=true]:…`), damit Icon + Check garantiert sichtbar bleiben.
-3. Span-Label bekommt explizit `text-inherit` — Verhalten bleibt, aber kein Vererbungsproblem mehr.
+```ts
+opts={{ align: "start", loop: activeTestimonials.length > 3 }}
+```
 
-Kein anderer Funnel-Code, kein State, keine sonstigen Buttons werden angefasst. Die anderen vier CTA-Buttons im Funnel (`Weiter`, `Zurück`) nutzen shadcn `<Button>` und sind nicht betroffen.
+Sonst nichts ändern – Loop, Autoplay, Dots, Card-Styling bleiben unverändert. Damit fließt das Carousel wie das Demos-Carousel von links nach rechts, alle drei sichtbaren Karten werden korrekt befüllt, der Autoplay läuft normal.
 
 ## Verifikation
 
-- Step 1 (Branche): jede Kachel beim Klick → lila Hintergrund, weißer Text + Check sichtbar.
-- Step 2 (Webseite?): selektierte Option bleibt 200 ms sichtbar bevor `next()` triggert.
-- Step 3 (Ziele, Mehrfachauswahl): mehrere lila Kacheln sichtbar.
-- Step 4 (Dringlichkeit): wie Step 2.
-- Nicht-selektierte Kacheln unverändert (weiße Card, Hover-Lift).
+Nach dem Fix prüfen: auf `/kostenlose-vorschau` muss die Testimonial-Sektion drei Karten gleichzeitig (ab `lg`) bzw. zwei (`sm`) bzw. eine (mobile) anzeigen, alle mit Sternen, Zitat, Name, Rolle und Result-Badge.
