@@ -95,6 +95,16 @@ const Portfolio = () => {
   const [autoShots, setAutoShots] = useState<Record<string, string>>({});
   const [shotLoading, setShotLoading] = useState<Record<string, boolean>>({});
 
+  const [reducedMotion, setReducedMotion] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener?.("change", handler);
+    return () => mq.removeEventListener?.("change", handler);
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     projects.forEach((p) => {
