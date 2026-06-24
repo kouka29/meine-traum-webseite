@@ -176,17 +176,18 @@ const Portfolio = () => {
                           <span className="w-2 h-2 rounded-full bg-emerald-400" />
                         </div>
                         {imgSrc ? (
-                          <img
-                            src={imgSrc}
-                            alt={imgAlt}
-                            width={800}
-                            height={450}
-                            loading={eager ? "eager" : "lazy"}
-                            {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
-                            decoding="async"
-                            className={`aspect-video w-full object-cover object-top ${reducedMotion ? "" : "group-hover:[object-position:50%_100%]"}`}
-                            style={reducedMotion ? undefined : { transition: "object-position 20s linear" }}
-                          />
+                          <div className="overflow-hidden">
+                            <img
+                              src={imgSrc}
+                              alt={imgAlt}
+                              width={800}
+                              height={450}
+                              loading={eager ? "eager" : "lazy"}
+                              {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
+                              decoding="async"
+                              className={`aspect-video w-full object-cover object-top ${reducedMotion ? "" : "transition-transform duration-500 ease-out group-hover:scale-105"}`}
+                            />
+                          </div>
                         ) : isLoadingShot ? (
                           <div className="aspect-video w-full bg-muted animate-pulse" />
                         ) : p.mockup_desktop_url ? (
