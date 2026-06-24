@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import DeviceMockup from "@/components/DeviceMockup";
-import { supabaseImage, supabaseImageSrcSet } from "@/lib/supabaseImage";
-import { ExternalLink, ArrowRight, TrendingUp } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { ExternalLink, ArrowRight } from "lucide-react";
 import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
@@ -76,6 +76,50 @@ const Portfolio = () => {
     return () => { cancelled = true; };
   }, []);
 
+  const normalizeImageSrc = (image_url: string): string => {
+    if (!image_url) return "";
+    if (/^https?:\/\//i.test(image_url)) {
+      return image_url
+        .replace("/storage/v1/render/image/public/", "/storage/v1/object/public/")
+        .split("?")[0];
+    }
+    // bundled asset import (starts with / or data:) — use as-is
+    if (image_url.startsWith("/") || image_url.startsWith("data:") || image_url.startsWith("blob:")) {
+      return image_url;
+    }
+    const base = (import.meta.env.VITE_SUPABASE_URL as string) || "";
+    return `${base}/storage/v1/object/public/portfolio-images/${image_url}`;
+  };
+
+  // Auto-screenshots for projects with URL but no image
+  const [autoShots, setAutoShots] = useState<Record<string, string>>({});
+  const [shotLoading, setShotLoading] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    projects.forEach((p) => {
+      if (p.image_url) return;
+      const ext = p.external_url;
+      if (!ext) return;
+      if (autoShots[p.id] || shotLoading[p.id]) return;
+      setShotLoading((s) => ({ ...s, [p.id]: true }));
+      supabase.functions
+        .invoke("portfolio-screenshot", { body: { url: normalizeUrl(ext), key: p.id } })
+        .then(({ data }) => {
+          if (cancelled) return;
+          if (data?.url) setAutoShots((m) => ({ ...m, [p.id]: data.url as string }));
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (!cancelled) setShotLoading((s) => ({ ...s, [p.id]: false }));
+        });
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projects]);
+
   return (
     <>
       <SEOHead
@@ -105,82 +149,91 @@ const Portfolio = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {projects.map((p, i) => (
-                <AnimatedSection key={p.id} delay={i * 0.08} className="h-full">
-                  {p.external_url ? (
-                    <a href={normalizeUrl(p.external_url)} target="_blank" rel="noopener noreferrer" className="block h-full">
-                      <div className="group cursor-pointer rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
-                        <div className="aspect-[10/7] relative overflow-hidden rounded-2xl bg-muted/30">
-                          {p.image_url ? (
-                            <img
-                            src={supabaseImage(p.image_url, { width: 400, quality: 72 })}
-                              srcSet={supabaseImageSrcSet(p.image_url, [640, 800, 1200], { quality: 72 })}
-                              sizes="(min-width: 1024px) 640px, (min-width: 768px) 50vw, 100vw"
-                              alt={`${p.title} – ${p.category} | Webdesign Referenz`}
-                              loading={i < 3 ? "eager" : "lazy"}
-                              {...(i < 3 ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
-                              decoding="async"
-                              width={800}
-                              height={600}
-                              className="absolute inset-0 w-full h-full object-cover object-center"
-                            />
-                          ) : p.mockup_desktop_url ? (
-                            <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                          ) : null}
-                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
-                            <ExternalLink size={24} className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" aria-hidden={true} focusable={false} />
-                          </div>
-                          {p.result && (
-                            <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5 z-10">
-                              <TrendingUp size={12} aria-hidden={true} focusable={false} /> {p.result}
-                            </span>
-                          )}
+              {projects.map((p, i) => {
+                const rawSrc = p.image_url || autoShots[p.id] || "";
+                const imgSrc = normalizeImageSrc(rawSrc);
+                const isLoadingShot = !p.image_url && !!p.external_url && !autoShots[p.id];
+                const eager = i < 3;
+                const imgAlt = `Webdesign-Referenz – ${p.title}, ${p.category}`;
+                const card = (
+                  <div className="group h-full w-full text-left bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col transition-all hover:border-primary/40 hover:shadow-lg hover:-translate-y-0.5">
+                    {/* Mockup */}
+                    <div className="relative bg-gradient-to-br from-primary/10 to-accent/10 p-5">
+                      <div className="bg-card rounded-lg shadow-md overflow-hidden border border-border">
+                        <div className="bg-muted h-6 flex items-center gap-1.5 px-2.5">
+                          <span className="w-2 h-2 rounded-full bg-rose-400" />
+                          <span className="w-2 h-2 rounded-full bg-amber-400" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-400" />
                         </div>
-                        <div className="p-6 flex flex-col flex-1">
-                          <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
-                          <h2 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h2>
-                          <p className="text-sm text-muted-foreground leading-relaxed min-h-[3.75rem]">
-                            {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  ) : (
-                    <div className="group rounded-2xl overflow-hidden border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background h-full flex flex-col">
-                      <div className="aspect-[10/7] relative overflow-hidden rounded-2xl bg-muted/30">
-                        {p.image_url ? (
+                        {imgSrc ? (
                           <img
-                            src={supabaseImage(p.image_url, { width: 400, quality: 72 })}
-                            srcSet={supabaseImageSrcSet(p.image_url, [640, 800, 1200], { quality: 72 })}
-                            sizes="(min-width: 1024px) 640px, (min-width: 768px) 50vw, 100vw"
-                            alt={`${p.title} – ${p.category} | Webdesign Referenz`}
-                            loading={i < 3 ? "eager" : "lazy"}
-                            {...(i < 3 ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
-                            decoding="async"
+                            src={imgSrc}
+                            alt={imgAlt}
                             width={800}
-                            height={600}
-                            className="absolute inset-0 w-full h-full object-cover object-center"
+                            height={450}
+                            loading={eager ? "eager" : "lazy"}
+                            {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
+                            decoding="async"
+                            className="aspect-video w-full object-cover object-top motion-safe:transition-[object-position] motion-safe:duration-[6000ms] motion-safe:ease-linear motion-safe:group-hover:object-bottom"
                           />
+                        ) : isLoadingShot ? (
+                          <div className="aspect-video w-full bg-muted animate-pulse" />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                        ) : null}
-                        {p.result && (
-                          <span className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm flex items-center gap-1.5">
-                            <TrendingUp size={12} aria-hidden={true} focusable={false} /> {p.result}
-                          </span>
+                        ) : (
+                          <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+                            <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
+                            <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
+                            <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
+                          </div>
                         )}
                       </div>
-                      <div className="p-6 flex flex-col flex-1">
-                        <span className="text-xs font-semibold text-primary uppercase tracking-wide">{p.category}</span>
-                        <h2 className="font-heading text-lg font-semibold mt-1.5 mb-2">{p.title}</h2>
-                        <p className="text-sm text-muted-foreground leading-relaxed min-h-[3.75rem]">
-                          {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
-                        </p>
-                      </div>
+                      {p.external_url && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-200">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-flex items-center gap-2 rounded-full bg-card text-foreground px-4 py-2 text-sm font-semibold shadow-lg">
+                            <ExternalLink className="w-4 h-4" aria-hidden={true} focusable={false} />
+                            Live ansehen
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </AnimatedSection>
-              ))}
+                    <div className="p-5 flex-1 flex flex-col">
+                      {p.category && (
+                        <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
+                          {p.category}
+                        </span>
+                      )}
+                      <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">{p.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-3 flex-1">
+                        {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
+                      </p>
+                      {p.external_url && (
+                        <div className="flex items-center justify-end">
+                          <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
+                            Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" aria-hidden={true} focusable={false} />
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+                return (
+                  <AnimatedSection key={p.id} delay={i * 0.08} className="h-full">
+                    {p.external_url ? (
+                      <a
+                        href={normalizeUrl(p.external_url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block h-full"
+                      >
+                        {card}
+                      </a>
+                    ) : (
+                      card
+                    )}
+                  </AnimatedSection>
+                );
+              })}
           </div>
 
           <div className="text-center mt-16">
