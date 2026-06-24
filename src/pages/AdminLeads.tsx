@@ -192,6 +192,7 @@ const AdminLeads = () => {
     title: "", category: "", description: "", result: "", external_url: "", is_visible: true,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [clearImage, setClearImage] = useState(false);
   const [savingProject, setSavingProject] = useState(false);
   const [generatingMockup, setGeneratingMockup] = useState(false);
 
@@ -366,6 +367,7 @@ const AdminLeads = () => {
     setEditingProject(null);
     setProjectForm({ title: "", category: "", description: "", result: "", external_url: "", is_visible: true });
     setImageFile(null);
+    setClearImage(false);
     setShowProjectDialog(true);
   };
 
@@ -376,6 +378,7 @@ const AdminLeads = () => {
       result: p.result, external_url: p.external_url || "", is_visible: p.is_visible,
     });
     setImageFile(null);
+    setClearImage(false);
     setShowProjectDialog(true);
   };
 
