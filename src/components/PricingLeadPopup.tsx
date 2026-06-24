@@ -454,7 +454,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 Kostenlos & unverbindlich – kein Spam, keine Verpflichtung
               </p>
               <p className="text-center text-xs text-muted-foreground/80 mt-1.5">
-                ⭐ Bereits 12 Handwerksbetriebe vertrauen uns
+                ⭐ +150 Betriebe aus der Region vertrauen uns
               </p>
             </div>
           </form>

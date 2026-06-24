@@ -59,7 +59,7 @@ const HandwerkerKontakt = () => (
               </ol>
             </div>
 
-            <p className="text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ 12 Handwerksbetriebe vertrauen uns bereits</p>
+            <p className="text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ +150 Betriebe aus der Region vertrauen uns</p>
           </div>
 
           {/* RIGHT */}

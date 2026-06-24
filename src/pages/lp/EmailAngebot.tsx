@@ -716,7 +716,7 @@ const EmailAngebot = () => {
               </div>
               <p className="text-sm text-white/80 mt-7 flex items-center justify-center gap-2 flex-wrap">
                 <span className="text-yellow-300 tracking-tight">★★★★★</span>
-                <span>Bereits 150+ Handwerksbetriebe aus der Region vertrauen uns</span>
+                <span>+150 Betriebe aus der Region vertrauen uns</span>
               </p>
             </div>
           </div>
