@@ -435,6 +435,8 @@ Deno.serve(async (req) => {
         if (uploadError) throw uploadError;
         const { data: urlData } = supabase.storage.from("portfolio-images").getPublicUrl(filePath);
         updates.image_url = urlData.publicUrl;
+      } else if (body.clear_image === true) {
+        updates.image_url = "";
       }
 
       const { data, error } = await supabase
