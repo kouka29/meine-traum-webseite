@@ -1788,18 +1788,16 @@ const KostenloseVorschauV2 = () => {
                         </div>
                         {d.image_url ? (
                           <img
-                            src={supabaseImage(d.image_url, { width: 600, quality: 72 })}
-                            srcSet={supabaseImageSrcSet(d.image_url, [400, 600, 800], { quality: 72 })}
+                            src={supabaseImage(d.image_url, { width: 800, quality: 75 })}
+                            srcSet={supabaseImageSrcSet(d.image_url, [400, 600, 800], { quality: 75 })}
                             sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
                             alt={d.company}
-                            className="aspect-video w-full object-cover object-top bg-white"
+                            className="aspect-[8/5] w-full object-contain bg-white"
                             loading="lazy"
                             decoding="async"
-                            width={800}
-                            height={600}
                           />
                         ) : (
-                          <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+                          <div className="aspect-[8/5] bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
                             <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
                             <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
                             <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
