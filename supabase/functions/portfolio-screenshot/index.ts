@@ -56,14 +56,14 @@ Deno.serve(async (req) => {
     }
 
     const key = sanitizeKey(rawKey);
-    const path = `auto/v2/${key}.jpg`;
+    const path = `auto/v3/${key}.jpg`;
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // Cache check
     const { data: existing } = await supabase.storage
       .from(BUCKET)
-      .list("auto/v2", { search: `${key}.jpg`, limit: 1 });
+      .list("auto/v3", { search: `${key}.jpg`, limit: 1 });
     if (existing && existing.some((f) => f.name === `${key}.jpg`)) {
       const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
       return new Response(
@@ -73,7 +73,7 @@ Deno.serve(async (req) => {
     }
 
     // Fetch screenshot via Microlink
-    const apiUrl = `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&waitUntil=networkidle2&viewport.width=1280&viewport.height=800&viewport.deviceScaleFactor=1&embed=screenshot.url&url=${encodeURIComponent(url)}`;
+    const apiUrl = `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=false&waitUntil=networkidle2&viewport.width=1000&viewport.height=2400&viewport.deviceScaleFactor=1&embed=screenshot.url&url=${encodeURIComponent(url)}`;
     const shotRes = await fetch(apiUrl, { headers: { Accept: "image/jpeg" } });
     if (!shotRes.ok) {
       return new Response(
