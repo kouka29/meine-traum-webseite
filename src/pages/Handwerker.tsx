@@ -240,7 +240,7 @@ const Handwerker = () => {
                   <div className="flex text-amber-400 mb-0.5">
                     {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" aria-hidden={true} focusable={false} />)}
                   </div>
-                  <p className="text-white/60 text-xs">12 Handwerksbetriebe aus der Region vertrauen uns</p>
+                  <p className="text-white/60 text-xs">+150 Betriebe aus der Region vertrauen uns</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -852,7 +852,7 @@ const Handwerker = () => {
                 <div className="flex text-amber-400 mb-0.5">
                   {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" aria-hidden={true} focusable={false} />)}
                 </div>
-                <p className="text-white/60 text-xs">12 Handwerksbetriebe aus der Region vertrauen uns</p>
+                <p className="text-white/60 text-xs">+150 Betriebe aus der Region vertrauen uns</p>
               </div>
             </div>
           </AnimatedSection>

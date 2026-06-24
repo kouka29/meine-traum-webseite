@@ -105,7 +105,7 @@ const HandwerkerHub = () => (
               <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
           </div>
-          <p className="mt-6 text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ Bereits 12 Handwerksbetriebe aus der Region vertrauen uns</p>
+          <p className="mt-6 text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ +150 Betriebe aus der Region vertrauen uns</p>
         </div>
       </Container>
     </Section>
@@ -251,7 +251,7 @@ const HandwerkerHub = () => (
               <Phone size={24} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
             <p className="text-sm mt-1 mb-6" style={{ color: "var(--text-muted)" }}>Mo–Fr 9–18 Uhr</p>
-            <p className="text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ 12 Handwerksbetriebe vertrauen uns bereits</p>
+            <p className="text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ +150 Betriebe aus der Region vertrauen uns</p>
           </div>
           <div>
             <h3 className="text-xl font-bold text-white mb-4">Vorschau jetzt anfordern</h3>
@@ -297,7 +297,7 @@ const HandwerkerHub = () => (
               <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
             </a>
           </div>
-          <p className="text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ Bereits 12 Handwerksbetriebe aus der Region vertrauen uns</p>
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>⭐⭐⭐⭐⭐ +150 Betriebe aus der Region vertrauen uns</p>
         </div>
       </Container>
     </Section>
