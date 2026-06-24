@@ -185,7 +185,8 @@ const Portfolio = () => {
                               loading={eager ? "eager" : "lazy"}
                               {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
                               decoding="async"
-                              className={`aspect-video w-full object-cover object-top ${reducedMotion ? "" : "transition-transform duration-500 ease-out group-hover:scale-105"}`}
+                              className={`aspect-video w-full object-cover object-top ${reducedMotion ? "" : "group-hover:[object-position:50%_100%]"}`}
+                              style={reducedMotion ? undefined : { transition: "object-position 9s linear" }}
                             />
                           </div>
                         ) : isLoadingShot ? (
