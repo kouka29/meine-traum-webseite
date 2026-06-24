@@ -1041,7 +1041,7 @@ const WebdesignPreise = () => {
           Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 30 764 98</a>
         </p>
         <p className="text-base md:text-lg font-bold text-primary mt-6">
-          ⭐⭐⭐⭐⭐ Bereits 150+ Handwerksbetriebe aus der Region vertrauen uns
+          ⭐⭐⭐⭐⭐ +150 Betriebe aus der Region vertrauen uns
         </p>
       </div>
     </section>
