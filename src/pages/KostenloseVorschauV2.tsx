@@ -1788,9 +1788,7 @@ const KostenloseVorschauV2 = () => {
                         </div>
                         {d.image_url ? (
                           <img
-                            src={supabaseImage(d.image_url, { width: 800, quality: 75 })}
-                            srcSet={supabaseImageSrcSet(d.image_url, [400, 600, 800], { quality: 75 })}
-                            sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                            src={d.image_url.replace("/storage/v1/render/image/public/", "/storage/v1/object/public/").split("?")[0]}
                             alt={d.company}
                             className="aspect-[8/5] w-full object-contain bg-white"
                             loading="lazy"
