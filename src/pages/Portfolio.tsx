@@ -95,6 +95,16 @@ const Portfolio = () => {
   const [autoShots, setAutoShots] = useState<Record<string, string>>({});
   const [shotLoading, setShotLoading] = useState<Record<string, boolean>>({});
 
+  const [reducedMotion, setReducedMotion] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener?.("change", handler);
+    return () => mq.removeEventListener?.("change", handler);
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     projects.forEach((p) => {
@@ -174,7 +184,8 @@ const Portfolio = () => {
                             loading={eager ? "eager" : "lazy"}
                             {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
                             decoding="async"
-                            className="aspect-video w-full object-cover object-top motion-safe:transition-[object-position] motion-safe:duration-[6000ms] motion-safe:ease-linear motion-safe:group-hover:object-bottom"
+                            className={`aspect-video w-full object-cover object-top ${reducedMotion ? "" : "group-hover:[object-position:50%_100%]"}`}
+                            style={reducedMotion ? undefined : { transition: "object-position 20s linear" }}
                           />
                         ) : isLoadingShot ? (
                           <div className="aspect-video w-full bg-muted animate-pulse" />
