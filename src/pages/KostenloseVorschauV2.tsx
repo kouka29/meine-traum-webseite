@@ -1792,7 +1792,7 @@ const KostenloseVorschauV2 = () => {
                             srcSet={supabaseImageSrcSet(d.image_url, [400, 600, 800], { quality: 72 })}
                             sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
                             alt={d.company}
-                            className="aspect-video w-full object-contain bg-white"
+                            className="aspect-video w-full object-cover object-top bg-white"
                             loading="lazy"
                             decoding="async"
                             width={800}
