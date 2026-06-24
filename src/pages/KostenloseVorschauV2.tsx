@@ -1792,7 +1792,7 @@ const KostenloseVorschauV2 = () => {
                             srcSet={supabaseImageSrcSet(d.image_url, [400, 600, 800], { quality: 72 })}
                             sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
                             alt={d.company}
-                            className="aspect-[4/3] w-full object-cover object-top"
+                            className="aspect-video w-full object-cover object-top transition-[object-position] duration-[4000ms] ease-linear group-hover:object-bottom motion-reduce:transition-none motion-reduce:group-hover:object-top"
                             loading="lazy"
                             decoding="async"
                             width={800}
