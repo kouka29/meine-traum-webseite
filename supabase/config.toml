@@ -29,3 +29,5 @@ project_id = "zwxucictfdbwhnnyemri"
     verify_jwt = false
   [functions.notify-lead]
     verify_jwt = false
+  [functions.portfolio-screenshot]
+    verify_jwt = false
