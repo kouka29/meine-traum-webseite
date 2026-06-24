@@ -56,15 +56,15 @@ Deno.serve(async (req) => {
     }
 
     const key = sanitizeKey(rawKey);
-    const path = `auto/${key}.png`;
+    const path = `auto/${key}.jpg`;
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // Cache check
     const { data: existing } = await supabase.storage
       .from(BUCKET)
-      .list("auto", { search: `${key}.png`, limit: 1 });
-    if (existing && existing.some((f) => f.name === `${key}.png`)) {
+      .list("auto", { search: `${key}.jpg`, limit: 1 });
+    if (existing && existing.some((f) => f.name === `${key}.jpg`)) {
       const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
       return new Response(
         JSON.stringify({ url: data.publicUrl, cached: true }),
@@ -73,8 +73,8 @@ Deno.serve(async (req) => {
     }
 
     // Fetch screenshot via Microlink
-    const apiUrl = `https://api.microlink.io/?screenshot=true&meta=false&type=png&fullPage=true&waitUntil=networkidle2&viewport.width=1200&viewport.deviceScaleFactor=1&embed=screenshot.url&url=${encodeURIComponent(url)}`;
-    const shotRes = await fetch(apiUrl, { headers: { Accept: "image/png" } });
+    const apiUrl = `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=true&waitUntil=networkidle2&viewport.width=1200&viewport.deviceScaleFactor=1&embed=screenshot.url&url=${encodeURIComponent(url)}`;
+    const shotRes = await fetch(apiUrl, { headers: { Accept: "image/jpeg" } });
     if (!shotRes.ok) {
       return new Response(
         JSON.stringify({ error: `screenshot failed: ${shotRes.status}` }),
@@ -117,7 +117,7 @@ Deno.serve(async (req) => {
     const { error: uploadErr } = await supabase.storage
       .from(BUCKET)
       .upload(path, new Uint8Array(imgBuf), {
-        contentType: "image/png",
+        contentType: "image/jpeg",
         upsert: true,
         cacheControl: "31536000",
       });
