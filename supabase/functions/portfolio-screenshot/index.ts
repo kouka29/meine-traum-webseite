@@ -73,7 +73,7 @@ Deno.serve(async (req) => {
     }
 
     // Fetch screenshot via Microlink
-    const apiUrl = `https://api.microlink.io/?screenshot=true&fullPage=true&type=png&viewport.width=1440&meta=false&embed=screenshot.url&url=${encodeURIComponent(url)}`;
+    const apiUrl = `https://api.microlink.io/?screenshot=true&meta=false&type=png&fullPage=true&waitUntil=networkidle2&viewport.width=1200&viewport.deviceScaleFactor=1&embed=screenshot.url&url=${encodeURIComponent(url)}`;
     const shotRes = await fetch(apiUrl, { headers: { Accept: "image/png" } });
     if (!shotRes.ok) {
       return new Response(
