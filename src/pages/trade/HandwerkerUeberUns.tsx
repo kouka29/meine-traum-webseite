@@ -9,7 +9,7 @@ const values = [
 ];
 
 const stats = [
-  { value: "12+", label: "Handwerksbetriebe betreut" },
+  { value: "+150", label: "Betriebe betreut" },
   { value: "48h", label: "Erste Vorschau fertig" },
   { value: "98%", label: "Weiterempfehlungsrate" },
   { value: "7 Tage", label: "Schnellste Live-Schaltung" },
