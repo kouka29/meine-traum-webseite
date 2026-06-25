@@ -1,29 +1,37 @@
-## Problem
+## Ziel
+Im Admin eine Screenshot-Vorschau pro Portfolio-Projekt mit einem "neu generieren"-Button (force) und Cache-Busting via Timestamp. Die öffentliche Portfolio-Seite bleibt unverändert (nutzt nur gespeicherte URLs).
 
-Die Demo-Karten zeigen aktuell nur einen **Ausschnitt** der Full-Page-Screenshots: `aspect-video` + `object-cover` zwingt die hochformatigen Screenshots (z.B. 1280×4000+ px) in ein 16:9-Fenster und schneidet alles ober-/unterhalb ab. Auch der Hover-Scroll (`object-top → object-bottom`) zeigt immer nur einen schmalen Streifen, nie die ganze Seite gleichzeitig.
+## 1. Datenbank-Migration
+- `portfolio_projects.screenshot_url` existiert bereits.
+- Spalte hinzufügen: `screenshot_updated_at timestamptz`.
 
-## Fix
+## 2. Edge Function `portfolio-screenshot`
+- Body um optionales `force: boolean` erweitern.
+- Bei `force === true`: Cache-Check (storage.list) überspringen → immer Microlink aufrufen, `upsert: true` im Bucket (bereits gesetzt), und beim DB-Update zusätzlich `screenshot_updated_at = new Date().toISOString()` schreiben.
+- Bei Cache-Hit (force false): wenn `projectId` vorhanden und `screenshot_updated_at` in DB leer, setze es auf jetzt (damit Vorschau einen Timestamp hat).
+- Hilfsfunktion `writeScreenshotUrl` erweitern um `screenshot_updated_at` mitzuschreiben.
+- Re-deploy via supabase--deploy_edge_functions.
 
-In `src/pages/KostenloseVorschauV2.tsx` (Demo-`<img>`, Z. 1789–1800) die Bildklassen so umstellen, dass der komplette Screenshot ohne Crop und ohne Hover-Scroll sichtbar ist:
+## 3. admin-leads Function
+- `portfolio-list` Select um `screenshot_updated_at` ergänzen.
+- `portfolio-update` darf weiterhin keine `screenshot_*`-Felder vom Client annehmen (read-only).
 
-1. **Aspect-Ratio anheben**, damit ein hoher Screenshot nicht in 16:9 gepresst wird. `aspect-[3/4]` (Hochformat) zeigt deutlich mehr von der Seite und passt zu Full-Page-Screenshots.
-2. **`object-contain`** statt `object-cover` — skaliert das gesamte Bild in den Rahmen, ohne irgendetwas wegzuschneiden.
-3. **Hover-Scroll und `object-top` entfernen** — nicht mehr nötig, da die ganze Seite bereits sichtbar ist. Auch `motion-reduce`-Klassen weg.
-4. **Hintergrund hinter dem Bild**: Letterbox-Streifen mit `bg-white` füllen (passt zum Browser-Mockup), damit `object-contain` keinen grauen Card-Rand zeigt.
+## 4. Admin-UI (`src/pages/AdminLeads.tsx`)
+- `PortfolioProject`-Type um `screenshot_updated_at: string | null` ergänzen.
+- In der Projekt-Listenzeile die kleine `w-20 h-15`-Thumbnail durch eine größere Vorschau ersetzen:
+  - `aspect-video w-[200px]` Block links neben Infos
+  - Quelle: `image_url` falls vorhanden, sonst `screenshot_url` mit `?v=${encodeURIComponent(screenshot_updated_at || '')}` als Cache-Buster.
+  - Darunter dezent: `zuletzt generiert: <formatiertes Datum>` (nur wenn vorhanden, sonst „noch nicht generiert").
+- Neuer Action-Button "Screenshot neu generieren" (Icon `RefreshCw`) pro Projekt, nur sichtbar wenn `external_url` gesetzt:
+  - Lokaler `regeneratingId`-State für Spinner pro Zeile.
+  - Ruft `supabase.functions.invoke("portfolio-screenshot", { body: { url, key: p.id, projectId: p.id, force: true } })`.
+  - Erfolg: `toast.success`, lokal `screenshot_url`/`screenshot_updated_at` aus Response übernehmen, sonst `fetchPortfolio()`.
+  - Fehler: `toast.error` mit Fehlertext.
+- Backfill-Button (existiert bereits) bleibt; nutzt weiterhin `force` nicht (nur fehlende).
 
-Neue img-Klassen:
-```
-aspect-[3/4] w-full object-contain bg-white
-```
+## 5. Öffentliche Portfolio-Seite
+- Keine Änderungen. Generieren passiert nur im Admin und einmalig beim Speichern eines neuen Projekts.
 
-Den Fallback-Block (Z. 1802) ebenfalls auf `aspect-[3/4]` setzen, damit Karten ohne Bild dieselbe Höhe haben und das Grid einheitlich bleibt.
-
-Browser-Rahmen (Verlauf-Padding, Card, Ampel-Dots, Hover-Overlay mit „Live ansehen") und alle anderen Karten-Inhalte bleiben unverändert.
-
-## Optional / Hinweis
-
-Bei sehr hohen Screenshots (>2000 px) wird die Darstellung im 3:4-Frame ziemlich klein. Falls dir die Vorschau danach zu klein erscheint, wäre die Alternative ein noch höheres Verhältnis (`aspect-[2/3]` oder `aspect-[1/1.4]`) oder das Bild bei der Erzeugung in `generate-demo-screenshot` direkt als Above-the-Fold-Shot (Viewport-Höhe, nicht Full-Page) zu speichern. Beides nur auf Zuruf — der Fix oben bleibt rein visuell.
-
-## Verifikation
-
-`/kostenlose-vorschau` öffnen, Demo-Carousel prüfen: jede Karte zeigt den **kompletten** Screenshot der gemockten Webseite (Header bis Footer), nichts wird mehr beim Hover gescrollt, alle Karten gleich hoch, Browser-Rahmen mit Ampel-Dots unverändert.
+## Technische Hinweise
+- Cache-Buster nur auf `screenshot_url` anwenden, nicht auf manuell hochgeladene `image_url` (die ändert ihren Pfad beim Upload bereits).
+- Edge Function gibt im Response zusätzlich `screenshot_updated_at` zurück, damit Admin sofort aktualisieren kann.
