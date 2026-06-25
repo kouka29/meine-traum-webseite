@@ -118,6 +118,7 @@ interface PortfolioProject {
   result: string;
   image_url: string;
   screenshot_url: string;
+  screenshot_updated_at: string | null;
   external_url: string;
   mockup_desktop_url: string;
   mockup_mobile_url: string;
@@ -196,6 +197,7 @@ const AdminLeads = () => {
   const [clearImage, setClearImage] = useState(false);
   const [savingProject, setSavingProject] = useState(false);
   const [generatingMockup, setGeneratingMockup] = useState(false);
+  const [regeneratingId, setRegeneratingId] = useState<string | null>(null);
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -494,6 +496,42 @@ const AdminLeads = () => {
     setBackfillRunning(false);
     toast.success(`Fertig: ${ok} erzeugt${fail ? `, ${fail} Fehler` : ""}`);
     fetchPortfolio();
+  };
+
+  const regenerateScreenshot = async (project: PortfolioProject) => {
+    if (!project.external_url) {
+      toast.error("Projekt hat keine URL");
+      return;
+    }
+    setRegeneratingId(project.id);
+    const { data, error } = await supabase.functions.invoke("portfolio-screenshot", {
+      body: {
+        url: project.external_url,
+        key: project.id,
+        projectId: project.id,
+        force: true,
+      },
+    });
+    setRegeneratingId(null);
+    if (error || (data && (data as { error?: string }).error)) {
+      toast.error(
+        (data as { error?: string })?.error || error?.message || "Screenshot fehlgeschlagen",
+      );
+      return;
+    }
+    const resp = data as { url?: string; screenshot_updated_at?: string | null };
+    toast.success("Screenshot neu generiert");
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === project.id
+          ? {
+              ...p,
+              screenshot_url: resp.url || p.screenshot_url,
+              screenshot_updated_at: resp.screenshot_updated_at || new Date().toISOString(),
+            }
+          : p,
+      ),
+    );
   };
 
   const generateMockup = async (project: PortfolioProject) => {
@@ -1213,15 +1251,30 @@ const AdminLeads = () => {
               </div>
             ) : (
               <div className="grid gap-4">
-                {projects.map((p, i) => (
-                  <div key={p.id} className={`bg-card rounded-xl border border-border p-4 flex items-center gap-4 transition-all ${!p.is_visible ? "opacity-60" : ""}`}>
+                {projects.map((p, i) => {
+                  const previewSrc = p.image_url
+                    ? p.image_url
+                    : p.screenshot_url
+                      ? `${p.screenshot_url}${p.screenshot_url.includes("?") ? "&" : "?"}v=${encodeURIComponent(p.screenshot_updated_at || "")}`
+                      : "";
+                  const lastShot = p.screenshot_updated_at
+                    ? new Date(p.screenshot_updated_at).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" })
+                    : null;
+                  const regenerating = regeneratingId === p.id;
+                  return (
+                  <div key={p.id} className={`bg-card rounded-xl border border-border p-4 flex items-start gap-4 transition-all ${!p.is_visible ? "opacity-60" : ""}`}>
                     {/* Image preview */}
-                    <div className="w-20 h-15 rounded-lg overflow-hidden bg-muted shrink-0">
-                      {p.image_url ? (
-                        <img src={p.image_url} alt={p.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center"><Image size={20} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
-                      )}
+                    <div className="shrink-0 w-[200px]">
+                      <div className="aspect-video rounded-lg overflow-hidden bg-muted border border-border">
+                        {previewSrc ? (
+                          <img src={previewSrc} alt={p.title} className="w-full h-full object-cover object-top" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center"><Image size={24} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-muted-foreground mt-1 truncate">
+                        {lastShot ? `zuletzt generiert: ${lastShot}` : p.image_url ? "manuelles Bild" : "noch nicht generiert"}
+                      </p>
                     </div>
 
                     {/* Info */}
@@ -1235,6 +1288,22 @@ const AdminLeads = () => {
 
                     {/* Actions */}
                     <div className="flex items-center gap-1 shrink-0">
+                      {p.external_url && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => regenerateScreenshot(p)}
+                          disabled={regenerating}
+                          className="h-8 w-8"
+                          title="Screenshot neu generieren"
+                        >
+                          {regenerating ? (
+                            <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} />
+                          ) : (
+                            <RefreshCw size={14} aria-hidden={true} focusable={false} />
+                          )}
+                        </Button>
+                      )}
                       <Button variant="ghost" size="icon" onClick={() => moveProject(i, "up")} disabled={i === 0} className="h-8 w-8">
                         <ChevronUp size={14} aria-hidden={true} focusable={false} />
                       </Button>
@@ -1257,7 +1326,8 @@ const AdminLeads = () => {
                       </Button>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

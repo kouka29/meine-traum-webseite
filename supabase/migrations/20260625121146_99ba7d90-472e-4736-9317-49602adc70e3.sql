@@ -1,0 +1,1 @@
+ALTER TABLE public.portfolio_projects ADD COLUMN IF NOT EXISTS screenshot_updated_at timestamptz;

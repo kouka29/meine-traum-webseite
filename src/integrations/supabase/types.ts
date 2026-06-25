@@ -565,6 +565,7 @@ export type Database = {
           mockup_desktop_url: string
           mockup_mobile_url: string
           result: string
+          screenshot_updated_at: string | null
           screenshot_url: string
           sort_order: number
           title: string
@@ -580,6 +581,7 @@ export type Database = {
           mockup_desktop_url?: string
           mockup_mobile_url?: string
           result?: string
+          screenshot_updated_at?: string | null
           screenshot_url?: string
           sort_order?: number
           title: string
@@ -595,6 +597,7 @@ export type Database = {
           mockup_desktop_url?: string
           mockup_mobile_url?: string
           result?: string
+          screenshot_updated_at?: string | null
           screenshot_url?: string
           sort_order?: number
           title?: string

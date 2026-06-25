@@ -36,6 +36,7 @@ Deno.serve(async (req) => {
     const rawKey = typeof body?.key === "string" ? body.key.trim() : "";
     const projectId =
       typeof body?.projectId === "string" ? body.projectId.trim() : "";
+    const force = body?.force === true;
 
     if (!url || !rawKey) {
       return new Response(JSON.stringify({ error: "url and key required" }), {
@@ -65,25 +66,36 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    const writeScreenshotUrl = async (publicUrl: string) => {
-      if (!projectId) return;
-      await supabase
+    const writeScreenshotUrl = async (publicUrl: string, touch: boolean) => {
+      if (!projectId) return null;
+      const updates: Record<string, string> = { screenshot_url: publicUrl };
+      if (touch) updates.screenshot_updated_at = new Date().toISOString();
+      const { data } = await supabase
         .from("portfolio_projects")
-        .update({ screenshot_url: publicUrl })
-        .eq("id", projectId);
+        .update(updates)
+        .eq("id", projectId)
+        .select("screenshot_updated_at")
+        .maybeSingle();
+      return data?.screenshot_updated_at ?? null;
     };
 
-    // Cache check
-    const { data: existing } = await supabase.storage
-      .from(BUCKET)
-      .list("auto/v3", { search: `${key}.jpg`, limit: 1 });
-    if (existing && existing.some((f) => f.name === `${key}.jpg`)) {
-      const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
-      await writeScreenshotUrl(data.publicUrl);
-      return new Response(
-        JSON.stringify({ url: data.publicUrl, cached: true }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
+    // Cache check — skipped when force=true
+    if (!force) {
+      const { data: existing } = await supabase.storage
+        .from(BUCKET)
+        .list("auto/v3", { search: `${key}.jpg`, limit: 1 });
+      if (existing && existing.some((f) => f.name === `${key}.jpg`)) {
+        const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+        const ts = await writeScreenshotUrl(data.publicUrl, false);
+        return new Response(
+          JSON.stringify({
+            url: data.publicUrl,
+            cached: true,
+            screenshot_updated_at: ts,
+          }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
     }
 
     // Fetch screenshot via Microlink
@@ -138,9 +150,14 @@ Deno.serve(async (req) => {
     if (uploadErr) throw uploadErr;
 
     const { data: pub } = supabase.storage.from(BUCKET).getPublicUrl(path);
-    await writeScreenshotUrl(pub.publicUrl);
+    const ts = await writeScreenshotUrl(pub.publicUrl, true);
     return new Response(
-      JSON.stringify({ url: pub.publicUrl, cached: false }),
+      JSON.stringify({
+        url: pub.publicUrl,
+        cached: false,
+        screenshot_updated_at: ts,
+        forced: force,
+      }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (e: unknown) {
