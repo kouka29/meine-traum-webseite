@@ -359,7 +359,7 @@ Deno.serve(async (req) => {
     if (action === "portfolio-list") {
       const { data, error } = await supabase
         .from("portfolio_projects")
-        .select("id, title, category, description, result, image_url, screenshot_url, external_url, mockup_desktop_url, mockup_mobile_url, is_visible, sort_order, created_at")
+        .select("id, title, category, description, result, image_url, screenshot_url, screenshot_updated_at, external_url, mockup_desktop_url, mockup_mobile_url, is_visible, sort_order, created_at")
         .order("sort_order", { ascending: true });
       if (error) throw error;
       return new Response(JSON.stringify({ projects: data }), {
