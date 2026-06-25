@@ -7,13 +7,14 @@ export type PortfolioRow = {
   description: string;
   result: string;
   image_url: string;
+  screenshot_url: string;
   external_url: string;
   mockup_desktop_url: string;
   mockup_mobile_url: string;
   sort_order?: number;
 };
 
-const STORAGE_KEY = "portfolio_projects_v2";
+const STORAGE_KEY = "portfolio_projects_v3";
 const TTL_MS = 5 * 60 * 1000; // 5 Minuten
 
 let memoryCache: PortfolioRow[] | null = null;
@@ -40,7 +41,7 @@ export function fetchPortfolio(): Promise<PortfolioRow[] | null> {
     const { data, error } = await supabase
       .from("portfolio_projects")
       .select(
-        "id, title, category, description, result, image_url, external_url, mockup_desktop_url, mockup_mobile_url, sort_order"
+        "id, title, category, description, result, image_url, screenshot_url, external_url, mockup_desktop_url, mockup_mobile_url, sort_order"
       )
       .eq("is_visible", true)
       .order("sort_order", { ascending: true });
