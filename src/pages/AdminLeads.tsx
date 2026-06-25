@@ -498,6 +498,42 @@ const AdminLeads = () => {
     fetchPortfolio();
   };
 
+  const regenerateScreenshot = async (project: PortfolioProject) => {
+    if (!project.external_url) {
+      toast.error("Projekt hat keine URL");
+      return;
+    }
+    setRegeneratingId(project.id);
+    const { data, error } = await supabase.functions.invoke("portfolio-screenshot", {
+      body: {
+        url: project.external_url,
+        key: project.id,
+        projectId: project.id,
+        force: true,
+      },
+    });
+    setRegeneratingId(null);
+    if (error || (data && (data as { error?: string }).error)) {
+      toast.error(
+        (data as { error?: string })?.error || error?.message || "Screenshot fehlgeschlagen",
+      );
+      return;
+    }
+    const resp = data as { url?: string; screenshot_updated_at?: string | null };
+    toast.success("Screenshot neu generiert");
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === project.id
+          ? {
+              ...p,
+              screenshot_url: resp.url || p.screenshot_url,
+              screenshot_updated_at: resp.screenshot_updated_at || new Date().toISOString(),
+            }
+          : p,
+      ),
+    );
+  };
+
   const generateMockup = async (project: PortfolioProject) => {
     if (!project.external_url) {
       toast.error("Bitte zuerst einen externen Link eingeben");
