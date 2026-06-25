@@ -502,7 +502,10 @@ const AdminLeads = () => {
     fetchPortfolio();
   };
 
-  const regenerateScreenshot = async (project: PortfolioProject) => {
+  const regenerateScreenshot = async (
+    project: PortfolioProject,
+    opts?: { waitMs?: number; hideSelectors?: string; clickSelector?: string },
+  ) => {
     if (!project.external_url) {
       toast.error("Projekt hat keine URL");
       return;
@@ -514,6 +517,9 @@ const AdminLeads = () => {
         key: project.id,
         projectId: project.id,
         force: true,
+        ...(opts?.waitMs !== undefined ? { waitMs: opts.waitMs } : {}),
+        ...(opts?.hideSelectors ? { hideSelectors: opts.hideSelectors } : {}),
+        ...(opts?.clickSelector ? { clickSelector: opts.clickSelector } : {}),
       },
     });
     setRegeneratingId(null);
