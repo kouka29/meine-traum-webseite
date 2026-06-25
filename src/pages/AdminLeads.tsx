@@ -197,6 +197,7 @@ const AdminLeads = () => {
   const [clearImage, setClearImage] = useState(false);
   const [savingProject, setSavingProject] = useState(false);
   const [generatingMockup, setGeneratingMockup] = useState(false);
+  const [regeneratingId, setRegeneratingId] = useState<string | null>(null);
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
