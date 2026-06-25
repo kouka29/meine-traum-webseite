@@ -37,6 +37,14 @@ Deno.serve(async (req) => {
     const projectId =
       typeof body?.projectId === "string" ? body.projectId.trim() : "";
     const force = body?.force === true;
+    const waitMs =
+      typeof body?.waitMs === "number" && body.waitMs >= 0 && body.waitMs <= 20000
+        ? Math.floor(body.waitMs)
+        : 3500;
+    const extraHide =
+      typeof body?.hideSelectors === "string" ? body.hideSelectors.trim() : "";
+    const clickSelector =
+      typeof body?.clickSelector === "string" ? body.clickSelector.trim() : "";
 
     if (!url || !rawKey) {
       return new Response(JSON.stringify({ error: "url and key required" }), {
@@ -98,8 +106,30 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Default cookie-banner selectors to hide
+    const defaultHide = [
+      "#BorlabsCookieBox",
+      ".brlbs-cmpnt-container",
+      "#cookie-notice",
+      ".cookie-banner",
+      ".cmplz-cookiebanner",
+      "#usercentrics-root",
+      ".cc-window",
+      ".iubenda-cs-container",
+      "#CybotCookiebotDialog",
+    ].join(",");
+    const hideParam = extraHide ? `${defaultHide},${extraHide}` : defaultHide;
+
     // Fetch screenshot via Microlink
-    const apiUrl = `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=false&waitUntil=networkidle2&viewport.width=1000&viewport.height=2400&viewport.deviceScaleFactor=1&embed=screenshot.url&url=${encodeURIComponent(url)}`;
+    let apiUrl =
+      `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=false` +
+      `&waitUntil=networkidle0&waitForTimeout=${waitMs}` +
+      `&viewport.width=1000&viewport.height=2400&viewport.deviceScaleFactor=1` +
+      `&hide=${encodeURIComponent(hideParam)}` +
+      `&embed=screenshot.url&url=${encodeURIComponent(url)}`;
+    if (clickSelector) {
+      apiUrl += `&click=${encodeURIComponent(clickSelector)}`;
+    }
     const shotRes = await fetch(apiUrl, { headers: { Accept: "image/jpeg" } });
     if (!shotRes.ok) {
       return new Response(
