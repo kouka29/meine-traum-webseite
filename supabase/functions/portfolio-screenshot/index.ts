@@ -29,7 +29,10 @@ Deno.serve(async (req) => {
     }
 
     const body = await req.json().catch(() => null);
-    const url = typeof body?.url === "string" ? body.url.trim() : "";
+    let url = typeof body?.url === "string" ? body.url.trim() : "";
+    if (url && !/^https?:\/\//i.test(url)) {
+      url = `https://${url.replace(/^\/+/, "")}`;
+    }
     const rawKey = typeof body?.key === "string" ? body.key.trim() : "";
     const projectId =
       typeof body?.projectId === "string" ? body.projectId.trim() : "";
