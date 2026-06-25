@@ -198,6 +198,10 @@ const AdminLeads = () => {
   const [savingProject, setSavingProject] = useState(false);
   const [generatingMockup, setGeneratingMockup] = useState(false);
   const [regeneratingId, setRegeneratingId] = useState<string | null>(null);
+  const [advancedOpenId, setAdvancedOpenId] = useState<string | null>(null);
+  const [advancedSettings, setAdvancedSettings] = useState<
+    Record<string, { waitMs: string; hideSelectors: string; clickSelector: string }>
+  >({});
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
