@@ -1179,9 +1179,25 @@ const AdminLeads = () => {
           <div>
             <div className="flex items-center justify-between mb-6">
               <p className="text-muted-foreground">{projects.length} Projekt{projects.length !== 1 ? "e" : ""}</p>
-              <Button variant="gradient" size="sm" onClick={openNewProject}>
-                <Plus size={14} aria-hidden={true} focusable={false} /> Neues Projekt
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={backfillScreenshots}
+                  disabled={backfillRunning}
+                  title="Erzeugt Screenshots für alle Projekte ohne Bild (einmalig)"
+                >
+                  {backfillRunning ? (
+                    <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} />
+                  ) : (
+                    <Image size={14} aria-hidden={true} focusable={false} />
+                  )}{" "}
+                  Fehlende Screenshots erzeugen
+                </Button>
+                <Button variant="gradient" size="sm" onClick={openNewProject}>
+                  <Plus size={14} aria-hidden={true} focusable={false} /> Neues Projekt
+                </Button>
+              </div>
             </div>
 
             {portfolioLoading ? (
