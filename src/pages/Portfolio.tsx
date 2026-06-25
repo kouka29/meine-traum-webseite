@@ -132,9 +132,8 @@ const Portfolio = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {projects.map((p, i) => {
-                const rawSrc = p.image_url || autoShots[p.id] || "";
+                const rawSrc = p.image_url || p.screenshot_url || "";
                 const imgSrc = normalizeImageSrc(rawSrc);
-                const isLoadingShot = !p.image_url && !!p.external_url && !autoShots[p.id];
                 const eager = i < 3;
                 const imgAlt = `Webdesign-Referenz – ${p.title}, ${p.category}`;
                 const card = (
@@ -161,8 +160,6 @@ const Portfolio = () => {
                               style={reducedMotion ? undefined : { transition: "object-position 9s linear" }}
                             />
                           </div>
-                        ) : isLoadingShot ? (
-                          <div className="aspect-video w-full bg-muted animate-pulse" />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                         ) : (
