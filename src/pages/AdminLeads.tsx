@@ -442,6 +442,57 @@ const AdminLeads = () => {
     }
     toast.success(editingProject ? "Projekt aktualisiert" : "Projekt erstellt");
     setShowProjectDialog(false);
+    // Trigger one-time screenshot generation if project has URL but no uploaded image.
+    const savedProject = data?.project as PortfolioProject | undefined;
+    if (
+      savedProject?.id &&
+      savedProject.external_url &&
+      !savedProject.image_url &&
+      !savedProject.screenshot_url
+    ) {
+      supabase.functions
+        .invoke("portfolio-screenshot", {
+          body: {
+            url: savedProject.external_url,
+            key: savedProject.id,
+            projectId: savedProject.id,
+          },
+        })
+        .then(({ error: shotErr }) => {
+          if (shotErr) {
+            toast.error("Screenshot konnte nicht erzeugt werden");
+          } else {
+            toast.success("Screenshot erzeugt");
+          }
+          fetchPortfolio();
+        });
+    } else {
+      fetchPortfolio();
+    }
+  };
+
+  const [backfillRunning, setBackfillRunning] = useState(false);
+  const backfillScreenshots = async () => {
+    const targets = projects.filter(
+      (p) => p.external_url && !p.image_url && !p.screenshot_url,
+    );
+    if (targets.length === 0) {
+      toast.info("Keine Projekte ohne Bild gefunden");
+      return;
+    }
+    setBackfillRunning(true);
+    toast.info(`Erzeuge ${targets.length} Screenshot${targets.length !== 1 ? "s" : ""}…`);
+    let ok = 0;
+    let fail = 0;
+    for (const p of targets) {
+      const { error: e } = await supabase.functions.invoke("portfolio-screenshot", {
+        body: { url: p.external_url, key: p.id, projectId: p.id },
+      });
+      if (e) fail++;
+      else ok++;
+    }
+    setBackfillRunning(false);
+    toast.success(`Fertig: ${ok} erzeugt${fail ? `, ${fail} Fehler` : ""}`);
     fetchPortfolio();
   };
 
