@@ -117,6 +117,7 @@ interface PortfolioProject {
   description: string;
   result: string;
   image_url: string;
+  screenshot_url: string;
   external_url: string;
   mockup_desktop_url: string;
   mockup_mobile_url: string;
