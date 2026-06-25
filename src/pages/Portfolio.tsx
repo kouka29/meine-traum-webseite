@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import DeviceMockup from "@/components/DeviceMockup";
-import { supabase } from "@/integrations/supabase/client";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
 import techstartImg from "@/assets/portfolio/techstart.jpg";
@@ -25,12 +24,12 @@ const FALLBACK_IMAGES: Record<string, string> = {
 };
 
 const fallbackProjects = [
-  { id: "1", title: "TechStart GmbH", category: "SaaS Landing Page", description: "Conversion-optimierte Landing Page – Anfragen um 300% gesteigert in nur 8 Wochen.", result: "+300% Anfragen", image_url: techstartImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
-  { id: "2", title: "Yoga Studio Flow", category: "Branding & Webdesign", description: "Ganzheitlicher Markenauftritt – von 3 auf 20+ Anfragen pro Monat.", result: "+700% Neukunden", image_url: yogastudioImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
-  { id: "3", title: "DigitalBoost", category: "E-Commerce", description: "Online-Shop mit optimiertem Checkout – Umsatz um 180% gesteigert.", result: "+180% Umsatz", image_url: digitalboostImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
-  { id: "4", title: "Kanzlei Weber", category: "Corporate Website", description: "Vertrauensvolle Online-Präsenz – 5x mehr Mandantenanfragen über die Website.", result: "5x mehr Mandanten", image_url: kanzleiImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
-  { id: "5", title: "FitLife Coaching", category: "Personal Brand", description: "Persönliche Website mit Buchungssystem – Auslastung von 40% auf 95% gesteigert.", result: "95% Auslastung", image_url: fitlifeImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
-  { id: "6", title: "GreenTech Solutions", category: "Startup Website", description: "Investoren-fokussiertes Webdesign – erfolgreich Series A Funding gesichert.", result: "Funding gesichert", image_url: greentechImg, external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "1", title: "TechStart GmbH", category: "SaaS Landing Page", description: "Conversion-optimierte Landing Page – Anfragen um 300% gesteigert in nur 8 Wochen.", result: "+300% Anfragen", image_url: techstartImg, screenshot_url: "", external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "2", title: "Yoga Studio Flow", category: "Branding & Webdesign", description: "Ganzheitlicher Markenauftritt – von 3 auf 20+ Anfragen pro Monat.", result: "+700% Neukunden", image_url: yogastudioImg, screenshot_url: "", external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "3", title: "DigitalBoost", category: "E-Commerce", description: "Online-Shop mit optimiertem Checkout – Umsatz um 180% gesteigert.", result: "+180% Umsatz", image_url: digitalboostImg, screenshot_url: "", external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "4", title: "Kanzlei Weber", category: "Corporate Website", description: "Vertrauensvolle Online-Präsenz – 5x mehr Mandantenanfragen über die Website.", result: "5x mehr Mandanten", image_url: kanzleiImg, screenshot_url: "", external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "5", title: "FitLife Coaching", category: "Personal Brand", description: "Persönliche Website mit Buchungssystem – Auslastung von 40% auf 95% gesteigert.", result: "95% Auslastung", image_url: fitlifeImg, screenshot_url: "", external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
+  { id: "6", title: "GreenTech Solutions", category: "Startup Website", description: "Investoren-fokussiertes Webdesign – erfolgreich Series A Funding gesichert.", result: "Funding gesichert", image_url: greentechImg, screenshot_url: "", external_url: "", mockup_desktop_url: "", mockup_mobile_url: "" },
 ];
 
 const Portfolio = () => {
@@ -44,6 +43,7 @@ const Portfolio = () => {
         description: p.description,
         result: p.result,
         image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        screenshot_url: p.screenshot_url || "",
         external_url: p.external_url || "",
         mockup_desktop_url: p.mockup_desktop_url || "",
         mockup_mobile_url: p.mockup_mobile_url || "",
@@ -68,6 +68,7 @@ const Portfolio = () => {
         description: p.description,
         result: p.result,
         image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+        screenshot_url: p.screenshot_url || "",
         external_url: p.external_url || "",
         mockup_desktop_url: p.mockup_desktop_url || "",
         mockup_mobile_url: p.mockup_mobile_url || "",
@@ -91,10 +92,6 @@ const Portfolio = () => {
     return `${base}/storage/v1/object/public/portfolio-images/${image_url}`;
   };
 
-  // Auto-screenshots for projects with URL but no image
-  const [autoShots, setAutoShots] = useState<Record<string, string>>({});
-  const [shotLoading, setShotLoading] = useState<Record<string, boolean>>({});
-
   const [reducedMotion, setReducedMotion] = useState(false);
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
@@ -104,31 +101,6 @@ const Portfolio = () => {
     mq.addEventListener?.("change", handler);
     return () => mq.removeEventListener?.("change", handler);
   }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    projects.forEach((p) => {
-      if (p.image_url) return;
-      const ext = p.external_url;
-      if (!ext) return;
-      if (autoShots[p.id] || shotLoading[p.id]) return;
-      setShotLoading((s) => ({ ...s, [p.id]: true }));
-      supabase.functions
-        .invoke("portfolio-screenshot", { body: { url: normalizeUrl(ext), key: p.id } })
-        .then(({ data }) => {
-          if (cancelled) return;
-          if (data?.url) setAutoShots((m) => ({ ...m, [p.id]: data.url as string }));
-        })
-        .catch(() => {})
-        .finally(() => {
-          if (!cancelled) setShotLoading((s) => ({ ...s, [p.id]: false }));
-        });
-    });
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projects]);
 
   return (
     <>
@@ -160,9 +132,8 @@ const Portfolio = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {projects.map((p, i) => {
-                const rawSrc = p.image_url || autoShots[p.id] || "";
+                const rawSrc = p.image_url || p.screenshot_url || "";
                 const imgSrc = normalizeImageSrc(rawSrc);
-                const isLoadingShot = !p.image_url && !!p.external_url && !autoShots[p.id];
                 const eager = i < 3;
                 const imgAlt = `Webdesign-Referenz – ${p.title}, ${p.category}`;
                 const card = (
@@ -189,8 +160,6 @@ const Portfolio = () => {
                               style={reducedMotion ? undefined : { transition: "object-position 9s linear" }}
                             />
                           </div>
-                        ) : isLoadingShot ? (
-                          <div className="aspect-video w-full bg-muted animate-pulse" />
                         ) : p.mockup_desktop_url ? (
                           <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
                         ) : (

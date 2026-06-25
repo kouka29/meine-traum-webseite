@@ -31,6 +31,8 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => null);
     const url = typeof body?.url === "string" ? body.url.trim() : "";
     const rawKey = typeof body?.key === "string" ? body.key.trim() : "";
+    const projectId =
+      typeof body?.projectId === "string" ? body.projectId.trim() : "";
 
     if (!url || !rawKey) {
       return new Response(JSON.stringify({ error: "url and key required" }), {
@@ -60,12 +62,21 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    const writeScreenshotUrl = async (publicUrl: string) => {
+      if (!projectId) return;
+      await supabase
+        .from("portfolio_projects")
+        .update({ screenshot_url: publicUrl })
+        .eq("id", projectId);
+    };
+
     // Cache check
     const { data: existing } = await supabase.storage
       .from(BUCKET)
       .list("auto/v3", { search: `${key}.jpg`, limit: 1 });
     if (existing && existing.some((f) => f.name === `${key}.jpg`)) {
       const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+      await writeScreenshotUrl(data.publicUrl);
       return new Response(
         JSON.stringify({ url: data.publicUrl, cached: true }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } },
@@ -124,6 +135,7 @@ Deno.serve(async (req) => {
     if (uploadErr) throw uploadErr;
 
     const { data: pub } = supabase.storage.from(BUCKET).getPublicUrl(path);
+    await writeScreenshotUrl(pub.publicUrl);
     return new Response(
       JSON.stringify({ url: pub.publicUrl, cached: false }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
