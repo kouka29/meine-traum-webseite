@@ -1271,8 +1271,13 @@ const AdminLeads = () => {
                     ? new Date(p.screenshot_updated_at).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" })
                     : null;
                   const regenerating = regeneratingId === p.id;
+                  const advOpen = advancedOpenId === p.id;
+                  const adv = advancedSettings[p.id] || { waitMs: "3500", hideSelectors: "", clickSelector: "" };
+                  const updateAdv = (patch: Partial<typeof adv>) =>
+                    setAdvancedSettings((s) => ({ ...s, [p.id]: { ...adv, ...patch } }));
                   return (
-                  <div key={p.id} className={`bg-card rounded-xl border border-border p-4 flex items-start gap-4 transition-all ${!p.is_visible ? "opacity-60" : ""}`}>
+                  <div key={p.id} className={`bg-card rounded-xl border border-border p-4 transition-all ${!p.is_visible ? "opacity-60" : ""}`}>
+                   <div className="flex items-start gap-4">
                     {/* Image preview */}
                     <div className="shrink-0 w-[200px]">
                       <div className="aspect-video rounded-lg overflow-hidden bg-muted border border-border">
@@ -1314,6 +1319,17 @@ const AdminLeads = () => {
                           )}
                         </Button>
                       )}
+                      {p.external_url && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setAdvancedOpenId(advOpen ? null : p.id)}
+                          className="h-8 w-8"
+                          title="Erweiterte Screenshot-Optionen"
+                        >
+                          {advOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                        </Button>
+                      )}
                       <Button variant="ghost" size="icon" onClick={() => moveProject(i, "up")} disabled={i === 0} className="h-8 w-8">
                         <ChevronUp size={14} aria-hidden={true} focusable={false} />
                       </Button>
@@ -1335,6 +1351,64 @@ const AdminLeads = () => {
                         <Trash2 size={14} aria-hidden={true} focusable={false} />
                       </Button>
                     </div>
+                   </div>
+                   {advOpen && p.external_url && (
+                     <div className="mt-4 border-t border-border pt-4 grid gap-3 sm:grid-cols-3">
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Wartezeit (ms)</label>
+                         <input
+                           type="number"
+                           value={adv.waitMs}
+                           onChange={(e) => updateAdv({ waitMs: e.target.value })}
+                           placeholder="3500"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Banner-Selektor ausblenden</label>
+                         <input
+                           type="text"
+                           value={adv.hideSelectors}
+                           onChange={(e) => updateAdv({ hideSelectors: e.target.value })}
+                           placeholder="#mein-cookie-banner, .overlay"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Akzeptieren-Button klicken</label>
+                         <input
+                           type="text"
+                           value={adv.clickSelector}
+                           onChange={(e) => updateAdv({ clickSelector: e.target.value })}
+                           placeholder="#accept-cookies"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div className="sm:col-span-3 flex items-center justify-between gap-3 flex-wrap">
+                         <p className="text-[11px] text-muted-foreground">
+                           Falls Inhalt fehlt: Wartezeit erhöhen. Falls Cookie-Banner im Bild: Banner-Selektor ausblenden oder Akzeptieren-Button-Selektor klicken.
+                         </p>
+                         <Button
+                           size="sm"
+                           onClick={() =>
+                             regenerateScreenshot(p, {
+                               waitMs: Number(adv.waitMs) || 3500,
+                               hideSelectors: adv.hideSelectors.trim(),
+                               clickSelector: adv.clickSelector.trim(),
+                             })
+                           }
+                           disabled={regenerating}
+                         >
+                           {regenerating ? (
+                             <Loader2 size={14} className="animate-spin mr-2" />
+                           ) : (
+                             <RefreshCw size={14} className="mr-2" />
+                           )}
+                           Mit diesen Einstellungen neu generieren
+                         </Button>
+                       </div>
+                     </div>
+                   )}
                   </div>
                   );
                 })}
