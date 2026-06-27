@@ -40,7 +40,7 @@ Deno.serve(async (req) => {
     const waitMs =
       typeof body?.waitMs === "number" && body.waitMs >= 0 && body.waitMs <= 20000
         ? Math.floor(body.waitMs)
-        : 3500;
+        : 1500;
     const extraHide =
       typeof body?.hideSelectors === "string" ? body.hideSelectors.trim() : "";
     const clickSelector =
@@ -120,17 +120,33 @@ Deno.serve(async (req) => {
     ].join(",");
     const hideParam = extraHide ? `${defaultHide},${extraHide}` : defaultHide;
 
-    // Fetch screenshot via Microlink
-    let apiUrl =
-      `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=false` +
-      `&waitUntil=networkidle0&waitForTimeout=${waitMs}` +
-      `&viewport.width=1000&viewport.height=2400&viewport.deviceScaleFactor=1` +
-      `&hide=${encodeURIComponent(hideParam)}` +
-      `&embed=screenshot.url&url=${encodeURIComponent(url)}`;
-    if (clickSelector) {
-      apiUrl += `&click=${encodeURIComponent(clickSelector)}`;
+    // Fetch screenshot via Microlink (with a lighter retry on timeout)
+    const buildApiUrl = (opts: {
+      waitUntil: string;
+      waitForTimeout: number;
+      height: number;
+    }) => {
+      let u =
+        `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=false` +
+        `&waitUntil=${opts.waitUntil}&waitForTimeout=${opts.waitForTimeout}` +
+        `&viewport.width=1000&viewport.height=${opts.height}&viewport.deviceScaleFactor=1` +
+        `&hide=${encodeURIComponent(hideParam)}` +
+        `&embed=screenshot.url&url=${encodeURIComponent(url)}`;
+      if (clickSelector) u += `&click=${encodeURIComponent(clickSelector)}`;
+      return u;
+    };
+
+    let shotRes = await fetch(
+      buildApiUrl({ waitUntil: "networkidle2", waitForTimeout: waitMs, height: 1600 }),
+      { headers: { Accept: "image/jpeg" } },
+    );
+    // Retry once with lighter settings if the upstream timed out
+    if (!shotRes.ok && (shotRes.status === 504 || shotRes.status === 408 || shotRes.status === 502)) {
+      shotRes = await fetch(
+        buildApiUrl({ waitUntil: "load", waitForTimeout: 800, height: 1200 }),
+        { headers: { Accept: "image/jpeg" } },
+      );
     }
-    const shotRes = await fetch(apiUrl, { headers: { Accept: "image/jpeg" } });
     if (!shotRes.ok) {
       return new Response(
         JSON.stringify({ error: `screenshot failed: ${shotRes.status}` }),
