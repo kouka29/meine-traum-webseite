@@ -23,8 +23,23 @@ const Footer = () => (
               ["Website für Sanitärbetriebe", "/sanitaer"],
               ["Website für Dachdecker", "/dachdecker"],
               ["Website für Ärzte", "/webdesign-aerzte"],
+              ["Website für Zahnärzte", "/zahnaerzte"],
+              ["Website für Tierärzte", "/tieraerzte"],
+              ["Website für Physiotherapeuten", "/physiotherapeuten"],
               ["Website für Immobilienmakler", "/webdesign-immobilienmakler"],
               ["Website für Coaches", "/webdesign-coaches"],
+              ["Website für Kanzleien", "/kanzleien"],
+              ["Website für Ingenieure", "/ingenieure"],
+              ["Website für Fitnessstudios", "/fitness"],
+              ["Website für Gastronomie", "/gastronomie"],
+              ["Website für Einzelhandel", "/einzelhandel"],
+              ["Website für Reinigungsfirmen", "/reinigung"],
+              ["Website für Logistik & Spedition", "/logistik"],
+              ["Website für Friseure", "/friseure"],
+              ["Website für Autohäuser", "/autohaeuser"],
+              ["Website für Gartenbau", "/gartenbau"],
+              ["Website für Schreiner", "/schreiner"],
+              ["Website für Floristen", "/floristen"],
             ].map(([label, path]) => (
               <li key={path}>
                 <Link to={path} className="hover:text-background transition-colors">
