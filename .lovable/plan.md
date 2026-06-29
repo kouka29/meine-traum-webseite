@@ -1,42 +1,46 @@
-# Branchen-Sichtbarkeit auf der Startseite & Footer
+## Ziel
+Auf der Startseite (`IndexBranchen.tsx`) wird die „Handwerker"-Card aufklappbar bzw. öffnet ein Popup mit den Handwerks-Unterkategorien (Elektriker, Maler, Sanitär/SHK, Dachdecker). Die freigewordenen Plätze im Grid werden mit neuen Branchen gefüllt, die nachweislich hohe Nachfrage nach Webdesign haben.
 
-## 1. Footer „Leistungen" umbauen (`src/components/Footer.tsx`)
+## 1. Handwerker-Card mit Sub-Branchen
 
-Aktuell listet die Spalte nur Gewerke des Handwerks. Statt dessen die echten Branchen-Landingpages verlinken (eine pro Branche):
+- Die Handwerker-Card bleibt erste Position im Grid, ist aber **kein** `<Link>` mehr, sondern ein `<button>`, der ein Radix-Popover öffnet (bereits im Projekt: `@/components/ui/popover`). Popover statt Dialog, weil leichter, direkt an der Card verankert und mobil als unterer Sheet-ähnlicher Layer ebenfalls gut nutzbar.
+- Inhalt des Popovers: Headline „Handwerks-Gewerke", 5 Links mit Icon:
+  - Handwerker (Übersicht) → `/handwerker`
+  - Elektriker → `/elektriker` (Zap)
+  - Maler & Lackierer → `/maler` (PaintRoller)
+  - Sanitär & Heizung (SHK) → `/sanitaer` (Wrench)
+  - Dachdecker → `/dachdecker` (Home)
+- Optisches Signal an der Card: kleines „5 Gewerke" Badge + Chevron-Down-Icon statt Pfeil, damit erkennbar ist, dass sie auffächert.
+- Tastatur/Accessibility: `aria-haspopup`, `aria-expanded`, ESC schließt (Radix-Standard).
+- Keine Routen- oder Backend-Änderung. Keine neuen Dependencies.
 
-- Handwerker – `/handwerker`
-- Elektriker – `/elektriker`
-- Sanitär & Heizung – `/sanitaer` (bzw. `/webdesign-shk`)
-- Dachdecker – `/dachdecker`
-- Maler & Lackierer – `/maler`
-- Ärzte – `/webdesign-aerzte`
-- Immobilienmakler – `/webdesign-immobilienmakler`
-- Coaches – `/webdesign-coaches`
+## 2. Neue Branchen im Grid
 
-Spaltenüberschrift „Leistungen" → „Branchen". Der Link „Webdesign Preise" wandert in die Spalte „Navigation".
+Die vier Handwerks-Unterkategorien werden aus dem Top-Level-Grid entfernt (leben jetzt nur noch im Popover). An ihre Stelle treten Branchen mit hoher Webdesign-Nachfrage im DACH-Raum, die zum bestehenden Lokal-/KMU-Fokus passen:
 
-## 2. Neue Sektion „Branchen" auf der Startseite
+| Branche | Route* | Icon | Begründung |
+|---|---|---|---|
+| Handwerker (mit Popover) | `/handwerker` | Hammer | bleibt |
+| Ärzte & Praxen | `/webdesign-aerzte` | Stethoscope | bestehende LP |
+| Immobilienmakler | `/webdesign-immobilienmakler` | Building2 | bestehende LP |
+| Coaches & Trainer | `/webdesign-coaches` | GraduationCap | bestehende LP |
+| Gastronomie & Restaurants | `/branchen/gastronomie` | UtensilsCrossed | sehr hohes Suchvolumen „Webdesign Restaurant", Reservierungen + Speisekarte |
+| Anwälte & Steuerberater | `/branchen/kanzleien` | Scale | hochpreisige Branche, starke Nachfrage nach seriösen Websites |
+| Fitness- & Yogastudios | `/branchen/fitness` | Dumbbell | lokale Studios, Kursbuchungen, hohe Konkurrenz |
+| Hotels & Pensionen | `/branchen/hotellerie` | BedDouble | Direktbuchungen statt Booking-Provision, klassischer Webdesign-Bedarf |
 
-Neue Komponente `src/components/IndexBranchen.tsx` und Einbindung in `src/pages/Index.tsx` zwischen `IndexBenefits` und `IndexTestimonials`.
+\* Für die vier neuen Branchen existieren noch keine Landingpages. **Diese Card-Links verweisen vorerst auf den Kontakt-/Vorschau-Flow** (`/kontakt?branche=gastronomie` usw.), damit nichts in 404 läuft. Eigene LPs können später ergänzt werden – außerhalb dieses Plans.
 
-Inhalt: Grid aus Cards (2 / 3 / 4 Spalten responsive), jede Card = klickbarer `<Link>` mit Icon (lucide-react), Branchen-Name, ein Satz Nutzen, dezenter „Mehr erfahren →"-Affordance. Verwendet ausschließlich semantische Design-Tokens (`bg-card`, `text-foreground`, `border-border`, `hover:shadow-elegant`, `text-primary`).
+Ergibt **8 Cards** wie bisher, Grid-Layout (2/3/4 Spalten) bleibt.
 
-Cards (8 Stück, alle bestehenden Landingpages):
+## 3. Footer
 
-| Branche | Route | Icon |
-|---|---|---|
-| Handwerker | `/handwerker` | Hammer |
-| Elektriker | `/elektriker` | Zap |
-| Maler & Lackierer | `/maler` | PaintRoller |
-| Sanitär & Heizung (SHK) | `/sanitaer` | Wrench |
-| Dachdecker | `/dachdecker` | Home |
-| Ärzte & Praxen | `/webdesign-aerzte` | Stethoscope |
-| Immobilienmakler | `/webdesign-immobilienmakler` | Building2 |
-| Coaches & Trainer | `/webdesign-coaches` | GraduationCap |
+Footer-Spalte „Branchen" bleibt wie sie ist (listet weiterhin die einzelnen Gewerke + bestehenden LPs). Keine Änderung – Footer ist die „flache" Übersicht, die Startseite ist kuratiert.
 
-Section-Header: „Webdesign für Ihre Branche" + Sub-Headline „Spezialisierte Landingpages mit branchenspezifischen Argumenten, Referenzen und Funktionen."
+## Technisches
 
-## Technische Hinweise
-- Lazy-Load der neuen Komponente analog zu den anderen `Index*`-Sektionen (`React.lazy` + bestehender Suspense-Wrapper in `Index.tsx`).
-- Keine neuen Dependencies; alle Icons via `lucide-react` (bereits installiert).
-- Keine Routen-Änderungen, keine Backend-Änderungen.
+- Nur `src/components/IndexBranchen.tsx` wird geändert.
+- Verwendet Radix Popover (`@/components/ui/popover`) – bereits vorhanden.
+- Neue Icons aus `lucide-react`: `ChevronDown`, `UtensilsCrossed`, `Scale`, `Dumbbell`, `BedDouble`. Alle Teil von lucide-react, keine Installation nötig.
+- Strikt semantische Tokens (`bg-card`, `bg-primary/10`, `text-primary`, `border-border`, `hover:shadow-elegant`) – keine Hardcoded-Farben.
+- Lazy-Loading-Setup in `Index.tsx` bleibt unverändert.
