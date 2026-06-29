@@ -13,12 +13,19 @@ import {
   UtensilsCrossed,
   Scale,
   Dumbbell,
-  BedDouble,
   HeartPulse,
   ShoppingBag,
   Truck,
   Cpu,
   Sparkles,
+  Scissors,
+  Smile,
+  Car,
+  Activity,
+  Leaf,
+  Heart,
+  Sofa,
+  Flower2,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -68,16 +75,10 @@ const metaBranchen = [
     ],
   },
   {
-    name: "Gastronomie",
+    name: "Gastronomie & Hotellerie",
     icon: UtensilsCrossed,
-    text: "Speisekarten, Reservierungen und Lieferdienst-Anbindung – appetitlich präsentiert.",
-    path: "/kontakt?branche=gastronomie",
-  },
-  {
-    name: "Hotels & Pensionen",
-    icon: BedDouble,
-    text: "Direktbuchungen statt Portal-Provision – mit emotionalen Bildwelten.",
-    path: "/kontakt?branche=hotellerie",
+    text: "Speisekarten, Reservierungen, Lieferdienste und direkte Zimmerbuchungen – alles an einem Ort.",
+    path: "/kontakt?branche=gastronomie-hotellerie",
   },
   {
     name: "Einzelhandel & Shops",
@@ -93,6 +94,22 @@ const metaBranchen = [
     items: [
       { name: "Reinigungsdienstleister", path: "/kontakt?branche=reinigung", icon: Sparkles },
       { name: "Logistiker & Speditionen", path: "/kontakt?branche=logistik", icon: Truck },
+    ],
+  },
+  {
+    name: "Maßgeschneiderte Lösungen",
+    icon: Sparkles,
+    text: "Wir finden das passende Konzept für Ihre Branche – ganz individuell und professionell.",
+    cta: "Branchen entdecken",
+    items: [
+      { name: "Friseure & Kosmetik", path: "/kontakt?branche=friseure", icon: Scissors },
+      { name: "Zahnärzte & Kieferorthopäden", path: "/kontakt?branche=zahnaerzte", icon: Smile },
+      { name: "Autohäuser & Kfz-Werkstätten", path: "/kontakt?branche=autohauser", icon: Car },
+      { name: "Physiotherapeuten & Ergotherapeuten", path: "/kontakt?branche=physiotherapeuten", icon: Activity },
+      { name: "Garten- & Landschaftsbau", path: "/kontakt?branche=gartenbau", icon: Leaf },
+      { name: "Schreiner & Tischler", path: "/kontakt?branche=schreiner", icon: Sofa },
+      { name: "Tierärzte", path: "/kontakt?branche=tieraerzte", icon: Heart },
+      { name: "Floristen", path: "/kontakt?branche=floristen", icon: Flower2 },
     ],
   },
 ];
