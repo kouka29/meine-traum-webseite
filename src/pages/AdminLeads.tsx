@@ -1282,7 +1282,15 @@ const AdminLeads = () => {
                     : null;
                   const regenerating = regeneratingId === p.id;
                   const advOpen = advancedOpenId === p.id;
-                  const adv = advancedSettings[p.id] || { waitMs: "3500", hideSelectors: "", clickSelector: "" };
+                  const adv = advancedSettings[p.id] || {
+                    waitMs: "4500",
+                    hideSelectors: "",
+                    clickSelector: "",
+                    viewportHeight: "900",
+                    fullPage: false,
+                    scrollBefore: false,
+                    retina: true,
+                  };
                   const updateAdv = (patch: Partial<typeof adv>) =>
                     setAdvancedSettings((s) => ({ ...s, [p.id]: { ...adv, ...patch } }));
                   return (
