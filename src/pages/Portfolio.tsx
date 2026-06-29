@@ -93,6 +93,7 @@ const Portfolio = () => {
   };
 
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [flatImages, setFlatImages] = useState<Record<string, boolean>>({});
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -156,8 +157,16 @@ const Portfolio = () => {
                               loading={eager ? "eager" : "lazy"}
                               {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
                               decoding="async"
-                              className={`aspect-video w-full object-cover object-top ${reducedMotion ? "" : "group-hover:[object-position:50%_100%]"}`}
-                              style={reducedMotion ? undefined : { transition: "object-position 9s linear" }}
+                              onLoad={(e) => {
+                                const img = e.currentTarget;
+                                const ratio = img.naturalHeight / Math.max(img.naturalWidth, 1);
+                                // Container is 16:9 (~0.5625). Only animate when image is meaningfully taller.
+                                if (ratio < 0.7) {
+                                  setFlatImages((m) => (m[p.id] ? m : { ...m, [p.id]: true }));
+                                }
+                              }}
+                              className={`aspect-video w-full object-cover object-top ${reducedMotion || flatImages[p.id] ? "" : "group-hover:[object-position:50%_100%]"}`}
+                              style={reducedMotion || flatImages[p.id] ? undefined : { transition: "object-position 9s linear" }}
                             />
                           </div>
                         ) : p.mockup_desktop_url ? (
