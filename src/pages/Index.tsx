@@ -15,6 +15,7 @@ const PainPoints = lazy(() => import("@/components/PainPoints"));
 const IndexServices = lazy(() => import("@/components/IndexServices"));
 const FreePreviewCTA = lazy(() => import("@/components/FreePreviewCTA"));
 const IndexBenefits = lazy(() => import("@/components/IndexBenefits"));
+const IndexBranchen = lazy(() => import("@/components/IndexBranchen"));
 const IndexTestimonials = lazy(() => import("@/components/IndexTestimonials"));
 const IndexPortfolio = lazy(() => import("@/components/IndexPortfolio"));
 const IndexFAQ = lazy(() => import("@/components/IndexFAQ"));
@@ -92,6 +93,7 @@ const Index = () => (
       <IndexServices />
       <FreePreviewCTA />
       <IndexBenefits />
+      <IndexBranchen />
       <IndexTestimonials />
       <IndexPortfolio />
       <IndexFAQ />
