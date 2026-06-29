@@ -138,7 +138,7 @@ const IndexPortfolio = () => {
         <Carousel
           opts={{ align: "start", loop: true }}
           plugins={[autoplay.current]}
-          className="max-w-6xl mx-auto relative px-0 sm:px-12"
+          className="relative w-full px-0 sm:px-12"
         >
           <CarouselContent className="-ml-6">
             {items.map((p, i) => {
@@ -249,8 +249,8 @@ const IndexPortfolio = () => {
               );
             })}
           </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex" />
-          <CarouselNext className="hidden sm:flex" />
+          <CarouselPrevious className="hidden sm:flex -left-20" />
+          <CarouselNext className="hidden sm:flex -right-20" />
         </Carousel>
         <div className="text-center mt-12">
           <Button variant="outline-primary" asChild>
