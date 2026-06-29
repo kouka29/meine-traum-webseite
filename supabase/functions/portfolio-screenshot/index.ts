@@ -66,7 +66,7 @@ Deno.serve(async (req) => {
       body.viewportHeight <= 4000
         ? Math.floor(body.viewportHeight)
         : 900;
-    const fullPage = body?.fullPage === true;
+    const fullPage = body?.fullPage === false ? false : true; // default true
     const scrollBefore = body?.scrollBefore === true;
     const retina = body?.retina !== false; // default true
     const extraHide =
@@ -98,7 +98,7 @@ Deno.serve(async (req) => {
     }
 
     const key = sanitizeKey(rawKey);
-    const path = `auto/v4/${key}.jpg`;
+    const path = `auto/v5/${key}.jpg`;
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
@@ -119,7 +119,7 @@ Deno.serve(async (req) => {
     if (!force) {
       const { data: existing } = await supabase.storage
         .from(BUCKET)
-        .list("auto/v4", { search: `${key}.jpg`, limit: 1 });
+        .list("auto/v5", { search: `${key}.jpg`, limit: 1 });
       if (existing && existing.some((f) => f.name === `${key}.jpg`)) {
         const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
         const ts = await writeScreenshotUrl(data.publicUrl, false);
@@ -190,7 +190,7 @@ Deno.serve(async (req) => {
           waitForTimeout: Math.min(waitMs + 4000, 15000),
           height: viewportHeight,
           scale: 1,
-          full: fullPage,
+          full: true,
           scroll: scrollBefore,
         }),
         { headers: { Accept: "image/jpeg" } },
