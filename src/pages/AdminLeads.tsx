@@ -1559,6 +1559,7 @@ const AdminLeads = () => {
                           category: projectForm.category,
                           result: projectForm.result,
                           current: projectForm.description,
+                          url: projectForm.external_url,
                         },
                       });
                       if (error) throw error;
