@@ -201,7 +201,15 @@ const AdminLeads = () => {
   const [generatingDesc, setGeneratingDesc] = useState(false);
   const [advancedOpenId, setAdvancedOpenId] = useState<string | null>(null);
   const [advancedSettings, setAdvancedSettings] = useState<
-    Record<string, { waitMs: string; hideSelectors: string; clickSelector: string }>
+    Record<string, {
+      waitMs: string;
+      hideSelectors: string;
+      clickSelector: string;
+      viewportHeight: string;
+      fullPage: boolean;
+      scrollBefore: boolean;
+      retina: boolean;
+    }>
   >({});
 
   // Testimonials state
