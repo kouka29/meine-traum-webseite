@@ -1,31 +1,42 @@
 ## Ziel
-Auf der Portfolio-Seite (`/portfolio`) sollen Projektbeschreibungen in der mobilen Ansicht (unterhalb des Breakpoints `md`) nur in den ersten zwei Zeilen angezeigt werden. Ein "Weiterlesen"-Link expandiert den Text auf die volle Beschreibung; ein "Weniger anzeigen"-Link klappt ihn wieder ein.
+Auf der Startseite (`src/components/IndexPortfolio.tsx`) sollen exakt dieselben Projekte und das gleiche Karten-Design wie auf `/portfolio` erscheinen — nur in einem horizontal scrollenden Embla-Karussell mit Autoplay (statt Grid).
 
-## Umsetzung
+## Änderungen
 
-### 1. State pro Karte
-- Ein Record-State `expandedDescriptions: Record<string, boolean>` in `src/pages/Portfolio.tsx`.
-- Initialwert: alle IDs auf `false`.
+**Nur `src/components/IndexPortfolio.tsx` anpassen** (Portfolio-Seite bleibt unverändert):
 
-### 2. Beschreibung kürzen (nur Mobile)
-- Die Beschreibungs-`<p>` erhält zusätzlich die Tailwind-Klasse `md:line-clamp-none line-clamp-2`.
-- Damit ist der Text auf mobilen Viewports auf 2 Zeilen begrenzt; auf Desktop (`md` und größer) bleibt er voll sichtbar.
+1. **Datenmodell angleichen**
+   - `PortfolioItem` um `description` und `screenshot_url` erweitern.
+   - In `getCachedPortfolio()`-/`fetchPortfolio()`-Mapping `description` und `screenshot_url` übernehmen — identisch zu `Portfolio.tsx`.
+   - Fallback-Items von 3 auf dieselben 6 (TechStart, Yoga Studio Flow, DigitalBoost, Kanzlei Weber, FitLife Coaching, GreenTech Solutions) erweitern, identisch zu `fallbackProjects` in `Portfolio.tsx` inkl. Fallback-Bild-Imports (`kanzlei.jpg`, `fitlife.jpg`, `greentech.jpg`).
+   - `FALLBACK_IMAGES` entsprechend ergänzen.
 
-### 3. Toggle-Button
-- Unterhalb der Beschreibung wird ein Button/Link gerendert (nur auf mobilen Viewports, d. h. `md:hidden`), der den Expand-Status umschaltet.
-- Text: **„Weiterlesen"** (wenn gekürzt) bzw. **„Weniger anzeigen"** (wenn expandiert).
-- Der Button verwendet `text-xs font-semibold text-primary` und ist per `onClick` an den lokalen State gebunden.
-- Beim Expandieren wird `line-clamp-2` entfernt (durch Klassen-Conditional), beim Kollabieren wieder hinzugefügt.
+2. **Karten-Markup 1:1 von Portfolio übernehmen**
+   - Bisheriges `Inner`-Markup ersetzen durch das `card`-Markup aus `Portfolio.tsx`:
+     - Browser-Mockup-Rahmen (Ampel-Punkte, abgerundete Karte, Border, Shadow)
+     - 16:9 Bild mit Hover-Scroll (`object-position` Transition, `flatImages`-Logik, `reducedMotion`)
+     - Hover-Overlay „Live ansehen"
+     - Kategorie-Badge, Titel, Beschreibung mit `line-clamp-2` + „Weiterlesen" auf Mobile, „Ansehen →" rechts unten
+   - `normalizeImageSrc` aus `Portfolio.tsx` mit übernehmen (Bevorzugung `image_url` → `screenshot_url`).
+   - State `reducedMotion`, `flatImages`, `expandedDescs` ergänzen.
 
-### 4. Keine Änderung an Desktop
-- Der Button ist nur auf kleinen Viewports sichtbar (`md:hidden`).
-- Auf Desktop bleibt die Beschreibung weiterhin ungekürzt.
+3. **Karussell-Wrapper beibehalten**
+   - Embla `Carousel` mit `Autoplay` (4 s, `stopOnMouseEnter`) bleibt.
+   - `CarouselItem`: `basis-full sm:basis-1/2 lg:basis-1/3` bleibt — Karte rendert als Kind.
+   - Link-Wrapper (`<a target="_blank">`) bleibt um die Karte herum, wenn `external_url` gesetzt.
+   - Stopp-on-Interaction beim Toggle von „Weiterlesen": Klick-Event innerhalb der Karte über `e.stopPropagation()` und `e.preventDefault()` (wie auf Portfolio-Seite) verhindert ungewollte Link-Navigation.
 
-### 5. Keine Änderung an Daten oder Business-Logik
-- Die Beschreibungstexte kommen weiterhin aus `projects` bzw. dem Fallback.
-- Keine Datenbank- oder Edge-Function-Änderungen nötig.
+4. **Sichtbares Verhalten**
+   - Pfeile (`CarouselPrevious/Next`) bleiben.
+   - „Alle Projekte ansehen"-Button unten bleibt.
+   - Section-Überschrift bleibt.
+
+## Nicht-Ziele
+- Portfolio-Seite (`src/pages/Portfolio.tsx`) wird nicht geändert.
+- Keine Änderungen an Datenbank/Edge Functions/Cache-Layer.
+- Keine neuen Routen, kein neues Design-Token.
 
 ## Technische Details
-- **Datei:** `src/pages/Portfolio.tsx`
-- **Tailwind:** Nutzt `line-clamp-2` (Tailwind Core seit v3.3) und `md:line-clamp-none`.
-- **Zugänglichkeit:** Der Toggle-Button erhält kein `href`, sondern ein `<button>`-Element mit `type="button"`, um Semantik zu wahren.
+- Datei: nur `src/components/IndexPortfolio.tsx`.
+- Imports zusätzlich nötig: `kanzleiImg`, `fitlifeImg`, `greentechImg` aus `@/assets/portfolio/...`, `ExternalLink`, `ArrowRight` aus `lucide-react`.
+- Imports entfernen, die nicht mehr genutzt werden: `Picture`, `PictureSource`, `supabaseImage`, `supabaseImageSrcSet`, `?as=picture`-Varianten (nicht mehr nötig, da Portfolio-Karte plain `<img>` nutzt).
