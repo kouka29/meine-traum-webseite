@@ -1,23 +1,48 @@
-Die aktuelle Branchen-Sektion auf der Startseite (8 Einzelkarten: Handwerker + 7 Branchen) wird in 8 Meta-Kategorien umgebaut. Karten mit mehreren Unterbranchen erhalten einen Radix-Popover (wie aktuell bei Handwerker). Einzel-Branchen mit eigener Landingpage verlinken direkt.
+## Recherche: Noch nicht erwähnte Branchen mit hoher Webdesign-Nachfrage
 
-Geplante 8-Karten-Struktur:
+Auf der Website bereits abgedeckt: Handwerker (Elektriker, Maler, SHK, Dachdecker), Gesundheit & Wellness (Ärzte, Fitness), Beratung & Kanzleien (Coaches, Anwälte/Steuerberater), Immobilien & Bau (Makler, Ingenieure), Gastronomie, Hotels, Einzelhandel, Dienstleistungen (Reinigung, Logistik).
 
-1. **Handwerker** — Popover mit 5 Gewerken (bestehend: Elektriker, Maler, SHK, Dachdecker, Alle Handwerker)
-2. **Gesundheit & Wellness** — Popover: Ärzte & Praxen (/webdesign-aerzte), Fitness- & Yogastudios (/kontakt?branche=fitness)
-3. **Beratung & Kanzleien** — Popover: Coaches & Trainer (/webdesign-coaches), Anwälte & Steuerberater (/kontakt?branche=kanzleien)
-4. **Immobilien & Bau** — Popover: Immobilienmakler (/webdesign-immobilienmakler), Ingenieure & Planer (/kontakt?branche=ingenieure)
-5. **Gastronomie** — Direktlink (/kontakt?branche=gastronomie), Text: Restaurants, Cafés, Lieferdienste
-6. **Hotels & Pensionen** — Direktlink (/kontakt?branche=hotellerie)
-7. **Einzelhandel & Shops** — Direktlink (/kontakt?branche=einzelhandel), Text: Lokale Geschäfte, Boutiquen, E-Commerce
-8. **Dienstleistungen** — Popover: Reinigungsdienstleister (/kontakt?branche=reinigung), Logistiker & Speditionen (/kontakt?branche=logistik)
+Branchen mit **hoher Nachfrage** nach Websites, die noch nicht vorkommen:
 
-Änderungen in `src/components/IndexBranchen.tsx`:
-- Neues Daten-Array `metaBranchen` mit 8 Einträgen. Jedes Item enthält `name`, `icon`, `text`, plus optional `items: [{name, path, icon}]` für Popover-Gruppen.
-- Render-Logik: Wenn `items` vorhanden → Popover-Trigger wie bisher. Sonst → `<Link>`-Card mit Direktverlinkung.
-- Icons über lucide-react (z. B. HeartPulse für Gesundheit, Scale für Kanzleien, Truck für Dienstleistungen, ShoppingBag für Einzelhandel, Cpu für Ingenieure).
-- Grid bleibt `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5`.
-- Mobile UX: Popover-Content bleibt klickbar, Touch-Targets ≥ 44 px.
+1. **Friseure & Kosmetik** – Sehr lokale Kundschaft, hoher Bedarf an Terminbuchung und Galerien.
+2. **Zahnärzte & Kieferorthopäden** – Ähnlich wie Ärzte, aber separate Zielgruppe mit eigenen Bedürfnissen.
+3. **Autohäuser & Kfz-Werkstätten** – Große Umsätze, Fahrzeugpräsentation und Werkstatt-Termine online.
+4. **Physiotherapeuten & Ergotherapeuten** – Wachsende Branche, Terminbuchung und Patienteninfo zentral.
+5. **Garten- & Landschaftsbau** – Saisonal, Portfolio und Kontaktanfragen online essenziell.
+6. **Schreiner & Tischler** – Handwerk mit hochwertiger Präsentation, Maßanfertigungen zeigen.
+7. **Tierärzte** – Tierhalter suchen gezielt online Praxen, Terminbuchung wichtig.
+8. **Floristen** – Lokale Sichtbarkeit, Blumenabos und Online-Shop für besondere Anlässe.
 
-Keine neuen Landingpages werden angelegt — neue Branchen verlinken auf `/kontakt?branche=…` als Platzhalter.
+Weitere Kandidaten mit moderatem bis hohem Potenzial: Bäcker & Konditoreien, Psychotherapeuten, Pflegedienste, Sicherheitsdienste, Architekten, Event-Agenturen, Fotografen, Reisebüros, Versicherungsmakler.
 
-Keine Änderungen an anderen Seiten außerhalb der Branchen-Sektion.
+---
+
+## Umsetzungsplan
+
+### Ziel
+Die 8. Karte im Branchen-Grid soll zu einer **Popover-Karte** „Maßgeschneiderte Lösungen für weitere Branchen" umgebaut werden. Gastronomie und Hotels werden zu einer Karte „Gastronomie & Hotellerie" zusammengefasst, sodass 7 Hauptkarten + 1 Weitere-Branchen-Karte entstehen.
+
+### Änderungen in `src/components/IndexBranchen.tsx`
+
+1. **Gastronomie & Hotels zusammenfassen**
+   - Neue kombinierte Karte: Name „Gastronomie & Hotellerie", Icon `UtensilsCrossed` oder gemischtes Icon, Text vereint beide Branchen.
+   - Link-Ziel: `/kontakt?branche=gastronomie-hotellerie`.
+
+2. **8. Karte als Popover-Karte erstellen**
+   - Name: „Maßgeschneiderte Lösungen" (oder kurz „Weitere Branchen" je nach Platz).
+   - Icon: `Sparkles` oder `Briefcase`.
+   - Text: „Maßgeschneiderte Lösungen für weitere Branchen – wir finden das passende Konzept für Sie."
+   - Popover-Inhalt: Liste der 5–7 zusätzlichen Branchen als verlinkte Einträge mit passenden Icons (z. B. `Scissors` für Friseure, `Car` für Autohäuser, `Flower2` für Floristen, `TreePine` für Gartenbau, `PawPrint` für Tierärzte, `Armchair` für Schreiner, `Activity` für Physiotherapeuten, `Smile` für Zahnärzte).
+   - Jeder Eintrag linkt auf `/kontakt?branche=<slug>`.
+
+3. **Visuelle Konsistenz**
+   - Die Popover-Karte nutzt denselben `PopoverCard`-Komponenten-Stil wie Handwerker, Gesundheit & Wellness etc.
+   - Badge zeigt Anzahl der Unterbranchen an (z. B. „7 Branchen").
+
+### Abgelehnte Alternative
+- Keine separate Landingpage für jede Unterbranche der 8. Karte (zu aufwändig, stattdessen vereinheitlichte Kontakt-Links mit Branchen-Parametern).
+
+### Ergebnis
+- 7 Hauptkarten im 4-Spalten-Raster.
+- 1 achte Popover-Karte mit 5–7 zusätzlichen Branchen.
+- Sauberes, nicht überladenes Grid.
