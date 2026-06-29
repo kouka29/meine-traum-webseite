@@ -94,6 +94,7 @@ const Portfolio = () => {
 
   const [reducedMotion, setReducedMotion] = useState(false);
   const [flatImages, setFlatImages] = useState<Record<string, boolean>>({});
+  const [expandedDescs, setExpandedDescs] = useState<Record<string, boolean>>({});
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
