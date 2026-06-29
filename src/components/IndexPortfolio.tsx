@@ -205,7 +205,7 @@ const IndexPortfolio = () => {
                         </span>
                       )}
                       <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">{p.title}</h3>
-                      <p className={`text-sm text-muted-foreground mb-2 flex-1 ${expandedDescs[p.id] ? "" : "line-clamp-2"} md:line-clamp-none`}>
+                      <p className={`text-sm text-muted-foreground mb-2 flex-1 ${expandedDescs[p.id] ? "" : "line-clamp-3"}`}>
                         {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
                       </p>
                       <span
@@ -223,7 +223,7 @@ const IndexPortfolio = () => {
                             setExpandedDescs(prev => ({ ...prev, [p.id]: !prev[p.id] }));
                           }
                         }}
-                        className="md:hidden text-xs font-semibold text-primary mb-2 cursor-pointer select-none"
+                        className="text-xs font-semibold text-primary mb-2 cursor-pointer select-none"
                       >
                         {expandedDescs[p.id] ? "Weniger anzeigen" : "Weiterlesen"}
                       </span>
