@@ -198,6 +198,7 @@ const AdminLeads = () => {
   const [savingProject, setSavingProject] = useState(false);
   const [generatingMockup, setGeneratingMockup] = useState(false);
   const [regeneratingId, setRegeneratingId] = useState<string | null>(null);
+  const [generatingDesc, setGeneratingDesc] = useState(false);
   const [advancedOpenId, setAdvancedOpenId] = useState<string | null>(null);
   const [advancedSettings, setAdvancedSettings] = useState<
     Record<string, { waitMs: string; hideSelectors: string; clickSelector: string }>
@@ -375,6 +376,7 @@ const AdminLeads = () => {
     setProjectForm({ title: "", category: "", description: "", result: "", external_url: "", is_visible: true });
     setImageFile(null);
     setClearImage(false);
+    setGeneratingDesc(false);
     setShowProjectDialog(true);
   };
 
@@ -1535,7 +1537,49 @@ const AdminLeads = () => {
               <Input id="proj-result" value={projectForm.result} onChange={e => setProjectForm(f => ({ ...f, result: e.target.value }))} placeholder="z.B. +300% Anfragen" />
             </div>
             <div>
-              <Label htmlFor="proj-desc">Beschreibung</Label>
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <Label htmlFor="proj-desc">Beschreibung</Label>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  className="h-7 px-2 text-xs gap-1"
+                  disabled={generatingDesc || !projectForm.title.trim()}
+                  onClick={async () => {
+                    if (!projectForm.title.trim()) {
+                      toast.error("Bitte zuerst einen Titel eintragen");
+                      return;
+                    }
+                    setGeneratingDesc(true);
+                    try {
+                      const { data, error } = await supabase.functions.invoke("generate-portfolio-description", {
+                        body: {
+                          password,
+                          title: projectForm.title,
+                          category: projectForm.category,
+                          result: projectForm.result,
+                          current: projectForm.description,
+                        },
+                      });
+                      if (error) throw error;
+                      const desc = (data as { description?: string; error?: string } | null)?.description;
+                      const err = (data as { error?: string } | null)?.error;
+                      if (err) { toast.error(err); return; }
+                      if (!desc) { toast.error("Keine Beschreibung erhalten"); return; }
+                      setProjectForm(f => ({ ...f, description: desc }));
+                      toast.success("Beschreibung generiert");
+                    } catch (e) {
+                      toast.error(e instanceof Error ? e.message : "Fehler bei der Generierung");
+                    } finally {
+                      setGeneratingDesc(false);
+                    }
+                  }}
+                >
+                  {generatingDesc
+                    ? <><Loader2 size={12} className="animate-spin" aria-hidden /> Generiere…</>
+                    : <><Sparkles size={12} aria-hidden /> KI generieren</>}
+                </Button>
+              </div>
               <Textarea id="proj-desc" value={projectForm.description} onChange={e => setProjectForm(f => ({ ...f, description: e.target.value }))} placeholder="Kurze Projektbeschreibung..." rows={3} />
             </div>
             <div>
