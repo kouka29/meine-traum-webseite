@@ -14,7 +14,7 @@ const Footer = () => (
           </p>
         </div>
         <div>
-          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Leistungen</h4>
+          <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Branchen</h4>
           <ul className="space-y-3 text-sm">
             {[
               ["Website für Handwerker", "/handwerker"],
@@ -22,7 +22,9 @@ const Footer = () => (
               ["Website für Maler", "/maler"],
               ["Website für Sanitärbetriebe", "/sanitaer"],
               ["Website für Dachdecker", "/dachdecker"],
-              ["Webdesign Preise", "/webdesign-preise"],
+              ["Website für Ärzte", "/webdesign-aerzte"],
+              ["Website für Immobilienmakler", "/webdesign-immobilienmakler"],
+              ["Website für Coaches", "/webdesign-coaches"],
             ].map(([label, path]) => (
               <li key={path}>
                 <Link to={path} className="hover:text-background transition-colors">
@@ -38,6 +40,7 @@ const Footer = () => (
             {[
               ["Startseite", "/"],
               ["Alle Leistungen", "/leistungen"],
+              ["Webdesign Preise", "/webdesign-preise"],
               ["Über uns", "/ueber-uns"],
               ["Referenzen", "/portfolio"],
               ["Kontakt", "/kontakt"],
