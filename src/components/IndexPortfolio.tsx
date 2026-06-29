@@ -221,8 +221,11 @@ const IndexPortfolio = () => {
                             e.preventDefault();
                             setExpandedDescs(prev => ({ ...prev, [p.id]: !prev[p.id] }));
                           }
-{expandedDescs[p.id] ? "Weniger anzeigen" : "Weiterlesen"}
-                    </span>
+                        }}
+                        className="md:hidden text-xs font-semibold text-primary mb-2 cursor-pointer select-none"
+                      >
+                        {expandedDescs[p.id] ? "Weniger anzeigen" : "Weiterlesen"}
+                      </span>
                     {p.external_url && (
                       <div className="flex items-center justify-end">
                         <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
