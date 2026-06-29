@@ -87,6 +87,23 @@ const EinEuroAngebot = lazy(() => import("./pages/EinEuroAngebot.tsx"));
 const Barrierefreiheit = lazy(() => import("./pages/Barrierefreiheit.tsx"));
 const Premium = lazy(() => import("./pages/Premium.tsx"));
 
+// Branchen-Landingpages
+const FitnessHub = lazy(() => import("./pages/branchen/FitnessHub.tsx"));
+const KanzleienHub = lazy(() => import("./pages/branchen/KanzleienHub.tsx"));
+const IngenieureHub = lazy(() => import("./pages/branchen/IngenieureHub.tsx"));
+const GastronomieHub = lazy(() => import("./pages/branchen/GastronomieHub.tsx"));
+const EinzelhandelHub = lazy(() => import("./pages/branchen/EinzelhandelHub.tsx"));
+const ReinigungHub = lazy(() => import("./pages/branchen/ReinigungHub.tsx"));
+const LogistikHub = lazy(() => import("./pages/branchen/LogistikHub.tsx"));
+const FriseureHub = lazy(() => import("./pages/branchen/FriseureHub.tsx"));
+const ZahnaerzteHub = lazy(() => import("./pages/branchen/ZahnaerzteHub.tsx"));
+const AutohaeuserHub = lazy(() => import("./pages/branchen/AutohaeuserHub.tsx"));
+const PhysioHub = lazy(() => import("./pages/branchen/PhysioHub.tsx"));
+const GartenbauHub = lazy(() => import("./pages/branchen/GartenbauHub.tsx"));
+const SchreinerHub = lazy(() => import("./pages/branchen/SchreinerHub.tsx"));
+const TieraerzteHub = lazy(() => import("./pages/branchen/TieraerzteHub.tsx"));
+const FloristenHub = lazy(() => import("./pages/branchen/FloristenHub.tsx"));
+
 const queryClient = new QueryClient();
 
 const PageLoader = () => (
@@ -211,6 +228,24 @@ const App = () => (
               <Route path="/dachdecker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
               <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
               <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
+
+              {/* Branchen-Landingpages */}
+              <Route path="/fitness" element={<FitnessHub />} />
+              <Route path="/kanzleien" element={<KanzleienHub />} />
+              <Route path="/ingenieure" element={<IngenieureHub />} />
+              <Route path="/gastronomie" element={<GastronomieHub />} />
+              <Route path="/einzelhandel" element={<EinzelhandelHub />} />
+              <Route path="/reinigung" element={<ReinigungHub />} />
+              <Route path="/logistik" element={<LogistikHub />} />
+              <Route path="/friseure" element={<FriseureHub />} />
+              <Route path="/zahnaerzte" element={<ZahnaerzteHub />} />
+              <Route path="/autohaeuser" element={<AutohaeuserHub />} />
+              <Route path="/physiotherapeuten" element={<PhysioHub />} />
+              <Route path="/gartenbau" element={<GartenbauHub />} />
+              <Route path="/schreiner" element={<SchreinerHub />} />
+              <Route path="/tieraerzte" element={<TieraerzteHub />} />
+              <Route path="/floristen" element={<FloristenHub />} />
+
               <Route path="/angebot" element={<Angebot />} />
               <Route path="/a" element={<Angebot />} />
               <Route path="/a/:shortId" element={<Angebot />} />
