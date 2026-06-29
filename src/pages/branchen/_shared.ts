@@ -16,7 +16,7 @@ export const NON_TRADE_DEFAULTS: Partial<TradeHubConfig> = {
 };
 
 /** Helper: merge a branche-specific config with the non-trade defaults. */
-export const branche = (cfg: TradeHubConfig): TradeHubConfig => ({
+export const branche = (cfg: Omit<TradeHubConfig, "crossLinks"> & { crossLinks?: TradeHubConfig["crossLinks"] }): TradeHubConfig => ({
   ...NON_TRADE_DEFAULTS,
   crossLinks: NON_TRADE_CROSS_LINKS,
   ...cfg,
