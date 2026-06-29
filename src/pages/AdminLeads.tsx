@@ -514,7 +514,15 @@ const AdminLeads = () => {
 
   const regenerateScreenshot = async (
     project: PortfolioProject,
-    opts?: { waitMs?: number; hideSelectors?: string; clickSelector?: string },
+    opts?: {
+      waitMs?: number;
+      hideSelectors?: string;
+      clickSelector?: string;
+      viewportHeight?: number;
+      fullPage?: boolean;
+      scrollBefore?: boolean;
+      retina?: boolean;
+    },
   ) => {
     if (!project.external_url) {
       toast.error("Projekt hat keine URL");
@@ -530,6 +538,10 @@ const AdminLeads = () => {
         ...(opts?.waitMs !== undefined ? { waitMs: opts.waitMs } : {}),
         ...(opts?.hideSelectors ? { hideSelectors: opts.hideSelectors } : {}),
         ...(opts?.clickSelector ? { clickSelector: opts.clickSelector } : {}),
+        ...(opts?.viewportHeight !== undefined ? { viewportHeight: opts.viewportHeight } : {}),
+        ...(opts?.fullPage !== undefined ? { fullPage: opts.fullPage } : {}),
+        ...(opts?.scrollBefore !== undefined ? { scrollBefore: opts.scrollBefore } : {}),
+        ...(opts?.retina !== undefined ? { retina: opts.retina } : {}),
       },
     });
     setRegeneratingId(null);
