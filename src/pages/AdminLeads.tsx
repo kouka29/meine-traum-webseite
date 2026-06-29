@@ -201,7 +201,15 @@ const AdminLeads = () => {
   const [generatingDesc, setGeneratingDesc] = useState(false);
   const [advancedOpenId, setAdvancedOpenId] = useState<string | null>(null);
   const [advancedSettings, setAdvancedSettings] = useState<
-    Record<string, { waitMs: string; hideSelectors: string; clickSelector: string }>
+    Record<string, {
+      waitMs: string;
+      hideSelectors: string;
+      clickSelector: string;
+      viewportHeight: string;
+      fullPage: boolean;
+      scrollBefore: boolean;
+      retina: boolean;
+    }>
   >({});
 
   // Testimonials state
@@ -506,7 +514,15 @@ const AdminLeads = () => {
 
   const regenerateScreenshot = async (
     project: PortfolioProject,
-    opts?: { waitMs?: number; hideSelectors?: string; clickSelector?: string },
+    opts?: {
+      waitMs?: number;
+      hideSelectors?: string;
+      clickSelector?: string;
+      viewportHeight?: number;
+      fullPage?: boolean;
+      scrollBefore?: boolean;
+      retina?: boolean;
+    },
   ) => {
     if (!project.external_url) {
       toast.error("Projekt hat keine URL");
@@ -522,6 +538,10 @@ const AdminLeads = () => {
         ...(opts?.waitMs !== undefined ? { waitMs: opts.waitMs } : {}),
         ...(opts?.hideSelectors ? { hideSelectors: opts.hideSelectors } : {}),
         ...(opts?.clickSelector ? { clickSelector: opts.clickSelector } : {}),
+        ...(opts?.viewportHeight !== undefined ? { viewportHeight: opts.viewportHeight } : {}),
+        ...(opts?.fullPage !== undefined ? { fullPage: opts.fullPage } : {}),
+        ...(opts?.scrollBefore !== undefined ? { scrollBefore: opts.scrollBefore } : {}),
+        ...(opts?.retina !== undefined ? { retina: opts.retina } : {}),
       },
     });
     setRegeneratingId(null);
@@ -1274,7 +1294,15 @@ const AdminLeads = () => {
                     : null;
                   const regenerating = regeneratingId === p.id;
                   const advOpen = advancedOpenId === p.id;
-                  const adv = advancedSettings[p.id] || { waitMs: "3500", hideSelectors: "", clickSelector: "" };
+                  const adv = advancedSettings[p.id] || {
+                    waitMs: "4500",
+                    hideSelectors: "",
+                    clickSelector: "",
+                    viewportHeight: "900",
+                    fullPage: false,
+                    scrollBefore: false,
+                    retina: true,
+                  };
                   const updateAdv = (patch: Partial<typeof adv>) =>
                     setAdvancedSettings((s) => ({ ...s, [p.id]: { ...adv, ...patch } }));
                   return (
@@ -1362,7 +1390,17 @@ const AdminLeads = () => {
                            type="number"
                            value={adv.waitMs}
                            onChange={(e) => updateAdv({ waitMs: e.target.value })}
-                           placeholder="3500"
+                           placeholder="4500"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Viewport-Höhe (px)</label>
+                         <input
+                           type="number"
+                           value={adv.viewportHeight}
+                           onChange={(e) => updateAdv({ viewportHeight: e.target.value })}
+                           placeholder="900"
                            className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
                          />
                        </div>
@@ -1386,17 +1424,35 @@ const AdminLeads = () => {
                            className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
                          />
                        </div>
+                       <div className="sm:col-span-3 flex flex-wrap gap-4 pt-1">
+                         <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
+                           <input type="checkbox" checked={adv.fullPage} onChange={(e) => updateAdv({ fullPage: e.target.checked })} />
+                           Vollständige Seite (Long-Scroll)
+                         </label>
+                         <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
+                           <input type="checkbox" checked={adv.scrollBefore} onChange={(e) => updateAdv({ scrollBefore: e.target.checked })} />
+                           Vor Aufnahme scrollen (Lazy-Load)
+                         </label>
+                         <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
+                           <input type="checkbox" checked={adv.retina} onChange={(e) => updateAdv({ retina: e.target.checked })} />
+                           Retina (2× Schärfe)
+                         </label>
+                       </div>
                        <div className="sm:col-span-3 flex items-center justify-between gap-3 flex-wrap">
                          <p className="text-[11px] text-muted-foreground">
-                           Falls Inhalt fehlt: Wartezeit erhöhen. Falls Cookie-Banner im Bild: Banner-Selektor ausblenden oder Akzeptieren-Button-Selektor klicken.
+                           Tipps: Inhalt fehlt? Wartezeit erhöhen oder "Vor Aufnahme scrollen" aktivieren. Lange Seite komplett? "Vollständige Seite" anhaken. Cookie-Banner sichtbar? Banner-Selektor ausblenden oder Akzeptieren-Button klicken.
                          </p>
                          <Button
                            size="sm"
                            onClick={() =>
                              regenerateScreenshot(p, {
-                               waitMs: Number(adv.waitMs) || 3500,
+                               waitMs: Number(adv.waitMs) || 4500,
                                hideSelectors: adv.hideSelectors.trim(),
                                clickSelector: adv.clickSelector.trim(),
+                               viewportHeight: Number(adv.viewportHeight) || 900,
+                               fullPage: adv.fullPage,
+                               scrollBefore: adv.scrollBefore,
+                               retina: adv.retina,
                              })
                            }
                            disabled={regenerating}

@@ -13,6 +13,25 @@ function sanitizeKey(key: string): string {
   return key.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 100);
 }
 
+// Injected into the page before screenshot — removes common consent overlays
+// and re-enables scrolling so the real content is visible.
+const CLEANUP_SCRIPT = `(() => {
+  try {
+    const sels = [
+      '#BorlabsCookieBox','.brlbs-cmpnt-container','#cookie-notice','.cookie-banner',
+      '.cmplz-cookiebanner','#usercentrics-root','#uc-banner','.cc-window',
+      '.iubenda-cs-container','#CybotCookiebotDialog','#onetrust-banner-sdk',
+      '#onetrust-consent-sdk','.osano-cm-window','#klaro','.klaro',
+      '[id*="cookie" i][class*="banner" i]','[class*="cookie" i][class*="banner" i]',
+      '[id*="consent" i]','[class*="consent" i]','[class*="overlay" i][class*="cookie" i]'
+    ];
+    document.querySelectorAll(sels.join(',')).forEach(el => el.remove());
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
+    document.body.style.position = 'static';
+  } catch (e) {}
+})();`;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -40,7 +59,16 @@ Deno.serve(async (req) => {
     const waitMs =
       typeof body?.waitMs === "number" && body.waitMs >= 0 && body.waitMs <= 20000
         ? Math.floor(body.waitMs)
-        : 1500;
+        : 4500;
+    const viewportHeight =
+      typeof body?.viewportHeight === "number" &&
+      body.viewportHeight >= 600 &&
+      body.viewportHeight <= 4000
+        ? Math.floor(body.viewportHeight)
+        : 900;
+    const fullPage = body?.fullPage === true;
+    const scrollBefore = body?.scrollBefore === true;
+    const retina = body?.retina !== false; // default true
     const extraHide =
       typeof body?.hideSelectors === "string" ? body.hideSelectors.trim() : "";
     const clickSelector =
@@ -70,7 +98,7 @@ Deno.serve(async (req) => {
     }
 
     const key = sanitizeKey(rawKey);
-    const path = `auto/v3/${key}.jpg`;
+    const path = `auto/v4/${key}.jpg`;
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
@@ -91,7 +119,7 @@ Deno.serve(async (req) => {
     if (!force) {
       const { data: existing } = await supabase.storage
         .from(BUCKET)
-        .list("auto/v3", { search: `${key}.jpg`, limit: 1 });
+        .list("auto/v4", { search: `${key}.jpg`, limit: 1 });
       if (existing && existing.some((f) => f.name === `${key}.jpg`)) {
         const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
         const ts = await writeScreenshotUrl(data.publicUrl, false);
@@ -117,6 +145,9 @@ Deno.serve(async (req) => {
       ".cc-window",
       ".iubenda-cs-container",
       "#CybotCookiebotDialog",
+      "#onetrust-banner-sdk",
+      "#onetrust-consent-sdk",
+      ".osano-cm-window",
     ].join(",");
     const hideParam = extraHide ? `${defaultHide},${extraHide}` : defaultHide;
 
@@ -125,25 +156,45 @@ Deno.serve(async (req) => {
       waitUntil: string;
       waitForTimeout: number;
       height: number;
+      scale: number;
+      full: boolean;
+      scroll: boolean;
     }) => {
       let u =
-        `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=false` +
+        `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=${opts.full}` +
         `&waitUntil=${opts.waitUntil}&waitForTimeout=${opts.waitForTimeout}` +
-        `&viewport.width=1000&viewport.height=${opts.height}&viewport.deviceScaleFactor=1` +
+        `&viewport.width=1440&viewport.height=${opts.height}&viewport.deviceScaleFactor=${opts.scale}` +
+        `&adblock=true&animations=false` +
+        (opts.scroll ? `&scroll=true` : ``) +
         `&hide=${encodeURIComponent(hideParam)}` +
+        `&scripts=${encodeURIComponent(CLEANUP_SCRIPT)}` +
         `&embed=screenshot.url&url=${encodeURIComponent(url)}`;
       if (clickSelector) u += `&click=${encodeURIComponent(clickSelector)}`;
       return u;
     };
 
     let shotRes = await fetch(
-      buildApiUrl({ waitUntil: "networkidle2", waitForTimeout: waitMs, height: 1600 }),
+      buildApiUrl({
+        waitUntil: "networkidle0",
+        waitForTimeout: waitMs,
+        height: viewportHeight,
+        scale: retina ? 2 : 1,
+        full: fullPage,
+        scroll: scrollBefore,
+      }),
       { headers: { Accept: "image/jpeg" } },
     );
-    // Retry once with lighter settings if the upstream timed out
+    // Retry once with MORE patience (not less) if upstream timed out
     if (!shotRes.ok && (shotRes.status === 504 || shotRes.status === 408 || shotRes.status === 502)) {
       shotRes = await fetch(
-        buildApiUrl({ waitUntil: "load", waitForTimeout: 800, height: 1200 }),
+        buildApiUrl({
+          waitUntil: "load",
+          waitForTimeout: Math.min(waitMs + 4000, 15000),
+          height: viewportHeight,
+          scale: 1,
+          full: fullPage,
+          scroll: scrollBefore,
+        }),
         { headers: { Accept: "image/jpeg" } },
       );
     }
