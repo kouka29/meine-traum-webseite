@@ -51,7 +51,7 @@ const metaBranchen = [
     cta: "Branche wählen",
     items: [
       { name: "Ärzte & Praxen", path: "/webdesign-aerzte", icon: Stethoscope },
-      { name: "Fitness- & Yogastudios", path: "/kontakt?branche=fitness", icon: Dumbbell },
+      { name: "Fitness- & Yogastudios", path: "/fitness", icon: Dumbbell },
     ],
   },
   {
@@ -61,7 +61,7 @@ const metaBranchen = [
     cta: "Branche wählen",
     items: [
       { name: "Coaches & Trainer", path: "/webdesign-coaches", icon: GraduationCap },
-      { name: "Anwälte & Steuerberater", path: "/kontakt?branche=kanzleien", icon: Scale },
+      { name: "Anwälte & Steuerberater", path: "/kanzleien", icon: Scale },
     ],
   },
   {
@@ -71,20 +71,20 @@ const metaBranchen = [
     cta: "Branche wählen",
     items: [
       { name: "Immobilienmakler", path: "/webdesign-immobilienmakler", icon: Building2 },
-      { name: "Ingenieure & Planer", path: "/kontakt?branche=ingenieure", icon: Cpu },
+      { name: "Ingenieure & Planer", path: "/ingenieure", icon: Cpu },
     ],
   },
   {
     name: "Gastronomie & Hotellerie",
     icon: UtensilsCrossed,
     text: "Speisekarten, Reservierungen, Lieferdienste und direkte Zimmerbuchungen – alles an einem Ort.",
-    path: "/kontakt?branche=gastronomie-hotellerie",
+    path: "/gastronomie",
   },
   {
     name: "Einzelhandel & Shops",
     icon: ShoppingBag,
     text: "Lokale Laden-Websites und Online-Shops, die verkaufen.",
-    path: "/kontakt?branche=einzelhandel",
+    path: "/einzelhandel",
   },
   {
     name: "Dienstleistungen",
@@ -92,8 +92,8 @@ const metaBranchen = [
     text: "Seriöse Auftritt-Websites für Reinigungs- und Logistikbetriebe.",
     cta: "Branche wählen",
     items: [
-      { name: "Reinigungsdienstleister", path: "/kontakt?branche=reinigung", icon: Sparkles },
-      { name: "Logistiker & Speditionen", path: "/kontakt?branche=logistik", icon: Truck },
+      { name: "Reinigungsdienstleister", path: "/reinigung", icon: Sparkles },
+      { name: "Logistiker & Speditionen", path: "/logistik", icon: Truck },
     ],
   },
   {
@@ -102,14 +102,14 @@ const metaBranchen = [
     text: "Wir finden das passende Konzept für Ihre Branche – ganz individuell und professionell.",
     cta: "Branchen entdecken",
     items: [
-      { name: "Friseure & Kosmetik", path: "/kontakt?branche=friseure", icon: Scissors },
-      { name: "Zahnärzte & Kieferorthopäden", path: "/kontakt?branche=zahnaerzte", icon: Smile },
-      { name: "Autohäuser & Kfz-Werkstätten", path: "/kontakt?branche=autohauser", icon: Car },
-      { name: "Physiotherapeuten & Ergotherapeuten", path: "/kontakt?branche=physiotherapeuten", icon: Activity },
-      { name: "Garten- & Landschaftsbau", path: "/kontakt?branche=gartenbau", icon: Leaf },
-      { name: "Schreiner & Tischler", path: "/kontakt?branche=schreiner", icon: Sofa },
-      { name: "Tierärzte", path: "/kontakt?branche=tieraerzte", icon: Heart },
-      { name: "Floristen", path: "/kontakt?branche=floristen", icon: Flower2 },
+      { name: "Friseure & Kosmetik", path: "/friseure", icon: Scissors },
+      { name: "Zahnärzte & Kieferorthopäden", path: "/zahnaerzte", icon: Smile },
+      { name: "Autohäuser & Kfz-Werkstätten", path: "/autohaeuser", icon: Car },
+      { name: "Physiotherapeuten & Ergotherapeuten", path: "/physiotherapeuten", icon: Activity },
+      { name: "Garten- & Landschaftsbau", path: "/gartenbau", icon: Leaf },
+      { name: "Schreiner & Tischler", path: "/schreiner", icon: Sofa },
+      { name: "Tierärzte", path: "/tieraerzte", icon: Heart },
+      { name: "Floristen", path: "/floristen", icon: Flower2 },
     ],
   },
 ];
