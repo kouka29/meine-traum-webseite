@@ -222,7 +222,7 @@ const LinkCard = ({
 );
 
 const IndexBranchen = () => (
-  <section className="section-padding bg-muted/30">
+  <section id="branchen" className="section-padding bg-muted/30 scroll-mt-24">
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="max-w-2xl mb-12">
