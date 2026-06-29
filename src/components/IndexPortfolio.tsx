@@ -135,14 +135,15 @@ const IndexPortfolio = () => {
             </h2>
           </div>
         </AnimatedSection>
-        <div className="flex items-center gap-3 sm:gap-4">
-          <CarouselPrevious className="static shrink-0 hidden sm:flex self-center" />
-          <Carousel
-            opts={{ align: "start", loop: true }}
-            plugins={[autoplay.current]}
-            className="relative flex-1 min-w-0"
-          >
-            <CarouselContent className="-ml-6">
+        <Carousel
+          opts={{ align: "start", loop: true }}
+          plugins={[autoplay.current]}
+          className="relative"
+        >
+          <div className="flex items-center gap-3 sm:gap-4">
+            <CarouselPrevious className="static shrink-0 hidden sm:flex self-center translate-y-0" />
+            <div className="flex-1 min-w-0">
+              <CarouselContent className="-ml-6">
               {items.map((p, i) => {
                 const rawSrc = (typeof p.image_url === "string" ? p.image_url : "") || p.screenshot_url || "";
                 const imgSrc = normalizeImageSrc(rawSrc);
@@ -250,10 +251,11 @@ const IndexPortfolio = () => {
                 </CarouselItem>
               );
             })}
-          </CarouselContent>
+              </CarouselContent>
+            </div>
+            <CarouselNext className="static shrink-0 hidden sm:flex self-center translate-y-0" />
+          </div>
         </Carousel>
-        <CarouselNext className="static shrink-0 hidden sm:flex self-center" />
-        </div>
         <div className="text-center mt-12">
           <Button variant="outline-primary" asChild>
             <Link to="/portfolio">Alle Projekte ansehen</Link>
