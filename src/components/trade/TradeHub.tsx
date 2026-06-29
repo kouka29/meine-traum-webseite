@@ -24,6 +24,12 @@ export interface TradeHubConfig {
   formH2: string;
   finalH2: string;
   finalSub: string;
+  /** Overrides for non-Handwerker branches */
+  crossLinksH2?: string;
+  crossLinksFooterLabel?: string;
+  crossLinksFooterTo?: string;
+  pricingContactPath?: string;
+  pricingNames?: { Starter: string; Pro: string; Premium: string };
 }
 
 const STEPS = [
@@ -32,7 +38,7 @@ const STEPS = [
   { emoji: "🚀", title: "Gefällt sie Dir — geht sie live", text: "Gefällt sie nicht — zahlst Du nichts. Gefällt sie Dir → wir schalten sie live." },
 ];
 
-const TRADE_NAMES = {
+const DEFAULT_TRADE_NAMES = {
   Starter: "Einzelkämpfer",
   Pro: "Wachstums-Betrieb",
   Premium: "Marktführer",
@@ -157,7 +163,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-3">Was kostet Deine neue Website?</h2>
           <p className="text-muted-foreground">Keine versteckten Kosten. Für Gewerbetreibende voll steuerlich absetzbar. ✅</p>
         </div>
-        <PricingNamesProvider names={TRADE_NAMES}>
+        <PricingNamesProvider names={config.pricingNames ?? DEFAULT_TRADE_NAMES}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {TRADE_RENT_PACKAGES.map((pkg, i) => (
               <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={scrollToForm} />
@@ -165,7 +171,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           </div>
         </PricingNamesProvider>
         <div className="text-center">
-          <Link to="/handwerker/kontakt" className="text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
+          <Link to={config.pricingContactPath ?? "/handwerker/kontakt"} className="text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
             Nicht sicher welches Paket passt? → Kostenlos beraten lassen
           </Link>
         </div>
@@ -176,7 +182,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
     <Section bg="light">
       <Container>
         <div className="text-center mb-10">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground">Auch für andere Handwerksbetriebe</h3>
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground">{config.crossLinksH2 ?? "Auch für andere Handwerksbetriebe"}</h3>
         </div>
         <div className="grid sm:grid-cols-3 gap-5 mb-6">
           {config.crossLinks.map((t) => (
@@ -191,8 +197,8 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           ))}
         </div>
         <div className="text-center">
-          <Link to="/handwerker" className="text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
-            Alle Branchen →
+          <Link to={config.crossLinksFooterTo ?? "/handwerker"} className="text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
+            {config.crossLinksFooterLabel ?? "Alle Branchen →"}
           </Link>
         </div>
       </Container>
