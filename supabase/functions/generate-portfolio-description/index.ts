@@ -9,7 +9,7 @@ Deno.serve(async (req) => {
     if (!ADMIN_PASSWORD || !LOVABLE_API_KEY) return json({ error: "Server nicht konfiguriert" }, 500);
 
     const body = await req.json().catch(() => null) as {
-      password?: string; title?: string; category?: string; result?: string; current?: string;
+      password?: string; title?: string; category?: string; result?: string; current?: string; url?: string;
     } | null;
     if (!body || body.password !== ADMIN_PASSWORD) return json({ error: "Ungültiges Passwort" }, 401);
 
@@ -17,7 +17,48 @@ Deno.serve(async (req) => {
     const category = (body.category || "").trim();
     const result = (body.result || "").trim();
     const current = (body.current || "").trim();
+    const url = (body.url || "").trim();
     if (!title) return json({ error: "Titel fehlt" }, 400);
+
+    // Optional: Echte Website-Inhalte holen, um die KI zu fundieren
+    let siteTitle = "";
+    let siteMeta = "";
+    let siteText = "";
+    if (url && /^https?:\/\//i.test(url)) {
+      try {
+        const res = await fetch(url, {
+          redirect: "follow",
+          signal: AbortSignal.timeout(8000),
+          headers: {
+            "User-Agent": "Mozilla/5.0 (compatible; LovableBot/1.0; +https://lovable.dev)",
+            "Accept": "text/html,application/xhtml+xml",
+          },
+        });
+        if (res.ok) {
+          const html = await res.text();
+          const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+          siteTitle = (titleMatch?.[1] || "").replace(/\s+/g, " ").trim().slice(0, 200);
+          const metaMatch = html.match(/<meta[^>]+name=["']description["'][^>]*content=["']([^"']+)["']/i)
+            || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]*name=["']description["']/i);
+          siteMeta = (metaMatch?.[1] || "").replace(/\s+/g, " ").trim().slice(0, 400);
+          const cleaned = html
+            .replace(/<script[\s\S]*?<\/script>/gi, " ")
+            .replace(/<style[\s\S]*?<\/style>/gi, " ")
+            .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ")
+            .replace(/<!--[\s\S]*?-->/g, " ")
+            .replace(/<[^>]+>/g, " ")
+            .replace(/&nbsp;/g, " ")
+            .replace(/&amp;/g, "&")
+            .replace(/&[a-z#0-9]+;/gi, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+          siteText = cleaned.slice(0, 4000);
+        }
+      } catch (e) {
+        console.warn("site fetch failed", url, e instanceof Error ? e.message : e);
+      }
+    }
+    const hasSite = Boolean(siteTitle || siteMeta || siteText);
 
     const angles = [
       { focus: "Conversion-Psychologie", tone: "selbstbewusst und ergebnisorientiert", hook: "klare Call-to-Actions, Social Proof, weniger Reibung" },
@@ -46,9 +87,18 @@ VERBOTEN:
 
 Liefere NUR den fertigen Satz, ohne Einleitung, ohne Erklärung.`;
 
+    const siteBlock = hasSite
+      ? `\n\nEchte Website-Inhalte (Faktenbasis, NICHT wörtlich zitieren, keine Markennamen wiederholen):
+Titel: ${siteTitle || "—"}
+Meta: ${siteMeta || "—"}
+Text: ${siteText || "—"}
+
+Beziehe dich auf konkrete dort genannte Leistungen, Branche und Region statt allgemeiner Floskeln.`
+      : "";
+
     const user = `Projekt-Titel: ${title}
 Kategorie/Branche: ${category || "—"}
-Ergebnis/Kennzahl: ${result || "—"}${current ? `\n\nBisheriger Text (Stil/Wortwahl NICHT wiederholen):\n${current}` : ""}`;
+Ergebnis/Kennzahl: ${result || "—"}${current ? `\n\nBisheriger Text (Stil/Wortwahl NICHT wiederholen):\n${current}` : ""}${siteBlock}`;
 
     const r = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
