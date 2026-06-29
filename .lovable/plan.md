@@ -1,45 +1,24 @@
-# Screenshots zuverlässig wie die echte Website aussehen lassen
-
 ## Problem
-Microlink liefert bei manchen Seiten ein unvollständiges/leeres Bild, weil:
-- Viewport zu klein (1000×1600) → Mobile-Layout oder Layout-Sprünge
-- `waitUntil: networkidle2` + nur 1,5s Wartezeit → Hero-Slider, Lazy-Images und Animationen sind noch nicht fertig
-- Cookie-Banner werden nur per `hide` (CSS) entfernt — manche Seiten blockieren den Inhalt mit Overlay/Body-Scroll-Lock, der bleibt
-- Fallback-Retry reduziert Höhe und Wartezeit → macht es eher schlechter, nicht besser
-- Kein `device`/`scaleFactor` für Retina → unscharf
-- Kein Provider-Fallback, wenn Microlink scheitert
 
-## Lösung
+Der Hover-Scroll-Effekt auf den Portfolio-Karten (`/portfolio`) animiert `object-position` von `top` nach `bottom` über 9 s. Das ist nur sichtbar, wenn das Bild **höher** ist als der Karten-Container (`aspect-video`, 16:9). Sonst gibt es kein Overflow, das `object-cover` schneidet nichts ab — das Bild steht still.
 
-### 1. Edge Function `portfolio-screenshot` qualitativ aufbohren
-- Viewport auf echte Desktop-Größe: **1440×900**, `deviceScaleFactor=2` (Retina-scharf)
-- `waitUntil=networkidle0` + großzügigeres `waitForTimeout` (Default **4500 ms**, max 15 s)
-- Statt nur `hide`: zusätzlich `scripts`-Param mit kleinen JS-Snippets, die typische Consent-Overlays + `body.overflow=auto` zurücksetzen (Borlabs, Usercentrics, Cookiebot, Complianz, iubenda, OneTrust)
-- Optionales Pre-Action: `scroll=true` (lädt Lazy-Bilder), danach zurück nach oben
-- `adblock=true`, `animations=false` (Microlink-Param) für ruhige Aufnahme
-- Smarter Retry-Fallback **mit längerer Wartezeit** (nicht kürzerer): zweiter Versuch `waitFor=8000`, `waitUntil=load`, scale=1
-- Optionaler 2. Provider als Fallback (z. B. ScreenshotOne / thum.io) hinter Secret `SCREENSHOT_FALLBACK_PROVIDER` — nur wenn Microlink final scheitert
+Bei der letzten Optimierung der Edge Function `portfolio-screenshot` wurde aus Performance-Gründen `fullPage=false` zum Standard und der Viewport auf 1440×900 (also exakt 16:9) gesetzt. Dadurch erzeugen alle „neu generierten" Screenshots ein Bild im selben Seitenverhältnis wie der Karten-Frame → kein Scroll-Spielraum.
 
-### 2. Mehr Steuerung im Admin
-Im "Erweitert"-Panel pro Projekt zusätzlich:
-- Numerisches Feld **Viewport-Höhe** (Default 900, bis 4000 für Long-Pages)
-- Checkbox **Vollständige Seite** (`fullPage=true`) — für Long-Scroll-Sites
-- Checkbox **Vor Aufnahme scrollen** (lazy-load triggern)
-- Checkbox **Retina (2×)**
-- Vorschau zeigt zusätzlich Dateigröße + Aufnahme-Zeitpunkt; Toast meldet, wenn Fallback-Provider griff
+Manuell hochgeladene Bilder (`image_url`) sind weiterhin meist hoch genug, deswegen tritt der Bug nur bei „nachträglich neu generierten" Projekten auf.
 
-### 3. Konsistenz im Cache-Pfad
-- Pfad-Bump auf `auto/v4/<key>.jpg`, damit neue Qualitätseinstellungen nicht durch alte Cache-Treffer überschrieben werden
-- `force=true` löscht zusätzlich vorhandene `v4`-Datei vor Upload (echte Neugenerierung statt nur Upsert)
+## Fix
 
-## Technische Details
-- Datei: `supabase/functions/portfolio-screenshot/index.ts`
-  - Neue Body-Felder: `viewportHeight`, `fullPage`, `scrollBefore`, `retina`
-  - Microlink-URL-Builder erweitern um `device`, `scripts`, `adblock`, `animations`, `scroll`
-- Datei: `src/pages/AdminLeads.tsx`
-  - Erweitert-Panel um 4 Felder, an `invoke` weiterreichen
-  - Erfolgs-Toast zeigt `provider` aus Response
-- Kein neues Secret nötig, solange Fallback-Provider weggelassen wird; wenn gewünscht: `add_secret` für `SCREENSHOTONE_ACCESS_KEY` (optional, separat fragen)
+### 1. `supabase/functions/portfolio-screenshot/index.ts`
+- Default `fullPage` auf **`true`** umstellen (vorher `false`). Damit liefert Microlink standardmäßig wieder einen langen Screenshot, der genug Höhe für den Hover-Scroll hat.
+- Storage-Pfad auf `auto/v5/` bumpen, damit beim ersten Aufruf pro Projekt **automatisch** ein neuer Full-Page-Screenshot erzeugt wird (statt das alte 16:9-Bild aus `auto/v4/` aus dem Cache zu liefern).
+- Im Retry-Pfad ebenfalls `fullPage: true` durchreichen (statt nur die übergebene Variable), damit auch der Fallback einen scrollbaren Screenshot produziert.
+- Admin-Override „Vollständige Seite" bleibt erhalten — der Default wird nur umgedreht.
 
-## Offen
-Soll ich den optionalen Zweit-Provider (ScreenshotOne) gleich mitbauen, oder erst Microlink-Tuning + Admin-Optionen umsetzen und schauen, ob das reicht?
+### 2. `src/pages/Portfolio.tsx` (defensiver Fallback)
+- Nach dem `onLoad` der `<img>` prüfen, ob die natürliche Höhe (bezogen auf die gerenderte Breite) signifikant größer ist als die Container-Höhe. Wenn **nein** (z. B. weil ein altes `auto/v4`-Bild oder ein manuell hochgeladenes 16:9-Bild vorliegt), die Hover-Scroll-Klasse + Inline-Transition für diese eine Karte deaktivieren. So sieht der Hover bei „flachen" Bildern nicht mehr nach kaputter Animation aus, sondern wirkt einfach statisch.
+- Keine Änderung am Mockup-Rahmen, an den restlichen Klassen oder am Reduced-Motion-Verhalten.
+
+### 3. Kein DB-Change, keine Migration, keine UI-Texte verändert.
+
+## Hinweis an den Nutzer
+Damit der Fix bei bereits regenerierten Projekten greift, muss im Admin **einmal pro betroffenem Projekt** „Screenshot neu generieren" geklickt werden (oder der Backfill-Button). Der neue Pfad `auto/v5/` sorgt dafür, dass ohne `force` automatisch ein frisches Full-Page-Bild gerendert wird, sobald irgendwo ein leerer Cache-Eintrag liegt.
