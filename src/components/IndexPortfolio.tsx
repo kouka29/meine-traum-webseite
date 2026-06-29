@@ -135,95 +135,97 @@ const IndexPortfolio = () => {
             </h2>
           </div>
         </AnimatedSection>
-        <Carousel
-          opts={{ align: "start", loop: true }}
-          plugins={[autoplay.current]}
-          className="max-w-6xl mx-auto relative px-0 sm:px-12"
-        >
-          <CarouselContent className="-ml-6">
-            {items.map((p, i) => {
-              const rawSrc = (typeof p.image_url === "string" ? p.image_url : "") || p.screenshot_url || "";
-              const imgSrc = normalizeImageSrc(rawSrc);
-              const eager = i < 3;
-              const imgAlt = `Webdesign-Referenz – ${p.title}, ${p.category}`;
-              const card = (
-                <div className="group h-full w-full text-left bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col transition-all hover:border-primary/40 hover:shadow-lg hover:-translate-y-0.5">
-                  <div className="relative bg-gradient-to-br from-primary/10 to-accent/10 p-5">
-                    <div className="bg-card rounded-lg shadow-md overflow-hidden border border-border">
-                      <div className="bg-muted h-6 flex items-center gap-1.5 px-2.5">
-                        <span className="w-2 h-2 rounded-full bg-rose-400" />
-                        <span className="w-2 h-2 rounded-full bg-amber-400" />
-                        <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                      </div>
-                      {imgSrc ? (
-                        <div className="overflow-hidden">
-                          <img
-                            src={imgSrc}
-                            alt={imgAlt}
-                            width={800}
-                            height={450}
-                            loading={eager ? "eager" : "lazy"}
-                            {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
-                            decoding="async"
-                            onLoad={(e) => {
-                              const img = e.currentTarget;
-                              const ratio = img.naturalHeight / Math.max(img.naturalWidth, 1);
-                              if (ratio < 0.7) {
-                                setFlatImages((m) => (m[p.id] ? m : { ...m, [p.id]: true }));
-                              }
-                            }}
-                            className={`aspect-video w-full object-cover object-top ${reducedMotion || flatImages[p.id] ? "" : "group-hover:[object-position:50%_100%]"}`}
-                            style={reducedMotion || flatImages[p.id] ? undefined : { transition: "object-position 9s linear" }}
-                          />
+        <div className="flex items-center gap-3 sm:gap-4">
+          <CarouselPrevious className="static shrink-0 hidden sm:flex self-center" />
+          <Carousel
+            opts={{ align: "start", loop: true }}
+            plugins={[autoplay.current]}
+            className="relative flex-1 min-w-0"
+          >
+            <CarouselContent className="-ml-6">
+              {items.map((p, i) => {
+                const rawSrc = (typeof p.image_url === "string" ? p.image_url : "") || p.screenshot_url || "";
+                const imgSrc = normalizeImageSrc(rawSrc);
+                const eager = i < 3;
+                const imgAlt = `Webdesign-Referenz – ${p.title}, ${p.category}`;
+                const card = (
+                  <div className="group h-full w-full text-left bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col transition-all hover:border-primary/40 hover:shadow-lg hover:-translate-y-0.5">
+                    <div className="relative bg-gradient-to-br from-primary/10 to-accent/10 p-5">
+                      <div className="bg-card rounded-lg shadow-md overflow-hidden border border-border">
+                        <div className="bg-muted h-6 flex items-center gap-1.5 px-2.5">
+                          <span className="w-2 h-2 rounded-full bg-rose-400" />
+                          <span className="w-2 h-2 rounded-full bg-amber-400" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-400" />
                         </div>
-                      ) : p.mockup_desktop_url ? (
-                        <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                      ) : (
-                        <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
-                          <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
-                          <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
-                          <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
+                        {imgSrc ? (
+                          <div className="overflow-hidden">
+                            <img
+                              src={imgSrc}
+                              alt={imgAlt}
+                              width={800}
+                              height={450}
+                              loading={eager ? "eager" : "lazy"}
+                              {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
+                              decoding="async"
+                              onLoad={(e) => {
+                                const img = e.currentTarget;
+                                const ratio = img.naturalHeight / Math.max(img.naturalWidth, 1);
+                                if (ratio < 0.7) {
+                                  setFlatImages((m) => (m[p.id] ? m : { ...m, [p.id]: true }));
+                                }
+                              }}
+                              className={`aspect-video w-full object-cover object-top ${reducedMotion || flatImages[p.id] ? "" : "group-hover:[object-position:50%_100%]"}`}
+                              style={reducedMotion || flatImages[p.id] ? undefined : { transition: "object-position 9s linear" }}
+                            />
+                          </div>
+                        ) : p.mockup_desktop_url ? (
+                          <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
+                        ) : (
+                          <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+                            <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
+                            <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
+                            <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
+                          </div>
+                        )}
+                      </div>
+                      {p.external_url && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-200">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-flex items-center gap-2 rounded-full bg-card text-foreground px-4 py-2 text-sm font-semibold shadow-lg">
+                            <ExternalLink className="w-4 h-4" aria-hidden={true} focusable={false} />
+                            Live ansehen
+                          </span>
                         </div>
                       )}
                     </div>
-                    {p.external_url && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-200">
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-flex items-center gap-2 rounded-full bg-card text-foreground px-4 py-2 text-sm font-semibold shadow-lg">
-                          <ExternalLink className="w-4 h-4" aria-hidden={true} focusable={false} />
-                          Live ansehen
+                    <div className="p-5 flex-1 flex flex-col">
+                      {p.category && (
+                        <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
+                          {p.category}
                         </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-5 flex-1 flex flex-col">
-                    {p.category && (
-                      <span className="inline-flex self-start items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold mb-2">
-                        {p.category}
-                      </span>
-                    )}
-                    <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">{p.title}</h3>
-                    <p className={`text-sm text-muted-foreground mb-2 flex-1 ${expandedDescs[p.id] ? "" : "line-clamp-2"} md:line-clamp-none`}>
-                      {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
-                    </p>
-                    <span
-                      role="button"
-                      tabIndex={0}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        setExpandedDescs(prev => ({ ...prev, [p.id]: !prev[p.id] }));
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
+                      )}
+                      <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">{p.title}</h3>
+                      <p className={`text-sm text-muted-foreground mb-2 flex-1 ${expandedDescs[p.id] ? "" : "line-clamp-2"} md:line-clamp-none`}>
+                        {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
+                      </p>
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={(e) => {
                           e.stopPropagation();
                           e.preventDefault();
                           setExpandedDescs(prev => ({ ...prev, [p.id]: !prev[p.id] }));
-                        }
-                      }}
-                      className="md:hidden text-xs font-semibold text-primary mb-2 cursor-pointer select-none"
-                    >
-                      {expandedDescs[p.id] ? "Weniger anzeigen" : "Weiterlesen"}
-                    </span>
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            setExpandedDescs(prev => ({ ...prev, [p.id]: !prev[p.id] }));
+                          }
+                        }}
+                        className="md:hidden text-xs font-semibold text-primary mb-2 cursor-pointer select-none"
+                      >
+                        {expandedDescs[p.id] ? "Weniger anzeigen" : "Weiterlesen"}
+                      </span>
                     {p.external_url && (
                       <div className="flex items-center justify-end">
                         <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
@@ -249,9 +251,9 @@ const IndexPortfolio = () => {
               );
             })}
           </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex" />
-          <CarouselNext className="hidden sm:flex" />
         </Carousel>
+        <CarouselNext className="static shrink-0 hidden sm:flex self-center" />
+        </div>
         <div className="text-center mt-12">
           <Button variant="outline-primary" asChild>
             <Link to="/portfolio">Alle Projekte ansehen</Link>
