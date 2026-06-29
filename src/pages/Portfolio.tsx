@@ -94,6 +94,7 @@ const Portfolio = () => {
 
   const [reducedMotion, setReducedMotion] = useState(false);
   const [flatImages, setFlatImages] = useState<Record<string, boolean>>({});
+  const [expandedDescs, setExpandedDescs] = useState<Record<string, boolean>>({});
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -195,9 +196,28 @@ const Portfolio = () => {
                         </span>
                       )}
                       <h3 className="font-bold mb-1 group-hover:text-primary transition-colors">{p.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-3 flex-1">
+                      <p className={`text-sm text-muted-foreground mb-2 flex-1 ${expandedDescs[p.id] ? "" : "line-clamp-2"} md:line-clamp-none`}>
                         {p.description || `Individuelles ${p.category}-Projekt – konzipiert und umgesetzt von unserer Webdesign Agentur.`}
                       </p>
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setExpandedDescs(prev => ({ ...prev, [p.id]: !prev[p.id] }));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            setExpandedDescs(prev => ({ ...prev, [p.id]: !prev[p.id] }));
+                          }
+                        }}
+                        className="md:hidden text-xs font-semibold text-primary mb-2 cursor-pointer select-none"
+                      >
+                        {expandedDescs[p.id] ? "Weniger anzeigen" : "Weiterlesen"}
+                      </span>
                       {p.external_url && (
                         <div className="flex items-center justify-end">
                           <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
