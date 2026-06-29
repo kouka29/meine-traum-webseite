@@ -1,46 +1,23 @@
-## Ziel
-Auf der Startseite (`IndexBranchen.tsx`) wird die „Handwerker"-Card aufklappbar bzw. öffnet ein Popup mit den Handwerks-Unterkategorien (Elektriker, Maler, Sanitär/SHK, Dachdecker). Die freigewordenen Plätze im Grid werden mit neuen Branchen gefüllt, die nachweislich hohe Nachfrage nach Webdesign haben.
+Die aktuelle Branchen-Sektion auf der Startseite (8 Einzelkarten: Handwerker + 7 Branchen) wird in 8 Meta-Kategorien umgebaut. Karten mit mehreren Unterbranchen erhalten einen Radix-Popover (wie aktuell bei Handwerker). Einzel-Branchen mit eigener Landingpage verlinken direkt.
 
-## 1. Handwerker-Card mit Sub-Branchen
+Geplante 8-Karten-Struktur:
 
-- Die Handwerker-Card bleibt erste Position im Grid, ist aber **kein** `<Link>` mehr, sondern ein `<button>`, der ein Radix-Popover öffnet (bereits im Projekt: `@/components/ui/popover`). Popover statt Dialog, weil leichter, direkt an der Card verankert und mobil als unterer Sheet-ähnlicher Layer ebenfalls gut nutzbar.
-- Inhalt des Popovers: Headline „Handwerks-Gewerke", 5 Links mit Icon:
-  - Handwerker (Übersicht) → `/handwerker`
-  - Elektriker → `/elektriker` (Zap)
-  - Maler & Lackierer → `/maler` (PaintRoller)
-  - Sanitär & Heizung (SHK) → `/sanitaer` (Wrench)
-  - Dachdecker → `/dachdecker` (Home)
-- Optisches Signal an der Card: kleines „5 Gewerke" Badge + Chevron-Down-Icon statt Pfeil, damit erkennbar ist, dass sie auffächert.
-- Tastatur/Accessibility: `aria-haspopup`, `aria-expanded`, ESC schließt (Radix-Standard).
-- Keine Routen- oder Backend-Änderung. Keine neuen Dependencies.
+1. **Handwerker** — Popover mit 5 Gewerken (bestehend: Elektriker, Maler, SHK, Dachdecker, Alle Handwerker)
+2. **Gesundheit & Wellness** — Popover: Ärzte & Praxen (/webdesign-aerzte), Fitness- & Yogastudios (/kontakt?branche=fitness)
+3. **Beratung & Kanzleien** — Popover: Coaches & Trainer (/webdesign-coaches), Anwälte & Steuerberater (/kontakt?branche=kanzleien)
+4. **Immobilien & Bau** — Popover: Immobilienmakler (/webdesign-immobilienmakler), Ingenieure & Planer (/kontakt?branche=ingenieure)
+5. **Gastronomie** — Direktlink (/kontakt?branche=gastronomie), Text: Restaurants, Cafés, Lieferdienste
+6. **Hotels & Pensionen** — Direktlink (/kontakt?branche=hotellerie)
+7. **Einzelhandel & Shops** — Direktlink (/kontakt?branche=einzelhandel), Text: Lokale Geschäfte, Boutiquen, E-Commerce
+8. **Dienstleistungen** — Popover: Reinigungsdienstleister (/kontakt?branche=reinigung), Logistiker & Speditionen (/kontakt?branche=logistik)
 
-## 2. Neue Branchen im Grid
+Änderungen in `src/components/IndexBranchen.tsx`:
+- Neues Daten-Array `metaBranchen` mit 8 Einträgen. Jedes Item enthält `name`, `icon`, `text`, plus optional `items: [{name, path, icon}]` für Popover-Gruppen.
+- Render-Logik: Wenn `items` vorhanden → Popover-Trigger wie bisher. Sonst → `<Link>`-Card mit Direktverlinkung.
+- Icons über lucide-react (z. B. HeartPulse für Gesundheit, Scale für Kanzleien, Truck für Dienstleistungen, ShoppingBag für Einzelhandel, Cpu für Ingenieure).
+- Grid bleibt `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5`.
+- Mobile UX: Popover-Content bleibt klickbar, Touch-Targets ≥ 44 px.
 
-Die vier Handwerks-Unterkategorien werden aus dem Top-Level-Grid entfernt (leben jetzt nur noch im Popover). An ihre Stelle treten Branchen mit hoher Webdesign-Nachfrage im DACH-Raum, die zum bestehenden Lokal-/KMU-Fokus passen:
+Keine neuen Landingpages werden angelegt — neue Branchen verlinken auf `/kontakt?branche=…` als Platzhalter.
 
-| Branche | Route* | Icon | Begründung |
-|---|---|---|---|
-| Handwerker (mit Popover) | `/handwerker` | Hammer | bleibt |
-| Ärzte & Praxen | `/webdesign-aerzte` | Stethoscope | bestehende LP |
-| Immobilienmakler | `/webdesign-immobilienmakler` | Building2 | bestehende LP |
-| Coaches & Trainer | `/webdesign-coaches` | GraduationCap | bestehende LP |
-| Gastronomie & Restaurants | `/branchen/gastronomie` | UtensilsCrossed | sehr hohes Suchvolumen „Webdesign Restaurant", Reservierungen + Speisekarte |
-| Anwälte & Steuerberater | `/branchen/kanzleien` | Scale | hochpreisige Branche, starke Nachfrage nach seriösen Websites |
-| Fitness- & Yogastudios | `/branchen/fitness` | Dumbbell | lokale Studios, Kursbuchungen, hohe Konkurrenz |
-| Hotels & Pensionen | `/branchen/hotellerie` | BedDouble | Direktbuchungen statt Booking-Provision, klassischer Webdesign-Bedarf |
-
-\* Für die vier neuen Branchen existieren noch keine Landingpages. **Diese Card-Links verweisen vorerst auf den Kontakt-/Vorschau-Flow** (`/kontakt?branche=gastronomie` usw.), damit nichts in 404 läuft. Eigene LPs können später ergänzt werden – außerhalb dieses Plans.
-
-Ergibt **8 Cards** wie bisher, Grid-Layout (2/3/4 Spalten) bleibt.
-
-## 3. Footer
-
-Footer-Spalte „Branchen" bleibt wie sie ist (listet weiterhin die einzelnen Gewerke + bestehenden LPs). Keine Änderung – Footer ist die „flache" Übersicht, die Startseite ist kuratiert.
-
-## Technisches
-
-- Nur `src/components/IndexBranchen.tsx` wird geändert.
-- Verwendet Radix Popover (`@/components/ui/popover`) – bereits vorhanden.
-- Neue Icons aus `lucide-react`: `ChevronDown`, `UtensilsCrossed`, `Scale`, `Dumbbell`, `BedDouble`. Alle Teil von lucide-react, keine Installation nötig.
-- Strikt semantische Tokens (`bg-card`, `bg-primary/10`, `text-primary`, `border-border`, `hover:shadow-elegant`) – keine Hardcoded-Farben.
-- Lazy-Loading-Setup in `Index.tsx` bleibt unverändert.
+Keine Änderungen an anderen Seiten außerhalb der Branchen-Sektion.
