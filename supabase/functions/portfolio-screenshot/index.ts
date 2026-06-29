@@ -164,10 +164,8 @@ Deno.serve(async (req) => {
         `https://api.microlink.io/?screenshot=true&meta=false&type=jpeg&fullPage=${opts.full}` +
         `&waitUntil=${opts.waitUntil}&waitForTimeout=${opts.waitForTimeout}` +
         `&viewport.width=1440&viewport.height=${opts.height}&viewport.deviceScaleFactor=${opts.scale}` +
-        `&adblock=true&animations=false` +
         (opts.scroll ? `&scroll=true` : ``) +
         `&hide=${encodeURIComponent(hideParam)}` +
-        `&scripts=${encodeURIComponent(CLEANUP_SCRIPT)}` +
         `&embed=screenshot.url&url=${encodeURIComponent(url)}`;
       if (clickSelector) u += `&click=${encodeURIComponent(clickSelector)}`;
       return u;
