@@ -1,32 +1,45 @@
-## Status heute
-Aktuell nutzt die KI-Generierung **nur** Titel, Kategorie und Ergebnis aus dem Admin-Formular. Die echte Website (`external_url`) wird **nicht** besucht. Beschreibungen sind dadurch generisch und nicht inhaltsbezogen.
+# Screenshots zuverlässig wie die echte Website aussehen lassen
 
-## Ziel
-Wenn im Projekt eine `external_url` hinterlegt ist, holt die Edge Function den tatsächlichen Seiteninhalt und übergibt ihn der KI als Faktenbasis. So entsteht eine echte, projektspezifische Beschreibung (z. B. tatsächliche Leistungen, Region, USPs).
+## Problem
+Microlink liefert bei manchen Seiten ein unvollständiges/leeres Bild, weil:
+- Viewport zu klein (1000×1600) → Mobile-Layout oder Layout-Sprünge
+- `waitUntil: networkidle2` + nur 1,5s Wartezeit → Hero-Slider, Lazy-Images und Animationen sind noch nicht fertig
+- Cookie-Banner werden nur per `hide` (CSS) entfernt — manche Seiten blockieren den Inhalt mit Overlay/Body-Scroll-Lock, der bleibt
+- Fallback-Retry reduziert Höhe und Wartezeit → macht es eher schlechter, nicht besser
+- Kein `device`/`scaleFactor` für Retina → unscharf
+- Kein Provider-Fallback, wenn Microlink scheitert
 
-## Backend — `supabase/functions/generate-portfolio-description/index.ts`
-1. Input erweitern: zusätzlich `url?: string` akzeptieren (vom Admin als `external_url` mitgesendet).
-2. Wenn `url` vorhanden ist:
-   - Website abrufen mit `fetch(url, { redirect: "follow", signal: AbortSignal.timeout(8000) })` + realistischem User-Agent.
-   - HTML säubern: `<script>`/`<style>`/`<noscript>` entfernen, Tags strippen, Whitespace normalisieren, `<title>` und `<meta name="description">` separat extrahieren.
-   - Auf ~4.000 Zeichen kürzen (reicht für Above-the-fold + Leistungen, hält Tokenkosten klein).
-   - Fehler (Timeout, 4xx/5xx, leerer Body) → still ignorieren und ohne Website-Kontext weitergenerieren.
-3. User-Prompt erweitern um Block:
-   ```
-   Echte Website-Inhalte (Faktenbasis, NICHT wörtlich zitieren):
-   Titel: …
-   Meta: …
-   Text: …
-   ```
-4. System-Prompt um eine Regel ergänzen: „Wenn Website-Inhalte vorliegen, beziehe dich auf konkrete, dort genannte Leistungen/Branche/Region statt allgemeiner Floskeln. Keine wörtlichen Zitate, keine Markennamen-Wiederholung."
-5. Antwortformat & Fehlerhandling (401/402/429) bleiben unverändert.
+## Lösung
 
-## Frontend — `src/pages/AdminLeads.tsx`
-- Im `supabase.functions.invoke("generate-portfolio-description", …)`-Aufruf zusätzlich `url: projectForm.external_url` mitsenden.
-- Button-Label/Tooltip kurz ergänzen: „nutzt Website-Inhalt, wenn URL hinterlegt".
-- Kein neuer State, keine UI-Umbauten.
+### 1. Edge Function `portfolio-screenshot` qualitativ aufbohren
+- Viewport auf echte Desktop-Größe: **1440×900**, `deviceScaleFactor=2` (Retina-scharf)
+- `waitUntil=networkidle0` + großzügigeres `waitForTimeout` (Default **4500 ms**, max 15 s)
+- Statt nur `hide`: zusätzlich `scripts`-Param mit kleinen JS-Snippets, die typische Consent-Overlays + `body.overflow=auto` zurücksetzen (Borlabs, Usercentrics, Cookiebot, Complianz, iubenda, OneTrust)
+- Optionales Pre-Action: `scroll=true` (lädt Lazy-Bilder), danach zurück nach oben
+- `adblock=true`, `animations=false` (Microlink-Param) für ruhige Aufnahme
+- Smarter Retry-Fallback **mit längerer Wartezeit** (nicht kürzerer): zweiter Versuch `waitFor=8000`, `waitUntil=load`, scale=1
+- Optionaler 2. Provider als Fallback (z. B. ScreenshotOne / thum.io) hinter Secret `SCREENSHOT_FALLBACK_PROVIDER` — nur wenn Microlink final scheitert
 
-## Nicht enthalten
-- Kein Caching der gescrapten Inhalte (bei jedem Klick frisch).
-- Kein Headless-Browser/Microlink — reines `fetch` + HTML-Strip reicht für statische Hero-/Leistungs-Inhalte. JS-only-SPAs werden bewusst nur best-effort abgedeckt; in dem Fall greift weiterhin der bisherige Titel/Kategorie/Ergebnis-Pfad.
-- Keine Schema-/DB-Änderung.
+### 2. Mehr Steuerung im Admin
+Im "Erweitert"-Panel pro Projekt zusätzlich:
+- Numerisches Feld **Viewport-Höhe** (Default 900, bis 4000 für Long-Pages)
+- Checkbox **Vollständige Seite** (`fullPage=true`) — für Long-Scroll-Sites
+- Checkbox **Vor Aufnahme scrollen** (lazy-load triggern)
+- Checkbox **Retina (2×)**
+- Vorschau zeigt zusätzlich Dateigröße + Aufnahme-Zeitpunkt; Toast meldet, wenn Fallback-Provider griff
+
+### 3. Konsistenz im Cache-Pfad
+- Pfad-Bump auf `auto/v4/<key>.jpg`, damit neue Qualitätseinstellungen nicht durch alte Cache-Treffer überschrieben werden
+- `force=true` löscht zusätzlich vorhandene `v4`-Datei vor Upload (echte Neugenerierung statt nur Upsert)
+
+## Technische Details
+- Datei: `supabase/functions/portfolio-screenshot/index.ts`
+  - Neue Body-Felder: `viewportHeight`, `fullPage`, `scrollBefore`, `retina`
+  - Microlink-URL-Builder erweitern um `device`, `scripts`, `adblock`, `animations`, `scroll`
+- Datei: `src/pages/AdminLeads.tsx`
+  - Erweitert-Panel um 4 Felder, an `invoke` weiterreichen
+  - Erfolgs-Toast zeigt `provider` aus Response
+- Kein neues Secret nötig, solange Fallback-Provider weggelassen wird; wenn gewünscht: `add_secret` für `SCREENSHOTONE_ACCESS_KEY` (optional, separat fragen)
+
+## Offen
+Soll ich den optionalen Zweit-Provider (ScreenshotOne) gleich mitbauen, oder erst Microlink-Tuning + Admin-Optionen umsetzen und schauen, ob das reicht?
