@@ -24,7 +24,7 @@ const TestimonialCard = ({ stars = 5, badge, badgeColor, quote, name, business }
     <p className="text-base italic text-foreground/80 leading-relaxed">"{quote}"</p>
     <div className="flex items-center gap-3 mt-2">
       <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-        <User size={18} aria-hidden={true} focusable={false} />
+        <User size={20} aria-hidden={true} focusable={false} />
       </div>
       <div>
         <p className="text-sm font-semibold text-foreground">{name}</p>

@@ -31,13 +31,13 @@ const HandwerkerKontakt = () => (
 
             <div>
               <a href="tel:+4961313076498" className="flex items-center gap-3 text-2xl md:text-3xl font-bold text-white hover:underline">
-                <Phone size={28} aria-hidden={true} focusable={false} /> 06131 3076498
+                <Phone size={24} aria-hidden={true} focusable={false} /> 06131 3076498
               </a>
               <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Mo–Fr 9–18 Uhr — ich gehe ran</p>
             </div>
 
             <a href="https://wa.me/+4961313076498" className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110" style={{ background: "#25D366" }}>
-              <MessageCircle size={18} aria-hidden={true} focusable={false} /> WhatsApp schreiben →
+              <MessageCircle size={20} aria-hidden={true} focusable={false} /> WhatsApp schreiben →
             </a>
 
             <a href="mailto:info@meine-traum-webseite.de" className="inline-flex items-center gap-2 text-sm text-white hover:underline">

@@ -45,7 +45,7 @@ const WebdesignCoaches = () => (
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
-                <Link to="/kontakt">Kostenlose Website-Vorschau für Coaches <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+                <Link to="/kontakt">Kostenlose Website-Vorschau für Coaches <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
               </Button>
               <Button variant="outline-primary" size="lg" asChild>
                 <Link to="/kostenloser-website-check">Website-Check für Coaches</Link>
@@ -78,7 +78,7 @@ const WebdesignCoaches = () => (
             <AnimatedSection key={f.title} delay={i * 0.08}>
               <div className="p-7 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 bg-background h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-                  <f.icon size={22} className="text-primary" />
+                  <f.icon size={20} className="text-primary" />
                 </div>
                 <h3 className="font-heading text-lg font-semibold mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
@@ -120,7 +120,7 @@ const WebdesignCoaches = () => (
                 <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
                   <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm font-medium">{l.label}</span>
-                  <ArrowRight size={14} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
+                  <ArrowRight size={16} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
                 </Link>
               ))}
             </div>

@@ -34,7 +34,7 @@ const ConversionOptimierung = () => (
               deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kontakt">Website optimieren lassen <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+              <Link to="/kontakt">Website optimieren lassen <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>
@@ -47,7 +47,7 @@ const ConversionOptimierung = () => (
             <AnimatedSection key={s.title} delay={i * 0.1}>
               <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all bg-background hover:shadow-card">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <s.icon size={22} className="text-primary" />
+                  <s.icon size={20} className="text-primary" />
                 </div>
                 <div>
                   <h3 className="font-heading text-lg font-semibold mb-1.5">{s.title}</h3>

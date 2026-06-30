@@ -28,7 +28,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
                 asChild
               >
                 <Link to="/kontakt">
-                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button
@@ -38,7 +38,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
                 asChild
               >
                 <Link to="/kontakt">
-                  <Phone size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
+                  <Phone size={20} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>

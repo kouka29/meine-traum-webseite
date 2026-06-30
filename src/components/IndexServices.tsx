@@ -30,7 +30,7 @@ const IndexServices = () => (
           <AnimatedSection key={s.title} delay={i * 0.1}>
             <Link to={s.link} className="bg-background rounded-2xl p-7 shadow-card hover:shadow-elevated transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-primary/10 h-full flex flex-col block">
               <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                <s.icon size={22} className="text-primary-foreground" />
+                <s.icon size={20} className="text-primary-foreground" />
               </div>
               <h3 className="font-heading text-lg font-semibold mb-2">{s.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>

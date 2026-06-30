@@ -114,7 +114,7 @@ const KostenloserWebsiteCheck = () => {
                     <Input required name="website" placeholder="www.ihre-website.de" className="bg-background h-12" />
                   </div>
                   <Button variant="gradient" size="lg" type="submit" disabled={loading} className="w-full text-base py-6">
-                    {loading ? "Wird gesendet..." : <>Kostenlosen Check anfordern <Send size={18} aria-hidden={true} focusable={false} /></>}
+                    {loading ? "Wird gesendet..." : <>Kostenlosen Check anfordern <Send size={20} aria-hidden={true} focusable={false} /></>}
                   </Button>
                   {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
                   <input
@@ -155,7 +155,7 @@ const KostenloserWebsiteCheck = () => {
                   <div className="space-y-4">
                     {checkPoints.map((p) => (
                       <div key={p} className="flex items-center gap-3 p-4 rounded-xl border border-border">
-                        <Search size={18} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                        <Search size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                         <span className="text-sm font-medium">{p}</span>
                       </div>
                     ))}
@@ -169,7 +169,7 @@ const KostenloserWebsiteCheck = () => {
                     Unser kostenloser Website-Check deckt die wahren Probleme auf und gibt dir konkrete Empfehlungen.
                   </p>
                   <Link to="/kontakt" className="inline-flex items-center gap-2 text-sm text-primary-foreground font-semibold hover:underline">
-                    Oder direkt Vorschau anfordern <ArrowRight size={14} aria-hidden={true} focusable={false} />
+                    Oder direkt Vorschau anfordern <ArrowRight size={16} aria-hidden={true} focusable={false} />
                   </Link>
                 </div>
               </div>

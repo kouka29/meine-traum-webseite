@@ -58,7 +58,7 @@ const WebsiteErstellenLassen = () => (
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
-                <Link to="/kontakt">Kostenlose Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+                <Link to="/kontakt">Kostenlose Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
               </Button>
             </div>
           </div>

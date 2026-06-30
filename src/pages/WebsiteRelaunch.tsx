@@ -36,7 +36,7 @@ const WebsiteRelaunch = () => (
               Online-Präsenz in ein modernes Verkaufsinstrument – mit mehr Anfragen, besserem Design und schnelleren Ladezeiten.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+              <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>

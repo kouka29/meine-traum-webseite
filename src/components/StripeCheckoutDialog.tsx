@@ -92,7 +92,7 @@ export default function StripeCheckoutDialog({
           )}
           {error && (
             <div className="flex items-start gap-3 mx-6 p-4 rounded-lg border border-destructive/30 bg-destructive/5 text-sm">
-              <AlertTriangle size={18} className="text-destructive shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+              <AlertTriangle size={20} className="text-destructive shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
               <div>
                 <p className="font-medium text-destructive">Fehler</p>
                 <p className="text-muted-foreground mt-1">{error}</p>

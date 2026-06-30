@@ -115,9 +115,9 @@ const Handwerker = () => {
         className="fixed top-0 left-0 right-0 z-[60] w-full bg-gradient-to-r from-primary via-[hsl(265,60%,55%)] to-accent text-primary-foreground py-2 px-4 text-center text-xs sm:text-sm font-medium hover:brightness-110 transition tracking-wide"
       >
         <span className="inline-flex items-center gap-2">
-          <Sparkles size={14} className="opacity-80" aria-hidden={true} focusable={false} />
+          <Sparkles size={16} className="opacity-80" aria-hidden={true} focusable={false} />
           Speziell für Handwerksbetriebe — Kostenlose Website-Vorschau in 48 Stunden sichern
-          <ArrowRight size={14} aria-hidden={true} focusable={false} />
+          <ArrowRight size={16} aria-hidden={true} focusable={false} />
         </span>
       </button>
 
@@ -180,7 +180,7 @@ const Handwerker = () => {
                 {["Kostenlose Vorschau in 48 h", "Kein Technik-Stress", "Fertig während Du arbeitest"].map((b) => (
                   <span key={b} className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                      <Check size={12} className="text-primary" strokeWidth={3} aria-hidden={true} focusable={false} />
+                      <Check size={16} className="text-primary" strokeWidth={3} aria-hidden={true} focusable={false} />
                     </span>
                     {b}
                   </span>
@@ -194,7 +194,7 @@ const Handwerker = () => {
                   className="group bg-white text-[hsl(228,28%,5%)] hover:bg-white hover:scale-[1.02] transition-all shadow-[0_20px_60px_-15px_hsl(250_56%_60%/0.6)] h-14 px-7 text-base font-semibold rounded-full"
                 >
                   Kostenlose Vorschau anfordern
-                  <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
+                  <ArrowRight size={20} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
                 </Button>
                 <Button
                   size="lg"
@@ -221,7 +221,7 @@ const Handwerker = () => {
                 </div>
                 <div className="text-sm">
                   <div className="flex text-amber-400 mb-0.5">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" aria-hidden={true} focusable={false} />)}
+                    {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" aria-hidden={true} focusable={false} />)}
                   </div>
                   <p className="text-white/60 text-xs">+150 Betriebe aus der Region vertrauen uns</p>
                 </div>
@@ -414,7 +414,7 @@ const Handwerker = () => {
               className="group bg-gradient-to-r from-primary to-accent text-white hover:brightness-110 h-14 px-8 text-base font-semibold rounded-full shadow-[0_20px_50px_-15px_hsl(250_56%_48%/0.6)]"
             >
               Jetzt Vorschau anfordern
-              <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
+              <ArrowRight size={20} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -440,7 +440,7 @@ const Handwerker = () => {
                 <div className="group relative p-8 rounded-2xl border border-border/60 bg-card/40 h-full transition-all hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1 overflow-hidden">
                   <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-primary/5 group-hover:bg-primary/10 transition-colors" />
                   <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/15 to-accent/10 border border-primary/10 flex items-center justify-center mb-5">
-                    <f.icon size={22} className="text-primary" />
+                    <f.icon size={20} className="text-primary" />
                   </div>
                   <h3 className="relative font-heading font-semibold text-lg mb-2.5 tracking-tight">{f.title}</h3>
                   <p className="relative text-sm text-muted-foreground leading-relaxed">{f.text}</p>
@@ -473,7 +473,7 @@ const Handwerker = () => {
                 <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-white to-white/90 text-foreground h-full flex flex-col shadow-[0_30px_60px_-20px_rgb(0_0_0/0.5)] hover:-translate-y-2 transition-transform duration-500">
                   <div className="absolute top-6 right-6 font-heading text-6xl text-primary/15 leading-none">"</div>
                   <div className="flex text-amber-400 mb-4">
-                    {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="currentColor" aria-hidden={true} focusable={false} />)}
+                    {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" aria-hidden={true} focusable={false} />)}
                   </div>
                   <span className="self-start text-[10px] font-bold tracking-[0.15em] bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-5">
                     {t.badge}
@@ -541,7 +541,7 @@ const Handwerker = () => {
                       {t.features.map((f) => (
                         <li key={f} className="flex items-start gap-3 text-[15px]">
                           <span className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${t.highlighted ? "bg-primary/30" : "bg-primary/15"}`}>
-                            <Check size={12} className={t.highlighted ? "text-white" : "text-primary"} strokeWidth={3} aria-hidden={true} focusable={false} />
+                            <Check size={16} className={t.highlighted ? "text-white" : "text-primary"} strokeWidth={3} aria-hidden={true} focusable={false} />
                           </span>
                           {f}
                         </li>
@@ -616,7 +616,7 @@ const Handwerker = () => {
           <div className="grid lg:grid-cols-[1.1fr,1fr] gap-12 lg:gap-16 items-center">
             <AnimatedSection>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 mb-7">
-                <Sparkles size={12} className="text-amber-300" aria-hidden={true} focusable={false} />
+                <Sparkles size={16} className="text-amber-300" aria-hidden={true} focusable={false} />
                 <span className="text-[11px] font-semibold tracking-[0.18em] text-amber-300 uppercase">
                   Kostenlos & unverbindlich
                 </span>
@@ -639,7 +639,7 @@ const Handwerker = () => {
                 ].map((b) => (
                   <li key={b} className="flex items-start gap-3 text-white/90 text-[15px]">
                     <span className="w-6 h-6 rounded-full bg-primary/25 border border-primary/40 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check size={13} className="text-primary" strokeWidth={3} aria-hidden={true} focusable={false} />
+                      <Check size={16} className="text-primary" strokeWidth={3} aria-hidden={true} focusable={false} />
                     </span>
                     {b}
                   </li>
@@ -664,7 +664,7 @@ const Handwerker = () => {
                   {submitted ? (
                     <div className="text-center py-10">
                       <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent mx-auto flex items-center justify-center mb-6 shadow-lg">
-                        <Check size={36} className="text-white" strokeWidth={3} aria-hidden={true} focusable={false} />
+                        <Check size={24} className="text-white" strokeWidth={3} aria-hidden={true} focusable={false} />
                       </div>
                       <h3 className="font-heading font-bold text-3xl mb-4 tracking-tight">Super!</h3>
                       <p className="text-muted-foreground text-[15px] leading-relaxed">
@@ -720,14 +720,14 @@ const Handwerker = () => {
                         />
                         <Button type="submit" size="lg" disabled={loading} className="w-full h-14 rounded-full bg-gradient-to-r from-primary to-accent text-white hover:brightness-110 font-semibold text-base shadow-[0_15px_40px_-10px_hsl(250_56%_48%/0.5)] group disabled:opacity-60">
                           {loading ? "Wird gesendet…" : "Kostenlose Vorschau anfordern"}
-                          <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
+                          <ArrowRight size={20} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
                         </Button>
                         <div className="space-y-2 pt-3 border-t border-border/60">
                           <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-                            <Clock size={12} aria-hidden={true} focusable={false} /> Ich melde mich innerhalb von 2 Stunden — Mo–Fr 9–18 Uhr
+                            <Clock size={16} aria-hidden={true} focusable={false} /> Ich melde mich innerhalb von 2 Stunden — Mo–Fr 9–18 Uhr
                           </p>
                           <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-                            <ShieldCheck size={12} aria-hidden={true} focusable={false} /> Keine Weitergabe Deiner Daten. Kein Spam. Versprochen.
+                            <ShieldCheck size={16} aria-hidden={true} focusable={false} /> Keine Weitergabe Deiner Daten. Kein Spam. Versprochen.
                           </p>
                         </div>
                       </form>
@@ -807,7 +807,7 @@ const Handwerker = () => {
                 className="group bg-white text-[hsl(228,28%,5%)] hover:bg-white hover:scale-[1.02] h-14 px-8 text-base font-semibold rounded-full shadow-[0_20px_60px_-15px_hsl(250_56%_60%/0.6)]"
               >
                 Kostenlose Vorschau anfordern
-                <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
+                <ArrowRight size={20} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden={true} focusable={false} />
               </Button>
               <Button
                 size="lg"
@@ -833,7 +833,7 @@ const Handwerker = () => {
               </div>
               <div className="text-sm text-left">
                 <div className="flex text-amber-400 mb-0.5">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" aria-hidden={true} focusable={false} />)}
+                  {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" aria-hidden={true} focusable={false} />)}
                 </div>
                 <p className="text-white/60 text-xs">+150 Betriebe aus der Region vertrauen uns</p>
               </div>

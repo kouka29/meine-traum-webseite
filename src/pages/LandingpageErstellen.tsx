@@ -35,7 +35,7 @@ const LandingpageErstellen = () => (
               Landingpages mit verkaufspsychologischem Aufbau – perfekt für Google Ads, Social Media und Lead-Generierung.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kontakt">Landingpage anfragen <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+              <Link to="/kontakt">Landingpage anfragen <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>
@@ -48,7 +48,7 @@ const LandingpageErstellen = () => (
             <AnimatedSection key={b.title} delay={i * 0.1}>
               <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all bg-background hover:shadow-card">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <b.icon size={22} className="text-primary" />
+                  <b.icon size={20} className="text-primary" />
                 </div>
                 <div>
                   <h3 className="font-heading text-lg font-semibold mb-1.5">{b.title}</h3>

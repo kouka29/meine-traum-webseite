@@ -59,7 +59,7 @@ export default function StripeEmbeddedCheckoutBox({
   if (!clientSecret) {
     return (
       <div style={{ padding: 40, textAlign: "center", color: "#6B7280" }}>
-        <Loader2 size={28} className="animate-spin" style={{ margin: "0 auto 8px" }} aria-hidden={true} focusable={false} />
+        <Loader2 size={24} className="animate-spin" style={{ margin: "0 auto 8px" }} aria-hidden={true} focusable={false} />
         <div style={{ fontSize: 13 }}>Bezahlung wird vorbereitet…</div>
       </div>
     );

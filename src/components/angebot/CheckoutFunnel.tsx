@@ -437,7 +437,7 @@ export default function CheckoutFunnel({
               }}
               aria-label="Zurück"
             >
-              <ChevronLeft size={18} aria-hidden={true} focusable={false} /> Zurück
+              <ChevronLeft size={20} aria-hidden={true} focusable={false} /> Zurück
             </button>
           ) : <span />}
           <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_DARK, letterSpacing: "-0.01em" }}>
@@ -476,7 +476,7 @@ export default function CheckoutFunnel({
                     fontSize: 12, fontWeight: 800, flexShrink: 0,
                     transition: "all 0.2s",
                   }}>
-                    {done ? <Check size={12} strokeWidth={3} aria-hidden={true} focusable={false} /> : i + 1}
+                    {done ? <Check size={16} strokeWidth={3} aria-hidden={true} focusable={false} /> : i + 1}
                   </div>
                   {i < stepLabels.length - 1 && (
                     <div style={{
@@ -613,7 +613,7 @@ export default function CheckoutFunnel({
                 )}
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: TEXT_MUTED }}>
-                <Shield size={12} aria-hidden={true} focusable={false} /> Sicher
+                <Shield size={16} aria-hidden={true} focusable={false} /> Sicher
               </div>
             </div>
 
@@ -643,11 +643,11 @@ export default function CheckoutFunnel({
               }}
             >
               {submitting ? (
-                <><Loader2 size={18} className="animate-spin" aria-hidden={true} focusable={false} /> Wird abgeschickt…</>
+                <><Loader2 size={20} className="animate-spin" aria-hidden={true} focusable={false} /> Wird abgeschickt…</>
               ) : currentKey === "kontakt" ? (
-                <>{payMethod === "online" && stripeAvailable ? "Weiter zur Zahlung" : "Verbindlich beauftragen"} <ArrowRight size={18} aria-hidden={true} focusable={false} /></>
+                <>{payMethod === "online" && stripeAvailable ? "Weiter zur Zahlung" : "Verbindlich beauftragen"} <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
               ) : (
-                <>Weiter <ArrowRight size={18} aria-hidden={true} focusable={false} /></>
+                <>Weiter <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
               )}
             </button>
             <TrustBlock />
@@ -861,7 +861,7 @@ function PaymentCard({
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
         {benefits.map((b, i) => (
           <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 6, fontSize: 13, color: TEXT_DARK }}>
-            <Check size={14} color="#059669" style={{ marginTop: 2, flexShrink: 0 }} strokeWidth={3} aria-hidden={true} focusable={false} />
+            <Check size={16} color="#059669" style={{ marginTop: 2, flexShrink: 0 }} strokeWidth={3} aria-hidden={true} focusable={false} />
             <span>{b}</span>
           </li>
         ))}
@@ -882,7 +882,7 @@ function StepAddOns({
   if (addons.length === 0) {
     return (
       <div style={{ textAlign: "center", padding: "40px 20px" }}>
-        <Sparkles size={32} color={BRAND} style={{ margin: "0 auto 12px" }} aria-hidden={true} focusable={false} />
+        <Sparkles size={24} color={BRAND} style={{ margin: "0 auto 12px" }} aria-hidden={true} focusable={false} />
         <h2 style={{ fontSize: 18, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>Alles drin!</h2>
         <p style={{ fontSize: 14, color: TEXT_MUTED }}>
           dein Paket enthält bereits alles, was Du brauchst. Weiter zum nächsten Schritt.
@@ -941,7 +941,7 @@ function StepAddOns({
                 marginTop: 2,
                 transition: "all 0.15s",
               }}>
-                {sel && <Check size={14} color="#fff" strokeWidth={3} aria-hidden={true} focusable={false} />}
+                {sel && <Check size={16} color="#fff" strokeWidth={3} aria-hidden={true} focusable={false} />}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 2 }}>
@@ -1346,7 +1346,7 @@ function StepFertig({ auftragsNr, email }: { auftragsNr: string; email: string }
         display: "inline-flex", alignItems: "center", justifyContent: "center",
         marginBottom: 16,
       }}>
-        <Check size={32} strokeWidth={3} aria-hidden={true} focusable={false} />
+        <Check size={24} strokeWidth={3} aria-hidden={true} focusable={false} />
       </div>
       <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 8, letterSpacing: "-0.02em" }}>
         Vielen Dank!

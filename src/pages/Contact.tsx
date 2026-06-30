@@ -135,7 +135,7 @@ const Contact = () => {
                 </div>
                 <Button variant="gradient" size="lg" type="submit" disabled={loading} className="w-full sm:w-auto text-base py-6 px-8">
                   {loading ? "Wird gesendet..." : (
-                    <>Erstgespräch anfragen <Send size={18} aria-hidden={true} focusable={false} /></>
+                    <>Erstgespräch anfragen <Send size={20} aria-hidden={true} focusable={false} /></>
                   )}
                 </Button>
                 {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
@@ -213,7 +213,7 @@ const Contact = () => {
                     ].map((item) => (
                       <div key={item.text} className="flex items-center gap-4">
                         <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <item.icon size={18} className="text-primary" />
+                          <item.icon size={20} className="text-primary" />
                         </div>
                         <div>
                           <p className="text-xs text-muted-foreground">{item.label}</p>

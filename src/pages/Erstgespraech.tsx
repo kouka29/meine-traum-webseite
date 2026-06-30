@@ -187,7 +187,7 @@ const Erstgespraech = () => (
                 asChild
               >
                 <a href={TERMIN_LINK}>
-                  Kostenloses Erstgespräch buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenloses Erstgespräch buchen <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </a>
               </Button>
               <Button
@@ -196,7 +196,7 @@ const Erstgespraech = () => (
                 className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 h-auto min-h-12 w-full sm:w-auto whitespace-normal text-center leading-tight"
                 onClick={scrollToWeiter}
               >
-                Erst mehr erfahren <ArrowDown size={18} aria-hidden={true} focusable={false} />
+                Erst mehr erfahren <ArrowDown size={20} aria-hidden={true} focusable={false} />
               </Button>
             </div>
           </div>
@@ -256,7 +256,7 @@ const Erstgespraech = () => (
                   <ul className="space-y-3 border-t border-border pt-5">
                     {c.bullets.map((b) => (
                       <li key={b} className="flex items-start gap-3">
-                        <Check size={18} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                        <Check size={20} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                         <span className="text-foreground/90 text-sm sm:text-base">
                           {b}
                         </span>
@@ -320,7 +320,7 @@ const Erstgespraech = () => (
             <AnimatedSection key={a.title} delay={i * 0.05}>
               <div className="flex items-start gap-4 sm:gap-5 p-5 sm:p-6 rounded-xl bg-background border border-border hover:shadow-elevated transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center text-primary-foreground shrink-0">
-                  <a.icon size={22} />
+                  <a.icon size={20} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-3 mb-1.5 flex-wrap">
@@ -350,7 +350,7 @@ const Erstgespraech = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center py-8 sm:py-16">
-            <Quote size={48} className="text-primary/30 mx-auto mb-8" aria-hidden={true} focusable={false} />
+            <Quote size={24} className="text-primary/30 mx-auto mb-8" aria-hidden={true} focusable={false} />
             <blockquote className="text-2xl sm:text-3xl md:text-4xl font-heading font-medium leading-relaxed text-foreground mb-10 text-balance">
               „Meine alte Website sah zwar ganz ansprechend aus, brachte jedoch
               kaum Anfragen. Mit der neuen, deutlich hochwertigeren Website
@@ -389,12 +389,12 @@ const Erstgespraech = () => (
             <Card className="h-full border-primary/30">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-primary flex items-center gap-2">
-                  <Check size={22} aria-hidden={true} focusable={false} /> Was es ist
+                  <Check size={20} aria-hidden={true} focusable={false} /> Was es ist
                 </h3>
                 <ul className="space-y-4">
                   {yesThis.map((y) => (
                     <li key={y} className="flex items-start gap-3">
-                      <Check size={18} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                      <Check size={20} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                       <span className="text-foreground/90">{y}</span>
                     </li>
                   ))}
@@ -406,12 +406,12 @@ const Erstgespraech = () => (
             <Card className="h-full border-destructive/20">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-muted-foreground flex items-center gap-2">
-                  <X size={22} aria-hidden={true} focusable={false} /> Was es nicht ist
+                  <X size={20} aria-hidden={true} focusable={false} /> Was es nicht ist
                 </h3>
                 <ul className="space-y-4">
                   {notThis.map((n) => (
                     <li key={n} className="flex items-start gap-3">
-                      <X size={18} className="text-destructive shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                      <X size={20} className="text-destructive shrink-0 mt-1" aria-hidden={true} focusable={false} />
                       <span className="text-muted-foreground">{n}</span>
                     </li>
                   ))}
@@ -474,7 +474,7 @@ const Erstgespraech = () => (
                 asChild
               >
                 <a href={TERMIN_LINK}>
-                  Jetzt Termin buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Jetzt Termin buchen <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </a>
               </Button>
               <div className="mt-8 flex flex-col items-center gap-2">
@@ -482,7 +482,7 @@ const Erstgespraech = () => (
                   href="tel:+4961313076498"
                   className="inline-flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 font-semibold text-base sm:text-lg transition-colors"
                 >
-                  <Phone size={18} aria-hidden={true} focusable={false} /> 06131 3076498
+                  <Phone size={20} aria-hidden={true} focusable={false} /> 06131 3076498
                 </a>
                 <p className="text-primary-foreground/60 text-xs sm:text-sm">
                   Mo–Fr 9–18 Uhr · Auch per WhatsApp erreichbar

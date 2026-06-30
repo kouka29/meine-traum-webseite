@@ -29,7 +29,7 @@ const FreePreviewCTA = () => (
             <div className="flex flex-col gap-4 max-w-md mx-auto mb-10 text-left">
               {steps.map((s) => (
                 <div key={s.text} className="flex items-start gap-3 text-sm text-primary-foreground/80">
-                  <s.icon size={18} className="shrink-0 mt-0.5" />
+                  <s.icon size={20} className="shrink-0 mt-0.5" />
                   <span>{s.text}</span>
                 </div>
               ))}
@@ -41,7 +41,7 @@ const FreePreviewCTA = () => (
                 asChild
               >
                 <Link to="/kontakt">
-                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button
@@ -51,7 +51,7 @@ const FreePreviewCTA = () => (
                 asChild
               >
                 <Link to="/kontakt">
-                  <Phone size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
+                  <Phone size={20} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>
