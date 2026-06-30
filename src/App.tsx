@@ -15,7 +15,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
 import StructuredData from "@/components/StructuredData";
 import PageTracker from "@/components/PageTracker";
-import { DesignModeProvider, useDesignMode } from "@/contexts/DesignModeProvider";
+import { DesignModeProvider } from "@/contexts/DesignModeProvider";
 
 // Eager load Index for fastest initial paint
 import Index from "./pages/Index.tsx";
@@ -49,7 +49,7 @@ const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 const Starter = lazy(() => import("./pages/Starter.tsx"));
 const KaufErfolgreich = lazy(() => import("./pages/KaufErfolgreich.tsx"));
 const Handwerker = lazy(() => import("./pages/Handwerker.tsx"));
-const HandwerkerClassic = lazy(() => import("./pages/HandwerkerClassic.tsx"));
+
 const HandwerkerPreise = lazy(() => import("./pages/trade/HandwerkerPreise.tsx"));
 const HandwerkerLeistungen = lazy(() => import("./pages/trade/HandwerkerLeistungen.tsx"));
 
@@ -107,10 +107,7 @@ const PageLoader = () => (
   </div>
 );
 
-const HandwerkerRoute = () => {
-  const { appleDesign } = useDesignMode();
-  return appleDesign ? <Handwerker /> : <HandwerkerClassic />;
-};
+const HandwerkerRoute = () => <Handwerker />;
 
 const ChromeWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
