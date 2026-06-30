@@ -813,7 +813,7 @@ const Starter = () => (
                   href="tel:+4961313076498"
                   className="inline-flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 font-semibold text-base sm:text-lg transition-colors"
                 >
-                  <Phone size={18} aria-hidden={true} focusable={false} /> 06131 / 30 765 00
+                  <Phone size={18} aria-hidden={true} focusable={false} /> 06131 3076498
                 </a>
                 <p className="text-primary-foreground/60 text-xs sm:text-sm">
                   Mo–Fr 9–18 Uhr · Auch per WhatsApp
