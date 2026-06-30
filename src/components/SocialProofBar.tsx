@@ -14,7 +14,7 @@ const SocialProofBar = () => (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
           {stats.map((s) => (
             <div key={s.label}>
-              <p className="font-heading text-3xl md:text-4xl font-bold gradient-text tracking-tight">{s.value}</p>
+              <p className="font-heading text-3xl md:text-4xl font-bold text-foreground tracking-tight">{s.value}</p>
               <p className="text-sm text-muted-foreground mt-2">{s.label}</p>
             </div>
           ))}
