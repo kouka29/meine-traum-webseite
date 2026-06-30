@@ -38,7 +38,7 @@ const HandwerkerUeberUns = () => (
     <section className="py-20" style={{ background: "var(--light-bg)" }}>
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-5">Warum wir uns auf Handwerksbetriebe spezialisiert haben</h2>
+          <h2 className="text-3xl text-3xl font-bold text-foreground mb-5">Warum wir uns auf Handwerksbetriebe spezialisiert haben</h2>
           <p className="text-muted-foreground leading-relaxed">
             Wir haben festgestellt: Die meisten Web-Agenturen reden viel und liefern wenig. Handwerker brauchen keine 50-seitigen Konzepte — sie brauchen eine Website die funktioniert. Die das Telefon klingeln lässt. Die Google-Rankings bringt. Genau das machen wir.
           </p>
@@ -71,7 +71,7 @@ const HandwerkerUeberUns = () => (
 
     <section className="py-16" style={{ background: "var(--dark-bg)" }}>
       <div className="container-narrow px-4 max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Überzeug Dich selbst — kostenlos und unverbindlich</h2>
+        <h2 className="text-3xl text-3xl font-bold text-white mb-6">Überzeug Dich selbst — kostenlos und unverbindlich</h2>
         <Link to="/handwerker/kontakt" className="inline-block rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-110" style={{ background: "var(--brand-purple)" }}>
           Kostenlose Vorschau anfordern →
         </Link>

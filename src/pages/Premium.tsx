@@ -556,7 +556,7 @@ const Premium = () => {
                 Projekt anfragen
               </div>
               <h2
-                className="text-4xl font-normal leading-[1.15] text-white md:text-5xl"
+                className="text-3xl font-normal leading-[1.15] text-white"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Erzählen Sie uns von{" "}

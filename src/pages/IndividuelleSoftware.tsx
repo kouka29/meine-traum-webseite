@@ -154,7 +154,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-destructive/10 text-destructive mb-4 text-xs">Das Problem</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Manuelle Prozesse bremsen dein Wachstum
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -185,7 +185,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Die Lösung</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Wir digitalisieren und automatisieren dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -216,7 +216,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Anwendungsbeispiele</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Mögliche Lösungen für dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -246,7 +246,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Unser Prozess</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               So entsteht deine individuelle Lösung
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -278,7 +278,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Ergebnisse</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Das Ergebnis: Mehr Effizienz, weniger Aufwand
             </h2>
           </div>
@@ -305,7 +305,7 @@ const IndividuelleSoftware = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="glass-card rounded-3xl p-8 sm:p-12 md:p-16 text-center max-w-3xl mx-auto border border-primary/20">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Startest du dein Projekt
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">

@@ -1559,7 +1559,7 @@ const KostenloseVorschauV2 = () => {
               {heroBadge}
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-5">
               {settings?.hero_h1_line1 ?? "dein Handwerksbetrieb."}
               <br />
               {settings?.hero_h1_line2 ?? "Eine neue Webseite."}
@@ -1652,7 +1652,7 @@ const KostenloseVorschauV2 = () => {
       {(settings?.show_pain_points ?? true) && (
       <section className="py-16 sm:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl text-3xl font-bold text-center mb-12">
             Erkennst du sich wieder?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -1679,7 +1679,7 @@ const KostenloseVorschauV2 = () => {
       {(settings?.show_process ?? true) && (
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl text-3xl font-bold text-center mb-12">
             In 3 Schritten zu deiner Vorschau
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 max-w-5xl mx-auto items-stretch">
@@ -1717,7 +1717,7 @@ const KostenloseVorschauV2 = () => {
       >
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+            <h2 className="text-3xl text-3xl font-bold mb-3">
               {isWaitlist ? `Jetzt für ${nextMonthLabel} vormerken lassen` : "Jetzt deinen Platz sichern"}
             </h2>
             {isWaitlist ? (
@@ -1740,7 +1740,7 @@ const KostenloseVorschauV2 = () => {
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">So könnte deine Webseite aussehen</h2>
+            <h2 className="text-3xl text-3xl font-bold mb-3">So könnte deine Webseite aussehen</h2>
             <p className="text-muted-foreground">Echte Vorschauen – in 48 Stunden erstellt.</p>
           </div>
           <Carousel
@@ -1834,7 +1834,7 @@ const KostenloseVorschauV2 = () => {
       {(settings?.show_testimonials ?? true) && (
       <section className="py-16 sm:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl text-3xl font-bold text-center mb-12">
             Was Kunden über ihre Vorschau sagen
           </h2>
           <Carousel
@@ -1890,7 +1890,7 @@ const KostenloseVorschauV2 = () => {
       {(settings?.show_faq ?? true) && activeFaqs.length > 0 && (
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3">
+          <h2 className="text-3xl text-3xl font-bold text-center mb-3">
             Das fragen Handwerker am häufigsten
           </h2>
           <p className="text-center text-muted-foreground mb-10">
@@ -1926,7 +1926,7 @@ const KostenloseVorschauV2 = () => {
                 <SlotPill inverse total={totalSlots} taken={takenSlots} />
               </div>
             )}
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight">
+            <h2 className="text-3xl text-3xl font-bold mb-4 leading-tight">
               {isWaitlist
                 ? `${monatName} ist ausgebucht – sichere sich ${nextMonthLabel}.`
                 : (settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut.")}

@@ -692,7 +692,7 @@ const EmailAngebot = () => {
             <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
 
             <div className="relative">
-              <h2 className="font-heading text-3xl md:text-5xl font-bold mb-5 text-white text-balance">
+              <h2 className="text-3xl font-heading text-3xl font-bold mb-5 text-white text-balance">
                 Mehr Aufträge. Weniger Aufwand.
               </h2>
               <p className="text-white/85 text-base md:text-lg mb-9 leading-relaxed max-w-2xl mx-auto">

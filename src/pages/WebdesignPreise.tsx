@@ -1027,7 +1027,7 @@ const WebdesignPreise = () => {
 
     <section className="bg-primary/10 py-[60px]">
       <div className="container-narrow px-4 text-center">
-        <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
+        <h2 className="text-3xl font-heading text-3xl font-bold text-foreground mb-5">
           Mehr Aufträge. Weniger Aufwand.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">

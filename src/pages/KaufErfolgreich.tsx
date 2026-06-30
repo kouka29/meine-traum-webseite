@@ -27,7 +27,7 @@ export default function KaufErfolgreich() {
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
           <CheckCircle2 className="text-primary" size={48} aria-hidden={true} focusable={false} />
         </div>
-        <h1 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+        <h1 className="text-4xl md:text-5xl font-heading text-3xl font-bold mb-4">
           {heading}
         </h1>
         <p className="text-lg text-muted-foreground mb-10">{subline}</p>

@@ -154,7 +154,7 @@ const EinEuroAngebot = () => {
       {/* WAS IST ENTHALTEN */}
       <section className="bg-white py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+          <h2 className="text-3xl text-3xl font-bold text-center mb-12 text-foreground">
             Das bekommen Sie für 1 €
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -172,7 +172,7 @@ const EinEuroAngebot = () => {
       {/* WIE FUNKTIONIERT */}
       <section className="bg-muted/40 py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">So funktioniert's</h2>
+          <h2 className="text-3xl text-3xl font-bold text-center mb-12">So funktioniert's</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {steps.map((s) => (
               <div key={s.n} className="rounded-2xl bg-card border border-border p-6 shadow-sm">
@@ -224,7 +224,7 @@ const EinEuroAngebot = () => {
         style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))" }}
       >
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl text-3xl font-bold text-center mb-12">
             Was würde das normalerweise kosten?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -254,7 +254,7 @@ const EinEuroAngebot = () => {
       {/* TESTIMONIALS */}
       <section className="bg-white py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Das sagen unsere Kunden</h2>
+          <h2 className="text-3xl text-3xl font-bold text-center mb-12">Das sagen unsere Kunden</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
               <div key={t.name} className="rounded-2xl bg-card border border-border p-6 shadow-sm">
@@ -269,7 +269,7 @@ const EinEuroAngebot = () => {
       {/* FAQ */}
       <section className="bg-muted/40 py-20 md:py-24">
         <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Häufige Fragen</h2>
+          <h2 className="text-3xl text-3xl font-bold text-center mb-10">Häufige Fragen</h2>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, idx) => (
               <AccordionItem key={idx} value={`item-${idx}`}>
@@ -345,7 +345,7 @@ const EinEuroAngebot = () => {
         }}
       >
         <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl text-3xl font-bold mb-4">
             Bereit für Ihre neue Webseite — für 1 €?
           </h2>
           <p className="text-white/70 mb-8">Limitiertes Einführungsangebot. Jetzt sichern.</p>

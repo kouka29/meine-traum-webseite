@@ -357,7 +357,7 @@ const Handwerker = () => {
               <span className="inline-block text-[11px] font-semibold tracking-[0.2em] text-white/40 uppercase mb-4">
                 Die Realität
               </span>
-              <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight mb-5 text-balance">
+              <h2 className="text-3xl text-white font-bold tracking-tight mb-5 text-balance">
                 Kommt Dir das bekannt vor?
               </h2>
               <p className="text-white/55 text-lg">Das sagen uns Handwerker bevor wir ihre Website gebaut haben.</p>
@@ -397,7 +397,7 @@ const Handwerker = () => {
               <span className="inline-block text-[11px] font-semibold tracking-[0.2em] text-primary uppercase mb-4">
                 So einfach geht's
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-5 text-balance">
+              <h2 className="text-3xl font-bold tracking-tight mb-5 text-balance">
                 Deine neue Website — ohne Stress, ohne Technik
               </h2>
               <p className="text-muted-foreground text-lg">Du machst Dein Handwerk. Wir machen Deine Website. Punkt.</p>
@@ -447,7 +447,7 @@ const Handwerker = () => {
               <span className="inline-block text-[11px] font-semibold tracking-[0.2em] text-primary uppercase mb-4">
                 Was Du bekommst
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-5 text-balance">
+              <h2 className="text-3xl font-bold tracking-tight mb-5 text-balance">
                 Eine Website, die für Dich arbeitet — auch wenn Du schläfst
               </h2>
             </div>
@@ -479,7 +479,7 @@ const Handwerker = () => {
               <span className="inline-block text-[11px] font-semibold tracking-[0.2em] text-white/40 uppercase mb-4">
                 Stimmen vom Bau
               </span>
-              <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              <h2 className="text-3xl text-white font-bold tracking-tight mb-5">
                 Was Handwerker über uns sagen
               </h2>
               <p className="text-white/55 text-lg">Echte Betriebe. Echte Ergebnisse.</p>
@@ -521,7 +521,7 @@ const Handwerker = () => {
               <span className="inline-block text-[11px] font-semibold tracking-[0.2em] text-primary uppercase mb-4">
                 Transparent & Fair
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-5 text-balance">
+              <h2 className="text-3xl font-bold tracking-tight mb-5 text-balance">
                 Was kostet Deine neue Website?
               </h2>
               <p className="text-muted-foreground text-lg">
@@ -600,7 +600,7 @@ const Handwerker = () => {
               <span className="inline-block text-[11px] font-semibold tracking-[0.2em] text-primary uppercase mb-4">
                 Deine Branche
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              <h2 className="text-3xl font-bold tracking-tight mb-5">
                 Wir kennen Dein Handwerk
               </h2>
             </div>
@@ -640,7 +640,7 @@ const Handwerker = () => {
                 </span>
               </div>
 
-              <h2 className="text-white text-5xl md:text-6xl font-bold mb-8 leading-[1.05] tracking-tight">
+              <h2 className="text-3xl text-white font-bold mb-8 leading-[1.05] tracking-tight">
                 Deine kostenlose<br />
                 <span className="bg-gradient-to-br from-[hsl(250,90%,75%)] to-[hsl(215,100%,70%)] bg-clip-text text-transparent">
                   Website-Vorschau
@@ -766,7 +766,7 @@ const Handwerker = () => {
               <span className="inline-block text-[11px] font-semibold tracking-[0.2em] text-primary uppercase mb-4">
                 FAQ
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              <h2 className="text-3xl font-bold tracking-tight mb-5">
                 Das fragen Handwerker am häufigsten
               </h2>
               <p className="text-muted-foreground text-lg">Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.</p>
@@ -808,7 +808,7 @@ const Handwerker = () => {
         />
         <div className="container-narrow px-4 text-center relative">
           <AnimatedSection>
-            <h2 className="text-white font-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1] tracking-tight text-balance">
+            <h2 className="text-3xl text-white font-heading font-bold mb-8 leading-[1] tracking-tight text-balance">
               Mehr Aufträge.<br />
               <span className="bg-gradient-to-br from-[hsl(250,90%,75%)] via-[hsl(265,85%,75%)] to-[hsl(215,100%,70%)] bg-clip-text text-transparent">
                 Weniger Leerläufe.

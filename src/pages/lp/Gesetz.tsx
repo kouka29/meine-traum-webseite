@@ -296,7 +296,7 @@ const Gesetz = () => {
       <section className="py-20 md:py-28 bg-muted/40">
         <div className="container mx-auto px-4 max-w-3xl text-center">
           <motion.div {...fadeUp}>
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-10">
+            <h2 className="text-3xl font-display text-3xl font-bold mb-10">
               Das sagt der Staat — keine Meinung, Fakten
             </h2>
             <Card className="p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
@@ -341,7 +341,7 @@ const Gesetz = () => {
         <section className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 max-w-[680px]">
             <motion.div {...fadeUp} className="text-center mb-10">
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-3xl font-display text-3xl font-bold mb-4">
                 Wie viele dieser Punkte treffen auf Ihre Webseite zu?
               </h2>
               <p className="text-muted-foreground">
@@ -380,7 +380,7 @@ const Gesetz = () => {
         <div className="container mx-auto px-4 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeUp}>
             <div className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Unsere Lösung</div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold leading-tight mb-6">
+            <h2 className="text-3xl font-display text-3xl font-bold leading-tight mb-6">
               {isBfsg ? "Wir lösen das Problem für Sie — kostenlos und unverbindlich" : "Neue, gesetzeskonforme Webseite — wir zeigen Ihnen kostenlos wie sie aussieht"}
             </h2>
             <ul className="space-y-3 mb-8">
@@ -595,7 +595,7 @@ const Gesetz = () => {
         style={{ background: "linear-gradient(135deg, hsl(250 56% 30%), hsl(250 56% 48%) 60%, hsl(215 100% 50%))" }}>
         <div className="container mx-auto px-4 text-center max-w-3xl">
           <div>
-            <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-display text-3xl font-bold text-white mb-4">
               Jetzt kostenlose Vorschau anfordern
             </h2>
             <p className="text-white/85 text-lg mb-6">
