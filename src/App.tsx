@@ -109,6 +109,15 @@ const PageLoader = () => (
 
 const HandwerkerRoute = () => <Handwerker />;
 
+const tradeHubs = [
+  { path: "elektriker", Hub: ElektrikerHub, Preise: ElektrikerPreise },
+  { path: "maler", Hub: MalerHub, Preise: null },
+  { path: "sanitaer", Hub: SanitaerHub, Preise: SanitaerPreise },
+  { path: "dachdecker", Hub: DachdeckerHub, Preise: DachdeckerPreise },
+] as const;
+
+const tradeSubRedirects = ["leistungen", "portfolio", "ueber-uns", "kontakt"] as const;
+
 const ChromeWrapper = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
   const standalone =
@@ -188,37 +197,26 @@ const App = () => (
               <Route path="/handwerker/kontakt" element={<HandwerkerKontakt />} />
               <Route path="/handwerker/*" element={<Navigate to="/handwerker" replace />} />
 
-              <Route path="/elektriker" element={<ElektrikerHub />} />
-              <Route path="/elektriker/preise" element={<ElektrikerPreise />} />
-              <Route path="/elektriker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-              <Route path="/elektriker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-              <Route path="/elektriker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-              <Route path="/elektriker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-              <Route path="/elektriker/*" element={<Navigate to="/elektriker" replace />} />
-
-              <Route path="/maler" element={<MalerHub />} />
-              <Route path="/maler/preise" element={<Navigate to="/handwerker/preise" replace />} />
-              <Route path="/maler/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-              <Route path="/maler/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-              <Route path="/maler/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-              <Route path="/maler/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-              <Route path="/maler/*" element={<Navigate to="/maler" replace />} />
-
-              <Route path="/sanitaer" element={<SanitaerHub />} />
-              <Route path="/sanitaer/preise" element={<SanitaerPreise />} />
-              <Route path="/sanitaer/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-              <Route path="/sanitaer/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-              <Route path="/sanitaer/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-              <Route path="/sanitaer/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-              <Route path="/sanitaer/*" element={<Navigate to="/sanitaer" replace />} />
-
-              <Route path="/dachdecker" element={<DachdeckerHub />} />
-              <Route path="/dachdecker/preise" element={<DachdeckerPreise />} />
-              <Route path="/dachdecker/leistungen" element={<Navigate to="/handwerker/leistungen" replace />} />
-              <Route path="/dachdecker/portfolio" element={<Navigate to="/handwerker/portfolio" replace />} />
-              <Route path="/dachdecker/ueber-uns" element={<Navigate to="/handwerker/ueber-uns" replace />} />
-              <Route path="/dachdecker/kontakt" element={<Navigate to="/handwerker/kontakt" replace />} />
-              <Route path="/dachdecker/*" element={<Navigate to="/dachdecker" replace />} />
+              {tradeHubs.flatMap(({ path, Hub, Preise }) => [
+                <Route key={path} path={`/${path}`} element={<Hub />} />,
+                <Route
+                  key={`${path}-preise`}
+                  path={`/${path}/preise`}
+                  element={Preise ? <Preise /> : <Navigate to="/handwerker/preise" replace />}
+                />,
+                ...tradeSubRedirects.map((sub) => (
+                  <Route
+                    key={`${path}-${sub}`}
+                    path={`/${path}/${sub}`}
+                    element={<Navigate to={`/handwerker/${sub}`} replace />}
+                  />
+                )),
+                <Route
+                  key={`${path}-wild`}
+                  path={`/${path}/*`}
+                  element={<Navigate to={`/${path}`} replace />}
+                />,
+              ])}
 
               {/* Branchen-Landingpages */}
               <Route path="/fitness" element={<FitnessHub />} />
