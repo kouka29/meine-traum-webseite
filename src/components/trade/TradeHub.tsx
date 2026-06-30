@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Check } from "lucide-react";
+import EmojiIcon from "@/lib/emojiToIcon";
 import HandwerkerLeadForm from "@/components/trade/HandwerkerLeadForm";
 import FeatureCard from "@/components/trade/FeatureCard";
 import TestimonialCard from "@/components/trade/TestimonialCard";
@@ -88,7 +89,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
               key={p.title}
               className="rounded-card bg-white p-6 flex flex-col gap-3 transition duration-300 hover:-translate-y-0.5 shadow-elevated"
             >
-              <div className="text-3xl">{p.icon}</div>
+              <EmojiIcon emoji={p.icon} size={20} />
               <h3 className="text-base font-semibold text-foreground">{p.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{p.description}</p>
             </div>
@@ -104,7 +105,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <div key={s.title} className="rounded-card bg-white p-7 shadow-marketing flex flex-col gap-3 border border-border">
               <div className="flex items-center gap-3">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center bg-brand text-brand-foreground font-bold text-sm">{i + 1}</span>
-                <span className="text-2xl">{s.emoji}</span>
+                <EmojiIcon emoji={s.emoji} size={20} />
               </div>
               <h3 className="text-base font-bold text-foreground">{s.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{s.text}</p>
@@ -163,7 +164,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
               to={t.to}
               className="group rounded-card bg-white p-7 flex flex-col items-center gap-3 shadow-marketing border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:shadow-marketing-hover"
             >
-              <span className="text-4xl">{t.icon}</span>
+              <EmojiIcon emoji={t.icon} size={20} />
               <span className="text-base font-semibold text-center text-foreground group-hover:text-brand transition-colors">{t.label}</span>
             </Link>
           ))}
