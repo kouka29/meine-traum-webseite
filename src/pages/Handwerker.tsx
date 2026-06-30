@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AnimatedSection from "@/components/AnimatedSection";
+import EmojiIcon from "@/lib/emojiToIcon";
 import {
   Accordion,
   AccordionContent,
@@ -339,7 +340,7 @@ const Handwerker = () => {
           <div className="flex gap-12 animate-[marquee_30s_linear_infinite] whitespace-nowrap text-white/30 text-sm font-medium tracking-wider">
             {[...trades, ...trades].map((t, i) => (
               <span key={i} className="flex items-center gap-2">
-                <span className="text-base">{t.icon}</span> {t.label.toUpperCase()}
+                <EmojiIcon emoji={t.icon} size={16} className="text-white/60" /> {t.label.toUpperCase()}
               </span>
             ))}
           </div>
@@ -611,7 +612,7 @@ const Handwerker = () => {
                   onClick={scrollToForm}
                   className="group relative w-full p-6 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/5 hover:shadow-card hover:-translate-y-1 transition-all duration-300 text-center overflow-hidden"
                 >
-                  <div className="text-3xl mb-2.5 group-hover:scale-110 transition-transform duration-300">{t.icon}</div>
+                  <div className="mb-2.5 flex justify-center group-hover:scale-110 transition-transform duration-300"><EmojiIcon emoji={t.icon} size={20} /></div>
                   <div className="text-sm font-semibold group-hover:text-primary transition-colors">{t.label}</div>
                 </button>
               </AnimatedSection>
