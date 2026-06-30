@@ -10,3 +10,8 @@ declare module "*as=picture" {
   };
   export default value;
 }
+
+declare module "*as=url" {
+  const src: string;
+  export default src;
+}
