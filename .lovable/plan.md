@@ -1,34 +1,44 @@
-## Prompt 6/9 — Ungenutzte npm-Dependencies entfernen
+## Prompt 8/9 — DRY Routing für Trade-Hubs
 
-Grep-Verifikation in `src/**`: alle Kandidaten haben **0 Importe**.
+In `src/App.tsx` Zeilen 191–221 ersetzen: 31 wiederholte `<Route>`-Zeilen → durch `tradeHubs`-Config + `.map()`.
 
-### Entfernen aus `package.json`
-- `@hookform/resolvers`
-- `date-fns`
-- `@radix-ui/react-avatar`
-- `@radix-ui/react-aspect-ratio`
-- `@radix-ui/react-collapsible`
-- `@radix-ui/react-context-menu`
-- `@radix-ui/react-dropdown-menu`
-- `@radix-ui/react-hover-card`
-- `@radix-ui/react-menubar`
-- `@radix-ui/react-navigation-menu`
-- `@radix-ui/react-scroll-area`
-- `@radix-ui/react-slider`
-- `@radix-ui/react-toggle-group`
-- `input-otp`
-- `cmdk`
-- `vaul`
+### Config (oberhalb der Routes platzieren, z. B. nach `HandwerkerRoute`)
+```ts
+const tradeHubs = [
+  { path: "elektriker", Hub: ElektrikerHub, Preise: ElektrikerPreise },
+  { path: "maler",      Hub: MalerHub,      Preise: null },
+  { path: "sanitaer",   Hub: SanitaerHub,   Preise: SanitaerPreise },
+  { path: "dachdecker", Hub: DachdeckerHub, Preise: DachdeckerPreise },
+] as const;
 
-### Behalten
-- `tailwindcss-animate` (Plugin in tailwind.config.ts)
-- `zod` (3 Importe in src/)
-- alle nicht in Kandidatenliste genannten Pakete
+const subRedirects = ["leistungen", "portfolio", "ueber-uns", "kontakt"] as const;
+```
 
-### Hinweis
-`react-hook-form` ist ebenfalls 0× importiert, steht aber nicht auf der Kandidatenliste → bleibt unverändert.
+### Generierte Routes (ersetzt Zeilen 191–221)
+```tsx
+{tradeHubs.flatMap(({ path, Hub, Preise }) => [
+  <Route key={path} path={`/${path}`} element={<Hub />} />,
+  <Route
+    key={`${path}-preise`}
+    path={`/${path}/preise`}
+    element={Preise ? <Preise /> : <Navigate to="/handwerker/preise" replace />}
+  />,
+  ...subRedirects.map((sub) => (
+    <Route
+      key={`${path}-${sub}`}
+      path={`/${path}/${sub}`}
+      element={<Navigate to={`/handwerker/${sub}`} replace />}
+    />
+  )),
+  <Route key={`${path}-wild`} path={`/${path}/*`} element={<Navigate to={`/${path}`} replace />} />,
+])}
+```
 
-### Ablauf
-1. `npm uninstall` der 16 Pakete (aktualisiert package.json + Lockfile).
-2. `npm run build` muss grün sein.
-3. `npm run lint` ≤ Baseline (~92 nach Prompt 5).
+### Unverändert
+- `/handwerker` mit `HandwerkerRoute` bleibt separat (Zeile 183).
+- Alle 4 lazy-Imports (ElektrikerHub, MalerHub, SanitaerHub, DachdeckerHub) und `ElektrikerPreise`, `SanitaerPreise`, `DachdeckerPreise` bleiben.
+- Identische URLs und Ziele zu vorher.
+
+### Verifikation
+- Stichproben: `/elektriker/preise` → `ElektrikerPreise`, `/maler/preise` → Redirect `/handwerker/preise`, `/sanitaer/kontakt` → Redirect `/handwerker/kontakt`.
+- `npm run build` grün, `npm run lint` ≤ Baseline (92).
