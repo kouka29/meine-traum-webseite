@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, Monitor, Palette, TrendingUp, Zap, Search, Smartphone } from "lucide-react";
+import { ArrowRight, Check, Monitor, Palette, TrendingUp, Zap, Search, Smartphone } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const features = [
@@ -38,7 +38,7 @@ const WebdesignAgentur = () => (
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
-                <Link to="/kontakt">Kostenlose Website-Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+                <Link to="/kontakt">Kostenlose Website-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
               </Button>
               <Button variant="outline-primary" size="lg" asChild>
                 <Link to="/webdesign-preise">Webdesign Preise ansehen</Link>
@@ -55,7 +55,7 @@ const WebdesignAgentur = () => (
             <AnimatedSection key={f.title} delay={i * 0.08}>
               <div className="p-7 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 bg-background h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-                  <f.icon size={22} className="text-primary" />
+                  <f.icon size={20} className="text-primary" />
                 </div>
                 <h3 className="font-heading text-lg font-semibold mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
@@ -65,7 +65,7 @@ const WebdesignAgentur = () => (
         </div>
 
         <AnimatedSection>
-          <div className="gradient-hero-bg rounded-3xl p-12 md:p-16 text-primary-foreground mb-20">
+          <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground mb-20">
             <h2 className="text-primary-foreground mb-5 text-balance text-center">Unser Webdesign-Prozess</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-10">
               {[
@@ -93,7 +93,7 @@ const WebdesignAgentur = () => (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
                {["Professioneller Online-Auftritt ab 990 €", "Kostenlose Vorschau in 48 Stunden", "Keine laufenden Agenturkosten", "Persönlicher Ansprechpartner", "SEO-Grundlagen inklusive", "Mobile-optimiert"].map((p) => (
                 <div key={p} className="flex items-center gap-3">
-                  <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                  <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm">{p}</span>
                 </div>
               ))}

@@ -24,7 +24,7 @@ export default function ZahlungErfolgreich() {
           display: "inline-flex", alignItems: "center", justifyContent: "center",
           marginBottom: 20,
         }}>
-          <Check size={36} strokeWidth={3} aria-hidden={true} focusable={false} />
+          <Check size={24} strokeWidth={3} aria-hidden={true} focusable={false} />
         </div>
         <h1 style={{ fontSize: 28, fontWeight: 800, color: "#1E1B4B", marginBottom: 10, letterSpacing: "-0.02em" }}>
           Zahlung erfolgreich

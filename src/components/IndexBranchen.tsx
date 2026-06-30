@@ -175,7 +175,7 @@ const PopoverCard = ({
               <ItemIcon size={16} aria-hidden focusable={false} />
             </span>
             <span className="flex-1 font-medium">{itemName}</span>
-            <ArrowRight size={14} className="text-muted-foreground" aria-hidden focusable={false} />
+            <ArrowRight size={16} className="text-muted-foreground" aria-hidden focusable={false} />
           </Link>
         ))}
       </div>

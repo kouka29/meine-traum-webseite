@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
-import { ArrowRight, FileText, MessageSquare, ShieldCheck, PhoneCall } from "lucide-react";
+import { ArrowRight, FileText, MessageSquare, ShieldCheck, Phone } from "lucide-react";
 
 const steps = [
   { icon: FileText, text: "Wir analysieren deine aktuelle Situation" },
@@ -13,7 +13,7 @@ const FreePreviewCTA = () => (
   <section className="section-padding">
     <div className="container-narrow px-4">
       <AnimatedSection>
-        <div className="gradient-hero-bg rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-20 text-center text-primary-foreground relative overflow-hidden">
+        <div className="gradient-hero-bg rounded-2xl sm:rounded-2xl p-8 sm:p-12 md:p-20 text-center text-primary-foreground relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.08),transparent_60%)]" />
           <div className="relative z-10">
             <span className="badge-label bg-primary-foreground/15 text-primary-foreground mb-8">
@@ -29,7 +29,7 @@ const FreePreviewCTA = () => (
             <div className="flex flex-col gap-4 max-w-md mx-auto mb-10 text-left">
               {steps.map((s) => (
                 <div key={s.text} className="flex items-start gap-3 text-sm text-primary-foreground/80">
-                  <s.icon size={18} className="shrink-0 mt-0.5" />
+                  <s.icon size={20} className="shrink-0 mt-0.5" />
                   <span>{s.text}</span>
                 </div>
               ))}
@@ -41,7 +41,7 @@ const FreePreviewCTA = () => (
                 asChild
               >
                 <Link to="/kontakt">
-                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button
@@ -51,7 +51,7 @@ const FreePreviewCTA = () => (
                 asChild
               >
                 <Link to="/kontakt">
-                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
+                  <Phone size={20} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>

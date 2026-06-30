@@ -91,7 +91,7 @@ const CookieBanner = () => {
             <h3 className="font-heading text-lg font-semibold">Cookie-Einstellungen</h3>
           </div>
           <button onClick={rejectAll} className="text-muted-foreground hover:text-foreground p-1" aria-label="Schließen">
-            <X size={18} aria-hidden={true} focusable={false} />
+            <X size={20} aria-hidden={true} focusable={false} />
           </button>
         </div>
 

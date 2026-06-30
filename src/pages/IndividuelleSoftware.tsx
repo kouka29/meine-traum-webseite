@@ -1,30 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import {
-  ArrowRight,
-  CheckCircle,
-  PhoneCall,
-  FileSpreadsheet,
-  Clock,
-  RefreshCw,
-  AlertTriangle,
-  Cog,
-  LayoutDashboard,
-  Users,
-  CalendarCheck,
-  Workflow,
-  Monitor,
-  Search,
-  Lightbulb,
-  Code2,
-  TestTube,
-  Rocket,
-  TrendingUp,
-  ShieldCheck,
-  Zap,
-  BarChart3,
-} from "lucide-react";
+import { ArrowRight, Check, Phone, FileSpreadsheet, Clock, RefreshCw, AlertTriangle, Cog, LayoutDashboard, Users, Calendar, Workflow, Monitor, Search, Lightbulb, Code2, TestTube, Rocket, TrendingUp, ShieldCheck, Zap, BarChart3 } from "lucide-react";
 
 const problems = [
   {
@@ -79,7 +56,7 @@ const solutions = [
 
 const useCases = [
   { icon: Users, title: "CRM-Systeme", desc: "Kunden und Kontakte zentral verwalten, nachverfolgen und pflegen." },
-  { icon: CalendarCheck, title: "Buchungsplattformen", desc: "Termine, Ressourcen oder Dienstleistungen online buchbar machen." },
+  { icon: Calendar, title: "Buchungsplattformen", desc: "Termine, Ressourcen oder Dienstleistungen online buchbar machen." },
   { icon: LayoutDashboard, title: "Kundenportale", desc: "Dokumente, Rechnungen und Projektstatus für deine Kunden bereitstellen." },
   { icon: BarChart3, title: "Interne Dashboards", desc: "Kennzahlen, Team-Aufgaben und Workflows an einem Ort bündeln." },
   { icon: Workflow, title: "Prozess-Automatisierung", desc: "Wiederkehrende Abläufe automatisieren – von der Anfrage bis zur Rechnung." },
@@ -126,7 +103,7 @@ const IndividuelleSoftware = () => (
                 "Für dein Business entwickelt",
               ].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
-                  <CheckCircle size={14} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                  <Check size={16} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span>{t}</span>
                 </div>
               ))}
@@ -134,12 +111,12 @@ const IndividuelleSoftware = () => (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  Kostenlose Erstberatung sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenlose Erstberatung sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button variant="outline-primary" size="lg" className="text-sm sm:text-base py-5 sm:py-6 w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Projekt anfragen
+                  <Phone size={20} aria-hidden={true} focusable={false} /> Projekt anfragen
                 </Link>
               </Button>
             </div>
@@ -154,7 +131,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-destructive/10 text-destructive mb-4 text-xs">Das Problem</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Manuelle Prozesse bremsen dein Wachstum
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -185,7 +162,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Die Lösung</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Wir digitalisieren und automatisieren dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -216,7 +193,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Anwendungsbeispiele</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Mögliche Lösungen für dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -229,7 +206,7 @@ const IndividuelleSoftware = () => (
             <AnimatedSection key={u.title} delay={i * 0.08}>
               <div className="glass-card p-6 rounded-2xl h-full text-center">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 mx-auto">
-                  <u.icon size={22} className="text-primary" />
+                  <u.icon size={20} className="text-primary" />
                 </div>
                 <h3 className="font-semibold text-base mb-2">{u.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{u.desc}</p>
@@ -246,7 +223,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Unser Prozess</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               So entsteht deine individuelle Lösung
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -278,7 +255,7 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Ergebnisse</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Das Ergebnis: Mehr Effizienz, weniger Aufwand
             </h2>
           </div>
@@ -304,8 +281,8 @@ const IndividuelleSoftware = () => (
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="glass-card rounded-3xl p-8 sm:p-12 md:p-16 text-center max-w-3xl mx-auto border border-primary/20">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+          <div className="glass-card rounded-2xl p-8 sm:p-12 md:p-16 text-center max-w-3xl mx-auto border border-primary/20">
+            <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Startest du dein Projekt
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">
@@ -315,7 +292,7 @@ const IndividuelleSoftware = () => (
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8" asChild>
                 <Link to="/kontakt">
-                  Kostenlose Erstberatung sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenlose Erstberatung sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
             </div>

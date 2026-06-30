@@ -303,15 +303,15 @@ html.apple-mode .pain-card .pain-card-text {
   }
 
   h1 {
-    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.08];
+    @apply text-4xl md:text-5xl font-bold leading-[1.1];
   }
 
   h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.12];
+    @apply text-3xl font-bold leading-[1.15];
   }
 
   h3 {
-    @apply text-xl md:text-2xl font-semibold leading-snug;
+    @apply text-xl font-semibold leading-snug;
   }
 
   p {
@@ -340,6 +340,11 @@ html.apple-mode .pain-card .pain-card-text {
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-hero);
+  }
+
+  /* Opt-in for the single hero H1 per landing page */
+  .hero-xl {
+    @apply text-5xl md:text-6xl;
   }
 
   .gradient-bg {

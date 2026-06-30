@@ -1,21 +1,6 @@
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import {
-  ArrowRight,
-  CheckCircle,
-  Star,
-  Lock,
-  FileText,
-  Target,
-  Phone,
-  Handshake,
-  Award,
-  Clock,
-  ChevronDown,
-  Quote,
-  ThumbsUp,
-  Shield,
-} from "lucide-react";
+import { ArrowRight, Check, Star, Lock, FileText, Target, Phone, Handshake, Award, Clock, ChevronDown, Quote, ThumbsUp, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -39,7 +24,7 @@ const TrustStrip = () => (
         className="flex items-center gap-3 sm:gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-4 sm:px-4 sm:py-5"
       >
         <div className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-          <Icon size={22} strokeWidth={2} />
+          <Icon size={20} strokeWidth={2} />
         </div>
         <div className="min-w-0 flex-1">
           <p className="font-heading text-2xl sm:text-[1.75rem] font-bold text-[#5B3DC8] leading-none mb-1 whitespace-nowrap">{num}</p>
@@ -147,7 +132,7 @@ const TestimonialBlock = () => {
               className="shrink-0 px-2.5"
               style={{ flex: `0 0 ${100 / visible}%` }}
             >
-              <div className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
+              <div className="relative overflow-hidden rounded-2xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
             <div className="p-7 md:p-8 flex-1 flex flex-col relative">
               <Quote
                 size={80}
@@ -231,7 +216,7 @@ const GrowthAccordion = ({
                 <ul className="space-y-1.5">
                   {extraFeatures.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                      <Check size={16} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                       <span>{f}</span>
                     </li>
                   ))}
@@ -302,7 +287,7 @@ const AddonsSection = () => (
           <ul className="space-y-2 mb-6 flex-1">
             {a.features.map((f) => (
               <li key={f} className="flex items-start gap-2 text-sm text-foreground/85">
-                <CheckCircle size={14} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                <Check size={16} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                 <span>{f}</span>
               </li>
             ))}
@@ -603,7 +588,7 @@ export const PackageCard = ({
     >
       {pkg.popular && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-          <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
+          <Star size={16} aria-hidden={true} focusable={false} /> Beliebteste Wahl
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
@@ -639,7 +624,7 @@ export const PackageCard = ({
           }
           return (
             <div key={f} className="flex items-start gap-2.5">
-              <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+              <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
               <span className="text-sm">{f}</span>
             </div>
           );
@@ -705,7 +690,7 @@ const BuyCard = ({
     >
       {pkg.popular && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-          <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
+          <Star size={16} aria-hidden={true} focusable={false} /> Beliebteste Wahl
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
@@ -726,7 +711,7 @@ const BuyCard = ({
       <div className="space-y-3 flex-1 mb-6">
         {visibleFeatures.map((f) => (
           <div key={f} className="flex items-start gap-2.5">
-            <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+            <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
             <span className="text-sm">{f}</span>
           </div>
         ))}
@@ -850,7 +835,7 @@ const WebdesignPreise = () => {
         onClick={() => openPopup("Kostenlose Demo")}
         className="font-semibold text-primary hover:underline inline-flex items-center gap-1"
       >
-        Kostenlose Demo anfordern <ArrowRight size={14} aria-hidden={true} focusable={false} />
+        Kostenlose Demo anfordern <ArrowRight size={16} aria-hidden={true} focusable={false} />
       </button>
     </div>
 
@@ -867,7 +852,7 @@ const WebdesignPreise = () => {
               Professionell online — ohne großes Investment.
             </p>
             <p className="inline-flex items-center gap-2 text-base md:text-lg font-bold text-primary bg-primary/10 px-4 py-2 rounded-full">
-              <CheckCircle size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+              <Check size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
               Für Gewerbetreibende voll steuerlich absetzbar
             </p>
           </div>
@@ -910,7 +895,7 @@ const WebdesignPreise = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {pkg.features.map((f) => (
                         <div key={f} className="flex items-start gap-2.5">
-                          <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                          <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                           <span className="text-sm">{f}</span>
                         </div>
                       ))}
@@ -965,7 +950,7 @@ const WebdesignPreise = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {buyEnterprise.features.map((f) => (
                       <div key={f} className="flex items-start gap-2.5">
-                        <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                        <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                         <span className="text-sm">{f}</span>
                       </div>
                     ))}
@@ -1027,7 +1012,7 @@ const WebdesignPreise = () => {
 
     <section className="bg-primary/10 py-[60px]">
       <div className="container-narrow px-4 text-center">
-        <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-5">
+        <h2 className="text-3xl font-heading text-3xl font-bold text-foreground mb-5">
           Mehr Aufträge. Weniger Aufwand.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
@@ -1035,7 +1020,7 @@ const WebdesignPreise = () => {
           Gefällt sie dir nicht — Du zahlst nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
-          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} aria-hidden={true} focusable={false} />
+          Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={20} aria-hidden={true} focusable={false} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
           Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 3076498</a>

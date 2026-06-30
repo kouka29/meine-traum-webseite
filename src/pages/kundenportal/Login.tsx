@@ -96,8 +96,8 @@ export default function KundenportalLogin() {
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="relative">
                 <div className="absolute -inset-10 bg-primary opacity-10 blur-[80px] rounded-full" />
-                <div className="relative w-32 h-32 bg-card shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] rounded-[2rem] flex items-center justify-center border border-border/60 transition-transform duration-500 hover:scale-105">
-                  <div className="absolute inset-2 border border-border/40 rounded-[1.5rem]" />
+                <div className="relative w-32 h-32 bg-card shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] rounded-2xl flex items-center justify-center border border-border/60 transition-transform duration-500 hover:scale-105">
+                  <div className="absolute inset-2 border border-border/40 rounded-2xl" />
                   <img src={logo} alt="Meine Traum Webseite" className="relative z-10 w-20 h-20 object-contain" />
                   <div className="absolute -top-2 -right-2 w-7 h-7 bg-primary rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center">
                     <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full animate-pulse" />

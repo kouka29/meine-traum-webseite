@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, Target, Zap, TrendingUp, MousePointer } from "lucide-react";
+import { ArrowRight, Check, Target, Zap, TrendingUp, MousePointer } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const benefits = [
@@ -35,7 +35,7 @@ const LandingpageErstellen = () => (
               Landingpages mit verkaufspsychologischem Aufbau – perfekt für Google Ads, Social Media und Lead-Generierung.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kontakt">Landingpage anfragen <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+              <Link to="/kontakt">Landingpage anfragen <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>
@@ -48,7 +48,7 @@ const LandingpageErstellen = () => (
             <AnimatedSection key={b.title} delay={i * 0.1}>
               <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all bg-background hover:shadow-card">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <b.icon size={22} className="text-primary" />
+                  <b.icon size={20} className="text-primary" />
                 </div>
                 <div>
                   <h3 className="font-heading text-lg font-semibold mb-1.5">{b.title}</h3>
@@ -74,7 +74,7 @@ const LandingpageErstellen = () => (
                 "DSGVO-konforme Umsetzung",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                  <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm">{item}</span>
                 </div>
               ))}

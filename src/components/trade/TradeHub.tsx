@@ -187,7 +187,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <ul className="space-y-3 mb-8">
               {["Individuell für Deinen Betrieb", "Ich melde mich innerhalb von 2 Stunden", "Kein Risiko — Du entscheidest danach frei", "Kostenlos — auch wenn Du nicht kaufst"].map((t) => (
                 <li key={t} className="flex items-start gap-2 text-sm text-foreground">
-                  <Check size={18} className="mt-0.5 shrink-0 text-success" aria-hidden={true} focusable={false} /> {t}
+                  <Check size={20} className="mt-0.5 shrink-0 text-success" aria-hidden={true} focusable={false} /> {t}
                 </li>
               ))}
             </ul>

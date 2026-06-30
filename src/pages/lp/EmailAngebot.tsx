@@ -1,25 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  CheckCircle,
-  Star,
-  Clock,
-  Sparkles,
-  ShieldCheck,
-  ChevronDown,
-  Quote,
-  Handshake,
-  Award,
-  ThumbsUp,
-  Lock,
-  FileText,
-  Target,
-  XCircle,
-  TrendingDown,
-  Smartphone,
-  Phone,
-} from "lucide-react";
+import { ArrowRight, Check, Star, Clock, Sparkles, ShieldCheck, ChevronDown, Quote, Handshake, Award, ThumbsUp, Lock, FileText, Target, XCircle, TrendingDown, Smartphone, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -260,7 +241,7 @@ const TrustStrip = () => (
         className="flex items-center gap-3 sm:gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-4 sm:px-4 sm:py-5"
       >
         <div className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-          <Icon size={22} strokeWidth={2} />
+          <Icon size={20} strokeWidth={2} />
         </div>
         <div className="min-w-0 flex-1">
           <p className="font-heading text-2xl sm:text-[1.75rem] font-bold text-[#5B3DC8] leading-none mb-1 whitespace-nowrap">{num}</p>
@@ -309,7 +290,7 @@ const TestimonialCarousel = () => {
         >
           {testimonials.map((t) => (
             <div key={t.id} className="shrink-0 px-2.5" style={{ flex: `0 0 ${100 / visible}%` }}>
-              <div className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
+              <div className="relative overflow-hidden rounded-2xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
                 <div className="p-7 md:p-8 flex-1 flex flex-col relative">
                   <Quote size={80} className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none" fill="currentColor" strokeWidth={0} aria-hidden={true} focusable={false} />
                   <div className="flex gap-1 mb-5 relative z-10">
@@ -372,7 +353,7 @@ const HiddenFeaturesAccordion = ({ items }: { items: string[] }) => {
             <ul className="space-y-1.5">
               {items.map((f) => (
                 <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                  <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                  <Check size={16} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                   <span>{f}</span>
                 </li>
               ))}
@@ -414,7 +395,7 @@ const EmailAngebot = () => {
             href="tel:+4961313076498"
             className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-foreground/80 hover:text-primary transition-colors"
           >
-            <Phone size={14} aria-hidden={true} focusable={false} /> 06131 3076498
+            <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
           </a>
         </div>
       </header>
@@ -456,7 +437,7 @@ const EmailAngebot = () => {
                 }}
                 className="animate-cta-pulse"
               >
-                Pakete & Preise ansehen <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                Pakete & Preise ansehen <ArrowRight size={20} aria-hidden={true} focusable={false} />
               </Button>
               <Button
                 variant="outline-primary"
@@ -474,7 +455,7 @@ const EmailAngebot = () => {
               </div>
               <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
               <div className="flex items-center gap-2">
-                <CheckCircle size={16} className="text-primary" aria-hidden={true} focusable={false} />
+                <Check size={16} className="text-primary" aria-hidden={true} focusable={false} />
                 <span>Voll absetzbar</span>
               </div>
               <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
@@ -509,7 +490,7 @@ const EmailAngebot = () => {
             ].map(({ Icon, title, text }) => (
               <div key={title} className="group relative rounded-2xl bg-card border border-border p-7 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-5">
-                  <Icon size={22} strokeWidth={2} />
+                  <Icon size={20} strokeWidth={2} />
                 </div>
                 <h3 className="font-heading text-lg font-bold mb-2 text-foreground">{title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
@@ -564,7 +545,7 @@ const EmailAngebot = () => {
                       >
                         {pkg.popular && (
                           <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-                            <Star size={12} aria-hidden={true} focusable={false} /> Beliebteste Wahl
+                            <Star size={16} aria-hidden={true} focusable={false} /> Beliebteste Wahl
                           </span>
                         )}
                         <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
@@ -578,7 +559,7 @@ const EmailAngebot = () => {
                         <div className="space-y-3 flex-1 mb-6">
                           {pkg.features.map((f) => (
                             <div key={f} className="flex items-start gap-2.5">
-                              <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                              <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                               <span className="text-sm">{f}</span>
                             </div>
                           ))}
@@ -614,7 +595,7 @@ const EmailAngebot = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {enterprisePkg.features.map((f) => (
                           <div key={f} className="flex items-start gap-2.5">
-                            <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                            <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                             <span className="text-sm">{f}</span>
                           </div>
                         ))}
@@ -686,13 +667,13 @@ const EmailAngebot = () => {
       {/* BLOCK 6: Finaler CTA */}
       <section className="py-16 md:py-24 px-4">
         <div className="container-narrow">
-          <div className="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] gradient-hero-bg p-10 md:p-16 text-center text-primary-foreground shadow-elevated">
+          <div className="relative overflow-hidden rounded-2xl md:rounded-2xl gradient-hero-bg p-10 md:p-16 text-center text-primary-foreground shadow-elevated">
             {/* Decorative glows */}
             <div className="pointer-events-none absolute -top-32 -right-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
 
             <div className="relative">
-              <h2 className="font-heading text-3xl md:text-5xl font-bold mb-5 text-white text-balance">
+              <h2 className="text-3xl font-heading text-3xl font-bold mb-5 text-white text-balance">
                 Mehr Aufträge. Weniger Aufwand.
               </h2>
               <p className="text-white/85 text-base md:text-lg mb-9 leading-relaxed max-w-2xl mx-auto">
@@ -705,7 +686,7 @@ const EmailAngebot = () => {
                   onClick={() => openPopup("Kostenlose Beratung")}
                   className="bg-white text-primary hover:bg-white/90 shadow-xl"
                 >
-                  Kostenlose Demo anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenlose Demo anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Button>
                 <a
                   href="tel:+4961313076498"

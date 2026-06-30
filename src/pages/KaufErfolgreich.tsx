@@ -1,5 +1,5 @@
 import { useSearchParams, Link } from "react-router-dom";
-import { CheckCircle2, Mail, Calendar, ArrowRight, Repeat } from "lucide-react";
+import { Check, Mail, Calendar, ArrowRight, Repeat } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function KaufErfolgreich() {
@@ -25,23 +25,23 @@ export default function KaufErfolgreich() {
     <main id="main-content" className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-background to-muted/30">
       <div className="max-w-2xl mx-auto px-4 text-center">
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
-          <CheckCircle2 className="text-primary" size={48} aria-hidden={true} focusable={false} />
+          <Check className="text-primary" size={24} aria-hidden={true} focusable={false} />
         </div>
-        <h1 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+        <h1 className="text-4xl md:text-5xl font-heading text-3xl font-bold mb-4">
           {heading}
         </h1>
         <p className="text-lg text-muted-foreground mb-10">{subline}</p>
 
         <div className="grid gap-4 text-left mb-10">
           <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
-            <Mail className="text-primary shrink-0 mt-0.5" size={22} aria-hidden={true} focusable={false} />
+            <Mail className="text-primary shrink-0 mt-0.5" size={20} aria-hidden={true} focusable={false} />
             <div>
               <p className="font-semibold mb-1">Bestätigung per E-Mail</p>
               <p className="text-sm text-muted-foreground">{emailText}</p>
             </div>
           </div>
           <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
-            <Calendar className="text-primary shrink-0 mt-0.5" size={22} aria-hidden={true} focusable={false} />
+            <Calendar className="text-primary shrink-0 mt-0.5" size={20} aria-hidden={true} focusable={false} />
             <div>
               <p className="font-semibold mb-1">Onboarding innerhalb von 24 h</p>
               <p className="text-sm text-muted-foreground">
@@ -52,7 +52,7 @@ export default function KaufErfolgreich() {
           </div>
           {isRent ? (
             <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
-              <Repeat className="text-primary shrink-0 mt-0.5" size={22} aria-hidden={true} focusable={false} />
+              <Repeat className="text-primary shrink-0 mt-0.5" size={20} aria-hidden={true} focusable={false} />
               <div>
                 <p className="font-semibold mb-1">Monatliche Abrechnung</p>
                 <p className="text-sm text-muted-foreground">
@@ -63,7 +63,7 @@ export default function KaufErfolgreich() {
             </div>
           ) : (
             <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
-              <CheckCircle2 className="text-primary shrink-0 mt-0.5" size={22} aria-hidden={true} focusable={false} />
+              <Check className="text-primary shrink-0 mt-0.5" size={20} aria-hidden={true} focusable={false} />
               <div>
                 <p className="font-semibold mb-1">Restzahlung bei Go-Live</p>
                 <p className="text-sm text-muted-foreground">

@@ -254,8 +254,8 @@ const Gesetz = () => {
                     transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
                     className="relative group"
                   >
-                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${v.glow} rounded-3xl blur opacity-10 group-hover:opacity-25 transition duration-500`} aria-hidden="true" />
-                    <div className="relative bg-white/80 shadow-2xl rounded-3xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
+                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${v.glow} rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500`} aria-hidden="true" />
+                    <div className="relative bg-white/80 shadow-2xl rounded-2xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
                       <div className={`w-12 h-12 ${v.iconBg} rounded-2xl flex items-center justify-center mb-6`}>
                         <Icon className={`w-6 h-6 ${v.iconColor}`} aria-hidden={true} focusable={false} />
                       </div>
@@ -296,7 +296,7 @@ const Gesetz = () => {
       <section className="py-20 md:py-28 bg-muted/40">
         <div className="container mx-auto px-4 max-w-3xl text-center">
           <motion.div {...fadeUp}>
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-10">
+            <h2 className="text-3xl font-display text-3xl font-bold mb-10">
               Das sagt der Staat — keine Meinung, Fakten
             </h2>
             <Card className="p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
@@ -341,7 +341,7 @@ const Gesetz = () => {
         <section className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 max-w-[680px]">
             <motion.div {...fadeUp} className="text-center mb-10">
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-3xl font-display text-3xl font-bold mb-4">
                 Wie viele dieser Punkte treffen auf Ihre Webseite zu?
               </h2>
               <p className="text-muted-foreground">
@@ -380,7 +380,7 @@ const Gesetz = () => {
         <div className="container mx-auto px-4 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeUp}>
             <div className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Unsere Lösung</div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold leading-tight mb-6">
+            <h2 className="text-3xl font-display text-3xl font-bold leading-tight mb-6">
               {isBfsg ? "Wir lösen das Problem für Sie — kostenlos und unverbindlich" : "Neue, gesetzeskonforme Webseite — wir zeigen Ihnen kostenlos wie sie aussieht"}
             </h2>
             <ul className="space-y-3 mb-8">
@@ -408,7 +408,7 @@ const Gesetz = () => {
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}>
             {isBfsg ? (
-              <div className="rounded-[20px] shadow-xl p-6 md:p-8 text-white"
+              <div className="rounded-2xl shadow-xl p-6 md:p-8 text-white"
                 style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))", border: "2px solid hsl(250 56% 48% / 0.3)" }}>
                 <div className="flex items-center gap-2 text-green-400 font-semibold mb-5">
                   <Check className="w-5 h-5" aria-hidden={true} focusable={false} />
@@ -595,7 +595,7 @@ const Gesetz = () => {
         style={{ background: "linear-gradient(135deg, hsl(250 56% 30%), hsl(250 56% 48%) 60%, hsl(215 100% 50%))" }}>
         <div className="container mx-auto px-4 text-center max-w-3xl">
           <div>
-            <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-display text-3xl font-bold text-white mb-4">
               Jetzt kostenlose Vorschau anfordern
             </h2>
             <p className="text-white/85 text-lg mb-6">

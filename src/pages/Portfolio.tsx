@@ -253,7 +253,7 @@ const Portfolio = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="gradient" size="lg" asChild>
-                <Link to="/kontakt">Kostenlose Vorschau anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+                <Link to="/kontakt">Kostenlose Vorschau anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
               </Button>
               <Button variant="outline-primary" size="lg" asChild>
                 <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten</Link>

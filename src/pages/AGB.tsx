@@ -1,28 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  FileText,
-  Briefcase,
-  FileSignature,
-  Handshake,
-  CreditCard,
-  Repeat,
-  Server,
-  Clock,
-  CheckCircle2,
-  ShieldAlert,
-  ShieldCheck,
-  Copyright,
-  BadgeCheck,
-  Lock,
-  Database,
-  Gavel,
-  ArrowUp,
-  Printer,
-  ChevronLeft,
-  Menu,
-} from "lucide-react";
+import { FileText, Briefcase, FileSignature, Handshake, CreditCard, Repeat, Server, Clock, Check, ShieldAlert, ShieldCheck, Copyright, BadgeCheck, Lock, Database, Gavel, ArrowUp, Printer, ChevronLeft, Menu } from "lucide-react";
 
 type Section = {
   id: string;
@@ -221,7 +200,7 @@ const sections: Section[] = [
     id: "p9",
     num: "§ 9",
     title: "Abnahme",
-    icon: CheckCircle2,
+    icon: Check,
     content: (
       <>
         <P n="1">Nach Fertigstellung fordert der Auftragnehmer den Auftraggeber zur Abnahme auf. Die Abnahme hat innerhalb von <Highlight>7 Werktagen</Highlight> zu erfolgen.</P>

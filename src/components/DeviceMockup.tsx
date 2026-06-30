@@ -15,7 +15,7 @@ const DeviceMockup = ({ desktopUrl, title }: DeviceMockupProps) => {
             <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a] border border-[#333]" />
           </div>
           {/* Screen */}
-          <div className="bg-muted overflow-hidden rounded-[2px]">
+          <div className="bg-muted overflow-hidden rounded-sm">
             <img
               src={desktopUrl}
               alt={`${title} – Desktop Ansicht`}

@@ -4,7 +4,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, CheckCircle, Shield, Clock, CalendarCheck, PhoneCall, Target } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Check, Shield, Clock, Calendar, Target } from "lucide-react";
 import { toast } from "sonner";
 import { submitLead } from "@/lib/submitLead";
 
@@ -83,7 +83,7 @@ const Contact = () => {
                 {[
                   { icon: Clock, text: "15 Minuten" },
                   { icon: Shield, text: "Unverbindlich" },
-                  { icon: PhoneCall, text: "Persönlich am Telefon" },
+                  { icon: Phone, text: "Persönlich am Telefon" },
                 ].map((b) => (
                   <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
                     <b.icon size={16} className="text-primary" />
@@ -135,7 +135,7 @@ const Contact = () => {
                 </div>
                 <Button variant="gradient" size="lg" type="submit" disabled={loading} className="w-full sm:w-auto text-base py-6 px-8">
                   {loading ? "Wird gesendet..." : (
-                    <>Erstgespräch anfragen <Send size={18} aria-hidden={true} focusable={false} /></>
+                    <>Erstgespräch anfragen <Send size={20} aria-hidden={true} focusable={false} /></>
                   )}
                 </Button>
                 {/* Honeypot – unsichtbar für Nutzer, fängt Spam-Bots */}
@@ -196,7 +196,7 @@ const Contact = () => {
                   <div className="space-y-3.5">
                     {trustPoints.map((t) => (
                       <div key={t} className="flex items-center gap-3">
-                        <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                        <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                         <span className="text-sm">{t}</span>
                       </div>
                     ))}
@@ -213,7 +213,7 @@ const Contact = () => {
                     ].map((item) => (
                       <div key={item.text} className="flex items-center gap-4">
                         <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <item.icon size={18} className="text-primary" />
+                          <item.icon size={20} className="text-primary" />
                         </div>
                         <div>
                           <p className="text-xs text-muted-foreground">{item.label}</p>

@@ -2,13 +2,13 @@ import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
-import { ArrowRight, PhoneCall } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 
 const CTABanner = forwardRef<HTMLElement>((_, ref) => (
   <section ref={ref} className="section-padding">
     <div className="container-narrow px-4">
       <AnimatedSection>
-        <div className="gradient-hero-bg rounded-2xl sm:rounded-3xl p-8 sm:p-14 md:p-20 text-center text-primary-foreground relative overflow-hidden">
+        <div className="gradient-hero-bg rounded-2xl sm:rounded-2xl p-8 sm:p-14 md:p-20 text-center text-primary-foreground relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.06),transparent_60%)]" />
           <div className="relative z-10">
             <h2 className="text-primary-foreground mb-4 text-balance">
@@ -28,7 +28,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
                 asChild
               >
                 <Link to="/kontakt">
-                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button
@@ -38,7 +38,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
                 asChild
               >
                 <Link to="/kontakt">
-                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
+                  <Phone size={20} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>

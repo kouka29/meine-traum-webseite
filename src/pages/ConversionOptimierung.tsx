@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, TrendingUp, BarChart3, MousePointer, Target } from "lucide-react";
+import { ArrowRight, Check, TrendingUp, BarChart3, MousePointer, Target } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
@@ -34,7 +34,7 @@ const ConversionOptimierung = () => (
               deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kontakt">Website optimieren lassen <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+              <Link to="/kontakt">Website optimieren lassen <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>
@@ -47,7 +47,7 @@ const ConversionOptimierung = () => (
             <AnimatedSection key={s.title} delay={i * 0.1}>
               <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all bg-background hover:shadow-card">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <s.icon size={22} className="text-primary" />
+                  <s.icon size={20} className="text-primary" />
                 </div>
                 <div>
                   <h3 className="font-heading text-lg font-semibold mb-1.5">{s.title}</h3>
@@ -59,7 +59,7 @@ const ConversionOptimierung = () => (
         </div>
 
         <AnimatedSection>
-          <div className="gradient-hero-bg rounded-3xl p-12 md:p-16 text-primary-foreground text-center mb-20">
+          <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground text-center mb-20">
             <h2 className="text-primary-foreground mb-5">Ergebnisse unserer Conversion-Optimierung</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
               {[

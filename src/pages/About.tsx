@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
-import { Target, Award, Rocket, Heart, ArrowRight, CheckCircle, Users } from "lucide-react";
+import { Target, Award, Rocket, Heart, ArrowRight, Check, Users } from "lucide-react";
 
 const values = [
   { icon: Target, title: "Ergebnisorientiert", desc: "Jede Designentscheidung dient einem Ziel: mehr Kunden für dein Unternehmen." },
@@ -58,7 +58,7 @@ const About = () => (
               <div className="space-y-3.5">
                 {reasons.map((r) => (
                   <div key={r} className="flex items-center gap-3">
-                    <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                    <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                     <span className="text-sm">{r}</span>
                   </div>
                 ))}
@@ -66,7 +66,7 @@ const About = () => (
               <div className="mt-10 flex flex-col sm:flex-row gap-4">
                 <Button variant="gradient" asChild>
                   <Link to="/kontakt">
-                    Kostenlose Vorschau anfordern <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                    Kostenlose Vorschau anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                   </Link>
                 </Button>
                 <Button variant="outline-primary" asChild>
@@ -74,9 +74,9 @@ const About = () => (
                 </Button>
               </div>
             </div>
-            <div className="aspect-square rounded-3xl gradient-hero-bg flex items-center justify-center">
+            <div className="aspect-square rounded-2xl gradient-hero-bg flex items-center justify-center">
               <div className="text-center text-primary-foreground">
-                <Users size={64} className="mx-auto mb-4 opacity-40" aria-hidden={true} focusable={false} />
+                <Users size={24} className="mx-auto mb-4 opacity-40" aria-hidden={true} focusable={false} />
                 <span className="font-heading text-5xl font-bold block tracking-tight">150+</span>
                 <span className="text-primary-foreground/60 text-sm mt-1 block">Zufriedene Kunden</span>
               </div>
@@ -94,7 +94,7 @@ const About = () => (
             <AnimatedSection key={v.title} delay={i * 0.1}>
               <div className="text-center p-8 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
-                  <v.icon size={22} className="text-primary" />
+                  <v.icon size={20} className="text-primary" />
                 </div>
                 <h3 className="font-heading text-lg font-semibold mb-2">{v.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>

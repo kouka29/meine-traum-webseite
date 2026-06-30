@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, RefreshCw, TrendingUp, Zap, Search } from "lucide-react";
+import { ArrowRight, Check, RefreshCw, TrendingUp, Zap, Search } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const signs = [
@@ -36,7 +36,7 @@ const WebsiteRelaunch = () => (
               Online-Präsenz in ein modernes Verkaufsinstrument – mit mehr Anfragen, besserem Design und schnelleren Ladezeiten.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
-              <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+              <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
           </div>
         </AnimatedSection>
@@ -57,7 +57,7 @@ const WebsiteRelaunch = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <div className="gradient-hero-bg rounded-3xl p-12 md:p-16 text-primary-foreground mb-20">
+          <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground mb-20">
             <h2 className="text-primary-foreground text-center mb-10 text-balance">Unsere Relaunch-Ergebnisse sprechen für sich</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               {[
@@ -88,7 +88,7 @@ const WebsiteRelaunch = () => (
               "Einweisung & Support nach Launch",
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
-                <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{item}</span>
               </div>
             ))}

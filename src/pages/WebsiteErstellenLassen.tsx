@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, Clock, Shield, Gift } from "lucide-react";
+import { ArrowRight, Check, Clock, Shield, Gift } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const steps = [
@@ -58,7 +58,7 @@ const WebsiteErstellenLassen = () => (
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
-                <Link to="/kontakt">Kostenlose Vorschau sichern <ArrowRight size={18} aria-hidden={true} focusable={false} /></Link>
+                <Link to="/kontakt">Kostenlose Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
               </Button>
             </div>
           </div>
@@ -72,7 +72,7 @@ const WebsiteErstellenLassen = () => (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-20">
             {benefits.map((b) => (
               <div key={b} className="flex items-center gap-3">
-                <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{b}</span>
               </div>
             ))}

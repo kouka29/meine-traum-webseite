@@ -8,30 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  ArrowRight,
-  ArrowDown,
-  Sparkles,
-  TrendingUp,
-  Check,
-  Quote,
-  Phone,
-  Zap,
-  Lock,
-  Award,
-  X,
-  AlertCircle,
-  Smartphone,
-  Search,
-  Shield,
-  Calendar,
-  Lightbulb,
-  Rocket,
-  HeartHandshake,
-  Star,
-  Clock,
-  Users,
-} from "lucide-react";
+import { ArrowRight, ArrowDown, Sparkles, TrendingUp, Check, Quote, Phone, Zap, Lock, Award, X, AlertTriangle, Smartphone, Search, Shield, Calendar, Lightbulb, Rocket, HeartHandshake, Star, Clock, Users } from "lucide-react";
 
 const TERMIN_LINK = "#termin-buchen";
 
@@ -91,7 +68,7 @@ const trust = [
 
 const painPoints = [
   {
-    icon: AlertCircle,
+    icon: AlertTriangle,
     title: "Du hast (noch) gar keine Website",
     text: "Kunden googeln du — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
   },
@@ -275,7 +252,7 @@ const Starter = () => (
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center">
             <span className="badge-label bg-primary/10 text-primary mb-6 sm:mb-8">
-              <Zap size={12} className="inline mr-1" aria-hidden={true} focusable={false} /> Starter Paket ab 990 € einmalig
+              <Zap size={16} className="inline mr-1" aria-hidden={true} focusable={false} /> Starter Paket ab 990 € einmalig
             </span>
             <h1 className="mb-6 text-balance">
               Keine Website? Veraltete Website?{" "}
@@ -293,7 +270,7 @@ const Starter = () => (
                 asChild
               >
                 <a href={TERMIN_LINK}>
-                  Kostenloses Erstgespräch buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Kostenloses Erstgespräch buchen <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </a>
               </Button>
               <Button
@@ -302,7 +279,7 @@ const Starter = () => (
                 className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8 h-auto min-h-12 w-full sm:w-auto whitespace-normal text-center leading-tight"
                 onClick={scrollTo("paket")}
               >
-                Was ist enthalten? <ArrowDown size={18} aria-hidden={true} focusable={false} />
+                Was ist enthalten? <ArrowDown size={20} aria-hidden={true} focusable={false} />
               </Button>
             </div>
           </div>
@@ -342,7 +319,7 @@ const Starter = () => (
                     onClick={scrollTo("paket")}
                     className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all self-start"
                   >
-                    {c.cta} <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                    {c.cta} <ArrowRight size={20} aria-hidden={true} focusable={false} />
                   </button>
                 </CardContent>
               </Card>
@@ -436,7 +413,7 @@ const Starter = () => (
                   {[...includedLeft, ...includedRight].map((item) => (
                     <div key={item} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                        <Check size={14} aria-hidden={true} focusable={false} />
+                        <Check size={16} aria-hidden={true} focusable={false} />
                       </div>
                       <span className="text-foreground/90 text-sm sm:text-base">
                         {item}
@@ -458,7 +435,7 @@ const Starter = () => (
                     asChild
                   >
                     <a href={TERMIN_LINK}>
-                      Kostenloses Erstgespräch buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                      Kostenloses Erstgespräch buchen <ArrowRight size={20} aria-hidden={true} focusable={false} />
                     </a>
                   </Button>
                 </div>
@@ -510,7 +487,7 @@ const Starter = () => (
                     {c.points.map((p) => (
                       <li key={p} className="flex items-start gap-3">
                         <c.icon
-                          size={18}
+                          size={20}
                           className={`shrink-0 mt-0.5 ${
                             c.highlight ? "text-primary" : "text-destructive"
                           }`}
@@ -541,7 +518,7 @@ const Starter = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              <Clock size={12} className="inline mr-1" aria-hidden={true} focusable={false} /> 14 Tage von Null zu Online
+              <Clock size={16} className="inline mr-1" aria-hidden={true} focusable={false} /> 14 Tage von Null zu Online
             </span>
             <h2 className="mb-4 text-balance">
               dein Weg zur fertigen Website — Schritt für Schritt
@@ -556,7 +533,7 @@ const Starter = () => (
             <AnimatedSection key={p.title} delay={i * 0.05}>
               <div className="flex items-start gap-4 sm:gap-6 p-5 sm:p-6 rounded-xl bg-card/70 border border-border hover:shadow-elevated transition-all duration-300">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl gradient-bg flex items-center justify-center text-primary-foreground shrink-0">
-                  <p.icon size={22} />
+                  <p.icon size={20} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-3 mb-1.5 flex-wrap">
@@ -587,7 +564,7 @@ const Starter = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              <Star size={12} className="inline mr-1" aria-hidden={true} focusable={false} /> Echte Kunden, echte Ergebnisse
+              <Star size={16} className="inline mr-1" aria-hidden={true} focusable={false} /> Echte Kunden, echte Ergebnisse
             </span>
             <h2 className="mb-4 text-balance">
               Was Starter-Kunden über uns sagen
@@ -694,12 +671,12 @@ const Starter = () => (
             <Card className="h-full border-primary/30">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-primary flex items-center gap-2">
-                  <Check size={22} aria-hidden={true} focusable={false} /> Starter passt, wenn …
+                  <Check size={20} aria-hidden={true} focusable={false} /> Starter passt, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitYes.map((y) => (
                     <li key={y} className="flex items-start gap-3">
-                      <Check size={18} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                      <Check size={20} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                       <span className="text-foreground/90">{y}</span>
                     </li>
                   ))}
@@ -711,12 +688,12 @@ const Starter = () => (
             <Card className="h-full border-destructive/20">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-muted-foreground flex items-center gap-2">
-                  <X size={22} aria-hidden={true} focusable={false} /> Starter passt nicht, wenn …
+                  <X size={20} aria-hidden={true} focusable={false} /> Starter passt nicht, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitNo.map((n) => (
                     <li key={n} className="flex items-start gap-3">
-                      <X size={18} className="text-destructive shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                      <X size={20} className="text-destructive shrink-0 mt-1" aria-hidden={true} focusable={false} />
                       <span className="text-muted-foreground">{n}</span>
                     </li>
                   ))}
@@ -737,7 +714,7 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center py-8 sm:py-16">
-            <Quote size={48} className="text-primary/30 mx-auto mb-8" aria-hidden={true} focusable={false} />
+            <Quote size={24} className="text-primary/30 mx-auto mb-8" aria-hidden={true} focusable={false} />
             <blockquote className="text-2xl sm:text-3xl md:text-4xl font-heading font-medium leading-relaxed text-foreground mb-10 text-balance">
               „Endlich eine Website, die so professionell aussieht wie mein
               Studio. Die Neukundengewinnung läuft jetzt automatisch."
@@ -789,7 +766,7 @@ const Starter = () => (
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="gradient-hero-bg rounded-2xl sm:rounded-3xl p-8 sm:p-14 md:p-20 text-center text-primary-foreground relative overflow-hidden">
+          <div className="gradient-hero-bg rounded-2xl sm:rounded-2xl p-8 sm:p-14 md:p-20 text-center text-primary-foreground relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.06),transparent_60%)]" />
             <div className="relative z-10">
               <h2 className="text-primary-foreground mb-4 text-balance">
@@ -805,7 +782,7 @@ const Starter = () => (
                 asChild
               >
                 <a href={TERMIN_LINK}>
-                  Jetzt Termin buchen <ArrowRight size={18} aria-hidden={true} focusable={false} />
+                  Jetzt Termin buchen <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </a>
               </Button>
               <div className="mt-8 flex flex-col items-center gap-2">
@@ -813,7 +790,7 @@ const Starter = () => (
                   href="tel:+4961313076498"
                   className="inline-flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 font-semibold text-base sm:text-lg transition-colors"
                 >
-                  <Phone size={18} aria-hidden={true} focusable={false} /> 06131 3076498
+                  <Phone size={20} aria-hidden={true} focusable={false} /> 06131 3076498
                 </a>
                 <p className="text-primary-foreground/60 text-xs sm:text-sm">
                   Mo–Fr 9–18 Uhr · Auch per WhatsApp
