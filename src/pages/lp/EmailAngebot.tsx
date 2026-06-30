@@ -386,7 +386,7 @@ const EmailAngebot = () => {
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80">
         <div className="container-narrow px-4 py-3.5 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center shadow-glow">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center">
               <Sparkles size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
             </div>
             <span className="font-heading font-semibold text-sm text-foreground">Meine Traum Webseite</span>

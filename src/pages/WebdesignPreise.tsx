@@ -601,7 +601,7 @@ export const PackageCard = ({
         </>
       ) : (
         <>
-          <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
+          <p className="font-heading text-3xl font-bold text-foreground mb-6">{pkg.price}</p>
           {pkg.subPrice && (
             <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
           )}

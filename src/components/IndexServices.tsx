@@ -18,7 +18,7 @@ const IndexServices = () => (
           <span className="badge-label bg-primary/10 text-primary mb-5">Unser Ansatz</span>
           <h2 className="mb-5 text-balance">
             So machen wir aus deiner Website einen{" "}
-            <span className="gradient-text">Kundenmagneten</span>
+            <span className="text-foreground">Kundenmagneten</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
             Kein Technik-Vortrag. Wir zeigen dir, welche vier Hebel deine Website braucht, damit Besucher zu Kunden werden.

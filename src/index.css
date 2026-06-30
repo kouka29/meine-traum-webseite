@@ -23,7 +23,7 @@ html.apple-mode {
   --radius: 1.25rem;
   --shadow-card: 0 1px 2px hsl(228 24% 10% / 0.04), 0 12px 32px hsl(265 74% 57% / 0.08);
   --shadow-elevated: 0 8px 24px hsl(228 24% 10% / 0.06), 0 32px 80px hsl(265 74% 57% / 0.18);
-  --shadow-glow: 0 0 40px hsl(265 74% 57% / 0.18);
+  --shadow-glow: 0 0 32px hsl(265 74% 57% / 0.06);
 }
 
 /* Aurora background layer on every page */
@@ -34,9 +34,9 @@ html.apple-mode body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 0%, hsl(265 80% 70% / 0.09), transparent 60%),
-    radial-gradient(ellipse 50% 60% at 80% 10%, hsl(211 100% 60% / 0.08), transparent 65%),
-    radial-gradient(ellipse 70% 50% at 50% 100%, hsl(248 70% 65% / 0.07), transparent 60%);
+    radial-gradient(ellipse 60% 50% at 20% 0%, hsl(265 80% 70% / 0.03), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 10%, hsl(211 100% 60% / 0.03), transparent 65%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, hsl(248 70% 65% / 0.025), transparent 60%);
   animation: apple-aurora-shift 18s ease-in-out infinite;
 }
 
@@ -118,9 +118,9 @@ html.apple-mode .badge-label {
 html.apple-mode.dark body::before,
 html.dark.apple-mode body::before {
   background:
-    radial-gradient(ellipse 60% 50% at 20% 0%, hsl(265 80% 50% / 0.28), transparent 60%),
-    radial-gradient(ellipse 50% 60% at 80% 10%, hsl(211 100% 50% / 0.22), transparent 65%),
-    radial-gradient(ellipse 70% 50% at 50% 100%, hsl(248 70% 50% / 0.2), transparent 60%);
+    radial-gradient(ellipse 60% 50% at 20% 0%, hsl(265 80% 50% / 0.09), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 10%, hsl(211 100% 50% / 0.07), transparent 65%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, hsl(248 70% 50% / 0.07), transparent 60%);
 }
 
 /* ============================================================
@@ -130,8 +130,8 @@ html.dark.apple-mode body::before {
    ============================================================ */
 html.apple-mode .painpoints-section {
   background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, hsl(265 80% 70% / 0.12), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, hsl(211 100% 60% / 0.10), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 0%, hsl(265 80% 70% / 0.04), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, hsl(211 100% 60% / 0.03), transparent 60%),
     linear-gradient(180deg, hsl(225 40% 99%) 0%, hsl(265 40% 97%) 100%) !important;
 }
 
@@ -207,11 +207,11 @@ html.apple-mode .pain-card .pain-card-text {
     --gradient-primary: linear-gradient(135deg, #8441E3 0%, #3488DF 100%);
     --gradient-hero: linear-gradient(135deg, #8441E3 0%, #6A57E0 50%, #3488DF 100%);
     --gradient-subtle: linear-gradient(135deg, hsl(265, 40%, 97.5%), hsl(211, 60%, 97.5%));
-    --gradient-glow: radial-gradient(ellipse at 50% 0%, hsl(265 74% 57% / 0.06), transparent 70%);
+    --gradient-glow: radial-gradient(ellipse at 50% 0%, hsl(265 74% 57% / 0.02), transparent 70%);
 
     --shadow-card: 0 1px 3px hsl(228 24% 10% / 0.03), 0 6px 16px hsl(228 24% 10% / 0.05);
     --shadow-elevated: 0 4px 16px hsl(228 24% 10% / 0.06), 0 20px 50px hsl(228 24% 10% / 0.1);
-    --shadow-glow: 0 0 25px hsl(265 74% 57% / 0.1);
+    --shadow-glow: 0 0 25px hsl(265 74% 57% / 0.04);
 
     --font-heading: 'Poppins', system-ui, sans-serif;
     --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;

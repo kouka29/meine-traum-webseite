@@ -291,7 +291,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               </div>
 
               <h3 className="font-heading text-xl sm:text-3xl font-bold leading-tight mb-3 text-foreground">
-                Danke{successData.firstName ? `, ${successData.firstName}` : ""}! 🎉
+                Danke{successData.firstName ? `, ${successData.firstName}` : ""}!
               </h3>
 
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">
@@ -349,13 +349,14 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               </span>
 
               <h2 className="font-heading text-xl sm:text-3xl font-bold leading-tight mb-1 sm:mb-2 text-foreground">
-                🚀 Fast geschafft!
+                Fast geschafft!
               </h2>
               <p className="text-muted-foreground text-[13px] sm:text-base mb-1.5 sm:mb-2 leading-relaxed">
                 Ich melde mich innerhalb von 2 Stunden bei dir.
               </p>
-              <p className="text-[11px] sm:text-xs text-center text-green-600 font-medium mb-3 sm:mb-5">
-                ✓ Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
+              <p className="text-[11px] sm:text-xs text-center text-green-600 font-medium mb-3 sm:mb-5 inline-flex items-center justify-center gap-1.5">
+                <Check size={14} className="inline" aria-hidden focusable={false} />
+                Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
               </p>
 
               <div className="space-y-2 sm:space-y-3">
