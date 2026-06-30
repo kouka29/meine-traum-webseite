@@ -136,7 +136,7 @@ const KostenloserWebsiteCheck = () => {
                   {submitError && (
                     <p className="text-sm text-destructive text-center">
                       Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
-                      <a href="tel:+4961313076500" className="font-semibold underline">
+                      <a href="tel:+4961313076498" className="font-semibold underline">
                         06131/30 765 00
                       </a>
                     </p>

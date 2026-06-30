@@ -810,7 +810,7 @@ const Starter = () => (
               </Button>
               <div className="mt-8 flex flex-col items-center gap-2">
                 <a
-                  href="tel:+4961313076500"
+                  href="tel:+4961313076498"
                   className="inline-flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 font-semibold text-base sm:text-lg transition-colors"
                 >
                   <Phone size={18} aria-hidden={true} focusable={false} /> 06131 / 30 765 00
