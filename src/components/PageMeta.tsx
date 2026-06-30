@@ -67,16 +67,6 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
     description:
       "Handwerker: Sichere sich einen von 5 Plätzen pro Monat. Kostenlose Vorschau in 48 h. Ohne Risiko und Verpflichtung.",
   },
-  "/kostenlose-vorschau2": {
-    title: `Vorschau in 48 h für Handwerker | ${BRAND}`,
-    description:
-      "Handwerksbetrieb? Erhältst du in 48 h eine kostenlose Vorschau deiner neuen Website. Ohne Risiko, ohne Kosten.",
-  },
-  "/kostenlose-vorschau-v2": {
-    title: `Kostenlose Website-Vorschau in 48 h | ${BRAND}`,
-    description:
-      "Kostenlose Vorschau deiner neuen Website in 48 h. Siehst du dein Design, bevor du sich entscheiden – unverbindlich.",
-  },
   "/webdesign-preise": {
     title: `Webdesign Preise & Kosten | ${BRAND}`,
     description:
