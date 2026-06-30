@@ -235,6 +235,24 @@ html.apple-mode .pain-card .pain-card-text {
     --text-white: #FFFFFF;
     --text-muted: #9CA3AF;
     --success: #10B981;
+
+    /* === Semantic marketing tokens (HSL — usable via Tailwind) === */
+    --brand: 238 82% 65%;            /* #5B5FEF */
+    --brand-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;           /* #F59E0B */
+    --warning-foreground: 240 51% 8%;
+    --success-hsl: 160 84% 39%;      /* #10B981 */
+    --success-foreground: 0 0% 100%;
+    --surface-dark: 228 21% 8%;      /* #0F1117 */
+    --surface-dark-card: 229 27% 14%;/* #1A1D2E */
+    --surface-light: 232 100% 99%;   /* #F8F9FF */
+    --on-dark-muted: 218 11% 65%;    /* #9CA3AF */
+
+    /* Unified marketing radii & shadows */
+    --radius-card: 1rem;             /* 16px — content cards */
+    --radius-card-lg: 1.25rem;       /* 20px — hero cards */
+    --shadow-marketing: 0 1px 2px hsl(228 24% 10% / 0.04), 0 10px 28px hsl(228 24% 10% / 0.06);
+    --shadow-marketing-hover: 0 4px 12px hsl(228 24% 10% / 0.06), 0 24px 60px hsl(238 82% 65% / 0.14);
   }
 
   .dark {
