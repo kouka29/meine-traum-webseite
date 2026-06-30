@@ -1,21 +1,21 @@
-## Ziel
-Die Projekt-Beschreibungen im Homepage-Portfolio-Karussell (`IndexPortfolio.tsx`) werden auf Desktop aktuell vollständig angezeigt (`md:line-clamp-none`). Sie sollen stattdessen auf max. 3 Zeilen gekürzt werden – mit einem "Weiterlesen"-Toggle, um den vollen Text einzublenden (wie auf Mobile bereits vorhanden).
+## Ursache
 
-## Änderungen
+Im Home-Portfolio-Carousel werden nur die ersten 3 Bilder geladen (`loading="eager"` für `i < 3`), alle weiteren mit `loading="lazy"`. Embla rendert zwar alle Slides, schiebt sie aber per `translate3d(-9999px,…)` weit aus dem Viewport. Browser laden `loading="lazy"` Bilder erst, wenn der Container im Viewport intersected — bei transformierten Off-Screen-Slides passiert das nicht. Resultat: `naturalWidth = 0`, leere/kaputte Tiles ab Slide 4. Auf `/portfolio` greift dieser Bug nicht, weil die Bilder in einem normalen Grid liegen.
 
-### 1. Zeilenbegrenzung auf Desktop anwenden
+Verifiziert per Playwright: Home `complete:true` nur für Slides 1–3, ab Slide 4 alle `complete:false / nw:0`. Auf `/portfolio` dieselben URLs → alle `complete:true`.
+
+## Fix
+
 In `src/components/IndexPortfolio.tsx`:
-- Den Beschreibungs-`<p>` von `line-clamp-2` auf `line-clamp-3` ändern.
-- Den Override `md:line-clamp-none` entfernen, damit die Begrenzung auch auf Desktop gilt.
 
-### 2. "Weiterlesen"-Toggle auf Desktop sichtbar machen
-- Den aktuell nur mobile sichtbaren Toggle-Button (`md:hidden`) anpassen, sodass er auf allen Viewports erscheint.
-- Beim Desktop-Klick darf das Carousel-Item nicht als Link-Click gewertet werden (`stopPropagation` / `preventDefault` bleibt erhalten).
+1. `loading="eager"` für **alle** Carousel-Bilder setzen (max ~30 Projekte, vertretbar — Portfolio-Sektion liegt mid-page und der User scrollt typischerweise dorthin).
+2. `decoding="async"` beibehalten, damit das Decoding nicht blockiert.
+3. `fetchpriority="high"` weiterhin nur für die ersten 3 (LCP-Kandidaten der Sektion).
 
-### 3. Optional: Fallback-Beschreibungen prüfen
-Falls einzelne Einträge keine Datenbank-Beschreibung haben und auf den Fallback-Text zurückgreifen, bleibt der Toggle korrekt funktionsfähig (State `expandedDescs` ist bereits implementiert).
+Damit verhalten sich Carousel und Grid identisch und alle Screenshots werden zuverlässig dargestellt.
 
-## Ergebnis
-- Konsistentes Verhalten zwischen Mobile und Desktop.
-- Kürzere, übersichtlichere Karten im Karussell.
-- Nutzer können per Klick den vollständigen Text lesen.
+## Betroffene Dateien
+
+- `src/components/IndexPortfolio.tsx` — `loading` Attribut anpassen.
+
+Keine weiteren Änderungen nötig (Edge Function, DB, Portfolio-Seite bleiben unberührt).

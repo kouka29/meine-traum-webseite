@@ -165,7 +165,7 @@ const IndexPortfolio = () => {
                               alt={imgAlt}
                               width={800}
                               height={450}
-                              loading={eager ? "eager" : "lazy"}
+                              loading="eager"
                               {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
                               decoding="async"
                               onLoad={(e) => {
