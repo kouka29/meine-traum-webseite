@@ -437,7 +437,7 @@ const AGB = () => {
       </header>
 
       {/* Mobile nav toggle */}
-      <div className="lg:hidden sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-border print:hidden">
+      <div className="lg:hidden sticky top-0 z-30 bg-white/95 border-b border-border print:hidden">
         <button
           onClick={() => setMobileNavOpen((v) => !v)}
           className="container-narrow px-4 py-3 flex items-center justify-between w-full text-sm font-semibold"

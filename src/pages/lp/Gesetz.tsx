@@ -255,7 +255,7 @@ const Gesetz = () => {
                     className="relative group"
                   >
                     <div className={`absolute -inset-0.5 bg-gradient-to-r ${v.glow} rounded-3xl blur opacity-10 group-hover:opacity-25 transition duration-500`} aria-hidden="true" />
-                    <div className="relative bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
+                    <div className="relative bg-white/80 shadow-2xl rounded-3xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
                       <div className={`w-12 h-12 ${v.iconBg} rounded-2xl flex items-center justify-center mb-6`}>
                         <Icon className={`w-6 h-6 ${v.iconColor}`} aria-hidden={true} focusable={false} />
                       </div>
