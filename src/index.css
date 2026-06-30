@@ -366,6 +366,14 @@ html.apple-mode .pain-card .pain-card-text {
     box-shadow: var(--shadow-glow);
   }
 
+  .shadow-marketing {
+    box-shadow: var(--shadow-marketing);
+  }
+
+  .shadow-marketing-hover {
+    box-shadow: var(--shadow-marketing-hover);
+  }
+
   .glow-bg {
     background-image: var(--gradient-glow);
   }
