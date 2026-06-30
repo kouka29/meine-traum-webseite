@@ -155,10 +155,6 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
     title: `Admin – Lead-Übersicht | ${BRAND}`,
     description: "Interner Admin-Bereich für Lead-Management und Anfragen-Übersicht.",
   },
-  "/original": {
-    title: `Website erstellen lassen – Original-Version | ${BRAND}`,
-    description: "Ursprüngliche Version unserer Homepage. Webdesign Agentur für conversion-optimierte Websites.",
-  },
   "/unsubscribe": {
     title: `E-Mail-Abmeldung | ${BRAND}`,
     description: "Vom Newsletter abmelden. Du kannst sich jederzeit wieder anmelden.",
