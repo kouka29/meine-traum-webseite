@@ -2339,7 +2339,7 @@ function AngebotGlobalStyles() {
         overflow: hidden;
       }
       .ang-count-num {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 44px; font-weight: 700; line-height: 1;
         font-variant-numeric: tabular-nums;
         background: linear-gradient(135deg, #4F3FF0 0%, #5B8DEF 100%);
