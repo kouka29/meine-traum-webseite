@@ -99,7 +99,6 @@ const Premium = () => {
       return;
     }
     setErrors({});
-    console.log("Premium application:", formData);
     setSubmitted(true);
   };
 
