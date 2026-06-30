@@ -1,15 +1,34 @@
-## Prompt 5/9 — Ungenutzte shadcn/ui-Dateien löschen
+## Prompt 6/9 — Ungenutzte npm-Dependencies entfernen
 
-Grep-Prüfung abgeschlossen: Alle 23 Kandidaten haben **0 Referenzen** in `src/` (weder in App-Code noch innerhalb von `src/components/ui/`).
+Grep-Verifikation in `src/**`: alle Kandidaten haben **0 Importe**.
 
-### Aktion
-Lösche aus `src/components/ui/`:
+### Entfernen aus `package.json`
+- `@hookform/resolvers`
+- `date-fns`
+- `@radix-ui/react-avatar`
+- `@radix-ui/react-aspect-ratio`
+- `@radix-ui/react-collapsible`
+- `@radix-ui/react-context-menu`
+- `@radix-ui/react-dropdown-menu`
+- `@radix-ui/react-hover-card`
+- `@radix-ui/react-menubar`
+- `@radix-ui/react-navigation-menu`
+- `@radix-ui/react-scroll-area`
+- `@radix-ui/react-slider`
+- `@radix-ui/react-toggle-group`
+- `input-otp`
+- `cmdk`
+- `vaul`
 
-alert.tsx, aspect-ratio.tsx, avatar.tsx, badge.tsx, breadcrumb.tsx, calendar.tsx, collapsible.tsx, command.tsx, context-menu.tsx, drawer.tsx, dropdown-menu.tsx, form.tsx, hover-card.tsx, input-otp.tsx, menubar.tsx, navigation-menu.tsx, pagination.tsx, resizable.tsx, scroll-area.tsx, sidebar.tsx, slider.tsx, table.tsx, toggle-group.tsx
+### Behalten
+- `tailwindcss-animate` (Plugin in tailwind.config.ts)
+- `zod` (3 Importe in src/)
+- alle nicht in Kandidatenliste genannten Pakete
 
-### Verifikation
-- `npm run build` muss grün sein
-- `npm run lint` Fehlerzahl ≤ Baseline (~71)
-- Keine weiteren Änderungen, Tabu-Zonen unberührt
+### Hinweis
+`react-hook-form` ist ebenfalls 0× importiert, steht aber nicht auf der Kandidatenliste → bleibt unverändert.
 
-Keine Ausnahmen — alle 23 Dateien werden gelöscht.
+### Ablauf
+1. `npm uninstall` der 16 Pakete (aktualisiert package.json + Lockfile).
+2. `npm run build` muss grün sein.
+3. `npm run lint` ≤ Baseline (~92 nach Prompt 5).
