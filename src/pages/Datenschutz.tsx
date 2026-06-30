@@ -113,21 +113,47 @@ const Datenschutz = () => (
           <AnimatedSection delay={0.3}>
             <h2 className="text-xl font-semibold text-foreground">5. Hosting</h2>
             <p>
-              Diese Website wird über den Hosting-Anbieter STRATO AG, Otto-Ostrowski-Straße 7, 10249 Berlin, Deutschland bereitgestellt. STRATO verarbeitet dabei personenbezogene Daten wie IP-Adressen und Zugriffsdaten auf ihren Servern in Deutschland.
-            </p>
-            <p>
-              Der Einsatz dieses Dienstes erfolgt im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots gemäß Art. 6 Abs. 1 lit. f DSGVO.
-            </p>
-            <p>
-              Datenschutzerklärung STRATO:{" "}
-              <a href="https://www.strato.de/datenschutz" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                strato.de/datenschutz
-              </a>
+              Diese Website wird bei Lovable gehostet (Lovable, betrieben durch Hibiscus Technologies, Inc.). Beim Aufruf werden technisch notwendige Verbindungsdaten (u. a. IP-Adresse, Zeitpunkt, abgerufene Seite) verarbeitet. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO. Die DNS-Verwaltung der Domain erfolgt über Cloudflare (Cloudflare, Inc., USA); dabei werden DNS-Anfragedaten verarbeitet.
             </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.35}>
-            <h2 className="text-xl font-semibold text-foreground">6. SSL- bzw. TLS-Verschlüsselung</h2>
+            <h2 className="text-xl font-semibold text-foreground">6. Dienstleister und Auftragsverarbeitung</h2>
+            
+            <h3 className="text-lg font-medium text-foreground mt-4">Datenbank &amp; Backend (Lovable Cloud)</h3>
+            <p>
+              Anfrage- und Formulardaten (Name, Telefonnummer, E-Mail, Betriebsname und weitere Angaben) werden in der von Lovable bereitgestellten Cloud-Datenbank gespeichert und verarbeitet (technische Basis: Supabase). Rechtsgrundlage: Art. 6 Abs. 1 lit. b und f DSGVO. Soweit eine Übermittlung in ein Drittland erfolgt, geschieht dies auf Grundlage von Standardvertragsklauseln.
+            </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">E-Mail-Postfach (STRATO)</h3>
+            <p>
+              Der Empfang und die Verarbeitung von Kontakt-E-Mails (u. a. über das info@-Postfach / Webmail) erfolgt über STRATO (STRATO AG, Otto-Ostrowski-Straße 7, 10249 Berlin). Rechtsgrundlage: Art. 6 Abs. 1 lit. b und f DSGVO.
+            </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">Meta-Pixel (Facebook)</h3>
+            <p>
+              Diese Website nutzt das Besucheraktions-Pixel von Meta Platforms Ireland Ltd. (4 Grand Canal Square, Dublin 2, Irland). Damit kann das Verhalten von Besuchern nach Klick auf eine Meta-Werbeanzeige statistisch ausgewertet und für Remarketing genutzt werden. Der Einsatz erfolgt ausschließlich nach deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), widerrufbar jederzeit mit Wirkung für die Zukunft. Eine Datenübermittlung in die USA ist möglich. Mehr:{" "}
+              <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                facebook.com/privacy/policy
+              </a>
+            </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">Stripe (Zahlungsabwicklung)</h3>
+            <p>
+              Für Zahlungen nutzen wir Stripe (Stripe Payments Europe Ltd., 1 Grand Canal Street Lower, Dublin, Irland). Dabei werden die erforderlichen Zahlungsdaten an Stripe übermittelt. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Mehr:{" "}
+              <a href="https://stripe.com/de/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                stripe.com/de/privacy
+              </a>
+            </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">Resend (E-Mail-Versand)</h3>
+            <p>
+              Für Benachrichtigungs- und Transaktions-E-Mails nutzen wir Resend. Die Verarbeitung erfolgt in der Region eu-west-1 (Irland, EU). Verarbeitet werden die für den Versand nötigen Daten (E-Mail-Adresse, Inhalt). Rechtsgrundlage: Art. 6 Abs. 1 lit. b und f DSGVO.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.4}>
+            <h2 className="text-xl font-semibold text-foreground">7. SSL- bzw. TLS-Verschlüsselung</h2>
             <p>
               Diese Website nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte 
               eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennst du daran, dass die 
