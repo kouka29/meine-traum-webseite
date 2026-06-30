@@ -1071,10 +1071,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           is_waitlist: isWaitlist,
         });
 
-      if (leadError) {
-        // Formspree war erfolgreich – DB-Speicherung ist nur fürs Admin-Backup.
-        console.warn("Lead konnte nicht in der DB gespeichert werden", leadError);
-      } else {
+      if (!leadError) {
         setLeadId(newLeadId);
       }
 
@@ -1164,11 +1161,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
             p_lead_id: leadId,
             p_contact_method: method,
           })
-          .then(({ error }) => {
-            if (error) {
-              console.warn("Kontaktweg konnte nicht gespeichert werden", error);
-            }
-          });
+          .then(() => {});
       }
     },
     [leadId, state],
