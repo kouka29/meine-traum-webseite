@@ -48,7 +48,7 @@ const Barrierefreiheit = () => (
               <br />
               E-Mail: info@meine-traum-webseite.de
               <br />
-              Telefon: 06131 30 764 98
+              Telefon: 06131 3076498
             </p>
           </AnimatedSection>
 

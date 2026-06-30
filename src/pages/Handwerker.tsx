@@ -121,7 +121,7 @@ const Handwerker = () => {
     });
     setLoading(false);
     if (ok) setSubmitted(true);
-    else toast({ title: "Bitte ruf kurz an: 06131 30 764 98", variant: "destructive" });
+    else toast({ title: "Bitte ruf kurz an: 06131 3076498", variant: "destructive" });
   };
 
   return (
@@ -219,7 +219,7 @@ const Handwerker = () => {
                   className="bg-white/5 backdrop-blur-md border border-white/15 text-white hover:bg-white/10 h-14 px-7 text-base font-medium rounded-full"
                 >
                   <a href="tel:+4961313076498" className="flex items-center gap-2">
-                    <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
+                    <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
                   </a>
                 </Button>
               </div>
@@ -668,7 +668,7 @@ const Handwerker = () => {
                   <span className="w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center">
                     <Phone size={20} className="text-primary" aria-hidden={true} focusable={false} />
                   </span>
-                  06131 30 764 98
+                  06131 3076498
                 </a>
                 <p className="text-sm text-white/55 mt-2 ml-14">Mo–Fr 9–18 Uhr</p>
               </div>
@@ -832,7 +832,7 @@ const Handwerker = () => {
                 className="bg-white/5 backdrop-blur-md border border-white/15 text-white hover:bg-white/10 h-14 px-8 text-base font-medium rounded-full"
               >
                 <a href="tel:+4961313076498" className="flex items-center gap-2">
-                  <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
+                  <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
                 </a>
               </Button>
             </div>

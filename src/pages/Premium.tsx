@@ -697,7 +697,7 @@ const Premium = () => {
               className="inline-flex items-center gap-3 rounded-none border border-[#0A0A1F]/30 px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#0A0A1F]/70 transition-all hover:border-[#0A0A1F] hover:text-[#0A0A1F]"
             >
               <Phone className="h-4 w-4" aria-hidden={true} focusable={false} />
-              06131 30 764 98
+              06131 3076498
             </a>
           </div>
 

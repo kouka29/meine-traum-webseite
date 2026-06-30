@@ -82,7 +82,7 @@ const EinEuroAngebot = () => {
     });
     setSubmitting(false);
     if (!result.ok) {
-      setError("Etwas ist schiefgelaufen. Bitte rufen Sie uns an: 06131 30 764 98");
+      setError("Etwas ist schiefgelaufen. Bitte rufen Sie uns an: 06131 3076498");
       return;
     }
     setSubmitted(true);

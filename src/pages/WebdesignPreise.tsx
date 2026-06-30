@@ -1038,7 +1038,7 @@ const WebdesignPreise = () => {
           Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={18} aria-hidden={true} focusable={false} />
         </Button>
         <p className="text-sm text-muted-foreground mt-5">
-          Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 30 764 98</a>
+          Fragen? Einfach anrufen: <a href="tel:+4961313076498" className="underline hover:text-foreground font-semibold">06131 3076498</a>
         </p>
         <p className="text-base md:text-lg font-bold text-primary mt-6">
           ⭐⭐⭐⭐⭐ +150 Betriebe aus der Region vertrauen uns

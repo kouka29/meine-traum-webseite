@@ -136,7 +136,7 @@ const Gesetz = () => {
     });
     setSubmitting(false);
     if (!result.ok) {
-      setSubmitError("Etwas ist schiefgelaufen. Bitte rufen Sie uns an: 06131 30 764 98");
+      setSubmitError("Etwas ist schiefgelaufen. Bitte rufen Sie uns an: 06131 3076498");
       return;
     }
     setSubmitStatus(result.status);
@@ -471,7 +471,7 @@ const Gesetz = () => {
                         Die 10 kostenlosen Vorschau-Plätze für diesen Monat sind bereits vergeben.
                         Wir haben Ihre Anfrage vermerkt und melden uns, sobald wieder ein Platz frei wird —
                         meist innerhalb der ersten Tage des nächsten Monats. Sie können uns auch direkt anrufen:{" "}
-                        <a href="tel:+4961313076498" className="font-semibold underline">06131 30 764 98</a>.
+                        <a href="tel:+4961313076498" className="font-semibold underline">06131 3076498</a>.
                       </p>
                     </>
                   ) : (
@@ -493,7 +493,7 @@ const Gesetz = () => {
                       <span className="text-foreground font-medium">Muad Amar antwortet persönlich</span>
                       <span className="mx-1">—</span>
                       kein Callcenter, keine Bots.
-                      <a href="tel:+4961313076498" className="ml-1 font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>06131 30 764 98</a>
+                      <a href="tel:+4961313076498" className="ml-1 font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>06131 3076498</a>
                     </div>
                   </div>
                   <h2 className="font-display text-3xl font-bold text-center mb-3">

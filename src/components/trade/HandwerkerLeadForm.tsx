@@ -62,7 +62,7 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
     if (ok) {
       setSubmitted(true);
     } else {
-      toast.error("Bitte ruf kurz an: 06131 30 764 98");
+      toast.error("Bitte ruf kurz an: 06131 3076498");
     }
   };
 
@@ -78,7 +78,7 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
           className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
           style={{ color: "#5B5FEF" }}
         >
-          <Phone size={16} aria-hidden={true} focusable={false} /> Lieber direkt anrufen? 06131 30 764 98
+          <Phone size={16} aria-hidden={true} focusable={false} /> Lieber direkt anrufen? 06131 3076498
         </a>
       </div>
     );

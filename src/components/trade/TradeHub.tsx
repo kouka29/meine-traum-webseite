@@ -71,7 +71,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             </Button>
             <Button variant="brand-soft" size="lg" asChild>
               <a href="tel:+4961313076498">
-                <Phone size={16} aria-hidden focusable={false} /> 06131 30 764 98
+                <Phone size={16} aria-hidden focusable={false} /> 06131 3076498
               </a>
             </Button>
           </div>
@@ -191,7 +191,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
               ))}
             </ul>
             <a href="tel:+4961313076498" className="inline-flex items-center gap-3 text-2xl font-bold text-foreground hover:underline">
-              <Phone size={24} aria-hidden={true} focusable={false} /> 06131 30 764 98
+              <Phone size={24} aria-hidden={true} focusable={false} /> 06131 3076498
             </a>
             <p className="text-sm mt-1 text-muted-foreground">Mo–Fr 9–18 Uhr</p>
           </div>
@@ -213,7 +213,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             </Button>
             <Button variant="brand-soft" size="lg" asChild>
               <a href="tel:+4961313076498">
-                <Phone size={16} aria-hidden focusable={false} /> 06131 30 764 98
+                <Phone size={16} aria-hidden focusable={false} /> 06131 3076498
               </a>
             </Button>
           </div>
