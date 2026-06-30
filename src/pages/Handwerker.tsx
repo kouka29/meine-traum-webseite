@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AnimatedSection from "@/components/AnimatedSection";
+import EmojiIcon from "@/lib/emojiToIcon";
 import {
   Accordion,
   AccordionContent,
@@ -168,7 +169,7 @@ const Handwerker = () => {
         <div className="container-narrow px-4 py-24 md:py-32 lg:py-40 relative">
           <div className="grid lg:grid-cols-[1.1fr,1fr] gap-16 items-center">
             <AnimatedSection>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 backdrop-blur-md mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 mb-8">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                 <span className="text-[11px] font-semibold tracking-[0.18em] text-amber-300 uppercase">
                   Für Elektriker · Maler · Sanitär · Dachdecker · Heizung
@@ -216,7 +217,7 @@ const Handwerker = () => {
                 <Button
                   size="lg"
                   asChild
-                  className="bg-white/5 backdrop-blur-md border border-white/15 text-white hover:bg-white/10 h-14 px-7 text-base font-medium rounded-full"
+                  className="bg-white/5 border border-white/15 text-white hover:bg-white/10 h-14 px-7 text-base font-medium rounded-full"
                 >
                   <a href="tel:+4961313076498" className="flex items-center gap-2">
                     <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
@@ -253,7 +254,7 @@ const Handwerker = () => {
 
                 {/* Laptop */}
                 <div
-                  className="relative rounded-[28px] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-2xl p-3 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.7)]"
+                  className="relative rounded-[28px] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-3 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.7)]"
                   style={{ transform: "rotateY(-8deg) rotateX(4deg)" }}
                 >
                   <div className="rounded-[20px] bg-white text-foreground overflow-hidden">
@@ -318,7 +319,7 @@ const Handwerker = () => {
                 </div>
 
                 {/* Floating chip */}
-                <div className="absolute -top-4 -left-4 md:-left-8 px-4 py-3 rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl border border-white/40">
+                <div className="absolute -top-4 -left-4 md:-left-8 px-4 py-3 rounded-2xl bg-white/95 shadow-2xl border border-white/40">
                   <div className="flex items-center gap-2.5">
                     <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center">
                       <span className="text-base">📩</span>
@@ -335,11 +336,11 @@ const Handwerker = () => {
         </div>
 
         {/* Marquee tradesline */}
-        <div className="relative border-t border-white/5 py-6 bg-black/20 backdrop-blur-sm overflow-hidden">
+        <div className="relative border-t border-white/5 py-6 bg-black/20 overflow-hidden">
           <div className="flex gap-12 animate-[marquee_30s_linear_infinite] whitespace-nowrap text-white/30 text-sm font-medium tracking-wider">
             {[...trades, ...trades].map((t, i) => (
               <span key={i} className="flex items-center gap-2">
-                <span className="text-base">{t.icon}</span> {t.label.toUpperCase()}
+                <EmojiIcon emoji={t.icon} size={16} className="text-white/60" /> {t.label.toUpperCase()}
               </span>
             ))}
           </div>
@@ -454,7 +455,7 @@ const Handwerker = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f, i) => (
               <AnimatedSection key={f.title} delay={i * 0.05}>
-                <div className="group relative p-8 rounded-3xl border border-border/60 bg-card/40 backdrop-blur-sm h-full transition-all hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1 overflow-hidden">
+                <div className="group relative p-8 rounded-3xl border border-border/60 bg-card/40 h-full transition-all hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1 overflow-hidden">
                   <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-primary/5 group-hover:bg-primary/10 transition-colors" />
                   <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/15 to-accent/10 border border-primary/10 flex items-center justify-center mb-5">
                     <f.icon size={22} className="text-primary" />
@@ -609,9 +610,9 @@ const Handwerker = () => {
               <AnimatedSection key={t.label} delay={i * 0.03}>
                 <button
                   onClick={scrollToForm}
-                  className="group relative w-full p-6 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/5 hover:shadow-card hover:-translate-y-1 transition-all duration-300 text-center overflow-hidden"
+                  className="group relative w-full p-6 rounded-2xl border border-border/60 bg-card/40 hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/5 hover:shadow-card hover:-translate-y-1 transition-all duration-300 text-center overflow-hidden"
                 >
-                  <div className="text-3xl mb-2.5 group-hover:scale-110 transition-transform duration-300">{t.icon}</div>
+                  <div className="mb-2.5 flex justify-center group-hover:scale-110 transition-transform duration-300"><EmojiIcon emoji={t.icon} size={20} /></div>
                   <div className="text-sm font-semibold group-hover:text-primary transition-colors">{t.label}</div>
                 </button>
               </AnimatedSection>
@@ -632,7 +633,7 @@ const Handwerker = () => {
         <div className="container-narrow px-4 relative">
           <div className="grid lg:grid-cols-[1.1fr,1fr] gap-12 lg:gap-16 items-center">
             <AnimatedSection>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 backdrop-blur-md mb-7">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 mb-7">
                 <Sparkles size={12} className="text-amber-300" aria-hidden={true} focusable={false} />
                 <span className="text-[11px] font-semibold tracking-[0.18em] text-amber-300 uppercase">
                   Kostenlos & unverbindlich
@@ -663,7 +664,7 @@ const Handwerker = () => {
                 ))}
               </ul>
 
-              <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl inline-block">
+              <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.04] inline-block">
                 <a href="tel:+4961313076498" className="flex items-center gap-3 text-2xl md:text-3xl font-heading font-bold hover:text-primary transition tracking-tight">
                   <span className="w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center">
                     <Phone size={20} className="text-primary" aria-hidden={true} focusable={false} />
@@ -776,7 +777,7 @@ const Handwerker = () => {
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
-                className="border border-border/60 rounded-2xl px-6 bg-card/40 backdrop-blur-sm data-[state=open]:border-primary/30 data-[state=open]:shadow-card transition-all"
+                className="border border-border/60 rounded-2xl px-6 bg-card/40 data-[state=open]:border-primary/30 data-[state=open]:shadow-card transition-all"
               >
                 <AccordionTrigger className="text-left font-heading font-semibold text-base md:text-lg hover:no-underline py-5 tracking-tight">
                   {f.q}
@@ -829,7 +830,7 @@ const Handwerker = () => {
               <Button
                 size="lg"
                 asChild
-                className="bg-white/5 backdrop-blur-md border border-white/15 text-white hover:bg-white/10 h-14 px-8 text-base font-medium rounded-full"
+                className="bg-white/5 border border-white/15 text-white hover:bg-white/10 h-14 px-8 text-base font-medium rounded-full"
               >
                 <a href="tel:+4961313076498" className="flex items-center gap-2">
                   <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498

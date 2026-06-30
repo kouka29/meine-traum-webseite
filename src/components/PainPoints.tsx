@@ -40,7 +40,7 @@ const PainPoints = () => (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {painPoints.map((p, i) => (
           <AnimatedSection key={i} delay={i * 0.1}>
-            <div className="pain-card p-7 rounded-2xl border border-background/8 hover:border-destructive/30 transition-all duration-300 bg-background/[0.04] backdrop-blur-sm h-full">
+            <div className="pain-card p-7 rounded-2xl border border-background/8 hover:border-destructive/30 transition-all duration-300 bg-background/[0.04] h-full">
               <div className="flex gap-5 items-start">
                 <div className="w-11 h-11 rounded-xl bg-destructive/15 flex items-center justify-center shrink-0">
                   <p.icon size={20} className="text-destructive" />

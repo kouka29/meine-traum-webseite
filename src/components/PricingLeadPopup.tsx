@@ -242,7 +242,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="absolute inset-0 bg-black/75 backdrop-blur-[2px]" />
+      <div className="absolute inset-0 bg-black/75" />
 
       <div
         className={cn(

@@ -81,7 +81,7 @@ const CookieBanner = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center p-4 bg-foreground/30 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-end justify-center p-4 bg-foreground/30">
       <div className="w-full max-w-2xl bg-background rounded-2xl shadow-elevated border border-border p-6 md:p-8 animate-fade-up">
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex items-center gap-3">

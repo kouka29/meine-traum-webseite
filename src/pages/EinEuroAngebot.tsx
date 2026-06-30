@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
 import { submitLead } from "@/lib/submitLead";
+import EmojiIcon from "@/lib/emojiToIcon";
 
 const testimonials = [
   { quote: "Ich hatte keine Ahnung dass mein Cookie-Banner nicht korrekt war. Muad hat das sofort erkannt und innerhalb von 3 Wochen hatten wir eine komplett neue, konforme Webseite.", name: "Thomas K., Elektriker aus Mainz" },
@@ -159,7 +160,7 @@ const EinEuroAngebot = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {includes.map((i) => (
               <div key={i.title} className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm">
-                <div className="text-4xl mb-3">{i.icon}</div>
+                <div className="mb-3 flex justify-center"><EmojiIcon emoji={i.icon} size={20} /></div>
                 <h3 className="font-semibold text-lg mb-2">{i.title}</h3>
                 <p className="text-muted-foreground text-sm">{i.text}</p>
               </div>

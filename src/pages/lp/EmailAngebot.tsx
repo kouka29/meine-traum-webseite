@@ -402,7 +402,7 @@ const EmailAngebot = () => {
   return (
     <main id="main-content" className="min-h-screen bg-background">
       {/* Minimal-Header */}
-      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80">
         <div className="container-narrow px-4 py-3.5 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center shadow-glow">
@@ -495,7 +495,7 @@ const EmailAngebot = () => {
         <div className="container-narrow px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Das Problem</p>
-            <h2 className="mb-4 text-balance">Warum die meisten Handwerker-Websites <span className="gradient-text">keine Anfragen bringen</span></h2>
+            <h2 className="mb-4 text-balance">Warum die meisten Handwerker-Websites <span className="text-foreground">keine Anfragen bringen</span></h2>
             <p className="text-muted-foreground text-base md:text-lg italic">
               Ein verlorener Auftrag kostet dich im Schnitt 800 €. Deine neue Website ab 59 €/Monat.
             </p>
@@ -524,7 +524,7 @@ const EmailAngebot = () => {
         <div className="container-narrow px-4">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Die Lösung</p>
-            <h2 className="mb-4 text-balance">Wähle dein <span className="gradient-text">Paket</span></h2>
+            <h2 className="mb-4 text-balance">Wähle dein <span className="text-foreground">Paket</span></h2>
             <p className="text-muted-foreground text-base md:text-lg">
               Monatlich flexibel oder einmalig — beides voll absetzbar.
             </p>
@@ -568,7 +568,7 @@ const EmailAngebot = () => {
                           </span>
                         )}
                         <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-                        <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
+                        <p className="font-heading text-3xl font-bold text-foreground mb-6">{pkg.price}</p>
                         {pkg.compare && (
                           <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
                         )}
@@ -609,7 +609,7 @@ const EmailAngebot = () => {
                     <div className="flex-1">
                       <h3 className="font-heading text-xl font-bold mb-1">{enterprisePkg.name}</h3>
                       <p className="text-sm text-muted-foreground mb-2">{enterprisePkg.subtitle}</p>
-                      <p className="font-heading text-2xl font-bold gradient-text mb-1">{enterprisePkg.price}</p>
+                      <p className="font-heading text-2xl font-bold text-foreground mb-1">{enterprisePkg.price}</p>
                       <p className="text-xs text-muted-foreground mb-5">zzgl. 19 % MwSt.</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {enterprisePkg.features.map((f) => (

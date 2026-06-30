@@ -259,7 +259,7 @@ const Countdown = ({
           { v: seconds, l: "Sek." },
         ].map((it) => (
           <div key={it.l} className="flex flex-col items-center">
-            <div className="bg-primary-foreground/15 backdrop-blur-sm border border-primary-foreground/25 text-primary-foreground rounded-xl px-3 py-3 sm:px-5 sm:py-4 min-w-[64px] sm:min-w-[80px]">
+            <div className="bg-primary-foreground/15 border border-primary-foreground/25 text-primary-foreground rounded-xl px-3 py-3 sm:px-5 sm:py-4 min-w-[64px] sm:min-w-[80px]">
               <div className="text-2xl sm:text-4xl font-bold tabular-nums leading-none">
                 {String(it.v).padStart(2, "0")}
               </div>
@@ -1527,7 +1527,7 @@ const KostenloseVorschauV2 = () => {
   return (
     <div className="min-h-screen bg-background scroll-smooth">
       {/* Mini-Header (fokussiert) */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
+      <header className="sticky top-0 z-40 bg-background/80 border-b border-border">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-bold">

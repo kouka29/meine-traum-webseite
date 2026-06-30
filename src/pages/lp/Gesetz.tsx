@@ -15,6 +15,7 @@ import { ShieldCheck, ArrowRight, Check, Star, Lock, Gavel, Building2, TrendingD
 import { Card } from "@/components/ui/card";
 import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
 import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
+import EmojiIcon from "@/lib/emojiToIcon";
 import bmasLogo from "@/assets/bmas-logo.svg.asset.json";
 import bfdiLogo from "@/assets/bfdi-logo.svg.asset.json";
 
@@ -254,7 +255,7 @@ const Gesetz = () => {
                     className="relative group"
                   >
                     <div className={`absolute -inset-0.5 bg-gradient-to-r ${v.glow} rounded-3xl blur opacity-10 group-hover:opacity-25 transition duration-500`} aria-hidden="true" />
-                    <div className="relative bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
+                    <div className="relative bg-white/80 shadow-2xl rounded-3xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
                       <div className={`w-12 h-12 ${v.iconBg} rounded-2xl flex items-center justify-center mb-6`}>
                         <Icon className={`w-6 h-6 ${v.iconColor}`} aria-hidden={true} focusable={false} />
                       </div>
@@ -280,7 +281,7 @@ const Gesetz = () => {
               {c.problems.map((p, i) => (
                 <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
                   <Card className="p-8 h-full rounded-2xl border-2 hover:border-primary/40 transition-colors">
-                    <div className="text-5xl mb-4">{p.icon}</div>
+                    <div className="mb-4"><EmojiIcon emoji={p.icon} size={20} /></div>
                     <h3 className="font-display text-xl font-bold mb-3">{p.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{p.text}</p>
                   </Card>

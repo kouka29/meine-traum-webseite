@@ -326,7 +326,7 @@ const Empfehlung = () => (
                   ].map((s) => (
                     <div key={s.label} className="text-center">
                       <s.icon size={20} className="text-primary mx-auto mb-2" />
-                      <p className="text-2xl sm:text-3xl font-heading font-bold gradient-text">
+                      <p className="text-2xl sm:text-3xl font-heading font-bold text-foreground">
                         {s.value}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
