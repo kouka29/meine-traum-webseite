@@ -15,6 +15,7 @@ import { ShieldCheck, ArrowRight, Check, Star, Lock, Gavel, Building2, TrendingD
 import { Card } from "@/components/ui/card";
 import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
 import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
+import EmojiIcon from "@/lib/emojiToIcon";
 import bmasLogo from "@/assets/bmas-logo.svg.asset.json";
 import bfdiLogo from "@/assets/bfdi-logo.svg.asset.json";
 
@@ -280,7 +281,7 @@ const Gesetz = () => {
               {c.problems.map((p, i) => (
                 <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
                   <Card className="p-8 h-full rounded-2xl border-2 hover:border-primary/40 transition-colors">
-                    <div className="text-5xl mb-4">{p.icon}</div>
+                    <div className="mb-4"><EmojiIcon emoji={p.icon} size={20} /></div>
                     <h3 className="font-display text-xl font-bold mb-3">{p.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{p.text}</p>
                   </Card>
