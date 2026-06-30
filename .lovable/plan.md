@@ -1,21 +1,31 @@
-## Ursache
+## Problem
+Die Screenshots von **ME-KA, CBI, Elektrotechnik Fretter** erscheinen im Carousel auf `/` leer/kaputt, auf `/portfolio` korrekt — obwohl die Storage-Dateien gültig sind (per curl geprüft, alle drei JPGs liefern echte Seiten-Inhalte).
 
-Im Home-Portfolio-Carousel werden nur die ersten 3 Bilder geladen (`loading="eager"` für `i < 3`), alle weiteren mit `loading="lazy"`. Embla rendert zwar alle Slides, schiebt sie aber per `translate3d(-9999px,…)` weit aus dem Viewport. Browser laden `loading="lazy"` Bilder erst, wenn der Container im Viewport intersected — bei transformierten Off-Screen-Slides passiert das nicht. Resultat: `naturalWidth = 0`, leere/kaputte Tiles ab Slide 4. Auf `/portfolio` greift dieser Bug nicht, weil die Bilder in einem normalen Grid liegen.
+## Diagnose (vermutete Ursache)
+- Beide Seiten teilen sich `portfolioCache` (`sessionStorage` Key `portfolio_projects_v3`, 5 min TTL) und denselben Resolver `rawSrc = p.image_url || p.screenshot_url`.
+- Für diese 3 Items ist `image_url` in der DB ein **leerer String** und `screenshot_url` ist gesetzt → der Fallback auf `screenshot_url` muss greifen.
+- Verdacht: In `IndexPortfolio.tsx` Zeile 148 wird `p.image_url` getestet als `(typeof p.image_url === "string" ? p.image_url : "")` — bei `""` ist `"" || screenshot_url` ok, aber wenn ein älterer Cache-Eintrag (`portfolio_projects_v3`) noch ein **anderes** image_url-Format speicherte (z. B. `null` oder einen toten relativen Pfad), wird `normalizeImageSrc` daraus eine kaputte URL bauen (`{SUPABASE_URL}/storage/v1/object/public/portfolio-images/null`). Portfolio.tsx hat eine etwas andere Branching-Reihenfolge und trifft dadurch evtl. nicht denselben Pfad.
 
-Verifiziert per Playwright: Home `complete:true` nur für Slides 1–3, ab Slide 4 alle `complete:false / nw:0`. Auf `/portfolio` dieselben URLs → alle `complete:true`.
+## Schritt 1 — Verifikation per Playwright
+Headless Chromium auf `http://localhost:8080/` öffnen, zur Portfolio-Section scrollen, für ME-KA / CBI / Elektrotechnik Fretter die tatsächlichen `<img src>`-Werte und `naturalWidth/naturalHeight` auslesen + Screenshots. Dasselbe auf `/portfolio` zum Vergleich. Damit ist die Render-Differenz eindeutig.
 
-## Fix
+## Schritt 2 — Fix in `src/components/IndexPortfolio.tsx`
+Resolver vereinheitlichen und robust gegen leere/null/relative image_url machen:
+```ts
+const rawSrc =
+  (typeof p.screenshot_url === "string" && p.screenshot_url) ||
+  (typeof p.image_url === "string" && p.image_url) ||
+  "";
+```
+Begründung: `screenshot_url` ist (sofern gesetzt) immer die frischeste, vom Admin-Edge-Function gepflegte Quelle. Damit identische Quelle wie auf `/portfolio` — Differenz verschwindet.
 
-In `src/components/IndexPortfolio.tsx`:
+## Schritt 3 — Cache-Invalidierung
+Da der bisherige `sessionStorage`-Eintrag noch alte Daten enthalten kann, Cache-Key von `portfolio_projects_v3` → `portfolio_projects_v4` in `src/lib/portfolioCache.ts` anheben. Alte Einträge werden ignoriert, frischer Fetch erzwungen.
 
-1. `loading="eager"` für **alle** Carousel-Bilder setzen (max ~30 Projekte, vertretbar — Portfolio-Sektion liegt mid-page und der User scrollt typischerweise dorthin).
-2. `decoding="async"` beibehalten, damit das Decoding nicht blockiert.
-3. `fetchpriority="high"` weiterhin nur für die ersten 3 (LCP-Kandidaten der Sektion).
+## Schritt 4 — Validierung
+Playwright erneut auf `/` ausführen, prüfen dass alle 3 Cards jetzt Bildinhalt zeigen (naturalWidth > 0, sichtbare Pixel-Diff zum vorherigen Screenshot).
 
-Damit verhalten sich Carousel und Grid identisch und alle Screenshots werden zuverlässig dargestellt.
-
-## Betroffene Dateien
-
-- `src/components/IndexPortfolio.tsx` — `loading` Attribut anpassen.
-
-Keine weiteren Änderungen nötig (Edge Function, DB, Portfolio-Seite bleiben unberührt).
+## Nicht-Ziele
+- Keine Änderungen an `Portfolio.tsx` (funktioniert bereits).
+- Kein Neugenerieren der Screenshots — die Dateien sind nachweislich intakt.
+- Keine Styling-Änderungen am Card-Layout.

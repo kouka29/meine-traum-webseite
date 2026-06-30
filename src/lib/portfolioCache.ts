@@ -14,7 +14,7 @@ export type PortfolioRow = {
   sort_order?: number;
 };
 
-const STORAGE_KEY = "portfolio_projects_v3";
+const STORAGE_KEY = "portfolio_projects_v4";
 const TTL_MS = 5 * 60 * 1000; // 5 Minuten
 
 let memoryCache: PortfolioRow[] | null = null;

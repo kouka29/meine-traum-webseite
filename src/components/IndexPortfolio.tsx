@@ -145,7 +145,10 @@ const IndexPortfolio = () => {
             <div className="flex-1 min-w-0">
               <CarouselContent className="-ml-6">
               {items.map((p, i) => {
-                const rawSrc = (typeof p.image_url === "string" ? p.image_url : "") || p.screenshot_url || "";
+                const rawSrc =
+                  (typeof p.screenshot_url === "string" && p.screenshot_url) ||
+                  (typeof p.image_url === "string" && p.image_url) ||
+                  "";
                 const imgSrc = normalizeImageSrc(rawSrc);
                 const eager = i < 3;
                 const imgAlt = `Webdesign-Referenz – ${p.title}, ${p.category}`;
