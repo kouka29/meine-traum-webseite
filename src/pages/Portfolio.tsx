@@ -7,12 +7,12 @@ import CTABanner from "@/components/CTABanner";
 import DeviceMockup from "@/components/DeviceMockup";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
-import techstartImg from "@/assets/portfolio/techstart.jpg";
-import yogastudioImg from "@/assets/portfolio/yogastudio.jpg";
-import digitalboostImg from "@/assets/portfolio/digitalboost.jpg";
-import kanzleiImg from "@/assets/portfolio/kanzlei.jpg";
-import fitlifeImg from "@/assets/portfolio/fitlife.jpg";
-import greentechImg from "@/assets/portfolio/greentech.jpg";
+import techstartImg from "@/assets/portfolio/techstart.jpg?w=800&format=webp&quality=80&as=url";
+import yogastudioImg from "@/assets/portfolio/yogastudio.jpg?w=800&format=webp&quality=80&as=url";
+import digitalboostImg from "@/assets/portfolio/digitalboost.jpg?w=800&format=webp&quality=80&as=url";
+import kanzleiImg from "@/assets/portfolio/kanzlei.jpg?w=800&format=webp&quality=80&as=url";
+import fitlifeImg from "@/assets/portfolio/fitlife.jpg?w=800&format=webp&quality=80&as=url";
+import greentechImg from "@/assets/portfolio/greentech.jpg?w=800&format=webp&quality=80&as=url";
 
 const FALLBACK_IMAGES: Record<string, string> = {
   "TechStart GmbH": techstartImg,
