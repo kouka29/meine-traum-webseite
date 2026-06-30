@@ -5,6 +5,9 @@ import FeatureCard from "@/components/trade/FeatureCard";
 import TestimonialCard from "@/components/trade/TestimonialCard";
 import { PackageCard, rentPackages } from "@/pages/WebdesignPreise";
 import { PricingNamesProvider } from "@/lib/pricingNames";
+import Section from "@/components/ui-marketing/Section";
+import SectionHeading from "@/components/ui-marketing/SectionHeading";
+import { Button } from "@/components/ui/button";
 
 export interface TradeHubConfig {
   branche: string;
@@ -47,77 +50,60 @@ const TRADE_RENT_PACKAGES = rentPackages.filter((p) => !p.enterprise);
 
 const scrollToForm = () => document.getElementById("vorschau-formular")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-const Section = ({ bg, children, id }: { bg: "dark" | "light" | "white"; children: React.ReactNode; id?: string }) => {
-  const style = bg === "dark" ? { background: "var(--dark-bg)" } : bg === "light" ? { background: "var(--light-bg)" } : { background: "#fff" };
-  return <section id={id} className="py-20 md:py-24" style={style}>{children}</section>;
-};
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="container-narrow px-4 max-w-6xl mx-auto">{children}</div>
-);
-
 const TradeHub = ({ config }: { config: TradeHubConfig }) => (
   <main id="main-content" className="pt-[110px]">
     {/* HERO */}
     <Section bg="dark">
-      <Container>
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block text-[11px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-full text-white mb-6" style={{ background: config.badgeColor }}>
             {config.badgeText}
           </span>
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">{config.heroH1}</h1>
-          <p className="text-lg max-w-2xl mx-auto mb-8" style={{ color: "var(--text-muted)" }}>{config.heroSub}</p>
+          <p className="text-lg max-w-2xl mx-auto mb-8 text-on-dark-muted">{config.heroSub}</p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white mb-8">
             {config.trustBadges.map((b) => (
-              <span key={b} className="flex items-center gap-2"><Check size={16} style={{ color: "var(--success)" }} aria-hidden={true} focusable={false} /> {b}</span>
+              <span key={b} className="flex items-center gap-2"><Check size={16} className="text-success" aria-hidden={true} focusable={false} /> {b}</span>
             ))}
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button onClick={scrollToForm} className="rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-110" style={{ background: "var(--brand-purple)" }}>
+            <Button variant="brand" size="lg" onClick={scrollToForm}>
               Kostenlose Vorschau anfordern →
-            </button>
-            <a href="tel:+4961313076498" style={{ backgroundColor: "#ffffff" }} className="rounded-xl px-7 py-3.5 text-sm font-semibold text-primary hover:text-white transition inline-flex items-center justify-center gap-2">
-              <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
-            </a>
+            </Button>
+            <Button variant="brand-soft" size="lg" asChild>
+              <a href="tel:+4961313076498">
+                <Phone size={16} aria-hidden focusable={false} /> 06131 30 764 98
+              </a>
+            </Button>
           </div>
-          <p className="mt-6 text-sm" style={{ color: "var(--text-muted)" }}>{config.socialProof}</p>
+          <p className="mt-6 text-sm text-on-dark-muted">{config.socialProof}</p>
         </div>
-      </Container>
     </Section>
 
     {/* PAIN POINTS */}
     <Section bg="dark">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">Kommt Dir das bekannt vor?</h2>
-        </div>
+        <SectionHeading tone="onDark" title="Kommt Dir das bekannt vor?" />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {config.painPoints.map((p) => (
             <div
               key={p.title}
-              className="rounded-2xl p-6 flex flex-col gap-3 transition duration-300 hover:-translate-y-0.5"
-              style={{ background: "#FFFFFF", boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}
+              className="rounded-card bg-white p-6 flex flex-col gap-3 transition duration-300 hover:-translate-y-0.5 shadow-elevated"
             >
               <div className="text-3xl">{p.icon}</div>
-              <h3 className="text-base font-semibold" style={{ color: "#0A0A1F" }}>{p.title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "rgba(10,10,31,0.65)" }}>{p.description}</p>
+              <h3 className="text-base font-semibold text-foreground">{p.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{p.description}</p>
             </div>
           ))}
         </div>
-      </Container>
     </Section>
 
     {/* HOW IT WORKS */}
     <Section bg="light">
-      <Container>
-        <div className="text-center mb-12">
-          <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--brand-purple)" }}>So einfach geht's</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-3">{config.stepsH2}</h2>
-        </div>
+        <SectionHeading eyebrow="So einfach geht's" title={config.stepsH2} />
         <div className="grid md:grid-cols-3 gap-6 mb-10">
           {STEPS.map((s, i) => (
-            <div key={s.title} className="rounded-2xl bg-white p-7 shadow-card flex flex-col gap-3">
+            <div key={s.title} className="rounded-card bg-white p-7 shadow-marketing flex flex-col gap-3 border border-border">
               <div className="flex items-center gap-3">
-                <span className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: "var(--brand-purple)" }}>{i + 1}</span>
+                <span className="w-10 h-10 rounded-full flex items-center justify-center bg-brand text-brand-foreground font-bold text-sm">{i + 1}</span>
                 <span className="text-2xl">{s.emoji}</span>
               </div>
               <h3 className="text-base font-bold text-foreground">{s.title}</h3>
@@ -126,43 +112,33 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           ))}
         </div>
         <div className="text-center">
-          <button onClick={scrollToForm} className="rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-110" style={{ background: "var(--brand-purple)" }}>
-            Jetzt Vorschau anfordern →
-          </button>
+          <Button variant="brand" size="lg" onClick={scrollToForm}>Jetzt Vorschau anfordern →</Button>
         </div>
-      </Container>
     </Section>
 
     {/* FEATURES */}
     <Section bg="white">
-      <Container>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12 max-w-3xl mx-auto">{config.featuresH2}</h2>
+        <SectionHeading title={config.featuresH2} />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {config.features.map((f) => <FeatureCard key={f.title} {...f} />)}
         </div>
-      </Container>
     </Section>
 
     {/* TESTIMONIAL */}
     <Section bg="dark">
-      <Container>
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{config.testimonialH2}</h2>
-        </div>
+        <SectionHeading tone="onDark" title={config.testimonialH2} />
         <div className="max-w-2xl mx-auto">
           <TestimonialCard {...config.testimonial} />
         </div>
-      </Container>
     </Section>
 
     {/* PRICING TEASER */}
     <Section bg="light">
-      <Container>
-        <div className="text-center mb-12">
-          <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--brand-purple)" }}>Transparent & fair</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-3">Was kostet Deine neue Website?</h2>
-          <p className="text-muted-foreground">Keine versteckten Kosten. Für Gewerbetreibende voll steuerlich absetzbar. ✅</p>
-        </div>
+        <SectionHeading
+          eyebrow="Transparent & fair"
+          title="Was kostet Deine neue Website?"
+          subtitle="Keine versteckten Kosten. Für Gewerbetreibende voll steuerlich absetzbar."
+        />
         <PricingNamesProvider names={config.pricingNames ?? DEFAULT_TRADE_NAMES}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {TRADE_RENT_PACKAGES.map((pkg, i) => (
@@ -171,52 +147,46 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           </div>
         </PricingNamesProvider>
         <div className="text-center">
-          <Link to={config.pricingContactPath ?? "/handwerker/kontakt"} className="text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
+          <Link to={config.pricingContactPath ?? "/handwerker/kontakt"} className="text-sm font-semibold hover:underline text-brand">
             Nicht sicher welches Paket passt? → Kostenlos beraten lassen
           </Link>
         </div>
-      </Container>
     </Section>
 
     {/* CROSS-LINKS */}
     <Section bg="light">
-      <Container>
-        <div className="text-center mb-10">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground">{config.crossLinksH2 ?? "Auch für andere Handwerksbetriebe"}</h3>
-        </div>
+        <SectionHeading title={config.crossLinksH2 ?? "Auch für andere Handwerksbetriebe"} />
         <div className="grid sm:grid-cols-3 gap-5 mb-6">
           {config.crossLinks.map((t) => (
             <Link
               key={t.label}
               to={t.to}
-              className="group rounded-2xl bg-white p-7 flex flex-col items-center gap-3 shadow-card border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-[#5B5FEF]"
+              className="group rounded-card bg-white p-7 flex flex-col items-center gap-3 shadow-marketing border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:shadow-marketing-hover"
             >
               <span className="text-4xl">{t.icon}</span>
-              <span className="text-base font-semibold text-center text-[#0A0A1F] group-hover:text-[#5B5FEF] transition-colors">{t.label}</span>
+              <span className="text-base font-semibold text-center text-foreground group-hover:text-brand transition-colors">{t.label}</span>
             </Link>
           ))}
         </div>
         <div className="text-center">
-          <Link to={config.crossLinksFooterTo ?? "/handwerker"} className="text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
+          <Link to={config.crossLinksFooterTo ?? "/handwerker"} className="text-sm font-semibold hover:underline text-brand">
             {config.crossLinksFooterLabel ?? "Alle Branchen →"}
           </Link>
         </div>
-      </Container>
     </Section>
 
     {/* LEAD FORM */}
     <Section bg="white" id="vorschau-formular">
-      <Container>
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div className="text-foreground">
-            <span className="inline-block text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full text-white mb-5" style={{ background: "var(--amber)" }}>
+            <span className="inline-block text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-warning text-warning-foreground mb-5">
               Kostenlos & unverbindlich
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">{config.formH2}</h2>
             <ul className="space-y-3 mb-8">
               {["Individuell für Deinen Betrieb", "Ich melde mich innerhalb von 2 Stunden", "Kein Risiko — Du entscheidest danach frei", "Kostenlos — auch wenn Du nicht kaufst"].map((t) => (
                 <li key={t} className="flex items-start gap-2 text-sm text-foreground">
-                  <Check size={18} style={{ color: "var(--success)" }} className="mt-0.5 shrink-0" aria-hidden={true} focusable={false} /> {t}
+                  <Check size={18} className="mt-0.5 shrink-0 text-success" aria-hidden={true} focusable={false} /> {t}
                 </li>
               ))}
             </ul>
@@ -230,25 +200,24 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <HandwerkerLeadForm branche={config.branche} />
           </div>
         </div>
-      </Container>
     </Section>
 
     {/* FINAL CTA */}
     <Section bg="dark">
-      <Container>
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-5">{config.finalH2}</h2>
-          <p className="text-lg mb-8" style={{ color: "var(--text-muted)" }}>{config.finalSub}</p>
+          <p className="text-lg mb-8 text-on-dark-muted">{config.finalSub}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button onClick={scrollToForm} className="rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-110" style={{ background: "var(--brand-purple)" }}>
+            <Button variant="brand" size="lg" onClick={scrollToForm}>
               Kostenlose Vorschau anfordern →
-            </button>
-            <a href="tel:+4961313076498" className="rounded-xl px-7 py-3.5 text-sm font-semibold transition inline-flex items-center justify-center gap-2" style={{ backgroundColor: "#ffffff", color: "var(--brand-purple)" }}>
-              <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
-            </a>
+            </Button>
+            <Button variant="brand-soft" size="lg" asChild>
+              <a href="tel:+4961313076498">
+                <Phone size={16} aria-hidden focusable={false} /> 06131 30 764 98
+              </a>
+            </Button>
           </div>
         </div>
-      </Container>
     </Section>
   </main>
 );

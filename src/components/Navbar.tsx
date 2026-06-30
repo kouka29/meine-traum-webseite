@@ -39,8 +39,7 @@ const Navbar = () => {
       {trade && (
         <Link
           to="/handwerker/kontakt"
-          className="block w-full text-center text-white text-xs sm:text-sm font-semibold py-2 px-4 hover:brightness-110 transition"
-          style={{ background: "#F59E0B" }}
+          className="block w-full text-center text-warning-foreground text-xs sm:text-sm font-semibold py-2 px-4 hover:brightness-110 transition bg-warning"
         >
           {trade.bannerText}
         </Link>
@@ -65,7 +64,7 @@ const Navbar = () => {
                   item.highlight ? "font-semibold" : "",
                   active && !item.highlight ? "text-primary" : !item.highlight ? "text-muted-foreground" : ""
                 )}
-                style={item.highlight ? { color: "#5B5FEF" } : undefined}
+                style={item.highlight ? { color: "hsl(var(--brand))" } : undefined}
               >
                 {item.label}
               </Link>
@@ -82,7 +81,7 @@ const Navbar = () => {
             variant="gradient"
             size="sm"
             className="text-[13px] px-5 whitespace-nowrap"
-            style={trade ? { background: "#5B5FEF", color: "#fff" } : undefined}
+            style={trade ? { background: "hsl(var(--brand))", color: "hsl(var(--brand-foreground))" } : undefined}
             asChild
           >
             <Link to={ctaPath}>{ctaLabel}</Link>
@@ -114,7 +113,7 @@ const Navbar = () => {
                     ? "text-primary"
                     : "text-muted-foreground"
                 )}
-                style={item.highlight ? { color: "#5B5FEF" } : undefined}
+                style={item.highlight ? { color: "hsl(var(--brand))" } : undefined}
               >
                 {item.label}
               </Link>
@@ -130,7 +129,7 @@ const Navbar = () => {
             <Button
               variant="gradient"
               size="sm"
-              style={trade ? { background: "#5B5FEF", color: "#fff" } : undefined}
+              style={trade ? { background: "hsl(var(--brand))", color: "hsl(var(--brand-foreground))" } : undefined}
               asChild
             >
               <Link to={ctaPath} onClick={() => setOpen(false)}>

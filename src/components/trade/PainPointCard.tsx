@@ -7,12 +7,12 @@ interface Props {
 }
 
 const PainPointCard = ({ icon: Icon = AlertTriangle, title, description }: Props) => (
-  <div className="rounded-2xl border border-white/5 p-6 flex flex-col gap-3" style={{ background: "#1A1D2E" }}>
-    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: "rgba(245,158,11,0.15)", color: "#F59E0B" }}>
-      <Icon size={22} />
+  <div className="rounded-card border border-white/5 bg-surface-dark-card p-6 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/10">
+    <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-warning/15 text-warning">
+      <Icon size={22} aria-hidden focusable={false} />
     </div>
     <h3 className="text-base font-semibold text-white">{title}</h3>
-    <p className="text-sm leading-relaxed" style={{ color: "#9CA3AF" }}>{description}</p>
+    <p className="text-sm leading-relaxed text-on-dark-muted">{description}</p>
   </div>
 );
 
