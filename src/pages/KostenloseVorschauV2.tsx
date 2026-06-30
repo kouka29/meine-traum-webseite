@@ -1023,8 +1023,32 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           ? state.email
           : `lead-${newLeadId}@vorschau-v2.local`;
 
-      // Primär: an Formspree senden (bestimmt Erfolg/Fehler des Submits).
-      const formspreeRes = await fetch("https://formspree.io/f/xojrerqe", {
+      // Primär: Supabase-Insert entscheidet über Erfolg/Fehler.
+      const { error: leadError } = await supabase
+        .from("leads")
+        .insert({
+          id: newLeadId,
+          first_name: state.firstName,
+          email: submissionEmail,
+          phone: state.phone.trim(),
+          company_name: state.company || "",
+          trade: state.trade || null,
+          trade_other: state.tradeOther || null,
+          has_website: state.hasWebsite || null,
+          goals: state.goals.length > 0 ? state.goals : null,
+          urgency: state.urgency || null,
+          current_website: state.currentWebsite || null,
+          notes: state.notes || null,
+          is_waitlist: isWaitlist,
+        });
+
+      if (leadError) {
+        throw leadError;
+      }
+      setLeadId(newLeadId);
+
+      // Formspree-Benachrichtigung im Hintergrund (fire-and-forget, kein Gate)
+      void fetch("https://formspree.io/f/xojrerqe", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -1048,39 +1072,6 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           dringlichkeit: state.urgency,
           seite: "kostenlose-vorschau-v2",
         }),
-      });
-      if (!formspreeRes.ok) {
-        throw new Error(`Formspree error ${formspreeRes.status}`);
-      }
-
-      const { data: leadData, error: leadError } = await supabase
-        .from("leads")
-        .insert({
-          id: newLeadId,
-          first_name: state.firstName,
-          email: submissionEmail,
-          phone: state.phone.trim(),
-          company_name: state.company || "",
-          trade: state.trade || null,
-          trade_other: state.tradeOther || null,
-          has_website: state.hasWebsite || null,
-          goals: state.goals.length > 0 ? state.goals : null,
-          urgency: state.urgency || null,
-          current_website: state.currentWebsite || null,
-          notes: state.notes || null,
-          is_waitlist: isWaitlist,
-        });
-
-      if (!leadError) {
-        setLeadId(newLeadId);
-      }
-
-      // Webhook + E-Mail-Benachrichtigung im Hintergrund (UI nicht blockieren)
-      void fetch("https://webhook.site/placeholder", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(state),
       }).catch(() => {});
 
       void supabase.functions.invoke("send-transactional-email", {
