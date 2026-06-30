@@ -309,7 +309,7 @@ const TestimonialCarousel = () => {
         >
           {testimonials.map((t) => (
             <div key={t.id} className="shrink-0 px-2.5" style={{ flex: `0 0 ${100 / visible}%` }}>
-              <div className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
+              <div className="relative overflow-hidden rounded-2xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
                 <div className="p-7 md:p-8 flex-1 flex flex-col relative">
                   <Quote size={80} className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none" fill="currentColor" strokeWidth={0} aria-hidden={true} focusable={false} />
                   <div className="flex gap-1 mb-5 relative z-10">
@@ -686,7 +686,7 @@ const EmailAngebot = () => {
       {/* BLOCK 6: Finaler CTA */}
       <section className="py-16 md:py-24 px-4">
         <div className="container-narrow">
-          <div className="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] gradient-hero-bg p-10 md:p-16 text-center text-primary-foreground shadow-elevated">
+          <div className="relative overflow-hidden rounded-2xl md:rounded-2xl gradient-hero-bg p-10 md:p-16 text-center text-primary-foreground shadow-elevated">
             {/* Decorative glows */}
             <div className="pointer-events-none absolute -top-32 -right-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />

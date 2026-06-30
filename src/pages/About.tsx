@@ -74,7 +74,7 @@ const About = () => (
                 </Button>
               </div>
             </div>
-            <div className="aspect-square rounded-3xl gradient-hero-bg flex items-center justify-center">
+            <div className="aspect-square rounded-2xl gradient-hero-bg flex items-center justify-center">
               <div className="text-center text-primary-foreground">
                 <Users size={64} className="mx-auto mb-4 opacity-40" aria-hidden={true} focusable={false} />
                 <span className="font-heading text-5xl font-bold block tracking-tight">150+</span>

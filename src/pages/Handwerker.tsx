@@ -254,10 +254,10 @@ const Handwerker = () => {
 
                 {/* Laptop */}
                 <div
-                  className="relative rounded-[28px] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-3 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.7)]"
+                  className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-3 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.7)]"
                   style={{ transform: "rotateY(-8deg) rotateX(4deg)" }}
                 >
-                  <div className="rounded-[20px] bg-white text-foreground overflow-hidden">
+                  <div className="rounded-2xl bg-white text-foreground overflow-hidden">
                     {/* Browser bar */}
                     <div className="flex items-center gap-1.5 px-4 py-2.5 bg-gradient-to-b from-[hsl(225,20%,97%)] to-[hsl(225,20%,94%)] border-b border-border/50">
                       <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
@@ -297,10 +297,10 @@ const Handwerker = () => {
 
                 {/* Floating phone */}
                 <div
-                  className="absolute -bottom-10 -right-4 md:-right-10 w-36 md:w-44 rounded-[28px] border border-white/15 bg-[hsl(228,20%,9%)] p-1.5 shadow-[0_30px_80px_-10px_rgb(0_0_0/0.8)]"
+                  className="absolute -bottom-10 -right-4 md:-right-10 w-36 md:w-44 rounded-2xl border border-white/15 bg-[hsl(228,20%,9%)] p-1.5 shadow-[0_30px_80px_-10px_rgb(0_0_0/0.8)]"
                   style={{ transform: "rotateY(12deg) rotateX(-4deg) rotate(6deg)" }}
                 >
-                  <div className="rounded-[22px] bg-white overflow-hidden">
+                  <div className="rounded-2xl bg-white overflow-hidden">
                     <div className="h-5 bg-[hsl(228,20%,9%)] flex items-center justify-center">
                       <div className="w-12 h-3 rounded-full bg-black" />
                     </div>
@@ -367,7 +367,7 @@ const Handwerker = () => {
             {painPoints.map((p, i) => (
               <AnimatedSection key={p.title} delay={i * 0.06}>
                 <div
-                  className="group relative p-8 rounded-3xl h-full transition-all duration-300 hover:-translate-y-0.5"
+                  className="group relative p-8 rounded-2xl h-full transition-all duration-300 hover:-translate-y-0.5"
                   style={{ background: "#FFFFFF", boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}
                 >
                   <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-red-500/15 to-orange-500/10 border border-red-500/20 flex items-center justify-center mb-5">
@@ -409,7 +409,7 @@ const Handwerker = () => {
             <div className="hidden md:block absolute top-16 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             {steps.map((s, i) => (
               <AnimatedSection key={s.title} delay={i * 0.1}>
-                <div className="relative p-8 rounded-3xl bg-background border border-border/60 h-full hover:shadow-elevated hover:-translate-y-1 transition-all duration-300">
+                <div className="relative p-8 rounded-2xl bg-background border border-border/60 h-full hover:shadow-elevated hover:-translate-y-1 transition-all duration-300">
                   <div className="flex items-start justify-between mb-6">
                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-[0_10px_30px_-10px_hsl(250_56%_48%/0.6)]">
                       <s.icon size={24} className="text-white" />
@@ -455,7 +455,7 @@ const Handwerker = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f, i) => (
               <AnimatedSection key={f.title} delay={i * 0.05}>
-                <div className="group relative p-8 rounded-3xl border border-border/60 bg-card/40 h-full transition-all hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1 overflow-hidden">
+                <div className="group relative p-8 rounded-2xl border border-border/60 bg-card/40 h-full transition-all hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1 overflow-hidden">
                   <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-primary/5 group-hover:bg-primary/10 transition-colors" />
                   <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/15 to-accent/10 border border-primary/10 flex items-center justify-center mb-5">
                     <f.icon size={22} className="text-primary" />
@@ -488,7 +488,7 @@ const Handwerker = () => {
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
               <AnimatedSection key={t.name} delay={i * 0.08}>
-                <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-white to-white/90 text-foreground h-full flex flex-col shadow-[0_30px_60px_-20px_rgb(0_0_0/0.5)] hover:-translate-y-2 transition-transform duration-500">
+                <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-white to-white/90 text-foreground h-full flex flex-col shadow-[0_30px_60px_-20px_rgb(0_0_0/0.5)] hover:-translate-y-2 transition-transform duration-500">
                   <div className="absolute top-6 right-6 font-heading text-6xl text-primary/15 leading-none">"</div>
                   <div className="flex text-amber-400 mb-4">
                     {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="currentColor" aria-hidden={true} focusable={false} />)}
@@ -534,7 +534,7 @@ const Handwerker = () => {
             {pricingTiers.map((t, i) => (
               <AnimatedSection key={t.name} delay={i * 0.08}>
                 <div
-                  className={`relative p-8 rounded-3xl h-full flex flex-col transition-all duration-300 ${
+                  className={`relative p-8 rounded-2xl h-full flex flex-col transition-all duration-300 ${
                     t.highlighted
                       ? "bg-gradient-to-br from-[hsl(228,28%,5%)] to-[hsl(250,40%,12%)] text-white border border-primary/40 shadow-[0_40px_80px_-20px_hsl(250_56%_48%/0.5)] md:-translate-y-4"
                       : "bg-background border border-border/60 hover:shadow-elevated hover:-translate-y-1"
@@ -542,7 +542,7 @@ const Handwerker = () => {
                 >
                   {t.highlighted && (
                     <>
-                      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
                       <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 text-[10px] font-bold tracking-[0.15em] rounded-full bg-gradient-to-r from-primary to-accent text-white shadow-lg">
                         BELIEBTESTE WAHL
                       </span>
@@ -677,8 +677,8 @@ const Handwerker = () => {
 
             <AnimatedSection delay={0.1}>
               <div className="relative">
-                <div className="absolute -inset-px rounded-[28px] bg-gradient-to-br from-primary/60 via-accent/40 to-transparent blur-sm" />
-                <div className="relative bg-white text-foreground rounded-[28px] p-8 md:p-10 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.6)]">
+                <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-primary/60 via-accent/40 to-transparent blur-sm" />
+                <div className="relative bg-white text-foreground rounded-2xl p-8 md:p-10 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.6)]">
                   {submitted ? (
                     <div className="text-center py-10">
                       <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent mx-auto flex items-center justify-center mb-6 shadow-lg">

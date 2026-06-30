@@ -147,7 +147,7 @@ const TestimonialBlock = () => {
               className="shrink-0 px-2.5"
               style={{ flex: `0 0 ${100 / visible}%` }}
             >
-              <div className="relative overflow-hidden rounded-3xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
+              <div className="relative overflow-hidden rounded-2xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
             <div className="p-7 md:p-8 flex-1 flex flex-col relative">
               <Quote
                 size={80}

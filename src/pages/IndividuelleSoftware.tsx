@@ -304,7 +304,7 @@ const IndividuelleSoftware = () => (
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
-          <div className="glass-card rounded-3xl p-8 sm:p-12 md:p-16 text-center max-w-3xl mx-auto border border-primary/20">
+          <div className="glass-card rounded-2xl p-8 sm:p-12 md:p-16 text-center max-w-3xl mx-auto border border-primary/20">
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
               Startest du dein Projekt
             </h2>

@@ -254,8 +254,8 @@ const Gesetz = () => {
                     transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
                     className="relative group"
                   >
-                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${v.glow} rounded-3xl blur opacity-10 group-hover:opacity-25 transition duration-500`} aria-hidden="true" />
-                    <div className="relative bg-white/80 shadow-2xl rounded-3xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
+                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${v.glow} rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500`} aria-hidden="true" />
+                    <div className="relative bg-white/80 shadow-2xl rounded-2xl p-8 h-full flex flex-col" style={{ border: "1px solid hsl(0 0% 100% / 0.6)" }}>
                       <div className={`w-12 h-12 ${v.iconBg} rounded-2xl flex items-center justify-center mb-6`}>
                         <Icon className={`w-6 h-6 ${v.iconColor}`} aria-hidden={true} focusable={false} />
                       </div>
@@ -408,7 +408,7 @@ const Gesetz = () => {
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}>
             {isBfsg ? (
-              <div className="rounded-[20px] shadow-xl p-6 md:p-8 text-white"
+              <div className="rounded-2xl shadow-xl p-6 md:p-8 text-white"
                 style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))", border: "2px solid hsl(250 56% 48% / 0.3)" }}>
                 <div className="flex items-center gap-2 text-green-400 font-semibold mb-5">
                   <Check className="w-5 h-5" aria-hidden={true} focusable={false} />

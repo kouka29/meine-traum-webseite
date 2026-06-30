@@ -91,7 +91,7 @@ const WebdesignSHK = () => (
 
         {/* Results */}
         <AnimatedSection>
-          <div className="gradient-hero-bg rounded-3xl p-12 md:p-16 text-primary-foreground mb-20">
+          <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground mb-20">
             <h2 className="text-primary-foreground mb-5 text-balance text-center">Was eine professionelle Website deinem SHK-Betrieb bringt</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
               {[

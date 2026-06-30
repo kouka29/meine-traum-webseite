@@ -59,7 +59,7 @@ const ConversionOptimierung = () => (
         </div>
 
         <AnimatedSection>
-          <div className="gradient-hero-bg rounded-3xl p-12 md:p-16 text-primary-foreground text-center mb-20">
+          <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground text-center mb-20">
             <h2 className="text-primary-foreground mb-5">Ergebnisse unserer Conversion-Optimierung</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
               {[

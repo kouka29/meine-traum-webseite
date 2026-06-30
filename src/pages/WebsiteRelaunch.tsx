@@ -57,7 +57,7 @@ const WebsiteRelaunch = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <div className="gradient-hero-bg rounded-3xl p-12 md:p-16 text-primary-foreground mb-20">
+          <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground mb-20">
             <h2 className="text-primary-foreground text-center mb-10 text-balance">Unsere Relaunch-Ergebnisse sprechen für sich</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               {[

@@ -13,7 +13,7 @@ const FreePreviewCTA = () => (
   <section className="section-padding">
     <div className="container-narrow px-4">
       <AnimatedSection>
-        <div className="gradient-hero-bg rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-20 text-center text-primary-foreground relative overflow-hidden">
+        <div className="gradient-hero-bg rounded-2xl sm:rounded-2xl p-8 sm:p-12 md:p-20 text-center text-primary-foreground relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.08),transparent_60%)]" />
           <div className="relative z-10">
             <span className="badge-label bg-primary-foreground/15 text-primary-foreground mb-8">

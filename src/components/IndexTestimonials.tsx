@@ -151,7 +151,7 @@ const IndexTestimonials = () => {
                       : `calc((100% - ${(visibleCount - 1) * 1.5}rem) / ${visibleCount})`,
                   }}
                 >
-                  <div className="group bg-card rounded-3xl p-6 sm:p-7 h-full flex flex-col border border-border/60 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_32px_64px_-16px_hsl(250_56%_48%/0.18)] hover:border-primary/30">
+                  <div className="group bg-card rounded-2xl p-6 sm:p-7 h-full flex flex-col border border-border/60 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_32px_64px_-16px_hsl(250_56%_48%/0.18)] hover:border-primary/30">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, j) => (
                         <Star key={j} size={15} className="text-primary fill-primary" aria-hidden={true} focusable={false} />
