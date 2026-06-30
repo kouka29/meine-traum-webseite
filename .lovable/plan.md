@@ -1,51 +1,111 @@
-# Visuelles Aufräumen (3 Punkte)
+## Ziel
+Visuelle Vereinheitlichung in drei Achsen (Typo, Radius, Icons) ohne Layout-Bruch und ohne Änderung an Inhalten, Farben oder Tabu-Bereichen (Supabase/Stripe/Pixel/Kundenportal/Admin).
 
-Keine Layout-/Funktionsänderung. Tabu: Supabase/Stripe/Pixel/Kundenportal bleibt unangetastet.
+---
 
-## 1) Emoji-Icons → lucide-react
+## 1) Type-Scale festlegen
 
-Betroffen sind primär Daten-Arrays mit `icon: "…"` (Emoji-String) in:
+**Globale Basis in `src/index.css`** (Elemente-Layer):
+```text
+h1   →  text-4xl md:text-5xl   (font-bold, leading-[1.1])
+h2   →  text-3xl                (font-bold, leading-[1.15])
+h3   →  text-xl                 (font-semibold, leading-snug)
+p    →  text-base               (leading-relaxed)
+small →  text-sm
+```
+Aktuell stehen `h1: md:text-6xl lg:text-7xl` und `h2: md:text-4xl lg:text-5xl` als Defaults — diese werden auf die Skala oben gekürzt. Damit greift die Skala automatisch überall, wo keine Override-Klassen gesetzt sind.
 
-- `src/pages/Handwerker.tsx` (10 Branchen-Items)
-- `src/pages/lp/Gesetz.tsx` (~9 Items in mehreren Arrays)
-- `src/pages/branchen/_shared.ts` (3 Cross-Links)
-- `src/pages/branchen/*Hub.tsx` (Zahnärzte, Fitness, Ingenieure, Restaurants, Hotels, Autohaeuser, Steuerberater, Anwaelte, Architekten, Versicherungsmakler, Finanzberater, Yoga, Friseure, Kosmetik, MassgeschneiderteLoesungen — soweit vorhanden)
-- `src/pages/trade/*Hub.tsx` (Elektriker, Maler, Sanitaer, Dachdecker, Schreiner, Fliesenleger, GartenLandschaft, Kaeltetechnik, KFZ)
-- Stichprobe weiterer Komponenten via `rg "icon:\s*[\"']"` und `rg "[\\p{Emoji}]"` in JSX-Text
+**Ausnahme „Hero-H1 der Startseite"**: genau **eine** H1 darf `text-6xl` bleiben → `src/pages/Index.tsx` Hero. Eine kuratierte Whitelist (Marketing-Hauptseiten Hero) bekommt das opt-in-Modifier `hero-xl` (Utility-Klasse in `index.css`, `@apply text-5xl md:text-6xl`).
 
-Vorgehen pro Datei:
-- Typ des Items von `icon: string` auf `icon: LucideIcon` umstellen (`import type { LucideIcon } from "lucide-react"`).
-- Mapping Emoji → Lucide (Auszug, deterministisch):
-  - ⚡ → `Zap`, 🎨 → `Palette`, 🔧 → `Wrench`, 🏠 → `Home`, 🪵 → `TreePine`, 🧱 → `Brick`/`Square` (Fallback), 🌿 → `Leaf`, ❄️ → `Snowflake`, 🚗 → `Car`, ➕ → `Plus`
-  - 📞 → `Phone`, 📅 → `Calendar`, 📋 → `ClipboardList`, 📸 → `Camera`, 📂 → `FolderOpen`, 📊 → `BarChart3`, 📱 → `Smartphone`, 📍 → `MapPin`
-  - ✅ → `Check`, ✔️ → `Check`, 🚀 → `Rocket`, ⭐ → `Star`, 💰/💸 → `Euro`, 🔍 → `Search`, 🔗 → `Link2`, 👥 → `Users`, 👨‍⚕️ → `Stethoscope`, 🎓 → `GraduationCap`, 🏢 → `Building2`
-  - 🏗️ → `HardHat`, 👷 → `HardHat`, ⚙️ → `Settings`, ⛈️ → `CloudLightning`, ♨️ → `Flame`, 🛁 → `Bath`, 🚨 → `Siren`, ⏰/⏱️ → `Clock`, 🍪 → `Cookie`, ⚖️ → `Scale`, 🏆 → `Trophy`, 💉 → `Syringe`, 😨 → `Frown`, 🥊 → `Dumbbell`
-- Rendering: `<Item.icon size={20} className="text-primary" aria-hidden />` (bei dekorativen Listen) bzw. `text-muted-foreground` wenn Card-Subdetail. Einheitliche Größe 20.
-- Bestehende Container-Größen (`w-12 h-12` etc.) bleiben — nur der Inhalt wird zum Icon. Kein Wechsel des Layouts.
+**Überschriften-Overrides aufräumen (Search-Replace)** in folgenden Dateien — H1/H2 die aktuell `text-5xl/6xl/7xl/8xl` tragen, werden auf die Skala (H1 = `text-4xl md:text-5xl`, H2 = `text-3xl`) reduziert:
 
-Akzeptanz: `rg "icon:\s*[\"']" src` liefert keine Emoji-Strings mehr; keine sichtbaren Emoji im UI (Stichprobe via `rg` über häufige Emoji-Codepoints).
+- `src/pages/Handwerker.tsx` (Zeilen 179, 360, 400, 450, 482, 524, 603, 643, 769, 811)
+- `src/pages/EinEuroAngebot.tsx` (Z. 124, 157, 175, 227, 257, 272, 348)
+- `src/pages/Premium.tsx` (Z. 543, 559) — Hero behält `text-5xl`
+- `src/pages/Erstgespraech.tsx` Quote (Z. 354) → `text-2xl md:text-3xl`
+- `src/pages/Starter.tsx` (Z. 422, 741)
+- `src/pages/trade/HandwerkerUeberUns.tsx` (Z. 30, 41, 74)
+- `src/pages/trade/HandwerkerLeistungen.tsx` (Z. 78)
+- `src/pages/ConversionOptimierung.tsx` (Z. 71) — dekorative Stat, bleibt `text-4xl`
+- `src/pages/About.tsx` (Z. 80) — Stat → `text-4xl`
+- `src/pages/KaufErfolgreich.tsx`, `src/pages/WebsiteErstellenLassen.tsx`, `src/pages/KostenloseVorschauV2.tsx`, `src/pages/lp/Gesetz.tsx`, `src/pages/lp/EmailAngebot.tsx`
 
-## 2) Gradient-Headlines reduzieren
+Dekorative Zahlen/Ziffern (Pricing-Preis, Schritt-Nummern, Stat-Counter, „❝"-Glyphen) **bleiben unangetastet** — das sind keine Headlines.
 
-Regel: **max. 1 `gradient-text` pro Seite**, ausschließlich auf der Haupt-Hero-H1.
+---
 
-Vorgehen pro Datei (26 Treffer): Erstes Vorkommen in der Hero-H1 behalten, alle weiteren `className="… gradient-text …"`-Vorkommen → `text-foreground` ersetzen (sonst Klassen unverändert). Bei mehrfachem `gradient-text` in einer Seite ohne klare Hero-H1 (z.B. `WebdesignPreise.tsx` mit 4 Treffern, `EmailAngebot.tsx` mit 5) bleibt nur das oberste Hero-Vorkommen.
+## 2) Radius vereinheitlichen
 
-Die CSS-Utility `.gradient-text` in `src/index.css` bleibt definiert.
+**Token in `src/index.css`:**
+- `:root { --radius: 0.75rem }` → bleibt.
+- `html.apple-mode { --radius: 1.25rem }` → **bleibt** (bewusst für Apple-Mode wie im Briefing erlaubt).
+- `--radius-card: 1rem` und `--radius-card-lg: 1.25rem` → behalten als bewusste Card-Stufen, aber Nutzung wird konsolidiert.
 
-## 3) Glow / Aurora beruhigen
+**Tailwind-Mapping (`tailwind.config.ts`)** prüfen — `rounded-lg/md/sm` lesen bereits aus `--radius`. shadcn-`Button`, `Input`, `Card` benutzen `rounded-md`/`rounded-lg` → keine Änderung nötig.
 
-- `src/index.css`: Opazitäten in den Aurora-/Radial-Gradient-Backgrounds (z.B. `aurora-bg`, `radial-glow`, `hero-glow`) halbieren (alle `hsl(... / X%)`-Werte → `X/2`). `shadow-glow` Utility selbst behalten, aber Blur/Spread reduzieren (≈ halbe Intensität).
-- `shadow-glow`: pro Seite max. 1 Element. Vorgehen: in jedem Page-File alle Vorkommen außer dem ersten (Hero-CTA) entfernen.
-- `backdrop-blur*`: nur in `src/components/Navbar.tsx` belassen. In Content-Cards / Popups / Banners (`PricingLeadPopup`, `PainPoints`, `CookieBanner`, `KostenloseVorschauV2`, `lp/EmailAngebot`, `lp/Gesetz`, `AGB`, `ui/button` Variant falls vorhanden) `backdrop-blur*`-Klassen entfernen; das umgebende `bg-…`/Border bleibt. Keine Layout-Klassen entfernen.
+**Aufräumen (Search-Replace) in Marketing-Components:**
+- `rounded-3xl` (26×) → `rounded-2xl` außer in Hero-Cards der Startseite und `Premium.tsx` (dort bewusst).
+- `rounded-[28px]`, `rounded-[2rem]`, `rounded-[20px]`, `rounded-[22px]`, `rounded-[2.5rem]`, `rounded-[1.5rem]` → auf `rounded-2xl` normalisieren.
+- `rounded-[2px]` (Single use) → `rounded-sm`.
+- `rounded-full` (172×, Buttons/Badges/Avatare) → bleibt.
+- `rounded-2xl` (Cards) und `rounded-xl` (Mid-Elements) bleiben — sind die zwei zulässigen Card-Stufen.
+
+Resultat: Stack {sm, md, lg, xl, 2xl, full} — keine willkürlichen Pixel-Werte.
+
+---
+
+## 3) Icon-Set kuratieren
+
+**Konzept → kanonisches Icon** (site-weit erzwungen):
+
+| Konzept | Icon |
+|---|---|
+| Telefon / Kontakt | `Phone` |
+| Termin / Kalender | `Calendar` |
+| E-Mail | `Mail` |
+| Adresse / Standort | `MapPin` |
+| Erfolg / Check | `Check` |
+| Fehler / Warnung | `AlertTriangle` |
+| Geschwindigkeit | `Zap` |
+| Sicherheit | `ShieldCheck` |
+| Zeit / Dauer | `Clock` |
+| Pfeil weiter | `ArrowRight` |
+| Externer Link | `ExternalLink` |
+| Schließen | `X` |
+
+**Suche & Ersetzen** (nicht im Admin/Kundenportal):
+- `PhoneCall`, `PhoneIncoming`, `PhoneOutgoing` → `Phone`
+- `CalendarDays`, `CalendarCheck`, `CalendarClock` → `Calendar`
+- `MailCheck`, `Send` (im Sinn von „E-Mail") → `Mail` (Send bleibt für „Senden-Button")
+- `CheckCircle`, `CheckCircle2` → `Check` (in Bullet-Listen) — Inline-Form bleibt wo bewusst dekorativ
+- `AlertCircle` → `AlertTriangle` (außer Inline-Form-Validation in `Input`)
+
+**Größen-Skala (px):**
+- `size={16}` Inline-Text und Buttons-sm
+- `size={20}` Standard (Cards, Listen-Bullets, Nav)
+- `size={24}` Hero/Feature-Tiles
+Stroke-width: Default (2) site-weit — keine `strokeWidth`-Overrides außer bewusst dünn in Hero-Premium (`Premium.tsx`, bleibt).
+
+Beliebige `size={28/32/40/48}` werden auf 24 reduziert; `size={12/14/18}` auf 16/20.
+
+---
 
 ## Verifikation
 
-- `rg "icon:\s*[\"'][^A-Za-z]" src` = 0
-- `rg "gradient-text" src` zeigt pro Page-Datei ≤ 1 Hit (plus `index.css`)
-- `rg "backdrop-blur" src` zeigt nur `Navbar.tsx` und ggf. `index.css`-Utility
-- `npm run build` grün, `npm run lint` ≤ Baseline (65)
+```text
+1. bunx tsgo --noEmit        → 0 Fehler
+2. npx eslint src --quiet    → 0 Fehler
+3. rg "text-(7xl|8xl)" src   → leer (außer bewusste Ausnahme)
+4. rg "rounded-\[" src       → leer
+5. Spot-Screenshots: /, /handwerker, /angebot, /kostenlose-vorschau
+```
 
-## Out of scope
+---
 
-Texte, Copy, Routing, Layout-Grid, Spacing, Farben-Tokens, Tabu-Bereiche (Supabase/Stripe/Pixel/Kundenportal-Komponenten).
+## Tabu (unangetastet)
+
+- `src/integrations/supabase/*`, alle Supabase-Edge-Functions
+- Stripe-Flows, Meta-Pixel
+- Kundenportal (`src/pages/portal/*`), Admin-Bereich (`src/pages/admin*`, `src/components/admin/*`)
+- Farben, Texte, Übersetzungen, Routing
+- Apple-Mode-Radius (1.25rem bleibt erhalten — bewusste Variante)
