@@ -57,7 +57,7 @@ const Handwerker = lazy(() => import("./pages/Handwerker.tsx"));
 const HandwerkerClassic = lazy(() => import("./pages/HandwerkerClassic.tsx"));
 const HandwerkerPreise = lazy(() => import("./pages/trade/HandwerkerPreise.tsx"));
 const HandwerkerLeistungen = lazy(() => import("./pages/trade/HandwerkerLeistungen.tsx"));
-const HandwerkerPortfolio = lazy(() => import("./pages/trade/HandwerkerPortfolio.tsx"));
+
 const HandwerkerUeberUns = lazy(() => import("./pages/trade/HandwerkerUeberUns.tsx"));
 const HandwerkerKontakt = lazy(() => import("./pages/trade/HandwerkerKontakt.tsx"));
 const ElektrikerHub = lazy(() => import("./pages/trade/ElektrikerHub.tsx"));
