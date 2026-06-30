@@ -75,7 +75,7 @@ const Navbar = () => {
             className="hidden xl:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground whitespace-nowrap hover:text-primary transition-colors"
           >
             <Phone size={14} className="text-primary" aria-hidden={true} focusable={false} />
-            06131 30 764 98
+            06131 3076498
           </a>
           <Button
             variant="gradient"
@@ -124,7 +124,7 @@ const Navbar = () => {
               onClick={() => setOpen(false)}
             >
               <Phone size={14} className="text-primary" aria-hidden={true} focusable={false} />
-              06131 30 764 98
+              06131 3076498
             </a>
             <Button
               variant="gradient"

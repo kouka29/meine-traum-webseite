@@ -35,7 +35,7 @@ const Datenschutz = () => (
               Deutschland
             </p>
             <p>
-              Telefon: +49 6131 30 765 00<br />
+              Telefon: 06131 3076498<br />
               E-Mail: info@meine-traum-webseite.de<br />
               <br />
             </p>

@@ -414,7 +414,7 @@ const EmailAngebot = () => {
             href="tel:+4961313076498"
             className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-foreground/80 hover:text-primary transition-colors"
           >
-            <Phone size={14} aria-hidden={true} focusable={false} /> 06131 30 764 98
+            <Phone size={14} aria-hidden={true} focusable={false} /> 06131 3076498
           </a>
         </div>
       </header>
@@ -711,7 +711,7 @@ const EmailAngebot = () => {
                   href="tel:+4961313076498"
                   className="inline-flex items-center justify-center gap-2 rounded-lg px-6 h-12 font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors"
                 >
-                  <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
+                  <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
                 </a>
               </div>
               <p className="text-sm text-white/80 mt-7 flex items-center justify-center gap-2 flex-wrap">

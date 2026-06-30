@@ -210,7 +210,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
     if (!ok) {
       setLoading(false);
       setSubmitError(
-        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 30 764 98",
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 3076498",
       );
       return;
     }
@@ -325,7 +325,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   className="inline-flex items-center gap-1.5 text-primary font-bold text-sm sm:text-base hover:underline"
                 >
                   <Phone size={14} aria-hidden={true} focusable={false} />
-                  06131 30 764 98
+                  06131 3076498
                 </a>
               </div>
             </div>
@@ -441,7 +441,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 <p className="text-center text-sm text-destructive mt-2">
                   Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
                   <a href="tel:+4961313076498" className="font-semibold underline">
-                    06131 30 764 98
+                    06131 3076498
                   </a>
                 </p>
               )}

@@ -31,7 +31,7 @@ const HandwerkerKontakt = () => (
 
             <div>
               <a href="tel:+4961313076498" className="flex items-center gap-3 text-2xl md:text-3xl font-bold text-white hover:underline">
-                <Phone size={28} aria-hidden={true} focusable={false} /> 06131 30 764 98
+                <Phone size={28} aria-hidden={true} focusable={false} /> 06131 3076498
               </a>
               <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Mo–Fr 9–18 Uhr — ich gehe ran</p>
             </div>

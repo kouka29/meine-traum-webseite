@@ -65,7 +65,7 @@ const Footer = () => (
           <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Kontakt</h4>
           <p className="text-sm leading-relaxed mb-3">
             info@meine-traum-webseite.de<br />
-            06131/30 765 00
+            06131 3076498
           </p>
           <p className="text-xs text-background/70 mb-6">
             Mo–Fr: 9:00 – 18:00 Uhr

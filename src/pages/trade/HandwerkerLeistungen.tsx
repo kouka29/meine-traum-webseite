@@ -43,7 +43,7 @@ const MiniForm = () => {
         <CheckCircle2 size={48} style={{ color: "var(--success)" }} aria-hidden={true} focusable={false} />
         <p className="font-semibold text-foreground">✅ Super! Ich melde mich innerhalb von 2 Stunden bei Dir.</p>
         <a href="tel:+4961313076498" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
-          <Phone size={16} aria-hidden={true} focusable={false} /> 06131 30 764 98
+          <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
         </a>
       </div>
     );

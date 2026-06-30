@@ -53,7 +53,7 @@ const KostenloserWebsiteCheck = () => {
       form.reset();
     } catch {
       setSubmitError(
-        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131/30 765 00",
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 3076498",
       );
       toast.error("Fehler beim Senden. Bitte versuchen du es erneut.");
     } finally {
@@ -136,8 +136,8 @@ const KostenloserWebsiteCheck = () => {
                   {submitError && (
                     <p className="text-sm text-destructive text-center">
                       Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
-                      <a href="tel:+4961313076500" className="font-semibold underline">
-                        06131/30 765 00
+                      <a href="tel:+4961313076498" className="font-semibold underline">
+                        06131 3076498
                       </a>
                     </p>
                   )}
