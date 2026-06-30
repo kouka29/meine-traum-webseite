@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, CheckCircle2, ShieldCheck, Loader2, ArrowRight, ChevronDown, Phone } from "lucide-react";
+import { X, Check, ShieldCheck, Loader2, ArrowRight, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { submitLead } from "@/lib/submitLead";
@@ -287,7 +287,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   animation: "pricing-popup-success-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
                 }}
               >
-                <CheckCircle2 size={64} strokeWidth={2.2} style={{ color: "#22C55E" }} aria-hidden={true} focusable={false} />
+                <Check size={64} strokeWidth={2.2} style={{ color: "#22C55E" }} aria-hidden={true} focusable={false} />
               </div>
 
               <h3 className="font-heading text-xl sm:text-3xl font-bold leading-tight mb-3 text-foreground">
@@ -306,7 +306,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   "Schritt 3: deine Demo ist in 48 h fertig",
                 ].map((step) => (
                   <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
-                    <CheckCircle2 size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                    <Check size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                     <span>{step}</span>
                   </div>
                 ))}

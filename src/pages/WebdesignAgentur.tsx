@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, Monitor, Palette, TrendingUp, Zap, Search, Smartphone } from "lucide-react";
+import { ArrowRight, Check, Monitor, Palette, TrendingUp, Zap, Search, Smartphone } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const features = [
@@ -93,7 +93,7 @@ const WebdesignAgentur = () => (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
                {["Professioneller Online-Auftritt ab 990 €", "Kostenlose Vorschau in 48 Stunden", "Keine laufenden Agenturkosten", "Persönlicher Ansprechpartner", "SEO-Grundlagen inklusive", "Mobile-optimiert"].map((p) => (
                 <div key={p} className="flex items-center gap-3">
-                  <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                  <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm">{p}</span>
                 </div>
               ))}

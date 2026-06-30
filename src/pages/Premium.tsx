@@ -1,17 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  Check,
-  X,
-  TrendingUp,
-  ShieldCheck,
-  Zap,
-  ChevronDown,
-  Phone,
-  ArrowRight,
-  CheckCircle2,
-} from "lucide-react";
+import { Check, X, TrendingUp, ShieldCheck, Zap, ChevronDown, Phone, ArrowRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -534,7 +524,7 @@ const Premium = () => {
         <div className="mx-auto max-w-[680px]">
           {submitted ? (
             <motion.div {...fadeUp} className="flex flex-col items-center text-center">
-              <CheckCircle2
+              <Check
                 className="h-12 w-12 text-[color:var(--mtw-brand)]"
                 aria-hidden={true}
                 focusable={false}

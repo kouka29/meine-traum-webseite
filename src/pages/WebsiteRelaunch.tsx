@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, RefreshCw, TrendingUp, Zap, Search } from "lucide-react";
+import { ArrowRight, Check, RefreshCw, TrendingUp, Zap, Search } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const signs = [
@@ -88,7 +88,7 @@ const WebsiteRelaunch = () => (
               "Einweisung & Support nach Launch",
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
-                <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{item}</span>
               </div>
             ))}

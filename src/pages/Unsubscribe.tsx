@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Loader2, CheckCircle, XCircle, MailX } from "lucide-react";
+import { Loader2, Check, XCircle, MailX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 type State =
@@ -86,7 +86,7 @@ const Unsubscribe = () => {
           )}
           {state.status === "success" && (
             <>
-              <CheckCircle className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
+              <Check className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Erfolgreich abgemeldet</h1>
               <p className="text-muted-foreground">
                 Du erhältst keine weiteren E-Mails von uns.
@@ -95,7 +95,7 @@ const Unsubscribe = () => {
           )}
           {state.status === "already" && (
             <>
-              <CheckCircle className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
+              <Check className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Bereits abgemeldet</h1>
               <p className="text-muted-foreground">
                 Diese E-Mail-Adresse wurde bereits abgemeldet.

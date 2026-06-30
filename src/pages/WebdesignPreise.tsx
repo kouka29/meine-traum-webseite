@@ -1,21 +1,6 @@
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import {
-  ArrowRight,
-  CheckCircle,
-  Star,
-  Lock,
-  FileText,
-  Target,
-  Phone,
-  Handshake,
-  Award,
-  Clock,
-  ChevronDown,
-  Quote,
-  ThumbsUp,
-  Shield,
-} from "lucide-react";
+import { ArrowRight, Check, Star, Lock, FileText, Target, Phone, Handshake, Award, Clock, ChevronDown, Quote, ThumbsUp, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -231,7 +216,7 @@ const GrowthAccordion = ({
                 <ul className="space-y-1.5">
                   {extraFeatures.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                      <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                      <Check size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                       <span>{f}</span>
                     </li>
                   ))}
@@ -302,7 +287,7 @@ const AddonsSection = () => (
           <ul className="space-y-2 mb-6 flex-1">
             {a.features.map((f) => (
               <li key={f} className="flex items-start gap-2 text-sm text-foreground/85">
-                <CheckCircle size={14} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                <Check size={14} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                 <span>{f}</span>
               </li>
             ))}
@@ -639,7 +624,7 @@ export const PackageCard = ({
           }
           return (
             <div key={f} className="flex items-start gap-2.5">
-              <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+              <Check size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
               <span className="text-sm">{f}</span>
             </div>
           );
@@ -726,7 +711,7 @@ const BuyCard = ({
       <div className="space-y-3 flex-1 mb-6">
         {visibleFeatures.map((f) => (
           <div key={f} className="flex items-start gap-2.5">
-            <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+            <Check size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
             <span className="text-sm">{f}</span>
           </div>
         ))}
@@ -867,7 +852,7 @@ const WebdesignPreise = () => {
               Professionell online — ohne großes Investment.
             </p>
             <p className="inline-flex items-center gap-2 text-base md:text-lg font-bold text-primary bg-primary/10 px-4 py-2 rounded-full">
-              <CheckCircle size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+              <Check size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
               Für Gewerbetreibende voll steuerlich absetzbar
             </p>
           </div>
@@ -910,7 +895,7 @@ const WebdesignPreise = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {pkg.features.map((f) => (
                         <div key={f} className="flex items-start gap-2.5">
-                          <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                          <Check size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                           <span className="text-sm">{f}</span>
                         </div>
                       ))}
@@ -965,7 +950,7 @@ const WebdesignPreise = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {buyEnterprise.features.map((f) => (
                       <div key={f} className="flex items-start gap-2.5">
-                        <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                        <Check size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                         <span className="text-sm">{f}</span>
                       </div>
                     ))}

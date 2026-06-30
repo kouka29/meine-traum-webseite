@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { Monitor, TrendingUp, Palette, Search, Settings, CheckCircle } from "lucide-react";
+import { Monitor, TrendingUp, Palette, Search, Settings, Check } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
@@ -95,7 +95,7 @@ const Services = () => (
                   <div className="flex flex-wrap gap-4">
                     {s.features.map((f) => (
                       <span key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <CheckCircle size={14} className="text-primary" aria-hidden={true} focusable={false} />
+                        <Check size={14} className="text-primary" aria-hidden={true} focusable={false} />
                         {f}
                       </span>
                     ))}

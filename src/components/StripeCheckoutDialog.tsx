@@ -3,7 +3,7 @@ import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, AlertTriangle } from "lucide-react";
 
 interface StripeCheckoutDialogProps {
   open: boolean;
@@ -92,7 +92,7 @@ export default function StripeCheckoutDialog({
           )}
           {error && (
             <div className="flex items-start gap-3 mx-6 p-4 rounded-lg border border-destructive/30 bg-destructive/5 text-sm">
-              <AlertCircle size={18} className="text-destructive shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+              <AlertTriangle size={18} className="text-destructive shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
               <div>
                 <p className="font-medium text-destructive">Fehler</p>
                 <p className="text-muted-foreground mt-1">{error}</p>

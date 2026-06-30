@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, PhoneCall } from "lucide-react";
+import { ArrowRight, Check, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
@@ -62,7 +62,7 @@ const Index = () => (
             <div className="flex items-center gap-3 sm:gap-5 mb-8 sm:mb-10 flex-wrap">
               {["Kostenloses Konzept", "Keine Verpflichtung", "Umsetzung in 48 h möglich"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
-                  <CheckCircle size={14} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                  <Check size={14} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span>{t}</span>
                 </div>
               ))}
@@ -78,7 +78,7 @@ const Index = () => (
               </Button>
               <Button variant="outline-primary" size="lg" className="text-xs sm:text-base py-5 sm:py-6 px-4 sm:px-8 h-auto min-h-12 w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
                 <Link to="/kontakt">
-                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
+                  <Phone size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>

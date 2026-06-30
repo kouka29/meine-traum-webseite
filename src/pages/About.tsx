@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
-import { Target, Award, Rocket, Heart, ArrowRight, CheckCircle, Users } from "lucide-react";
+import { Target, Award, Rocket, Heart, ArrowRight, Check, Users } from "lucide-react";
 
 const values = [
   { icon: Target, title: "Ergebnisorientiert", desc: "Jede Designentscheidung dient einem Ziel: mehr Kunden für dein Unternehmen." },
@@ -58,7 +58,7 @@ const About = () => (
               <div className="space-y-3.5">
                 {reasons.map((r) => (
                   <div key={r} className="flex items-center gap-3">
-                    <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                    <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                     <span className="text-sm">{r}</span>
                   </div>
                 ))}

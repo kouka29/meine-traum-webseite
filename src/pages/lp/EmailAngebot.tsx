@@ -1,25 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  CheckCircle,
-  Star,
-  Clock,
-  Sparkles,
-  ShieldCheck,
-  ChevronDown,
-  Quote,
-  Handshake,
-  Award,
-  ThumbsUp,
-  Lock,
-  FileText,
-  Target,
-  XCircle,
-  TrendingDown,
-  Smartphone,
-  Phone,
-} from "lucide-react";
+import { ArrowRight, Check, Star, Clock, Sparkles, ShieldCheck, ChevronDown, Quote, Handshake, Award, ThumbsUp, Lock, FileText, Target, XCircle, TrendingDown, Smartphone, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -372,7 +353,7 @@ const HiddenFeaturesAccordion = ({ items }: { items: string[] }) => {
             <ul className="space-y-1.5">
               {items.map((f) => (
                 <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                  <CheckCircle size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+                  <Check size={13} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                   <span>{f}</span>
                 </li>
               ))}
@@ -474,7 +455,7 @@ const EmailAngebot = () => {
               </div>
               <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
               <div className="flex items-center gap-2">
-                <CheckCircle size={16} className="text-primary" aria-hidden={true} focusable={false} />
+                <Check size={16} className="text-primary" aria-hidden={true} focusable={false} />
                 <span>Voll absetzbar</span>
               </div>
               <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
@@ -578,7 +559,7 @@ const EmailAngebot = () => {
                         <div className="space-y-3 flex-1 mb-6">
                           {pkg.features.map((f) => (
                             <div key={f} className="flex items-start gap-2.5">
-                              <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                              <Check size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                               <span className="text-sm">{f}</span>
                             </div>
                           ))}
@@ -614,7 +595,7 @@ const EmailAngebot = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {enterprisePkg.features.map((f) => (
                           <div key={f} className="flex items-start gap-2.5">
-                            <CheckCircle size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+                            <Check size={15} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
                             <span className="text-sm">{f}</span>
                           </div>
                         ))}

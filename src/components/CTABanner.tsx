@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
-import { ArrowRight, PhoneCall } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 
 const CTABanner = forwardRef<HTMLElement>((_, ref) => (
   <section ref={ref} className="section-padding">
@@ -38,7 +38,7 @@ const CTABanner = forwardRef<HTMLElement>((_, ref) => (
                 asChild
               >
                 <Link to="/kontakt">
-                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
+                  <Phone size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>

@@ -8,30 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  ArrowRight,
-  ArrowDown,
-  Sparkles,
-  TrendingUp,
-  Check,
-  Quote,
-  Phone,
-  Zap,
-  Lock,
-  Award,
-  X,
-  AlertCircle,
-  Smartphone,
-  Search,
-  Shield,
-  Calendar,
-  Lightbulb,
-  Rocket,
-  HeartHandshake,
-  Star,
-  Clock,
-  Users,
-} from "lucide-react";
+import { ArrowRight, ArrowDown, Sparkles, TrendingUp, Check, Quote, Phone, Zap, Lock, Award, X, AlertTriangle, Smartphone, Search, Shield, Calendar, Lightbulb, Rocket, HeartHandshake, Star, Clock, Users } from "lucide-react";
 
 const TERMIN_LINK = "#termin-buchen";
 
@@ -91,7 +68,7 @@ const trust = [
 
 const painPoints = [
   {
-    icon: AlertCircle,
+    icon: AlertTriangle,
     title: "Du hast (noch) gar keine Website",
     text: "Kunden googeln du — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
   },

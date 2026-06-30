@@ -1,30 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
-import {
-  ArrowRight,
-  CheckCircle,
-  PhoneCall,
-  FileSpreadsheet,
-  Clock,
-  RefreshCw,
-  AlertTriangle,
-  Cog,
-  LayoutDashboard,
-  Users,
-  CalendarCheck,
-  Workflow,
-  Monitor,
-  Search,
-  Lightbulb,
-  Code2,
-  TestTube,
-  Rocket,
-  TrendingUp,
-  ShieldCheck,
-  Zap,
-  BarChart3,
-} from "lucide-react";
+import { ArrowRight, Check, Phone, FileSpreadsheet, Clock, RefreshCw, AlertTriangle, Cog, LayoutDashboard, Users, Calendar, Workflow, Monitor, Search, Lightbulb, Code2, TestTube, Rocket, TrendingUp, ShieldCheck, Zap, BarChart3 } from "lucide-react";
 
 const problems = [
   {
@@ -79,7 +56,7 @@ const solutions = [
 
 const useCases = [
   { icon: Users, title: "CRM-Systeme", desc: "Kunden und Kontakte zentral verwalten, nachverfolgen und pflegen." },
-  { icon: CalendarCheck, title: "Buchungsplattformen", desc: "Termine, Ressourcen oder Dienstleistungen online buchbar machen." },
+  { icon: Calendar, title: "Buchungsplattformen", desc: "Termine, Ressourcen oder Dienstleistungen online buchbar machen." },
   { icon: LayoutDashboard, title: "Kundenportale", desc: "Dokumente, Rechnungen und Projektstatus für deine Kunden bereitstellen." },
   { icon: BarChart3, title: "Interne Dashboards", desc: "Kennzahlen, Team-Aufgaben und Workflows an einem Ort bündeln." },
   { icon: Workflow, title: "Prozess-Automatisierung", desc: "Wiederkehrende Abläufe automatisieren – von der Anfrage bis zur Rechnung." },
@@ -126,7 +103,7 @@ const IndividuelleSoftware = () => (
                 "Für dein Business entwickelt",
               ].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
-                  <CheckCircle size={14} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                  <Check size={14} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span>{t}</span>
                 </div>
               ))}
@@ -139,7 +116,7 @@ const IndividuelleSoftware = () => (
               </Button>
               <Button variant="outline-primary" size="lg" className="text-sm sm:text-base py-5 sm:py-6 w-full sm:w-auto" asChild>
                 <Link to="/kontakt">
-                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Projekt anfragen
+                  <Phone size={18} aria-hidden={true} focusable={false} /> Projekt anfragen
                 </Link>
               </Button>
             </div>

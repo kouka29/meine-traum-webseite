@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import FreePreviewCTA from "@/components/FreePreviewCTA";
-import { ArrowRight, CheckCircle, Hammer, Search, Smartphone, Star, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, Check, Hammer, Search, Smartphone, Star, TrendingUp, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
@@ -121,7 +121,7 @@ const WebdesignHandwerker = () => (
                 { label: "Webdesign Preise", to: "/webdesign-preise" },
               ].map((l) => (
                 <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
-                  <CheckCircle size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
+                  <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm font-medium">{l.label}</span>
                   <ArrowRight size={14} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
                 </Link>

@@ -11,25 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  ArrowRight,
-  Phone,
-  Check,
-  AlertCircle,
-  Search,
-  Smartphone,
-  MessageSquare,
-  Zap,
-  Wrench,
-  Euro,
-  Clipboard,
-  Palette,
-  Rocket,
-  Star,
-  ShieldCheck,
-  Clock,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Phone, Check, AlertTriangle, Search, Smartphone, MessageSquare, Zap, Wrench, Euro, Clipboard, Palette, Rocket, Star, ShieldCheck, Clock, Sparkles } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { submitLead } from "@/lib/submitLead";
 
@@ -371,7 +353,7 @@ const Handwerker = () => {
                   style={{ background: "#FFFFFF", boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}
                 >
                   <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-red-500/15 to-orange-500/10 border border-red-500/20 flex items-center justify-center mb-5">
-                    <AlertCircle size={20} className="text-red-500" aria-hidden={true} focusable={false} />
+                    <AlertTriangle size={20} className="text-red-500" aria-hidden={true} focusable={false} />
                   </div>
                   <h3 className="font-heading font-semibold text-xl mb-3 tracking-tight" style={{ color: "#0A0A1F" }}>{p.title}</h3>
                   <p className="text-[15px] leading-relaxed" style={{ color: "rgba(10,10,31,0.65)" }}>{p.text}</p>

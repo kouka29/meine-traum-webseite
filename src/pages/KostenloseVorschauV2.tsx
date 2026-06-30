@@ -9,39 +9,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  ArrowRight,
-  ArrowLeft,
-  CheckCircle2,
-  Clock,
-  ShieldCheck,
-  AlertTriangle,
-  Trophy,
-  ClipboardList,
-  Wand2,
-  Sparkles,
-  Star,
-  Lock,
-  Phone,
-  Zap,
-  Brush,
-  Wrench,
-  Home,
-  Axe,
-  Trees,
-  Car,
-  Settings,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
-  TrendingUp,
-  MapPin,
-  Award,
-  Flame,
-  CalendarClock,
-  Share2,
-} from "lucide-react";
-import { Calendar as CalendarIcon, PhoneCall, Video, MessageCircle } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Clock, ShieldCheck, AlertTriangle, Trophy, ClipboardList, Wand2, Sparkles, Star, Lock, Phone, Zap, Brush, Wrench, Home, Axe, Trees, Car, Settings, XCircle, TrendingUp, MapPin, Award, Flame, Calendar, Share2 } from "lucide-react";
+import { Calendar as CalendarIcon, Phone, Video, MessageCircle } from "lucide-react";
 import { ExternalLink } from "lucide-react";
 import {
   AlertDialog,
@@ -83,8 +52,8 @@ const tradeOptions = [
 ];
 
 const websiteOptions = [
-  { value: "Ja, und ich bin zufrieden", icon: CheckCircle, tone: "success" as const },
-  { value: "Ja, aber sie ist veraltet", icon: AlertCircle, tone: "warning" as const },
+  { value: "Ja, und ich bin zufrieden", icon: Check, tone: "success" as const },
+  { value: "Ja, aber sie ist veraltet", icon: AlertTriangle, tone: "warning" as const },
   { value: "Nein, noch gar keine", icon: XCircle, tone: "danger" as const },
 ];
 
@@ -97,7 +66,7 @@ const goalOptions = [
 
 const urgencyOptions = [
   { value: "Sofort – ich brauche das jetzt", icon: Flame },
-  { value: "In den nächsten 1–3 Monaten", icon: CalendarClock },
+  { value: "In den nächsten 1–3 Monaten", icon: Calendar },
 ];
 
 const painPoints = [
@@ -372,7 +341,7 @@ const TileButton = ({
           {label}
         </span>
         {selected && (
-          <CheckCircle2
+          <Check
             className="w-5 h-5 text-primary-foreground shrink-0"
             aria-hidden={true}
             focusable={false}
@@ -655,7 +624,7 @@ const SuccessScreen = ({
     return (
       <div ref={screenRef} className="text-center py-8 px-2 sm:px-4 scroll-mt-20">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
+          <Check className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-3">
           {isWaitlist
@@ -666,7 +635,7 @@ const SuccessScreen = ({
           <CalendarIcon className="w-4 h-4" aria-hidden={true} focusable={false} />
           {dateLabel} · {bookingTime} Uhr
           <span className="opacity-60">·</span>
-          {contactMethod === "online" ? <Video className="w-4 h-4" aria-hidden={true} focusable={false} /> : <PhoneCall className="w-4 h-4" aria-hidden={true} focusable={false} />}
+          {contactMethod === "online" ? <Video className="w-4 h-4" aria-hidden={true} focusable={false} /> : <Phone className="w-4 h-4" aria-hidden={true} focusable={false} />}
           {methodLabel}
         </div>
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
@@ -773,7 +742,7 @@ const SuccessScreen = ({
                       : "border-border bg-card hover:border-primary/40"
                   }`}
                 >
-                  <PhoneCall className="w-4 h-4" aria-hidden={true} focusable={false} /> Telefonat
+                  <Phone className="w-4 h-4" aria-hidden={true} focusable={false} /> Telefonat
                 </button>
                 <button
                   type="button"
@@ -819,7 +788,7 @@ const SuccessScreen = ({
     <div ref={screenRef} className="py-6 px-2 sm:px-4 scroll-mt-20">
       <div className="text-center mb-8">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-5 animate-in zoom-in duration-500">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
+          <Check className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-2">
           {isWaitlist
@@ -840,7 +809,7 @@ const SuccessScreen = ({
         <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6 flex flex-col">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <PhoneCall className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
+              <Phone className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
             </div>
             <h4 className="font-bold text-base sm:text-lg">Was jetzt passiert</h4>
           </div>
@@ -872,7 +841,7 @@ const SuccessScreen = ({
                     : "border-border bg-card hover:border-primary/40"
                 }`}
               >
-                <PhoneCall className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefonat
+                <Phone className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefonat
               </button>
               <button
                 type="button"
@@ -888,7 +857,7 @@ const SuccessScreen = ({
             </div>
             {contactMethod && (
               <p className="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1 pt-1">
-                <CheckCircle2 className="w-3 h-3" aria-hidden={true} focusable={false} /> Notiert – wir melden uns wie gewünscht.
+                <Check className="w-3 h-3" aria-hidden={true} focusable={false} /> Notiert – wir melden uns wie gewünscht.
               </p>
             )}
           </div>
@@ -918,7 +887,7 @@ const SuccessScreen = ({
             Termin jetzt auswählen
           </Button>
           <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1"><PhoneCall className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefon</span>
+            <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefon</span>
             <span className="inline-flex items-center gap-1"><Video className="w-3 h-3" aria-hidden={true} focusable={false} /> oder Online</span>
           </div>
         </div>
@@ -1636,7 +1605,7 @@ const KostenloseVorschauV2 = () => {
               {[
                 { icon: ShieldCheck, text: "Kostenlos & unverbindlich" },
                 { icon: Clock, text: "Fertig in 48 Stunden" },
-                { icon: CheckCircle2, text: "Kein technisches Wissen nötig" },
+                { icon: Check, text: "Kein technisches Wissen nötig" },
               ].map((it) => (
                 <div key={it.text} className="flex items-center justify-center gap-2 text-sm font-medium">
                   <it.icon className="w-5 h-5 text-primary shrink-0" />
@@ -1722,7 +1691,7 @@ const KostenloseVorschauV2 = () => {
             </h2>
             {isWaitlist ? (
               <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 px-4 py-1.5 text-sm font-semibold">
-                <CalendarClock className="w-4 h-4" aria-hidden={true} focusable={false} />
+                <Calendar className="w-4 h-4" aria-hidden={true} focusable={false} />
                 {monatName} ist ausgebucht – Warteliste für {nextMonthLabel}
               </div>
             ) : (

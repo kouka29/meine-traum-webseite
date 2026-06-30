@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
-import { ArrowRight, FileText, MessageSquare, ShieldCheck, PhoneCall } from "lucide-react";
+import { ArrowRight, FileText, MessageSquare, ShieldCheck, Phone } from "lucide-react";
 
 const steps = [
   { icon: FileText, text: "Wir analysieren deine aktuelle Situation" },
@@ -51,7 +51,7 @@ const FreePreviewCTA = () => (
                 asChild
               >
                 <Link to="/kontakt">
-                  <PhoneCall size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
+                  <Phone size={18} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
                 </Link>
               </Button>
             </div>
