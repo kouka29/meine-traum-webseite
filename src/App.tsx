@@ -42,13 +42,11 @@ const WebdesignAerzte = lazy(() => import("./pages/WebdesignAerzte.tsx"));
 const WebdesignImmobilienmakler = lazy(() => import("./pages/WebdesignImmobilienmakler.tsx"));
 const WebdesignCoaches = lazy(() => import("./pages/WebdesignCoaches.tsx"));
 const IndividuelleSoftware = lazy(() => import("./pages/IndividuelleSoftware.tsx"));
-const IndexOriginal = lazy(() => import("./pages/IndexOriginal.tsx"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
 const KostenloseVorschau = lazy(() => import("./pages/KostenloseVorschau.tsx"));
 const KostenloseVorschau2 = lazy(() => import("./pages/KostenloseVorschau2.tsx"));
 const KostenloseVorschauV2 = lazy(() => import("./pages/KostenloseVorschauV2.tsx"));
 const Empfehlung = lazy(() => import("./pages/Empfehlung.tsx"));
-const DesignVorschau = lazy(() => import("./pages/DesignVorschau.tsx"));
 const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 const Starter = lazy(() => import("./pages/Starter.tsx"));
 const KaufErfolgreich = lazy(() => import("./pages/KaufErfolgreich.tsx"));
@@ -171,7 +169,6 @@ const App = () => (
               <Route path="/kostenlose-vorschau2" element={<KostenloseVorschau />} />
               <Route path="/webdesign-preise" element={<WebdesignPreise />} />
               <Route path="/preise" element={<WebdesignPreise />} />
-              <Route path="/preise2" element={<WebdesignPreise2 />} />
               <Route path="/webdesign-shk" element={<WebdesignSHK />} />
               <Route path="/webdesign-handwerker" element={<WebdesignHandwerker />} />
               <Route path="/webdesign-aerzte" element={<WebdesignAerzte />} />
@@ -182,7 +179,6 @@ const App = () => (
               <Route path="/impressum" element={<Impressum />} />
               <Route path="/barrierefreiheit" element={<Barrierefreiheit />} />
               <Route path="/admin" element={<AdminLeads />} />
-              <Route path="/original" element={<IndexOriginal />} />
               <Route path="/unsubscribe" element={<Unsubscribe />} />
               <Route path="/empfehlung" element={<Empfehlung />} />
               <Route path="/erstgespraech" element={<Erstgespraech />} />
@@ -267,7 +263,6 @@ const App = () => (
                 <Route path="angebote" element={<KundenportalAngebote />} />
                 <Route path="einstellungen" element={<KundenportalEinstellungen />} />
               </Route>
-              <Route path="/design-vorschau" element={<DesignVorschau />} />
               <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
