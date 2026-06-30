@@ -17,7 +17,7 @@ const Impressum = () => (
 
             <div>
               <h2 className="text-lg font-heading font-semibold text-foreground mb-3">Kontakt</h2>
-              <p>Telefon: 06131/30 765 00<br />E-Mail: info@meine-traum-webseite.de</p>
+              <p>Telefon: 06131 3076498<br />E-Mail: info@meine-traum-webseite.de</p>
             </div>
 
             <div>

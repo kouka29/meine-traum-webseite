@@ -53,7 +53,7 @@ const Contact = () => {
       form.reset();
     } catch {
       setSubmitError(
-        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131/30 765 00",
+        "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 3076498",
       );
       toast.error("Fehler beim Senden. Bitte versuchen du es erneut.");
     } finally {
@@ -159,7 +159,7 @@ const Contact = () => {
                   <p className="text-sm text-destructive">
                     Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
                     <a href="tel:+4961313076498" className="font-semibold underline">
-                      06131/30 765 00
+                      06131 3076498
                     </a>
                   </p>
                 )}
@@ -207,7 +207,7 @@ const Contact = () => {
                   <h3 className="font-heading font-semibold mb-5 text-lg">Direkter Kontakt</h3>
                   <div className="space-y-4">
                     {[
-                      { icon: Phone, text: "06131/30 765 00", label: "Jetzt anrufen" },
+                      { icon: Phone, text: "06131 3076498", label: "Jetzt anrufen" },
                       { icon: Mail, text: "info@meine-traum-webseite.de", label: "E-Mail schreiben" },
                       { icon: MapPin, text: "Rheinallee 88, 55120 Mainz", label: "Standort" },
                     ].map((item) => (
