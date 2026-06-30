@@ -342,6 +342,11 @@ html.apple-mode .pain-card .pain-card-text {
     background-image: var(--gradient-hero);
   }
 
+  /* Opt-in for the single hero H1 per landing page */
+  .hero-xl {
+    @apply text-5xl md:text-6xl;
+  }
+
   .gradient-bg {
     background-image: var(--gradient-primary);
   }
