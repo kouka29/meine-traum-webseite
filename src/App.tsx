@@ -36,7 +36,6 @@ const WebsiteRelaunch = lazy(() => import("./pages/WebsiteRelaunch.tsx"));
 const ConversionOptimierung = lazy(() => import("./pages/ConversionOptimierung.tsx"));
 const KostenloserWebsiteCheck = lazy(() => import("./pages/KostenloserWebsiteCheck.tsx"));
 const WebdesignPreise = lazy(() => import("./pages/WebdesignPreise.tsx"));
-const WebdesignPreise2 = lazy(() => import("./pages/WebdesignPreise2.tsx"));
 const WebdesignSHK = lazy(() => import("./pages/WebdesignSHK.tsx"));
 const WebdesignHandwerker = lazy(() => import("./pages/WebdesignHandwerker.tsx"));
 const WebdesignAerzte = lazy(() => import("./pages/WebdesignAerzte.tsx"));
