@@ -709,7 +709,7 @@ const BuyCard = ({
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
-      <p className="font-heading text-3xl font-bold gradient-text mb-6">{pkg.price}</p>
+      <p className="font-heading text-3xl font-bold text-foreground mb-6">{pkg.price}</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
           {pkg.highlights.map((h) => (
@@ -861,7 +861,7 @@ const WebdesignPreise = () => {
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
               Ein Auftrag reicht.{" "}
-              <span className="gradient-text">Den Rest verdienst du.</span>
+              <span className="text-foreground">Den Rest verdienst du.</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-5">
               Professionell online — ohne großes Investment.
@@ -960,7 +960,7 @@ const WebdesignPreise = () => {
                 <div className="flex-1">
                   <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(buyEnterprise.name)}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
-                  <p className="font-heading text-2xl font-bold gradient-text mb-1">{buyEnterprise.price}</p>
+                  <p className="font-heading text-2xl font-bold text-foreground mb-1">{buyEnterprise.price}</p>
                   <p className="text-xs text-muted-foreground mb-5">zzgl. MwSt.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {buyEnterprise.features.map((f) => (

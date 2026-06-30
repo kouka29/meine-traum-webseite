@@ -84,7 +84,7 @@ const WebsiteErstellenLassen = () => (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-20">
             {steps.map((s) => (
               <div key={s.step} className="text-center p-6 rounded-2xl border border-border hover:border-primary/20 transition-all">
-                <span className="font-heading text-4xl font-bold gradient-text">{s.step}</span>
+                <span className="font-heading text-4xl font-bold text-foreground">{s.step}</span>
                 <h3 className="font-heading text-lg font-semibold mt-3 mb-2">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </div>

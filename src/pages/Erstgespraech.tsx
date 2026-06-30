@@ -212,7 +212,7 @@ const Erstgespraech = () => (
             <AnimatedSection key={s.label} delay={i * 0.05}>
               <div className="text-center">
                 <s.icon size={20} className="text-primary mx-auto mb-2" />
-                <p className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold gradient-text leading-none mb-2">
+                <p className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-foreground leading-none mb-2">
                   {s.value}
                 </p>
                 <p className="text-xs sm:text-sm text-muted-foreground">
@@ -232,7 +232,7 @@ const Erstgespraech = () => (
           <div className="text-center mb-12">
             <h2 className="mb-4 text-balance">
               Zwei Ausgangssituationen — ein Ziel:{" "}
-              <span className="gradient-text">mehr Anfragen.</span>
+              <span className="text-foreground">mehr Anfragen.</span>
             </h2>
           </div>
         </AnimatedSection>

@@ -398,7 +398,7 @@ const Starter = () => (
           <div className="text-center mb-12">
             <h2 className="mb-4 text-balance">
               Das Starter Paket —{" "}
-              <span className="gradient-text">alles drin, nichts versteckt</span>
+              <span className="text-foreground">alles drin, nichts versteckt</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Ein klares Paket, ein klarer Preis. Keine Nachverhandlung, keine

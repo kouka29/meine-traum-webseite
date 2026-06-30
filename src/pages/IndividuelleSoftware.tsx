@@ -290,7 +290,7 @@ const IndividuelleSoftware = () => (
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3 mx-auto">
                   <r.icon size={20} className="text-primary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold gradient-text mb-1">{r.value}</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1">{r.value}</div>
                 <div className="font-semibold text-sm mb-1">{r.label}</div>
                 <p className="text-muted-foreground text-xs leading-relaxed">{r.desc}</p>
               </div>
