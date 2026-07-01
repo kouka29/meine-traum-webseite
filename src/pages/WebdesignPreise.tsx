@@ -601,7 +601,7 @@ export const PackageCard = ({
         </>
       ) : (
         <>
-          <p className="font-heading text-3xl font-bold text-foreground mb-6">{pkg.price}</p>
+          <p className="font-heading text-3xl font-bold text-primary mb-6">{pkg.price}</p>
           {pkg.subPrice && (
             <p className="text-xs text-muted-foreground italic mb-3">{pkg.subPrice}</p>
           )}
@@ -694,7 +694,7 @@ const BuyCard = ({
         </span>
       )}
       <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(pkg.name)}</h3>
-      <p className="font-heading text-3xl font-bold text-foreground mb-6">{pkg.price}</p>
+      <p className="font-heading text-3xl font-bold text-primary mb-6">{pkg.price}</p>
       {pkg.highlights && (
         <div className="space-y-1 mb-3">
           {pkg.highlights.map((h) => (
