@@ -27,7 +27,7 @@ const HandwerkerUeberUns = () => (
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <TradeBreadcrumbs />
         <div className="text-center mt-8 max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Wir bauen Websites für Menschen die anpacken</h1>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Wir bauen Websites für Menschen die anpacken</h1>
           <p className="text-lg" style={{ color: "var(--text-muted)" }}>
             Kein großes Agenturbüro. Kein Fachchinesisch. Nur ehrliche Arbeit — wie bei Euch.
           </p>
