@@ -15,7 +15,9 @@
     <!-- Stripe preconnect is injected dynamically by src/lib/stripe.ts when checkout actually mounts -->
 
     <!-- Fonts are self-hosted via @fontsource packages (no Google Fonts CDN in critical path). -->
-    <!-- Preload links for above-the-fold woff2 files are injected from src/main.tsx where Vite knows the hashed URLs. -->
+    <!-- Above-the-fold weights preloaded from stable public paths. -->
+    <link rel="preload" href="/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/poppins-700-latin.woff2" as="font" type="font/woff2" crossorigin>
     <meta name="description" content="Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h.">
     <meta name="author" content="Meine Traum Webseite" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
