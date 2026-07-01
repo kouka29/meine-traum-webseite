@@ -10,6 +10,10 @@ const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
 const TEXT_DARK = "#1E1B4B";
 const TEXT_MUTED = "#6B7280";
 
+// Feature-Flag: Auf "true" setzen, falls die Online-Zahlung ausfällt und
+// Rechnungszahlung im Checkout wieder erlaubt werden soll.
+const RECHNUNG_ENABLED = false;
+
 export interface FunnelAddon {
   id: string;
   name: string;
