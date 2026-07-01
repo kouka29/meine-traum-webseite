@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import TradeBreadcrumbs from "@/components/TradeBreadcrumbs";
 import TestimonialCard from "@/components/trade/TestimonialCard";
+import EmojiIcon from "@/lib/emojiToIcon";
 
 const values = [
   { emoji: "🔨", title: "Ehrlich wie Handwerk", text: "Kein Bullshit. Kein Fachchinesisch. Klare Ansagen was geht und was nicht." },

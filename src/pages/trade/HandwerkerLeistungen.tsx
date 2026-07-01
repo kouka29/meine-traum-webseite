@@ -2,6 +2,7 @@ import { useState, FormEvent } from "react";
 import { Check, Phone } from "lucide-react";
 import { z } from "zod";
 import TradeBreadcrumbs from "@/components/TradeBreadcrumbs";
+import EmojiIcon from "@/lib/emojiToIcon";
 
 const services = [
   { emoji: "🔍", title: "Google-Optimierung (SEO)", desc: "Damit Kunden Dich finden wenn sie '[Beruf] [Stadt]' googeln — nicht Deinen Konkurrenten.", items: ["Keyword-Analyse", "Google Business Einrichtung", "Lokale SEO-Optimierung"] },
