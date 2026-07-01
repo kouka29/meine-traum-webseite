@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Send, X, Loader2, MessageCircle } from "lucide-react";
+import { Send, X, Loader2 } from "lucide-react";
 import { createPortal } from "react-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { honeypotFieldProps } from "@/lib/submitLead";
