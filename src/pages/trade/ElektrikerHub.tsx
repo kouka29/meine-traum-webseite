@@ -5,7 +5,7 @@ const config: TradeHubConfig = {
   badgeColor: "#FBBF24",
   badgeText: "⚡ SPEZIELL FÜR ELEKTRIKER",
   heroH1: <>Mehr Aufträge als Elektriker — <span style={{ color: "var(--brand-purple)" }}>gefunden auf Google wenn's drauf ankommt</span></>,
-  heroSub: "Kunden suchen 'Elektriker [Stadt]' — wir sorgen dafür dass sie Dich finden. Nicht Deinen Konkurrenten.",
+  heroSub: "Kunden suchen nach 'Elektriker' in Deiner Stadt — wir sorgen dafür dass sie Dich finden. Nicht Deinen Konkurrenten.",
   trustBadges: ["Gefunden bei Notfall-Suchen", "Kein Technik-Stress", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Elektriker aus der Region vertrauen uns",
   painPoints: [
@@ -17,7 +17,7 @@ const config: TradeHubConfig = {
   stepsH2: "Deine Elektriker-Website — ohne Stress, ohne Technik",
   featuresH2: "Was Deine Elektriker-Website kann",
   features: [
-    { emoji: "🔍", title: "Gefunden bei Notfall-Suchen", description: "Kunden suchen nachts 'Elektriker Notfall [Stadt]' — wir sorgen dafür dass Du erscheinst wenn es drauf ankommt." },
+    { emoji: "🔍", title: "Gefunden bei Notfall-Suchen", description: "Kunden suchen nachts nach 'Elektriker Notfall' in Deiner Stadt — wir sorgen dafür dass Du erscheinst wenn es drauf ankommt." },
     { emoji: "📋", title: "Leistungsseiten die überzeugen", description: "Hausanschluss, Zählerschrank, Smart Home — Deine Leistungen klar und vertrauenswürdig dargestellt." },
     { emoji: "⭐", title: "Bewertungen die Kunden bringen", description: "Wir helfen Dir Google-Bewertungen zu sammeln — der stärkste Vertrauensbeweis für neue Kunden." },
     { emoji: "📱", title: "Perfekt auf jedem Handy", description: "Kunden suchen auf dem Handy — auch auf der Baustelle. Deine Seite funktioniert überall." },
