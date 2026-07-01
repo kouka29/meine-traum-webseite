@@ -89,7 +89,9 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
               key={p.title}
               className="rounded-card bg-white p-6 flex flex-col gap-3 transition duration-300 hover:-translate-y-0.5 shadow-elevated"
             >
-              <EmojiIcon emoji={p.icon} size={20} />
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <EmojiIcon emoji={p.icon} size={24} />
+              </div>
               <h3 className="text-base font-semibold text-foreground">{p.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{p.description}</p>
             </div>
@@ -105,7 +107,9 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
             <div key={s.title} className="rounded-card bg-white p-7 shadow-marketing flex flex-col gap-3 border border-border">
               <div className="flex items-center gap-3">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center bg-brand text-brand-foreground font-bold text-sm">{i + 1}</span>
-                <EmojiIcon emoji={s.emoji} size={20} />
+                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                  <EmojiIcon emoji={s.emoji} size={20} />
+                </div>
               </div>
               <h3 className="text-base font-bold text-foreground">{s.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{s.text}</p>
@@ -164,7 +168,9 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
               to={t.to}
               className="group rounded-card bg-white p-7 flex flex-col items-center gap-3 shadow-marketing border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:shadow-marketing-hover"
             >
-              <EmojiIcon emoji={t.icon} size={20} />
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                <EmojiIcon emoji={t.icon} size={24} />
+              </div>
               <span className="text-base font-semibold text-center text-foreground group-hover:text-brand transition-colors">{t.label}</span>
             </Link>
           ))}
