@@ -3,6 +3,7 @@ import { Check, Phone } from "lucide-react";
 import { z } from "zod";
 import TradeBreadcrumbs from "@/components/TradeBreadcrumbs";
 import EmojiIcon from "@/lib/emojiToIcon";
+import { submitLead } from "@/lib/submitLead";
 
 const services = [
   { emoji: "🔍", title: "Google-Optimierung (SEO)", desc: "Damit Kunden Dich finden wenn sie nach Deinem Gewerk in Deiner Stadt googeln — nicht Deinen Konkurrenten.", items: ["Keyword-Analyse", "Google Business Einrichtung", "Lokale SEO-Optimierung"] },
@@ -24,7 +25,7 @@ const MiniForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const r = miniSchema.safeParse(form);
     if (!r.success) {
@@ -35,7 +36,14 @@ const MiniForm = () => {
     }
     setErrors({});
     setLoading(true);
-    setTimeout(() => { setLoading(false); setSubmitted(true); }, 400);
+    const ok = await submitLead({
+      name: form.vorname,
+      phone: form.telefon,
+      source_cta: "handwerker-leistungen-mini",
+    });
+    setLoading(false);
+    if (ok) setSubmitted(true);
+    else setErrors({ telefon: "Übermittlung fehlgeschlagen. Bitte später erneut versuchen." });
   };
 
   if (submitted) {
