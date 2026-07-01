@@ -1,21 +1,9 @@
-## Plan: ChatAssistant Floating-Button Position Fix
+Änderungen ausschließlich in `src/components/ChatAssistant.tsx` am Floating-Button (`.mtw-fab` CSS-Regel bleibt unverändert):
 
-### Context
-Der Floating-Button in `src/components/ChatAssistant.tsx` verliert zur Laufzeit seine rechts-Positionierung (`right-5`), weil Tailwind-Klassen von anderem CSS überschrieben werden. Ziel ist, die Position per `!important`-CSS zu erzwingen.
+1. Inline-Style `style={{ background: BRAND_GRADIENT }}` am `<button>` entfernen.
+2. Kreis-Optik-Klassen entfernen: `"rounded-full"`, `"shadow-lg"`, `"hover:shadow-xl"`, `"transition-shadow"`. Behalten: `"flex items-center justify-center"`. Hinzufügen: `"hover:scale-105 transition-transform"`.
+3. Button-Größe um ~30 % erhöhen: `"w-16 h-16 md:w-[68px] md:h-[68px]"` → `"w-[84px] h-[84px] md:w-[92px] md:h-[92px]"`.
+4. Maskottchen-Img füllt den Button: `"w-[88%] h-[88%]"` → `"w-full h-full"`. Zusätzlich `drop-shadow-[0_4px_12px_rgba(0,0,0,0.20)]` auf dem `<img>`.
+5. MessageCircle-Badge (absolute `-top-1 -right-1 bg-white ...`) komplett entfernen.
 
-### Änderungen (nur in `src/components/ChatAssistant.tsx`)
-
-1. **CSS-Regeln im `<style>`-Block ergänzen** (Zeilen 416–422):
-   - `.mtw-fab` und `.mtw-panel` mit `!important` für `position`, `right`, `left`, `bottom`, `z-index`, `width`, `max-width` definieren.
-   - Mobile/Desktop-Unterscheidung via `@media(min-width:768px)`.
-
-2. **Floating-Button**: Positionsklassen entfernen und durch `className="mtw-fab"` ersetzen. Visuelle Klassen (`rounded-full`, `shadow-lg`, `hover:shadow-xl`, `transition-shadow`, `flex items-center justify-center`, `w-16 h-16 md:w-[68px] md:h-[68px]`) und `style={{ background: BRAND_GRADIENT }}` bleiben erhalten.
-
-3. **Panel-Container**: Positionsklassen entfernen und durch `className` mit `mtw-panel` ersetzen. Visuelle Klassen (`bg-background`, `border`, `border-border`, `shadow-2xl`, `flex`, `flex-col`, `overflow-hidden`, `max-h-[70vh]`, `rounded-2xl`) und `data-apple-skip` bleiben erhalten.
-
-### Tabu
-- Keine Änderungen an Supabase, Stripe, Pixel oder Kundenportal.
-
-### Erfolgskriterium
-- Build bleibt grün.
-- Button und Panel behalten ihre Position auch bei CSS-Konflikten.
+Build grün halten. Tabu: Supabase/Stripe/Pixel/Kundenportal.
