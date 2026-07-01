@@ -1,29 +1,21 @@
-## Plan: Fix broken `position:fixed` for Chat Widget
+## Plan: ChatAssistant Floating-Button Position Fix
 
-### Problem
-The Chat Widget scrolls away instead of staying fixed. Root cause: `overflow-x: clip` and `max-width: 100vw` applied to the `html` root element breaks `position:fixed` behavior in some browsers.
+### Context
+Der Floating-Button in `src/components/ChatAssistant.tsx` verliert zur Laufzeit seine rechts-Positionierung (`right-5`), weil Tailwind-Klassen von anderem CSS überschrieben werden. Ziel ist, die Position per `!important`-CSS zu erzwingen.
 
-### Fix (1 file changed)
-File: `src/index.css` (lines ~309-312)
+### Änderungen (nur in `src/components/ChatAssistant.tsx`)
 
-Change:
-```css
-html, body {
-  overflow-x: clip;
-  max-width: 100vw;
-}
-```
+1. **CSS-Regeln im `<style>`-Block ergänzen** (Zeilen 416–422):
+   - `.mtw-fab` und `.mtw-panel` mit `!important` für `position`, `right`, `left`, `bottom`, `z-index`, `width`, `max-width` definieren.
+   - Mobile/Desktop-Unterscheidung via `@media(min-width:768px)`.
 
-To:
-```css
-body {
-  overflow-x: clip;
-  max-width: 100vw;
-}
-```
+2. **Floating-Button**: Positionsklassen entfernen und durch `className="mtw-fab"` ersetzen. Visuelle Klassen (`rounded-full`, `shadow-lg`, `hover:shadow-xl`, `transition-shadow`, `flex items-center justify-center`, `w-16 h-16 md:w-[68px] md:h-[68px]`) und `style={{ background: BRAND_GRADIENT }}` bleiben erhalten.
 
-The `html` element receives **no** `overflow-x` and **no** `max-width`. Horizontal scroll remains prevented via `body`, while `position:fixed` on the Chat Widget works correctly again.
+3. **Panel-Container**: Positionsklassen entfernen und durch `className` mit `mtw-panel` ersetzen. Visuelle Klassen (`bg-background`, `border`, `border-border`, `shadow-2xl`, `flex`, `flex-col`, `overflow-hidden`, `max-h-[70vh]`, `rounded-2xl`) und `data-apple-skip` bleiben erhalten.
 
-### Verification
-- Run `bun run build` to confirm build stays green.
-- No other files modified.
+### Tabu
+- Keine Änderungen an Supabase, Stripe, Pixel oder Kundenportal.
+
+### Erfolgskriterium
+- Build bleibt grün.
+- Button und Panel behalten ihre Position auch bei CSS-Konflikten.
