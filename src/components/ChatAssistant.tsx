@@ -29,6 +29,18 @@ const MSGS_KEY = "mtw_chat_msgs_v2";
 const OPEN_KEY = "mtw_chat_open";
 const CONSENT_KEY = "mtw_chat_consent_v1";
 const LEAD_KEY = "mtw_chat_lead_v1";
+const AUTOOPEN_KEY = "chat_autoopened";
+const USER_TOUCHED_KEY = "chat_user_touched";
+
+const AUTOOPEN_BLOCK_PREFIXES = ["/angebot", "/checkout", "/kostenlose-vorschau"];
+
+function isTypingInField(): boolean {
+  const el = typeof document !== "undefined" ? document.activeElement : null;
+  if (!el) return false;
+  const tag = el.tagName;
+  return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" ||
+    (el as HTMLElement).isContentEditable === true;
+}
 
 const HIDE_PREFIXES = [
   "/kundenportal",
@@ -162,11 +174,115 @@ const ChatAssistant = () => {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        try {
+          sessionStorage.setItem(USER_TOUCHED_KEY, "1");
+          sessionStorage.setItem(AUTOOPEN_KEY, "1");
+        } catch {
+          /* ignore */
+        }
+        setOpen(false);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  // Behavioral auto-openers — max 1x/session, respects user-touched flag.
+  useEffect(() => {
+    if (shouldHide) return;
+    if (typeof window === "undefined") return;
+    if (open) return;
+    if (AUTOOPEN_BLOCK_PREFIXES.some((p) => pathname.startsWith(p))) return;
+    try {
+      if (sessionStorage.getItem(AUTOOPEN_KEY) === "1") return;
+      if (sessionStorage.getItem(USER_TOUCHED_KEY) === "1") return;
+    } catch {
+      return;
+    }
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    const autoOpen = (message: string, opts?: { openLeadForm?: boolean }) => {
+      try {
+        if (sessionStorage.getItem(AUTOOPEN_KEY) === "1") return;
+        if (sessionStorage.getItem(USER_TOUCHED_KEY) === "1") return;
+      } catch {
+        return;
+      }
+      if (isTypingInField()) return;
+      try {
+        sessionStorage.setItem(AUTOOPEN_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+      setMessages((prev) => {
+        if (prev.some((m) => m.role === "assistant" && m.content === message)) return prev;
+        return [...prev, { role: "assistant", content: message }];
+      });
+      setAvatarState("nudge");
+      setTimeout(() => {
+        setAvatarState((s) => (s === "nudge" ? "idle" : s));
+      }, 4000);
+      if (opts?.openLeadForm) setShowLeadForm(true);
+      setOpen(true);
+    };
+
+    const cleanups: Array<() => void> = [];
+
+    // Trigger 1 — /preise Timer (30s)
+    if (pathname.startsWith("/preise") || pathname.startsWith("/webdesign-preise")) {
+      const t = window.setTimeout(
+        () => autoOpen("Fragen zu den Paketen? Ich helf dir das passende zu finden."),
+        30_000,
+      );
+      cleanups.push(() => window.clearTimeout(t));
+    }
+
+    // Trigger 2 — Exit-Intent (Desktop only)
+    if (!isMobile) {
+      const onMouseOut = (e: MouseEvent) => {
+        if (e.clientY > 0) return;
+        if (e.relatedTarget) return;
+        autoOpen("Bevor du gehst — hol dir die kostenlose Strategie-Vorschau.", {
+          openLeadForm: true,
+        });
+      };
+      document.addEventListener("mouseout", onMouseOut);
+      cleanups.push(() => document.removeEventListener("mouseout", onMouseOut));
+    }
+
+    // Trigger 3 — /portfolio scroll >60% + 20s idle
+    if (pathname.startsWith("/portfolio")) {
+      let interacted = false;
+      const markInteracted = () => {
+        interacted = true;
+      };
+      document.addEventListener("click", markInteracted, { once: true });
+      document.addEventListener("keydown", markInteracted, { once: true });
+      document.addEventListener("touchstart", markInteracted, { once: true });
+      const t = window.setTimeout(() => {
+        if (interacted) return;
+        const docHeight = Math.max(
+          document.documentElement.scrollHeight,
+          document.body.scrollHeight,
+        );
+        const scrolled = (window.scrollY + window.innerHeight) / docHeight;
+        if (scrolled >= 0.6) {
+          autoOpen("Soll ich dir ein Beispiel für deine Branche zeigen?");
+        }
+      }, 20_000);
+      cleanups.push(() => {
+        window.clearTimeout(t);
+        document.removeEventListener("click", markInteracted);
+        document.removeEventListener("keydown", markInteracted);
+        document.removeEventListener("touchstart", markInteracted);
+      });
+    }
+
+    return () => cleanups.forEach((fn) => fn());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, shouldHide]);
 
   const sendMessage = useCallback(async () => {
     const text = input.trim();
@@ -282,7 +398,14 @@ const ChatAssistant = () => {
         <button
           type="button"
           aria-label="KI-Assistent öffnen"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            try {
+              sessionStorage.setItem(USER_TOUCHED_KEY, "1");
+            } catch {
+              /* ignore */
+            }
+            setOpen(true);
+          }}
           style={{ background: BRAND_GRADIENT }}
           className={cn(
             "fixed right-5 z-40 rounded-full shadow-lg hover:shadow-xl transition-shadow",
@@ -344,7 +467,15 @@ const ChatAssistant = () => {
             </div>
             <button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                try {
+                  sessionStorage.setItem(USER_TOUCHED_KEY, "1");
+                  sessionStorage.setItem(AUTOOPEN_KEY, "1");
+                } catch {
+                  /* ignore */
+                }
+                setOpen(false);
+              }}
               className="p-1.5 rounded-md hover:bg-white/15 transition-colors"
               aria-label="Schließen"
             >
