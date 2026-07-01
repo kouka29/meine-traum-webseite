@@ -1,29 +1,33 @@
-## Ziel
-"Flash of Fallback" auf `/portfolio` eliminieren. Beim ersten Laden (leerer Cache) werden momentan kurz die 6 hartcodierten `fallbackProjects` angezeigt, bevor Supabase-Daten eintreffen. Stukomponente soll stattdessen zuerst ein Skeleton-Grid zeigen und Fallbacks nur als letzten Ausweg verwenden.
+## Befund
 
-## Änderungen
+Das ausgewählte Formular „Jetzt kostenlos prüfen lassen“ auf `/lp/gesetz` nutzt aktuell **nicht** die zentrale Lead-Benachrichtigung, sondern nur `submitVorschauAnfrage()`.
 
-### 1. State-Initialisierung (`src/pages/Portfolio.tsx`)
-- `useState`-Init ersetzen: Nicht mehr mit `fallbackProjects` starten.
-- Stattdessen `getCachedPortfolio()` auslesen. Falls Cache vorhanden → damit initialisieren.
-- Falls kein Cache → `[]` (leeres Array).
-- Neuer State `loading` (boolean), initial `true` wenn kein Cache vorhanden.
+Dadurch passiert beim Absenden nur Folgendes:
+- Eintrag landet in der Datenbank-Tabelle `vorschau_anfragen`.
+- Es wird **keine** `notify-lead` Backend-Funktion aufgerufen.
+- Deshalb kommt für dieses Formular **keine Telegram-Nachricht** an.
 
-### 2. `useEffect` anpassen
-- `fetchPortfolio()` aufrufen.
-- Wenn echte Daten kommen → `setProjects(mappedData)`.
-- Wenn **keine** echten Daten kommen UND `projects.length === 0` → `setProjects(fallbackProjects)` als letzten Ausweg.
-- In allen Fällen `setLoading(false)` setzen (auch bei Fehler/Abbruch).
-- `catch` handler hinzufügen, der `setLoading(false)` sicherstellt.
+Ich habe gesehen, dass deine Tests dort tatsächlich gespeichert wurden, aber nicht in der normalen Lead-Tabelle bzw. Telegram-Pipeline auftauchen.
 
-### 3. Render-Logik: Skeleton-Grid
-- Solange `loading === true` UND `projects.length === 0`: Ein Skeleton-Grid rendern.
-- 6 graue Platzhalter im selben Layout (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7`).
-- Jeder Platzhalter: `<div className="rounded-2xl bg-muted/60 h-80 animate-pulse" />`.
-- Sobald `projects.length > 0`: normale `projects.map(...)` rendern.
-- Keine Änderungen am Card-Markup, an `portfolioCache.ts`, Supabase-Funktionen oder Routing.
+## Plan
 
-## Verifikation
-- `tsc --noEmit` grün.
-- `vite build` grün.
-- Keine sichtbaren Fallback-Karten beim ersten Laden ohne Cache (nur Skeletons).
+1. **Formular `/lp/gesetz` korrekt anbinden**
+   - In `src/pages/lp/Gesetz.tsx` zusätzlich `submitLead` importieren.
+   - Nach erfolgreichem `submitVorschauAnfrage()` die zentrale Telegram-/Lead-Funktion `submitLead()` aufrufen.
+
+2. **Payload sauber mappen**
+   - Name → `name`
+   - Telefon → `phone`
+   - E-Mail → `email`
+   - Firmenname + Webseiten-URL + Grund in `message`
+   - CTA z. B. `gesetz_kostenlos_pruefen`
+   - Dadurch kommt in Telegram klar an, dass es vom Formular `/lp/gesetz` stammt.
+
+3. **Erfolg nicht mehr nur an Vorschau-Speicherung koppeln**
+   - Die Datenbank-Speicherung in `vorschau_anfragen` bleibt bestehen.
+   - Zusätzlich wird die zentrale Lead-Benachrichtigung ausgelöst.
+   - Falls Telegram/Lead-Funktion fehlschlägt, soll der Nutzer nicht fälschlich komplett im Dunkeln bleiben; ich setze eine klare Fehlermeldung oder blockiere Erfolg nur dann, wenn die zentrale Lead-Übergabe nicht klappt.
+
+4. **Kurz verifizieren**
+   - Prüfen, dass die Komponente kompiliert.
+   - Danach kann das Formular erneut getestet werden; es sollte dann über denselben Telegram-Pfad laufen wie die anderen funktionierenden Formulare.
