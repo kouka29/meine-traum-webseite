@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#92400E",
   badgeText: "🪚 SPEZIELL FÜR SCHREINER & TISCHLER",
   heroH1: <>Mehr Aufträge für Ihre Werkstatt — <span style={{ color: "var(--brand-purple)" }}>Handwerk, das man online sieht</span></>,
-  heroSub: "Kunden suchen 'Schreiner [Stadt]' für Küchen, Möbel oder Einbauten. Wir bauen die Website, die Ihre Handarbeit ins richtige Licht rückt.",
+  heroSub: "Kunden suchen 'Schreiner in Deiner Stadt' für Küchen, Möbel oder Einbauten. Wir bauen die Website, die Ihre Handarbeit ins richtige Licht rückt.",
   trustBadges: ["Referenz-Galerie wie Manufaktur", "Individuelle Anfrage online", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Schreinereien aus DACH vertrauen uns",
   painPoints: [

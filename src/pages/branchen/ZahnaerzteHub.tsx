@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#0891B2",
   badgeText: "🦷 SPEZIELL FÜR ZAHNÄRZTE & KIEFERORTHOPÄDEN",
   heroH1: <>Mehr Patienten für Ihre Praxis — <span style={{ color: "var(--brand-purple)" }}>vertrauensvoll, modern, buchbar</span></>,
-  heroSub: "Patienten suchen 'Zahnarzt [Stadt]' und entscheiden in Sekunden. Wir bauen die Website, die Vertrauen schafft und Termine produziert.",
+  heroSub: "Patienten suchen 'Zahnarzt in Deiner Stadt' und entscheiden in Sekunden. Wir bauen die Website, die Vertrauen schafft und Termine produziert.",
   trustBadges: ["Online-Termin direkt buchbar", "DSGVO-konform & sicher", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Praxen aus DACH vertrauen uns",
   painPoints: [
