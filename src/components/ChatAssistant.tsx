@@ -440,10 +440,9 @@ const ChatAssistant = () => {
           }}
           style={{ background: BRAND_GRADIENT }}
           className={cn(
-            "fixed right-5 z-40 rounded-full shadow-lg hover:shadow-xl transition-shadow",
+            "mtw-fab rounded-full shadow-lg hover:shadow-xl transition-shadow",
             "flex items-center justify-center",
             "w-16 h-16 md:w-[68px] md:h-[68px]",
-            "bottom-24 md:bottom-5",
           )}
         >
           <img
