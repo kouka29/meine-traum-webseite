@@ -1,88 +1,61 @@
 ## Ziel
-Ein neues, dezentes Chat-Widget mit dem MTW-Maskottchen (State-abhängige Avatare), Marken-Verlauf `#8441E3 → #3488DF` nur auf Floating-Button + Panel-Header. Rein additiv — keine Edge-Functions, kein Stripe, kein Pixel, kein Kundenportal wird angefasst. Bestehende `chat-assistant` + `notify-lead` + `check-vorschau-availability` Functions werden nur konsumiert.
+Sparsame verhaltensbasierte Auto-Öffner im bestehenden `src/components/ChatAssistant.tsx`. Additiv, keine Änderung am Layout, an Edge-Functions oder anderen Komponenten.
 
-## Dateien
+## Datei
+Nur `src/components/ChatAssistant.tsx`.
 
-### Neu: `src/components/ChatAssistant.tsx`
-Single-File-Komponente (ersetzt in `App.tsx` den bisherigen Import auf `@/components/ChatAssistant/ChatAssistant`; alte Datei bleibt unangetastet im Repo, wird nur nicht mehr importiert — rein additiver Ersatz).
-
-Struktur:
-- **Assets-Import**: 5 statische PNG-Imports aus `src/assets/mascot/`
-  - `idle` = 01, `greeting` = 09, `thinking` = 06, `success` = 04, `nudge` = 07
-- **State**: `open`, `messages`, `input`, `loading`, `availability {available,isFull}`, `avatarState` ∈ `idle|greeting|thinking|success|nudge`, `showConsent`, `showLeadForm`, `leadSubmitted`, Lead-Felder (`name`, `phone`, `company` = Honeypot).
-- **Persistenz**: `sessionStorage` für Offen-Zustand (`mtw_chat_open`), Consent-Gesehen-Flag (`mtw_chat_consent_v1`) und Nachrichten (`mtw_chat_msgs_v2`).
-- **Route-Hide**: gleicher Ausschluss-Set wie bisher (Admin, Kundenportal, Angebot, Checkout, Erfolg).
-
-### Update: `src/App.tsx`
-- Import-Pfad wechseln: `import ChatAssistant from "@/components/ChatAssistant";`
-- Sonst nichts. Alle Route-Regeln bleiben identisch.
-
-### Update: `tailwind.config.ts` (nur wenn nötig)
-- Keine Änderung — Verlauf wird per Inline-Style `linear-gradient(135deg,#8441E3,#3488DF)` gesetzt, um Token-Sauberkeit nicht anzufassen.
+## Neue Konstanten & State
+- `AUTOOPEN_KEY = "chat_autoopened"` — globaler Session-Flag (`sessionStorage`), gesetzt sobald IRGENDEIN Auto-Öffner gefeuert hat.
+- `USER_TOUCHED_KEY = "chat_user_touched"` — wird gesetzt, sobald der Nutzer den Widget-Button selbst geöffnet oder das Panel geschlossen hat. Ist er einmal gesetzt, feuert kein Auto-Öffner mehr.
+- Konsumiert bestehende `nudgeAvatar` (07) sowie `getGreeting`-Muster.
 
 ## Verhalten
+Ein einziger `useEffect`, der beim Mount:
+1. Abbricht, wenn `shouldHide`, `open`, `sessionStorage[AUTOOPEN_KEY]` oder `sessionStorage[USER_TOUCHED_KEY]` gesetzt sind.
+2. Auf Mobil (`window.matchMedia("(max-width: 768px)").matches`) abbricht, wenn ein aktives Formular sichtbar ist. Heuristik: irgendein `input`/`textarea`/`select` innerhalb `[data-funnel], form` hat gerade Fokus, ODER ein Element mit `[data-funnel-active]` existiert. Robust: einfach `document.activeElement` ist `INPUT|TEXTAREA|SELECT` → Trigger überspringen. Zusätzlich Route-Guard: startsWith `/angebot`, `/checkout`, `/kostenlose-vorschau` — dort keine Auto-Öffner.
+3. Registriert je nach Route bis zu drei Trigger, deren Cleanup beim Unmount/Route-Wechsel läuft.
 
-### Floating-Button (z-40)
-- Fixiert unten rechts, rund (56×56 desktop, 52×52 mobile), Verlauf-Hintergrund, sanfter Box-Shadow.
-- Enthält `idle`-Maskottchen (`object-contain`, ~70% des Buttons).
-- Mobile-Offset: `bottom-24 md:bottom-5` — hebt Widget über etwaige Sticky-CTA-Bar.
-- Dezente Idle-Animation: eigene Keyframe `float` in `<style>`-Tag oder via Tailwind arbitrary — 3s ease-in-out, ±4px, `prefers-reduced-motion: reduce` respektiert.
+Gemeinsame Helper (in Komponente, nicht exportiert):
+- `autoOpen(message: string)`:
+  - Prüft nochmals Guards (nicht `open`, kein `AUTOOPEN_KEY`, kein `USER_TOUCHED_KEY`, `document.activeElement` kein Text-Input).
+  - Setzt `sessionStorage[AUTOOPEN_KEY] = "1"`.
+  - `setAvatarState("nudge")` (Timeout 4s → zurück auf `idle`).
+  - Ersetzt/erweitert `messages`: wenn leer, initialisiert mit `[{role:"assistant", content: message}]`. Ist bereits Greeting drin, hängt Nudge-Message nur an, wenn nicht identisch.
+  - `setOpen(true)`.
 
-### Panel
-- Breite ~360px (`w-[360px] max-w-[calc(100vw-2rem)]`), `max-h-[70vh]`, abgerundet, Schatten, weißer Body.
-- **Header**: Marken-Verlauf + weißer Text. Links Avatar (48×48, wechselt per State), Mitte "KI-Assistent" (Poppins) + Zeile "Antwortet in Sekunden". Rechts kleines Badge `KI` (weiß/10 % Alpha) und Close-Button.
-- **Consent-Zeile** (dünn, nur wenn `!consentDismissed`): "Dieser Chat wird KI-gestützt verarbeitet (Google Gemini via Lovable). Mit dem Senden stimmst du zu. Mehr: [Datenschutz](/datenschutz)."
-- **Nachrichtenliste**: scrollbar, User rechts (primary bubble), Assistant links (muted bubble), auto-scroll ans Ende.
-- **Loading-Zeile**: kleine Bubble mit drei animierten Punkten; Header-Avatar wechselt auf `thinking`.
-- **Composer**: `<textarea>` + Send-Button (Enter sendet, Shift+Enter Umbruch).
-- **Footer/Handoff-CTA**: immer sichtbar
-  - `available > 0` → Button „Kostenlose Vorschau sichern ({available} frei)"
-  - `isFull` → Button „Rückruf anfordern"
-  - `availability === null` (noch nicht geladen) → Button ohne Zahl „Kostenlose Vorschau sichern"
-  - Klick klappt Inline-Lead-Formular auf.
+### Trigger 1 — `/preise` Timer (30 s)
+- Guard: `pathname.startsWith("/preise") || pathname.startsWith("/webdesign-preise")`.
+- `setTimeout(() => autoOpen("Fragen zu den Paketen? Ich helf dir das passende zu finden."), 30_000)`.
+- Cleanup: `clearTimeout`.
 
-### Kontextabhängige Begrüßung
-Beim ersten Öffnen (leere Message-Historie) je nach `pathname`:
-- startsWith `/preise` oder `/webdesign-preise` → "Fragen zu den Paketen? Ich helf dir das passende zu finden."
-- startsWith `/portfolio` → "Suchst du ein Beispiel für deine Branche?"
-- sonst → "Hi! Ich bin dein Assistent von MTW. Was möchtest du wissen?"
-Avatar-State: `greeting` für 2.5s, dann `idle`.
+### Trigger 2 — Exit-Intent (Desktop)
+- Nur wenn `!window.matchMedia("(max-width: 768px)").matches`.
+- Listener `mouseout` auf `document`: wenn `e.clientY <= 0` und `!e.relatedTarget` und `!e.toElement` → `autoOpen("Bevor du gehst — hol dir die kostenlose Strategie-Vorschau.")` und `setShowLeadForm(true)`, damit der Handoff-CTA/Formular direkt sichtbar ist.
+- Cleanup: Listener entfernen.
 
-### Chat-Call
-`supabase.functions.invoke("chat-assistant", { body: { messages, page: pathname } })`.
-Response: `{ reply, available, isFull }` → Nachrichten anhängen, `availability` updaten, `avatarState` zurück auf `idle`.
-Fehlerpfad: Fallback-Nachricht mit Telefonnummer, `avatarState = idle`.
+### Trigger 3 — `/portfolio` Scroll (>60 % + 20 s ohne Interaktion)
+- Guard: `pathname.startsWith("/portfolio")`.
+- Interaktions-Flag `interacted = false` — setzt sich bei `click`, `keydown`, `touchstart`.
+- `setTimeout(fire, 20_000)`; `fire()` prüft:
+  - `!interacted`
+  - Scroll-Prozentsatz `(scrollY + innerHeight) / documentHeight >= 0.6`
+  - dann `autoOpen("Soll ich dir ein Beispiel für deine Branche zeigen?")`
+- Cleanup: `clearTimeout` + Listener entfernen.
 
-### Verfügbarkeit
-Beim Öffnen einmalig `supabase.functions.invoke("check-vorschau-availability", {})` (falls Function fehlschlägt → still ignorieren, Button bleibt neutral). Antworten von `chat-assistant` überschreiben den Wert.
+### User-Touched-Erkennung
+- Floating-Button `onClick`: setzt `USER_TOUCHED_KEY` bevor `setOpen(true)`.
+- Close-Button `onClick`: setzt `USER_TOUCHED_KEY` und `AUTOOPEN_KEY` (Sicherheit, damit nichts nachfeuert).
+- Escape-Handler: setzt beim Schließen ebenfalls beide Flags.
 
-### Lead-Formular (Inline)
-Felder: `Name`, `Telefon`, Honeypot `company` (off-screen, `honeypotFieldProps` aus `@/lib/submitLead`).
-Submit → `supabase.functions.invoke("notify-lead", { body: {...} })` mit:
-```
-{ name, phone, company, source_page: pathname, source_cta: "chatbot", message: "Chatbot-Lead" }
-```
-- Honeypot befüllt → still `return` (kein Netzwerk-Call), UI zeigt trotzdem „Danke".
-- Erfolg → `avatarState = success` (bleibt), Danke-Bubble „Danke! Muad meldet sich.", Formular schließen, `leadSubmitted = true` in sessionStorage.
-- Fehler → Inline-Fehlermeldung mit Telefonnummer.
-
-Hinweis: `submitLead()` helper wird bewusst NICHT genutzt, weil er `source_page` selbst setzt und das Feld-Set etwas anders formt — hier direkter `invoke`, um dem Prompt (`source_cta: "chatbot"`, Message exakt „Chatbot-Lead") 1:1 zu entsprechen. `honeypotFieldProps` wird weiter aus `@/lib/submitLead` importiert (kein Duplikat).
-
-### Kein Auto-Öffnen
-`useChatTriggers` wird nicht mehr eingebunden (bleibt als Datei bestehen, wird für spätere Phase reaktivierbar).
-
-### Accessibility
-- `role="dialog"` + `aria-label` am Panel, `aria-live="polite"` an der Nachrichtenliste, Focus-Trap light: Auto-Focus Textarea beim Öffnen, Escape schließt Panel.
-- Bilder mit sprechendem `alt="MTW Maskottchen"` + `aria-hidden` an dekorativen Instanzen.
-
-## Verifikation
-1. `bun run build` grün.
-2. `bun x tsgo --noEmit` grün.
-3. `bun run lint` — Fehleranzahl ≤ Baseline (65).
-4. Manuell (Playwright optional): Widget öffnet, Consent sichtbar, Nachricht senden → Loading-Avatar 06 → Reply, Handoff-Formular → Danke-State mit Avatar 04.
+### Avatar-Reset
+Bestehendes „nach Erfolgs-/Idle-Reset"-Verhalten bleibt. Neuer Auto-Timeout setzt `avatarState` nach 4 s zurück auf `idle`, falls in der Zwischenzeit nicht `thinking`/`success` gesetzt wurde.
 
 ## Nicht-Änderungen
-- `supabase/functions/**` unverändert.
-- `src/lib/stripe.ts`, `MetaPixel.tsx`, Kundenportal-Routen — kein Diff.
-- `src/hooks/useChatTriggers.ts` bleibt (unbenutzt).
-- Alte `src/components/ChatAssistant/**` bleibt physisch, wird nur nicht mehr importiert.
+- `App.tsx`, Edge Functions, andere Komponenten: unverändert.
+- Kein neuer Hook, kein neues Modul.
+- `useChatTriggers.ts` bleibt weiter unbenutzt.
+
+## Verifikation
+1. `bunx tsgo --noEmit` grün.
+2. `bun run build` grün.
+3. Kurzer Smoke-Check per Playwright optional: auf `/` Session-Storage setzen und prüfen, dass Auto-Open nicht feuert; auf `/preise` mit gemocktem Timer prüfen, dass `open=true`.
