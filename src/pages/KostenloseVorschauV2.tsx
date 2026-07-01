@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { submitLead } from "@/lib/submitLead";
 import { supabaseImage, supabaseImageSrcSet } from "@/lib/supabaseImage";
 import { useVorschauSettings, type VorschauSettings, type VorschauDemo, type VorschauFaq } from "@/hooks/useVorschauSettings";
 import {
@@ -609,6 +610,15 @@ const SuccessScreen = ({
 
       setBookingConfirmed(true);
       toast.success(`Termin gebucht: ${dateLabel} um ${bookingTime} (${methodLabel})`);
+
+      // Telegram-Ping (fire-and-forget)
+      void submitLead({
+        name: firstName,
+        phone: phone || "",
+        email,
+        message: `Termin: ${dateLabel} ${bookingTime} (${methodLabel}) – ${company}`,
+        source_cta: "kostenlose-vorschau-v2:booking",
+      });
     } catch (error) {
       console.error("Booking konnte nicht gespeichert werden", error);
       toast.error("Der Termin konnte nicht gespeichert werden. Bitte versuche es erneut.");
@@ -1068,6 +1078,15 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
 
       localStorage.removeItem(STORAGE_KEY);
       setDone(true);
+
+      // Telegram-Ping (fire-and-forget)
+      void submitLead({
+        name: state.firstName,
+        phone: state.phone,
+        email: state.email || undefined,
+        message: `${state.company}${state.notes ? ` – ${state.notes}` : ""}`,
+        source_cta: "kostenlose-vorschau-v2:lead",
+      });
     } catch (err) {
       console.error(err);
       setSubmitError(
@@ -1123,6 +1142,14 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           })
           .then(() => {});
       }
+      // Telegram-Ping (fire-and-forget)
+      void submitLead({
+        name: state.firstName,
+        phone: state.phone || "",
+        email: state.email || undefined,
+        message: `${state.company} – Kontaktweg: ${methodLabel}`,
+        source_cta: `kostenlose-vorschau-v2:kontaktweg:${method}`,
+      });
     },
     [leadId, state],
   );
