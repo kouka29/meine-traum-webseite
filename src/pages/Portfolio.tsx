@@ -144,7 +144,10 @@ const Portfolio = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {projects.map((p, i) => {
+            {loading && projects.length === 0 && Array.from({ length: 6 }).map((_, i) => (
+              <div key={`skel-${i}`} className="rounded-2xl bg-muted/60 h-80 animate-pulse" />
+            ))}
+            {projects.map((p, i) => {
                 const rawSrc = p.image_url || p.screenshot_url || "";
                 const imgSrc = normalizeImageSrc(rawSrc);
                 const eager = i < 3;
