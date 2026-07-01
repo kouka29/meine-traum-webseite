@@ -34,7 +34,7 @@ const fallbackProjects = [
 ];
 
 const Portfolio = () => {
-  const [projects, setProjects] = useState(() => {
+  const cachedInit = (() => {
     const cached = getCachedPortfolio();
     if (cached && cached.length > 0) {
       return cached.map(p => ({
@@ -50,8 +50,11 @@ const Portfolio = () => {
         mockup_mobile_url: p.mockup_mobile_url || "",
       }));
     }
-    return fallbackProjects;
-  });
+    return null;
+  })();
+
+  const [projects, setProjects] = useState(cachedInit ?? []);
+  const [loading, setLoading] = useState(!cachedInit);
 
   const normalizeUrl = (url: string) => {
     if (!url) return "";
@@ -61,19 +64,26 @@ const Portfolio = () => {
   useEffect(() => {
     let cancelled = false;
     fetchPortfolio().then(data => {
-      if (cancelled || !data || data.length === 0) return;
-      setProjects(data.map(p => ({
-        id: p.id,
-        title: p.title,
-        category: p.category,
-        description: p.description,
-        result: p.result,
-        image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
-        screenshot_url: p.screenshot_url || "",
-        external_url: p.external_url || "",
-        mockup_desktop_url: p.mockup_desktop_url || "",
-        mockup_mobile_url: p.mockup_mobile_url || "",
-      })));
+      if (cancelled) return;
+      if (data && data.length > 0) {
+        setProjects(data.map(p => ({
+          id: p.id,
+          title: p.title,
+          category: p.category,
+          description: p.description,
+          result: p.result,
+          image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+          screenshot_url: p.screenshot_url || "",
+          external_url: p.external_url || "",
+          mockup_desktop_url: p.mockup_desktop_url || "",
+          mockup_mobile_url: p.mockup_mobile_url || "",
+        })));
+      } else {
+        setProjects(prev => prev.length ? prev : fallbackProjects);
+      }
+      setLoading(false);
+    }).catch(() => {
+      if (!cancelled) setLoading(false);
     });
     return () => { cancelled = true; };
   }, []);
@@ -134,7 +144,10 @@ const Portfolio = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {projects.map((p, i) => {
+            {loading && projects.length === 0 && Array.from({ length: 6 }).map((_, i) => (
+              <div key={`skel-${i}`} className="rounded-2xl bg-muted/60 h-80 animate-pulse" />
+            ))}
+            {projects.map((p, i) => {
                 const rawSrc = p.image_url || p.screenshot_url || "";
                 const imgSrc = normalizeImageSrc(rawSrc);
                 const eager = i < 3;
