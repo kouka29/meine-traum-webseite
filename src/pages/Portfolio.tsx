@@ -34,7 +34,7 @@ const fallbackProjects = [
 ];
 
 const Portfolio = () => {
-  const [projects, setProjects] = useState(() => {
+  const cachedInit = (() => {
     const cached = getCachedPortfolio();
     if (cached && cached.length > 0) {
       return cached.map(p => ({
@@ -50,8 +50,11 @@ const Portfolio = () => {
         mockup_mobile_url: p.mockup_mobile_url || "",
       }));
     }
-    return fallbackProjects;
-  });
+    return null;
+  })();
+
+  const [projects, setProjects] = useState(cachedInit ?? []);
+  const [loading, setLoading] = useState(!cachedInit);
 
   const normalizeUrl = (url: string) => {
     if (!url) return "";

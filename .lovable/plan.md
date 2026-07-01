@@ -1,69 +1,29 @@
-Task: Remove raw placeholder tokens from visible user-facing strings across 18 files. Only rewrite quoted/marketing text that contains bracketed placeholders like [Stadt], [Region], [Ort], [Beruf], [Thema], [Fachgebiet], [PLZ]. Never touch code brackets (React hooks, arrays, destructuring).
+## Ziel
+"Flash of Fallback" auf `/portfolio` eliminieren. Beim ersten Laden (leerer Cache) werden momentan kurz die 6 hartcodierten `fallbackProjects` angezeigt, bevor Supabase-Daten eintreffen. Stukomponente soll stattdessen zuerst ein Skeleton-Grid zeigen und Fallbacks nur als letzten Ausweg verwenden.
 
-## Affected files and occurrences
+## Änderungen
 
-1. **src/components/PageMeta.tsx** (1)
-   - `/elektriker` description: `'Elektriker [Stadt]'` → `'Elektriker' in Deiner Stadt`
+### 1. State-Initialisierung (`src/pages/Portfolio.tsx`)
+- `useState`-Init ersetzen: Nicht mehr mit `fallbackProjects` starten.
+- Stattdessen `getCachedPortfolio()` auslesen. Falls Cache vorhanden → damit initialisieren.
+- Falls kein Cache → `[]` (leeres Array).
+- Neuer State `loading` (boolean), initial `true` wenn kein Cache vorhanden.
 
-2. **src/pages/WebdesignAerzte.tsx** (1)
-   - Feature card desc: `"Arzt [Stadt]"` → `"Arzt in Deiner Stadt"`
+### 2. `useEffect` anpassen
+- `fetchPortfolio()` aufrufen.
+- Wenn echte Daten kommen → `setProjects(mappedData)`.
+- Wenn **keine** echten Daten kommen UND `projects.length === 0` → `setProjects(fallbackProjects)` als letzten Ausweg.
+- In allen Fällen `setLoading(false)` setzen (auch bei Fehler/Abbruch).
+- `catch` handler hinzufügen, der `setLoading(false)` sicherstellt.
 
-3. **src/pages/WebdesignCoaches.tsx** (2)
-   - Feature card desc: `"Coach [Thema] [Stadt]"` and `"Berater für [Thema]"` → generic natural phrasing (e.g. `"Coach für Dein Thema in Deiner Stadt"`, `"Berater für Dein Thema"`)
+### 3. Render-Logik: Skeleton-Grid
+- Solange `loading === true` UND `projects.length === 0`: Ein Skeleton-Grid rendern.
+- 6 graue Platzhalter im selben Layout (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7`).
+- Jeder Platzhalter: `<div className="rounded-2xl bg-muted/60 h-80 animate-pulse" />`.
+- Sobald `projects.length > 0`: normale `projects.map(...)` rendern.
+- Keine Änderungen am Card-Markup, an `portfolioCache.ts`, Supabase-Funktionen oder Routing.
 
-4. **src/pages/WebdesignImmobilienmakler.tsx** (1)
-   - Feature card desc: `"Immobilienmakler [Stadt]"` → `"Immobilienmakler in Deiner Stadt"`
-
-5. **src/pages/WebdesignSHK.tsx** (1)
-   - Feature card desc: `"Heizungsbauer [Stadt]"` → `"Heizungsbauer in Deiner Stadt"`
-
-6. **src/pages/branchen/AutohaeuserHub.tsx** (1)
-   - `heroSub`: `'Werkstatt [Stadt]'` → `'Werkstatt in Deiner Stadt'`
-
-7. **src/pages/branchen/EinzelhandelHub.tsx** (1)
-   - `heroSub`: `'Geschäft [Stadt]'` → `'Geschäft in Deiner Stadt'`
-
-8. **src/pages/branchen/FitnessHub.tsx** (1)
-   - `heroSub`: `'Fitnessstudio [Stadt]'` and `'Yoga in der Nähe'` → `'Fitnessstudio in Deiner Stadt'` and `'Yoga in Deiner Nähe'`
-
-9. **src/pages/branchen/FloristenHub.tsx** (2)
-   - `heroSub`: `'Florist [Stadt]'` → `'Florist in Deiner Stadt'`
-   - `painPoints[2].description`: `'Blumen Lieferung [Stadt]'` → `'Blumen Lieferung in Deiner Stadt'`
-
-10. **src/pages/branchen/FriseureHub.tsx** (1)
-    - `painPoints[3].description`: `'Friseur [Stadt]'` → `'Friseur in Deiner Stadt'`
-
-11. **src/pages/branchen/GartenbauHub.tsx** (1)
-    - `heroSub`: `'Gartenbauer [Stadt]'` → `'Gartenbauer in Deiner Stadt'`
-
-12. **src/pages/branchen/GastronomieHub.tsx** (2)
-    - `heroSub`: `'Restaurant [Stadt]'` → `'Restaurant in Deiner Stadt'`
-    - `features[4].description`: `'Italiener in [Stadt]'` → `'Italiener in Deiner Stadt'`
-
-13. **src/pages/branchen/KanzleienHub.tsx** (1)
-    - `heroSub`: `'Anwalt [Stadt] [Fachgebiet]'` → `'Anwalt in Deiner Stadt für Dein Fachgebiet'`
-
-14. **src/pages/branchen/PhysioHub.tsx** (1)
-    - `heroSub`: `'Physiotherapie [Stadt]'` → `'Physiotherapie in Deiner Stadt'`
-
-15. **src/pages/branchen/ReinigungHub.tsx** (1)
-    - `heroSub`: `'Gebäudereinigung [Stadt]'` → `'Gebäudereinigung in Deiner Stadt'`
-
-16. **src/pages/branchen/SchreinerHub.tsx** (1)
-    - `heroSub`: `'Schreiner [Stadt]'` → `'Schreiner in Deiner Stadt'`
-
-17. **src/pages/branchen/TieraerzteHub.tsx** (1)
-    - `heroSub`: `'Tierarzt [Stadt]'` → `'Tierarzt in Deiner Stadt'`
-
-18. **src/pages/branchen/ZahnaerzteHub.tsx** (1)
-    - `heroSub`: `'Zahnarzt [Stadt]'` → `'Zahnarzt in Deiner Stadt'`
-
-## Rule for every rewrite
-- Remove square brackets and the placeholder word inside.
-- Reformulate naturally and generically ("in Deiner Stadt", "in Deiner Region", "in Deiner Nähe", "für Dein Thema", etc.).
-- Preserve exact surrounding punctuation, casing, and sentence meaning.
-- Do not change any other text, numbers, or code.
-
-## Verification step
-- Run `rg '\[Stadt\]|\[Region\]|\[Ort\]|\[Beruf\]|\[Thema\]|\[Fachgebiet\]|\[PLZ\]' src/components/PageMeta.tsx src/pages/WebdesignAerzte.tsx src/pages/WebdesignCoaches.tsx src/pages/WebdesignImmobilienmakler.tsx src/pages/WebdesignSHK.tsx src/pages/branchen/` to confirm zero matches.
-- Run `tsc --noEmit` to confirm build stays green.
+## Verifikation
+- `tsc --noEmit` grün.
+- `vite build` grün.
+- Keine sichtbaren Fallback-Karten beim ersten Laden ohne Cache (nur Skeletons).
