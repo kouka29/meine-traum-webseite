@@ -887,7 +887,7 @@ const WebdesignPreise = () => {
                 <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
                     <h3 className="font-heading text-xl font-bold mb-1"><PricingName name={pkg.name} /></h3>
-                    <p className="text-sm text-muted-foreground mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
+                    <p className="font-heading text-3xl font-bold text-primary mb-1">Auf Anfrage – meist unter 300 €/Monat</p>
                     <p className="text-xs text-muted-foreground mb-3">zzgl. 19 % MwSt.</p>
                     {pkg.desc && (
                       <p className="text-sm text-muted-foreground mb-5 whitespace-pre-line">{pkg.desc}</p>
@@ -945,7 +945,7 @@ const WebdesignPreise = () => {
                 <div className="flex-1">
                   <h3 className="font-heading text-xl font-bold mb-1">{usePricingName(buyEnterprise.name)}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{buyEnterprise.subtitle}</p>
-                  <p className="font-heading text-2xl font-bold text-foreground mb-1">{buyEnterprise.price}</p>
+                  <p className="font-heading text-3xl font-bold text-primary mb-1">{buyEnterprise.price}</p>
                   <p className="text-xs text-muted-foreground mb-5">zzgl. MwSt.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     {buyEnterprise.features.map((f) => (
