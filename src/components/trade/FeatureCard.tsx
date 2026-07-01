@@ -9,7 +9,9 @@ interface Props {
 
 const FeatureCard = ({ emoji, title, description }: Props) => (
   <MarketingCard variant="feature">
-    <EmojiIcon emoji={emoji} size={20} />
+    <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 mb-1">
+      <EmojiIcon emoji={emoji} size={24} />
+    </div>
     <h3 className="text-base font-bold text-foreground">{title}</h3>
     <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
   </MarketingCard>
