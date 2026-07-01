@@ -1,66 +1,25 @@
-# Telegram-Pings für die zwei fehlenden Formulare
+## Ziel
+Im Checkout-Funnel (`src/components/angebot/CheckoutFunnel.tsx`, Zahlungsart-Auswahl bei Zeile ~1251–1286) die Option **„Auf Rechnung"** sichtbar lassen, aber deaktivieren. Beim Hover erscheint ein Tooltip mit Hinweis und Kontaktmöglichkeiten.
 
-Ziel: Beide Publikumsformulare senden ab sofort einen Telegram-Ping via zentraler `submitLead` → `notify-lead` Edge-Function. Bestehende Logik (Supabase-Insert, Formspree, Transaktionsmails) bleibt unangetastet.
+## Änderungen (nur `src/components/angebot/CheckoutFunnel.tsx`)
 
-## 1. `src/pages/KostenloseVorschauV2.tsx`
+1. **Default auf „online" erzwingen**: In dem `useState`/Effekt, der `payMethod` initialisiert, sicherstellen, dass `payMethod` bei Rendern nie auf `"rechnung"` steht (falls zuvor gesetzt → auf `"online"` zurückstellen).
 
-Drei Events, an denen Telegram informiert wird — alle als **fire-and-forget** *nach* dem bereits vorhandenen Supabase-Insert (damit der Erfolgs-Gate erhalten bleibt):
+2. **Rechnung-Button deaktivieren**:
+   - `onClick` entfernen bzw. no-op.
+   - Visuell abgedimmt: `opacity: 0.5`, `cursor: not-allowed`, kein Aktiv-Rahmen möglich.
+   - `title`-Attribut als nativer Tooltip-Fallback: „Aktuell nicht verfügbar. Bitte kontaktiere uns telefonisch unter 06131 3076498 oder per Mail an info@meine-traum-webseite.de".
+   - Zusätzlich: Wrapper mit CSS-`:hover`-Tooltip (kleines Popup absolut positioniert über dem Button) mit demselben Text und klickbaren Links (`tel:+4961313076498`, `mailto:info@meine-traum-webseite.de`).
+   - Kleiner „Nicht verfügbar"-Badge am Button.
 
-**a) Haupt-Formular (`handleSubmit`, Zeile ~976–1080)** — nach erfolgreichem `leads`-Insert:
+3. **Kein Backend-/Logik-Wechsel** in `src/pages/Angebot.tsx` — `isRechnung`-Zweige bleiben unberührt (werden nur nicht mehr erreicht, da UI sperrt).
+
+## Wieder aktivieren (bei Ausfall Online-Zahlung)
+Ein einzelnes Konstanten-Flag am Dateikopf, z. B.:
 ```ts
-void submitLead({
-  name: state.firstName,
-  phone: state.phone,
-  email: state.email || undefined,
-  company: state.company,
-  message: state.notes || undefined,
-  source_cta: "kostenlose-vorschau-v2:lead",
-});
+const RECHNUNG_ENABLED = false; // auf true setzen, falls Online-Zahlung ausfällt
 ```
+Steuerung von `disabled`-Zustand, Tooltip-Anzeige und Default-`payMethod` an dieser einen Stelle.
 
-**b) Kontaktweg gewählt (`updateContactMethod`, Zeile ~1084 ff.)** — parallel zum Formspree-Call:
-```ts
-void submitLead({
-  name: state.firstName,
-  phone: state.phone,
-  email: state.email || undefined,
-  company: state.company,
-  source_cta: `kostenlose-vorschau-v2:kontaktweg:${method}`,
-});
-```
-
-**c) Termin gebucht (Booking-Handler, Zeile ~540–618)** — nach erfolgreichem Booking-Update, parallel zu Formspree/Mails:
-```ts
-void submitLead({
-  name: firstName,
-  phone: phone || "",
-  email,
-  company,
-  message: `Termin: ${dateLabel} ${bookingTime} (${methodLabel})`,
-  source_cta: "kostenlose-vorschau-v2:booking",
-});
-```
-
-Import ergänzen: `import { submitLead } from "@/lib/submitLead";`
-
-## 2. `src/pages/Premium.tsx`
-
-Aktuell fake Submit (nur `setSubmitted(true)`). Umbau:
-
-- `handleSubmit` → `async`, ruft `submitLead` mit Formulardaten (`name`, `email`, `phone`, `company`, `message`, `source_cta: "premium-form"`).
-- Nur bei Erfolg (`ok === true`) `setSubmitted(true)`, sonst Fehler-State setzen und Button re-enable.
-- Submit-Button-Loading-State (`submitting`) hinzufügen; Button während Request disablen.
-- Validation (name/email/message) bleibt unverändert.
-
-Import ergänzen: `import { submitLead } from "@/lib/submitLead";`
-
-## Nicht angefasst
-
-- `submitLead`, `notify-lead` Edge-Function, DB-Schema — funktionieren bereits (Telegram bestätigt Zustellung in Logs).
-- Formspree-Calls (bewusst redundant als E-Mail-Backup).
-- Supabase-Insert als Erfolgs-Gate in KostenloseVorschauV2.
-- Booking/Checkout-Flows (`Angebot.tsx`, `CheckoutFunnel.tsx`) — eigener Prozess.
-
-## Verifikation
-
-Nach dem Build: manueller Test auf `/kostenlose-vorschau` (Formular absenden + Kontaktweg wählen + Termin buchen) und `/premium` (Formular absenden). Erwartet: 4 Telegram-Nachrichten mit unterschiedlichen `source_cta`-Kennungen.
+## Kein Rollout auf andere Flows
+`Angebot.tsx` / `Starter.tsx` / `Wachstumspaket` bleiben unverändert — es geht nur um die Zahlungsmethodenauswahl im Checkout-Funnel.
