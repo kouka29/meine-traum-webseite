@@ -302,7 +302,7 @@ const Gesetz = () => {
             <Card className="p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
               <div className="flex items-center gap-5 mb-5 flex-wrap">
                 <div className="shrink-0 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100 flex items-center justify-center">
-                  <img src={bmasLogo.url} alt="Logo Bundesministerium für Arbeit und Soziales" className="h-10 md:h-12 w-auto" loading="lazy" />
+                  <img src={bmasLogo.url} alt="Logo Bundesministerium für Arbeit und Soziales" width={160} height={48} className="h-10 md:h-12 w-auto" loading="lazy" decoding="async" />
                 </div>
                 <div className="font-semibold text-lg">{c.source.name}</div>
               </div>
@@ -317,7 +317,7 @@ const Gesetz = () => {
               <Card className="mt-6 p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
                 <div className="flex items-center gap-5 mb-5 flex-wrap">
                   <div className="shrink-0 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100 flex items-center justify-center">
-                    <img src={bfdiLogo.url} alt="Logo Bundesbeauftragte für den Datenschutz und die Informationsfreiheit" className="h-10 md:h-12 w-auto" loading="lazy" />
+                    <img src={bfdiLogo.url} alt="Logo Bundesbeauftragte für den Datenschutz und die Informationsfreiheit" width={160} height={48} className="h-10 md:h-12 w-auto" loading="lazy" decoding="async" />
                   </div>
                   <div className="font-semibold text-lg">Bundesbeauftragte für den Datenschutz (BfDI)</div>
                 </div>

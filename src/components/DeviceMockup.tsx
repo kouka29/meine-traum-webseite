@@ -19,7 +19,10 @@ const DeviceMockup = ({ desktopUrl, title }: DeviceMockupProps) => {
             <img
               src={desktopUrl}
               alt={`${title} – Desktop Ansicht`}
+              width={800}
+              height={500}
               loading="lazy"
+              decoding="async"
               className="w-full h-auto block"
             />
           </div>

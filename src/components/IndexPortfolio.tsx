@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "./AnimatedSection";
 import DeviceMockup from "./DeviceMockup";
+import ProjectImage from "./ProjectImage";
 import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
 import techstartImg from "@/assets/portfolio/techstart.jpg?w=800&format=webp&quality=80&as=url";
 import yogastudioImg from "@/assets/portfolio/yogastudio.jpg?w=800&format=webp&quality=80&as=url";
@@ -163,14 +164,12 @@ const IndexPortfolio = () => {
                         </div>
                         {imgSrc ? (
                           <div className="overflow-hidden">
-                            <img
+                            <ProjectImage
                               src={imgSrc}
                               alt={imgAlt}
                               width={800}
                               height={450}
-                              loading="eager"
-                              {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
-                              decoding="async"
+                              priority={eager}
                               onLoad={(e) => {
                                 const img = e.currentTarget;
                                 const ratio = img.naturalHeight / Math.max(img.naturalWidth, 1);

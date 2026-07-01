@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import CTABanner from "@/components/CTABanner";
 import DeviceMockup from "@/components/DeviceMockup";
+import ProjectImage from "@/components/ProjectImage";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { getCachedPortfolio, fetchPortfolio } from "@/lib/portfolioCache";
 import techstartImg from "@/assets/portfolio/techstart.jpg?w=800&format=webp&quality=80&as=url";
@@ -150,14 +151,12 @@ const Portfolio = () => {
                         </div>
                         {imgSrc ? (
                           <div className="overflow-hidden">
-                            <img
+                            <ProjectImage
                               src={imgSrc}
                               alt={imgAlt}
                               width={800}
                               height={450}
-                              loading={eager ? "eager" : "lazy"}
-                              {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
-                              decoding="async"
+                              priority={eager}
                               onLoad={(e) => {
                                 const img = e.currentTarget;
                                 const ratio = img.naturalHeight / Math.max(img.naturalWidth, 1);
