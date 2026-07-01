@@ -419,6 +419,10 @@ const ChatAssistant = () => {
         @media (prefers-reduced-motion: reduce) { .mtw-float { animation: none; } }
         @keyframes mtw-dot { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
         .mtw-dot { animation: mtw-dot 1.2s infinite ease-in-out; }
+        .mtw-fab{position:fixed!important;right:1.25rem!important;left:auto!important;bottom:6rem!important;z-index:50!important}
+        @media(min-width:768px){.mtw-fab{bottom:1.25rem!important}}
+        .mtw-panel{position:fixed!important;left:1rem!important;right:1rem!important;bottom:6rem!important;z-index:50!important;width:auto!important;max-width:calc(100vw - 2rem)!important}
+        @media(min-width:768px){.mtw-panel{left:auto!important;right:1.25rem!important;bottom:1.25rem!important;width:360px!important}}
       `}</style>
 
       {/* Floating trigger */}
@@ -436,10 +440,9 @@ const ChatAssistant = () => {
           }}
           style={{ background: BRAND_GRADIENT }}
           className={cn(
-            "fixed right-5 z-40 rounded-full shadow-lg hover:shadow-xl transition-shadow",
+            "mtw-fab rounded-full shadow-lg hover:shadow-xl transition-shadow",
             "flex items-center justify-center",
             "w-16 h-16 md:w-[68px] md:h-[68px]",
-            "bottom-24 md:bottom-5",
           )}
         >
           <img
@@ -465,10 +468,7 @@ const ChatAssistant = () => {
           aria-label="KI-Assistent"
           data-apple-skip
           className={cn(
-            "fixed z-40 bg-background border border-border shadow-2xl flex flex-col overflow-hidden",
-            "right-4 left-4 md:left-auto md:right-5",
-            "bottom-24 md:bottom-5",
-            "w-auto md:w-[360px] max-w-[calc(100vw-2rem)]",
+            "mtw-panel bg-background border border-border shadow-2xl flex flex-col overflow-hidden",
             "max-h-[70vh] rounded-2xl",
           )}
         >
