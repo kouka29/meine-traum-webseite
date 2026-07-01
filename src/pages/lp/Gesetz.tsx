@@ -15,6 +15,7 @@ import { ShieldCheck, ArrowRight, Check, Star, Lock, Gavel, Building2, TrendingD
 import { Card } from "@/components/ui/card";
 import VorschauVerfuegbarkeit from "@/components/VorschauVerfuegbarkeit";
 import { submitVorschauAnfrage } from "@/lib/vorschauSlots";
+import { submitLead } from "@/lib/submitLead";
 import EmojiIcon from "@/lib/emojiToIcon";
 import bmasLogo from "@/assets/bmas-logo.svg.asset.json";
 import bfdiLogo from "@/assets/bfdi-logo.svg.asset.json";
@@ -127,19 +128,39 @@ const Gesetz = () => {
       return;
     }
     setSubmitting(true);
+    const sourcePage = `/lp/gesetz?grund=${grund}`;
     const result = await submitVorschauAnfrage({
       name: form.name.trim(),
       email: form.email.trim(),
       company: form.firma.trim() || null,
       website_url: form.url.trim() || null,
       phone: form.telefon.trim() || null,
-      source_page: `/lp/gesetz?grund=${grund}`,
+      source_page: sourcePage,
     });
-    setSubmitting(false);
     if (!result.ok) {
+      setSubmitting(false);
       setSubmitError("Etwas ist schiefgelaufen. Bitte rufen Sie uns an: 06131 3076498");
       return;
     }
+
+    const leadOk = await submitLead({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.telefon.trim() || undefined,
+      source_cta: isBfsg ? "gesetz_kostenlos_pruefen" : "gesetz_kostenlose_vorschau",
+      message: [
+        form.firma.trim() ? `Firma: ${form.firma.trim()}` : null,
+        form.url.trim() ? `Webseite: ${form.url.trim()}` : null,
+        `Grund: ${grund}`,
+        `Quelle: ${sourcePage}`,
+      ].filter(Boolean).join("\n"),
+    });
+    setSubmitting(false);
+    if (!leadOk) {
+      setSubmitError("Die Anfrage wurde gespeichert, aber die Benachrichtigung ist fehlgeschlagen. Bitte rufen Sie uns an: 06131 3076498");
+      return;
+    }
+
     setSubmitStatus(result.status);
     setSubmitted(true);
     document.getElementById("form-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
