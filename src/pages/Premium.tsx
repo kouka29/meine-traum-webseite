@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Check, X, TrendingUp, ShieldCheck, Zap, ChevronDown, Phone, ArrowRight } from "lucide-react";
+import { submitLead } from "@/lib/submitLead";
 import {
   Accordion,
   AccordionContent,
@@ -78,8 +79,10 @@ const Premium = () => {
   });
   const [errors, setErrors] = useState<{ name?: boolean; email?: boolean; message?: boolean }>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newErrors: typeof errors = {};
     if (!formData.name.trim()) newErrors.name = true;
     if (!formData.email.trim()) newErrors.email = true;
@@ -89,7 +92,31 @@ const Premium = () => {
       return;
     }
     setErrors({});
-    setSubmitted(true);
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      const ok = await submitLead({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || undefined,
+        message: [
+          formData.company && `Unternehmen: ${formData.company}`,
+          formData.website && `Website: ${formData.website}`,
+          formData.source && `Quelle: ${formData.source}`,
+          formData.message,
+        ]
+          .filter(Boolean)
+          .join(" | "),
+        source_cta: "premium-form",
+      });
+      if (!ok) {
+        setSubmitError("Etwas ist schiefgelaufen. Bitte ruf uns direkt an: 06131 3076498");
+        return;
+      }
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -635,10 +662,14 @@ const Premium = () => {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="mt-12 w-full rounded-none bg-[color:var(--mtw-brand)] py-5 text-sm uppercase tracking-widest text-white transition-all duration-200 hover:opacity-90"
+                  disabled={submitting}
+                  className="mt-12 w-full rounded-none bg-[color:var(--mtw-brand)] py-5 text-sm uppercase tracking-widest text-white transition-all duration-200 hover:opacity-90 disabled:opacity-60"
                 >
-                  Projekt einreichen →
+                  {submitting ? "Wird gesendet..." : "Projekt einreichen →"}
                 </button>
+                {submitError && (
+                  <p className="mt-3 text-center text-xs text-red-400">{submitError}</p>
+                )}
                 <p className="mt-4 text-center text-xs text-white/25">
                   🔒 Ihre Daten werden vertraulich behandelt. Kein Spam, keine Weitergabe.
                 </p>
