@@ -14,7 +14,7 @@ const HandwerkerKontakt = () => (
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <TradeBreadcrumbs />
         <div className="text-center mt-8 max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Ruf an oder schreib uns — wir melden uns heute noch</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">Ruf an oder schreib uns — wir melden uns heute noch</h1>
           <p className="text-lg" style={{ color: "var(--text-muted)" }}>
             Kein Verkaufsgespräch. Kein Druck. Nur eine kurze Unterhaltung über Deine Website.
           </p>
