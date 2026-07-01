@@ -148,7 +148,9 @@ export default function CheckoutFunnel({
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<{ auftrags_nr: string } | null>(null);
   const stripeAvailable = isStripeConfigured();
-  const [payMethod, setPayMethod] = useState<PayMethod>(stripeAvailable ? "online" : "rechnung");
+  const [payMethod, setPayMethod] = useState<PayMethod>(
+    stripeAvailable || !RECHNUNG_ENABLED ? "online" : "rechnung",
+  );
   const [stripeItems, setStripeItems] = useState<StripeItem[] | null>(null);
 
   // Kontaktdaten
@@ -170,7 +172,7 @@ export default function CheckoutFunnel({
       setSelectedPaketId(paket.id);
       setPaymentMode(initialPaymentMode);
       setSelectedAddonIds((paket.addons ?? addons).filter((a) => a.default_selected).map((a) => a.id));
-      setPayMethod(stripeAvailable ? "online" : "rechnung");
+      setPayMethod(stripeAvailable || !RECHNUNG_ENABLED ? "online" : "rechnung");
       setStripeItems(null);
       setGrowthBindend(false);
     }
