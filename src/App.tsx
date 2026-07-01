@@ -16,7 +16,7 @@ import PageMeta from "@/components/PageMeta";
 import StructuredData from "@/components/StructuredData";
 import PageTracker from "@/components/PageTracker";
 import { DesignModeProvider } from "@/contexts/DesignModeProvider";
-import ChatAssistant from "@/components/ChatAssistant/ChatAssistant";
+import ChatAssistant from "@/components/ChatAssistant";
 
 // Eager load Index for fastest initial paint
 import Index from "./pages/Index.tsx";
