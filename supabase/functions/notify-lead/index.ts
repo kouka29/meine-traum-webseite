@@ -104,7 +104,7 @@ Deno.serve(async (req) => {
   let tgOk = false;
   try {
     if (!TG_TOKEN || !TG_CHAT) {
-      console.error("Telegram secrets missing");
+      console.error("Telegram secrets missing", { hasToken: !!TG_TOKEN, hasChat: !!TG_CHAT });
     } else {
       const ts = new Date().toLocaleString("de-DE", {
         timeZone: "Europe/Berlin",
@@ -134,6 +134,8 @@ Deno.serve(async (req) => {
         },
       );
       if (tgRes.ok) {
+        const tgBody = await tgRes.text();
+        console.log("Telegram sent OK", tgRes.status, tgBody.slice(0, 200));
         tgOk = true;
       } else {
         console.error("Telegram failed", tgRes.status, await tgRes.text());
