@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Send, X, Loader2, MessageCircle } from "lucide-react";
+import { Send, X, Loader2 } from "lucide-react";
 import { createPortal } from "react-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { honeypotFieldProps } from "@/lib/submitLead";
@@ -438,26 +438,19 @@ const ChatAssistant = () => {
             }
             setOpen(true);
           }}
-          style={{ background: BRAND_GRADIENT }}
           className={cn(
-            "mtw-fab rounded-full shadow-lg hover:shadow-xl transition-shadow",
-            "flex items-center justify-center",
-            "w-16 h-16 md:w-[68px] md:h-[68px]",
+            "mtw-fab flex items-center justify-center hover:scale-105 transition-transform",
+            "w-[84px] h-[84px] md:w-[92px] md:h-[92px]",
           )}
         >
           <img
             src={idleAvatar}
             alt=""
             aria-hidden
-            className="mtw-float w-[88%] h-[88%] object-contain"
+            className="mtw-float w-full h-full object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.20)]"
             draggable={false}
           />
           <span className="sr-only">Chat öffnen</span>
-          <MessageCircle
-            size={14}
-            className="absolute -top-1 -right-1 bg-white text-primary rounded-full p-0.5"
-            aria-hidden
-          />
         </button>
       )}
 
