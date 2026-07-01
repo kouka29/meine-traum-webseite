@@ -150,6 +150,11 @@ const Datenschutz = () => (
             <p>
               Für Benachrichtigungs- und Transaktions-E-Mails nutzen wir Resend. Die Verarbeitung erfolgt in der Region eu-west-1 (Irland, EU). Verarbeitet werden die für den Versand nötigen Daten (E-Mail-Adresse, Inhalt). Rechtsgrundlage: Art. 6 Abs. 1 lit. b und f DSGVO.
             </p>
+
+            <h3 className="text-lg font-medium text-foreground mt-4">KI-Chatassistent</h3>
+            <p>
+              Auf dieser Website bieten wir einen KI-gestützten Chat-Assistenten an. Deine eingegebenen Nachrichten werden zur Beantwortung an das KI-Gateway von Lovable (technische Basis: Google Gemini) übermittelt und verarbeitet. Zweck: Beantwortung von Anfragen und Anbahnung einer Geschäftsbeziehung. Rechtsgrundlage: Art. 6 Abs. 1 lit. a und f DSGVO. Eine Übermittlung in Drittländer (u.&nbsp;a. USA) ist möglich und erfolgt auf Grundlage von Standardvertragsklauseln. Gib im Chat keine sensiblen Daten ein. Übermittelst du über das Chat-Formular deine Kontaktdaten, verarbeiten wir diese zur Kontaktaufnahme.
+            </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.4}>
