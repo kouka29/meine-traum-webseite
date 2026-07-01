@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import TradeBreadcrumbs from "@/components/TradeBreadcrumbs";
 import TestimonialCard from "@/components/trade/TestimonialCard";
+import EmojiIcon from "@/lib/emojiToIcon";
 
 const values = [
   { emoji: "🔨", title: "Ehrlich wie Handwerk", text: "Kein Bullshit. Kein Fachchinesisch. Klare Ansagen was geht und was nicht." },
@@ -46,8 +47,10 @@ const HandwerkerUeberUns = () => (
 
         <div className="grid md:grid-cols-3 gap-5 mb-16">
           {values.map((v) => (
-            <div key={v.title} className="rounded-2xl bg-white p-7 shadow-card">
-              <div className="text-3xl mb-3">{v.emoji}</div>
+          <div key={v.title} className="rounded-2xl bg-white p-7 shadow-card">
+            <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 mb-3">
+              <EmojiIcon emoji={v.emoji} size={24} />
+            </div>
               <h3 className="text-base font-bold text-foreground mb-2">{v.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{v.text}</p>
             </div>

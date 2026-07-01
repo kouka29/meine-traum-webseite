@@ -6,7 +6,8 @@ import {
   Flame, Bath, Siren, Clock, Cookie, Scale, Trophy, Syringe, Frown,
   Dumbbell, Sun, Sparkles, Armchair, Factory, Sprout, HelpCircle,
   Wrench as Tools, Truck, FileText, Lock, Store, SmartphoneNfc, Map,
-  Flower2, Heart, PawPrint, Briefcase, type LucideIcon,
+  Flower2, Heart, PawPrint, Briefcase, Pencil, Mail, Hammer, Target,
+  type LucideIcon,
 } from "lucide-react";
 
 /** Map of legacy emoji icons → lucide-react component. */
@@ -74,6 +75,10 @@ const MAP: Record<string, LucideIcon> = {
   "💒": Heart,
   "🖤": Heart,
   "🐶": PawPrint,
+  "✍️": Pencil,
+  "📩": Mail,
+  "🔨": Hammer,
+  "🎯": Target,
 };
 
 const FALLBACK: LucideIcon = Briefcase;
