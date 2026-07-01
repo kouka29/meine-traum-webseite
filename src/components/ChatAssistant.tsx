@@ -398,7 +398,14 @@ const ChatAssistant = () => {
         <button
           type="button"
           aria-label="KI-Assistent öffnen"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            try {
+              sessionStorage.setItem(USER_TOUCHED_KEY, "1");
+            } catch {
+              /* ignore */
+            }
+            setOpen(true);
+          }}
           style={{ background: BRAND_GRADIENT }}
           className={cn(
             "fixed right-5 z-40 rounded-full shadow-lg hover:shadow-xl transition-shadow",
@@ -460,7 +467,15 @@ const ChatAssistant = () => {
             </div>
             <button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                try {
+                  sessionStorage.setItem(USER_TOUCHED_KEY, "1");
+                  sessionStorage.setItem(AUTOOPEN_KEY, "1");
+                } catch {
+                  /* ignore */
+                }
+                setOpen(false);
+              }}
               className="p-1.5 rounded-md hover:bg-white/15 transition-colors"
               aria-label="Schließen"
             >
