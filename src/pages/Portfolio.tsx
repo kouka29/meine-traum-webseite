@@ -64,19 +64,26 @@ const Portfolio = () => {
   useEffect(() => {
     let cancelled = false;
     fetchPortfolio().then(data => {
-      if (cancelled || !data || data.length === 0) return;
-      setProjects(data.map(p => ({
-        id: p.id,
-        title: p.title,
-        category: p.category,
-        description: p.description,
-        result: p.result,
-        image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
-        screenshot_url: p.screenshot_url || "",
-        external_url: p.external_url || "",
-        mockup_desktop_url: p.mockup_desktop_url || "",
-        mockup_mobile_url: p.mockup_mobile_url || "",
-      })));
+      if (cancelled) return;
+      if (data && data.length > 0) {
+        setProjects(data.map(p => ({
+          id: p.id,
+          title: p.title,
+          category: p.category,
+          description: p.description,
+          result: p.result,
+          image_url: p.image_url || FALLBACK_IMAGES[p.title] || "",
+          screenshot_url: p.screenshot_url || "",
+          external_url: p.external_url || "",
+          mockup_desktop_url: p.mockup_desktop_url || "",
+          mockup_mobile_url: p.mockup_mobile_url || "",
+        })));
+      } else {
+        setProjects(prev => prev.length ? prev : fallbackProjects);
+      }
+      setLoading(false);
+    }).catch(() => {
+      if (!cancelled) setLoading(false);
     });
     return () => { cancelled = true; };
   }, []);
