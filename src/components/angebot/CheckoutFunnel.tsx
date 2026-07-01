@@ -1255,33 +1255,84 @@ function StepKontakt({
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
             {(["online", "rechnung"] as const).map((m) => {
-              const active = payMethod === m;
+              const disabled = m === "rechnung" && !RECHNUNG_ENABLED;
+              const active = payMethod === m && !disabled;
+              const tooltipText = "Aktuell nicht verfügbar. Bitte kontaktiere uns telefonisch unter 06131 3076498 oder per Mail an info@meine-traum-webseite.de.";
               return (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setPayMethod(m)}
-                  style={{
-                    padding: "12px 10px", cursor: "pointer", fontFamily: "inherit",
-                    background: active ? `${BRAND}10` : "#fff",
-                    border: active ? `2px solid ${BRAND}` : "2px solid #E5E3FF",
-                    borderRadius: 12, textAlign: "center",
-                    transition: "all 0.15s",
-                  }}
-                >
-                  <div style={{ fontSize: 18, marginBottom: 4 }} aria-hidden="true">
-                    {m === "online" ? "💳" : "📄"}
-                  </div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_DARK }}>
-                    {m === "online" ? "Online zahlen" : "Auf Rechnung"}
-                  </div>
-                  <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
-                    {m === "online" ? "Karte, Apple/Google Pay" : "Überweisung in 14 Tagen"}
-                  </div>
-                </button>
+                <div key={m} style={{ position: "relative" }} className={disabled ? "rechnung-disabled-wrap" : undefined}>
+                  <button
+                    type="button"
+                    onClick={() => { if (!disabled) setPayMethod(m); }}
+                    disabled={disabled}
+                    title={disabled ? tooltipText : undefined}
+                    aria-disabled={disabled || undefined}
+                    style={{
+                      width: "100%",
+                      padding: "12px 10px",
+                      cursor: disabled ? "not-allowed" : "pointer",
+                      fontFamily: "inherit",
+                      background: active ? `${BRAND}10` : "#fff",
+                      border: active ? `2px solid ${BRAND}` : "2px solid #E5E3FF",
+                      borderRadius: 12, textAlign: "center",
+                      transition: "all 0.15s",
+                      opacity: disabled ? 0.5 : 1,
+                    }}
+                  >
+                    <div style={{ fontSize: 18, marginBottom: 4 }} aria-hidden="true">
+                      {m === "online" ? "💳" : "📄"}
+                    </div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_DARK }}>
+                      {m === "online" ? "Online zahlen" : "Auf Rechnung"}
+                    </div>
+                    <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
+                      {m === "online"
+                        ? "Karte, Apple/Google Pay"
+                        : disabled ? "Aktuell nicht verfügbar" : "Überweisung in 14 Tagen"}
+                    </div>
+                  </button>
+                  {disabled && (
+                    <div
+                      role="tooltip"
+                      className="rechnung-tooltip"
+                      style={{
+                        position: "absolute",
+                        bottom: "calc(100% + 8px)",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        background: "#111827",
+                        color: "#fff",
+                        padding: "10px 12px",
+                        borderRadius: 8,
+                        fontSize: 12,
+                        lineHeight: 1.4,
+                        width: 260,
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+                        opacity: 0,
+                        pointerEvents: "none",
+                        transition: "opacity 0.15s",
+                        zIndex: 20,
+                      }}
+                    >
+                      Diese Bezahlmethode ist aktuell nicht verfügbar. Für weitere Infos bitte Kontakt aufnehmen:
+                      <div style={{ marginTop: 6 }}>
+                        📞 <a href="tel:+4961313076498" style={{ color: "#93C5FD", fontWeight: 700 }}>06131 3076498</a>
+                      </div>
+                      <div style={{ marginTop: 2 }}>
+                        ✉ <a href="mailto:info@meine-traum-webseite.de" style={{ color: "#93C5FD", fontWeight: 700 }}>info@meine-traum-webseite.de</a>
+                      </div>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
+          <style>{`
+            .rechnung-disabled-wrap:hover .rechnung-tooltip,
+            .rechnung-disabled-wrap:focus-within .rechnung-tooltip {
+              opacity: 1 !important;
+              pointer-events: auto !important;
+            }
+          `}</style>
         </div>
       )}
 
