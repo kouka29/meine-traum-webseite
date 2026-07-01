@@ -12,7 +12,7 @@ const config = branche({
   painPoints: [
     { icon: "📞", title: "Telefon dauerblockiert", description: "Patiententermine, Notfälle, Rückrufe — eine Online-Buchung entlastet die Rezeption massiv." },
     { icon: "😨", title: "Angstpatienten gehen woanders hin", description: "Eine vertrauensvolle Website mit Bildern, Team und Leistungen senkt die Hemmschwelle deutlich." },
-    { icon: "🔍", title: "Konkurrenz steht oben bei Google", description: "Wer bei 'Zahnarzt [Stadt]' nicht erscheint, verliert Neupatienten. Wir bringen Sie nach vorne." },
+    { icon: "🔍", title: "Konkurrenz steht oben bei Google", description: "Wer bei 'Zahnarzt in Deiner Stadt' nicht erscheint, verliert Neupatienten. Wir bringen Sie nach vorne." },
     { icon: "💉", title: "Leistungen verstecken sich", description: "Implantate, Bleaching, KFO — eigene Seiten je Leistung erhöhen Anfragen messbar." },
   ],
   stepsH2: "Ihre Praxis-Website — modern & vertrauensvoll",
