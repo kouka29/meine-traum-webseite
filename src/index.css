@@ -306,7 +306,7 @@ html.apple-mode .pain-card .pain-card-text {
     @apply border-border;
   }
 
-  html, body {
+  body {
     overflow-x: clip;
     max-width: 100vw;
   }

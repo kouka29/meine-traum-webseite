@@ -1,34 +1,29 @@
-## Plan: Quick-Reply Chips in ChatAssistant
+## Plan: Fix broken `position:fixed` for Chat Widget
 
-### Scope
-Only `src/components/ChatAssistant.tsx` — additive changes, no backend touches.
+### Problem
+The Chat Widget scrolls away instead of staying fixed. Root cause: `overflow-x: clip` and `max-width: 100vw` applied to the `html` root element breaks `position:fixed` behavior in some browsers.
 
-### What we build
+### Fix (1 file changed)
+File: `src/index.css` (lines ~309-312)
 
-1. **Suggestion config**
-   - Add `SUGGESTIONS` map (pathname → array of chip strings) and `DEFAULT_CHIPS` fallback.
-   - Add `getSuggestions(pathname)` that resolves the best match once (computed at component mount or when pathname changes).
+Change:
+```css
+html, body {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+```
 
-2. **Chip UI**
-   - Render chips directly under the greeting assistant message.
-   - Condition: only while the user has not yet sent any own message (`messages` contains zero user messages).
-   - Styling: small pills (`rounded-full`, `border border-border`, `text-sm`, `px-3 py-1.5`, `hover:bg-muted`, brand-accent on hover). Max 4 visible.
-   - Mobile: wrapping flex layout so they don’t overflow.
-   - Accessibility: each chip is a `<button>` with `aria-label`.
+To:
+```css
+body {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+```
 
-3. **Chip interaction**
-   - On click: prepend the chip text as a `user` message to `messages`, then invoke the existing `sendMessage` logic (or extract a `sendUserMessage(text)` helper so both textarea and chips share the same send path).
-   - After a user message exists (including chip clicks), chips are hidden.
+The `html` element receives **no** `overflow-x` and **no** `max-width`. Horizontal scroll remains prevented via `body`, while `position:fixed` on the Chat Widget works correctly again.
 
-4. **Optional re-show**
-   - After an assistant reply, show a subtle text link/button "Weitere Fragen" that re-renders the chips from `getSuggestions`. Clicking it hides the link again.
-
-5. **No-op guardrails**
-   - Do not modify Supabase/Stripe/Pixel/Kundenportal code.
-   - Ensure build passes and lint count does not exceed current baseline.
-
-### Files changed
-- `src/components/ChatAssistant.tsx` only.
-
-### Not changed
-- Edge functions, auth, checkout, pricing, pixel, sitemap, or any other page/component.
+### Verification
+- Run `bun run build` to confirm build stays green.
+- No other files modified.
