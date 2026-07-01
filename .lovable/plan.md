@@ -1,28 +1,22 @@
 ## Ziel
-Die Preise der Miet- und Kauf-Pakete (Starter / Pro / Premium) auf allen Preis-Seiten wieder in die Markenfarbe (Violett/Primary) setzen, wie auf dem Referenz-Bild gezeigt.
+Die Enterprise-Preis-Anzeigen (Miete & Kauf) auf `/preise` und allen Branchen-Preisseiten sollen dieselbe Farbe (`text-primary`) und Schriftgröße (`text-3xl`) wie die regulären Paket-Preise erhalten.
 
-## Betroffene Bereiche
-1. **Hauptpreis-Seite** (`/preise` → `src/pages/WebdesignPreise.tsx`)
-   - `PackageCard` (Miete): `text-foreground` → `text-primary` bei `pkg.price`
-   - `BuyCard` (Kauf): `text-foreground` → `text-primary` bei `pkg.price`
-2. **Branchen-Preis-Seiten** (falls dieselbe Komponente/Logik genutzt wird)
-   - `src/pages/trade/ElektrikerPreise.tsx`
-   - `src/pages/trade/SanitaerPreise.tsx`
-   - `src/pages/trade/DachdeckerPreise.tsx`
-   - `src/pages/trade/HandwerkerPreise.tsx`
-3. **Checkout-Funnel / Angebot** (`src/components/angebot/CheckoutFunnel.tsx`, `src/pages/Angebot.tsx`)
-   - Preis-Anzeige im Funnel und auf dem Angebots-PDF-View auf `text-primary` prüfen und anpassen.
+## Betroffene Stellen
+1. **Miete Enterprise** (`src/pages/WebdesignPreise.tsx` ~Z. 890):
+   - Aktuell: `text-sm text-muted-foreground`
+   - Ziel: `font-heading text-3xl font-bold text-primary mb-1`
+   - Text: "Auf Anfrage – meist unter 300 €/Monat"
 
-## Umsetzung
-- In den betroffenen Komponenten die Tailwind-Klasse der Preis-Elemente von `text-foreground` auf `text-primary` (bzw. `hsl(var(--primary))`) ändern.
-- Keine Layout-, Text- oder Funktionsänderungen.
-- Keine Änderungen an Admin, Kundenportal, Stripe-Logik oder Tracking.
+2. **Kauf Enterprise** (`src/pages/WebdesignPreise.tsx` ~Z. 948):
+   - Aktuell: `font-heading text-2xl font-bold text-foreground mb-1`
+   - Ziel: `font-heading text-3xl font-bold text-primary mb-1`
+   - Text: "Auf Anfrage"
 
 ## Technische Details
-- Design-Token: `--primary: 253 63% 57%` (#6A4BD6)
-- Nur die eigentliche Preis-Zahl (z. B. „59 €/Monat“, „990 € einmalig“) wird eingefärbt.
-- Sekundäre Texte (zzgl. MwSt., Vergleichs-Hinweise etc.) bleiben `text-muted-foreground`.
+- Keine Textinhalte ändern, nur Tailwind-Klassen.
+- Keine Änderungen an Admin, Kundenportal, Stripe oder Tracking.
+- Branchen-Preisseiten übernehmen die Änderung automatisch (Wrapper um `WebdesignPreise`).
 
 ## Validierung
 - Build grün (TypeScript + Vite).
-- Visueller Check auf `/preise` und einer Branchen-Preis-Seite.
+- Visueller Check auf `/preise`.
