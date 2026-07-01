@@ -87,7 +87,9 @@ const HandwerkerLeistungen = () => (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {services.map((s) => (
             <div key={s.title} className="rounded-2xl bg-white p-7 shadow-card flex flex-col gap-3">
-              <div className="text-3xl">{s.emoji}</div>
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <EmojiIcon emoji={s.emoji} size={24} />
+              </div>
               <h3 className="text-base font-bold text-foreground">{s.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               <div className="pt-2 border-t border-border mt-2">

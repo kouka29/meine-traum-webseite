@@ -75,6 +75,10 @@ const MAP: Record<string, LucideIcon> = {
   "💒": Heart,
   "🖤": Heart,
   "🐶": PawPrint,
+  "✍️": Pencil,
+  "📩": Mail,
+  "🔨": Hammer,
+  "🎯": Target,
 };
 
 const FALLBACK: LucideIcon = Briefcase;
