@@ -1528,7 +1528,7 @@ const KostenloseVorschauV2 = () => {
               {heroBadge}
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-5">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
               {settings?.hero_h1_line1 ?? "dein Handwerksbetrieb."}
               <br />
               {settings?.hero_h1_line2 ?? "Eine neue Webseite."}
