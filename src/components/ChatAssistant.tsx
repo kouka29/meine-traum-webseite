@@ -580,6 +580,50 @@ const ChatAssistant = () => {
               </div>
             )}
 
+            {/* Quick-reply chips */}
+            {(() => {
+              const hasUserMessage = messages.some((m) => m.role === "user");
+              const showChips = !hasUserMessage || showExtraSuggestions;
+              const chips = getSuggestions(pathname).slice(0, 4);
+              if (!showChips || chips.length === 0) return null;
+              return (
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {chips.map((chip) => (
+                    <button
+                      key={chip}
+                      type="button"
+                      onClick={() => {
+                        setShowExtraSuggestions(false);
+                        void submitChat(chip);
+                      }}
+                      aria-label={`Frage vorschlagen: ${chip}`}
+                      className="rounded-full border border-border text-sm px-3 py-1.5 hover:bg-muted hover:border-primary hover:text-primary transition-colors text-left"
+                    >
+                      {chip}
+                    </button>
+                  ))}
+                </div>
+              );
+            })()}
+
+            {/* "Weitere Fragen" link */}
+            {(() => {
+              const hasUserMessage = messages.some((m) => m.role === "user");
+              const lastIsAssistant = messages[messages.length - 1]?.role === "assistant";
+              if (!hasUserMessage || !lastIsAssistant || loading || showExtraSuggestions) return null;
+              return (
+                <div className="flex justify-start mt-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowExtraSuggestions(true)}
+                    className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2"
+                  >
+                    Weitere Fragen
+                  </button>
+                </div>
+              );
+            })()}
+
             {/* Inline lead form */}
             {showLeadForm && !leadSubmitted && (
               <form
