@@ -468,10 +468,7 @@ const ChatAssistant = () => {
           aria-label="KI-Assistent"
           data-apple-skip
           className={cn(
-            "fixed z-40 bg-background border border-border shadow-2xl flex flex-col overflow-hidden",
-            "right-4 left-4 md:left-auto md:right-5",
-            "bottom-24 md:bottom-5",
-            "w-auto md:w-[360px] max-w-[calc(100vw-2rem)]",
+            "mtw-panel bg-background border border-border shadow-2xl flex flex-col overflow-hidden",
             "max-h-[70vh] rounded-2xl",
           )}
         >
