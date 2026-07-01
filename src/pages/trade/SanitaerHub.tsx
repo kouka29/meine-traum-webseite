@@ -17,10 +17,10 @@ const config: TradeHubConfig = {
   stepsH2: "Deine Sanitär-Website — ohne Stress, ohne Technik",
   featuresH2: "Was Deine Sanitär-Website kann",
   features: [
-    { emoji: "🚨", title: "Notfall-Page optimiert", description: "Eine eigene Notfall-Seite die bei 'Rohrbruch [Stadt]' rankt und sofort Vertrauen aufbaut — auch um Mitternacht." },
+    { emoji: "🚨", title: "Notfall-Page optimiert", description: "Eine eigene Notfall-Seite die bei Suchen wie 'Rohrbruch' in Deiner Stadt rankt und sofort Vertrauen aufbaut — auch um Mitternacht." },
     { emoji: "🛁", title: "Badplanung-Galerie", description: "Zeig Deine schönsten Bad-Referenzen — Kunden entscheiden mit den Augen, dann mit dem Geldbeutel." },
     { emoji: "♨️", title: "Heizungsleistungen klar dargestellt", description: "Wärmepumpe, Gas, Öl, Pellets — alle Leistungen strukturiert und für Kunden verständlich." },
-    { emoji: "📍", title: "Lokal bei Google gefunden", description: "Optimiert für 'Sanitär [Stadt]', 'Heizung [Stadt]', 'Rohrbruch [Stadt]' — Du erscheinst wenn es drauf ankommt." },
+    { emoji: "📍", title: "Lokal bei Google gefunden", description: "Optimiert für lokale Suchen wie 'Sanitär', 'Heizung', 'Rohrbruch' in Deiner Stadt — Du erscheinst wenn es drauf ankommt." },
     { emoji: "📱", title: "Mobil-optimiert", description: "Notfall-Kunden suchen auf dem Handy — Deine Seite lädt sofort und hat Click-to-Call prominent." },
     { emoji: "🔧", title: "Alles inklusive", description: "Hosting, Domain, SSL, Updates — Du machst Dein Handwerk, wir den Rest." },
   ],

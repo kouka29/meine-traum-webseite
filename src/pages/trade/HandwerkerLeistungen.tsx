@@ -5,7 +5,7 @@ import TradeBreadcrumbs from "@/components/TradeBreadcrumbs";
 import EmojiIcon from "@/lib/emojiToIcon";
 
 const services = [
-  { emoji: "🔍", title: "Google-Optimierung (SEO)", desc: "Damit Kunden Dich finden wenn sie '[Beruf] [Stadt]' googeln — nicht Deinen Konkurrenten.", items: ["Keyword-Analyse", "Google Business Einrichtung", "Lokale SEO-Optimierung"] },
+  { emoji: "🔍", title: "Google-Optimierung (SEO)", desc: "Damit Kunden Dich finden wenn sie nach Deinem Gewerk in Deiner Stadt googeln — nicht Deinen Konkurrenten.", items: ["Keyword-Analyse", "Google Business Einrichtung", "Lokale SEO-Optimierung"] },
   { emoji: "🎨", title: "Professionelles Webdesign", desc: "Eine Website die Vertrauen aufbaut — schon bevor der erste Anruf kommt.", items: ["Individuelles Design", "Mobil-optimiert", "Schnelle Ladezeit"] },
   { emoji: "✍️", title: "Texte die verkaufen", desc: "Wir schreiben alle Texte für Dich — in der Sprache Deiner Kunden.", items: ["Alle Seiten-Texte", "SEO-optimiert", "Auf Dein Gewerk angepasst"] },
   { emoji: "🔧", title: "Hosting & Technik", desc: "Du kümmerst Dich um nichts. Wir übernehmen alles im Hintergrund.", items: ["Hosting", "Domain", "SSL-Zertifikat", "Regelmäßige Updates"] },
