@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#F97316",
   badgeText: "💪 SPEZIELL FÜR FITNESS- & YOGASTUDIOS",
   heroH1: <>Mehr Mitglieder für Dein Studio — <span style={{ color: "var(--brand-purple)" }}>gefunden, gebucht, gewonnen</span></>,
-  heroSub: "Kunden suchen 'Fitnessstudio [Stadt]' oder 'Yoga in der Nähe' — wir sorgen dafür dass sie Dich finden und direkt eine Probestunde buchen.",
+  heroSub: "Kunden suchen 'Fitnessstudio in Deiner Stadt' oder 'Yoga in Deiner Nähe' — wir sorgen dafür dass sie Dich finden und direkt eine Probestunde buchen.",
   trustBadges: ["Probestunde direkt buchbar", "Kursplan immer aktuell", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Studios aus Mainz, Frankfurt & Wiesbaden vertrauen uns",
   painPoints: [

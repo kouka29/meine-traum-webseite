@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#9333EA",
   badgeText: "🛍️ SPEZIELL FÜR EINZELHANDEL & SHOPS",
   heroH1: <>Mehr Kunden im Laden & online — <span style={{ color: "var(--brand-purple)" }}>lokal gefunden, treu gemacht</span></>,
-  heroSub: "Kunden suchen 'Geschäft [Stadt]' oder Ihr Sortiment bei Google. Wir machen Sie sichtbar — und verkaufen optional auch online.",
+  heroSub: "Kunden suchen 'Geschäft in Deiner Stadt' oder Ihr Sortiment bei Google. Wir machen Sie sichtbar — und verkaufen optional auch online.",
   trustBadges: ["Local SEO inklusive", "Optional mit Online-Shop", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Läden aus Mainz, Wiesbaden & Frankfurt vertrauen uns",
   painPoints: [

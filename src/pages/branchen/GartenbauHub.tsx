@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#16A34A",
   badgeText: "🌿 SPEZIELL FÜR GARTEN- & LANDSCHAFTSBAU",
   heroH1: <>Mehr GaLaBau-Aufträge — <span style={{ color: "var(--brand-purple)" }}>Vorher/Nachher-Bilder, die verkaufen</span></>,
-  heroSub: "Kunden suchen 'Gartenbauer [Stadt]' und wollen sehen, was Sie können. Wir bauen die Website mit Referenz-Galerie, die Anfragen konstant produziert.",
+  heroSub: "Kunden suchen 'Gartenbauer in Deiner Stadt' und wollen sehen, was Sie können. Wir bauen die Website mit Referenz-Galerie, die Anfragen konstant produziert.",
   trustBadges: ["Referenz-Galerie als Verkaufsargument", "Anfragen mit Foto-Upload", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ GaLaBau-Betriebe aus DACH vertrauen uns",
   painPoints: [

@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#DC2626",
   badgeText: "🍽️ SPEZIELL FÜR GASTRONOMIE & HOTELLERIE",
   heroH1: <>Mehr Reservierungen & Buchungen — <span style={{ color: "var(--brand-purple)" }}>direkt, ohne Provision an Portale</span></>,
-  heroSub: "Gäste suchen 'Restaurant [Stadt]' oder 'Hotel mit Frühstück'. Wir bauen die Website, die direkt bucht — statt Booking.com 15 % zu schenken.",
+  heroSub: "Gäste suchen 'Restaurant in Deiner Stadt' oder 'Hotel mit Frühstück'. Wir bauen die Website, die direkt bucht — statt Booking.com 15 % zu schenken.",
   trustBadges: ["Direkt-Reservierung ohne Provision", "Speisekarte/Zimmer mobil", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Restaurants & Hotels aus Mainz/Wiesbaden vertrauen uns",
   painPoints: [
@@ -22,7 +22,7 @@ const config = branche({
     { emoji: "🛏️", title: "Direkt-Zimmerbuchung", description: "Mit Channel-Manager-Anbindung oder direkter Anfrage — Sie sparen Booking.com-Provision." },
     { emoji: "🍷", title: "Speisekarte mit Bildern", description: "Wechselnde Karten, Tagesgerichte, Allergene — alles übersichtlich, mobil perfekt." },
     { emoji: "🚚", title: "Lieferdienst- & Take-Away-Modul", description: "Optional integriert oder mit Lieferando/Wolt verbunden." },
-    { emoji: "🗺️", title: "Google Maps & Local SEO", description: "Sie erscheinen ganz oben, wenn jemand 'Italiener in [Stadt]' sucht." },
+    { emoji: "🗺️", title: "Google Maps & Local SEO", description: "Sie erscheinen ganz oben, wenn jemand 'Italiener in Deiner Stadt' sucht." },
     { emoji: "🔧", title: "Alles inklusive", description: "Hosting, Domain, SSL, Speisekarten-Updates — wir kochen die Technik, Sie das Essen." },
   ],
   testimonialH2: "Was Gastronomen über uns sagen",

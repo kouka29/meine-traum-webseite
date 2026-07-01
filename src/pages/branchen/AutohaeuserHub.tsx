@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#EF4444",
   badgeText: "🚗 SPEZIELL FÜR AUTOHÄUSER & KFZ-WERKSTÄTTEN",
   heroH1: <>Mehr Fahrzeugverkäufe & Werkstatt-Aufträge — <span style={{ color: "var(--brand-purple)" }}>online präsent, lokal stark</span></>,
-  heroSub: "Kunden suchen 'Werkstatt [Stadt]' oder Gebrauchtwagen online. Wir bauen die Website, die Probefahrten und TÜV-Termine produziert.",
+  heroSub: "Kunden suchen 'Werkstatt in Deiner Stadt' oder Gebrauchtwagen online. Wir bauen die Website, die Probefahrten und TÜV-Termine produziert.",
   trustBadges: ["Online-Terminbuchung Werkstatt", "Fahrzeugangebote integriert", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Autohäuser & Werkstätten aus DACH vertrauen uns",
   painPoints: [
