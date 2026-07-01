@@ -1743,6 +1743,8 @@ const KostenloseVorschauV2 = () => {
                           <img
                             src={d.image_url.replace("/storage/v1/render/image/public/", "/storage/v1/object/public/").split("?")[0]}
                             alt={d.company}
+                            width={800}
+                            height={500}
                             className="aspect-[8/5] w-full object-contain bg-white"
                             loading="lazy"
                             decoding="async"

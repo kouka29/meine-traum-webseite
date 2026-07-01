@@ -151,14 +151,12 @@ const Portfolio = () => {
                         </div>
                         {imgSrc ? (
                           <div className="overflow-hidden">
-                            <img
+                            <ProjectImage
                               src={imgSrc}
                               alt={imgAlt}
                               width={800}
                               height={450}
-                              loading={eager ? "eager" : "lazy"}
-                              {...(eager ? ({ fetchpriority: "high" } as Record<string, string>) : {})}
-                              decoding="async"
+                              priority={eager}
                               onLoad={(e) => {
                                 const img = e.currentTarget;
                                 const ratio = img.naturalHeight / Math.max(img.naturalWidth, 1);
