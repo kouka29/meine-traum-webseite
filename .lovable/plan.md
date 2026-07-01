@@ -1,33 +1,66 @@
-## Befund
+# Telegram-Pings für die zwei fehlenden Formulare
 
-Das ausgewählte Formular „Jetzt kostenlos prüfen lassen“ auf `/lp/gesetz` nutzt aktuell **nicht** die zentrale Lead-Benachrichtigung, sondern nur `submitVorschauAnfrage()`.
+Ziel: Beide Publikumsformulare senden ab sofort einen Telegram-Ping via zentraler `submitLead` → `notify-lead` Edge-Function. Bestehende Logik (Supabase-Insert, Formspree, Transaktionsmails) bleibt unangetastet.
 
-Dadurch passiert beim Absenden nur Folgendes:
-- Eintrag landet in der Datenbank-Tabelle `vorschau_anfragen`.
-- Es wird **keine** `notify-lead` Backend-Funktion aufgerufen.
-- Deshalb kommt für dieses Formular **keine Telegram-Nachricht** an.
+## 1. `src/pages/KostenloseVorschauV2.tsx`
 
-Ich habe gesehen, dass deine Tests dort tatsächlich gespeichert wurden, aber nicht in der normalen Lead-Tabelle bzw. Telegram-Pipeline auftauchen.
+Drei Events, an denen Telegram informiert wird — alle als **fire-and-forget** *nach* dem bereits vorhandenen Supabase-Insert (damit der Erfolgs-Gate erhalten bleibt):
 
-## Plan
+**a) Haupt-Formular (`handleSubmit`, Zeile ~976–1080)** — nach erfolgreichem `leads`-Insert:
+```ts
+void submitLead({
+  name: state.firstName,
+  phone: state.phone,
+  email: state.email || undefined,
+  company: state.company,
+  message: state.notes || undefined,
+  source_cta: "kostenlose-vorschau-v2:lead",
+});
+```
 
-1. **Formular `/lp/gesetz` korrekt anbinden**
-   - In `src/pages/lp/Gesetz.tsx` zusätzlich `submitLead` importieren.
-   - Nach erfolgreichem `submitVorschauAnfrage()` die zentrale Telegram-/Lead-Funktion `submitLead()` aufrufen.
+**b) Kontaktweg gewählt (`updateContactMethod`, Zeile ~1084 ff.)** — parallel zum Formspree-Call:
+```ts
+void submitLead({
+  name: state.firstName,
+  phone: state.phone,
+  email: state.email || undefined,
+  company: state.company,
+  source_cta: `kostenlose-vorschau-v2:kontaktweg:${method}`,
+});
+```
 
-2. **Payload sauber mappen**
-   - Name → `name`
-   - Telefon → `phone`
-   - E-Mail → `email`
-   - Firmenname + Webseiten-URL + Grund in `message`
-   - CTA z. B. `gesetz_kostenlos_pruefen`
-   - Dadurch kommt in Telegram klar an, dass es vom Formular `/lp/gesetz` stammt.
+**c) Termin gebucht (Booking-Handler, Zeile ~540–618)** — nach erfolgreichem Booking-Update, parallel zu Formspree/Mails:
+```ts
+void submitLead({
+  name: firstName,
+  phone: phone || "",
+  email,
+  company,
+  message: `Termin: ${dateLabel} ${bookingTime} (${methodLabel})`,
+  source_cta: "kostenlose-vorschau-v2:booking",
+});
+```
 
-3. **Erfolg nicht mehr nur an Vorschau-Speicherung koppeln**
-   - Die Datenbank-Speicherung in `vorschau_anfragen` bleibt bestehen.
-   - Zusätzlich wird die zentrale Lead-Benachrichtigung ausgelöst.
-   - Falls Telegram/Lead-Funktion fehlschlägt, soll der Nutzer nicht fälschlich komplett im Dunkeln bleiben; ich setze eine klare Fehlermeldung oder blockiere Erfolg nur dann, wenn die zentrale Lead-Übergabe nicht klappt.
+Import ergänzen: `import { submitLead } from "@/lib/submitLead";`
 
-4. **Kurz verifizieren**
-   - Prüfen, dass die Komponente kompiliert.
-   - Danach kann das Formular erneut getestet werden; es sollte dann über denselben Telegram-Pfad laufen wie die anderen funktionierenden Formulare.
+## 2. `src/pages/Premium.tsx`
+
+Aktuell fake Submit (nur `setSubmitted(true)`). Umbau:
+
+- `handleSubmit` → `async`, ruft `submitLead` mit Formulardaten (`name`, `email`, `phone`, `company`, `message`, `source_cta: "premium-form"`).
+- Nur bei Erfolg (`ok === true`) `setSubmitted(true)`, sonst Fehler-State setzen und Button re-enable.
+- Submit-Button-Loading-State (`submitting`) hinzufügen; Button während Request disablen.
+- Validation (name/email/message) bleibt unverändert.
+
+Import ergänzen: `import { submitLead } from "@/lib/submitLead";`
+
+## Nicht angefasst
+
+- `submitLead`, `notify-lead` Edge-Function, DB-Schema — funktionieren bereits (Telegram bestätigt Zustellung in Logs).
+- Formspree-Calls (bewusst redundant als E-Mail-Backup).
+- Supabase-Insert als Erfolgs-Gate in KostenloseVorschauV2.
+- Booking/Checkout-Flows (`Angebot.tsx`, `CheckoutFunnel.tsx`) — eigener Prozess.
+
+## Verifikation
+
+Nach dem Build: manueller Test auf `/kostenlose-vorschau` (Formular absenden + Kontaktweg wählen + Termin buchen) und `/premium` (Formular absenden). Erwartet: 4 Telegram-Nachrichten mit unterschiedlichen `source_cta`-Kennungen.
