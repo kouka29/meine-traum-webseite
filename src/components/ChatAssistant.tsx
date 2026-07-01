@@ -63,6 +63,27 @@ function getGreeting(pathname: string): string {
   return "Hi! Ich bin dein Assistent von MTW. Was möchtest du wissen?";
 }
 
+const DEFAULT_CHIPS = [
+  "Was kostet eine Webseite?",
+  "Wie lange dauert ein Projekt?",
+  "Haben Sie Referenzen?",
+  "Kostenloser Rückruf?",
+];
+
+const SUGGESTIONS: Record<string, string[]> = {
+  "/preise": ["Welches Paket passt zu mir?", "Was ist im Starter-Paket?", "Wie lange dauert es?", "Gibt es Ratenzahlung?"],
+  "/webdesign-preise": ["Welches Paket passt zu mir?", "Was ist im Starter-Paket?", "Wie lange dauert es?", "Gibt es Ratenzahlung?"],
+  "/portfolio": ["Haben Sie Beispiele für meine Branche?", "Wie sieht das auf Mobil aus?", "Kann ich Referenzen anrufen?", "Wie starten wir?"],
+  "/leistungen": ["Was ist SEO-Optimierung?", "Enthalten Updates?", "Wie lange dauert ein Projekt?", "Was ist Responsive Design?"],
+};
+
+function getSuggestions(pathname: string): string[] {
+  for (const [key, chips] of Object.entries(SUGGESTIONS)) {
+    if (pathname.startsWith(key)) return chips;
+  }
+  return DEFAULT_CHIPS;
+}
+
 const ChatAssistant = () => {
   const { pathname } = useLocation();
 
@@ -112,6 +133,7 @@ const ChatAssistant = () => {
   const [leadHoney, setLeadHoney] = useState("");
   const [leadLoading, setLeadLoading] = useState(false);
   const [leadError, setLeadError] = useState<string | null>(null);
+  const [showExtraSuggestions, setShowExtraSuggestions] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -285,14 +307,15 @@ const ChatAssistant = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, shouldHide]);
 
-  const sendMessage = useCallback(async () => {
-    const text = input.trim();
-    if (!text || loading) return;
+  const submitChat = useCallback(async (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed || loading) return;
+    setShowExtraSuggestions(false);
     if (!consentDismissed) {
       setConsentDismissed(true);
       sessionStorage.setItem(CONSENT_KEY, "1");
     }
-    const next: ChatMsg[] = [...messages, { role: "user", content: text }];
+    const next: ChatMsg[] = [...messages, { role: "user", content: trimmed }];
     setMessages(next);
     setInput("");
     setLoading(true);
@@ -323,7 +346,11 @@ const ChatAssistant = () => {
       setAvatarState(leadSubmitted ? "success" : "idle");
       setTimeout(() => inputRef.current?.focus(), 50);
     }
-  }, [input, loading, messages, pathname, consentDismissed, leadSubmitted]);
+  }, [loading, messages, pathname, consentDismissed, leadSubmitted]);
+
+  const sendMessage = useCallback(() => {
+    void submitChat(input);
+  }, [input, submitChat]);
 
   const handleLeadSubmit = useCallback(
     async (e: React.FormEvent) => {
