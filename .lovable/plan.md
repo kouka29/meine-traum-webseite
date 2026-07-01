@@ -1,9 +1,11 @@
-Änderungen ausschließlich in `src/components/ChatAssistant.tsx` am Floating-Button (`.mtw-fab` CSS-Regel bleibt unverändert):
+## Ziel
+Der KI-Assistent in `supabase/functions/chat-assistant/index.ts` gibt aktuell Platzhalter wie "[Link einfügen]" aus, weil ihm echte Infos fehlen. Der SYSTEM_PROMPT soll um einen Block mit echten Daten und einer strikten Regel gegen Platzhalter erweitert werden.
 
-1. Inline-Style `style={{ background: BRAND_GRADIENT }}` am `<button>` entfernen.
-2. Kreis-Optik-Klassen entfernen: `"rounded-full"`, `"shadow-lg"`, `"hover:shadow-xl"`, `"transition-shadow"`. Behalten: `"flex items-center justify-center"`. Hinzufügen: `"hover:scale-105 transition-transform"`.
-3. Button-Größe um ~30 % erhöhen: `"w-16 h-16 md:w-[68px] md:h-[68px]"` → `"w-[84px] h-[84px] md:w-[92px] md:h-[92px]"`.
-4. Maskottchen-Img füllt den Button: `"w-[88%] h-[88%]"` → `"w-full h-full"`. Zusätzlich `drop-shadow-[0_4px_12px_rgba(0,0,0,0.20)]` auf dem `<img>`.
-5. MessageCircle-Badge (absolute `-top-1 -right-1 bg-white ...`) komplett entfernen.
+## Änderung
+- **Datei:** `supabase/functions/chat-assistant/index.ts`
+- **Aktion:** Innerhalb des `SYSTEM_PROMPT`-Template-Strings (nach dem bestehenden Textblock, vor dem abschließenden Backtick) den vom Nutzer vorgegebenen Block `"ECHTE SEITEN & INFOS ..."` + `"STRIKTE REGEL — KEINE PLATZHALTER ..."` einfügen.
+- **Scope:** Nur dieser String-Block. Keine andere Logik, CORS, API-Calls oder Importe ändern.
 
-Build grün halten. Tabu: Supabase/Stripe/Pixel/Kundenportal.
+## Validierung
+- `bun run build` muss grün durchlaufen.
+- Keine weiteren Dateien werden berührt.
