@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Send, X, Loader2, MessageCircle } from "lucide-react";
+import { createPortal } from "react-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { honeypotFieldProps } from "@/lib/submitLead";
 import { Button } from "@/components/ui/button";
@@ -383,7 +384,7 @@ const ChatAssistant = () => {
 
   const headerAvatar = AVATARS[avatarState];
 
-  return (
+  return createPortal(
     <>
       <style>{`
         @keyframes mtw-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
@@ -410,7 +411,7 @@ const ChatAssistant = () => {
           className={cn(
             "fixed right-5 z-40 rounded-full shadow-lg hover:shadow-xl transition-shadow",
             "flex items-center justify-center",
-            "w-[52px] h-[52px] md:w-[56px] md:h-[56px]",
+            "w-16 h-16 md:w-[68px] md:h-[68px]",
             "bottom-24 md:bottom-5",
           )}
         >
@@ -418,7 +419,7 @@ const ChatAssistant = () => {
             src={idleAvatar}
             alt=""
             aria-hidden
-            className="mtw-float w-[72%] h-[72%] object-contain"
+            className="mtw-float w-[88%] h-[88%] object-contain"
             draggable={false}
           />
           <span className="sr-only">Chat öffnen</span>
@@ -435,6 +436,7 @@ const ChatAssistant = () => {
         <div
           role="dialog"
           aria-label="KI-Assistent"
+          data-apple-skip
           className={cn(
             "fixed z-40 bg-background border border-border shadow-2xl flex flex-col overflow-hidden",
             "right-4 left-4 md:left-auto md:right-5",
@@ -661,7 +663,8 @@ const ChatAssistant = () => {
 
       {/* Preload nudge asset to avoid flash later */}
       <link rel="preload" as="image" href={nudgeAvatar} />
-    </>
+    </>,
+    document.body
   );
 };
 
