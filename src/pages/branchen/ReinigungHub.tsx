@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#06B6D4",
   badgeText: "✨ SPEZIELL FÜR REINIGUNGSDIENSTLEISTER",
   heroH1: <>Mehr Reinigungs-Aufträge — <span style={{ color: "var(--brand-purple)" }}>Gewerbe & Privat, planbar gewonnen</span></>,
-  heroSub: "Kunden suchen 'Gebäudereinigung [Stadt]' oder 'Reinigungsfirma'. Wir bauen die Website, die seriös wirkt — und Anfragen produziert.",
+  heroSub: "Kunden suchen 'Gebäudereinigung in Deiner Stadt' oder 'Reinigungsfirma'. Wir bauen die Website, die seriös wirkt — und Anfragen produziert.",
   trustBadges: ["Angebotsanfrage in 30 Sekunden", "Gewerbe & Privat trennbar", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Reinigungsbetriebe aus der Region vertrauen uns",
   painPoints: [

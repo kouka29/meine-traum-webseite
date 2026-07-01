@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#14B8A6",
   badgeText: "🤲 SPEZIELL FÜR PHYSIO- & ERGOTHERAPEUTEN",
   heroH1: <>Volle Praxis — <span style={{ color: "var(--brand-purple)" }}>Patienten buchen online, Sie therapieren in Ruhe</span></>,
-  heroSub: "Patienten suchen 'Physiotherapie [Stadt]' und wollen sofort einen Termin. Wir bauen die Website mit Online-Buchung — die Termine konstant füllt.",
+  heroSub: "Patienten suchen 'Physiotherapie in Deiner Stadt' und wollen sofort einen Termin. Wir bauen die Website mit Online-Buchung — die Termine konstant füllt.",
   trustBadges: ["Online-Termin Kasse & Privat", "Heilmittel klar erklärt", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Therapiepraxen aus der Region vertrauen uns",
   painPoints: [

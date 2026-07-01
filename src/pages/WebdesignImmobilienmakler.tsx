@@ -14,7 +14,7 @@ const painPoints = [
 
 const features = [
   { icon: Home, title: "Immobilien-Design", desc: "Hochwertige Objektpräsentation mit großen Bildern, virtuellen Rundgängen und übersichtlicher Darstellung deiner Angebote." },
-  { icon: Search, title: "SEO für Immobilienmakler", desc: 'Gefunden werden bei "Immobilienmakler [Stadt]", "Haus verkaufen" und lokalen Suchanfragen.' },
+  { icon: Search, title: "SEO für Immobilienmakler", desc: 'Gefunden werden bei "Immobilienmakler in Deiner Stadt", "Haus verkaufen" und lokalen Suchanfragen.' },
   { icon: Camera, title: "Objekt-Präsentation", desc: "deine Immobilien werden professionell in Szene gesetzt – mit Bildergalerien und strukturierten Exposés." },
   { icon: MapPin, title: "Regionale Sichtbarkeit", desc: "Lokale SEO-Optimierung sorgt dafür, dass Eigentümer und Käufer aus deiner Region Du findest." },
   { icon: Smartphone, title: "Mobile Optimierung", desc: "Immobiliensuche findet unterwegs statt – deine Website funktioniert perfekt auf jedem Gerät." },

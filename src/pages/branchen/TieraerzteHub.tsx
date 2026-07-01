@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#7C3AED",
   badgeText: "🐾 SPEZIELL FÜR TIERÄRZTE",
   heroH1: <>Mehr Tierhalter in Ihrer Praxis — <span style={{ color: "var(--brand-purple)" }}>Termin online, Notdienst klar sichtbar</span></>,
-  heroSub: "Tierhalter suchen 'Tierarzt [Stadt]' oft im Notfall. Wir bauen die Website, die sofort die richtige Info liefert und Termine produziert.",
+  heroSub: "Tierhalter suchen 'Tierarzt in Deiner Stadt' oft im Notfall. Wir bauen die Website, die sofort die richtige Info liefert und Termine produziert.",
   trustBadges: ["Online-Termin direkt buchbar", "Notdienst-Hinweis prominent", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Tierärzt:innen aus der Region vertrauen uns",
   painPoints: [

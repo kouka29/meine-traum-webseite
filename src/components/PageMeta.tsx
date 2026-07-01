@@ -175,7 +175,7 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
   },
   "/elektriker": {
     title: `Website für Elektriker | ${BRAND}`,
-    description: "Websites speziell für Elektriker. Gefunden bei 'Elektriker [Stadt]'. Mehr Aufträge, auch bei Notfällen. Kostenlose Vorschau in 48h.",
+    description: "Websites speziell für Elektriker. Gefunden bei 'Elektriker' in Deiner Stadt. Mehr Aufträge, auch bei Notfällen. Kostenlose Vorschau in 48h.",
   },
   "/maler": {
     title: `Website für Maler | ${BRAND}`,

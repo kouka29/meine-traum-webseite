@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#1E3A8A",
   badgeText: "⚖️ SPEZIELL FÜR ANWÄLTE & STEUERBERATER",
   heroH1: <>Mehr Mandanten für Ihre Kanzlei — <span style={{ color: "var(--brand-purple)" }}>seriös, vertrauensvoll, online sichtbar</span></>,
-  heroSub: "Mandanten suchen 'Anwalt [Stadt] [Fachgebiet]' oder 'Steuerberater in der Nähe'. Wir sorgen dafür, dass Sie als erste Wahl erscheinen — mit Stil und Substanz.",
+  heroSub: "Mandanten suchen 'Anwalt in Deiner Stadt für Dein Fachgebiet' oder 'Steuerberater in der Nähe'. Wir sorgen dafür, dass Sie als erste Wahl erscheinen — mit Stil und Substanz.",
   trustBadges: ["DSGVO-konform & verschlüsselt", "Fachgebiete klar dargestellt", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Kanzleien aus der DACH-Region vertrauen uns",
   painPoints: [

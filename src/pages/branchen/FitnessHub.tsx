@@ -6,7 +6,7 @@ const config = branche({
   badgeColor: "#F97316",
   badgeText: "💪 SPEZIELL FÜR FITNESS- & YOGASTUDIOS",
   heroH1: <>Mehr Mitglieder für Dein Studio — <span style={{ color: "var(--brand-purple)" }}>gefunden, gebucht, gewonnen</span></>,
-  heroSub: "Kunden suchen 'Fitnessstudio [Stadt]' oder 'Yoga in der Nähe' — wir sorgen dafür dass sie Dich finden und direkt eine Probestunde buchen.",
+  heroSub: "Kunden suchen 'Fitnessstudio in Deiner Stadt' oder 'Yoga in Deiner Nähe' — wir sorgen dafür dass sie Dich finden und direkt eine Probestunde buchen.",
   trustBadges: ["Probestunde direkt buchbar", "Kursplan immer aktuell", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Studios aus Mainz, Frankfurt & Wiesbaden vertrauen uns",
   painPoints: [
@@ -22,7 +22,7 @@ const config = branche({
     { emoji: "💪", title: "Kursplan & Trainer vorstellen", description: "Kurse, Trainer:innen, Specials — alles übersichtlich und mobil perfekt." },
     { emoji: "⭐", title: "Bewertungen sichtbar machen", description: "Google-Sterne und echte Mitglieder-Stimmen prominent — der stärkste Vertrauensbeweis." },
     { emoji: "📱", title: "Perfekt auf jedem Handy", description: "90 % Deiner Interessenten kommen vom Smartphone. Wir bauen mobile-first." },
-    { emoji: "🎯", title: "Lokal gefunden werden", description: "Google Maps + lokale SEO — Du erscheinst genau wenn jemand nach 'Yoga [Stadt]' sucht." },
+    { emoji: "🎯", title: "Lokal gefunden werden", description: "Google Maps + lokale SEO — Du erscheinst genau wenn jemand nach 'Yoga in Deiner Stadt' sucht." },
     { emoji: "🔧", title: "Alles inklusive", description: "Hosting, Domain, SSL, Updates, Kursplan-Pflege — wir kümmern uns." },
   ],
   testimonialH2: "Was Studios über uns sagen",

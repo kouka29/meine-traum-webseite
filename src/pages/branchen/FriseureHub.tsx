@@ -13,7 +13,7 @@ const config = branche({
     { icon: "📞", title: "Telefon klingelt während der Behandlung", description: "Termine annehmen während Kundenarbeit ist nervig. Online-Buchung löst das Problem." },
     { icon: "📸", title: "Instagram-Arbeiten landen nicht im Salon", description: "Tolle Posts, leere Stühle — ohne Website-Brücke konvertiert Instagram schlecht." },
     { icon: "💸", title: "No-Shows kosten Geld", description: "Online-Buchung mit Erinnerung reduziert No-Shows um bis zu 60 %." },
-    { icon: "🔍", title: "Bei Google nicht auffindbar", description: "Wer 'Friseur [Stadt]' nicht oben steht, verliert Laufkundschaft komplett." },
+    { icon: "🔍", title: "Bei Google nicht auffindbar", description: "Wer 'Friseur in Deiner Stadt' nicht oben steht, verliert Laufkundschaft komplett." },
   ],
   stepsH2: "Deine Salon-Website — stylisch & buchbar",
   featuresH2: "Was Deine Salon-Website kann",
