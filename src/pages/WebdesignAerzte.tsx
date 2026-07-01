@@ -14,7 +14,7 @@ const painPoints = [
 
 const features = [
   { icon: Heart, title: "Praxis-gerechtes Design", desc: "deine Website vermittelt Vertrauen und Kompetenz – mit einem Design, das deine Praxis professionell repräsentiert." },
-  { icon: Search, title: "Lokales SEO für Ärzte", desc: 'Gefunden werden bei "Arzt [Stadt]", "Zahnarzt in der Nähe" und ähnlichen Suchanfragen deiner Patienten.' },
+  { icon: Search, title: "Lokales SEO für Ärzte", desc: 'Gefunden werden bei "Arzt in Deiner Stadt", "Zahnarzt in der Nähe" und ähnlichen Suchanfragen deiner Patienten.' },
   { icon: Clock, title: "Online-Terminbuchung", desc: "Integration einer Online-Terminbuchung – damit Patienten rund um die Uhr Termine vereinbaren können." },
   { icon: Shield, title: "DSGVO-konform", desc: "deine Praxis-Website erfüllt alle Datenschutz-Anforderungen – inklusive Impressum und Datenschutzerklärung." },
   { icon: Smartphone, title: "Mobilfreundlich", desc: "Patienten suchen unterwegs – deine Website sieht auf jedem Gerät professionell aus." },
