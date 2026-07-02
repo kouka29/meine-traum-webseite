@@ -17,10 +17,10 @@ const FreePreviewCTA = () => (
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.08),transparent_60%)]" />
           <div className="relative z-10">
             <span className="badge-label bg-primary-foreground/15 text-primary-foreground mb-8">
-              dein nächster Schritt
+              Dein nächster Schritt
             </span>
             <h2 className="text-primary-foreground mb-5 text-balance">
-              deine kostenlose Website-Strategie
+              Deine kostenlose Website-Strategie
             </h2>
             <p className="text-primary-foreground/70 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
               Du erhältst ein individuelles Konzept für deine neue Website – mit konkreten Ideen für Struktur, Texte und Aufbau.
