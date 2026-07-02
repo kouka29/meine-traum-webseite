@@ -93,7 +93,7 @@ const IndividuelleSoftware = () => (
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-6 leading-relaxed">
               Wir entwickeln maßgeschneiderte Web-Apps und Softwarelösungen, die manuelle Abläufe
-              ersetzen, Prozesse automatisieren und dein Unternehmen effizient wachsen lassen.
+              ersetzen, Prozesse automatisieren und Dein Unternehmen effizient wachsen lassen.
             </p>
             <div className="flex items-center gap-3 sm:gap-5 mb-8 flex-wrap">
               {[
@@ -132,7 +132,7 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-destructive/10 text-destructive mb-4 text-xs">Das Problem</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Manuelle Prozesse bremsen dein Wachstum
+              Manuelle Prozesse bremsen Dein Wachstum
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
               Die meisten Unternehmen verlieren täglich Stunden mit Aufgaben, die ein
@@ -163,11 +163,11 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Die Lösung</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Wir digitalisieren und automatisieren dein Unternehmen
+              Wir digitalisieren und automatisieren Dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Keine Standard-Software, die du verbiegen müssen. Sondern Lösungen,
-              die sich an dein Geschäft anpassen.
+              Keine Standard-Software, die Du verbiegen müssen. Sondern Lösungen,
+              die sich an Dein Geschäft anpassen.
             </p>
           </div>
         </AnimatedSection>
@@ -194,10 +194,10 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Anwendungsbeispiele</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Mögliche Lösungen für dein Unternehmen
+              Mögliche Lösungen für Dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Jedes Unternehmen ist anders – hier einige Beispiele, was wir für du bauen können.
+              Jedes Unternehmen ist anders – hier einige Beispiele, was wir für Du bauen können.
             </p>
           </div>
         </AnimatedSection>
@@ -224,10 +224,10 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Unser Prozess</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              So entsteht deine individuelle Lösung
+              So entsteht Deine individuelle Lösung
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Strukturiert, transparent und auf dein Ergebnis ausgerichtet.
+              Strukturiert, transparent und auf Dein Ergebnis ausgerichtet.
             </p>
           </div>
         </AnimatedSection>
@@ -283,11 +283,11 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="glass-card rounded-2xl p-8 sm:p-12 md:p-16 text-center max-w-3xl mx-auto border border-primary/20">
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Startest du dein Projekt
+              Startest Du Dein Projekt
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">
               Lass uns gemeinsam herausfinden, wie eine individuelle Softwarelösung
-              dein Business effizienter und profitabler macht.
+              Dein Business effizienter und profitabler macht.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8" asChild>

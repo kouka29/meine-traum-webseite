@@ -49,11 +49,11 @@ const About = () => (
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Die meisten Agenturen liefern eine schöne Website – und das war's.
                 Wir gehen weiter: Jede Website, die wir erstellen, ist ein strategisches Verkaufsinstrument,
-                das messbar zu deinem Geschäftserfolg beiträgt.
+                das messbar zu Deinem Geschäftserfolg beiträgt.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
                 Wir kombinieren verkaufspsychologisches Design mit modernster Technologie –
-                damit deine Website nicht nur Besucher anzieht, sondern sie in zahlende Kunden verwandelt.
+                damit Deine Website nicht nur Besucher anzieht, sondern sie in zahlende Kunden verwandelt.
               </p>
               <div className="space-y-3.5">
                 {reasons.map((r) => (

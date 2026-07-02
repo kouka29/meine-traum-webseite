@@ -40,8 +40,8 @@ const WebdesignHandwerker = () => (
               <span className="gradient-text">Die Website, die Aufträge bringt</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Du bist Handwerker und deine Website bringt keine Anfragen? Wir erstellen professionelle Websites
-              speziell für Handwerksbetriebe – damit du online gefunden werden und mehr Kunden gewinnen.
+              Du bist Handwerker und Deine Website bringt keine Anfragen? Wir erstellen professionelle Websites
+              speziell für Handwerksbetriebe – damit Du online gefunden werden und mehr Kunden gewinnen.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
@@ -71,7 +71,7 @@ const WebdesignHandwerker = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">So bringen wir deinen Handwerksbetrieb online nach vorne</h2>
+          <h2 className="text-center mb-16 text-balance">So bringen wir Deinen Handwerksbetrieb online nach vorne</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
@@ -109,7 +109,7 @@ const WebdesignHandwerker = () => (
           <div className="mb-20">
             <h2 className="text-center mb-5 text-balance">Passende Leistungen für Handwerker</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-center text-lg mb-10">
-              Ob neue Website, Relaunch oder Conversion-Optimierung – wir haben die passende Lösung für deinen Handwerksbetrieb.
+              Ob neue Website, Relaunch oder Conversion-Optimierung – wir haben die passende Lösung für Deinen Handwerksbetrieb.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
               {[

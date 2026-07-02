@@ -19,7 +19,7 @@ const IndexBenefits = () => (
             Das Ergebnis: Mehr Anfragen, planbar und messbar
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Keine vagen Versprechen. Wir zeigen, was sich konkret ändert, wenn deine Website endlich als Vertriebskanal funktioniert.
+            Keine vagen Versprechen. Wir zeigen, was sich konkret ändert, wenn Deine Website endlich als Vertriebskanal funktioniert.
           </p>
         </div>
       </AnimatedSection>

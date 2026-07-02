@@ -259,7 +259,7 @@ const Starter = () => (
               <span className="gradient-text">Beides lösbar — in 7 Tagen.</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
-              Wir bauen dir eine moderne, professionelle Website, die Besucher
+              Wir bauen Dir eine moderne, professionelle Website, die Besucher
               sofort überzeugt — zu einem Fixpreis ohne Überraschungen.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -292,9 +292,9 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Wo stehst du gerade?</h2>
+            <h2 className="mb-4 text-balance">Wo stehst Du gerade?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Beide Wege führen zu einer Website, die für du arbeitet.
+              Beide Wege führen zu einer Website, die für Du arbeitet.
             </p>
           </div>
         </AnimatedSection>
@@ -338,10 +338,10 @@ const Starter = () => (
               Klingt bekannt?
             </span>
             <h2 className="mb-4 text-balance">
-              Was du gerade Anfragen kostet — jeden Tag
+              Was Du gerade Anfragen kostet — jeden Tag
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Wenn du auch nur einer dieser Punkte trifft, verlierst du gerade
+              Wenn Du auch nur einer dieser Punkte trifft, verlierst Du gerade
               Geld. Die gute Nachricht: jeder davon ist in 7 Tagen lösbar.
             </p>
           </div>
@@ -425,7 +425,7 @@ const Starter = () => (
                   <p className="text-sm text-muted-foreground mb-6">
                     Brauchst du mehr Seiten, einen Shop oder spezielle Funktionen?{" "}
                     <strong className="text-foreground">
-                      Wir erstellen dir ein individuelles Angebot.
+                      Wir erstellen Dir ein individuelles Angebot.
                     </strong>
                   </p>
                   <Button
@@ -455,8 +455,8 @@ const Starter = () => (
               Warum Starter — und nicht Selbstbau oder klassische Agentur?
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Drei Wege zu einer Website. Nur einer davon kostet du nicht
-              Wochen deiner Lebenszeit oder tausende Euro extra.
+              Drei Wege zu einer Website. Nur einer davon kostet Du nicht
+              Wochen Deiner Lebenszeit oder tausende Euro extra.
             </p>
           </div>
         </AnimatedSection>
@@ -521,7 +521,7 @@ const Starter = () => (
               <Clock size={16} className="inline mr-1" aria-hidden={true} focusable={false} /> 14 Tage von Null zu Online
             </span>
             <h2 className="mb-4 text-balance">
-              dein Weg zur fertigen Website — Schritt für Schritt
+              Dein Weg zur fertigen Website — Schritt für Schritt
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Klare Phasen, klare Erwartungen. Du weißt jederzeit, wo wir stehen.
@@ -628,7 +628,7 @@ const Starter = () => (
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
               <Shield size={26} aria-hidden={true} focusable={false} />
             </div>
-            <h2 className="mb-4 text-balance">3 Garantien — du gehen null Risiko</h2>
+            <h2 className="mb-4 text-balance">3 Garantien — Du gehst null Risiko</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Vertrauen bekommen wir nicht durch Versprechen — sondern dadurch,
               dass wir das Risiko übernehmen.
@@ -660,9 +660,9 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Ist Starter das Richtige für du?</h2>
+            <h2 className="mb-4 text-balance">Ist Starter das Richtige für Du?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Wir verkaufen lieber ehrlich als überall. Hier siehst du, ob es passt.
+              Wir verkaufen lieber ehrlich als überall. Hier siehst Du, ob es passt.
             </p>
           </div>
         </AnimatedSection>
@@ -699,8 +699,8 @@ const Starter = () => (
                   ))}
                 </ul>
                 <p className="mt-6 text-xs text-muted-foreground italic">
-                  Falls du sich hier wiederfindest: kein Problem — wir empfehlen
-                  dir gern eine andere Lösung oder ein größeres Paket.
+                  Falls Du sich hier wiederfindest: kein Problem — wir empfehlen
+                  Dir gern eine andere Lösung oder ein größeres Paket.
                 </p>
               </CardContent>
             </Card>

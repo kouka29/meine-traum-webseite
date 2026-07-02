@@ -45,7 +45,7 @@ export default function KaufErfolgreich() {
             <div>
               <p className="font-semibold mb-1">Onboarding innerhalb von 24 h</p>
               <p className="text-sm text-muted-foreground">
-                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und deinen
+                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und Deinen
                 Onboarding-Fragebogen zu schicken.
               </p>
             </div>
@@ -67,7 +67,7 @@ export default function KaufErfolgreich() {
               <div>
                 <p className="font-semibold mb-1">Restzahlung bei Go-Live</p>
                 <p className="text-sm text-muted-foreground">
-                  Die restlichen 50 % werden erst fällig, wenn deine Website live geht – per Rechnung.
+                  Die restlichen 50 % werden erst fällig, wenn Deine Website live geht – per Rechnung.
                 </p>
               </div>
             </div>

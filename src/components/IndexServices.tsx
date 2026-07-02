@@ -21,7 +21,7 @@ const IndexServices = () => (
             <span className="text-foreground">Kundenmagneten</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Kein Technik-Vortrag. Wir zeigen dir, welche vier Hebel deine Website braucht, damit Besucher zu Kunden werden.
+            Kein Technik-Vortrag. Wir zeigen Dir, welche vier Hebel Deine Website braucht, damit Besucher zu Kunden werden.
           </p>
         </div>
       </AnimatedSection>

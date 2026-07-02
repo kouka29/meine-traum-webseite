@@ -20,7 +20,7 @@ export default function KundenportalVertrag() {
     <div className="space-y-6">
       <div>
         <h1 className="font-heading text-3xl font-bold">Vertrag & Paket</h1>
-        <p className="text-muted-foreground mt-1">Übersicht deiner gebuchten Leistungen und Vertragsdaten.</p>
+        <p className="text-muted-foreground mt-1">Übersicht Deiner gebuchten Leistungen und Vertragsdaten.</p>
       </div>
 
       {buchungen.length === 0 ? (

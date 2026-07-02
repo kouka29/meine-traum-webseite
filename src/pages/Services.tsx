@@ -68,7 +68,7 @@ const Services = () => (
             </span>
             <h1 className="mb-5 text-balance">
               Webdesign, Conversion & SEO –{" "}
-              <span className="gradient-text">alles für deinen Online-Erfolg</span>
+              <span className="gradient-text">alles für Deinen Online-Erfolg</span>
             </h1>
             <p className="text-muted-foreground text-lg">
               Wir erstellen keine Standard-Websites, sondern Verkaufsinstrumente, die sich bezahlt machen –
@@ -112,10 +112,10 @@ const Services = () => (
               <span className="badge-label bg-primary/10 text-primary mb-5">FAQ</span>
               <h2 className="mb-5 text-balance">Häufige Fragen zu unseren Leistungen</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Keine Standard-Antworten. Hier findest du klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
+                Keine Standard-Antworten. Hier findest Du klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
               </p>
               <div className="hidden lg:block p-6 rounded-2xl border border-border bg-muted/30">
-                <p className="font-heading font-semibold mb-2">deine Frage ist nicht dabei?</p>
+                <p className="font-heading font-semibold mb-2">Deine Frage ist nicht dabei?</p>
                 <p className="text-sm text-muted-foreground mb-4">Wir beantworten sie gerne persönlich – unverbindlich und kostenfrei.</p>
                 <Link to="/kontakt" className="text-sm font-semibold text-primary hover:underline">
                   Jetzt Kontakt aufnehmen →

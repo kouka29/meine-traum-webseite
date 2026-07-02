@@ -42,7 +42,7 @@ export default function KundenportalRechnungen() {
     <div className="space-y-6">
       <div>
         <h1 className="font-heading text-3xl font-bold">Rechnungen</h1>
-        <p className="text-muted-foreground mt-1">Alle deine Zahlungen und Rechnungen als PDF.</p>
+        <p className="text-muted-foreground mt-1">Alle Deine Zahlungen und Rechnungen als PDF.</p>
       </div>
 
       {invoices.length === 0 ? (
@@ -50,7 +50,7 @@ export default function KundenportalRechnungen() {
           <CardContent className="py-16 text-center">
             <Receipt size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
             <p className="text-muted-foreground">Noch keine Rechnungen vorhanden.</p>
-            <p className="text-xs text-muted-foreground mt-2">Sobald eine Zahlung erfolgt ist, findest du hier alle Rechnungen.</p>
+            <p className="text-xs text-muted-foreground mt-2">Sobald eine Zahlung erfolgt ist, findest Du hier alle Rechnungen.</p>
           </CardContent>
         </Card>
       ) : (

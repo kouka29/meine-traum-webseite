@@ -134,7 +134,7 @@ const CookieBanner = () => {
               />
               <div>
                 <span className="text-sm font-medium">Marketing-Cookies</span>
-                <p className="text-xs text-muted-foreground">Werden verwendet, um dir relevante Werbung und Inhalte anzuzeigen.</p>
+                <p className="text-xs text-muted-foreground">Werden verwendet, um Dir relevante Werbung und Inhalte anzuzeigen.</p>
               </div>
             </label>
           </div>

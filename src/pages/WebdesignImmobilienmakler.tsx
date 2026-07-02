@@ -40,7 +40,7 @@ const WebdesignImmobilienmakler = () => (
               <span className="gradient-text">Mehr Eigentümer-Leads durch eine starke Website</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Als Immobilienmakler brauchst du eine Website, die Vertrauen schafft, deine Objekte hochwertig präsentiert
+              Als Immobilienmakler brauchst Du eine Website, die Vertrauen schafft, Deine Objekte hochwertig präsentiert
               und kontinuierlich neue Leads generiert. Genau das liefern wir.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
@@ -56,7 +56,7 @@ const WebdesignImmobilienmakler = () => (
 
         <AnimatedSection>
           <div className="mb-20 max-w-3xl mx-auto">
-            <h2 className="text-center mb-10 text-balance">Kennst du diese Herausforderungen?</h2>
+            <h2 className="text-center mb-10 text-balance">Kennst Du diese Herausforderungen?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
                 <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
@@ -71,7 +71,7 @@ const WebdesignImmobilienmakler = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">So machen wir du zum Makler Nr. 1 in deiner Region</h2>
+          <h2 className="text-center mb-16 text-balance">So machen wir Dich zum Makler Nr. 1 in Deiner Region</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (

@@ -680,7 +680,7 @@ function StepPaket({
         Welches Paket darf es sein?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Wähle das Paket, das am besten zu dir passt.
+        Wähle das Paket, das am besten zu Dir passt.
       </p>
       <div style={{ display: "grid", gap: 12 }}>
         {pakete.map((p, idx) => {
@@ -765,7 +765,7 @@ function StepZahlung({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Wie möchtest du zahlen?
+        Wie möchtest Du zahlst?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
         Beide Wege — gleiches Ergebnis. Du entscheidest.
@@ -891,7 +891,7 @@ function StepAddOns({
         <Sparkles size={24} color={BRAND} style={{ margin: "0 auto 12px" }} aria-hidden={true} focusable={false} />
         <h2 style={{ fontSize: 18, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>Alles drin!</h2>
         <p style={{ fontSize: 14, color: TEXT_MUTED }}>
-          dein Paket enthält bereits alles, was Du brauchst. Weiter zum nächsten Schritt.
+          Dein Paket enthält bereits alles, was Du brauchst. Weiter zum nächsten Schritt.
         </p>
       </div>
     );
@@ -899,7 +899,7 @@ function StepAddOns({
   return (
     <div>
       <h2 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6, letterSpacing: "-0.02em" }}>
-        Möchtest du noch etwas dazunehmen?
+        Möchtest Du noch etwas dazunehmen?
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
         Optional — direkt weiter oder Wachstumspaket dazunehmen.
@@ -911,9 +911,9 @@ function StepAddOns({
           borderRadius: 12, fontSize: 12.5, color: "#9A3412", lineHeight: 1.5,
         }}>
           <strong>🚀 Wachstumspaket gewählt:</strong> Wird heute <strong>nicht</strong> mit
-          eingezogen. Du erhältst deine erste Rechnung erst ab Website-Go-Live –
+          eingezogen. Du erhältst Deine erste Rechnung erst ab Website-Go-Live –
           monatlich per E-Mail mit Bezahllink (Karte, SEPA, Überweisung). Im Kundenportal
-          kannst du jederzeit auf automatisches Stripe-Abo umstellen.
+          kannst Du jederzeit auf automatisches Stripe-Abo umstellen.
         </div>
       )}
       <div style={{ display: "grid", gap: 10 }}>
@@ -1137,7 +1137,7 @@ function StepKontakt({
         Deine Kontaktdaten
       </h2>
       <p style={{ fontSize: 14, color: TEXT_MUTED, marginBottom: 20 }}>
-        Damit wir dir Auftragsbestätigung und Rechnung zusenden können.
+        Damit wir Dir Auftragsbestätigung und Rechnung zusenden können.
       </p>
 
       <div style={{ display: "grid", gap: 14 }}>
@@ -1387,7 +1387,7 @@ function StepBezahlen(props: React.ComponentProps<typeof StripeEmbeddedCheckoutB
         Sichere Bezahlung
       </h2>
       <p style={{ fontSize: 13, color: TEXT_MUTED, marginBottom: 16 }}>
-        deine Buchung ist registriert. Schließen du nun die Zahlung ab — sicher über Stripe.
+        Deine Buchung ist registriert. Schließen Du nun die Zahlung ab — sicher über Stripe.
       </p>
       <StripeEmbeddedCheckoutBox {...props} />
     </div>
@@ -1409,7 +1409,7 @@ function StepFertig({ auftragsNr, email }: { auftragsNr: string; email: string }
         Vielen Dank!
       </h2>
       <p style={{ fontSize: 15, color: TEXT_MUTED, marginBottom: 16, lineHeight: 1.5 }}>
-        dein Auftrag <strong style={{ color: TEXT_DARK }}>{auftragsNr}</strong> wurde verbindlich angenommen.
+        Dein Auftrag <strong style={{ color: TEXT_DARK }}>{auftragsNr}</strong> wurde verbindlich angenommen.
       </p>
       <p style={{ fontSize: 13, color: TEXT_MUTED }}>
         Eine Bestätigung wurde an <strong style={{ color: TEXT_DARK }}>{email}</strong> versendet.

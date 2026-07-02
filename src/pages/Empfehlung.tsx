@@ -150,7 +150,7 @@ const Empfehlung = () => (
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
               98% unserer Kunden empfehlen uns aktiv weiter — weil ihre Website
               nach dem Relaunch endlich Anfragen bringt.{" "}
-              <strong className="text-foreground">Jetzt bist du dran.</strong>
+              <strong className="text-foreground">Jetzt bist Du dran.</strong>
             </p>
             <Button
               variant="gradient"
@@ -217,23 +217,23 @@ const Empfehlung = () => (
                       Persönliche Nachricht
                     </p>
                     <h2 className="text-2xl sm:text-3xl font-heading font-bold">
-                      Warum du auf dieser Seite sind
+                      Warum Du auf dieser Seite sind
                     </h2>
                   </div>
                 </div>
                 <div className="space-y-4 text-foreground/90 leading-relaxed text-base sm:text-lg">
                   <p>
-                    Du bist hier, weil du jemand empfohlen hat — jemand, dem wir
+                    Du bist hier, weil Dich jemand empfohlen hat — jemand, dem wir
                     geholfen haben, mit seiner Website wirklich Kunden zu gewinnen.
                   </p>
                   <p>
                     Empfehlungen sind das Wertvollste, das wir bekommen können. Du
-                    bedeuten: Vertrauen wurde übertragen. Genau deshalb verdienen du
+                    bedeuten: Vertrauen wurde übertragen. Genau deshalb verdienst Du
                     keine Standard-Behandlung — sondern eine, die diesem Vertrauen
                     gerecht wird.
                   </p>
                   <p className="font-semibold text-foreground">
-                    Drei Dinge, die wir dir versprechen:
+                    Drei Dinge, die wir Dir versprechen:
                   </p>
                   <ul className="space-y-3">
                     {[
@@ -261,10 +261,10 @@ const Empfehlung = () => (
         <AnimatedSection>
           <div className="text-center mb-12">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              <Sparkles size={16} className="inline mr-1" aria-hidden={true} focusable={false} /> dein Empfehlungs-Bonus
+              <Sparkles size={16} className="inline mr-1" aria-hidden={true} focusable={false} /> Dein Empfehlungs-Bonus
             </span>
             <h2 className="mb-4 text-balance">
-              3 Vorteile, die du nur als Empfehlung bekommen
+              3 Vorteile, die Du nur als Empfehlung bekommst
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Wer von einem unserer Kunden weiterempfohlen wird, startet nicht bei null —
@@ -351,7 +351,7 @@ const Empfehlung = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Sind wir der richtige Partner für du?</h2>
+            <h2 className="mb-4 text-balance">Sind wir der richtige Partner für Dich?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Ehrliche Einschätzung — bevor wir miteinander sprechen.
             </p>
@@ -362,7 +362,7 @@ const Empfehlung = () => (
             <Card className="h-full border-primary/30">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-primary">
-                  Für du, wenn …
+                  Für Dich, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitYes.map((item) => (
@@ -379,7 +379,7 @@ const Empfehlung = () => (
             <Card className="h-full border-destructive/20">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl font-heading font-bold mb-6 text-muted-foreground">
-                  Nicht für du, wenn …
+                  Nicht für Dich, wenn …
                 </h3>
                 <ul className="space-y-4">
                   {fitNo.map((item) => (
@@ -403,7 +403,7 @@ const Empfehlung = () => (
           <div className="text-center mb-12">
             <h2 className="mb-4">Was passiert als nächstes?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              In drei einfachen Schritten zu deiner neuen Website.
+              In drei einfachen Schritten zu Deiner neuen Website.
             </p>
           </div>
         </AnimatedSection>
@@ -436,10 +436,10 @@ const Empfehlung = () => (
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
               <Shield size={26} aria-hidden={true} focusable={false} />
             </div>
-            <h2 className="mb-4 text-balance">du gehen null Risiko ein</h2>
+            <h2 className="mb-4 text-balance">Du gehst null Risiko ein</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Vertrauen muss verdient werden. Deshalb übernehmen wir das Risiko —
-              nicht du.
+              nicht Dich.
             </p>
           </div>
         </AnimatedSection>
@@ -471,7 +471,7 @@ const Empfehlung = () => (
           <div className="text-center mb-12">
             <h2 className="mb-4 text-balance">Die häufigsten Fragen — ehrlich beantwortet</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Falls du dieselben Gedanken haben wie viele vor dir.
+              Falls Du dieselben Gedanken hast wie viele vor Dir.
             </p>
           </div>
         </AnimatedSection>
@@ -509,7 +509,7 @@ const Empfehlung = () => (
                 Bereit? Dann lass uns kurz sprechen.
               </h2>
               <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8 text-base sm:text-lg">
-                15 Minuten reichen — danach weißt du, ob und wie wir dir helfen können.
+                15 Minuten reichen — danach weißt Du, ob und wie wir Dir helfen können.
               </p>
               <Button
                 size="lg"

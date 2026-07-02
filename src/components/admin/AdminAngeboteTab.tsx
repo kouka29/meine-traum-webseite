@@ -92,7 +92,7 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
         <div className="text-center py-20 text-muted-foreground">
           <FileText size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
           <p className="text-lg mb-2">Noch keine Angebote vorhanden.</p>
-          <p className="text-sm">Erstellen du ein Angebot aus dem Leads-Tab.</p>
+          <p className="text-sm">Erstellen Du ein Angebot aus dem Leads-Tab.</p>
         </div>
       ) : (
         <div className="overflow-x-auto rounded-xl border border-border bg-card">

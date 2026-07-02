@@ -41,7 +41,7 @@ const WebsiteErstellenLassen = () => (
               <span className="gradient-text">die aktiv Kunden gewinnt</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Du möchtest eine moderne Website für dein Unternehmen erstellen lassen? Wir gestalten conversion-optimierte
+              Du möchtest eine moderne Website für Dein Unternehmen erstellen lassen? Wir gestalten conversion-optimierte
               Webseiten, die nicht nur gut aussehen, sondern messbar mehr Anfragen und Umsatz generieren.
             </p>
             <div className="flex flex-wrap justify-center gap-5 mt-8">
@@ -65,7 +65,7 @@ const WebsiteErstellenLassen = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-5 text-balance">Was Du bekommst, wenn du deine Website bei uns erstellen lassen</h2>
+          <h2 className="text-center mb-5 text-balance">Was Du bekommst, wenn Du Deine Website bei uns erstellen lassen</h2>
           <p className="text-muted-foreground text-center max-w-2xl mx-auto text-lg mb-12">
             Jede Website, die wir erstellen, ist ein strategisches Verkaufsinstrument – kein Template von der Stange.
           </p>

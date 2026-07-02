@@ -71,7 +71,7 @@ const WebdesignAerzte = () => (
         </AnimatedSection>
 
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">Was wir für deine Arztpraxis tun</h2>
+          <h2 className="text-center mb-16 text-balance">Was wir für Deine Arztpraxis tun</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (

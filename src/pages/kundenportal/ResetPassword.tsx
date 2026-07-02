@@ -126,7 +126,7 @@ export default function KundenportalResetPassword() {
                 <CheckCircle2 className="text-primary" size={32} aria-hidden={true} focusable={false} />
               </div>
               <h2 className="font-heading text-2xl font-bold">Passwort gespeichert</h2>
-              <p className="text-muted-foreground text-sm">Du kannst dich jetzt im Kundenportal anmelden.</p>
+              <p className="text-muted-foreground text-sm">Du kannst Dich jetzt im Kundenportal anmelden.</p>
               <Button className="w-full" onClick={() => navigate("/kundenportal", { replace: true })}>
                 Zum Kundenportal
               </Button>
@@ -138,7 +138,7 @@ export default function KundenportalResetPassword() {
                   <LockKeyhole className="text-primary" size={24} aria-hidden={true} focusable={false} />
                 </div>
                 <h2 className="font-heading text-2xl font-bold mb-2">Passwort setzen</h2>
-                <p className="text-sm text-muted-foreground">Wähle ein neues Passwort für dein Kundenportal.</p>
+                <p className="text-sm text-muted-foreground">Wähle ein neues Passwort für Dein Kundenportal.</p>
               </div>
 
               <div className="space-y-2">

@@ -699,7 +699,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
 
                 <p className="text-xs text-muted-foreground">
                   Beide Werte sind manuell editierbar. Der <strong>Auto-Button</strong> trägt automatisch die echten Anfragen
-                  (Status <code>slot_assigned</code>, aktueller Monat) ein – danach kannst du den Wert noch von Hand anpassen.
+                  (Status <code>slot_assigned</code>, aktueller Monat) ein – danach kannst Du den Wert noch von Hand anpassen.
                 </p>
 
                 <div className="flex items-center gap-3 pt-1">

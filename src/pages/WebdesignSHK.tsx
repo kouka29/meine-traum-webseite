@@ -40,7 +40,7 @@ const WebdesignSHK = () => (
               <span className="gradient-text">Mehr Anfragen durch eine professionelle Website</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Du bist Sanitär-, Heizungs- oder Klimabetrieb und deine Website bringt kaum Anfragen?
+              Du bist Sanitär-, Heizungs- oder Klimabetrieb und Deine Website bringt kaum Anfragen?
               Wir erstellen Websites speziell für SHK-Betriebe, die bei Google gefunden werden und Kunden überzeugen.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
@@ -57,7 +57,7 @@ const WebdesignSHK = () => (
         {/* Pain Points */}
         <AnimatedSection>
           <div className="mb-20 max-w-3xl mx-auto">
-            <h2 className="text-center mb-10 text-balance">Kennst du diese Probleme als SHK-Betrieb?</h2>
+            <h2 className="text-center mb-10 text-balance">Kennst Du diese Probleme als SHK-Betrieb?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
                 <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
@@ -73,7 +73,7 @@ const WebdesignSHK = () => (
 
         {/* Features */}
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">So machen wir deinen SHK-Betrieb online sichtbar</h2>
+          <h2 className="text-center mb-16 text-balance">So machen wir Deinen SHK-Betrieb online sichtbar</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
@@ -92,7 +92,7 @@ const WebdesignSHK = () => (
         {/* Results */}
         <AnimatedSection>
           <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground mb-20">
-            <h2 className="text-primary-foreground mb-5 text-balance text-center">Was eine professionelle Website deinem SHK-Betrieb bringt</h2>
+            <h2 className="text-primary-foreground mb-5 text-balance text-center">Was eine professionelle Website Deinem SHK-Betrieb bringt</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
               {[
                 { value: "+320%", label: "Mehr Online-Anfragen" },
@@ -113,7 +113,7 @@ const WebdesignSHK = () => (
           <div className="mb-20">
             <h2 className="text-center mb-5 text-balance">Unsere Leistungen für SHK-Betriebe</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-center text-lg mb-10">
-              Von der Webseite über Landingpages bis zur Conversion-Optimierung – wir bieten alles, was dein SHK-Betrieb online braucht.
+              Von der Webseite über Landingpages bis zur Conversion-Optimierung – wir bieten alles, was Dein SHK-Betrieb online braucht.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
               {[

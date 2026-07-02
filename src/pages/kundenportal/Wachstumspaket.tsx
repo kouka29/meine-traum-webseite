@@ -49,7 +49,7 @@ export default function KundenportalWachstumspaket() {
           <p className="text-muted-foreground mt-1">Du hast aktuell kein Wachstumspaket gebucht.</p>
         </div>
         <Card><CardContent className="py-10 text-center text-muted-foreground text-sm">
-          Wenn du beim Kauf deiner Webseite ein Wachstumspaket dazugebucht hast, erscheint es hier nach der ersten Bestätigung.
+          Wenn Du beim Kauf Deiner Webseite ein Wachstumspaket dazugebucht hast, erscheint es hier nach der ersten Bestätigung.
         </CardContent></Card>
       </div>
     );
@@ -64,7 +64,7 @@ export default function KundenportalWachstumspaket() {
     <div className="space-y-6">
       <div>
         <h1 className="font-heading text-3xl font-bold">Wachstumspaket</h1>
-        <p className="text-muted-foreground mt-1">Verwalte dein Wachstumspaket und die Abrechnung.</p>
+        <p className="text-muted-foreground mt-1">Verwalte Dein Wachstumspaket und die Abrechnung.</p>
       </div>
 
       <Card>
@@ -105,7 +105,7 @@ export default function KundenportalWachstumspaket() {
 
           {isPending && (
             <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900">
-              Dein Wachstumspaket startet automatisch, sobald deine Website live geht. Erst danach werden Rechnungen erstellt.
+              Dein Wachstumspaket startet automatisch, sobald Deine Website live geht. Erst danach werden Rechnungen erstellt.
             </div>
           )}
 
@@ -116,7 +116,7 @@ export default function KundenportalWachstumspaket() {
                 Auf automatische Stripe-Zahlung umstellen
               </div>
               <p className="text-xs text-muted-foreground mb-3">
-                Spare dir den manuellen Klick. Karte oder SEPA wird automatisch monatlich abgebucht, du erhältst weiterhin eine Rechnung per Mail.
+                Spare Dir den manuellen Klick. Karte oder SEPA wird automatisch monatlich abgebucht, Du erhältst weiterhin eine Rechnung per Mail.
               </p>
               {!showCheckout ? (
                 <Button size="sm" onClick={() => setShowCheckout(true)} disabled={isPending}>

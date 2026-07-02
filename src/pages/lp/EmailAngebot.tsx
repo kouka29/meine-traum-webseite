@@ -478,7 +478,7 @@ const EmailAngebot = () => {
             <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Das Problem</p>
             <h2 className="mb-4 text-balance">Warum die meisten Handwerker-Websites <span className="text-foreground">keine Anfragen bringen</span></h2>
             <p className="text-muted-foreground text-base md:text-lg italic">
-              Ein verlorener Auftrag kostet dich im Schnitt 800 €. Deine neue Website ab 59 €/Monat.
+              Ein verlorener Auftrag kostet Dich im Schnitt 800 €. Deine neue Website ab 59 €/Monat.
             </p>
           </div>
 
@@ -505,7 +505,7 @@ const EmailAngebot = () => {
         <div className="container-narrow px-4">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Die Lösung</p>
-            <h2 className="mb-4 text-balance">Wähle dein <span className="text-foreground">Paket</span></h2>
+            <h2 className="mb-4 text-balance">Wähle Dein <span className="text-foreground">Paket</span></h2>
             <p className="text-muted-foreground text-base md:text-lg">
               Monatlich flexibel oder einmalig — beides voll absetzbar.
             </p>
@@ -678,7 +678,7 @@ const EmailAngebot = () => {
               </h2>
               <p className="text-white/85 text-base md:text-lg mb-9 leading-relaxed max-w-2xl mx-auto">
                 Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
-                Gefällt sie dir nicht — du zahlst nichts.
+                Gefällt sie Dir nicht — Du zahlst nichts.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button

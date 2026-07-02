@@ -27,11 +27,11 @@ const ConversionOptimierung = () => (
             <span className="badge-label bg-primary/10 text-primary mb-5">Conversion Optimierung</span>
             <h1 className="mb-5 text-balance">
               Conversion Optimierung –{" "}
-              <span className="gradient-text">mehr Kunden aus deinen bestehenden Besuchern</span>
+              <span className="gradient-text">mehr Kunden aus Deinen bestehenden Besuchern</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              deine Website hat Besucher, aber keine Anfragen? Als Conversion Optimierung Agentur verwandeln wir
-              deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
+              Deine Website hat Besucher, aber keine Anfragen? Als Conversion Optimierung Agentur verwandeln wir
+              Deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
               <Link to="/kontakt">Website optimieren lassen <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>

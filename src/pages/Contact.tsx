@@ -71,12 +71,12 @@ const Contact = () => {
                 Kostenloses Erstgespräch
               </span>
               <h1 className="mb-5 text-balance">
-                <span className="block">dein kostenloses Erstgespräch –</span>
+                <span className="block">Dein kostenloses Erstgespräch –</span>
                 <span className="gradient-text block mt-3">in 15 Minuten zur Klarheit</span>
               </h1>
               <p className="text-muted-foreground text-lg">
                 Du hast sich für ein persönliches Erstgespräch entschieden. Perfekt. In 15 Minuten besprechen
-                wir dein Projekt, klären deine Ziele und Du erhältst eine konkrete Empfehlung – ohne Verkaufsdruck,
+                wir Dein Projekt, klären Deine Ziele und Du erhältst eine konkrete Empfehlung – ohne Verkaufsdruck,
                 ohne Verpflichtung.
               </p>
               <div className="flex flex-wrap justify-center gap-5 mt-8">
@@ -122,7 +122,7 @@ const Contact = () => {
                   <Input placeholder="z. B. Malerbetrieb, Coaching, Steuerberatung..." className="bg-card h-12" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Wann passt es dir am besten? (optional)</label>
+                  <label className="text-sm font-medium mb-2 block">Wann passt es Dir am besten? (optional)</label>
                   <Input placeholder="z. B. Mo–Fr vormittags, oder Di nachmittag" className="bg-card h-12" />
                 </div>
                 <div>
@@ -164,7 +164,7 @@ const Contact = () => {
                   </p>
                 )}
                 <p className="text-xs text-muted-foreground">
-                  Kein Verkaufsgespräch. Keine versteckten Kosten. Wir melden uns persönlich bei dir.
+                  Kein Verkaufsgespräch. Keine versteckten Kosten. Wir melden uns persönlich bei Dir.
                 </p>
               </form>
             </AnimatedSection>
@@ -173,12 +173,12 @@ const Contact = () => {
               <div className="space-y-10">
                 <div className="p-8 rounded-2xl gradient-hero-bg">
                   <h2 className="font-heading font-semibold text-primary-foreground mb-4 text-lg">
-                    So läuft dein Erstgespräch ab
+                    So läuft Dein Erstgespräch ab
                   </h2>
                   <ol className="space-y-4 text-sm text-primary-foreground/75">
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">1.</span>
-                      du füllen das Formular aus (2 Minuten)
+                      Du füllst das Formular aus (2 Minuten)
                     </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">2.</span>
@@ -192,7 +192,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-heading font-semibold mb-5 text-lg">Das bekommst du</h3>
+                  <h3 className="font-heading font-semibold mb-5 text-lg">Das bekommst Du</h3>
                   <div className="space-y-3.5">
                     {trustPoints.map((t) => (
                       <div key={t} className="flex items-center gap-3">

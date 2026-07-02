@@ -846,7 +846,7 @@ const WebdesignPreise = () => {
             <span className="badge-label bg-primary/10 text-primary mb-5">Webdesign Preise</span>
             <h1 className="mb-5 text-balance">
               Ein Auftrag reicht.{" "}
-              <span className="text-foreground">Den Rest verdienst du.</span>
+              <span className="text-foreground">Den Rest verdienst Du.</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-5">
               Professionell online — ohne großes Investment.
@@ -876,8 +876,8 @@ const WebdesignPreise = () => {
               ✓ Meistgewählt – kein großes Investment, sofort loslegen
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Ein verlorener Auftrag kostet dich im Schnitt 800 €.<br />
-              Deine neue Website kostet dich ab 59 €/Monat.
+              Ein verlorener Auftrag kostet Dich im Schnitt 800 €.<br />
+              Deine neue Website kostet Dich ab 59 €/Monat.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rentPackages.filter(p => !p.enterprise).map((pkg, i) => <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={openPopup} onCheckout={openRentCheckout} />)}
@@ -923,7 +923,7 @@ const WebdesignPreise = () => {
 
           <TabsContent value="kauf">
             <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium bg-[#F0FFF4] text-[#166534] border-[#166534]/20">
-              💡 Einmal zahlen. Für immer dein. Nach ca. 2 Jahren günstiger als die Miete.
+              💡 Einmal zahlen. Für immer Dein. Nach ca. 2 Jahren günstiger als die Miete.
             </div>
             <p className="text-center text-base md:text-lg italic text-muted-foreground mb-8 max-w-2xl mx-auto">
               Du hast Miete gesehen – und überlegst ob Kauf mehr Sinn macht?<br />
@@ -1017,7 +1017,7 @@ const WebdesignPreise = () => {
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-7 leading-relaxed max-w-2xl mx-auto">
           Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
-          Gefällt sie dir nicht — Du zahlst nichts.
+          Gefällt sie Dir nicht — Du zahlst nichts.
         </p>
         <Button variant="gradient" size="lg" onClick={() => openPopup("Kostenlose Beratung")} data-pricing-cta="true">
           Kostenlose Demo anfordern — in 48h fertig <ArrowRight size={20} aria-hidden={true} focusable={false} />

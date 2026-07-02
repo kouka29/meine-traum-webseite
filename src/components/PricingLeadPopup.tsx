@@ -295,8 +295,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               </h3>
 
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">
-                deine Anfrage ist angekommen.<br />
-                Ich melde mich innerhalb von 2 Stunden persönlich bei dir.
+                Deine Anfrage ist angekommen.<br />
+                Ich melde mich innerhalb von 2 Stunden persönlich bei Dir.
               </p>
 
               <div className="my-4 rounded-xl bg-[#F9FAFB] p-4 text-left space-y-2">
@@ -314,7 +314,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
 
               {successData.emailProvided && (
                 <p className="text-xs text-muted-foreground/80 leading-relaxed mb-3">
-                  Schau auch kurz in deinen Spam-Ordner — manchmal landet unsere Mail dort.
+                  Schau auch kurz in Deinen Spam-Ordner — manchmal landet unsere Mail dort.
                 </p>
               )}
 
@@ -352,11 +352,11 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 Fast geschafft!
               </h2>
               <p className="text-muted-foreground text-[13px] sm:text-base mb-1.5 sm:mb-2 leading-relaxed">
-                Ich melde mich innerhalb von 2 Stunden bei dir.
+                Ich melde mich innerhalb von 2 Stunden bei Dir.
               </p>
               <p className="text-[11px] sm:text-xs text-center text-green-600 font-medium mb-3 sm:mb-5 inline-flex items-center justify-center gap-1.5">
                 <Check size={14} className="inline" aria-hidden focusable={false} />
-                Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
+                Du bekommst Deine kostenlose Design-Demo innerhalb von 48 Stunden.
               </p>
 
               <div className="space-y-2 sm:space-y-3">
@@ -448,7 +448,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               )}
 
               <p className="text-center text-xs sm:text-sm text-foreground/80 mt-3">
-                ⏱ Ich melde mich innerhalb von 2 Stunden bei dir — Mo–Fr 9–18 Uhr
+                ⏱ Ich melde mich innerhalb von 2 Stunden bei Dir — Mo–Fr 9–18 Uhr
               </p>
               <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1.5">
                 <ShieldCheck size={16} aria-hidden={true} focusable={false} />

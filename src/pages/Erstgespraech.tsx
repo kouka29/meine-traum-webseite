@@ -175,8 +175,8 @@ const Erstgespraech = () => (
               </span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
-              Egal ob du noch gar keine Website haben oder deine bestehende endlich
-              Anfragen bringen soll — in 15 Minuten wissen wir, was dein nächster
+              Egal ob Du noch gar keine Website haben oder Deine bestehende endlich
+              Anfragen bringen soll — in 15 Minuten wissen wir, was Dein nächster
               Schritt ist.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -308,10 +308,10 @@ const Erstgespraech = () => (
               Konkrete Agenda · 15–20 Min
             </span>
             <h2 className="mb-4 text-balance">
-              Was du im Erstgespräch konkret bekommen
+              Was Du im Erstgespräch konkret bekommen
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Damit Du weißt, worauf du sich einlässt — hier ist der genaue Ablauf.
+              Damit Du weißt, worauf Du sich einlässt — hier ist der genaue Ablauf.
             </p>
           </div>
         </AnimatedSection>
@@ -380,7 +380,7 @@ const Erstgespraech = () => (
               Klare Erwartungen — von Anfang an
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Damit du genau wissen, was du erwartet — und was nicht.
+              Damit Du genau wissen, was Du erwartet — und was nicht.
             </p>
           </div>
         </AnimatedSection>
@@ -465,8 +465,8 @@ const Erstgespraech = () => (
                 15 Minuten. Kein Verkaufsgespräch.
               </h2>
               <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8 text-base sm:text-lg">
-                Wir schauen gemeinsam auf deine Situation und zeigen dir konkret,
-                was möglich ist. Danach entscheidest du in Ruhe.
+                Wir schauen gemeinsam auf Deine Situation und zeigen Dir konkret,
+                was möglich ist. Danach entscheidest Du in Ruhe.
               </p>
               <Button
                 size="lg"

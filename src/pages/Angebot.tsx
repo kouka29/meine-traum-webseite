@@ -236,10 +236,10 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
           <Lock size={24} color={BRAND} aria-hidden={true} focusable={false} />
         </div>
         <h1 style={{ fontSize: 26, fontWeight: 800, color: TEXT_DARK, marginBottom: 8 }}>
-          dein persönliches Angebot wartet auf du
+          Dein persönliches Angebot wartet auf Du
         </h1>
         <p style={{ color: TEXT_MUTED, marginBottom: 28, fontSize: 15 }}>
-          Bitte gib deinen persönlichen Zugangscode ein.
+          Bitte gib Deinen persönlichen Zugangscode ein.
         </p>
         <input
           type="password"
@@ -260,7 +260,7 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
         />
         {error && (
           <p style={{ color: "#EF4444", fontSize: 14, marginBottom: 16 }}>
-            Ungültiger Code. Bitte prüfen du deinen Zugangscode.
+            Ungültiger Code. Bitte prüfen Du Deinen Zugangscode.
           </p>
         )}
         <button
@@ -526,7 +526,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
               Häufige <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Fragen</span>
             </h2>
             <p style={{ fontSize: 18, color: TEXT_MUTED, textAlign: "center", marginBottom: 48, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-              Alles was Du weißt möchten — bevor du den nächsten Schritt gehen.
+              Alles was Du weißt möchten — bevor Du den nächsten Schritt gehen.
             </p>
             <Accordion type="single" collapsible defaultValue="faq-0" className="angebot-faq-accordion">
               {displayFaqs.map((f, i) => (
@@ -676,7 +676,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           textTransform: "uppercase", letterSpacing: "0.06em",
           marginBottom: 28,
         }}>
-          Persönliches Angebot — nur für du
+          Persönliches Angebot — nur für Du
         </div>
 
         <h1 className="ang-reveal ang-d-4" style={{
@@ -750,7 +750,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             }}>
               <span aria-hidden="true">💳</span>
               <strong style={{ color: BRAND, fontWeight: 700 }}>Einmalkauf</strong>
-              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— Website gehört dir</span>
+              <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>— Website gehört Dir</span>
             </span>
             <span style={{
               display: "inline-flex", alignItems: "center", gap: 8,
@@ -765,7 +765,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             </span>
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, fontStyle: "italic" }}>
-            Du entscheidest nach dem Erstgespräch — wir beraten du ehrlich.
+            Du entscheidest nach dem Erstgespräch — wir beraten Du ehrlich.
           </div>
         </div>
         </div>
@@ -784,7 +784,7 @@ function ProblemSection() {
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-          Was dein Unternehmen gerade <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>kostet</span><br />ohne professionelle Website
+          Was Dein Unternehmen gerade <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>kostet</span><br />ohne professionelle Website
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
           {problems.map((p, i) => (
@@ -808,7 +808,7 @@ function ProblemSection() {
           ))}
         </div>
         <p style={{ marginTop: 40, textAlign: "center", fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
-          Genau das ändern wir — mit deinem individuellen Projekt.
+          Genau das ändern wir — mit Deinem individuellen Projekt.
         </p>
       </div>
     </section>
@@ -897,10 +897,10 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-            Welches <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Paket</span> passt zu dir?
+            Welches <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Paket</span> passt zu Dir?
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            Wählen du deine Variante — alle Inhalte unten passen sich automatisch an.
+            Wählen Du Deine Variante — alle Inhalte unten passen sich automatisch an.
           </p>
         </div>
 
@@ -916,7 +916,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
           }}>
             <span style={{ fontSize: 18 }}>💡</span>
             <span>
-              <strong style={{ color: BRAND }}>Zwei Wege zu deiner Website</strong> — mieten ab <strong>{minMiete} €/Monat</strong> oder einmalig kaufen. Du entscheidest später.
+              <strong style={{ color: BRAND }}>Zwei Wege zu Deiner Website</strong> — mieten ab <strong>{minMiete} €/Monat</strong> oder einmalig kaufen. Du entscheidest später.
             </span>
           </div>
         )}
@@ -1071,7 +1071,7 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
             Was wir gemeinsam <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>umsetzen</span>
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, maxWidth: 560, margin: "0 auto" }}>
-            Jede Leistung — mit konkretem Nutzen für du.
+            Jede Leistung — mit konkretem Nutzen für Du.
           </p>
         </div>
         <div className="angebot-leistungen-grid ang-stagger-leist" style={{
@@ -1131,9 +1131,9 @@ function PriceSection({
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
             {hasMiete ? (
-              <>Wie möchtest du <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>zahlen</span>?</>
+              <>Wie möchtest Du <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>zahlen</span>?</>
             ) : (
-              <>dein <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span></>
+              <>Dein <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span></>
             )}
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
@@ -1220,7 +1220,7 @@ function PriceSection({
             fontSize: 13.5, color: TEXT_MUTED, textAlign: "center",
             lineHeight: 1.6,
           }}>
-            <strong style={{ color: TEXT_DARK }}>Beides enthält:</strong> alle Leistungen aus deinem Paket · 2 Korrekturrunden · DSGVO-konform · Hosting & Domain
+            <strong style={{ color: TEXT_DARK }}>Beides enthält:</strong> alle Leistungen aus Deinem Paket · 2 Korrekturrunden · DSGVO-konform · Hosting & Domain
           </div>
         )}
 
@@ -1243,7 +1243,7 @@ function PriceSection({
                 Optionale Erweiterungen
               </div>
               <h3 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
-                Stellen du dein Paket zusammen
+                Stellen Du Dein Paket zusammen
               </h3>
             </div>
             <div style={{ display: "grid", gap: 12 }}>
@@ -1339,7 +1339,7 @@ function PriceSection({
                 background: "#FEF3C7", color: "#92400E",
                 borderRadius: 12, fontSize: 13, lineHeight: 1.5,
               }}>
-                Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen du uns kurz an, wir senden dir einen passenden Zahlungslink.
+                Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen Du uns kurz an, wir senden Dir einen passenden Zahlungslink.
               </div>
             )}
           </div>
@@ -1514,7 +1514,7 @@ function TimelineSection() {
     <section className="angebot-timeline-section" style={{ padding: "clamp(58px, 8vw, 92px) 16px", background: "#fff" }}>
       <div className="angebot-timeline-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-          dein Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
+          Dein Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{ position: "relative" }}>
           {steps.map((s, i) => (
@@ -1954,7 +1954,7 @@ function ExpiredOverlay() {
           Dieses Angebot ist abgelaufen.
         </h2>
         <p style={{ color: TEXT_MUTED, marginBottom: 24, fontSize: 15 }}>
-          Sprechen du uns gerne an — wir erstellen ein aktuelles Angebot.
+          Sprechen Du uns gerne an — wir erstellen ein aktuelles Angebot.
         </p>
         <a
           href="https://meine-traum-webseite.de/kontakt"
@@ -2104,7 +2104,7 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
           {submitting ? <><Loader2 size={16} className="animate-spin" aria-hidden={true} focusable={false} /> Wird verarbeitet…</> : <>Zahlungspflichtig bestellen →</>}
         </button>
         <p style={{ marginTop: 12, fontSize: 11, color: TEXT_MUTED, textAlign: "center" }}>
-          Mit Klick erteilen du einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
+          Mit Klick erteilen Du einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
         </p>
       </form>
     </div>
@@ -2165,10 +2165,10 @@ function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; on
           <CheckCheck size={24} aria-hidden={true} focusable={false} />
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 10 }}>
-          Vielen Dank für deinen Auftrag!
+          Vielen Dank für Deinen Auftrag!
         </h2>
         <p style={{ color: TEXT_MUTED, fontSize: 15, marginBottom: 16 }}>
-          deine Bestellung wurde verbindlich erfasst. Du erhältst in Kürze eine Bestätigung per E-Mail.
+          Deine Bestellung wurde verbindlich erfasst. Du erhältst in Kürze eine Bestätigung per E-Mail.
         </p>
         <div style={{
           display: "inline-block", background: BG_SOFT, color: TEXT_DARK,

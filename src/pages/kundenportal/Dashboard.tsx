@@ -39,7 +39,7 @@ export default function KundenportalDashboard() {
     <div className="space-y-8">
       <div>
         <h1 className="font-heading text-3xl font-bold">Willkommen{account?.first_name ? `, ${account.first_name}` : ""} 👋</h1>
-        <p className="text-muted-foreground mt-1">Hier siehst du alles Wichtige zu deinem Webseiten-Projekt auf einen Blick.</p>
+        <p className="text-muted-foreground mt-1">Hier siehst Du alles Wichtige zu Deinem Webseiten-Projekt auf einen Blick.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
