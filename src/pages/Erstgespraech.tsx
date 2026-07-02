@@ -38,7 +38,7 @@ const cards = [
     icon: Sparkles,
     badge: "Ich brauche eine neue Website",
     title: "Null zu Online — mit System",
-    text: "Keine Website ist kein Problem. Wir bauen dir eine, die vom ersten Tag an Besucher in Anfragen verwandelt. Kein Baukastensystem. Keine Templates. Strategie first.",
+    text: "Keine Website ist kein Problem. Wir bauen Dir eine, die vom ersten Tag an Besucher in Anfragen verwandelt. Kein Baukastensystem. Keine Templates. Strategie first.",
     bullets: [
       "Konzept + Struktur inklusive",
       "Fertig in 2–4 Wochen",
@@ -49,10 +49,10 @@ const cards = [
     icon: TrendingUp,
     badge: "Meine Website bringt keine Anfragen",
     title: "Relaunch mit messbarem Ergebnis",
-    text: "Schickes Design reicht nicht. Wir analysieren was fehlt und bauen deine Website so um, dass Besucher zu Kunden werden. Unsere Kunden berichten von 2–5x mehr Anfragen.",
+    text: "Schickes Design reicht nicht. Wir analysieren was fehlt und bauen Deine Website so um, dass Besucher zu Kunden werden. Unsere Kunden berichten von 2–5x mehr Anfragen.",
     bullets: [
       "Website-Analyse inklusive",
-      "Keine Arbeit für du — wir übernehmen alles",
+      "Keine Arbeit für Du — wir übernehmen alles",
       "Ergebnisse messbar ab Tag 1",
     ],
   },
@@ -72,7 +72,7 @@ const trust = [
   {
     icon: Zap,
     title: "48 h Konzept — kostenlos",
-    text: "Du siehst, wie deine Website aussehen könnte, bevor du einen Euro ausgibst.",
+    text: "Du siehst, wie Deine Website aussehen könnte, bevor Du einen Euro ausgibst.",
   },
 ];
 
@@ -87,19 +87,19 @@ const faqs = [
   },
   {
     q: "Was muss ich selbst vorbereiten?",
-    a: "Wenig. Logo, Infos zum Business, Wunschfotos — wir führst du durch alles.",
+    a: "Wenig. Logo, Infos zum Business, Wunschfotos — wir führst Du durch alles.",
   },
   {
     q: "Was, wenn ich noch unsicher bin, ob ich überhaupt eine Website brauche?",
-    a: "Genau dafür ist das Gespräch da. Wir sagen dir ehrlich, ob sich eine neue/überarbeitete Website für du lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das auch.",
+    a: "Genau dafür ist das Gespräch da. Wir sagen Dir ehrlich, ob sich eine neue/überarbeitete Website für Du lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das auch.",
   },
   {
     q: "Geht das Gespräch auch per WhatsApp oder Telefon?",
-    a: "Ja. Du wählen, was dir lieber ist: Videocall, Telefon oder WhatsApp-Sprachnachrichten. Wir passen uns deinem Alltag an, nicht umgekehrt.",
+    a: "Ja. Du wählen, was Dir lieber ist: Videocall, Telefon oder WhatsApp-Sprachnachrichten. Wir passen uns Deinem Alltag an, nicht umgekehrt.",
   },
   {
     q: "Was passiert nach dem Gespräch?",
-    a: "Innerhalb von 48 Stunden bekommst du ein kostenloses, individuelles Konzept — Struktur, Textideen, visuelle Richtung. Du entscheidest dann komplett frei, ob du mit uns weitermachen wollen. Kein Druck, kein Folgeanruf.",
+    a: "Innerhalb von 48 Stunden bekommst Du ein kostenloses, individuelles Konzept — Struktur, Textideen, visuelle Richtung. Du entscheidest dann komplett frei, ob Du mit uns weitermachen wollen. Kein Druck, kein Folgeanruf.",
   },
 ];
 
@@ -114,17 +114,17 @@ const agenda = [
   {
     icon: MessageSquare,
     title: "deine Situation verstehen",
-    text: "Wir hören zu: Wo stehst du, was hast du probiert, was funktioniert nicht?",
+    text: "Wir hören zu: Wo stehst Du, was hast Du probiert, was funktioniert nicht?",
   },
   {
     icon: Target,
     title: "Zielgruppe & Positionierung schärfen",
-    text: "Wer soll bei dir anfragen — und warum genau bei dir, nicht beim Wettbewerb?",
+    text: "Wer soll bei Dir anfragen — und warum genau bei Dir, nicht beim Wettbewerb?",
   },
   {
     icon: Lightbulb,
     title: "Konkrete Lösungswege",
-    text: "Du bekommst 1–2 konkrete Vorschläge, wie deine Website Anfragen bringen kann.",
+    text: "Du bekommst 1–2 konkrete Vorschläge, wie Deine Website Anfragen bringen kann.",
   },
   {
     icon: FileText,
@@ -143,7 +143,7 @@ const notThis = [
   "Kein Standard-Pauschal-Angebot",
   "Kein Druck, kein „heute oder nie\"",
   "Kein verstecktes Kleingedrucktes",
-  "Keine Folgeanrufe, wenn du nicht wollen",
+  "Keine Folgeanrufe, wenn Du nicht wollen",
 ];
 
 const yesThis = [

@@ -33,7 +33,7 @@ const services = [
   {
     icon: Search,
     title: "SEO-Grundlagen",
-    desc: "Gefunden werden, wenn Kunden suchen. Wir sorgen dafür, dass deine Website bei Google sichtbar wird – von Anfang an.",
+    desc: "Gefunden werden, wenn Kunden suchen. Wir sorgen dafür, dass Deine Website bei Google sichtbar wird – von Anfang an.",
     features: ["On-Page Optimierung", "Technisches SEO", "Lokale Sichtbarkeit", "Google-konforme Struktur"],
     result: "Top-Platzierungen bei relevanten Suchbegriffen",
     link: "/leistungen",
@@ -41,7 +41,7 @@ const services = [
   {
     icon: Settings,
     title: "Individuelle Lösungen",
-    desc: "Buchungssysteme, Anbindungen, Automatisierungen – wir setzen um, was dein Business braucht. Maßgeschneidert und zukunftssicher.",
+    desc: "Buchungssysteme, Anbindungen, Automatisierungen – wir setzen um, was Dein Business braucht. Maßgeschneidert und zukunftssicher.",
     features: ["API-Integrationen", "Buchungssysteme", "Automatisierungen", "Individuelle Beratung"],
     result: "Zeitersparnis durch Automatisierung",
     link: "/kontakt",
@@ -50,11 +50,11 @@ const services = [
 
 const faqs = [
   { q: "Welche Leistungen bietet eure Webdesign Agentur?", a: "Wir bieten Conversion-Webdesign, UX/UI Design, SEO-Optimierung, Landingpage-Erstellung, Website Relaunch und Conversion-Optimierung – alles aus einer Hand." },
-  { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Du kannst jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten du gerne, welche Kombination für deine Ziele am sinnvollsten ist." },
+  { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Du kannst jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten Du gerne, welche Kombination für Deine Ziele am sinnvollsten ist." },
   { q: "Erstellt ihr auch Landingpages?", a: "Ja, wir erstellen hochkonvertierende Landingpages für Google Ads, Social Media Kampagnen und Lead-Generierung. Mehr dazu auf unserer Landingpage-Seite." },
-  { q: "Wie lange dauert ein Webdesign-Projekt?", a: "Eine typische Website ist innerhalb von 3–6 Wochen live. Landingpages oft schon in 1–2 Wochen. Den genauen Zeitplan stimmen wir nach dem Strategiegespräch mit dir ab." },
-  { q: "Was kostet eine professionelle Website?", a: "Unsere Websites starten ab einem klar definierten Festpreis. Den genauen Investitionsrahmen erhältst du nach einem kostenlosen Strategiegespräch – transparent, ohne versteckte Kosten." },
-  { q: "Übernehmt ihr auch die Pflege und Wartung?", a: "Ja, auf Wunsch übernehmen wir Hosting, Updates, Backups und inhaltliche Anpassungen in einem monatlichen Wartungspaket – damit deine Website dauerhaft schnell und sicher bleibt." },
+  { q: "Wie lange dauert ein Webdesign-Projekt?", a: "Eine typische Website ist innerhalb von 3–6 Wochen live. Landingpages oft schon in 1–2 Wochen. Den genauen Zeitplan stimmen wir nach dem Strategiegespräch mit Dir ab." },
+  { q: "Was kostet eine professionelle Website?", a: "Unsere Websites starten ab einem klar definierten Festpreis. Den genauen Investitionsrahmen erhältst Du nach einem kostenlosen Strategiegespräch – transparent, ohne versteckte Kosten." },
+  { q: "Übernehmt ihr auch die Pflege und Wartung?", a: "Ja, auf Wunsch übernehmen wir Hosting, Updates, Backups und inhaltliche Anpassungen in einem monatlichen Wartungspaket – damit Deine Website dauerhaft schnell und sicher bleibt." },
 ];
 
 const Services = () => (

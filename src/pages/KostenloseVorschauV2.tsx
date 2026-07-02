@@ -74,17 +74,17 @@ const painPoints = [
   {
     icon: AlertTriangle,
     title: "Veraltete Webseite",
-    text: "Du verlierst Aufträge, weil dein Auftritt online nicht überzeugt.",
+    text: "Du verlierst Aufträge, weil Dein Auftritt online nicht überzeugt.",
   },
   {
     icon: Clock,
     title: "Keine Zeit",
-    text: "Du hast genug mit deinem Kerngeschäft zu tun – die Webseite bleibt liegen.",
+    text: "Du hast genug mit Deinem Kerngeschäft zu tun – die Webseite bleibt liegen.",
   },
   {
     icon: Trophy,
     title: "Konkurrenz zieht vorbei",
-    text: "Andere Betriebe in deiner Region sind online besser aufgestellt als du.",
+    text: "Andere Betriebe in Deiner Region sind online besser aufgestellt als Du.",
   },
 ];
 
@@ -92,7 +92,7 @@ const processSteps = [
   {
     icon: ClipboardList,
     title: "Formular ausfüllen (2 Min.)",
-    text: "Sag mir kurz, was dein Betrieb macht.",
+    text: "Sag mir kurz, was Dein Betrieb macht.",
   },
   {
     icon: Wand2,
@@ -102,7 +102,7 @@ const processSteps = [
   {
     icon: Sparkles,
     title: "Du entscheidest – ohne Druck",
-    text: "Gefällt sie dir? Dann reden wir. Wenn nicht, zahlst du nichts.",
+    text: "Gefällt sie Dir? Dann reden wir. Wenn nicht, zahlst Du nichts.",
   },
 ];
 
@@ -136,27 +136,27 @@ const testimonials = [
 const faqs = [
   {
     q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als du denkst. Ein einziger neuer Auftrag reicht. Den Rest verdienen du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    a: "Ja – und zwar schneller als Du denkst. Ein einziger neuer Auftrag reicht. Den Rest verdienen Du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
     q: "Was passiert wenn mir die Vorschau nicht gefällt?",
-    a: "Gar nichts. Du zahlst keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige dir die Vorschau – gefällt sie dir nicht, war es das. Kein unangenehmes Gespräch danach.",
+    a: "Gar nichts. Du zahlst keinen Cent. Kein Kleingedrucktes, kein Druck, keine Verpflichtung. Ich zeige Dir die Vorschau – gefällt sie Dir nicht, war es das. Kein unangenehmes Gespräch danach.",
   },
   {
     q: "Muss ich selbst viel Zeit investieren oder mich um Technik kümmern?",
-    a: "Nein. Du füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst deine fertige Website – ohne einen einzigen technischen Handgriff.",
+    a: "Nein. Du füllen einmal ein 2-Minuten-Formular aus und lehnen sich zurück. Ich kümmere mich um alles: Design, Texte, Technik, Einrichtung. Du bekommst Deine fertige Website – ohne einen einzigen technischen Handgriff.",
   },
   {
     q: "Was passiert nach den 12 Monaten Mindestlaufzeit?",
-    a: "Nach den 12 Monaten läuft dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
+    a: "Nach den 12 Monaten läuft Dein Vertrag automatisch monatlich weiter – das ist der Normalfall.\nSie können aber jederzeit kündigen, mit einer Frist von nur 30 Tagen.\nKein Preisanstieg, kein neuer Vertrag, keine versteckten Änderungen.\nEinfach kurz Bescheid geben – fertig.",
   },
   {
     q: "Warum gibt es eine 12-monatige Mindestlaufzeit?",
-    a: "Eine Website ist kein Sprint, sondern ein Marathon. Google braucht 3–6 Monate, um du für lokale Suchanfragen ernst zu nehmen. Erst nach diesem Zeitraum siehst du die volle Wirkung. Mit der Laufzeit stellen wir sicher, dass du nicht zu früh aufgeben – und tatsächlich Ergebnisse sehen.",
+    a: "Eine Website ist kein Sprint, sondern ein Marathon. Google braucht 3–6 Monate, um Du für lokale Suchanfragen ernst zu nehmen. Erst nach diesem Zeitraum siehst Du die volle Wirkung. Mit der Laufzeit stellen wir sicher, dass Du nicht zu früh aufgeben – und tatsächlich Ergebnisse sehen.",
   },
   {
     q: "Wie lange dauert es bis ich erste Anfragen bekomme?",
-    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von deiner Region und deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
+    a: "Die meisten unserer Kunden sehen erste Ergebnisse innerhalb von 2–6 Wochen nach Launch. Wie schnell es geht hängt von Deiner Region und Deinem Gewerk ab. Wer zusätzlich Google Business einrichtet (ab Pro-Paket inklusive) sieht oft noch schneller Ergebnisse.",
   },
 ];
 
@@ -652,7 +652,7 @@ const SuccessScreen = ({
           Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.{" "}
           {isWaitlist
             ? `Sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir, um den Termin zu bestätigen.`
-            : "Dein Platz ist für du vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
+            : "Dein Platz ist für Du vorgemerkt – nach unserem kurzen Gespräch ist er fix Deiner."}
         </p>
         <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
           <p className="font-bold mb-4 text-center">So geht's weiter:</p>
@@ -1927,7 +1927,7 @@ const KostenloseVorschauV2 = () => {
             <h2 className="text-3xl text-3xl font-bold mb-4 leading-tight">
               {isWaitlist
                 ? `${monatName} ist ausgebucht – sichere sich ${nextMonthLabel}.`
-                : (settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut.")}
+                : (settings?.final_cta_headline ?? "Warte nicht, bis es Dein Mitbewerber tut.")}
             </h2>
             <p className="text-base sm:text-xl text-primary-foreground/85 mb-8">
               {isWaitlist

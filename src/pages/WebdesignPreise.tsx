@@ -327,7 +327,7 @@ export const rentPackages: Pkg[] = [
     badge: "Starter Miete – 59 €/Monat netto",
     priceId: "starter_rent_monthly",
     features: [
-      "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
+      "1 Seite: Leistungen, Über Dich, Kontakt & Anfrageformular",
       "Individuelle Texte & Inhalte – Du lieferst die Infos, wir schreiben",
       "Perfekt auf jedem Smartphone & Tablet",
       "Hosting, Domain & SSL inklusive – keine Extra-Kosten",
@@ -353,7 +353,7 @@ export const rentPackages: Pkg[] = [
     features: [
       "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
       "Google Maps & Google Business vollständig eingerichtet",
-      "Bei Google gefunden werden – wenn Kunden in deiner Stadt suchen",
+      "Bei Google gefunden werden – wenn Kunden in Deiner Stadt suchen",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
       "Kontaktformular auf jeder Seite",
       "Optimierte Ladezeiten durch Bildkomprimierung",
@@ -377,10 +377,10 @@ export const rentPackages: Pkg[] = [
     includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
       "Bis zu 10 Seiten – Deine komplette Online-Präsenz",
-      "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
+      "Google-Optimierung beim Launch – damit Dich Kunden in Deiner Stadt finden",
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
       "Feinschliff nach Launch inklusive – damit alles genau passt",
-      "Angebotsanfrage-Formular – Kunden liefern dir alle Projektinfos direkt",
+      "Angebotsanfrage-Formular – Kunden liefern Dir alle Projektinfos direkt",
       "Bis zu 3 zusätzliche Landingpage inklusive – ideal für Aktionen oder Werbekampagnen",
       "Persönlicher Ansprechpartner",
     ],
@@ -437,9 +437,9 @@ const buyPackages: BuyPkg[] = [
     price: "990 € einmalig",
     badge: "Starter Kauf – 990 € netto",
     priceId: "starter_purchase_deposit",
-    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 € (alle Preise netto)",
+    compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst Du 426 € (alle Preise netto)",
     features: [
-      "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
+      "1 Seite: Leistungen, Über Dich, Kontakt & Anfrageformular",
       "Individuelle Texte & Inhalte – Du lieferst die Infos, wir schreiben",
       "Perfekt auf jedem Smartphone & Tablet",
       "Hosting, Domain & SSL inklusive – keine Extra-Kosten",
@@ -462,12 +462,12 @@ const buyPackages: BuyPkg[] = [
     price: "1.990 € einmalig",
     badge: "Pro Kauf – 1.990 € netto",
     priceId: "pro_purchase_deposit",
-    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst du 386 € (alle Preise netto)",
+    compare: "Miete Pro: 99 € × 24 = 2.376 € — hier sparst Du 386 € (alle Preise netto)",
     includesHint: "✓ Alles aus Starter inklusive – plus:",
     features: [
       "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
       "Google Maps & Google Business vollständig eingerichtet",
-      "Bei Google gefunden werden – wenn Kunden in deiner Stadt suchen",
+      "Bei Google gefunden werden – wenn Kunden in Deiner Stadt suchen",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
       "Kontaktformular auf jeder Seite",
       "Optimierte Ladezeiten durch Bildkomprimierung",
@@ -489,14 +489,14 @@ const buyPackages: BuyPkg[] = [
     price: "3.590 € einmalig",
     badge: "Premium Kauf – 3.590 € netto",
     priceId: "premium_purchase_deposit",
-    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 226 € (alle Preise netto)",
+    compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst Du 226 € (alle Preise netto)",
     includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
       "Bis zu 10 Seiten – Deine komplette Online-Präsenz",
-      "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
+      "Google-Optimierung beim Launch – damit Dich Kunden in Deiner Stadt finden",
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
       "Feinschliff nach Launch inklusive – damit alles genau passt",
-      "Angebotsanfrage-Formular – Kunden liefern dir alle Projektinfos direkt",
+      "Angebotsanfrage-Formular – Kunden liefern Dir alle Projektinfos direkt",
       "Bis zu 3 zusätzliche Landingpage inklusive – ideal für Aktionen oder Werbekampagnen",
       "Persönlicher Ansprechpartner",
     ],
@@ -534,23 +534,23 @@ const buyEnterprise = {
 const faqs = [
   {
     q: "Mieten oder kaufen – was passt zu mir?",
-    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – Du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
+    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – Du kümmerst Dich um nichts. Einmalkauf = einmal zahlen, die Website gehört Dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten Dich kostenlos.",
   },
   {
     q: "Wie lange dauert es bis meine Website fertig ist?",
-    a: "Beim Starter-Paket ist deine Website in 7 Tagen live. Beim Pro-Paket ca. 2 Wochen. Beim Premium-Paket besprechen wir Timing individuell nach deinen Wünschen.",
+    a: "Beim Starter-Paket ist Deine Website in 7 Tagen live. Beim Pro-Paket ca. 2 Wochen. Beim Premium-Paket besprechen wir Timing individuell nach Deinen Wünschen.",
   },
   {
     q: "Was passiert nach den 12 Monaten?",
-    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – Du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
+    a: "Nach dem 12-monatigen Startzeitraum läuft Dein Vertrag monatlich weiter – Du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
   },
   {
     q: "Muss ich selbst Texte und Inhalte liefern?",
-    a: "Nein – Du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
+    a: "Nein – Du lieferst uns Deine Infos (was Du anbietest, wo Du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für Dich. Professionell, auf Dein Unternehmen zugeschnitten.",
   },
   {
     q: "Was ist wenn ich mit der Website nicht zufrieden bin?",
-    a: "Wir zeigen dir vor dem Launch eine Vorschau – erst wenn du zufrieden bist, gehen wir live. Beim Premium-Paket sind zusätzlich Korrekturen nach Launch inklusive.",
+    a: "Wir zeigen Dir vor dem Launch eine Vorschau – erst wenn Du zufrieden bist, gehen wir live. Beim Premium-Paket sind zusätzlich Korrekturen nach Launch inklusive.",
   },
   {
     q: "Kann ich mein Paket später wechseln?",
@@ -558,7 +558,7 @@ const faqs = [
   },
   {
     q: "Ist die Website auch auf dem Handy nutzbar?",
-    a: "Ja – alle Websites sind vollständig für Smartphones und Tablets optimiert. Deine Kunden können dich von überall problemlos erreichen.",
+    a: "Ja – alle Websites sind vollständig für Smartphones und Tablets optimiert. Deine Kunden können Dich von überall problemlos erreichen.",
   },
 ];
 

@@ -10,16 +10,16 @@ export default function KaufErfolgreich() {
   const isRent = kind === "rent";
 
   const heading = isRent
-    ? "Vielen Dank für deine Buchung!"
-    : "Vielen Dank für deine Anzahlung!";
+    ? "Vielen Dank für Deine Buchung!"
+    : "Vielen Dank für Deine Anzahlung!";
 
   const subline = isRent
-    ? "Dein Miet-Abo ist aktiv. Wir starten jetzt mit deiner neuen Website."
-    : "Deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit deiner neuen Website.";
+    ? "Dein Miet-Abo ist aktiv. Wir starten jetzt mit Deiner neuen Website."
+    : "Deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit Deiner neuen Website.";
 
   const emailText = isRent
-    ? "Du erhältst in Kürze eine Bestätigung mit deiner ersten Monatsrechnung als PDF."
-    : "Du erhältst in Kürze eine Bestätigung mit deiner Anzahlungs-Rechnung als PDF.";
+    ? "Du erhältst in Kürze eine Bestätigung mit Deiner ersten Monatsrechnung als PDF."
+    : "Du erhältst in Kürze eine Bestätigung mit Deiner Anzahlungs-Rechnung als PDF.";
 
   return (
     <main id="main-content" className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-background to-muted/30">

@@ -172,7 +172,7 @@ export default function Angebot() {
       <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: "100vh", background: BG_SOFT, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
         <div style={{ background: "#fff", borderRadius: 20, padding: 40, maxWidth: 480, textAlign: "center", boxShadow: "0 10px 40px rgba(79,63,240,0.1)" }}>
           <h1 style={{ color: TEXT_DARK, fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Ungültiger Link</h1>
-          <p style={{ color: TEXT_MUTED }}>{shortError || "Dieser Angebot-Link ist nicht gültig. Bitte prüfen du die URL oder kontaktiere uns."}</p>
+          <p style={{ color: TEXT_MUTED }}>{shortError || "Dieser Angebot-Link ist nicht gültig. Bitte prüfen Du die URL oder kontaktiere uns."}</p>
         </div>
       </div>
     );
@@ -702,7 +702,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
         }}>
           {nachricht && nachricht.trim()
             ? nachricht
-            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für du und dein Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}
+            : "Schön, dass wir uns kennenlernen durften. Dieses Angebot haben wir speziell für Du und Dein Unternehmen zusammengestellt — kein Standard, sondern genau das, was wir gemeinsam besprochen haben."}
         </p>
 
         {/* Countdown — Inline, kein Kasten */}
@@ -776,7 +776,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
 
 function ProblemSection() {
   const problems = [
-    { titel: "Unsichtbar bei Google", text: "Kunden finden deine Mitbewerber — nicht du." },
+    { titel: "Unsichtbar bei Google", text: "Kunden finden Deine Mitbewerber — nicht Du." },
     { titel: "Kein Vertrauen auf den ersten Blick", text: "Interessenten springen ab, bevor sie überhaupt anrufen." },
     { titel: "Kein System für neue Anfragen", text: "Aufträge kommen per Zufall — nicht planbar." },
   ];
@@ -822,16 +822,16 @@ function nutzenFor(titel: string, beschreibung?: string): string {
     return b.startsWith("→") ? b : `→ ${b}`;
   }
   const t = (titel || "").toLowerCase();
-  if (t.includes("produkt") || t.includes("artikel")) return "→ deine Produkte sind sofort online kaufbar — rund um die Uhr.";
+  if (t.includes("produkt") || t.includes("artikel")) return "→ Deine Produkte sind sofort online kaufbar — rund um die Uhr.";
   if (t.includes("kategor")) return "→ Kunden finden sich in deinem Shop sofort zurecht.";
   if (t.includes("design") || t.includes("marke")) return "→ Kunden nimm auf den ersten Blick ernst.";
-  if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht du — egal von welchem Gerät.";
-  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ dein Shop läuft automatisch — Du musst nichts manuell tun.";
-  if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei dir — ohne Umwege.";
-  if (t.includes("korrektur") || t.includes("runde")) return "→ Du bekommst genau das, was du sich vorgestellt haben.";
+  if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht Du — egal von welchem Gerät.";
+  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ Dein Shop läuft automatisch — Du musst nichts manuell tun.";
+  if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei Dir — ohne Umwege.";
+  if (t.includes("korrektur") || t.includes("runde")) return "→ Du bekommst genau das, was Du sich vorgestellt haben.";
   if (t.includes("impressum") || t.includes("datenschutz")) return "→ Rechtlich abgesichert — kein Stress mit Abmahnungen.";
-  if (t.includes("support") || t.includes("whatsapp")) return "→ Bei Fragen sind wir direkt für du da — ohne Warteschleife.";
-  if (t.includes("launch") || t.includes("live") || t.includes("veröffentlich")) return "→ deine Website geht pünktlich online — wir kümmern uns um alles.";
+  if (t.includes("support") || t.includes("whatsapp")) return "→ Bei Fragen sind wir direkt für Du da — ohne Warteschleife.";
+  if (t.includes("launch") || t.includes("live") || t.includes("veröffentlich")) return "→ Deine Website geht pünktlich online — wir kümmern uns um alles.";
   return "";
 }
 
@@ -840,12 +840,12 @@ function addonBeschreibungFor(titel: string, beschreibung?: string): string {
   if (beschreibung && beschreibung.trim()) return beschreibung.trim();
   const t = (titel || "").toLowerCase();
   if (t.includes("care") || t.includes("wartung") || t.includes("support")) {
-    return "Wir halten deine Website aktuell, sicher und fehlerfrei. Updates, Backups und technischer Support — monatlich gebucht, monatlich kündbar.";
+    return "Wir halten Deine Website aktuell, sicher und fehlerfrei. Updates, Backups und technischer Support — monatlich gebucht, monatlich kündbar.";
   }
   if (t.includes("seo")) {
     return "Mehr Sichtbarkeit bei Google — damit Kunden Du findest, bevor sie zur Konkurrenz gehen.";
   }
-  return "Auf Anfrage erfahren du mehr Details.";
+  return "Auf Anfrage erfahren Du mehr Details.";
 }
 
 function badgeFor(index: number, total: number): string {
@@ -857,13 +857,13 @@ function badgeFor(index: number, total: number): string {
 
 // ─── Standard-FAQs (Fallback wenn Admin keine eingetragen hat) ──
 const STANDARD_FAQS: Faq[] = [
-  { frage: "Was passiert direkt nach der Beauftragung?", antwort: "Sobald du den Auftrag erteilt haben, erhältst du innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei dir, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
-  { frage: "Wie lange dauert die Umsetzung?", antwort: "Die Umsetzung beginnt direkt nach Zahlungseingang. Je nach Paket und deiner Mitwirkung (Texte, Bilder, Inhalte) ist deine Website in der Regel innerhalb von 2–4 Wochen fertig und live. Wir halten du während des gesamten Prozesses auf dem Laufenden." },
-  { frage: "Was wenn das Ergebnis nicht den Erwartungen entspricht?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Du siehst die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis du zufrieden sind — im Rahmen der vereinbarten Runden." },
-  { frage: "Besteht eine langfristige Bindung?", antwort: "Beim Einmalkauf gehört dir die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben du flexibel." },
-  { frage: "Welche monatlichen Kosten entstehen nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei deinem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
-  { frage: "Kann die Website später selbst bearbeitet werden?", antwort: "Ja. Wir bauen deine Website so auf, dass du Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir dir im Kickoff wie das funktioniert. Für alles Weitere steht dir unser Care-Paket zur Verfügung." },
-  { frage: "Was ist der Unterschied zwischen Website kaufen und Website mieten?", antwort: "Beim Kauf zahlst du einmalig und die Website gehört dir. Beim Mietmodell zahlst du eine monatliche Rate — dafür ist der Einstieg günstiger, und Wartung sowie Updates sind inklusive. Welches Modell besser zu dir passt, hängt von deinem Budget und deinen Zielen ab. Beides führt zum gleichen Ergebnis: eine professionelle Website die Kunden bringt." },
+  { frage: "Was passiert direkt nach der Beauftragung?", antwort: "Sobald Du den Auftrag erteilt haben, erhältst Du innerhalb weniger Minuten eine Auftragsbestätigung per E-Mail. Wir melden uns anschließend innerhalb von 24 Stunden bei Dir, um einen Kickoff-Termin zu vereinbaren — und die Umsetzung startet." },
+  { frage: "Wie lange dauert die Umsetzung?", antwort: "Die Umsetzung beginnt direkt nach Zahlungseingang. Je nach Paket und Deiner Mitwirkung (Texte, Bilder, Inhalte) ist Deine Website in der Regel innerhalb von 2–4 Wochen fertig und live. Wir halten Du während des gesamten Prozesses auf dem Laufenden." },
+  { frage: "Was wenn das Ergebnis nicht den Erwartungen entspricht?", antwort: "Kein Problem — dafür sind die Korrekturrunden im Paket enthalten. Du siehst die Website bevor sie live geht und können gezielt Änderungen anfordern. Wir arbeiten so lange daran, bis Du zufrieden sind — im Rahmen der vereinbarten Runden." },
+  { frage: "Besteht eine langfristige Bindung?", antwort: "Beim Einmalkauf gehört Dir die Website vollständig — keine Bindung, kein Abo. Beim Mietmodell gilt eine Mindestlaufzeit von 12 Monaten, danach monatlich kündbar. In beiden Fällen bleiben Du flexibel." },
+  { frage: "Welche monatlichen Kosten entstehen nach dem Projekt?", antwort: "Beim Einmalkauf entstehen nach Projektabschluss nur die regulären Hosting- und Domain-Kosten (ca. 10–20 € / Monat, je nach Anbieter). Diese werden direkt bei Deinem Hosting-Anbieter abgerechnet — nicht bei uns. Beim Mietmodell ist Hosting bereits enthalten." },
+  { frage: "Kann die Website später selbst bearbeitet werden?", antwort: "Ja. Wir bauen Deine Website so auf, dass Du Texte, Bilder und Inhalte selbst aktualisieren können — ohne technisches Vorwissen. Auf Wunsch zeigen wir Dir im Kickoff wie das funktioniert. Für alles Weitere steht Dir unser Care-Paket zur Verfügung." },
+  { frage: "Was ist der Unterschied zwischen Website kaufen und Website mieten?", antwort: "Beim Kauf zahlst Du einmalig und die Website gehört Dir. Beim Mietmodell zahlst Du eine monatliche Rate — dafür ist der Einstieg günstiger, und Wartung sowie Updates sind inklusive. Welches Modell besser zu Dir passt, hängt von Deinem Budget und Deinen Zielen ab. Beides führt zum gleichen Ergebnis: eine professionelle Website die Kunden bringt." },
 ];
 
 function resolveFaqs(custom: Faq[] | undefined, hasMiete: boolean): Faq[] {
@@ -1137,7 +1137,7 @@ function PriceSection({
             )}
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            {hasMiete ? "Beide Wege — gleiches Ergebnis. Du entscheidest." : "Einmalige Investition — Deine Website gehört dir."}
+            {hasMiete ? "Beide Wege — gleiches Ergebnis. Du entscheidest." : "Einmalige Investition — Deine Website gehört Dir."}
           </p>
         </div>
 
@@ -1175,7 +1175,7 @@ function PriceSection({
             mainPrice={`${Number(preis).toLocaleString("de-DE")} €`}
             mainSub={null}
             normalpreis={normalpreis ?? null}
-            tagline="Einmalige Investition. Website gehört dir."
+            tagline="Einmalige Investition. Website gehört Dir."
             bullets={[
               "Kein monatlicher Aufwand",
               "Vollständiges Eigentum",
@@ -1484,7 +1484,7 @@ function TimelineSection() {
     {
       n: 1,
       titel: "Auftrag erteilen",
-      text: "Du bestätigen heute verbindlich. Wir reservieren deine Kapazitäten und schalten den Zugang frei.",
+      text: "Du bestätigen heute verbindlich. Wir reservieren Deine Kapazitäten und schalten den Zugang frei.",
       badge: "Sofort",
       badgeTone: "primary" as const,
     },
@@ -1505,7 +1505,7 @@ function TimelineSection() {
     {
       n: 4,
       titel: "Live & fertig",
-      text: "Wir feiern den Launch gemeinsam und begleiten du auch danach, um den dauerhaften Erfolg zu sichern.",
+      text: "Wir feiern den Launch gemeinsam und begleiten Du auch danach, um den dauerhaften Erfolg zu sichern.",
       badge: "Go-Live",
       badgeTone: "success" as const,
     },
@@ -2021,7 +2021,7 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
       if (!r?.success || !r.auftrags_nr) throw new Error(r?.error || "Buchung fehlgeschlagen");
       onSuccess(r.auftrags_nr);
     } catch (err: any) {
-      setError(err?.message || "Es ist ein Fehler aufgetreten. Bitte versuchen du es erneut.");
+      setError(err?.message || "Es ist ein Fehler aufgetreten. Bitte versuchen Du es erneut.");
     } finally {
       setSubmitting(false);
     }

@@ -34,7 +34,7 @@ export default function KundenportalLogin() {
       return;
     }
     if (password.length < 6) {
-      toast.error("Bitte gib dein Passwort ein");
+      toast.error("Bitte gib Dein Passwort ein");
       return;
     }
 
@@ -46,7 +46,7 @@ export default function KundenportalLogin() {
     setLoading(false);
 
     if (error) {
-      toast.error("E-Mail oder Passwort stimmt nicht. Falls du noch kein Passwort hast, setze es über „Passwort vergessen“.");
+      toast.error("E-Mail oder Passwort stimmt nicht. Falls Du noch kein Passwort hast, setze es über „Passwort vergessen“.");
       return;
     }
 

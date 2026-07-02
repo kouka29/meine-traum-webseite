@@ -6,10 +6,10 @@ import { ArrowRight, Check, Clock, Shield, Gift } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const steps = [
-  { step: "1", title: "Kostenloses Erstgespräch", desc: "Wir besprechen deine Ziele, Zielgruppe und Anforderungen – telefonisch oder per Video." },
-  { step: "2", title: "Kostenlose Vorschau in 48 h", desc: "Du erhältst eine individuelle Vorschau deiner neuen Website – komplett unverbindlich." },
-  { step: "3", title: "Professionelle Umsetzung", desc: "Nach deiner Freigabe setzen wir das Projekt in 2–4 Wochen um – mit laufendem Feedback." },
-  { step: "4", title: "Launch & Support", desc: "Go-Live, Einweisung und optionaler Support – damit deine Website langfristig performt." },
+  { step: "1", title: "Kostenloses Erstgespräch", desc: "Wir besprechen Deine Ziele, Zielgruppe und Anforderungen – telefonisch oder per Video." },
+  { step: "2", title: "Kostenlose Vorschau in 48 h", desc: "Du erhältst eine individuelle Vorschau Deiner neuen Website – komplett unverbindlich." },
+  { step: "3", title: "Professionelle Umsetzung", desc: "Nach Deiner Freigabe setzen wir das Projekt in 2–4 Wochen um – mit laufendem Feedback." },
+  { step: "4", title: "Launch & Support", desc: "Go-Live, Einweisung und optionaler Support – damit Deine Website langfristig performt." },
 ];
 
 const benefits = [
@@ -22,10 +22,10 @@ const benefits = [
 ];
 
 const faqs = [
-  { q: "Was kostet es, eine Website erstellen zu lassen?", a: "Die Kosten für eine professionelle Website starten ab 990 €. Der Preis hängt vom Umfang ab – Landingpage, Unternehmensseite oder E-Commerce. Wir erstellen dir ein individuelles Angebot nach dem Erstgespräch." },
+  { q: "Was kostet es, eine Website erstellen zu lassen?", a: "Die Kosten für eine professionelle Website starten ab 990 €. Der Preis hängt vom Umfang ab – Landingpage, Unternehmensseite oder E-Commerce. Wir erstellen Dir ein individuelles Angebot nach dem Erstgespräch." },
   { q: "Wie lange dauert es, eine Homepage erstellen zu lassen?", a: "Eine typische Website ist in 2–4 Wochen fertig. Einfache Landingpages können schneller umgesetzt werden. Du erhältst bereits nach 48 Stunden eine kostenlose Vorschau." },
-  { q: "Kann ich meine Website selbst pflegen?", a: "Ja! Wir integrieren ein einfach bedienbares CMS, mit dem du Texte, Bilder und Inhalte selbst aktualisieren können – ohne technische Kenntnisse." },
-  { q: "Website erstellen lassen oder selbst machen?", a: "Eine professionell erstellte Website spart dir Zeit und liefert bessere Ergebnisse. Unsere Kunden berichten von durchschnittlich 3x mehr Anfragen nach dem Relaunch. Selbstgebaute Websites erreichen selten diese Conversion-Raten." },
+  { q: "Kann ich meine Website selbst pflegen?", a: "Ja! Wir integrieren ein einfach bedienbares CMS, mit dem Du Texte, Bilder und Inhalte selbst aktualisieren können – ohne technische Kenntnisse." },
+  { q: "Website erstellen lassen oder selbst machen?", a: "Eine professionell erstellte Website spart Dir Zeit und liefert bessere Ergebnisse. Unsere Kunden berichten von durchschnittlich 3x mehr Anfragen nach dem Relaunch. Selbstgebaute Websites erreichen selten diese Conversion-Raten." },
   { q: "Ist die Website auch für Suchmaschinen optimiert?", a: "Ja, SEO-Grundlagen sind bei uns immer inklusive: sauberer Code, Meta-Tags, strukturierte Daten, schnelle Ladezeiten und mobile Optimierung." },
 ];
 

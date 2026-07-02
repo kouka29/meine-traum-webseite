@@ -6,25 +6,25 @@ import { ArrowRight, Check, Lightbulb, Search, Users, Smartphone, TrendingUp, Ta
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
-  "Deine Website vermittelt nicht die Expertise und Persönlichkeit, die deine Klienten erwarten",
+  "Deine Website vermittelt nicht die Expertise und Persönlichkeit, die Deine Klienten erwarten",
   "Du gewinnst Klienten nur über Empfehlungen – Deine Website bringt keine neuen Anfragen",
-  "Besucher verstehen nicht sofort, wie du ihnen helfen können, und springen ab",
+  "Besucher verstehen nicht sofort, wie Du ihnen helfen können, und springen ab",
   "Du hast kein System für automatisierte Terminbuchung oder Lead-Generierung",
 ];
 
 const features = [
-  { icon: Lightbulb, title: "Persönliches Branding", desc: "Deine Website wird zur Bühne für deine Expertise – mit einem Design, das deine Persönlichkeit und Methodik widerspiegelt." },
+  { icon: Lightbulb, title: "Persönliches Branding", desc: "Deine Website wird zur Bühne für Deine Expertise – mit einem Design, das Deine Persönlichkeit und Methodik widerspiegelt." },
   { icon: Search, title: "SEO für Coaches", desc: 'Gefunden werden bei "Coach für Dein Thema in Deiner Stadt", "Berater für Dein Thema" und ähnlichen Suchanfragen.' },
-  { icon: Target, title: "Klare Positionierung", desc: "Deine Zielgruppe erkennt sofort, ob du der richtige Coach oder Berater sind – durch gezielte Ansprache." },
+  { icon: Target, title: "Klare Positionierung", desc: "Deine Zielgruppe erkennt sofort, ob Du der richtige Coach oder Berater sind – durch gezielte Ansprache." },
   { icon: Users, title: "Vertrauensaufbau", desc: "Testimonials, Erfolgsgeschichten und Zertifizierungen werden professionell präsentiert." },
   { icon: Smartphone, title: "Mobilfreundlich", desc: "Deine Website sieht auf jedem Gerät professionell aus – wichtig, da viele Klienten unterwegs recherchieren." },
   { icon: TrendingUp, title: "Mehr Klienten gewinnen", desc: "Conversion-optimierter Aufbau mit klaren CTAs – von der Erstberatung bis zur Buchung." },
 ];
 
 const faqs = [
-  { q: "Warum brauche ich als Coach eine professionelle Website?", a: "Deine Website ist dein digitales Aushängeschild. Potenzielle Klienten prüfen deine Online-Präsenz, bevor sie Kontakt aufnehmen. Eine professionelle Website schafft Vertrauen und positioniert du als Experte." },
+  { q: "Warum brauche ich als Coach eine professionelle Website?", a: "Deine Website ist Dein digitales Aushängeschild. Potenzielle Klienten prüfen Deine Online-Präsenz, bevor sie Kontakt aufnehmen. Eine professionelle Website schafft Vertrauen und positioniert Du als Experte." },
   { q: "Was kostet eine Coach-Website?", a: "Unsere Websites für Coaches und Berater starten ab 990 €. Inkl. persönlichem Branding, SEO und Conversion-Optimierung. Kostenlose Vorschau in 48 h." },
-  { q: "Kann ich Testimonials und Erfolgsgeschichten selbst einpflegen?", a: "Ja, wir richten deine Website so ein, dass du Inhalte wie Testimonials, Blog-Beiträge und Angebote einfach selbst aktualisieren können." },
+  { q: "Kann ich Testimonials und Erfolgsgeschichten selbst einpflegen?", a: "Ja, wir richten Deine Website so ein, dass Du Inhalte wie Testimonials, Blog-Beiträge und Angebote einfach selbst aktualisieren können." },
   { q: "Bietet ihr auch Landingpages für einzelne Angebote an?", a: "Ja! Für Webinare, Online-Kurse oder spezielle Programme erstellen wir gezielte Landingpages, die Teilnehmer und Klienten gewinnen." },
 ];
 

@@ -8,24 +8,24 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const painPoints = [
   "Du verlierst Aufträge an modernere Handwerksbetriebe mit besserer Online-Präsenz",
   "Deine aktuelle Website ist veraltet und macht keinen professionellen Eindruck",
-  "Potenzielle Kunden findest du bei Google nicht – aber deine Konkurrenz schon",
+  "Potenzielle Kunden findest Du bei Google nicht – aber Deine Konkurrenz schon",
   "Deine Website sieht auf dem Smartphone schlecht aus, obwohl die meisten dort suchen",
 ];
 
 const features = [
   { icon: Hammer, title: "Design für Handwerker", desc: "Deine Website zeigt sofort, wer Du bist und was Du kannst – vertrauenswürdig, professionell und einladend." },
-  { icon: Search, title: "Lokales SEO", desc: "Wir sorgen dafür, dass du bei Google Maps und lokalen Suchanfragen ganz oben erscheinen." },
-  { icon: Star, title: "Bewertungen einbinden", desc: "Zeigst du deine besten Google-Bewertungen direkt auf der Website – für sofortiges Vertrauen." },
-  { icon: Smartphone, title: "Mobilfreundlich", desc: "Perfekte Darstellung auf Smartphone und Tablet – da, wo deine Kunden nach Handwerkern suchen." },
-  { icon: Users, title: "Einfache Kontaktaufnahme", desc: "Click-to-Call, Kontaktformular und WhatsApp-Button – Kunden erreichen du mit einem Klick." },
-  { icon: TrendingUp, title: "Messbar mehr Aufträge", desc: "Tracking und Analytics zeigen dir genau, wie viele Anfragen über deine Website reinkommen." },
+  { icon: Search, title: "Lokales SEO", desc: "Wir sorgen dafür, dass Du bei Google Maps und lokalen Suchanfragen ganz oben erscheinen." },
+  { icon: Star, title: "Bewertungen einbinden", desc: "Zeigst Du Deine besten Google-Bewertungen direkt auf der Website – für sofortiges Vertrauen." },
+  { icon: Smartphone, title: "Mobilfreundlich", desc: "Perfekte Darstellung auf Smartphone und Tablet – da, wo Deine Kunden nach Handwerkern suchen." },
+  { icon: Users, title: "Einfache Kontaktaufnahme", desc: "Click-to-Call, Kontaktformular und WhatsApp-Button – Kunden erreichen Du mit einem Klick." },
+  { icon: TrendingUp, title: "Messbar mehr Aufträge", desc: "Tracking und Analytics zeigen Dir genau, wie viele Anfragen über Deine Website reinkommen." },
 ];
 
 const faqs = [
-  { q: "Brauche ich als Handwerker wirklich eine professionelle Website?", a: "Ja! Über 85% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlierst du täglich Aufträge an die Konkurrenz, die online besser aufgestellt ist." },
-  { q: "Was kostet eine Handwerker-Website?", a: "Unsere Handwerker-Websites starten ab 990 €. Dafür erhältst du ein professionelles, conversion-optimiertes Design mit SEO-Grundlagen. Eine kostenlose Vorschau gibt es in 48 h." },
-  { q: "Wie lange dauert es, bis meine Website online ist?", a: "In der Regel 2–4 Wochen. Eine erste Vorschau deiner neuen Website erhältst du bereits innerhalb von 48 Stunden." },
-  { q: "Kann ich die Website selbst bearbeiten?", a: "Ja, wir richten ein einfaches System ein, mit dem du Texte, Bilder und Öffnungszeiten selbst aktualisieren können – ohne technische Vorkenntnisse." },
+  { q: "Brauche ich als Handwerker wirklich eine professionelle Website?", a: "Ja! Über 85% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlierst Du täglich Aufträge an die Konkurrenz, die online besser aufgestellt ist." },
+  { q: "Was kostet eine Handwerker-Website?", a: "Unsere Handwerker-Websites starten ab 990 €. Dafür erhältst Du ein professionelles, conversion-optimiertes Design mit SEO-Grundlagen. Eine kostenlose Vorschau gibt es in 48 h." },
+  { q: "Wie lange dauert es, bis meine Website online ist?", a: "In der Regel 2–4 Wochen. Eine erste Vorschau Deiner neuen Website erhältst Du bereits innerhalb von 48 Stunden." },
+  { q: "Kann ich die Website selbst bearbeiten?", a: "Ja, wir richten ein einfaches System ein, mit dem Du Texte, Bilder und Öffnungszeiten selbst aktualisieren können – ohne technische Vorkenntnisse." },
 ];
 
 const WebdesignHandwerker = () => (

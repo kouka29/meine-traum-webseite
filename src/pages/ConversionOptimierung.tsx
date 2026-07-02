@@ -6,14 +6,14 @@ import { ArrowRight, Check, TrendingUp, BarChart3, MousePointer, Target } from "
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
-  { icon: BarChart3, title: "Conversion-Analyse", desc: "Wir analysieren deine Website mit bewährten Methoden und identifizieren, wo Besucher abspringen und warum." },
-  { icon: MousePointer, title: "Optimierte Landingpages", desc: "Wir optimieren deine wichtigsten Seiten mit verkaufspsychologischen Elementen für maximale Conversion-Raten." },
+  { icon: BarChart3, title: "Conversion-Analyse", desc: "Wir analysieren Deine Website mit bewährten Methoden und identifizieren, wo Besucher abspringen und warum." },
+  { icon: MousePointer, title: "Optimierte Landingpages", desc: "Wir optimieren Deine wichtigsten Seiten mit verkaufspsychologischen Elementen für maximale Conversion-Raten." },
   { icon: Target, title: "A/B Testing", desc: "Wir testen verschiedene Varianten und implementieren datengetrieben die beste Lösung." },
   { icon: TrendingUp, title: "Laufende Optimierung", desc: "Conversion-Optimierung ist kein einmaliges Projekt – wir optimieren kontinuierlich für wachsende Ergebnisse." },
 ];
 
 const faqs = [
-  { q: "Was ist Conversion-Optimierung?", a: "Conversion-Optimierung (CRO) bedeutet, deine bestehende Website so zu verbessern, dass mehr Besucher zu Kunden werden – durch bessere Texte, Layouts, Call-to-Actions und User Experience." },
+  { q: "Was ist Conversion-Optimierung?", a: "Conversion-Optimierung (CRO) bedeutet, Deine bestehende Website so zu verbessern, dass mehr Besucher zu Kunden werden – durch bessere Texte, Layouts, Call-to-Actions und User Experience." },
   { q: "Lohnt sich Conversion-Optimierung für kleine Unternehmen?", a: "Absolut! Gerade bei kleinen Budgets ist es entscheidend, das Maximum aus jedem Besucher herauszuholen. Unsere Kunden berichten von bis zu 400% mehr Conversions." },
   { q: "Wie schnell sehe ich Ergebnisse?", a: "Erste Verbesserungen sind oft schon nach 2–4 Wochen messbar. Langfristige Optimierung liefert kontinuierlich steigende Ergebnisse." },
 ];

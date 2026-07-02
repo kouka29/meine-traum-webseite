@@ -70,12 +70,12 @@ const painPoints = [
   {
     icon: AlertTriangle,
     title: "Du hast (noch) gar keine Website",
-    text: "Kunden googeln Dich — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
+    text: "Kunden googeln Dich — und finden nichts. Jeden Tag verlierst Du Anfragen, die nie bei Dir ankommen.",
   },
   {
     icon: Smartphone,
     title: "Deine Website wirkt wie aus 2015",
-    text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was du anbietest.",
+    text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was Du anbietest.",
   },
   {
     icon: Search,
@@ -130,13 +130,13 @@ const process = [
   {
     icon: Phone,
     title: "Erstgespräch (15 Min)",
-    text: "Wir verstehen deine Situation, Branche und Ziele. Kostenlos, unverbindlich.",
+    text: "Wir verstehen Deine Situation, Branche und Ziele. Kostenlos, unverbindlich.",
     duration: "Tag 1",
   },
   {
     icon: Lightbulb,
     title: "Konzept in 48 h",
-    text: "Du bekommst Struktur, Textideen und visuelle Richtung — bevor du einen Euro zahlen.",
+    text: "Du bekommst Struktur, Textideen und visuelle Richtung — bevor Du einen Euro zahlen.",
     duration: "Tag 1–3",
   },
   {
@@ -212,15 +212,15 @@ const moreTestimonials = [
 const faqs = [
   {
     q: "Was bekomme ich konkret für 990 €?",
-    a: "Eine vollständige, professionelle One-Page-Website: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, SSL-Zertifikat, Hosting, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit. Einmalzahlung, dann gehört dir die Seite dauerhaft.",
+    a: "Eine vollständige, professionelle One-Page-Website: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, SSL-Zertifikat, Hosting, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit. Einmalzahlung, dann gehört Dir die Seite dauerhaft.",
   },
   {
     q: "Wo ist der Unterschied zu den teureren Paketen?",
-    a: "Das Starter Paket ist eine starke einzelne Seite. Wenn du mehrere Unterseiten, einen Blog, einen Shop oder spezielle Funktionen brauchen, sprechen wir über ein größeres Paket — immer als Fixpreis.",
+    a: "Das Starter Paket ist eine starke einzelne Seite. Wenn Du mehrere Unterseiten, einen Blog, einen Shop oder spezielle Funktionen brauchen, sprechen wir über ein größeres Paket — immer als Fixpreis.",
   },
   {
     q: "Was muss ich selbst vorbereiten?",
-    a: "Wenig. Wenn du Logo, ein paar Infos zum Business und eigene Fotos haben — super. Falls nicht, übernehmen wir Bildauswahl/KI-Bilder, Texte und Konzept komplett.",
+    a: "Wenig. Wenn Du Logo, ein paar Infos zum Business und eigene Fotos haben — super. Falls nicht, übernehmen wir Bildauswahl/KI-Bilder, Texte und Konzept komplett.",
   },
   {
     q: "Kann ich später erweitern?",
@@ -232,15 +232,15 @@ const faqs = [
   },
   {
     q: "Bin ich nach Launch auf euch angewiesen?",
-    a: "Nein. Du bekommst alle Zugänge und sind Eigentümer. Wenn du später Änderungen wollen, kannst du sie selbst, mit uns oder mit jeder anderen Agentur machen.",
+    a: "Nein. Du bekommst alle Zugänge und bist Eigentümer. Wenn Du später Änderungen wollen, kannst Du sie selbst, mit uns oder mit jeder anderen Agentur machen.",
   },
   {
     q: "Was, wenn mir das Konzept nicht gefällt?",
-    a: "Dann zahlst du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48 h-Konzept kostenlos: damit Du siehst können, was Du bekommst — bevor Du Dich bindest.",
+    a: "Dann zahlst Du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48 h-Konzept kostenlos: damit sehen kannst, was Du bekommst — bevor Du Dich bindest.",
   },
   {
     q: "Macht ihr auch Texte und Bilder?",
-    a: "Ja, beides ist im Paket inklusive. Wir schreiben verkaufsstarke Texte und nutzen passende Stockfotos oder KI-Bilder. Eigene Fotos kannst du natürlich auch liefern.",
+    a: "Ja, beides ist im Paket inklusive. Wir schreiben verkaufsstarke Texte und nutzen passende Stockfotos oder KI-Bilder. Eigene Fotos kannst Du natürlich auch liefern.",
   },
 ];
 

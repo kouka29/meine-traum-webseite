@@ -10,7 +10,7 @@ import { submitLead } from "@/lib/submitLead";
 
 const trustPoints = [
   "15 Minuten Klarheit – kein Verkaufsgespräch",
-  "Konkrete Empfehlung für dein Projekt",
+  "Konkrete Empfehlung für Dein Projekt",
   "Transparente Preisinfo direkt im Call",
   "Persönlicher Ansprechpartner – kein Callcenter",
 ];
@@ -55,7 +55,7 @@ const Contact = () => {
       setSubmitError(
         "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 3076498",
       );
-      toast.error("Fehler beim Senden. Bitte versuchen du es erneut.");
+      toast.error("Fehler beim Senden. Bitte versuchen Du es erneut.");
     } finally {
       setLoading(false);
     }

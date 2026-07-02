@@ -67,7 +67,7 @@ const steps = [
   {
     icon: MessageSquare,
     title: "Kostenloses Erstgespräch",
-    text: "15–20 Min, wir analysieren deine Situation",
+    text: "15–20 Min, wir analysieren Deine Situation",
   },
   {
     icon: FileText,
@@ -90,35 +90,35 @@ const empfehlerBenefits = [
   {
     icon: Gift,
     title: "Konzept-Bonus gratis",
-    text: "Du erhältst dein persönliches Website-Konzept (Wert 490 €) ohne Aufpreis dazu.",
+    text: "Du erhältst Dein persönliches Website-Konzept (Wert 490 €) ohne Aufpreis dazu.",
   },
   {
     icon: Shield,
     title: "Vertrauensvorschuss",
-    text: "Keine Verkaufsmasche, keine Standard-Pitches — wir behandeln du wie wir auch deine:n Empfehler:in behandelt haben.",
+    text: "Keine Verkaufsmasche, keine Standard-Pitches — wir behandeln Du wie wir auch Deine:n Empfehler:in behandelt haben.",
   },
 ];
 
 const objections = [
   {
     q: "Ich weiß noch nicht, ob ich überhaupt eine neue Website brauche.",
-    a: "Genau dafür ist das Erstgespräch da. In 15 Minuten sehen wir gemeinsam, ob ein Relaunch sich für du lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das ehrlich.",
+    a: "Genau dafür ist das Erstgespräch da. In 15 Minuten sehen wir gemeinsam, ob ein Relaunch sich für Du lohnt — oder ob kleinere Änderungen reichen. Wenn wir nicht der richtige Partner sind, sagen wir das ehrlich.",
   },
   {
     q: "Wie viel kostet das Ganze ungefähr?",
-    a: "Unsere Projekte starten ab 990 € für eine Landingpage und liegen meist zwischen 3.500–8.000 € für eine vollständige Website. Den exakten Preis nennen wir erst nach dem Konzept — damit Du weißt, wofür du bezahlst.",
+    a: "Unsere Projekte starten ab 990 € für eine Landingpage und liegen meist zwischen 3.500–8.000 € für eine vollständige Website. Den exakten Preis nennen wir erst nach dem Konzept — damit Du weißt, wofür Du bezahlst.",
   },
   {
     q: "Wie lange dauert die Umsetzung?",
-    a: "Eine Landingpage in 48 Stunden, eine vollständige Website in 2–4 Wochen. Express-Umsetzung möglich, falls du Druck haben.",
+    a: "Eine Landingpage in 48 Stunden, eine vollständige Website in 2–4 Wochen. Express-Umsetzung möglich, falls Du Druck haben.",
   },
   {
     q: "Was, wenn mir das Konzept nicht gefällt?",
-    a: "Dann zahlst du nichts. Das Konzept ist kostenlos und unverbindlich — Du entscheidest danach völlig frei, ob wir weitermachen.",
+    a: "Dann zahlst Du nichts. Das Konzept ist kostenlos und unverbindlich — Du entscheidest danach völlig frei, ob wir weitermachen.",
   },
   {
     q: "Bekomme ich auch Texte und Bilder?",
-    a: "Ja. Wir übernehmen Copywriting, KI-Bildgenerierung und visuelle Konzeption komplett — Du musst kein Wort selbst schreiben, wenn du nicht wollen.",
+    a: "Ja. Wir übernehmen Copywriting, KI-Bildgenerierung und visuelle Konzeption komplett — Du musst kein Wort selbst schreiben, wenn Du nicht wollen.",
   },
   {
     q: "Was unterscheidet euch von anderen Agenturen?",
@@ -127,7 +127,7 @@ const objections = [
 ];
 
 const guarantees = [
-  "Konzept kostenlos & unverbindlich — Du zahlst erst, wenn du überzeugt sind",
+  "Konzept kostenlos & unverbindlich — Du zahlst erst, wenn Du überzeugt sind",
   "Festpreis vor Projektstart — keine versteckten Kosten",
   "30-Tage-Zufriedenheitsgarantie nach Launch",
   "Persönlicher Ansprechpartner — keine Ticketsysteme, kein Outsourcing",
@@ -238,8 +238,8 @@ const Empfehlung = () => (
                   <ul className="space-y-3">
                     {[
                       "Kein Verkaufsgespräch — sondern ein ehrliches Strategiegespräch.",
-                      "Keine Pauschal-Pitches — sondern ein individuelles Konzept für deine Situation.",
-                      "Keine Ausreden, falls wir nicht passen — wir empfehlen dir dann jemand anderen.",
+                      "Keine Pauschal-Pitches — sondern ein individuelles Konzept für Deine Situation.",
+                      "Keine Ausreden, falls wir nicht passen — wir empfehlen Dir dann jemand anderen.",
                     ].map((p) => (
                       <li key={p} className="flex items-start gap-3">
                         <Check size={20} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />

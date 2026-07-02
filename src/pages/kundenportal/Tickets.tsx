@@ -33,7 +33,7 @@ export default function KundenportalTickets() {
 
   const submit = async () => {
     if (subject.trim().length < 3) { toast.error("Bitte Betreff eingeben"); return; }
-    if (message.trim().length < 5) { toast.error("Bitte beschreibe deinen Wunsch etwas ausführlicher"); return; }
+    if (message.trim().length < 5) { toast.error("Bitte beschreibe Deinen Wunsch etwas ausführlicher"); return; }
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
     setSaving(true);
@@ -95,7 +95,7 @@ export default function KundenportalTickets() {
             </div>
             <div>
               <Label>Beschreibung</Label>
-              <Textarea rows={6} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Beschreibe deinen Wunsch so genau wie möglich..." maxLength={5000} />
+              <Textarea rows={6} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Beschreibe Deinen Wunsch so genau wie möglich..." maxLength={5000} />
             </div>
           </div>
           <DialogFooter>

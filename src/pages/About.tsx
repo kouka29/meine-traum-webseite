@@ -5,10 +5,10 @@ import CTABanner from "@/components/CTABanner";
 import { Target, Award, Rocket, Heart, ArrowRight, Check, Users } from "lucide-react";
 
 const values = [
-  { icon: Target, title: "Ergebnisorientiert", desc: "Jede Designentscheidung dient einem Ziel: mehr Kunden für dein Unternehmen." },
+  { icon: Target, title: "Ergebnisorientiert", desc: "Jede Designentscheidung dient einem Ziel: mehr Kunden für Dein Unternehmen." },
   { icon: Award, title: "Höchste Qualität", desc: "Wir liefern nur Ergebnisse, die wir selbst nutzen würden." },
   { icon: Rocket, title: "Schnell & Effizient", desc: "Von der ersten Idee zur fertigen Website – ohne unnötige Wartezeiten." },
-  { icon: Heart, title: "Partnerschaftlich", desc: "Wir arbeiten mit dir, nicht nur für du. Dein Erfolg ist unser Erfolg." },
+  { icon: Heart, title: "Partnerschaftlich", desc: "Wir arbeiten mit Dir, nicht nur für Du. Dein Erfolg ist unser Erfolg." },
 ];
 
 const reasons = [

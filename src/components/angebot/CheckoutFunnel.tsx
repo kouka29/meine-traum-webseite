@@ -800,7 +800,7 @@ function StepZahlung({
                 : "Komplett heute fällig"
             }
             benefits={[
-              "Die Website gehört dir",
+              "Die Website gehört Dir",
               "Keine laufenden Kosten",
               "Einmaliges Investment",
             ]}

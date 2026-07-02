@@ -6,26 +6,26 @@ import { ArrowRight, Check, Flame, Droplets, ThermometerSun, Phone, Search, Tren
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
-  "Trotz hoher Nachfrage kommen zu wenig Anfragen über deine Website rein",
-  'Kunden findest du nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen',
+  "Trotz hoher Nachfrage kommen zu wenig Anfragen über Deine Website rein",
+  'Kunden findest Du nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen',
   "Deine Website sieht veraltet aus und schreckt potenzielle Kunden ab",
   "Du verlierst Aufträge an modernere SHK-Betriebe mit besserer Online-Präsenz",
 ];
 
 const features = [
   { icon: Flame, title: "Branchenspezifisches Design", desc: "Deine Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
-  { icon: Search, title: "Lokales SEO für SHK", desc: 'Wir optimieren deine Website für lokale Suchanfragen wie "Heizungsbauer in Deiner Stadt" oder "Sanitär Notdienst in der Nähe".' },
+  { icon: Search, title: "Lokales SEO für SHK", desc: 'Wir optimieren Deine Website für lokale Suchanfragen wie "Heizungsbauer in Deiner Stadt" oder "Sanitär Notdienst in der Nähe".' },
   { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – Deine Leistungen werden übersichtlich und überzeugend dargestellt." },
-  { icon: Phone, title: "Sofort-Kontakt-Funktion", desc: "Click-to-Call, Notdienst-Button und Kontaktformular – damit Kunden du sofort erreichen." },
+  { icon: Phone, title: "Sofort-Kontakt-Funktion", desc: "Click-to-Call, Notdienst-Button und Kontaktformular – damit Kunden Du sofort erreichen." },
   { icon: ThermometerSun, title: "Mobile Optimierung", desc: "Über 70% der Notdienst-Anfragen kommen vom Smartphone. Deine Website funktioniert auf jedem Gerät perfekt." },
   { icon: TrendingUp, title: "Mehr Anfragen, mehr Aufträge", desc: "Conversion-optimierter Aufbau sorgt dafür, dass aus Besuchern zahlende Kunden werden." },
 ];
 
 const faqs = [
-  { q: "Warum braucht ein SHK-Betrieb eine professionelle Website?", a: "Über 80% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlierst du täglich potenzielle Aufträge an deine Konkurrenz – besonders bei Notdienst-Anfragen." },
+  { q: "Warum braucht ein SHK-Betrieb eine professionelle Website?", a: "Über 80% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlierst Du täglich potenzielle Aufträge an Deine Konkurrenz – besonders bei Notdienst-Anfragen." },
   { q: "Was kostet eine Website für SHK-Betriebe?", a: "Unsere Webdesign-Projekte für SHK-Betriebe starten ab 990 €. Der genaue Preis hängt vom Umfang ab. Du erhältst eine kostenlose Vorschau in 48 Stunden." },
-  { q: "Kann ich meine Leistungen selbst aktualisieren?", a: "Ja. Wir richten deine Website so ein, dass du Inhalte wie Notdienst-Zeiten oder neue Leistungen einfach selbst anpassen können." },
-  { q: "Wie schnell ist meine neue SHK-Website online?", a: "In der Regel innerhalb von 2–4 Wochen. Eine erste Vorschau erhältst du bereits nach 48 Stunden." },
+  { q: "Kann ich meine Leistungen selbst aktualisieren?", a: "Ja. Wir richten Deine Website so ein, dass Du Inhalte wie Notdienst-Zeiten oder neue Leistungen einfach selbst anpassen können." },
+  { q: "Wie schnell ist meine neue SHK-Website online?", a: "In der Regel innerhalb von 2–4 Wochen. Eine erste Vorschau erhältst Du bereits nach 48 Stunden." },
 ];
 
 const WebdesignSHK = () => (

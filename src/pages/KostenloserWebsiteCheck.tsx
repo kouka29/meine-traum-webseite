@@ -14,7 +14,7 @@ const checkPoints = [
   "SEO-Grundlagen & Meta-Daten",
   "Conversion-Elemente & Call-to-Actions",
   "Technische Fehler & Broken Links",
-  "Vergleich mit deiner Konkurrenz",
+  "Vergleich mit Deiner Konkurrenz",
 ];
 
 const KostenloserWebsiteCheck = () => {
@@ -49,13 +49,13 @@ const KostenloserWebsiteCheck = () => {
         company,
       });
       if (!ok) throw new Error("submitLead failed");
-      toast.success("Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden mit deiner Website-Analyse.");
+      toast.success("Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden mit Deiner Website-Analyse.");
       form.reset();
     } catch {
       setSubmitError(
         "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 3076498",
       );
-      toast.error("Fehler beim Senden. Bitte versuchen du es erneut.");
+      toast.error("Fehler beim Senden. Bitte versuchen Du es erneut.");
     } finally {
       setLoading(false);
     }

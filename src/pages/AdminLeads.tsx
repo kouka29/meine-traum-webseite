@@ -1704,7 +1704,7 @@ const AdminLeads = () => {
             </div>
             <div>
               <Label htmlFor="test-text">Bewertungstext *</Label>
-              <Textarea id="test-text" value={testimonialForm.text} onChange={e => setTestimonialForm(f => ({ ...f, text: e.target.value }))} placeholder="Was sagt der Kunde über du?" rows={4} />
+              <Textarea id="test-text" value={testimonialForm.text} onChange={e => setTestimonialForm(f => ({ ...f, text: e.target.value }))} placeholder="Was sagt der Kunde über Du?" rows={4} />
             </div>
             <div className="flex items-center gap-3">
               <Switch checked={testimonialForm.is_visible} onCheckedChange={v => setTestimonialForm(f => ({ ...f, is_visible: v }))} />
