@@ -4,7 +4,7 @@ import AnimatedSection from "./AnimatedSection";
 import { Target, Layers, PenTool, MousePointerClick } from "lucide-react";
 
 const steps = [
-  { icon: Target, title: "Strategie & Zielgruppenanalyse", desc: "Wir finden heraus, wen du erreichen wollen – und was diese Menschen brauchen, um Vertrauen aufzubauen und anzufragen.", link: "/leistungen" },
+  { icon: Target, title: "Strategie & Zielgruppenanalyse", desc: "Wir finden heraus, wen du erreichen möchtest – und was diese Menschen brauchen, um Vertrauen aufzubauen und anzufragen.", link: "/leistungen" },
   { icon: Layers, title: "Conversion-orientierter Aufbau", desc: "Jede Seite folgt einer klaren Struktur: Problem → Lösung → Beweis → Handlungsaufforderung. Kein Rätselraten für deine Besucher.", link: "/conversion-optimierung" },
   { icon: PenTool, title: "Psychologisch optimierte Texte", desc: "Texte, die nicht beschreiben, sondern überzeugen. Geschrieben für Menschen, die eine Entscheidung treffen wollen.", link: "/leistungen" },
   { icon: MousePointerClick, title: "Klare Handlungsaufforderungen", desc: "Jeder Besucher weiß sofort, was der nächste Schritt ist – und warum er ihn gehen sollte. Kein Suchen, kein Zögern.", link: "/leistungen" },
