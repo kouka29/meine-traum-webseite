@@ -34,7 +34,7 @@ export default function KundenportalLogin() {
       return;
     }
     if (password.length < 6) {
-      toast.error("Bitte gib dein Passwort ein");
+      toast.error("Bitte gib Dein Passwort ein");
       return;
     }
 
@@ -46,7 +46,7 @@ export default function KundenportalLogin() {
     setLoading(false);
 
     if (error) {
-      toast.error("E-Mail oder Passwort stimmt nicht. Falls du noch kein Passwort hast, setze es über „Passwort vergessen“.");
+      toast.error("E-Mail oder Passwort stimmt nicht. Falls Du noch kein Passwort hast, setze es über „Passwort vergessen“.");
       return;
     }
 
@@ -126,8 +126,8 @@ export default function KundenportalLogin() {
                 </div>
                 <h1 className="font-heading text-2xl font-bold">E-Mail versendet</h1>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Wir haben dir eine E-Mail an <strong className="text-foreground">{email}</strong> geschickt,
-                  damit du dein Passwort festlegen kannst.
+                  Wir haben Dir eine E-Mail an <strong className="text-foreground">{email}</strong> geschickt,
+                  damit Du Dein Passwort festlegen kannst.
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Keine Mail erhalten? Schau in den Spam-Ordner oder{" "}
@@ -142,7 +142,7 @@ export default function KundenportalLogin() {
                   </div>
                   <h1 className="font-heading text-2xl font-bold mb-2">Kundenportal</h1>
                   <p className="text-sm text-muted-foreground">
-                    Melde dich mit deiner E-Mail und deinem Passwort an.
+                    Melde Dich mit Deiner E-Mail und Deinem Passwort an.
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -154,7 +154,7 @@ export default function KundenportalLogin() {
                     autoFocus
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="du@beispiel.de"
+                    placeholder="Du@beispiel.de"
                     required
                   />
                 </div>
@@ -219,7 +219,7 @@ export default function KundenportalLogin() {
                   {resetting ? "E-Mail wird gesendet…" : "Passwort vergessen oder erstes Passwort setzen"}
                 </button>
                 <p className="text-xs text-center text-muted-foreground">
-                  Noch kein Zugang? Dein Portal wird automatisch nach deiner Buchung erstellt –
+                  Noch kein Zugang? Dein Portal wird automatisch nach Deiner Buchung erstellt –
                   oder <Link to="/kontakt" className="text-primary underline">kontaktiere uns</Link>.
                 </p>
               </form>

@@ -12,7 +12,7 @@ const problems = [
   {
     icon: RefreshCw,
     title: "Wiederkehrende manuelle Aufgaben",
-    desc: "dein Team verbringt Stunden mit Aufgaben, die ein System in Sekunden erledigt.",
+    desc: "Dein Team verbringt Stunden mit Aufgaben, die ein System in Sekunden erledigt.",
   },
   {
     icon: Clock,
@@ -22,7 +22,7 @@ const problems = [
   {
     icon: AlertTriangle,
     title: "Fehlende Systeme",
-    desc: "Es gibt kein zentrales Tool, das deine Abläufe zusammenhält und abbildet.",
+    desc: "Es gibt kein zentrales Tool, das Deine Abläufe zusammenhält und abbildet.",
   },
 ];
 
@@ -30,7 +30,7 @@ const solutions = [
   {
     icon: Cog,
     title: "Individuelle Web-Apps",
-    desc: "Maßgeschneiderte Anwendungen, die genau zu deinen Abläufen passen – nicht umgekehrt.",
+    desc: "Maßgeschneiderte Anwendungen, die genau zu Deinen Abläufen passen – nicht umgekehrt.",
   },
   {
     icon: LayoutDashboard,
@@ -40,7 +40,7 @@ const solutions = [
   {
     icon: Users,
     title: "Kundenportale",
-    desc: "Gib deinen Kunden Zugang zu Dokumenten, Status-Updates und Kommunikation.",
+    desc: "Gib Deinen Kunden Zugang zu Dokumenten, Status-Updates und Kommunikation.",
   },
   {
     icon: Workflow,
@@ -50,31 +50,31 @@ const solutions = [
   {
     icon: Monitor,
     title: "Systemverknüpfungen",
-    desc: "Verbinden du bestehende Tools und schaffen du durchgängige Abläufe.",
+    desc: "Verbinden Du bestehende Tools und schaffen Du durchgängige Abläufe.",
   },
 ];
 
 const useCases = [
   { icon: Users, title: "CRM-Systeme", desc: "Kunden und Kontakte zentral verwalten, nachverfolgen und pflegen." },
   { icon: Calendar, title: "Buchungsplattformen", desc: "Termine, Ressourcen oder Dienstleistungen online buchbar machen." },
-  { icon: LayoutDashboard, title: "Kundenportale", desc: "Dokumente, Rechnungen und Projektstatus für deine Kunden bereitstellen." },
+  { icon: LayoutDashboard, title: "Kundenportale", desc: "Dokumente, Rechnungen und Projektstatus für Deine Kunden bereitstellen." },
   { icon: BarChart3, title: "Interne Dashboards", desc: "Kennzahlen, Team-Aufgaben und Workflows an einem Ort bündeln." },
   { icon: Workflow, title: "Prozess-Automatisierung", desc: "Wiederkehrende Abläufe automatisieren – von der Anfrage bis zur Rechnung." },
 ];
 
 const steps = [
-  { icon: Search, num: "01", title: "Analyse & Zieldefinition", desc: "Wir verstehen dein Geschäft, deine Abläufe und definieren gemeinsam das Ziel." },
+  { icon: Search, num: "01", title: "Analyse & Zieldefinition", desc: "Wir verstehen Dein Geschäft, Deine Abläufe und definieren gemeinsam das Ziel." },
   { icon: Lightbulb, num: "02", title: "Konzept & Struktur", desc: "Wir entwickeln einen klaren Plan – welche Funktionen, welche Abläufe, welches Ergebnis." },
-  { icon: Code2, num: "03", title: "Entwicklung", desc: "dein System wird gebaut – transparent, in Etappen, mit regelmäßigem Feedback." },
+  { icon: Code2, num: "03", title: "Entwicklung", desc: "Dein System wird gebaut – transparent, in Etappen, mit regelmäßigem Feedback." },
   { icon: TestTube, num: "04", title: "Testing & Optimierung", desc: "Wir testen gründlich, optimieren und stellen sicher, dass alles reibungslos läuft." },
-  { icon: Rocket, num: "05", title: "Launch & Betreuung", desc: "Go-Live – und danach stehen wir dir weiterhin als Partner zur Seite." },
+  { icon: Rocket, num: "05", title: "Launch & Betreuung", desc: "Go-Live – und danach stehen wir Dir weiterhin als Partner zur Seite." },
 ];
 
 const results = [
   { icon: Clock, value: "70%", label: "Zeitersparnis", desc: "bei wiederkehrenden Aufgaben durch Automatisierung" },
   { icon: ShieldCheck, value: "90%", label: "Weniger Fehler", desc: "durch automatisierte statt manuelle Abläufe" },
   { icon: Zap, value: "3×", label: "Schnellere Abläufe", desc: "durch klar strukturierte, digitale Prozesse" },
-  { icon: TrendingUp, value: "∞", label: "Skalierbares Wachstum", desc: "Systeme, die mit deinem Unternehmen mitwachsen" },
+  { icon: TrendingUp, value: "∞", label: "Skalierbares Wachstum", desc: "Systeme, die mit Deinem Unternehmen mitwachsen" },
 ];
 
 const IndividuelleSoftware = () => (
@@ -88,19 +88,19 @@ const IndividuelleSoftware = () => (
               Individuelle Apps & Softwarelösungen
             </span>
             <h1 className="mb-5 text-balance">
-              Individuelle Apps & Software, die Prozesse automatisieren und dein{" "}
+              Individuelle Apps & Software, die Prozesse automatisieren und Dein{" "}
               <span className="gradient-text">Business skalieren</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-6 leading-relaxed">
               Wir entwickeln maßgeschneiderte Web-Apps und Softwarelösungen, die manuelle Abläufe
-              ersetzen, Prozesse automatisieren und dein Unternehmen effizient wachsen lassen.
+              ersetzen, Prozesse automatisieren und Dein Unternehmen effizient wachsen lassen.
             </p>
             <div className="flex items-center gap-3 sm:gap-5 mb-8 flex-wrap">
               {[
                 "Individuelle Lösungen statt Baukasten",
                 "Automatisierung von Prozessen",
                 "Skalierbare Systeme",
-                "Für dein Business entwickelt",
+                "Für Dein Business entwickelt",
               ].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
                   <Check size={16} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
@@ -132,7 +132,7 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-destructive/10 text-destructive mb-4 text-xs">Das Problem</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Manuelle Prozesse bremsen dein Wachstum
+              Manuelle Prozesse bremsen Dein Wachstum
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
               Die meisten Unternehmen verlieren täglich Stunden mit Aufgaben, die ein
@@ -163,11 +163,11 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Die Lösung</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Wir digitalisieren und automatisieren dein Unternehmen
+              Wir digitalisieren und automatisieren Dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Keine Standard-Software, die du verbiegen müssen. Sondern Lösungen,
-              die sich an dein Geschäft anpassen.
+              Keine Standard-Software, die Du verbiegen müssen. Sondern Lösungen,
+              die sich an Dein Geschäft anpassen.
             </p>
           </div>
         </AnimatedSection>
@@ -194,10 +194,10 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Anwendungsbeispiele</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Mögliche Lösungen für dein Unternehmen
+              Mögliche Lösungen für Dein Unternehmen
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Jedes Unternehmen ist anders – hier einige Beispiele, was wir für du bauen können.
+              Jedes Unternehmen ist anders – hier einige Beispiele, was wir für Du bauen können.
             </p>
           </div>
         </AnimatedSection>
@@ -224,10 +224,10 @@ const IndividuelleSoftware = () => (
           <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
             <span className="badge-label bg-primary/10 text-primary mb-4 text-xs">Unser Prozess</span>
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              So entsteht deine individuelle Lösung
+              So entsteht Deine individuelle Lösung
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">
-              Strukturiert, transparent und auf dein Ergebnis ausgerichtet.
+              Strukturiert, transparent und auf Dein Ergebnis ausgerichtet.
             </p>
           </div>
         </AnimatedSection>
@@ -283,11 +283,11 @@ const IndividuelleSoftware = () => (
         <AnimatedSection>
           <div className="glass-card rounded-2xl p-8 sm:p-12 md:p-16 text-center max-w-3xl mx-auto border border-primary/20">
             <h2 className="text-3xl text-2xl sm:text-3xl font-bold mb-4">
-              Startest du dein Projekt
+              Startest Du Dein Projekt
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">
               Lass uns gemeinsam herausfinden, wie eine individuelle Softwarelösung
-              dein Business effizienter und profitabler macht.
+              Dein Business effizienter und profitabler macht.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button variant="gradient" size="lg" className="text-sm sm:text-base py-5 sm:py-6 px-6 sm:px-8" asChild>

@@ -10,7 +10,7 @@ const config = branche({
   trustBadges: ["Probestunde direkt buchbar", "Kursplan immer aktuell", "Fertig in 7–14 Tagen"],
   socialProof: "⭐⭐⭐⭐⭐ Studios aus Mainz, Frankfurt & Wiesbaden vertrauen uns",
   painPoints: [
-    { icon: "📅", title: "Probestunden landen auf Instagram statt im Studio", description: "Interessenten schreiben DMs, du verlierst sie im Posteingang. Eine Website mit Online-Buchung wandelt sofort." },
+    { icon: "📅", title: "Probestunden landen auf Instagram statt im Studio", description: "Interessenten schreiben DMs, Du verlierst sie im Posteingang. Eine Website mit Online-Buchung wandelt sofort." },
     { icon: "🥊", title: "Konkurrenz mit Online-Mitgliedschaft", description: "Die großen Ketten sind 24/7 online. Wer keine Website hat, wirkt klein — selbst wenn die Hallen voll sind." },
     { icon: "📋", title: "Kursplan nur als PDF", description: "Niemand lädt PDFs runter. Ein aktueller, mobiler Kursplan auf der Website hält Mitglieder informiert." },
     { icon: "💸", title: "Werbung ohne Landingpage verbrennt Geld", description: "Instagram-Ads ohne Conversion-Seite bringen kein Mitglied. Wir bauen die Seite, die wirklich konvertiert." },

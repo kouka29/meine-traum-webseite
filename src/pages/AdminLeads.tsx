@@ -1279,7 +1279,7 @@ const AdminLeads = () => {
               <div className="text-center py-20 text-muted-foreground">
                 <FolderOpen size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
                 <p className="text-lg mb-2">Noch keine Projekte vorhanden.</p>
-                <p className="text-sm">Erstellen du dein erstes Portfolio-Projekt.</p>
+                <p className="text-sm">Erstellen Du Dein erstes Portfolio-Projekt.</p>
               </div>
             ) : (
               <div className="grid gap-4">
@@ -1494,7 +1494,7 @@ const AdminLeads = () => {
               <div className="text-center py-20 text-muted-foreground">
                 <MessageSquare size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
                 <p className="text-lg mb-2">Noch keine Referenzen vorhanden.</p>
-                <p className="text-sm">Erstellen du deine erste Kundenreferenz.</p>
+                <p className="text-sm">Erstellen Du Deine erste Kundenreferenz.</p>
               </div>
             ) : (
               <div className="grid gap-4">
@@ -1704,7 +1704,7 @@ const AdminLeads = () => {
             </div>
             <div>
               <Label htmlFor="test-text">Bewertungstext *</Label>
-              <Textarea id="test-text" value={testimonialForm.text} onChange={e => setTestimonialForm(f => ({ ...f, text: e.target.value }))} placeholder="Was sagt der Kunde über du?" rows={4} />
+              <Textarea id="test-text" value={testimonialForm.text} onChange={e => setTestimonialForm(f => ({ ...f, text: e.target.value }))} placeholder="Was sagt der Kunde über Du?" rows={4} />
             </div>
             <div className="flex items-center gap-3">
               <Switch checked={testimonialForm.is_visible} onCheckedChange={v => setTestimonialForm(f => ({ ...f, is_visible: v }))} />

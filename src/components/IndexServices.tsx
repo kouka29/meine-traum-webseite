@@ -4,8 +4,8 @@ import AnimatedSection from "./AnimatedSection";
 import { Target, Layers, PenTool, MousePointerClick } from "lucide-react";
 
 const steps = [
-  { icon: Target, title: "Strategie & Zielgruppenanalyse", desc: "Wir finden heraus, wen du erreichen möchtest – und was diese Menschen brauchen, um Vertrauen aufzubauen und anzufragen.", link: "/leistungen" },
-  { icon: Layers, title: "Conversion-orientierter Aufbau", desc: "Jede Seite folgt einer klaren Struktur: Problem → Lösung → Beweis → Handlungsaufforderung. Kein Rätselraten für deine Besucher.", link: "/conversion-optimierung" },
+  { icon: Target, title: "Strategie & Zielgruppenanalyse", desc: "Wir finden heraus, wen Du erreichst möchtest – und was diese Menschen brauchen, um Vertrauen aufzubauen und anzufragen.", link: "/leistungen" },
+  { icon: Layers, title: "Conversion-orientierter Aufbau", desc: "Jede Seite folgt einer klaren Struktur: Problem → Lösung → Beweis → Handlungsaufforderung. Kein Rätselraten für Deine Besucher.", link: "/conversion-optimierung" },
   { icon: PenTool, title: "Psychologisch optimierte Texte", desc: "Texte, die nicht beschreiben, sondern überzeugen. Geschrieben für Menschen, die eine Entscheidung treffen wollen.", link: "/leistungen" },
   { icon: MousePointerClick, title: "Klare Handlungsaufforderungen", desc: "Jeder Besucher weiß sofort, was der nächste Schritt ist – und warum er ihn gehen sollte. Kein Suchen, kein Zögern.", link: "/leistungen" },
 ];
@@ -17,11 +17,11 @@ const IndexServices = () => (
         <div className="text-center mb-12 md:mb-20">
           <span className="badge-label bg-primary/10 text-primary mb-5">Unser Ansatz</span>
           <h2 className="mb-5 text-balance">
-            So machen wir aus deiner Website einen{" "}
+            So machen wir aus Deiner Website einen{" "}
             <span className="text-foreground">Kundenmagneten</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Kein Technik-Vortrag. Wir zeigen dir, welche vier Hebel deine Website braucht, damit Besucher zu Kunden werden.
+            Kein Technik-Vortrag. Wir zeigen Dir, welche vier Hebel Deine Website braucht, damit Besucher zu Kunden werden.
           </p>
         </div>
       </AnimatedSection>

@@ -6,26 +6,26 @@ import { ArrowRight, Check, Flame, Droplets, ThermometerSun, Phone, Search, Tren
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
-  "Trotz hoher Nachfrage kommen zu wenig Anfragen über deine Website rein",
-  'Kunden findest du nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen',
-  "deine Website sieht veraltet aus und schreckt potenzielle Kunden ab",
+  "Trotz hoher Nachfrage kommen zu wenig Anfragen über Deine Website rein",
+  'Kunden findest Du nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen',
+  "Deine Website sieht veraltet aus und schreckt potenzielle Kunden ab",
   "Du verlierst Aufträge an modernere SHK-Betriebe mit besserer Online-Präsenz",
 ];
 
 const features = [
-  { icon: Flame, title: "Branchenspezifisches Design", desc: "deine Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
-  { icon: Search, title: "Lokales SEO für SHK", desc: 'Wir optimieren deine Website für lokale Suchanfragen wie "Heizungsbauer in Deiner Stadt" oder "Sanitär Notdienst in der Nähe".' },
-  { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – deine Leistungen werden übersichtlich und überzeugend dargestellt." },
-  { icon: Phone, title: "Sofort-Kontakt-Funktion", desc: "Click-to-Call, Notdienst-Button und Kontaktformular – damit Kunden du sofort erreichen." },
+  { icon: Flame, title: "Branchenspezifisches Design", desc: "Deine Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
+  { icon: Search, title: "Lokales SEO für SHK", desc: 'Wir optimieren Deine Website für lokale Suchanfragen wie "Heizungsbauer in Deiner Stadt" oder "Sanitär Notdienst in der Nähe".' },
+  { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – Deine Leistungen werden übersichtlich und überzeugend dargestellt." },
+  { icon: Phone, title: "Sofort-Kontakt-Funktion", desc: "Click-to-Call, Notdienst-Button und Kontaktformular – damit Kunden Du sofort erreichen." },
   { icon: ThermometerSun, title: "Mobile Optimierung", desc: "Über 70% der Notdienst-Anfragen kommen vom Smartphone. Deine Website funktioniert auf jedem Gerät perfekt." },
   { icon: TrendingUp, title: "Mehr Anfragen, mehr Aufträge", desc: "Conversion-optimierter Aufbau sorgt dafür, dass aus Besuchern zahlende Kunden werden." },
 ];
 
 const faqs = [
-  { q: "Warum braucht ein SHK-Betrieb eine professionelle Website?", a: "Über 80% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlierst du täglich potenzielle Aufträge an deine Konkurrenz – besonders bei Notdienst-Anfragen." },
+  { q: "Warum braucht ein SHK-Betrieb eine professionelle Website?", a: "Über 80% der Kunden suchen online nach Handwerkern. Ohne professionelle Website verlierst Du täglich potenzielle Aufträge an Deine Konkurrenz – besonders bei Notdienst-Anfragen." },
   { q: "Was kostet eine Website für SHK-Betriebe?", a: "Unsere Webdesign-Projekte für SHK-Betriebe starten ab 990 €. Der genaue Preis hängt vom Umfang ab. Du erhältst eine kostenlose Vorschau in 48 Stunden." },
-  { q: "Kann ich meine Leistungen selbst aktualisieren?", a: "Ja. Wir richten deine Website so ein, dass du Inhalte wie Notdienst-Zeiten oder neue Leistungen einfach selbst anpassen können." },
-  { q: "Wie schnell ist meine neue SHK-Website online?", a: "In der Regel innerhalb von 2–4 Wochen. Eine erste Vorschau erhältst du bereits nach 48 Stunden." },
+  { q: "Kann ich meine Leistungen selbst aktualisieren?", a: "Ja. Wir richten Deine Website so ein, dass Du Inhalte wie Notdienst-Zeiten oder neue Leistungen einfach selbst anpassen können." },
+  { q: "Wie schnell ist meine neue SHK-Website online?", a: "In der Regel innerhalb von 2–4 Wochen. Eine erste Vorschau erhältst Du bereits nach 48 Stunden." },
 ];
 
 const WebdesignSHK = () => (
@@ -40,7 +40,7 @@ const WebdesignSHK = () => (
               <span className="gradient-text">Mehr Anfragen durch eine professionelle Website</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Du bist Sanitär-, Heizungs- oder Klimabetrieb und deine Website bringt kaum Anfragen?
+              Du bist Sanitär-, Heizungs- oder Klimabetrieb und Deine Website bringt kaum Anfragen?
               Wir erstellen Websites speziell für SHK-Betriebe, die bei Google gefunden werden und Kunden überzeugen.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
@@ -57,7 +57,7 @@ const WebdesignSHK = () => (
         {/* Pain Points */}
         <AnimatedSection>
           <div className="mb-20 max-w-3xl mx-auto">
-            <h2 className="text-center mb-10 text-balance">Kennst du diese Probleme als SHK-Betrieb?</h2>
+            <h2 className="text-center mb-10 text-balance">Kennst Du diese Probleme als SHK-Betrieb?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
                 <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
@@ -73,7 +73,7 @@ const WebdesignSHK = () => (
 
         {/* Features */}
         <AnimatedSection>
-          <h2 className="text-center mb-16 text-balance">So machen wir deinen SHK-Betrieb online sichtbar</h2>
+          <h2 className="text-center mb-16 text-balance">So machen wir Deinen SHK-Betrieb online sichtbar</h2>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
@@ -92,7 +92,7 @@ const WebdesignSHK = () => (
         {/* Results */}
         <AnimatedSection>
           <div className="gradient-hero-bg rounded-2xl p-12 md:p-16 text-primary-foreground mb-20">
-            <h2 className="text-primary-foreground mb-5 text-balance text-center">Was eine professionelle Website deinem SHK-Betrieb bringt</h2>
+            <h2 className="text-primary-foreground mb-5 text-balance text-center">Was eine professionelle Website Deinem SHK-Betrieb bringt</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
               {[
                 { value: "+320%", label: "Mehr Online-Anfragen" },
@@ -113,7 +113,7 @@ const WebdesignSHK = () => (
           <div className="mb-20">
             <h2 className="text-center mb-5 text-balance">Unsere Leistungen für SHK-Betriebe</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-center text-lg mb-10">
-              Von der Webseite über Landingpages bis zur Conversion-Optimierung – wir bieten alles, was dein SHK-Betrieb online braucht.
+              Von der Webseite über Landingpages bis zur Conversion-Optimierung – wir bieten alles, was Dein SHK-Betrieb online braucht.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
               {[

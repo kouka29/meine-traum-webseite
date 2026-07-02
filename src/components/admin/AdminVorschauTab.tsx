@@ -699,7 +699,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
 
                 <p className="text-xs text-muted-foreground">
                   Beide Werte sind manuell editierbar. Der <strong>Auto-Button</strong> trägt automatisch die echten Anfragen
-                  (Status <code>slot_assigned</code>, aktueller Monat) ein – danach kannst du den Wert noch von Hand anpassen.
+                  (Status <code>slot_assigned</code>, aktueller Monat) ein – danach kannst Du den Wert noch von Hand anpassen.
                 </p>
 
                 <div className="flex items-center gap-3 pt-1">
@@ -899,8 +899,8 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             {([
-              { key: "show_pain_points" as const, label: "„Erkennst du sich wieder?" },
-              { key: "show_process" as const, label: "„In 3 Schritten zu deiner Vorschau" },
+              { key: "show_pain_points" as const, label: "„Erkennst Du sich wieder?" },
+              { key: "show_process" as const, label: "„In 3 Schritten zu Deiner Vorschau" },
               { key: "show_demos" as const, label: "Demo-Beispiele" },
               { key: "show_testimonials" as const, label: "Testimonials" },
               { key: "show_faq" as const, label: "FAQ" },

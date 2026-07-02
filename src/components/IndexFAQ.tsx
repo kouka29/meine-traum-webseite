@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: "Wie schnell kann meine neue Website live gehen?",
-    a: "Die meisten Projekte sind in 2–4 Wochen fertig. Das erste Konzept mit Struktur und Textideen erhältst du bereits innerhalb von 48 Stunden – kostenlos und unverbindlich.",
+    a: "Die meisten Projekte sind in 2–4 Wochen fertig. Das erste Konzept mit Struktur und Textideen erhältst Du bereits innerhalb von 48 Stunden – kostenlos und unverbindlich.",
   },
   {
     q: "Was ist der Unterschied zu einer normalen Webdesign-Agentur?",
@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "Ist das kostenlose Konzept wirklich ohne Haken?",
-    a: "Ja. Du erhältst ein individuelles Konzept für deine Website – Struktur, Textideen, Empfehlungen. Wenn es dir gefällt, können wir loslegen. Wenn nicht, behalten du die Ideen trotzdem. Kein Druck.",
+    a: "Ja. Du erhältst ein individuelles Konzept für Deine Website – Struktur, Textideen, Empfehlungen. Wenn es Dir gefällt, können wir loslegen. Wenn nicht, behalten Du die Ideen trotzdem. Kein Druck.",
   },
   {
     q: "Für wen funktioniert das am besten?",
@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: "Kann ich meine bestehende Website überarbeiten lassen?",
-    a: "Absolut. Viele unserer Kunden kommen mit einer bestehenden Website, die nicht performt. Wir analysieren sie, zeigen dir die Schwachstellen und erstellen ein Relaunch-Konzept – auf Wunsch komplett kostenlos.",
+    a: "Absolut. Viele unserer Kunden kommen mit einer bestehenden Website, die nicht performt. Wir analysieren sie, zeigen Dir die Schwachstellen und erstellen ein Relaunch-Konzept – auf Wunsch komplett kostenlos.",
   },
 ];
 

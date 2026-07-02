@@ -14,9 +14,9 @@ const Datenschutz = () => (
             <h2 className="text-xl font-semibold text-foreground">1. Datenschutz auf einen Blick</h2>
             <h3 className="text-lg font-medium text-foreground mt-4">Allgemeine Hinweise</h3>
             <p>
-              Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit deinen personenbezogenen Daten passiert, 
-              wenn du diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen du persönlich identifiziert 
-              werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen du unserer nachstehenden Datenschutzerklärung.
+              Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Deinen personenbezogenen Daten passiert, 
+              wenn Du diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Du persönlich identifiziert 
+              werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Du unserer nachstehenden Datenschutzerklärung.
             </p>
           </AnimatedSection>
 
@@ -50,24 +50,24 @@ const Datenschutz = () => (
             
             <h3 className="text-lg font-medium text-foreground mt-4">Cookies</h3>
             <p>
-              Unsere Website verwendet Cookies. Cookies sind kleine Textdateien, die auf deinem Endgerät gespeichert werden. 
+              Unsere Website verwendet Cookies. Cookies sind kleine Textdateien, die auf Deinem Endgerät gespeichert werden. 
               Du richten keinen Schaden an und enthalten keine Viren. Wir unterscheiden zwischen technisch notwendigen 
               Cookies (Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO, § 25 Abs. 2 TDDDG) und einwilligungspflichtigen 
               Cookies (Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG).
             </p>
             <p>
-              Du kannst deine Cookie-Einstellungen jederzeit über den Cookie-Banner auf unserer Website anpassen 
-              oder deine Einwilligung widerrufen.
+              Du kannst Deine Cookie-Einstellungen jederzeit über den Cookie-Banner auf unserer Website anpassen 
+              oder Deine Einwilligung widerrufen.
             </p>
 
             <h3 className="text-lg font-medium text-foreground mt-4">Kontaktformular</h3>
             <p>
-              Wenn du uns per Kontaktformular Anfragen zukommen lassen, werden deine Angaben aus dem Formular inklusive 
-              der von dir dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von 
-              Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne deine Einwilligung weiter.
+              Wenn Du uns per Kontaktformular Anfragen zukommen lassen, werden Deine Angaben aus dem Formular inklusive 
+              der von Dir dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von 
+              Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Deine Einwilligung weiter.
             </p>
             <p>
-              Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern deine 
+              Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Deine 
               Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher 
               Maßnahmen erforderlich ist.
             </p>
@@ -77,7 +77,7 @@ const Datenschutz = () => (
               Zur Verarbeitung von Kontaktanfragen nutzen wir den Dienst Formspree (Formspree Inc., 2025 Shattuck Ave, Berkeley, CA 94704, USA).
             </p>
             <p>
-              Wenn du das Kontaktformular auf unserer Website ausfüllen, werden deine eingegebenen Daten (Name, Telefonnummer, E-Mail, Betriebsname sowie weitere Angaben) an die Server von Formspree in den USA übertragen und dort verarbeitet.
+              Wenn Du das Kontaktformular auf unserer Website ausfüllen, werden Deine eingegebenen Daten (Name, Telefonnummer, E-Mail, Betriebsname sowie weitere Angaben) an die Server von Formspree in den USA übertragen und dort verarbeitet.
             </p>
             <p>
               Formspree ist nach dem EU-US Data Privacy Framework zertifiziert. Die Übertragung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung).
@@ -91,7 +91,7 @@ const Datenschutz = () => (
 
             <h3 className="text-lg font-medium text-foreground mt-4">Aufbewahrungsdauer</h3>
             <p>
-              deine über das Kontaktformular übermittelten Daten werden gelöscht, sobald sie für den Zweck der Erhebung nicht mehr erforderlich sind. Dies ist in der Regel nach Abschluss oder Ablehnung der Zusammenarbeit der Fall, spätestens jedoch nach 24 Monaten.
+              Deine über das Kontaktformular übermittelten Daten werden gelöscht, sobald sie für den Zweck der Erhebung nicht mehr erforderlich sind. Dies ist in der Regel nach Abschluss oder Ablehnung der Zusammenarbeit der Fall, spätestens jedoch nach 24 Monaten.
             </p>
           </AnimatedSection>
 
@@ -99,9 +99,9 @@ const Datenschutz = () => (
             <h2 className="text-xl font-semibold text-foreground">4. Deine Rechte</h2>
             <p>Du hast jederzeit das Recht:</p>
             <ul className="list-disc pl-5 space-y-1">
-              <li>Auskunft über deine bei uns gespeicherten Daten zu erhalten (Art. 15 DSGVO)</li>
+              <li>Auskunft über Deine bei uns gespeicherten Daten zu erhalten (Art. 15 DSGVO)</li>
               <li>Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO)</li>
-              <li>Löschung deiner Daten zu verlangen (Art. 17 DSGVO)</li>
+              <li>Löschung Deiner Daten zu verlangen (Art. 17 DSGVO)</li>
               <li>Einschränkung der Verarbeitung zu verlangen (Art. 18 DSGVO)</li>
               <li>Datenübertragbarkeit zu verlangen (Art. 20 DSGVO)</li>
               <li>Widerspruch gegen die Verarbeitung einzulegen (Art. 21 DSGVO)</li>
@@ -132,7 +132,7 @@ const Datenschutz = () => (
 
             <h3 className="text-lg font-medium text-foreground mt-4">Meta-Pixel (Facebook)</h3>
             <p>
-              Diese Website nutzt das Besucheraktions-Pixel von Meta Platforms Ireland Ltd. (4 Grand Canal Square, Dublin 2, Irland). Damit kann das Verhalten von Besuchern nach Klick auf eine Meta-Werbeanzeige statistisch ausgewertet und für Remarketing genutzt werden. Der Einsatz erfolgt ausschließlich nach deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), widerrufbar jederzeit mit Wirkung für die Zukunft. Eine Datenübermittlung in die USA ist möglich. Mehr:{" "}
+              Diese Website nutzt das Besucheraktions-Pixel von Meta Platforms Ireland Ltd. (4 Grand Canal Square, Dublin 2, Irland). Damit kann das Verhalten von Besuchern nach Klick auf eine Meta-Werbeanzeige statistisch ausgewertet und für Remarketing genutzt werden. Der Einsatz erfolgt ausschließlich nach Deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), widerrufbar jederzeit mit Wirkung für die Zukunft. Eine Datenübermittlung in die USA ist möglich. Mehr:{" "}
               <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                 facebook.com/privacy/policy
               </a>
@@ -153,7 +153,7 @@ const Datenschutz = () => (
 
             <h3 className="text-lg font-medium text-foreground mt-4">KI-Chatassistent</h3>
             <p>
-              Auf dieser Website bieten wir einen KI-gestützten Chat-Assistenten an. Deine eingegebenen Nachrichten werden zur Beantwortung an das KI-Gateway von Lovable (technische Basis: Google Gemini) übermittelt und verarbeitet. Zweck: Beantwortung von Anfragen und Anbahnung einer Geschäftsbeziehung. Rechtsgrundlage: Art. 6 Abs. 1 lit. a und f DSGVO. Eine Übermittlung in Drittländer (u.&nbsp;a. USA) ist möglich und erfolgt auf Grundlage von Standardvertragsklauseln. Gib im Chat keine sensiblen Daten ein. Übermittelst du über das Chat-Formular deine Kontaktdaten, verarbeiten wir diese zur Kontaktaufnahme.
+              Auf dieser Website bieten wir einen KI-gestützten Chat-Assistenten an. Deine eingegebenen Nachrichten werden zur Beantwortung an das KI-Gateway von Lovable (technische Basis: Google Gemini) übermittelt und verarbeitet. Zweck: Beantwortung von Anfragen und Anbahnung einer Geschäftsbeziehung. Rechtsgrundlage: Art. 6 Abs. 1 lit. a und f DSGVO. Eine Übermittlung in Drittländer (u.&nbsp;a. USA) ist möglich und erfolgt auf Grundlage von Standardvertragsklauseln. Gib im Chat keine sensiblen Daten ein. Übermittelst Du über das Chat-Formular Deine Kontaktdaten, verarbeiten wir diese zur Kontaktaufnahme.
             </p>
           </AnimatedSection>
 
@@ -161,8 +161,8 @@ const Datenschutz = () => (
             <h2 className="text-xl font-semibold text-foreground">7. SSL- bzw. TLS-Verschlüsselung</h2>
             <p>
               Diese Website nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte 
-              eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennst du daran, dass die 
-              Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in deiner Browserzeile.
+              eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennst Du daran, dass die 
+              Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in Deiner Browserzeile.
             </p>
           </AnimatedSection>
 

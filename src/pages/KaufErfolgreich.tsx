@@ -10,16 +10,16 @@ export default function KaufErfolgreich() {
   const isRent = kind === "rent";
 
   const heading = isRent
-    ? "Vielen Dank für deine Buchung!"
-    : "Vielen Dank für deine Anzahlung!";
+    ? "Vielen Dank für Deine Buchung!"
+    : "Vielen Dank für Deine Anzahlung!";
 
   const subline = isRent
-    ? "dein Miet-Abo ist aktiv. Wir starten jetzt mit deiner neuen Website."
-    : "deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit deiner neuen Website.";
+    ? "Dein Miet-Abo ist aktiv. Wir starten jetzt mit Deiner neuen Website."
+    : "Deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit Deiner neuen Website.";
 
   const emailText = isRent
-    ? "Du erhältst in Kürze eine Bestätigung mit deiner ersten Monatsrechnung als PDF."
-    : "Du erhältst in Kürze eine Bestätigung mit deiner Anzahlungs-Rechnung als PDF.";
+    ? "Du erhältst in Kürze eine Bestätigung mit Deiner ersten Monatsrechnung als PDF."
+    : "Du erhältst in Kürze eine Bestätigung mit Deiner Anzahlungs-Rechnung als PDF.";
 
   return (
     <main id="main-content" className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-background to-muted/30">
@@ -45,7 +45,7 @@ export default function KaufErfolgreich() {
             <div>
               <p className="font-semibold mb-1">Onboarding innerhalb von 24 h</p>
               <p className="text-sm text-muted-foreground">
-                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und deinen
+                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und Deinen
                 Onboarding-Fragebogen zu schicken.
               </p>
             </div>
@@ -67,7 +67,7 @@ export default function KaufErfolgreich() {
               <div>
                 <p className="font-semibold mb-1">Restzahlung bei Go-Live</p>
                 <p className="text-sm text-muted-foreground">
-                  Die restlichen 50 % werden erst fällig, wenn deine Website live geht – per Rechnung.
+                  Die restlichen 50 % werden erst fällig, wenn Deine Website live geht – per Rechnung.
                 </p>
               </div>
             </div>

@@ -31,7 +31,7 @@ export default function ZahlungErfolgreich() {
         </h1>
         <p style={{ fontSize: 15, color: "#6B7280", lineHeight: 1.6, marginBottom: 18 }}>
           Vielen Dank! Deine Zahlung wurde erfolgreich verarbeitet.
-          {auftrag && (<> dein Auftrag <strong style={{ color: "#1E1B4B" }}>{auftrag}</strong> ist bestätigt.</>)}
+          {auftrag && (<> Dein Auftrag <strong style={{ color: "#1E1B4B" }}>{auftrag}</strong> ist bestätigt.</>)}
         </p>
         <p style={{ fontSize: 13, color: "#6B7280", marginBottom: 24 }}>
           Du erhältst in Kürze eine Bestätigung per E-Mail. Wir melden uns innerhalb von 24 h für die nächsten Schritte.

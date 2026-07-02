@@ -17,7 +17,7 @@ const services = [
   {
     icon: TrendingUp,
     title: "Conversion-Optimierung",
-    desc: "deine Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
+    desc: "Deine Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
     features: ["Conversion-Analyse", "Optimierte Landingpages", "A/B Testing", "Tracking & Analytics"],
     result: "Bis zu 400% mehr Conversions",
     link: "/conversion-optimierung",
@@ -33,7 +33,7 @@ const services = [
   {
     icon: Search,
     title: "SEO-Grundlagen",
-    desc: "Gefunden werden, wenn Kunden suchen. Wir sorgen dafür, dass deine Website bei Google sichtbar wird – von Anfang an.",
+    desc: "Gefunden werden, wenn Kunden suchen. Wir sorgen dafür, dass Deine Website bei Google sichtbar wird – von Anfang an.",
     features: ["On-Page Optimierung", "Technisches SEO", "Lokale Sichtbarkeit", "Google-konforme Struktur"],
     result: "Top-Platzierungen bei relevanten Suchbegriffen",
     link: "/leistungen",
@@ -41,7 +41,7 @@ const services = [
   {
     icon: Settings,
     title: "Individuelle Lösungen",
-    desc: "Buchungssysteme, Anbindungen, Automatisierungen – wir setzen um, was dein Business braucht. Maßgeschneidert und zukunftssicher.",
+    desc: "Buchungssysteme, Anbindungen, Automatisierungen – wir setzen um, was Dein Business braucht. Maßgeschneidert und zukunftssicher.",
     features: ["API-Integrationen", "Buchungssysteme", "Automatisierungen", "Individuelle Beratung"],
     result: "Zeitersparnis durch Automatisierung",
     link: "/kontakt",
@@ -50,11 +50,11 @@ const services = [
 
 const faqs = [
   { q: "Welche Leistungen bietet eure Webdesign Agentur?", a: "Wir bieten Conversion-Webdesign, UX/UI Design, SEO-Optimierung, Landingpage-Erstellung, Website Relaunch und Conversion-Optimierung – alles aus einer Hand." },
-  { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Du kannst jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten du gerne, welche Kombination für deine Ziele am sinnvollsten ist." },
+  { q: "Kann ich einzelne Leistungen buchen?", a: "Ja! Du kannst jede Leistung einzeln buchen oder als Komplettpaket. Wir beraten Du gerne, welche Kombination für Deine Ziele am sinnvollsten ist." },
   { q: "Erstellt ihr auch Landingpages?", a: "Ja, wir erstellen hochkonvertierende Landingpages für Google Ads, Social Media Kampagnen und Lead-Generierung. Mehr dazu auf unserer Landingpage-Seite." },
-  { q: "Wie lange dauert ein Webdesign-Projekt?", a: "Eine typische Website ist innerhalb von 3–6 Wochen live. Landingpages oft schon in 1–2 Wochen. Den genauen Zeitplan stimmen wir nach dem Strategiegespräch mit dir ab." },
-  { q: "Was kostet eine professionelle Website?", a: "Unsere Websites starten ab einem klar definierten Festpreis. Den genauen Investitionsrahmen erhältst du nach einem kostenlosen Strategiegespräch – transparent, ohne versteckte Kosten." },
-  { q: "Übernehmt ihr auch die Pflege und Wartung?", a: "Ja, auf Wunsch übernehmen wir Hosting, Updates, Backups und inhaltliche Anpassungen in einem monatlichen Wartungspaket – damit deine Website dauerhaft schnell und sicher bleibt." },
+  { q: "Wie lange dauert ein Webdesign-Projekt?", a: "Eine typische Website ist innerhalb von 3–6 Wochen live. Landingpages oft schon in 1–2 Wochen. Den genauen Zeitplan stimmen wir nach dem Strategiegespräch mit Dir ab." },
+  { q: "Was kostet eine professionelle Website?", a: "Unsere Websites starten ab einem klar definierten Festpreis. Den genauen Investitionsrahmen erhältst Du nach einem kostenlosen Strategiegespräch – transparent, ohne versteckte Kosten." },
+  { q: "Übernehmt ihr auch die Pflege und Wartung?", a: "Ja, auf Wunsch übernehmen wir Hosting, Updates, Backups und inhaltliche Anpassungen in einem monatlichen Wartungspaket – damit Deine Website dauerhaft schnell und sicher bleibt." },
 ];
 
 const Services = () => (
@@ -68,7 +68,7 @@ const Services = () => (
             </span>
             <h1 className="mb-5 text-balance">
               Webdesign, Conversion & SEO –{" "}
-              <span className="gradient-text">alles für deinen Online-Erfolg</span>
+              <span className="gradient-text">alles für Deinen Online-Erfolg</span>
             </h1>
             <p className="text-muted-foreground text-lg">
               Wir erstellen keine Standard-Websites, sondern Verkaufsinstrumente, die sich bezahlt machen –
@@ -112,10 +112,10 @@ const Services = () => (
               <span className="badge-label bg-primary/10 text-primary mb-5">FAQ</span>
               <h2 className="mb-5 text-balance">Häufige Fragen zu unseren Leistungen</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Keine Standard-Antworten. Hier findest du klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
+                Keine Standard-Antworten. Hier findest Du klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
               </p>
               <div className="hidden lg:block p-6 rounded-2xl border border-border bg-muted/30">
-                <p className="font-heading font-semibold mb-2">deine Frage ist nicht dabei?</p>
+                <p className="font-heading font-semibold mb-2">Deine Frage ist nicht dabei?</p>
                 <p className="text-sm text-muted-foreground mb-4">Wir beantworten sie gerne persönlich – unverbindlich und kostenfrei.</p>
                 <Link to="/kontakt" className="text-sm font-semibold text-primary hover:underline">
                   Jetzt Kontakt aufnehmen →

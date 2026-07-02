@@ -10,17 +10,17 @@ const painPoints = [
   {
     icon: EyeOff,
     problem: "Besucher scrollen – und gehen wieder?",
-    detail: "Ohne klare Nutzerführung wissen Besucher nicht, was sie tun sollen. Sie verlassen die Seite – und rufen bei deinem Wettbewerber an.",
+    detail: "Ohne klare Nutzerführung wissen Besucher nicht, was sie tun sollen. Sie verlassen die Seite – und rufen bei Deinem Wettbewerber an.",
   },
   {
     icon: AlertTriangle,
     problem: "Die falschen Leute fühlen sich angesprochen?",
-    detail: "Wenn deine Texte alle ansprechen, überzeugen sie niemanden. Deine Zielgruppe muss sich sofort wiedererkennen.",
+    detail: "Wenn Deine Texte alle ansprechen, überzeugen sie niemanden. Deine Zielgruppe muss sich sofort wiedererkennen.",
   },
   {
     icon: XCircle,
     problem: "Kein klarer nächster Schritt?",
-    detail: "Ohne eine eindeutige Handlungsaufforderung verlierst du jeden zweiten Interessenten – obwohl er bereit wäre, Kontakt aufzunehmen.",
+    detail: "Ohne eine eindeutige Handlungsaufforderung verlierst Du jeden zweiten Interessenten – obwohl er bereit wäre, Kontakt aufzunehmen.",
   },
 ];
 

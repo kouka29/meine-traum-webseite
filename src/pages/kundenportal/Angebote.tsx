@@ -20,7 +20,7 @@ export default function KundenportalAngebote() {
     <div className="space-y-6">
       <div>
         <h1 className="font-heading text-3xl font-bold">Angebote</h1>
-        <p className="text-muted-foreground mt-1">Alle Angebote, die wir dir erstellt haben.</p>
+        <p className="text-muted-foreground mt-1">Alle Angebote, die wir Dir erstellt haben.</p>
       </div>
 
       {angebote.length === 0 ? (

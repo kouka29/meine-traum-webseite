@@ -23,7 +23,7 @@ const FreePreviewCTA = () => (
               Deine kostenlose Website-Strategie
             </h2>
             <p className="text-primary-foreground/70 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
-              Du erhältst ein individuelles Konzept für deine neue Website – mit konkreten Ideen für Struktur, Texte und Aufbau.
+              Du erhältst ein individuelles Konzept für Deine neue Website – mit konkreten Ideen für Struktur, Texte und Aufbau.
               Kein Verkaufsgespräch. Kein Kleingedrucktes. Du entscheidest danach in Ruhe.
             </p>
             <div className="flex flex-col gap-4 max-w-md mx-auto mb-10 text-left">

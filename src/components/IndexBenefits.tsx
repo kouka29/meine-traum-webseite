@@ -5,8 +5,8 @@ import { BarChart3, Users, LayoutDashboard, BadgeCheck, ArrowRight } from "lucid
 
 const benefits = [
   { icon: BarChart3, title: "Mehr qualifizierte Anfragen", desc: "Keine Zufallstreffer. Deine Website filtert die richtigen Interessenten heraus – und führt sie gezielt zur Kontaktaufnahme. Unsere Kunden berichten von 2–5x mehr Anfragen nach dem Relaunch." },
-  { icon: Users, title: "Höhere Abschlussquote", desc: "Wer über deine Website anfrägt, ist bereits überzeugt. Die Gespräche starten auf einem anderen Level – weil deine Seite die Vorarbeit leistet." },
-  { icon: LayoutDashboard, title: "Klar strukturierte Seiten", desc: "Besucher verstehen in unter 5 Sekunden, was du anbietest und warum sie bei dir richtig sind. Keine Verwirrung, kein Absprung." },
+  { icon: Users, title: "Höhere Abschlussquote", desc: "Wer über Deine Website anfrägt, ist bereits überzeugt. Die Gespräche starten auf einem anderen Level – weil Deine Seite die Vorarbeit leistet." },
+  { icon: LayoutDashboard, title: "Klar strukturierte Seiten", desc: "Besucher verstehen in unter 5 Sekunden, was Du anbietest und warum sie bei Dir richtig sind. Keine Verwirrung, kein Absprung." },
   { icon: BadgeCheck, title: "Vertrauen ab der ersten Sekunde", desc: "Dein Auftritt zeigt sofort: Hier arbeiten Könner. Kundenstimmen, klare Ergebnisse und ein sauberer Aufbau schaffen Glaubwürdigkeit, bevor das erste Gespräch stattfindet." },
 ];
 
@@ -19,7 +19,7 @@ const IndexBenefits = () => (
             Das Ergebnis: Mehr Anfragen, planbar und messbar
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Keine vagen Versprechen. Wir zeigen, was sich konkret ändert, wenn deine Website endlich als Vertriebskanal funktioniert.
+            Keine vagen Versprechen. Wir zeigen, was sich konkret ändert, wenn Deine Website endlich als Vertriebskanal funktioniert.
           </p>
         </div>
       </AnimatedSection>

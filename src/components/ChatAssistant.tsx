@@ -55,12 +55,12 @@ const HIDE_PREFIXES = [
 
 function getGreeting(pathname: string): string {
   if (pathname.startsWith("/preise") || pathname.startsWith("/webdesign-preise")) {
-    return "Fragen zu den Paketen? Ich helf dir das passende zu finden.";
+    return "Fragen zu den Paketen? Ich helf Dir das passende zu finden.";
   }
   if (pathname.startsWith("/portfolio")) {
-    return "Suchst du ein Beispiel für deine Branche?";
+    return "Suchst Du ein Beispiel für Deine Branche?";
   }
-  return "Hi! Ich bin dein Assistent von MTW. Was möchtest du wissen?";
+  return "Hi! Ich bin Dein Assistent von MTW. Was möchtest Du weißt?";
 }
 
 const DEFAULT_CHIPS = [
@@ -256,7 +256,7 @@ const ChatAssistant = () => {
     // Trigger 1 — /preise Timer (30s)
     if (pathname.startsWith("/preise") || pathname.startsWith("/webdesign-preise")) {
       const t = window.setTimeout(
-        () => autoOpen("Fragen zu den Paketen? Ich helf dir das passende zu finden."),
+        () => autoOpen("Fragen zu den Paketen? Ich helf Dir das passende zu finden."),
         30_000,
       );
       cleanups.push(() => window.clearTimeout(t));
@@ -267,7 +267,7 @@ const ChatAssistant = () => {
       const onMouseOut = (e: MouseEvent) => {
         if (e.clientY > 0) return;
         if (e.relatedTarget) return;
-        autoOpen("Bevor du gehst — hol dir die kostenlose Strategie-Vorschau.", {
+        autoOpen("Bevor Du gehst — hol Dir die kostenlose Strategie-Vorschau.", {
           openLeadForm: true,
         });
       };
@@ -292,7 +292,7 @@ const ChatAssistant = () => {
         );
         const scrolled = (window.scrollY + window.innerHeight) / docHeight;
         if (scrolled >= 0.6) {
-          autoOpen("Soll ich dir ein Beispiel für deine Branche zeigen?");
+          autoOpen("Soll ich Dir ein Beispiel für Deine Branche zeigen?");
         }
       }, 20_000);
       cleanups.push(() => {
@@ -509,7 +509,7 @@ const ChatAssistant = () => {
           {!consentDismissed && (
             <div className="text-[11px] text-muted-foreground bg-muted/50 px-3 py-2 border-b border-border leading-snug">
               Dieser Chat wird KI-gestützt verarbeitet (Google Gemini via Lovable). Mit dem
-              Senden stimmst du zu. Mehr:{" "}
+              Senden stimmst Du zu. Mehr:{" "}
               <a href="/datenschutz" className="underline text-primary">
                 Datenschutz
               </a>
@@ -625,7 +625,7 @@ const ChatAssistant = () => {
               >
                 <div className="text-xs text-muted-foreground">
                   {availability?.isFull
-                    ? "Alle Vorschau-Plätze diesen Monat vergeben. Wir rufen dich zurück."
+                    ? "Alle Vorschau-Plätze diesen Monat vergeben. Wir rufen Dich zurück."
                     : "Kurz Name + Telefon — wir melden uns."}
                 </div>
                 <input

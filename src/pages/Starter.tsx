@@ -70,17 +70,17 @@ const painPoints = [
   {
     icon: AlertTriangle,
     title: "Du hast (noch) gar keine Website",
-    text: "Kunden googeln du — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
+    text: "Kunden googeln Dich — und finden nichts. Jeden Tag verlierst Du Anfragen, die nie bei Dir ankommen.",
   },
   {
     icon: Smartphone,
-    title: "deine Website wirkt wie aus 2015",
-    text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was du anbietest.",
+    title: "Deine Website wirkt wie aus 2015",
+    text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was Du anbietest.",
   },
   {
     icon: Search,
     title: "Du wirst bei Google nicht gefunden",
-    text: "Keine SEO-Grundlagen, kein Standortbezug. Selbst wer du sucht, landet bei der Konkurrenz.",
+    text: "Keine SEO-Grundlagen, kein Standortbezug. Selbst wer nach Dir sucht, landet bei der Konkurrenz.",
   },
   {
     icon: X,
@@ -130,13 +130,13 @@ const process = [
   {
     icon: Phone,
     title: "Erstgespräch (15 Min)",
-    text: "Wir verstehen deine Situation, Branche und Ziele. Kostenlos, unverbindlich.",
+    text: "Wir verstehen Deine Situation, Branche und Ziele. Kostenlos, unverbindlich.",
     duration: "Tag 1",
   },
   {
     icon: Lightbulb,
     title: "Konzept in 48 h",
-    text: "Du bekommst Struktur, Textideen und visuelle Richtung — bevor du einen Euro zahlen.",
+    text: "Du bekommst Struktur, Textideen und visuelle Richtung — bevor Du einen Euro zahlen.",
     duration: "Tag 1–3",
   },
   {
@@ -163,15 +163,15 @@ const fitYes = [
 const fitNo = [
   "Du brauchst einen Online-Shop mit hunderten Produkten",
   "Du willst alles selber machen und nur „Beratung\"",
-  "du suchst die billigste Lösung um jeden Preis",
-  "du erwartest 50 Korrekturschleifen über 6 Monate",
+  "Du suchst die billigste Lösung um jeden Preis",
+  "Du erwartest 50 Korrekturschleifen über 6 Monate",
 ];
 
 const guarantees = [
   {
     icon: Shield,
     title: "Konzept kostenlos",
-    text: "Du zahlst erst, wenn du das Konzept überzeugt. Keine Vorkasse.",
+    text: "Du zahlst erst, wenn Dich das Konzept überzeugt. Keine Vorkasse.",
   },
   {
     icon: Lock,
@@ -212,15 +212,15 @@ const moreTestimonials = [
 const faqs = [
   {
     q: "Was bekomme ich konkret für 990 €?",
-    a: "Eine vollständige, professionelle One-Page-Website: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, SSL-Zertifikat, Hosting, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit. Einmalzahlung, dann gehört dir die Seite dauerhaft.",
+    a: "Eine vollständige, professionelle One-Page-Website: modernes Design, mobil-optimiert, mit Kontaktformular & WhatsApp-Button, SSL-Zertifikat, Hosting, Impressum, Datenschutz und SEO-Grundlagen — komplett launchbereit. Einmalzahlung, dann gehört Dir die Seite dauerhaft.",
   },
   {
     q: "Wo ist der Unterschied zu den teureren Paketen?",
-    a: "Das Starter Paket ist eine starke einzelne Seite. Wenn du mehrere Unterseiten, einen Blog, einen Shop oder spezielle Funktionen brauchen, sprechen wir über ein größeres Paket — immer als Fixpreis.",
+    a: "Das Starter Paket ist eine starke einzelne Seite. Wenn Du mehrere Unterseiten, einen Blog, einen Shop oder spezielle Funktionen brauchen, sprechen wir über ein größeres Paket — immer als Fixpreis.",
   },
   {
     q: "Was muss ich selbst vorbereiten?",
-    a: "Wenig. Wenn du Logo, ein paar Infos zum Business und eigene Fotos haben — super. Falls nicht, übernehmen wir Bildauswahl/KI-Bilder, Texte und Konzept komplett.",
+    a: "Wenig. Wenn Du Logo, ein paar Infos zum Business und eigene Fotos haben — super. Falls nicht, übernehmen wir Bildauswahl/KI-Bilder, Texte und Konzept komplett.",
   },
   {
     q: "Kann ich später erweitern?",
@@ -232,15 +232,15 @@ const faqs = [
   },
   {
     q: "Bin ich nach Launch auf euch angewiesen?",
-    a: "Nein. Du bekommst alle Zugänge und sind Eigentümer. Wenn du später Änderungen wollen, kannst du sie selbst, mit uns oder mit jeder anderen Agentur machen.",
+    a: "Nein. Du bekommst alle Zugänge und bist Eigentümer. Wenn Du später Änderungen wollen, kannst Du sie selbst, mit uns oder mit jeder anderen Agentur machen.",
   },
   {
     q: "Was, wenn mir das Konzept nicht gefällt?",
-    a: "Dann zahlst du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48 h-Konzept kostenlos: damit Du siehst können, was Du bekommst — bevor du sich binden.",
+    a: "Dann zahlst Du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48 h-Konzept kostenlos: damit sehen kannst, was Du bekommst — bevor Du Dich bindest.",
   },
   {
     q: "Macht ihr auch Texte und Bilder?",
-    a: "Ja, beides ist im Paket inklusive. Wir schreiben verkaufsstarke Texte und nutzen passende Stockfotos oder KI-Bilder. Eigene Fotos kannst du natürlich auch liefern.",
+    a: "Ja, beides ist im Paket inklusive. Wir schreiben verkaufsstarke Texte und nutzen passende Stockfotos oder KI-Bilder. Eigene Fotos kannst Du natürlich auch liefern.",
   },
 ];
 
@@ -259,7 +259,7 @@ const Starter = () => (
               <span className="gradient-text">Beides lösbar — in 7 Tagen.</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
-              Wir bauen dir eine moderne, professionelle Website, die Besucher
+              Wir bauen Dir eine moderne, professionelle Website, die Besucher
               sofort überzeugt — zu einem Fixpreis ohne Überraschungen.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -292,9 +292,9 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Wo stehst du gerade?</h2>
+            <h2 className="mb-4 text-balance">Wo stehst Du gerade?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Beide Wege führen zu einer Website, die für du arbeitet.
+              Beide Wege führen zu einer Website, die für Du arbeitet.
             </p>
           </div>
         </AnimatedSection>
@@ -338,10 +338,10 @@ const Starter = () => (
               Klingt bekannt?
             </span>
             <h2 className="mb-4 text-balance">
-              Was du gerade Anfragen kostet — jeden Tag
+              Was Du gerade Anfragen kostet — jeden Tag
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Wenn du auch nur einer dieser Punkte trifft, verlierst du gerade
+              Wenn Du auch nur einer dieser Punkte trifft, verlierst Du gerade
               Geld. Die gute Nachricht: jeder davon ist in 7 Tagen lösbar.
             </p>
           </div>
@@ -423,9 +423,9 @@ const Starter = () => (
                 </div>
                 <div className="border-t border-border pt-6 text-center">
                   <p className="text-sm text-muted-foreground mb-6">
-                    Brauchst du mehr Seiten, einen Shop oder spezielle Funktionen?{" "}
+                    Brauchst Du mehr Seiten, einen Shop oder spezielle Funktionen?{" "}
                     <strong className="text-foreground">
-                      Wir erstellen dir ein individuelles Angebot.
+                      Wir erstellen Dir ein individuelles Angebot.
                     </strong>
                   </p>
                   <Button
@@ -455,8 +455,8 @@ const Starter = () => (
               Warum Starter — und nicht Selbstbau oder klassische Agentur?
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Drei Wege zu einer Website. Nur einer davon kostet du nicht
-              Wochen deiner Lebenszeit oder tausende Euro extra.
+              Drei Wege zu einer Website. Nur einer davon kostet Du nicht
+              Wochen Deiner Lebenszeit oder tausende Euro extra.
             </p>
           </div>
         </AnimatedSection>
@@ -521,7 +521,7 @@ const Starter = () => (
               <Clock size={16} className="inline mr-1" aria-hidden={true} focusable={false} /> 14 Tage von Null zu Online
             </span>
             <h2 className="mb-4 text-balance">
-              dein Weg zur fertigen Website — Schritt für Schritt
+              Dein Weg zur fertigen Website — Schritt für Schritt
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Klare Phasen, klare Erwartungen. Du weißt jederzeit, wo wir stehen.
@@ -628,7 +628,7 @@ const Starter = () => (
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
               <Shield size={26} aria-hidden={true} focusable={false} />
             </div>
-            <h2 className="mb-4 text-balance">3 Garantien — du gehen null Risiko</h2>
+            <h2 className="mb-4 text-balance">3 Garantien — Du gehst null Risiko</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Vertrauen bekommen wir nicht durch Versprechen — sondern dadurch,
               dass wir das Risiko übernehmen.
@@ -660,9 +660,9 @@ const Starter = () => (
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-balance">Ist Starter das Richtige für du?</h2>
+            <h2 className="mb-4 text-balance">Ist Starter das Richtige für Du?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Wir verkaufen lieber ehrlich als überall. Hier siehst du, ob es passt.
+              Wir verkaufen lieber ehrlich als überall. Hier siehst Du, ob es passt.
             </p>
           </div>
         </AnimatedSection>
@@ -699,8 +699,8 @@ const Starter = () => (
                   ))}
                 </ul>
                 <p className="mt-6 text-xs text-muted-foreground italic">
-                  Falls du sich hier wiederfindest: kein Problem — wir empfehlen
-                  dir gern eine andere Lösung oder ein größeres Paket.
+                  Falls Du sich hier wiederfindest: kein Problem — wir empfehlen
+                  Dir gern eine andere Lösung oder ein größeres Paket.
                 </p>
               </CardContent>
             </Card>

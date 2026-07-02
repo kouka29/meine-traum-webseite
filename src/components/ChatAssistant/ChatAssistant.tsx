@@ -174,7 +174,7 @@ const ChatAssistant = () => {
           {
             role: "assistant",
             content: isFull
-              ? "Danke! Wir rufen dich schnellstmöglich zurück. 📞"
+              ? "Danke! Wir rufen Dich schnellstmöglich zurück. 📞"
               : "Perfekt, danke! Wir melden uns kurz, um deine kostenlose Vorschau abzustimmen. ✅",
           },
         ]);
@@ -276,7 +276,7 @@ const ChatAssistant = () => {
                 <div className="text-sm font-semibold">{ctaLabel}</div>
                 <div className="text-xs text-muted-foreground">
                   {availability?.isFull
-                    ? "Alle Vorschau-Plätze diesen Monat sind vergeben. Wir rufen dich gern zurück."
+                    ? "Alle Vorschau-Plätze diesen Monat sind vergeben. Wir rufen Dich gern zurück."
                     : `Noch ${availability?.available ?? ""} Plätze frei diesen Monat. Kurz Name + Telefon — wir kümmern uns um den Rest.`}
                 </div>
                 <form onSubmit={handleLeadSubmit} className="space-y-2">
@@ -305,7 +305,7 @@ const ChatAssistant = () => {
                     )}
                   </Button>
                   <p className="text-[10px] text-muted-foreground leading-tight">
-                    Mit Absenden stimmst du zu, dass wir dich kontaktieren dürfen. Details in der{" "}
+                    Mit Absenden stimmst Du zu, dass wir Dich kontaktieren dürfen. Details in der{" "}
                     <a href="/datenschutz" className="underline">Datenschutzerklärung</a>.
                   </p>
                 </form>

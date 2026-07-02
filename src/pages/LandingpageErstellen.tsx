@@ -10,12 +10,12 @@ const benefits = [
   { icon: Target, title: "Ein Ziel. Maximale Wirkung.", desc: "Jede Landingpage hat ein klares Conversion-Ziel – ob Anfrage, Buchung oder Download." },
   { icon: MousePointer, title: "Verkaufspsychologischer Aufbau", desc: "Bewährte Strukturen, die Besucher Schritt für Schritt zum Handeln führen." },
   { icon: Zap, title: "Schnelle Ladezeiten", desc: "Unter 2 Sekunden – damit kein potenzieller Kunde abspringt." },
-  { icon: TrendingUp, title: "A/B-Testing-fähig", desc: "Wir optimieren deine Landingpage kontinuierlich für maximale Conversion-Raten." },
+  { icon: TrendingUp, title: "A/B-Testing-fähig", desc: "Wir optimieren Deine Landingpage kontinuierlich für maximale Conversion-Raten." },
 ];
 
 const faqs = [
   { q: "Was ist eine Landingpage und wofür brauche ich sie?", a: "Eine Landingpage ist eine eigenständige Seite mit einem einzigen Conversion-Ziel – z. B. Anfrage, Terminbuchung oder Lead-Generierung. Du ist perfekt für Werbekampagnen, da sie Besucher gezielt zum Handeln führt." },
-  { q: "Was kostet eine Landingpage erstellen lassen?", a: "Eine professionelle Landingpage kostet ab 800 €. Der Preis variiert je nach Umfang, Integration und Komplexität. Wir erstellen dir ein individuelles Angebot." },
+  { q: "Was kostet eine Landingpage erstellen lassen?", a: "Eine professionelle Landingpage kostet ab 800 €. Der Preis variiert je nach Umfang, Integration und Komplexität. Wir erstellen Dir ein individuelles Angebot." },
   { q: "Wie schnell kann eine Landingpage erstellt werden?", a: "Eine Landingpage kann in 1–2 Wochen erstellt werden. Für eilige Projekte bieten wir auch Express-Umsetzungen an." },
 ];
 

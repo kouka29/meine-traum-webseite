@@ -96,9 +96,9 @@ const CookieBanner = () => {
         </div>
 
         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-          Wir verwenden Cookies, um dir die bestmögliche Erfahrung auf unserer Website zu bieten. 
+          Wir verwenden Cookies, um Dir die bestmögliche Erfahrung auf unserer Website zu bieten. 
           Einige Cookies sind technisch notwendig, während andere uns helfen, die Website zu verbessern 
-          und dir relevante Inhalte anzuzeigen. Du kannst deine Einwilligung jederzeit widerrufen.{" "}
+          und Dir relevante Inhalte anzuzeigen. Du kannst Deine Einwilligung jederzeit widerrufen.{" "}
           <a href="/datenschutz" className="text-primary underline underline-offset-2 hover:text-primary/80">
             Mehr erfahren
           </a>
@@ -134,7 +134,7 @@ const CookieBanner = () => {
               />
               <div>
                 <span className="text-sm font-medium">Marketing-Cookies</span>
-                <p className="text-xs text-muted-foreground">Werden verwendet, um dir relevante Werbung und Inhalte anzuzeigen.</p>
+                <p className="text-xs text-muted-foreground">Werden verwendet, um Dir relevante Werbung und Inhalte anzuzeigen.</p>
               </div>
             </label>
           </div>

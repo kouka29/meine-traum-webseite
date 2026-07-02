@@ -7,17 +7,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const features = [
   { icon: Monitor, title: "Conversion-optimiertes Webdesign", desc: "Jede Seite wird strategisch aufgebaut, um Besucher zu Kunden zu machen – mit verkaufspsychologischen Elementen." },
-  { icon: Palette, title: "Individuelles Design", desc: "Kein Template-Design. Deine Website wird maßgeschneidert für deine Marke, deine Branche und deine Zielgruppe." },
+  { icon: Palette, title: "Individuelles Design", desc: "Kein Template-Design. Deine Website wird maßgeschneidert für Deine Marke, Deine Branche und Deine Zielgruppe." },
   { icon: Zap, title: "Blitzschnelle Performance", desc: "Ladezeiten unter 3 Sekunden – für bessere Rankings und weniger Absprünge." },
-  { icon: Smartphone, title: "Mobile First", desc: "Über 60% deiner Besucher kommen vom Smartphone. Unsere Websites sehen auf jedem Gerät perfekt aus." },
-  { icon: Search, title: "SEO-Grundlagen inklusive", desc: "On-Page SEO, Meta-Tags, strukturierte Daten – damit Google deine Website findet und rankt." },
-  { icon: TrendingUp, title: "Messbare Ergebnisse", desc: "Analytics & Tracking von Anfang an – damit Du siehst, wie deine Website performt." },
+  { icon: Smartphone, title: "Mobile First", desc: "Über 60% Deiner Besucher kommen vom Smartphone. Unsere Websites sehen auf jedem Gerät perfekt aus." },
+  { icon: Search, title: "SEO-Grundlagen inklusive", desc: "On-Page SEO, Meta-Tags, strukturierte Daten – damit Google Deine Website findet und rankt." },
+  { icon: TrendingUp, title: "Messbare Ergebnisse", desc: "Analytics & Tracking von Anfang an – damit Du siehst, wie Deine Website performt." },
 ];
 
 const faqs = [
   { q: "Was macht eine gute Webdesign Agentur aus?", a: "Eine gute Webdesign Agentur erstellt nicht nur schöne Websites, sondern Verkaufsinstrumente. Bei Meine Traum Webseite kombinieren wir verkaufspsychologisches Design mit modernster Technik für messbare Ergebnisse." },
    { q: "Wie viel kostet professionelles Webdesign?", a: "Unsere Webdesign-Projekte starten ab 990 €. Der genaue Preis hängt vom Umfang deines Projekts ab. Wir bieten transparente Preise und eine kostenlose Erstberatung." },
-  { q: "Wie lange dauert die Erstellung einer Website?", a: "In der Regel 2–4 Wochen. Eine kostenlose Vorschau erhältst du bereits innerhalb von 48 Stunden nach dem Erstgespräch." },
+  { q: "Wie lange dauert die Erstellung einer Website?", a: "In der Regel 2–4 Wochen. Eine kostenlose Vorschau erhältst Du bereits innerhalb von 48 Stunden nach dem Erstgespräch." },
   { q: "Bietet ihr auch Webdesign für kleine Unternehmen an?", a: "Ja! Wir sind spezialisiert auf Webdesign für kleine Unternehmen, Selbstständige, Handwerker und KMUs im DACH-Raum." },
 ];
 
@@ -69,7 +69,7 @@ const WebdesignAgentur = () => (
             <h2 className="text-primary-foreground mb-5 text-balance text-center">Unser Webdesign-Prozess</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-10">
               {[
-                { step: "1", title: "Analyse", desc: "Wir analysieren deine Branche, Zielgruppe und Konkurrenz." },
+                { step: "1", title: "Analyse", desc: "Wir analysieren Deine Branche, Zielgruppe und Konkurrenz." },
                 { step: "2", title: "Konzept & Design", desc: "Strategischer Aufbau mit verkaufspsychologischen Elementen." },
                 { step: "3", title: "Entwicklung", desc: "Umsetzung mit modernster Technik – schnell, responsiv, SEO-optimiert." },
                 { step: "4", title: "Launch & Optimierung", desc: "Go-Live mit Tracking und laufender Conversion-Optimierung." },

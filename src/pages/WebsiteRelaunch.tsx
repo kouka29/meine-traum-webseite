@@ -6,17 +6,17 @@ import { ArrowRight, Check, RefreshCw, TrendingUp, Zap, Search } from "lucide-re
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const signs = [
-  "deine Website sieht veraltet aus und schreckt Kunden ab",
-  "Du bekommst kaum Anfragen über deine aktuelle Website",
-  "deine Website lädt langsam (über 3 Sekunden)",
-  "deine Website ist nicht mobilfreundlich",
-  "deine Konkurrenz wirkt online deutlich professioneller",
+  "Deine Website sieht veraltet aus und schreckt Kunden ab",
+  "Du bekommst kaum Anfragen über Deine aktuelle Website",
+  "Deine Website lädt langsam (über 3 Sekunden)",
+  "Deine Website ist nicht mobilfreundlich",
+  "Deine Konkurrenz wirkt online deutlich professioneller",
   "Du kannst Inhalte nicht selbst aktualisieren",
 ];
 
 const faqs = [
-  { q: "Was kostet ein Website Relaunch?", a: "Ein professioneller Website Relaunch startet ab 990 €. Der Preis hängt vom Umfang der bestehenden Seite und den gewünschten Funktionen ab. Wir erstellen dir ein individuelles Angebot." },
-  { q: "Verliere ich mein Google-Ranking beim Relaunch?", a: "Nein! Wir setzen saubere Weiterleitungen (301-Redirects) und optimieren deine neue Website von Anfang an für Suchmaschinen. In der Regel verbessern sich die Rankings nach einem professionellen Relaunch sogar." },
+  { q: "Was kostet ein Website Relaunch?", a: "Ein professioneller Website Relaunch startet ab 990 €. Der Preis hängt vom Umfang der bestehenden Seite und den gewünschten Funktionen ab. Wir erstellen Dir ein individuelles Angebot." },
+  { q: "Verliere ich mein Google-Ranking beim Relaunch?", a: "Nein! Wir setzen saubere Weiterleitungen (301-Redirects) und optimieren Deine neue Website von Anfang an für Suchmaschinen. In der Regel verbessern sich die Rankings nach einem professionellen Relaunch sogar." },
   { q: "Wie lange dauert ein Website Relaunch?", a: "Ein typischer Relaunch dauert 3–5 Wochen, abhängig vom Umfang. Du erhältst vorab eine kostenlose Vorschau innerhalb von 48 Stunden." },
 ];
 
@@ -29,10 +29,10 @@ const WebsiteRelaunch = () => (
             <span className="badge-label bg-primary/10 text-primary mb-5">Website Relaunch</span>
             <h1 className="mb-5 text-balance">
               Website Relaunch –{" "}
-              <span className="gradient-text">deine veraltete Website wird zum Kundenmagnet</span>
+              <span className="gradient-text">Deine veraltete Website wird zum Kundenmagnet</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              deine Website bringt keine Anfragen mehr? Ein professioneller Website Relaunch verwandelt deine veraltete
+              Deine Website bringt keine Anfragen mehr? Ein professioneller Website Relaunch verwandelt Deine veraltete
               Online-Präsenz in ein modernes Verkaufsinstrument – mit mehr Anfragen, besserem Design und schnelleren Ladezeiten.
             </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
@@ -44,7 +44,7 @@ const WebsiteRelaunch = () => (
         <AnimatedSection>
           <h2 className="text-center mb-5 text-balance">Wann ist ein Website Relaunch notwendig?</h2>
           <p className="text-muted-foreground text-center max-w-2xl mx-auto text-lg mb-12">
-            Erkennst du eines dieser Anzeichen? Dann wird es Zeit für einen professionellen Relaunch.
+            Erkennst Du eines dieser Anzeichen? Dann wird es Zeit für einen professionellen Relaunch.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-20">
             {signs.map((s) => (
