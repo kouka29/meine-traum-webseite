@@ -328,7 +328,7 @@ export const rentPackages: Pkg[] = [
     priceId: "starter_rent_monthly",
     features: [
       "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
-      "Individuelle Texte & Inhalte – du lieferst die Infos, wir schreiben",
+      "Individuelle Texte & Inhalte – Du lieferst die Infos, wir schreiben",
       "Perfekt auf jedem Smartphone & Tablet",
       "Hosting, Domain & SSL inklusive – keine Extra-Kosten",
       "Professionelles Design – kein Baukastensystem",
@@ -376,7 +376,7 @@ export const rentPackages: Pkg[] = [
     priceId: "premium_rent_monthly",
     includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
-      "Bis zu 10 Seiten – deine komplette Online-Präsenz",
+      "Bis zu 10 Seiten – Deine komplette Online-Präsenz",
       "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
       "Feinschliff nach Launch inklusive – damit alles genau passt",
@@ -440,7 +440,7 @@ const buyPackages: BuyPkg[] = [
     compare: "Miete Starter: 59 € × 24 = 1.416 € — hier sparst du 426 € (alle Preise netto)",
     features: [
       "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
-      "Individuelle Texte & Inhalte – du lieferst die Infos, wir schreiben",
+      "Individuelle Texte & Inhalte – Du lieferst die Infos, wir schreiben",
       "Perfekt auf jedem Smartphone & Tablet",
       "Hosting, Domain & SSL inklusive – keine Extra-Kosten",
       "Professionelles Design – kein Baukastensystem",
@@ -492,7 +492,7 @@ const buyPackages: BuyPkg[] = [
     compare: "Miete Premium: 159 € × 24 = 3.816 € — hier sparst du 226 € (alle Preise netto)",
     includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
-      "Bis zu 10 Seiten – deine komplette Online-Präsenz",
+      "Bis zu 10 Seiten – Deine komplette Online-Präsenz",
       "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
       "Feinschliff nach Launch inklusive – damit alles genau passt",
@@ -534,7 +534,7 @@ const buyEnterprise = {
 const faqs = [
   {
     q: "Mieten oder kaufen – was passt zu mir?",
-    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
+    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – Du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
   },
   {
     q: "Wie lange dauert es bis meine Website fertig ist?",
@@ -542,11 +542,11 @@ const faqs = [
   },
   {
     q: "Was passiert nach den 12 Monaten?",
-    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
+    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – Du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
   },
   {
     q: "Muss ich selbst Texte und Inhalte liefern?",
-    a: "Nein – du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
+    a: "Nein – Du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
   },
   {
     q: "Was ist wenn ich mit der Website nicht zufrieden bin?",
@@ -554,7 +554,7 @@ const faqs = [
   },
   {
     q: "Kann ich mein Paket später wechseln?",
-    a: "Ja – du kannst jederzeit auf ein höheres Paket upgraden, ohne neue Mindestlaufzeit. Ein Downgrade ist nach Ende des Startzeitraums möglich.",
+    a: "Ja – Du kannst jederzeit auf ein höheres Paket upgraden, ohne neue Mindestlaufzeit. Ein Downgrade ist nach Ende des Startzeitraums möglich.",
   },
   {
     q: "Ist die Website auch auf dem Handy nutzbar?",

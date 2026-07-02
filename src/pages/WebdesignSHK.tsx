@@ -8,14 +8,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const painPoints = [
   "Trotz hoher Nachfrage kommen zu wenig Anfragen über deine Website rein",
   'Kunden findest du nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen',
-  "deine Website sieht veraltet aus und schreckt potenzielle Kunden ab",
+  "Deine Website sieht veraltet aus und schreckt potenzielle Kunden ab",
   "Du verlierst Aufträge an modernere SHK-Betriebe mit besserer Online-Präsenz",
 ];
 
 const features = [
-  { icon: Flame, title: "Branchenspezifisches Design", desc: "deine Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
+  { icon: Flame, title: "Branchenspezifisches Design", desc: "Deine Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
   { icon: Search, title: "Lokales SEO für SHK", desc: 'Wir optimieren deine Website für lokale Suchanfragen wie "Heizungsbauer in Deiner Stadt" oder "Sanitär Notdienst in der Nähe".' },
-  { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – deine Leistungen werden übersichtlich und überzeugend dargestellt." },
+  { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – Deine Leistungen werden übersichtlich und überzeugend dargestellt." },
   { icon: Phone, title: "Sofort-Kontakt-Funktion", desc: "Click-to-Call, Notdienst-Button und Kontaktformular – damit Kunden du sofort erreichen." },
   { icon: ThermometerSun, title: "Mobile Optimierung", desc: "Über 70% der Notdienst-Anfragen kommen vom Smartphone. Deine Website funktioniert auf jedem Gerät perfekt." },
   { icon: TrendingUp, title: "Mehr Anfragen, mehr Aufträge", desc: "Conversion-optimierter Aufbau sorgt dafür, dass aus Besuchern zahlende Kunden werden." },

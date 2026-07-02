@@ -7,17 +7,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const painPoints = [
   "Verkäufer und Käufer findest du nicht über Google, sondern gehen zur Konkurrenz",
-  "deine Website präsentiert deine Objekte nicht ansprechend genug",
+  "Deine Website präsentiert deine Objekte nicht ansprechend genug",
   "Du hast keine automatisierte Wertermittlung oder Lead-Generierung auf deiner Seite",
-  "deine Online-Präsenz vermittelt nicht das Vertrauen, das Eigentümer erwarten",
+  "Deine Online-Präsenz vermittelt nicht das Vertrauen, das Eigentümer erwarten",
 ];
 
 const features = [
   { icon: Home, title: "Immobilien-Design", desc: "Hochwertige Objektpräsentation mit großen Bildern, virtuellen Rundgängen und übersichtlicher Darstellung deiner Angebote." },
   { icon: Search, title: "SEO für Immobilienmakler", desc: 'Gefunden werden bei "Immobilienmakler in Deiner Stadt", "Haus verkaufen" und lokalen Suchanfragen.' },
-  { icon: Camera, title: "Objekt-Präsentation", desc: "deine Immobilien werden professionell in Szene gesetzt – mit Bildergalerien und strukturierten Exposés." },
+  { icon: Camera, title: "Objekt-Präsentation", desc: "Deine Immobilien werden professionell in Szene gesetzt – mit Bildergalerien und strukturierten Exposés." },
   { icon: MapPin, title: "Regionale Sichtbarkeit", desc: "Lokale SEO-Optimierung sorgt dafür, dass Eigentümer und Käufer aus deiner Region Du findest." },
-  { icon: Smartphone, title: "Mobile Optimierung", desc: "Immobiliensuche findet unterwegs statt – deine Website funktioniert perfekt auf jedem Gerät." },
+  { icon: Smartphone, title: "Mobile Optimierung", desc: "Immobiliensuche findet unterwegs statt – Deine Website funktioniert perfekt auf jedem Gerät." },
   { icon: TrendingUp, title: "Lead-Generierung", desc: "Wertermittlungs-Formulare und Kontaktmöglichkeiten, die Eigentümer-Leads generieren." },
 ];
 

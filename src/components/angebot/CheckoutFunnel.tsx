@@ -1212,7 +1212,7 @@ function StepKontakt({
             ],
             Premium: [
               "Alles aus Pro inklusive",
-              "Bis zu 10 Seiten – deine komplette Online-Präsenz",
+              "Bis zu 10 Seiten – Deine komplette Online-Präsenz",
               "Google-Optimierung beim Launch",
               "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
               "Feinschliff nach Launch inklusive",

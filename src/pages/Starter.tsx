@@ -70,17 +70,17 @@ const painPoints = [
   {
     icon: AlertTriangle,
     title: "Du hast (noch) gar keine Website",
-    text: "Kunden googeln du — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
+    text: "Kunden googeln Dich — und finden nichts. Jeden Tag verlierst du Anfragen, die nie bei dir ankommen.",
   },
   {
     icon: Smartphone,
-    title: "deine Website wirkt wie aus 2015",
+    title: "Deine Website wirkt wie aus 2015",
     text: "Auf dem Handy unleserlich, langsam, unübersichtlich. Besucher springen ab, bevor sie überhaupt verstehen, was du anbietest.",
   },
   {
     icon: Search,
     title: "Du wirst bei Google nicht gefunden",
-    text: "Keine SEO-Grundlagen, kein Standortbezug. Selbst wer du sucht, landet bei der Konkurrenz.",
+    text: "Keine SEO-Grundlagen, kein Standortbezug. Selbst wer nach Dir sucht, landet bei der Konkurrenz.",
   },
   {
     icon: X,
@@ -163,15 +163,15 @@ const fitYes = [
 const fitNo = [
   "Du brauchst einen Online-Shop mit hunderten Produkten",
   "Du willst alles selber machen und nur „Beratung\"",
-  "du suchst die billigste Lösung um jeden Preis",
-  "du erwartest 50 Korrekturschleifen über 6 Monate",
+  "Du suchst die billigste Lösung um jeden Preis",
+  "Du erwartest 50 Korrekturschleifen über 6 Monate",
 ];
 
 const guarantees = [
   {
     icon: Shield,
     title: "Konzept kostenlos",
-    text: "Du zahlst erst, wenn du das Konzept überzeugt. Keine Vorkasse.",
+    text: "Du zahlst erst, wenn Dich das Konzept überzeugt. Keine Vorkasse.",
   },
   {
     icon: Lock,
@@ -236,7 +236,7 @@ const faqs = [
   },
   {
     q: "Was, wenn mir das Konzept nicht gefällt?",
-    a: "Dann zahlst du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48 h-Konzept kostenlos: damit Du siehst können, was Du bekommst — bevor du sich binden.",
+    a: "Dann zahlst du nichts und wir gehen freundlich auseinander. Genau dafür ist das 48 h-Konzept kostenlos: damit Du siehst können, was Du bekommst — bevor Du Dich bindest.",
   },
   {
     q: "Macht ihr auch Texte und Bilder?",

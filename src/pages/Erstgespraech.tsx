@@ -134,7 +134,7 @@ const agenda = [
   {
     icon: Calendar,
     title: "Klarer nächster Schritt",
-    text: "du gehen aus dem Gespräch mit Klarheit raus — ob mit uns, oder ohne.",
+    text: "Du gehst aus dem Gespräch mit Klarheit raus — ob mit uns, oder ohne.",
   },
 ];
 

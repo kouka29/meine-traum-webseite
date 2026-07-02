@@ -100,7 +100,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <label className="text-sm font-medium mb-2 block">Name *</label>
-                    <Input required placeholder="dein Name" className="bg-card h-12" />
+                    <Input required placeholder="Dein Name" className="bg-card h-12" />
                   </div>
                   <div>
                     <label className="text-sm font-medium mb-2 block">E-Mail *</label>

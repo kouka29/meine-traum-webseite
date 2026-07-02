@@ -17,7 +17,7 @@ const services = [
   {
     icon: TrendingUp,
     title: "Conversion-Optimierung",
-    desc: "deine Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
+    desc: "Deine Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
     features: ["Conversion-Analyse", "Optimierte Landingpages", "A/B Testing", "Tracking & Analytics"],
     result: "Bis zu 400% mehr Conversions",
     link: "/conversion-optimierung",

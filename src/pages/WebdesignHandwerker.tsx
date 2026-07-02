@@ -7,13 +7,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const painPoints = [
   "Du verlierst Aufträge an modernere Handwerksbetriebe mit besserer Online-Präsenz",
-  "deine aktuelle Website ist veraltet und macht keinen professionellen Eindruck",
+  "Deine aktuelle Website ist veraltet und macht keinen professionellen Eindruck",
   "Potenzielle Kunden findest du bei Google nicht – aber deine Konkurrenz schon",
-  "deine Website sieht auf dem Smartphone schlecht aus, obwohl die meisten dort suchen",
+  "Deine Website sieht auf dem Smartphone schlecht aus, obwohl die meisten dort suchen",
 ];
 
 const features = [
-  { icon: Hammer, title: "Design für Handwerker", desc: "deine Website zeigt sofort, wer Du bist und was Du kannst – vertrauenswürdig, professionell und einladend." },
+  { icon: Hammer, title: "Design für Handwerker", desc: "Deine Website zeigt sofort, wer Du bist und was Du kannst – vertrauenswürdig, professionell und einladend." },
   { icon: Search, title: "Lokales SEO", desc: "Wir sorgen dafür, dass du bei Google Maps und lokalen Suchanfragen ganz oben erscheinen." },
   { icon: Star, title: "Bewertungen einbinden", desc: "Zeigst du deine besten Google-Bewertungen direkt auf der Website – für sofortiges Vertrauen." },
   { icon: Smartphone, title: "Mobilfreundlich", desc: "Perfekte Darstellung auf Smartphone und Tablet – da, wo deine Kunden nach Handwerkern suchen." },

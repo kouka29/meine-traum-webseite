@@ -97,7 +97,7 @@ const processSteps = [
   {
     icon: Wand2,
     title: "Ich baue deine Vorschau (48 h)",
-    text: "du lehnen sich zurück, ich arbeite.",
+    text: "Du lehnen sich zurück, ich arbeite.",
   },
   {
     icon: Sparkles,
@@ -136,7 +136,7 @@ const testimonials = [
 const faqs = [
   {
     q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als du denken. Ein einziger neuer Auftrag reicht. Den Rest verdienen du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    a: "Ja – und zwar schneller als du denkst. Ein einziger neuer Auftrag reicht. Den Rest verdienen du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
     q: "Was passiert wenn mir die Vorschau nicht gefällt?",
@@ -652,7 +652,7 @@ const SuccessScreen = ({
           Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.{" "}
           {isWaitlist
             ? `Sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir, um den Termin zu bestätigen.`
-            : "dein Platz ist für du vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
+            : "Dein Platz ist für du vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
         </p>
         <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
           <p className="font-bold mb-4 text-center">So geht's weiter:</p>
@@ -1556,7 +1556,7 @@ const KostenloseVorschauV2 = () => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
-              {settings?.hero_h1_line1 ?? "dein Handwerksbetrieb."}
+              {settings?.hero_h1_line1 ?? "Dein Handwerksbetrieb."}
               <br />
               {settings?.hero_h1_line2 ?? "Eine neue Webseite."}
               <br />

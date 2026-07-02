@@ -7,17 +7,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const painPoints = [
   "Patienten findest du online nicht – aber deine Kollegen in der Nachbarschaft schon",
-  "deine Website wirkt veraltet und vermittelt nicht den professionellen Eindruck deiner Praxis",
+  "Deine Website wirkt veraltet und vermittelt nicht den professionellen Eindruck deiner Praxis",
   "Neue Patienten informieren sich online, bevor sie einen Termin buchen – und springen ab",
   "Du hast keine Online-Terminbuchung und verlieren Patienten an modernere Praxen",
 ];
 
 const features = [
-  { icon: Heart, title: "Praxis-gerechtes Design", desc: "deine Website vermittelt Vertrauen und Kompetenz – mit einem Design, das deine Praxis professionell repräsentiert." },
+  { icon: Heart, title: "Praxis-gerechtes Design", desc: "Deine Website vermittelt Vertrauen und Kompetenz – mit einem Design, das deine Praxis professionell repräsentiert." },
   { icon: Search, title: "Lokales SEO für Ärzte", desc: 'Gefunden werden bei "Arzt in Deiner Stadt", "Zahnarzt in der Nähe" und ähnlichen Suchanfragen deiner Patienten.' },
   { icon: Clock, title: "Online-Terminbuchung", desc: "Integration einer Online-Terminbuchung – damit Patienten rund um die Uhr Termine vereinbaren können." },
-  { icon: Shield, title: "DSGVO-konform", desc: "deine Praxis-Website erfüllt alle Datenschutz-Anforderungen – inklusive Impressum und Datenschutzerklärung." },
-  { icon: Smartphone, title: "Mobilfreundlich", desc: "Patienten suchen unterwegs – deine Website sieht auf jedem Gerät professionell aus." },
+  { icon: Shield, title: "DSGVO-konform", desc: "Deine Praxis-Website erfüllt alle Datenschutz-Anforderungen – inklusive Impressum und Datenschutzerklärung." },
+  { icon: Smartphone, title: "Mobilfreundlich", desc: "Patienten suchen unterwegs – Deine Website sieht auf jedem Gerät professionell aus." },
   { icon: TrendingUp, title: "Mehr Patienten gewinnen", desc: "Conversion-optimierter Aufbau sorgt dafür, dass Besucher zu Patienten werden." },
 ];
 

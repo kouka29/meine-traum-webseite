@@ -14,8 +14,8 @@ export default function KaufErfolgreich() {
     : "Vielen Dank für deine Anzahlung!";
 
   const subline = isRent
-    ? "dein Miet-Abo ist aktiv. Wir starten jetzt mit deiner neuen Website."
-    : "deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit deiner neuen Website.";
+    ? "Dein Miet-Abo ist aktiv. Wir starten jetzt mit deiner neuen Website."
+    : "Deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit deiner neuen Website.";
 
   const emailText = isRent
     ? "Du erhältst in Kürze eine Bestätigung mit deiner ersten Monatsrechnung als PDF."

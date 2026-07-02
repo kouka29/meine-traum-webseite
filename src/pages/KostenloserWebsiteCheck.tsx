@@ -99,7 +99,7 @@ const KostenloserWebsiteCheck = () => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
                     <label className="text-sm font-medium mb-2 block">Name *</label>
-                    <Input required name="name" placeholder="dein Name" className="bg-background h-12" />
+                    <Input required name="name" placeholder="Dein Name" className="bg-background h-12" />
                   </div>
                   <div>
                     <label className="text-sm font-medium mb-2 block">E-Mail *</label>

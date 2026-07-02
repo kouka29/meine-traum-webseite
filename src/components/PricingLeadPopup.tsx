@@ -301,9 +301,9 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
 
               <div className="my-4 rounded-xl bg-[#F9FAFB] p-4 text-left space-y-2">
                 {[
-                  "Schritt 1: Ich rufe du kurz an",
+                  "Schritt 1: Ich rufe Dich kurz an",
                   "Schritt 2: Wir klären was Du brauchst",
-                  "Schritt 3: deine Demo ist in 48 h fertig",
+                  "Schritt 3: Deine Demo ist in 48 h fertig",
                 ].map((step) => (
                   <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
                     <Check size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
@@ -362,7 +362,7 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               <div className="space-y-2 sm:space-y-3">
                 <FloatingField
                   id="popup-firstname"
-                  label="dein Vorname"
+                  label="Dein Vorname"
                   value={firstName}
                   onChange={(v) => {
                     setFirstName(v);

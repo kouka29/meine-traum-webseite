@@ -60,7 +60,7 @@ function getGreeting(pathname: string): string {
   if (pathname.startsWith("/portfolio")) {
     return "Suchst du ein Beispiel für deine Branche?";
   }
-  return "Hi! Ich bin dein Assistent von MTW. Was möchtest du wissen?";
+  return "Hi! Ich bin dein Assistent von MTW. Was möchtest du weißt?";
 }
 
 const DEFAULT_CHIPS = [

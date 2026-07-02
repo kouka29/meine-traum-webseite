@@ -12,7 +12,7 @@ const problems = [
   {
     icon: RefreshCw,
     title: "Wiederkehrende manuelle Aufgaben",
-    desc: "dein Team verbringt Stunden mit Aufgaben, die ein System in Sekunden erledigt.",
+    desc: "Dein Team verbringt Stunden mit Aufgaben, die ein System in Sekunden erledigt.",
   },
   {
     icon: Clock,
@@ -65,7 +65,7 @@ const useCases = [
 const steps = [
   { icon: Search, num: "01", title: "Analyse & Zieldefinition", desc: "Wir verstehen dein Geschäft, deine Abläufe und definieren gemeinsam das Ziel." },
   { icon: Lightbulb, num: "02", title: "Konzept & Struktur", desc: "Wir entwickeln einen klaren Plan – welche Funktionen, welche Abläufe, welches Ergebnis." },
-  { icon: Code2, num: "03", title: "Entwicklung", desc: "dein System wird gebaut – transparent, in Etappen, mit regelmäßigem Feedback." },
+  { icon: Code2, num: "03", title: "Entwicklung", desc: "Dein System wird gebaut – transparent, in Etappen, mit regelmäßigem Feedback." },
   { icon: TestTube, num: "04", title: "Testing & Optimierung", desc: "Wir testen gründlich, optimieren und stellen sicher, dass alles reibungslos läuft." },
   { icon: Rocket, num: "05", title: "Launch & Betreuung", desc: "Go-Live – und danach stehen wir dir weiterhin als Partner zur Seite." },
 ];

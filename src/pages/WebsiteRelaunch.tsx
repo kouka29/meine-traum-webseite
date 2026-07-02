@@ -6,10 +6,10 @@ import { ArrowRight, Check, RefreshCw, TrendingUp, Zap, Search } from "lucide-re
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const signs = [
-  "deine Website sieht veraltet aus und schreckt Kunden ab",
+  "Deine Website sieht veraltet aus und schreckt Kunden ab",
   "Du bekommst kaum Anfragen über deine aktuelle Website",
-  "deine Website lädt langsam (über 3 Sekunden)",
-  "deine Website ist nicht mobilfreundlich",
+  "Deine Website lädt langsam (über 3 Sekunden)",
+  "Deine Website ist nicht mobilfreundlich",
   "deine Konkurrenz wirkt online deutlich professioneller",
   "Du kannst Inhalte nicht selbst aktualisieren",
 ];

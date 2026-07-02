@@ -51,16 +51,16 @@ const testimonials = [
 ];
 
 const fitYes = [
-  "du planbar neue Anfragen wollen statt zufällige",
-  "deine Website aktuell kaum oder keine Leads bringt",
-  "du in Selbstständigkeit, KMU oder Handwerk tätig sind",
-  "du eine Entscheidung treffen wollen, nicht 6 Monate warten",
+  "Du planbar neue Anfragen wollen statt zufällige",
+  "Deine Website aktuell kaum oder keine Leads bringt",
+  "Du in Selbstständigkeit, KMU oder Handwerk tätig sind",
+  "Du eine Entscheidung treffen wollen, nicht 6 Monate warten",
 ];
 
 const fitNo = [
-  "du nur eine \"hübsche\" Website wollen ohne Strategie",
-  "du noch keine klare Zielgruppe kennst",
-  "du Budget unter 990 € eingeplant haben",
+  "Du nur eine \"hübsche\" Website wollen ohne Strategie",
+  "Du noch keine klare Zielgruppe kennst",
+  "Du Budget unter 990 € eingeplant haben",
 ];
 
 const steps = [
@@ -118,7 +118,7 @@ const objections = [
   },
   {
     q: "Bekomme ich auch Texte und Bilder?",
-    a: "Ja. Wir übernehmen Copywriting, KI-Bildgenerierung und visuelle Konzeption komplett — du müssen kein Wort selbst schreiben, wenn du nicht wollen.",
+    a: "Ja. Wir übernehmen Copywriting, KI-Bildgenerierung und visuelle Konzeption komplett — Du musst kein Wort selbst schreiben, wenn du nicht wollen.",
   },
   {
     q: "Was unterscheidet euch von anderen Agenturen?",

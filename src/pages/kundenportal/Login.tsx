@@ -154,7 +154,7 @@ export default function KundenportalLogin() {
                     autoFocus
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="du@beispiel.de"
+                    placeholder="Du@beispiel.de"
                     required
                   />
                 </div>

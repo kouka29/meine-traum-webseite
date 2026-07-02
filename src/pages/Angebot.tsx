@@ -590,7 +590,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── STICKY BOTTOM BAR ────────────────────────────── */}
       {showSticky && (
         <StickyBar
-          paketName={selectedPaket?.name || data.branche || "dein Angebot"}
+          paketName={selectedPaket?.name || data.branche || "Dein Angebot"}
           preis={anzeigeGesamt}
           miete={aktiveMiete}
           priceMode={priceMode}
@@ -826,7 +826,7 @@ function nutzenFor(titel: string, beschreibung?: string): string {
   if (t.includes("kategor")) return "→ Kunden finden sich in deinem Shop sofort zurecht.";
   if (t.includes("design") || t.includes("marke")) return "→ Kunden nimm auf den ersten Blick ernst.";
   if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht du — egal von welchem Gerät.";
-  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ dein Shop läuft automatisch — du müssen nichts manuell tun.";
+  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ dein Shop läuft automatisch — Du musst nichts manuell tun.";
   if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei dir — ohne Umwege.";
   if (t.includes("korrektur") || t.includes("runde")) return "→ Du bekommst genau das, was du sich vorgestellt haben.";
   if (t.includes("impressum") || t.includes("datenschutz")) return "→ Rechtlich abgesichert — kein Stress mit Abmahnungen.";
@@ -1137,7 +1137,7 @@ function PriceSection({
             )}
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            {hasMiete ? "Beide Wege — gleiches Ergebnis. Du entscheidest." : "Einmalige Investition — deine Website gehört dir."}
+            {hasMiete ? "Beide Wege — gleiches Ergebnis. Du entscheidest." : "Einmalige Investition — Deine Website gehört dir."}
           </p>
         </div>
 
@@ -1484,7 +1484,7 @@ function TimelineSection() {
     {
       n: 1,
       titel: "Auftrag erteilen",
-      text: "du bestätigen heute verbindlich. Wir reservieren deine Kapazitäten und schalten den Zugang frei.",
+      text: "Du bestätigen heute verbindlich. Wir reservieren deine Kapazitäten und schalten den Zugang frei.",
       badge: "Sofort",
       badgeTone: "primary" as const,
     },
@@ -1498,7 +1498,7 @@ function TimelineSection() {
     {
       n: 3,
       titel: "Umsetzung",
-      text: "dein Projekt wird nach höchsten Standards umgesetzt. Du erhältst regelmäßige Updates zum Fortschritt.",
+      text: "Dein Projekt wird nach höchsten Standards umgesetzt. Du erhältst regelmäßige Updates zum Fortschritt.",
       badge: "Hauptphase",
       badgeTone: "neutral" as const,
     },
@@ -1803,7 +1803,7 @@ function FinalCtaSection({
           Bereit, loszulegen?
         </h2>
         <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 8, lineHeight: 1.6 }}>
-          {leadName ? `${leadName}, dein Projekt wartet auf den Startschuss.` : "dein Projekt wartet auf den Startschuss."}
+          {leadName ? `${leadName}, dein Projekt wartet auf den Startschuss.` : "Dein Projekt wartet auf den Startschuss."}
         </p>
         <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", marginBottom: 32, lineHeight: 1.6 }}>
           Ein Klick — und wir kümmern uns um den Rest.
