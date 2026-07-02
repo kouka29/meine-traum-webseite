@@ -419,7 +419,7 @@ const ChatAssistant = () => {
         @media (prefers-reduced-motion: reduce) { .mtw-float { animation: none; } }
         @keyframes mtw-dot { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
         .mtw-dot { animation: mtw-dot 1.2s infinite ease-in-out; }
-        .mtw-fab{position:fixed!important;right:1.25rem!important;left:auto!important;bottom:6rem!important;z-index:50!important}
+        .mtw-fab{position:fixed!important;right:1.25rem!important;left:auto!important;bottom:4rem!important;z-index:50!important}
         @media(min-width:768px){.mtw-fab{bottom:1.25rem!important}}
         .mtw-panel{position:fixed!important;left:1rem!important;right:1rem!important;bottom:6rem!important;z-index:50!important;width:auto!important;max-width:calc(100vw - 2rem)!important}
         @media(min-width:768px){.mtw-panel{left:auto!important;right:1.25rem!important;bottom:1.25rem!important;width:360px!important}}
