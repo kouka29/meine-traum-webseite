@@ -5,7 +5,7 @@ const painPoints = [
   {
     icon: TrendingDown,
     problem: "Schickes Design – null Anfragen?",
-    detail: "deine Website sieht gut aus, aber es meldet sich niemand. Das liegt nicht am Markt – sondern an fehlender Verkaufsstruktur.",
+    detail: "Deine Website sieht gut aus, aber es meldet sich niemand. Das liegt nicht am Markt – sondern an fehlender Verkaufsstruktur.",
   },
   {
     icon: EyeOff,
