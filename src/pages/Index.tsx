@@ -48,8 +48,8 @@ const Index = () => (
       <div className="container-narrow px-4 relative z-10">
         <AnimatedSection>
           <div className="max-w-3xl">
-            <span className="badge-label bg-destructive/10 text-destructive mb-6 sm:mb-8 text-[10px] sm:text-xs">
-              deine Website bringt keine Kunden? Das ändern wir.
+            <span className="badge-label bg-destructive/10 text-destructive mb-6 sm:mb-8 text-[10px] sm:text-xs uppercase">
+              DEINE WEBSITE BRINGT KEINE KUNDEN? DAS ÄNDERN WIR.
             </span>
             <h1 className="mb-4 sm:mb-6 text-balance">
               Webseiten, die planbar Kundenanfragen bringen –{" "}
