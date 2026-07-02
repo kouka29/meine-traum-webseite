@@ -119,11 +119,11 @@ const IndexTestimonials = () => {
         <AnimatedSection>
           <div className="text-center mb-12 md:mb-20">
             <h2 className="mb-5 text-balance">
-              Was unsere Kunden sagen – und was sich verändert hat
-            </h2>
+ Was unsere Kunden sagen – und was sich verändert hat
+ </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Keine leeren Worte. Echte Unternehmer berichten, wie sich ihre Anfragenzahl nach dem Website-Relaunch entwickelt hat.
-            </p>
+ Keine leeren Worte. Echte Unternehmer berichten, wie sich ihre Anfragenzahl nach dem Website-Relaunch entwickelt hat.
+ </p>
           </div>
         </AnimatedSection>
 
@@ -142,7 +142,7 @@ const IndexTestimonials = () => {
               }}
             >
               {renderItems.map((t, idx) => (
-                <div
+ <div
                   key={`${t.id}-${idx}`}
                   className="min-w-0 shrink-0 grow-0"
                   style={{
@@ -154,7 +154,7 @@ const IndexTestimonials = () => {
                   <div className="group bg-card rounded-2xl p-6 sm:p-7 h-full flex flex-col border border-border/60 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_32px_64px_-16px_hsl(250_56%_48%/0.18)] hover:border-primary/30">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, j) => (
-                        <Star key={j} size={16} className="text-primary fill-primary" aria-hidden={true} focusable={false} />
+ <Star key={j} size={16} className="text-primary fill-primary" aria-hidden={true} focusable={false} />
                       ))}
                     </div>
                     <span className="badge-label bg-primary/10 text-primary mb-4 w-fit text-[11px]">
@@ -162,37 +162,37 @@ const IndexTestimonials = () => {
                     </span>
                     <p className="text-sm text-muted-foreground mb-8 flex-1 italic leading-relaxed">
                       „{t.text}"
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
-                        <Users size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold">{t.name}</p>
-                        <p className="text-xs text-muted-foreground">{t.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+ </p>
+ <div className="flex items-center gap-3">
+ <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
+ <Users size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
+ </div>
+ <div>
+ <p className="text-sm font-semibold">{t.name}</p>
+ <p className="text-xs text-muted-foreground">{t.role}</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ ))}
+ </div>
+ </div>
 
-          </div>
+ </div>
 
-          {testimonials.length > visibleCount && (
-              <div className="flex justify-center gap-2 mt-8">
-                {Array.from({ length: total }).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      setEnableTransition(true);
-                      setCurrent(i);
-                    }}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      i === activeDot ? "bg-primary w-6" : "bg-muted-foreground/30"
+ {testimonials.length > visibleCount && (
+ <div className="flex justify-center gap-2 mt-8">
+ {Array.from({ length: total }).map((_, i) => (
+ <button
+ key={i}
+ onClick={() => {
+ setEnableTransition(true);
+ setCurrent(i);
+ }}
+ className={`w-2 h-2 rounded-full transition-all duration-300 ${
+ i === activeDot ? "bg-primary w-6" : "bg-muted-foreground/30"
                     }`}
-                    aria-label={`Zu Gruppe ${i + 1}`}
+ aria-label={`Zu Gruppe ${i + 1}`}
                   />
                 ))}
               </div>

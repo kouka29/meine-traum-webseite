@@ -23,11 +23,11 @@ type FloatingFieldProps = {
   type?: string;
   value: string;
   onChange: (v: string) => void;
-  error?: string;
-  required?: boolean;
-  autoComplete?: string;
-  maxLength?: number;
-  inputRef?: React.RefObject<HTMLInputElement>;
+ error?: string;
+ required?: boolean;
+ autoComplete?: string;
+ maxLength?: number;
+ inputRef?: React.RefObject<HTMLInputElement>;
 };
 
 const FloatingField = ({
@@ -45,8 +45,8 @@ const FloatingField = ({
   const [focused, setFocused] = useState(false);
   const floated = focused || value.length > 0;
 
-  return (
-    <div>
+ return (
+ <div>
       <div className="relative">
         <input
           id={id}
@@ -95,9 +95,9 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [honeypot, setHoneypot] = useState("");
-  // Snapshot of submitted data for the success view (form state gets reset)
-  const [successData, setSuccessData] = useState<{ firstName: string; emailProvided: boolean }>({
+ const [honeypot, setHoneypot] = useState("");
+ // Snapshot of submitted data for the success view (form state gets reset)
+ const [successData, setSuccessData] = useState<{ firstName: string; emailProvided: boolean }>({
     firstName: "",
     emailProvided: false,
   });
@@ -107,8 +107,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
   }>({});
 
   const firstNameRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+ const phoneRef = useRef<HTMLInputElement>(null);
+ const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
 
   const ctaLabel = getCtaLabel(badge);
@@ -268,16 +268,16 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
         {submitted ? (
           <>
             <style>{`
-              @keyframes pricing-popup-success-pop {
-                0%   { transform: scale(0.5); opacity: 0; }
-                60%  { transform: scale(1.1); opacity: 1; }
-                100% { transform: scale(1);   opacity: 1; }
-              }
-              @keyframes pricing-popup-progress {
-                from { transform: scaleX(0); }
-                to   { transform: scaleX(1); }
-              }
-            `}</style>
+ @keyframes pricing-popup-success-pop {
+ 0% { transform: scale(0.5); opacity: 0; }
+ 60% { transform: scale(1.1); opacity: 1; }
+ 100% { transform: scale(1); opacity: 1; }
+ }
+ @keyframes pricing-popup-progress {
+ from { transform: scaleX(0); }
+ to { transform: scaleX(1); }
+ }
+ `}</style>
             <div className="relative flex-1 overflow-y-auto px-6 pt-8 pb-6 sm:p-8 sm:pb-8 text-center animate-in fade-in duration-200">
               <div
                 className="mx-auto mb-5 flex items-center justify-center"
@@ -295,17 +295,17 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               </h3>
 
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">
-                deine Anfrage ist angekommen.<br />
-                Ich melde mich innerhalb von 2 Stunden persönlich bei dir.
-              </p>
+ Deine Anfrage ist angekommen.<br />
+ Ich melde mich innerhalb von 2 Stunden persönlich bei dir.
+ </p>
 
               <div className="my-4 rounded-xl bg-[#F9FAFB] p-4 text-left space-y-2">
                 {[
-                  "Schritt 1: Ich rufe du kurz an",
+                  "Schritt 1: Ich rufe Dich kurz an",
                   "Schritt 2: Wir klären was Du brauchst",
-                  "Schritt 3: deine Demo ist in 48 h fertig",
+                  "Schritt 3: Deine Demo ist in 48 h fertig",
                 ].map((step) => (
-                  <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
+ <div key={step} className="flex items-start gap-2 text-xs sm:text-sm text-foreground/75">
                     <Check size={16} style={{ color: "#22C55E" }} className="shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
                     <span>{step}</span>
                   </div>
@@ -314,8 +314,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
 
               {successData.emailProvided && (
                 <p className="text-xs text-muted-foreground/80 leading-relaxed mb-3">
-                  Schau auch kurz in deinen Spam-Ordner — manchmal landet unsere Mail dort.
-                </p>
+ Schau auch kurz in deinen Spam-Ordner — manchmal landet unsere Mail dort.
+ </p>
               )}
 
               <div className="mt-3">
@@ -325,8 +325,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                   className="inline-flex items-center gap-1.5 text-primary font-bold text-sm sm:text-base hover:underline"
                 >
                   <Phone size={16} aria-hidden={true} focusable={false} />
-                  06131 3076498
-                </a>
+ 06131 3076498
+ </a>
               </div>
             </div>
 
@@ -340,8 +340,8 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               />
             </div>
           </>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+ ) : (
+ <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
             {/* Scrollable content */}
             <div ref={scrollAreaRef} className="relative flex-1 overflow-y-auto px-5 pt-5 pb-3 sm:p-8 sm:pb-6">
               <span className="inline-block badge-label bg-primary/10 text-primary mb-3 sm:mb-4 mt-1">
@@ -349,20 +349,20 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
               </span>
 
               <h2 className="font-heading text-xl sm:text-3xl font-bold leading-tight mb-1 sm:mb-2 text-foreground">
-                Fast geschafft!
-              </h2>
+ Fast geschafft!
+ </h2>
               <p className="text-muted-foreground text-[13px] sm:text-base mb-1.5 sm:mb-2 leading-relaxed">
-                Ich melde mich innerhalb von 2 Stunden bei dir.
-              </p>
+ Ich melde mich innerhalb von 2 Stunden bei dir.
+ </p>
               <p className="text-[11px] sm:text-xs text-center text-green-600 font-medium mb-3 sm:mb-5 inline-flex items-center justify-center gap-1.5">
                 <Check size={14} className="inline" aria-hidden focusable={false} />
-                Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
-              </p>
+ Du bekommst deine kostenlose Design-Demo innerhalb von 48 Stunden.
+ </p>
 
               <div className="space-y-2 sm:space-y-3">
                 <FloatingField
                   id="popup-firstname"
-                  label="dein Vorname"
+                  label="Dein Vorname"
                   value={firstName}
                   onChange={(v) => {
                     setFirstName(v);
@@ -432,9 +432,9 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 {loading ? (
                   <>
                     <Loader2 size={20} className="animate-spin" aria-hidden={true} focusable={false} /> Wird gesendet...
-                  </>
-                ) : (
-                  <>{ctaLabel} <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
+ </>
+ ) : (
+ <>{ctaLabel} <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
                 )}
               </Button>
 
@@ -442,21 +442,21 @@ const PricingLeadPopup = ({ open, badge, onClose }: PricingLeadPopupProps) => {
                 <p className="text-center text-sm text-destructive mt-2">
                   Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
                   <a href="tel:+4961313076498" className="font-semibold underline">
-                    06131 3076498
-                  </a>
+ 06131 3076498
+ </a>
                 </p>
               )}
 
               <p className="text-center text-xs sm:text-sm text-foreground/80 mt-3">
-                ⏱ Ich melde mich innerhalb von 2 Stunden bei dir — Mo–Fr 9–18 Uhr
-              </p>
+ ⏱ Ich melde mich innerhalb von 2 Stunden bei dir — Mo–Fr 9–18 Uhr
+ </p>
               <p className="text-center text-xs text-muted-foreground mt-3 flex items-center justify-center gap-1.5">
                 <ShieldCheck size={16} aria-hidden={true} focusable={false} />
-                Kostenlos & unverbindlich – kein Spam, keine Verpflichtung
-              </p>
+ Kostenlos & unverbindlich – kein Spam, keine Verpflichtung
+ </p>
               <p className="text-center text-xs text-muted-foreground/80 mt-1.5">
-                ⭐ +150 Betriebe aus der Region vertrauen uns
-              </p>
+ ⭐ +150 Betriebe aus der Region vertrauen uns
+ </p>
             </div>
           </form>
         )}

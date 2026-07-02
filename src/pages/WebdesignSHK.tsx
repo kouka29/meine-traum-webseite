@@ -8,14 +8,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const painPoints = [
   "Trotz hoher Nachfrage kommen zu wenig Anfragen über deine Website rein",
   'Kunden findest du nicht bei Google, wenn sie nach "Heizungsbauer in der Nähe" suchen',
-  "deine Website sieht veraltet aus und schreckt potenzielle Kunden ab",
+  "Deine Website sieht veraltet aus und schreckt potenzielle Kunden ab",
   "Du verlierst Aufträge an modernere SHK-Betriebe mit besserer Online-Präsenz",
 ];
 
 const features = [
-  { icon: Flame, title: "Branchenspezifisches Design", desc: "deine Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
+  { icon: Flame, title: "Branchenspezifisches Design", desc: "Deine Website wird speziell für SHK-Betriebe gestaltet – mit Fokus auf Notdienst, Leistungsübersicht und Kontaktmöglichkeiten." },
   { icon: Search, title: "Lokales SEO für SHK", desc: 'Wir optimieren deine Website für lokale Suchanfragen wie "Heizungsbauer in Deiner Stadt" oder "Sanitär Notdienst in der Nähe".' },
-  { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – deine Leistungen werden übersichtlich und überzeugend dargestellt." },
+  { icon: Droplets, title: "Leistungen klar präsentiert", desc: "Sanitär, Heizung, Klima – Deine Leistungen werden übersichtlich und überzeugend dargestellt." },
   { icon: Phone, title: "Sofort-Kontakt-Funktion", desc: "Click-to-Call, Notdienst-Button und Kontaktformular – damit Kunden du sofort erreichen." },
   { icon: ThermometerSun, title: "Mobile Optimierung", desc: "Über 70% der Notdienst-Anfragen kommen vom Smartphone. Deine Website funktioniert auf jedem Gerät perfekt." },
   { icon: TrendingUp, title: "Mehr Anfragen, mehr Aufträge", desc: "Conversion-optimierter Aufbau sorgt dafür, dass aus Besuchern zahlende Kunden werden." },
@@ -29,7 +29,7 @@ const faqs = [
 ];
 
 const WebdesignSHK = () => (
-  <main id="main-content" className="pt-20">
+ <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -40,9 +40,9 @@ const WebdesignSHK = () => (
               <span className="gradient-text">Mehr Anfragen durch eine professionelle Website</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Du bist Sanitär-, Heizungs- oder Klimabetrieb und deine Website bringt kaum Anfragen?
-              Wir erstellen Websites speziell für SHK-Betriebe, die bei Google gefunden werden und Kunden überzeugen.
-            </p>
+ Du bist Sanitär-, Heizungs- oder Klimabetrieb und deine Website bringt kaum Anfragen?
+ Wir erstellen Websites speziell für SHK-Betriebe, die bei Google gefunden werden und Kunden überzeugen.
+ </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
                 <Link to="/kontakt">Kostenlose Website-Vorschau für SHK sichern <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
@@ -60,7 +60,7 @@ const WebdesignSHK = () => (
             <h2 className="text-center mb-10 text-balance">Kennst du diese Probleme als SHK-Betrieb?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
-                <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
+ <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
                   <span className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-destructive" />
                   </span>
@@ -77,7 +77,7 @@ const WebdesignSHK = () => (
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
-            <AnimatedSection key={f.title} delay={i * 0.08}>
+ <AnimatedSection key={f.title} delay={i * 0.08}>
               <div className="p-7 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 bg-background h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                   <f.icon size={20} className="text-primary" />
@@ -99,7 +99,7 @@ const WebdesignSHK = () => (
                 { value: "24/7", label: "Notdienst-Sichtbarkeit" },
                 { value: "Top 5", label: "Google-Rankings lokal" },
               ].map((s) => (
-                <div key={s.label} className="text-center">
+ <div key={s.label} className="text-center">
                   <span className="font-heading text-4xl font-bold text-primary-foreground">{s.value}</span>
                   <p className="text-sm text-primary-foreground/70 mt-2">{s.label}</p>
                 </div>
@@ -113,8 +113,8 @@ const WebdesignSHK = () => (
           <div className="mb-20">
             <h2 className="text-center mb-5 text-balance">Unsere Leistungen für SHK-Betriebe</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-center text-lg mb-10">
-              Von der Webseite über Landingpages bis zur Conversion-Optimierung – wir bieten alles, was dein SHK-Betrieb online braucht.
-            </p>
+ Von der Webseite über Landingpages bis zur Conversion-Optimierung – wir bieten alles, was dein SHK-Betrieb online braucht.
+ </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
               {[
                 { label: "Website erstellen lassen", to: "/website-erstellen-lassen" },
@@ -124,7 +124,7 @@ const WebdesignSHK = () => (
                 { label: "Kostenloser Website-Check", to: "/kostenloser-website-check" },
                 { label: "Webdesign Preise", to: "/webdesign-preise" },
               ].map((l) => (
-                <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
+ <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
                   <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm font-medium">{l.label}</span>
                   <ArrowRight size={16} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
@@ -140,7 +140,7 @@ const WebdesignSHK = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+ <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

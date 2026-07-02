@@ -118,29 +118,29 @@ export default function AdminVorschauTab({ password }: { password: string }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [pageKey, setPageKey] = useState<"v1" | "v2">("v2");
-  const [settings, setSettings] = useState<Settings | null>(null);
+ const [settings, setSettings] = useState<Settings | null>(null);
 
-  // Global slot settings (used by /lp/gesetz etc. via check-vorschau-availability)
-  const [globalSettings, setGlobalSettings] = useState<Settings | null>(null);
-  const [globalLoading, setGlobalLoading] = useState(true);
-  const [globalSaving, setGlobalSaving] = useState(false);
-  const [demos, setDemos] = useState<Demo[]>([]);
-  const [faqs, setFaqs] = useState<Faq[]>([]);
-  const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);
+ // Global slot settings (used by /lp/gesetz etc. via check-vorschau-availability)
+ const [globalSettings, setGlobalSettings] = useState<Settings | null>(null);
+ const [globalLoading, setGlobalLoading] = useState(true);
+ const [globalSaving, setGlobalSaving] = useState(false);
+ const [demos, setDemos] = useState<Demo[]>([]);
+ const [faqs, setFaqs] = useState<Faq[]>([]);
+ const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]);
 
-  // Demo dialog
-  const [showDemoDialog, setShowDemoDialog] = useState(false);
-  const [editingDemo, setEditingDemo] = useState<Demo | null>(null);
+ // Demo dialog
+ const [showDemoDialog, setShowDemoDialog] = useState(false);
+ const [editingDemo, setEditingDemo] = useState<Demo | null>(null);
   const [demoForm, setDemoForm] = useState({ trade: "", company: "", description: "", is_visible: true, portfolio_project_id: "" as string });
   const [demoImageFile, setDemoImageFile] = useState<File | null>(null);
-  const [savingDemo, setSavingDemo] = useState(false);
-  const [genDescLoading, setGenDescLoading] = useState(false);
-  const [screenshotUrl, setScreenshotUrl] = useState("");
-  const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
-  const [genShotLoading, setGenShotLoading] = useState(false);
+ const [savingDemo, setSavingDemo] = useState(false);
+ const [genDescLoading, setGenDescLoading] = useState(false);
+ const [screenshotUrl, setScreenshotUrl] = useState("");
+ const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
+ const [genShotLoading, setGenShotLoading] = useState(false);
 
-  // Combined slot section: which scope are we editing?
-  const [slotScope, setSlotScope] = useState<"page" | "global">("page");
+ // Combined slot section: which scope are we editing?
+ const [slotScope, setSlotScope] = useState<"page" | "global">("page");
   const [autoCountLoading, setAutoCountLoading] = useState(false);
 
   const generateScreenshot = async () => {
@@ -579,7 +579,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           { key: "v2" as const, label: "/kostenlose-vorschau", path: "/kostenlose-vorschau" },
           { key: "v1" as const, label: "/kostenlose-vorschau-v2", path: "/kostenlose-vorschau-v2" },
         ]).map(p => (
-          <Button
+ <Button
             key={p.key}
             variant={pageKey === p.key ? "gradient" : "outline"}
             size="sm"
@@ -610,7 +610,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
             <Users size={16} className="text-primary" aria-hidden={true} focusable={false} /> Plätze &amp; Verknappung
-          </CardTitle>
+ </CardTitle>
         </CardHeader>
         <CardContent className="space-y-5">
           {/* Scope switch */}
@@ -632,14 +632,14 @@ export default function AdminVorschauTab({ password }: { password: string }) {
               disabled={!globalSettings && !globalLoading}
             >
               <Globe size={14} className="mr-1" aria-hidden={true} focusable={false} />
-              Global (alle Landingpages)
-            </Button>
+ Global (alle Landingpages)
+ </Button>
           </div>
 
           {slotScope === "global" && globalLoading ? (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Loader2 className="animate-spin" size={16} /> Lade globale Einstellungen…
-            </div>
+ </div>
           ) : (() => {
             const active = slotScope === "global" ? globalSettings : settings;
             if (!active) {
@@ -698,9 +698,9 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                 </div>
 
                 <p className="text-xs text-muted-foreground">
-                  Beide Werte sind manuell editierbar. Der <strong>Auto-Button</strong> trägt automatisch die echten Anfragen
-                  (Status <code>slot_assigned</code>, aktueller Monat) ein – danach kannst du den Wert noch von Hand anpassen.
-                </p>
+ Beide Werte sind manuell editierbar. Der <strong>Auto-Button</strong> trägt automatisch die echten Anfragen
+ (Status <code>slot_assigned</code>, aktueller Monat) ein – danach kannst du den Wert noch von Hand anpassen.
+ </p>
 
                 <div className="flex items-center gap-3 pt-1">
                   <Switch
@@ -719,7 +719,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                   >
                     {(slotScope === "global" ? globalSaving : saving)
                       ? <Loader2 className="animate-spin mr-2" size={16} />
-                      : <Save className="mr-2" size={16} />}
+ : <Save className="mr-2" size={16} />}
                     {slotScope === "global" ? "Globale Plätze speichern" : "Plätze für diese Seite speichern"}
                   </Button>
                   <span className="text-xs text-muted-foreground">
@@ -739,21 +739,21 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
             <Clock size={16} className="text-primary" aria-hidden={true} focusable={false} />
-            Countdown
-            <span className="ml-1 inline-flex items-center gap-1 text-xs font-medium text-primary">
+ Countdown
+ <span className="ml-1 inline-flex items-center gap-1 text-xs font-medium text-primary">
               <Globe size={12} aria-hidden={true} focusable={false} /> Global
-            </span>
+ </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {globalLoading ? (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Loader2 className="animate-spin" size={16} /> Lade globalen Countdown…
-            </div>
-          ) : !globalSettings ? (
-            <p className="text-sm text-muted-foreground">Globale Einstellungen konnten nicht geladen werden.</p>
-          ) : (
-            <>
+ </div>
+ ) : !globalSettings ? (
+ <p className="text-sm text-muted-foreground">Globale Einstellungen konnten nicht geladen werden.</p>
+ ) : (
+ <>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="countdown-mode">Modus</Label>
@@ -803,12 +803,12 @@ export default function AdminVorschauTab({ password }: { password: string }) {
                 >
                   {globalCountdownSaving
                     ? <Loader2 className="animate-spin mr-2" size={16} />
-                    : <Save className="mr-2" size={16} />}
+ : <Save className="mr-2" size={16} />}
                   Globalen Countdown speichern
                 </Button>
                 <span className="text-xs text-muted-foreground">
-                  Wirkt sich sofort auf alle Landingpages aus (z. B. /kostenlose-vorschau, /lp/gesetz).
-                </span>
+ Wirkt sich sofort auf alle Landingpages aus (z. B. /kostenlose-vorschau, /lp/gesetz).
+ </span>
               </div>
             </>
           )}
@@ -820,7 +820,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
             <Sparkles size={16} className="text-primary" aria-hidden={true} focusable={false} /> Hero-Texte
-          </CardTitle>
+ </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
@@ -828,7 +828,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
             <Input id="badge" value={settings.hero_badge_text}
               onChange={e => updateSettings({ hero_badge_text: e.target.value })} />
             <p className="text-xs text-muted-foreground mt-1">
-              Platzhalter: <code>{"{remaining}"}</code> · <code>{"{total}"}</code> · <code>{"{taken}"}</code> · <code>{"{month}"}</code>
+ Platzhalter: <code>{"{remaining}"}</code> · <code>{"{total}"}</code> · <code>{"{taken}"}</code> · <code>{"{month}"}</code>
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -905,7 +905,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
               { key: "show_testimonials" as const, label: "Testimonials" },
               { key: "show_faq" as const, label: "FAQ" },
             ]).map(s => (
-              <div key={s.key} className="flex items-center gap-3 rounded-md border border-border p-3">
+ <div key={s.key} className="flex items-center gap-3 rounded-md border border-border p-3">
                 <Switch checked={settings[s.key]} onCheckedChange={v => updateSettings({ [s.key]: v } as Partial<Settings>)} />
                 <Label className="cursor-pointer">{s.label}</Label>
               </div>
@@ -929,19 +929,19 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           </CardTitle>
           <Button variant="gradient" size="sm" onClick={openNewDemo}>
             <Plus size={14} aria-hidden={true} focusable={false} /> Neue Demo
-          </Button>
+ </Button>
         </CardHeader>
         <CardContent>
           {demos.length === 0 ? (
             <p className="text-sm text-muted-foreground text-center py-6">Noch keine Demos. Lege das erste Beispiel an.</p>
-          ) : (
-            <div className="grid gap-3">
+ ) : (
+ <div className="grid gap-3">
               {demos.map((d, i) => (
-                <div key={d.id} className={`flex items-center gap-3 rounded-lg border border-border p-3 min-w-0 ${!d.is_visible ? "opacity-60" : ""}`}>
+ <div key={d.id} className={`flex items-center gap-3 rounded-lg border border-border p-3 min-w-0 ${!d.is_visible ? "opacity-60" : ""}`}>
                   <div className="w-16 h-12 rounded-md overflow-hidden bg-muted shrink-0">
                     {d.image_url
                       ? <img src={d.image_url} alt={d.company} className="w-full h-full object-cover" />
-                      : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={16} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>}
+ : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={16} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
@@ -971,25 +971,25 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold flex items-center gap-2">
             <Briefcase size={16} className="text-primary" aria-hidden={true} focusable={false} /> Portfolio-Projekte als Demos verwenden
-          </CardTitle>
+ </CardTitle>
         </CardHeader>
         <CardContent>
           {portfolio.length === 0 ? (
             <p className="text-sm text-muted-foreground text-center py-6">
-              Keine Portfolio-Projekte vorhanden. Lege erst Projekte im Portfolio-Tab an.
-            </p>
-          ) : (
-            <div className="grid gap-2">
+ Keine Portfolio-Projekte vorhanden. Lege erst Projekte im Portfolio-Tab an.
+ </p>
+ ) : (
+ <div className="grid gap-2">
               {portfolio.map(p => {
                 const usedDemo = demos.find(d => d.portfolio_project_id === p.id);
-                const used = !!usedDemo;
-                return (
-                  <div key={p.id} className="flex items-center gap-3 rounded-lg border border-border p-3 min-w-0">
+ const used = !!usedDemo;
+ return (
+ <div key={p.id} className="flex items-center gap-3 rounded-lg border border-border p-3 min-w-0">
                     <div className="w-14 h-10 rounded-md overflow-hidden bg-muted shrink-0">
                       {(p.mockup_desktop_url || p.image_url) ? (
                         <img src={p.mockup_desktop_url || p.image_url} alt={p.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center"><ImageIcon size={14} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
+ ) : (
+ <div className="w-full h-full flex items-center justify-center"><ImageIcon size={14} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -1019,15 +1019,15 @@ export default function AdminVorschauTab({ password }: { password: string }) {
           </CardTitle>
           <Button variant="gradient" size="sm" onClick={openNewFaq}>
             <Plus size={14} aria-hidden={true} focusable={false} /> Neue Frage
-          </Button>
+ </Button>
         </CardHeader>
         <CardContent>
           {faqs.length === 0 ? (
             <p className="text-sm text-muted-foreground text-center py-6">Noch keine FAQs.</p>
-          ) : (
-            <div className="grid gap-3">
+ ) : (
+ <div className="grid gap-3">
               {faqs.map((f, i) => (
-                <div key={f.id} className={`flex items-start gap-3 rounded-lg border border-border p-3 ${!f.is_visible ? "opacity-60" : ""}`}>
+ <div key={f.id} className={`flex items-start gap-3 rounded-lg border border-border p-3 ${!f.is_visible ? "opacity-60" : ""}`}>
                   <MessageSquare size={16} className="text-primary mt-1 shrink-0" aria-hidden={true} focusable={false} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
@@ -1081,12 +1081,12 @@ export default function AdminVorschauTab({ password }: { password: string }) {
               >
                 <option value="">— Kein Portfolio-Projekt verlinkt —</option>
                 {portfolio.map(p => (
-                  <option key={p.id} value={p.id}>{p.title}{p.category ? ` (${p.category})` : ""}</option>
+ <option key={p.id} value={p.id}>{p.title}{p.category ? ` (${p.category})` : ""}</option>
                 ))}
               </select>
               <p className="text-xs text-muted-foreground mt-1">
-                Wenn verlinkt, werden Bild und Daten des Portfolio-Projekts in der Vorschau-Demo verwendet (falls hier nichts überschrieben wird).
-              </p>
+ Wenn verlinkt, werden Bild und Daten des Portfolio-Projekts in der Vorschau-Demo verwendet (falls hier nichts überschrieben wird).
+ </p>
             </div>
             <div>
               <Label>Branche / Badge</Label>

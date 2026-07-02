@@ -19,7 +19,7 @@ const faqs = [
 ];
 
 const ConversionOptimierung = () => (
-  <main id="main-content" className="pt-20">
+ <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -30,9 +30,9 @@ const ConversionOptimierung = () => (
               <span className="gradient-text">mehr Kunden aus deinen bestehenden Besuchern</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              deine Website hat Besucher, aber keine Anfragen? Als Conversion Optimierung Agentur verwandeln wir
-              deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
-            </p>
+ Deine Website hat Besucher, aber keine Anfragen? Als Conversion Optimierung Agentur verwandeln wir
+ Deine bestehenden Besucher in zahlende Kunden – datengetrieben und messbar.
+ </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
               <Link to="/kontakt">Website optimieren lassen <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
@@ -44,7 +44,7 @@ const ConversionOptimierung = () => (
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
           {services.map((s, i) => (
-            <AnimatedSection key={s.title} delay={i * 0.1}>
+ <AnimatedSection key={s.title} delay={i * 0.1}>
               <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all bg-background hover:shadow-card">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <s.icon size={20} className="text-primary" />
@@ -67,7 +67,7 @@ const ConversionOptimierung = () => (
                 { value: "3x", label: "Mehr Anfragen" },
                 { value: "150+", label: "Optimierte Projekte" },
               ].map((s) => (
-                <div key={s.label}>
+ <div key={s.label}>
                   <span className="font-heading text-5xl font-bold text-primary-foreground">{s.value}</span>
                   <p className="text-sm text-primary-foreground/70 mt-2">{s.label}</p>
                 </div>
@@ -81,7 +81,7 @@ const ConversionOptimierung = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+ <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

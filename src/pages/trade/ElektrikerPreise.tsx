@@ -8,7 +8,7 @@ const tradeNames = {
 };
 
 const ElektrikerPreise = () => (
-  <PricingNamesProvider names={tradeNames}>
+ <PricingNamesProvider names={tradeNames}>
     <WebdesignPreise />
   </PricingNamesProvider>
 );

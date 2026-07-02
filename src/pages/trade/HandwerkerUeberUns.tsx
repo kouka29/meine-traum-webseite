@@ -23,15 +23,15 @@ const testimonials = [
 ];
 
 const HandwerkerUeberUns = () => (
-  <main id="main-content" className="pt-[110px]">
+ <main id="main-content" className="pt-[110px]">
     <section className="py-16 md:py-20" style={{ background: "var(--dark-bg)" }}>
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <TradeBreadcrumbs />
         <div className="text-center mt-8 max-w-3xl mx-auto">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">Wir bauen Websites für Menschen die anpacken</h1>
           <p className="text-lg" style={{ color: "var(--text-muted)" }}>
-            Kein großes Agenturbüro. Kein Fachchinesisch. Nur ehrliche Arbeit — wie bei Euch.
-          </p>
+ Kein großes Agenturbüro. Kein Fachchinesisch. Nur ehrliche Arbeit — wie bei Euch.
+ </p>
         </div>
       </div>
     </section>
@@ -41,13 +41,13 @@ const HandwerkerUeberUns = () => (
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl text-3xl font-bold text-foreground mb-5">Warum wir uns auf Handwerksbetriebe spezialisiert haben</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Wir haben festgestellt: Die meisten Web-Agenturen reden viel und liefern wenig. Handwerker brauchen keine 50-seitigen Konzepte — sie brauchen eine Website die funktioniert. Die das Telefon klingeln lässt. Die Google-Rankings bringt. Genau das machen wir.
-          </p>
+ Wir haben festgestellt: Die meisten Web-Agenturen reden viel und liefern wenig. Handwerker brauchen keine 50-seitigen Konzepte — sie brauchen eine Website die funktioniert. Die das Telefon klingeln lässt. Die Google-Rankings bringt. Genau das machen wir.
+ </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5 mb-16">
           {values.map((v) => (
-          <div key={v.title} className="rounded-2xl bg-white p-7 shadow-card">
+ <div key={v.title} className="rounded-2xl bg-white p-7 shadow-card">
             <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 mb-3">
               <EmojiIcon emoji={v.emoji} size={24} />
             </div>
@@ -59,7 +59,7 @@ const HandwerkerUeberUns = () => (
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 max-w-4xl mx-auto">
           {stats.map((s) => (
-            <div key={s.label} className="text-center">
+ <div key={s.label} className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1" style={{ color: "var(--brand-purple)" }}>{s.value}</div>
               <div className="text-xs md:text-sm text-muted-foreground">{s.label}</div>
             </div>
@@ -76,8 +76,8 @@ const HandwerkerUeberUns = () => (
       <div className="container-narrow px-4 max-w-3xl mx-auto text-center">
         <h2 className="text-3xl text-3xl font-bold text-white mb-6">Überzeug Dich selbst — kostenlos und unverbindlich</h2>
         <Link to="/handwerker/kontakt" className="inline-block rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-110" style={{ background: "var(--brand-purple)" }}>
-          Kostenlose Vorschau anfordern →
-        </Link>
+ Kostenlose Vorschau anfordern →
+ </Link>
       </div>
     </section>
   </main>

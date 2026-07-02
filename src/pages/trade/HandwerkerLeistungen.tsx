@@ -53,7 +53,7 @@ const MiniForm = () => {
         <p className="font-semibold text-foreground">✅ Super! Ich melde mich innerhalb von 2 Stunden bei Dir.</p>
         <a href="tel:+4961313076498" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>
           <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
-        </a>
+ </a>
       </div>
     );
   }
@@ -79,7 +79,7 @@ const MiniForm = () => {
 };
 
 const HandwerkerLeistungen = () => (
-  <main id="main-content" className="pt-[110px]">
+ <main id="main-content" className="pt-[110px]">
     <section className="py-16 md:py-20" style={{ background: "var(--dark-bg)" }}>
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <TradeBreadcrumbs />
@@ -94,7 +94,7 @@ const HandwerkerLeistungen = () => (
       <div className="container-narrow px-4 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {services.map((s) => (
-            <div key={s.title} className="rounded-2xl bg-white p-7 shadow-card flex flex-col gap-3">
+ <div key={s.title} className="rounded-2xl bg-white p-7 shadow-card flex flex-col gap-3">
               <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                 <EmojiIcon emoji={s.emoji} size={24} />
               </div>

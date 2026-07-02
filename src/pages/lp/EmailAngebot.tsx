@@ -32,7 +32,7 @@ const rentPackages: Pkg[] = [
     badge: "Starter Miete – 59 €/Monat netto",
     features: [
       "1 Seite: Leistungen, Über dich, Kontakt & Anfrageformular",
-      "Individuelle Texte & Inhalte – du lieferst die Infos, wir schreiben",
+      "Individuelle Texte & Inhalte – Du lieferst die Infos, wir schreiben",
       "Perfekt auf jedem Smartphone & Tablet",
       "Hosting, Domain & SSL inklusive – keine Extra-Kosten",
     ],
@@ -68,7 +68,7 @@ const rentPackages: Pkg[] = [
     badge: "Premium Miete – 159 €/Monat netto",
     includesHint: "✓ Alles aus Pro inklusive – plus:",
     features: [
-      "Bis zu 10 Seiten – deine komplette Online-Präsenz",
+      "Bis zu 10 Seiten – Deine komplette Online-Präsenz",
       "Google-Optimierung beim Launch – damit dich Kunden in deiner Stadt finden",
       "Smarte Extras möglich – Terminbuchung, Rechner oder Anfrage-Tool",
       "Feinschliff nach Launch inklusive – damit alles genau passt",
@@ -197,7 +197,7 @@ const testimonials = [
 const faqs = [
   {
     q: "Mieten oder kaufen – was passt zu mir?",
-    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
+    a: "Miete = sofort starten, kein großes Investment, maximale Flexibilität. Hosting, Wartung und Support sind inklusive – Du kümmerst dich um nichts. Einmalkauf = einmal zahlen, die Website gehört dir, nach ca. 2 Jahren günstiger als die Miete. Nicht sicher? Wir beraten dich kostenlos.",
   },
   {
     q: "Wie lange dauert es bis meine Website fertig ist?",
@@ -205,11 +205,11 @@ const faqs = [
   },
   {
     q: "Was passiert nach den 12 Monaten?",
-    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
+    a: "Nach dem 12-monatigen Startzeitraum läuft dein Vertrag monatlich weiter – Du kannst jederzeit kündigen. Keine automatische Verlängerung auf ein weiteres Jahr.",
   },
   {
     q: "Muss ich selbst Texte und Inhalte liefern?",
-    a: "Nein – du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
+    a: "Nein – Du lieferst uns deine Infos (was du anbietest, wo du tätig bist, Fotos wenn vorhanden) und wir schreiben die Texte für dich. Professionell, auf dein Unternehmen zugeschnitten.",
   },
   {
     q: "Was ist wenn ich mit der Website nicht zufrieden bin?",
@@ -217,7 +217,7 @@ const faqs = [
   },
   {
     q: "Kann ich mein Paket später wechseln?",
-    a: "Ja – du kannst jederzeit auf ein höheres Paket upgraden, ohne neue Mindestlaufzeit. Ein Downgrade ist nach Ende des Startzeitraums möglich.",
+    a: "Ja – Du kannst jederzeit auf ein höheres Paket upgraden, ohne neue Mindestlaufzeit. Ein Downgrade ist nach Ende des Startzeitraums möglich.",
   },
   {
     q: "Ist die Website auch auf dem Handy nutzbar?",
@@ -229,14 +229,14 @@ const initialsFor = (name: string) =>
   name.split(" ").map((p) => p[0]).filter(Boolean).slice(0, 2).join("");
 
 const TrustStrip = () => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
+ <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
     {[
       { Icon: Handshake, num: "150+", label: "Betriebe vertrauen uns" },
       { Icon: Award, num: "6 Jahre", label: "Erfahrung im Webdesign für Selbstständige" },
       { Icon: ThumbsUp, num: "98%", label: "Weiterempfehlungsrate" },
       { Icon: Clock, num: "48h", label: "Erstes Konzept steht" },
     ].map(({ Icon, num, label }) => (
-      <div
+ <div
         key={num}
         className="flex items-center gap-3 sm:gap-4 rounded-xl border border-primary/20 bg-primary/5 px-4 py-4 sm:px-4 sm:py-5"
       >
@@ -289,440 +289,440 @@ const TestimonialCarousel = () => {
           }}
         >
           {testimonials.map((t) => (
-            <div key={t.id} className="shrink-0 px-2.5" style={{ flex: `0 0 ${100 / visible}%` }}>
+ <div key={t.id} className="shrink-0 px-2.5" style={{ flex: `0 0 ${100 / visible}%` }}>
               <div className="relative overflow-hidden rounded-2xl bg-background border border-border shadow-[0_20px_50px_rgba(91,61,200,0.08)] flex flex-col h-full">
                 <div className="p-7 md:p-8 flex-1 flex flex-col relative">
                   <Quote size={80} className="absolute top-5 right-5 text-primary/[0.06] pointer-events-none" fill="currentColor" strokeWidth={0} aria-hidden={true} focusable={false} />
                   <div className="flex gap-1 mb-5 relative z-10">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" aria-hidden={true} focusable={false} />
+ <Star key={i} size={16} className="text-yellow-400" fill="currentColor" stroke="none" aria-hidden={true} focusable={false} />
                     ))}
                   </div>
                   <blockquote className="font-heading text-base md:text-lg leading-snug text-foreground font-semibold mb-6 tracking-tight flex-1 relative z-10">
                     „{t.text}"
-                  </blockquote>
-                  <div className="flex items-center gap-3 relative z-10">
-                    <div className="w-11 h-11 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm ring-4 ring-primary/10 shrink-0">
-                      {initialsFor(t.name)}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-semibold text-foreground text-sm leading-tight">{t.name}</p>
-                      <p className="text-[11px] text-muted-foreground tracking-wider uppercase mt-0.5 truncate">{t.role}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="h-1.5 w-full bg-gradient-to-r from-primary to-[hsl(250,56%,65%)]" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {pageCount > 1 && (
-        <div className="flex justify-center gap-2 mt-6">
-          {Array.from({ length: pageCount }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIdx(i)}
-              aria-label={`Seite ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30"}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
+ </blockquote>
+ <div className="flex items-center gap-3 relative z-10">
+ <div className="w-11 h-11 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm ring-4 ring-primary/10 shrink-0">
+ {initialsFor(t.name)}
+ </div>
+ <div className="min-w-0">
+ <p className="font-semibold text-foreground text-sm leading-tight">{t.name}</p>
+ <p className="text-[11px] text-muted-foreground tracking-wider uppercase mt-0.5 truncate">{t.role}</p>
+ </div>
+ </div>
+ </div>
+ <div className="h-1.5 w-full bg-gradient-to-r from-primary to-[hsl(250,56%,65%)]" />
+ </div>
+ </div>
+ ))}
+ </div>
+ </div>
+ {pageCount > 1 && (
+ <div className="flex justify-center gap-2 mt-6">
+ {Array.from({ length: pageCount }).map((_, i) => (
+ <button
+ key={i}
+ onClick={() => setIdx(i)}
+ aria-label={`Seite ${i + 1}`}
+ className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30"}`}
+ />
+ ))}
+ </div>
+ )}
+ </div>
+ );
 };
 
 const HiddenFeaturesAccordion = ({ items }: { items: string[] }) => {
-  const [open, setOpen] = useState(false);
-  if (items.length === 0) return null;
-  return (
-    <div className="mb-3">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-primary border-2 border-primary/30 hover:border-primary hover:bg-primary/5 rounded-xl px-4 py-2.5 transition-colors"
-      >
-        <span>Alle Leistungen anzeigen</span>
-        <ChevronDown size={16} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden={true} focusable={false} />
-      </button>
-      <div className={`grid transition-all duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
-        <div className="overflow-hidden">
-          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
-            <ul className="space-y-1.5">
-              {items.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                  <Check size={16} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+ const [open, setOpen] = useState(false);
+ if (items.length === 0) return null;
+ return (
+ <div className="mb-3">
+ <button
+ type="button"
+ onClick={() => setOpen((o) => !o)}
+ aria-expanded={open}
+ className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-primary border-2 border-primary/30 hover:border-primary hover:bg-primary/5 rounded-xl px-4 py-2.5 transition-colors"
+ >
+ <span>Alle Leistungen anzeigen</span>
+ <ChevronDown size={16} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden={true} focusable={false} />
+ </button>
+ <div className={`grid transition-all duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
+ <div className="overflow-hidden">
+ <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+ <ul className="space-y-1.5">
+ {items.map((f) => (
+ <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
+ <Check size={16} className="text-primary shrink-0 mt-0.5" aria-hidden={true} focusable={false} />
+ <span>{f}</span>
+ </li>
+ ))}
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+ );
 };
 
 const EmailAngebot = () => {
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
-  const [checkoutPkg, setCheckoutPkg] = useState<{ name: string } | null>(null);
-  const [mode, setMode] = useState<"miete" | "kauf">("miete");
+ const [popupOpen, setPopupOpen] = useState(false);
+ const [popupBadge, setPopupBadge] = useState("Kostenlose Beratung");
+ const [checkoutPkg, setCheckoutPkg] = useState<{ name: string } | null>(null);
+ const [mode, setMode] = useState<"miete" | "kauf">("miete");
 
-  const openPopup = (badge: string) => {
-    setPopupBadge(badge);
-    setPopupOpen(true);
-  };
+ const openPopup = (badge: string) => {
+ setPopupBadge(badge);
+ setPopupOpen(true);
+ };
 
-  const currentFunnelPaket = checkoutPkg
-    ? funnelPakete.find((p) => p.name === checkoutPkg.name) ?? funnelPakete[0]
-    : null;
+ const currentFunnelPaket = checkoutPkg
+ ? funnelPakete.find((p) => p.name === checkoutPkg.name) ?? funnelPakete[0]
+ : null;
 
-  return (
-    <main id="main-content" className="min-h-screen bg-background">
-      {/* Minimal-Header */}
-      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80">
-        <div className="container-narrow px-4 py-3.5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center">
-              <Sparkles size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
-            </div>
-            <span className="font-heading font-semibold text-sm text-foreground">Meine Traum Webseite</span>
-          </div>
-          <a
-            href="tel:+4961313076498"
-            className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-foreground/80 hover:text-primary transition-colors"
-          >
-            <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
-          </a>
-        </div>
-      </header>
+ return (
+ <main id="main-content" className="min-h-screen bg-background">
+ {/* Minimal-Header */}
+ <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80">
+ <div className="container-narrow px-4 py-3.5 flex items-center justify-between gap-3">
+ <div className="flex items-center gap-2.5">
+ <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-[hsl(250,56%,65%)] flex items-center justify-center">
+ <Sparkles size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
+ </div>
+ <span className="font-heading font-semibold text-sm text-foreground">Meine Traum Webseite</span>
+ </div>
+ <a
+ href="tel:+4961313076498"
+ className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-foreground/80 hover:text-primary transition-colors"
+ >
+ <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
+ </a>
+ </div>
+ </header>
 
-      {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden">
-        {/* Aurora glow background */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full blur-[120px] opacity-[0.18] bg-primary" />
-          <div className="absolute top-[10%] left-[-15%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-[0.14] bg-accent" />
-        </div>
+ {/* ============ HERO ============ */}
+ <section className="relative overflow-hidden">
+ {/* Aurora glow background */}
+ <div className="pointer-events-none absolute inset-0 -z-10">
+ <div className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full blur-[120px] opacity-[0.18] bg-primary" />
+ <div className="absolute top-[10%] left-[-15%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-[0.14] bg-accent" />
+ </div>
 
-        <div className="container-narrow px-4 pt-16 md:pt-24 pb-12 md:pb-16">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-7 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-              </span>
-              Exklusiv-Angebot für Handwerksbetriebe
-            </div>
+ <div className="container-narrow px-4 pt-16 md:pt-24 pb-12 md:pb-16">
+ <div className="text-center max-w-3xl mx-auto">
+ <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-7 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider">
+ <span className="relative flex h-2 w-2">
+ <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
+ <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+ </span>
+ Exklusiv-Angebot für Handwerksbetriebe
+ </div>
 
-            <h1 className="mb-6 text-balance leading-[1.08] pb-2">
-              Deine neue <span className="gradient-text inline-block pb-1">Website</span> —<br />
-              in 7 Tagen live.
-            </h1>
-            <p className="text-muted-foreground text-lg md:text-xl mb-9 max-w-2xl mx-auto leading-relaxed">
-              Professionell online. Steuerlich absetzbar. Ohne Technik-Stress —
-              <span className="text-foreground font-semibold"> ab 59 €/Monat</span>.
-            </p>
+ <h1 className="mb-6 text-balance leading-[1.08] pb-2">
+ Deine neue <span className="gradient-text inline-block pb-1">Website</span> —<br />
+ in 7 Tagen live.
+ </h1>
+ <p className="text-muted-foreground text-lg md:text-xl mb-9 max-w-2xl mx-auto leading-relaxed">
+ Professionell online. Steuerlich absetzbar. Ohne Technik-Stress —
+ <span className="text-foreground font-semibold"> ab 59 €/Monat</span>.
+ </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-              <Button
-                variant="gradient"
-                size="lg"
-                onClick={() => {
-                  const el = document.getElementById("pricing");
-                  el?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                className="animate-cta-pulse"
-              >
-                Pakete & Preise ansehen <ArrowRight size={20} aria-hidden={true} focusable={false} />
-              </Button>
-              <Button
-                variant="outline-primary"
-                size="lg"
-                onClick={() => openPopup("Kostenlose Beratung")}
-              >
-                Kostenlos beraten lassen
-              </Button>
-            </div>
+ <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+ <Button
+ variant="gradient"
+ size="lg"
+ onClick={() => {
+ const el = document.getElementById("pricing");
+ el?.scrollIntoView({ behavior: "smooth", block: "start" });
+ }}
+ className="animate-cta-pulse"
+ >
+ Pakete & Preise ansehen <ArrowRight size={20} aria-hidden={true} focusable={false} />
+ </Button>
+ <Button
+ variant="outline-primary"
+ size="lg"
+ onClick={() => openPopup("Kostenlose Beratung")}
+ >
+ Kostenlos beraten lassen
+ </Button>
+ </div>
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-7 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Clock size={16} className="text-primary" aria-hidden={true} focusable={false} />
-                <span>In 7 Tagen live</span>
-              </div>
-              <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
-              <div className="flex items-center gap-2">
-                <Check size={16} className="text-primary" aria-hidden={true} focusable={false} />
-                <span>Voll absetzbar</span>
-              </div>
-              <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
-              <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-primary" aria-hidden={true} focusable={false} />
-                <span>Kein Technik-Wissen nötig</span>
-              </div>
-            </div>
-          </div>
+ <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-7 text-sm text-muted-foreground">
+ <div className="flex items-center gap-2">
+ <Clock size={16} className="text-primary" aria-hidden={true} focusable={false} />
+ <span>In 7 Tagen live</span>
+ </div>
+ <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
+ <div className="flex items-center gap-2">
+ <Check size={16} className="text-primary" aria-hidden={true} focusable={false} />
+ <span>Voll absetzbar</span>
+ </div>
+ <span className="hidden sm:inline w-1 h-1 rounded-full bg-border" />
+ <div className="flex items-center gap-2">
+ <ShieldCheck size={16} className="text-primary" aria-hidden={true} focusable={false} />
+ <span>Kein Technik-Wissen nötig</span>
+ </div>
+ </div>
+ </div>
 
-          {/* TrustStrip direkt im Hero */}
-          <TrustStrip />
-        </div>
-      </section>
+ {/* TrustStrip direkt im Hero */}
+ <TrustStrip />
+ </div>
+ </section>
 
-      {/* ============ PAIN POINTS ============ */}
-      <section className="border-y border-border/60 bg-gradient-to-b from-secondary/40 to-background py-16 md:py-20">
-        <div className="container-narrow px-4">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Das Problem</p>
-            <h2 className="mb-4 text-balance">Warum die meisten Handwerker-Websites <span className="text-foreground">keine Anfragen bringen</span></h2>
-            <p className="text-muted-foreground text-base md:text-lg italic">
-              Ein verlorener Auftrag kostet dich im Schnitt 800 €. Deine neue Website ab 59 €/Monat.
-            </p>
-          </div>
+ {/* ============ PAIN POINTS ============ */}
+ <section className="border-y border-border/60 bg-gradient-to-b from-secondary/40 to-background py-16 md:py-20">
+ <div className="container-narrow px-4">
+ <div className="text-center max-w-2xl mx-auto mb-12">
+ <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Das Problem</p>
+ <h2 className="mb-4 text-balance">Warum die meisten Handwerker-Websites <span className="text-foreground">keine Anfragen bringen</span></h2>
+ <p className="text-muted-foreground text-base md:text-lg italic">
+ Ein verlorener Auftrag kostet dich im Schnitt 800 €. Deine neue Website ab 59 €/Monat.
+ </p>
+ </div>
 
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              { Icon: XCircle, title: "Unsichtbar bei Google", text: "Kunden suchen 'Maler in deiner Stadt' — und finden den Wettbewerb. Du bleibst außen vor." },
-              { Icon: TrendingDown, title: "Veraltete Optik schreckt ab", text: "Eine Seite aus 2012 verliert Vertrauen, bevor ein Kunde überhaupt anruft. Premium-Kunden sind sofort weg." },
-              { Icon: Smartphone, title: "Auf dem Handy unbrauchbar", text: "80 % deiner Besucher kommen mobil. Wenn die Seite nicht funktioniert, sind sie in 3 Sekunden weg." },
-            ].map(({ Icon, title, text }) => (
-              <div key={title} className="group relative rounded-2xl bg-card border border-border p-7 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-5">
-                  <Icon size={20} strokeWidth={2} />
-                </div>
-                <h3 className="font-heading text-lg font-bold mb-2 text-foreground">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+ <div className="grid md:grid-cols-3 gap-5">
+ {[
+ { Icon: XCircle, title: "Unsichtbar bei Google", text: "Kunden suchen 'Maler in deiner Stadt' — und finden den Wettbewerb. Du bleibst außen vor." },
+ { Icon: TrendingDown, title: "Veraltete Optik schreckt ab", text: "Eine Seite aus 2012 verliert Vertrauen, bevor ein Kunde überhaupt anruft. Premium-Kunden sind sofort weg." },
+ { Icon: Smartphone, title: "Auf dem Handy unbrauchbar", text: "80 % deiner Besucher kommen mobil. Wenn die Seite nicht funktioniert, sind sie in 3 Sekunden weg." },
+ ].map(({ Icon, title, text }) => (
+ <div key={title} className="group relative rounded-2xl bg-card border border-border p-7 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-300">
+ <div className="w-12 h-12 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center mb-5">
+ <Icon size={20} strokeWidth={2} />
+ </div>
+ <h3 className="font-heading text-lg font-bold mb-2 text-foreground">{title}</h3>
+ <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
+ </div>
+ ))}
+ </div>
+ </div>
+ </section>
 
-      {/* ============ PRICING ============ */}
-      <section id="pricing" className="px-4 pt-16 md:pt-20 pb-10 md:pb-14">
-        <div className="container-narrow px-4">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Die Lösung</p>
-            <h2 className="mb-4 text-balance">Wähle dein <span className="text-foreground">Paket</span></h2>
-            <p className="text-muted-foreground text-base md:text-lg">
-              Monatlich flexibel oder einmalig — beides voll absetzbar.
-            </p>
-          </div>
+ {/* ============ PRICING ============ */}
+ <section id="pricing" className="px-4 pt-16 md:pt-20 pb-10 md:pb-14">
+ <div className="container-narrow px-4">
+ <div className="text-center max-w-2xl mx-auto mb-10">
+ <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Die Lösung</p>
+ <h2 className="mb-4 text-balance">Wähle dein <span className="text-foreground">Paket</span></h2>
+ <p className="text-muted-foreground text-base md:text-lg">
+ Monatlich flexibel oder einmalig — beides voll absetzbar.
+ </p>
+ </div>
 
-          <Tabs value={mode} onValueChange={(v) => setMode(v as "miete" | "kauf")} className="mb-8">
-            <TabsList className="mx-auto flex w-full max-w-sm mb-6">
-              <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
-              <TabsTrigger value="kauf" className="flex-1">Einmalig kaufen</TabsTrigger>
-            </TabsList>
+ <Tabs value={mode} onValueChange={(v) => setMode(v as "miete" | "kauf")} className="mb-8">
+ <TabsList className="mx-auto flex w-full max-w-sm mb-6">
+ <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
+ <TabsTrigger value="kauf" className="flex-1">Einmalig kaufen</TabsTrigger>
+ </TabsList>
 
-            <p className="text-xs text-muted-foreground text-center italic mb-6 max-w-2xl mx-auto">
-              Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
-              Für Gewerbetreibende voll absetzbar.
-            </p>
+ <p className="text-xs text-muted-foreground text-center italic mb-6 max-w-2xl mx-auto">
+ Alle Preise verstehen sich netto zzgl. der gesetzlichen Mehrwertsteuer.<br />
+ Für Gewerbetreibende voll absetzbar.
+ </p>
 
-            {(["miete", "kauf"] as const).map((m) => {
-              const list = m === "miete" ? rentPackages : buyPackages;
-              return (
-                <TabsContent key={m} value={m}>
-                  <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium" style={m === "miete"
-                    ? { background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))", borderColor: "hsl(var(--primary) / 0.2)" }
-                    : { background: "#F0FFF4", color: "#166534", borderColor: "rgba(22,101,52,0.2)" }}>
-                    {m === "miete"
-                      ? "✓ Meistgewählt – kein großes Investment, sofort loslegen"
+ {(["miete", "kauf"] as const).map((m) => {
+ const list = m === "miete" ? rentPackages : buyPackages;
+ return (
+ <TabsContent key={m} value={m}>
+ <div className="mb-8 rounded-xl border px-5 py-3 text-center text-sm font-medium" style={m === "miete"
+ ? { background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))", borderColor: "hsl(var(--primary) / 0.2)" }
+ : { background: "#F0FFF4", color: "#166534", borderColor: "rgba(22,101,52,0.2)" }}>
+ {m === "miete"
+ ? "✓ Meistgewählt – kein großes Investment, sofort loslegen"
                       : "💡 Einmal zahlen. Für immer dein. Nach ca. 2 Jahren günstiger als die Miete."}
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:px-4">
-                    {list.map((pkg) => (
-                      <div
-                        key={pkg.name}
-                        className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
-                          pkg.popular
-                            ? "border-[3px] border-primary shadow-[0_32px_70px_-12px_hsl(var(--primary)/0.45)] lg:scale-[1.04] lg:z-10"
+ </div>
+ <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:px-4">
+ {list.map((pkg) => (
+ <div
+ key={pkg.name}
+ className={`relative rounded-2xl p-10 h-full flex flex-col border bg-background ${
+ pkg.popular
+ ? "border-[3px] border-primary shadow-[0_32px_70px_-12px_hsl(var(--primary)/0.45)] lg:scale-[1.04] lg:z-10"
                             : "border-2 border-primary/70 hover:border-primary transition-colors"
-                        }`}
-                      >
-                        {pkg.popular && (
-                          <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
-                            <Star size={16} aria-hidden={true} focusable={false} /> Beliebteste Wahl
-                          </span>
-                        )}
-                        <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
-                        <p className="font-heading text-3xl font-bold text-foreground mb-6">{pkg.price}</p>
-                        {pkg.compare && (
-                          <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
-                        )}
-                        {pkg.includesHint && (
-                          <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
-                        )}
-                        <div className="space-y-3 flex-1 mb-6">
-                          {pkg.features.map((f) => (
-                            <div key={f} className="flex items-start gap-2.5">
-                              <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
-                              <span className="text-sm">{f}</span>
-                            </div>
-                          ))}
-                        </div>
-                        <HiddenFeaturesAccordion items={pkg.hidden} />
-                        <div className="space-y-2 mt-6">
-                          <Button
-                            variant="gradient"
-                            size="lg"
-                            className="w-full"
-                            onClick={() => setCheckoutPkg({ name: pkg.name })}
-                          >
-                            {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
-                          </Button>
-                          <button
-                            type="button"
-                            onClick={() => openPopup(pkg.badge)}
-                            className="w-full text-sm font-semibold text-primary hover:underline pt-1"
-                          >
-                            Kostenlos beraten lassen →
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {/* Enterprise Block */}
-                  <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
-                    <div className="flex-1">
-                      <h3 className="font-heading text-xl font-bold mb-1">{enterprisePkg.name}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{enterprisePkg.subtitle}</p>
-                      <p className="font-heading text-2xl font-bold text-foreground mb-1">{enterprisePkg.price}</p>
-                      <p className="text-xs text-muted-foreground mb-5">zzgl. 19 % MwSt.</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {enterprisePkg.features.map((f) => (
-                          <div key={f} className="flex items-start gap-2.5">
-                            <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
-                            <span className="text-sm">{f}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="md:w-auto">
-                      <Button variant="outline" size="lg" onClick={() => openPopup(enterprisePkg.badge)}>
-                        {enterprisePkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
-                      </Button>
-                    </div>
-                  </div>
-                </TabsContent>
-              );
-            })}
-          </Tabs>
+ }`}
+ >
+ {pkg.popular && (
+ <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge-label bg-primary text-primary-foreground flex items-center gap-1 whitespace-nowrap">
+ <Star size={16} aria-hidden={true} focusable={false} /> Beliebteste Wahl
+ </span>
+ )}
+ <h3 className="font-heading text-xl font-bold mb-1">{pkg.name}</h3>
+ <p className="font-heading text-3xl font-bold text-foreground mb-6">{pkg.price}</p>
+ {pkg.compare && (
+ <p className="text-xs text-muted-foreground mb-5">{pkg.compare}</p>
+ )}
+ {pkg.includesHint && (
+ <p className="text-xs text-primary mt-2 mb-3">{pkg.includesHint}</p>
+ )}
+ <div className="space-y-3 flex-1 mb-6">
+ {pkg.features.map((f) => (
+ <div key={f} className="flex items-start gap-2.5">
+ <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+ <span className="text-sm">{f}</span>
+ </div>
+ ))}
+ </div>
+ <HiddenFeaturesAccordion items={pkg.hidden} />
+ <div className="space-y-2 mt-6">
+ <Button
+ variant="gradient"
+ size="lg"
+ className="w-full"
+ onClick={() => setCheckoutPkg({ name: pkg.name })}
+ >
+ {pkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
+ </Button>
+ <button
+ type="button"
+ onClick={() => openPopup(pkg.badge)}
+ className="w-full text-sm font-semibold text-primary hover:underline pt-1"
+ >
+ Kostenlos beraten lassen →
+ </button>
+ </div>
+ </div>
+ ))}
+ </div>
+ {/* Enterprise Block */}
+ <div className="mt-8 rounded-2xl p-8 md:p-10 border border-foreground/40 bg-gradient-to-br from-card to-background flex flex-col md:flex-row md:items-center gap-8">
+ <div className="flex-1">
+ <h3 className="font-heading text-xl font-bold mb-1">{enterprisePkg.name}</h3>
+ <p className="text-sm text-muted-foreground mb-2">{enterprisePkg.subtitle}</p>
+ <p className="font-heading text-2xl font-bold text-foreground mb-1">{enterprisePkg.price}</p>
+ <p className="text-xs text-muted-foreground mb-5">zzgl. 19 % MwSt.</p>
+ <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+ {enterprisePkg.features.map((f) => (
+ <div key={f} className="flex items-start gap-2.5">
+ <Check size={16} className="text-primary shrink-0 mt-1" aria-hidden={true} focusable={false} />
+ <span className="text-sm">{f}</span>
+ </div>
+ ))}
+ </div>
+ </div>
+ <div className="md:w-auto">
+ <Button variant="outline" size="lg" onClick={() => openPopup(enterprisePkg.badge)}>
+ {enterprisePkg.cta} <ArrowRight size={16} aria-hidden={true} focusable={false} />
+ </Button>
+ </div>
+ </div>
+ </TabsContent>
+ );
+ })}
+ </Tabs>
 
-          <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
-            <span>🛡️</span>
-            <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
-          </p>
-          <div className="mt-4 flex justify-center">
-            <PaymentTrustStrip kind={mode === "miete" ? "rent" : "deposit"} />
-          </div>
-          <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-            * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
-          </p>
+ <p className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+ <span>🛡️</span>
+ <span>Website in 7 Tagen live — oder wir arbeiten kostenlos weiter bis sie steht.</span>
+ </p>
+ <div className="mt-4 flex justify-center">
+ <PaymentTrustStrip kind={mode === "miete" ? "rent" : "deposit"} />
+ </div>
+ <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+ * 12 Monate Startzeitraum – danach monatlich kündbar. Alle Preise netto zzgl. 19% MwSt.
+ </p>
 
-          {/* BLOCK 4: Testimonials Carousel */}
-          <TestimonialCarousel />
+ {/* BLOCK 4: Testimonials Carousel */}
+ <TestimonialCarousel />
 
-          {/* BLOCK 5: FAQ */}
-          <div className="max-w-3xl mx-auto mb-16">
-            <h2 className="text-center mb-8 text-balance">Häufige Fragen</h2>
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqs.map((faq, i) => (
-                <AccordionItem
-                  key={i}
-                  value={`faq-${i}`}
-                  className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all"
-                >
-                  <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+ {/* BLOCK 5: FAQ */}
+ <div className="max-w-3xl mx-auto mb-16">
+ <h2 className="text-center mb-8 text-balance">Häufige Fragen</h2>
+ <Accordion type="single" collapsible className="space-y-3">
+ {faqs.map((faq, i) => (
+ <AccordionItem
+ key={i}
+ value={`faq-${i}`}
+ className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all"
+ >
+ <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">
+ {faq.q}
+ </AccordionTrigger>
+ <AccordionContent className="text-muted-foreground leading-relaxed pb-5">
+ {faq.a}
+ </AccordionContent>
+ </AccordionItem>
+ ))}
+ </Accordion>
+ </div>
 
-          {/* Trust Badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
-            {[
-              { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Du siehst ist was Du zahlst" },
-              { Icon: FileText, label: "Kein Kleingedrucktes", sub: "Einfache, klare Verträge" },
-              { Icon: Target, label: "Erst Demo – dann Entscheidung", sub: "Kostenlose Vorschau in 48 Stunden" },
-            ].map(({ Icon, label, sub }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-3 px-2">
-                <Icon className="text-primary w-10 h-10 sm:w-12 sm:h-12" strokeWidth={1.8} />
-                <span className="text-base sm:text-[17px] font-bold leading-snug text-foreground">{label}</span>
-                <span className="text-xs sm:text-sm text-muted-foreground leading-[1.5]">{sub}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+ {/* Trust Badges */}
+ <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto mb-20">
+ {[
+ { Icon: Lock, label: "Keine versteckten Kosten", sub: "Was Du siehst ist was Du zahlst" },
+ { Icon: FileText, label: "Kein Kleingedrucktes", sub: "Einfache, klare Verträge" },
+ { Icon: Target, label: "Erst Demo – dann Entscheidung", sub: "Kostenlose Vorschau in 48 Stunden" },
+ ].map(({ Icon, label, sub }) => (
+ <div key={label} className="flex flex-col items-center text-center gap-3 px-2">
+ <Icon className="text-primary w-10 h-10 sm:w-12 sm:h-12" strokeWidth={1.8} />
+ <span className="text-base sm:text-[17px] font-bold leading-snug text-foreground">{label}</span>
+ <span className="text-xs sm:text-sm text-muted-foreground leading-[1.5]">{sub}</span>
+ </div>
+ ))}
+ </div>
+ </div>
+ </section>
 
-      {/* BLOCK 6: Finaler CTA */}
-      <section className="py-16 md:py-24 px-4">
-        <div className="container-narrow">
-          <div className="relative overflow-hidden rounded-2xl md:rounded-2xl gradient-hero-bg p-10 md:p-16 text-center text-primary-foreground shadow-elevated">
-            {/* Decorative glows */}
-            <div className="pointer-events-none absolute -top-32 -right-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
+ {/* BLOCK 6: Finaler CTA */}
+ <section className="py-16 md:py-24 px-4">
+ <div className="container-narrow">
+ <div className="relative overflow-hidden rounded-2xl md:rounded-2xl gradient-hero-bg p-10 md:p-16 text-center text-primary-foreground shadow-elevated">
+ {/* Decorative glows */}
+ <div className="pointer-events-none absolute -top-32 -right-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
+ <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
 
-            <div className="relative">
-              <h2 className="text-3xl font-heading text-3xl font-bold mb-5 text-white text-balance">
-                Mehr Aufträge. Weniger Aufwand.
-              </h2>
-              <p className="text-white/85 text-base md:text-lg mb-9 leading-relaxed max-w-2xl mx-auto">
-                Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
-                Gefällt sie dir nicht — du zahlst nichts.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button
-                  size="lg"
-                  onClick={() => openPopup("Kostenlose Beratung")}
-                  className="bg-white text-primary hover:bg-white/90 shadow-xl"
-                >
-                  Kostenlose Demo anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} />
-                </Button>
-                <a
-                  href="tel:+4961313076498"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg px-6 h-12 font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors"
-                >
-                  <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
-                </a>
-              </div>
-              <p className="text-sm text-white/80 mt-7 flex items-center justify-center gap-2 flex-wrap">
-                <span className="text-yellow-300 tracking-tight">★★★★★</span>
-                <span>+150 Betriebe aus der Region vertrauen uns</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+ <div className="relative">
+ <h2 className="text-3xl font-heading text-3xl font-bold mb-5 text-white text-balance">
+ Mehr Aufträge. Weniger Aufwand.
+ </h2>
+ <p className="text-white/85 text-base md:text-lg mb-9 leading-relaxed max-w-2xl mx-auto">
+ Kostenlose Design-Demo in 48 Stunden. Kein Risiko. Keine Verpflichtung.<br />
+ Gefällt sie dir nicht — Du zahlst nichts.
+ </p>
+ <div className="flex flex-col sm:flex-row gap-3 justify-center">
+ <Button
+ size="lg"
+ onClick={() => openPopup("Kostenlose Beratung")}
+ className="bg-white text-primary hover:bg-white/90 shadow-xl"
+ >
+ Kostenlose Demo anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} />
+ </Button>
+ <a
+ href="tel:+4961313076498"
+ className="inline-flex items-center justify-center gap-2 rounded-lg px-6 h-12 font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors"
+ >
+ <Phone size={16} aria-hidden={true} focusable={false} /> 06131 3076498
+ </a>
+ </div>
+ <p className="text-sm text-white/80 mt-7 flex items-center justify-center gap-2 flex-wrap">
+ <span className="text-yellow-300 tracking-tight">★★★★★</span>
+ <span>+150 Betriebe aus der Region vertrauen uns</span>
+ </p>
+ </div>
+ </div>
+ </div>
+ </section>
 
-      {/* BLOCK 7: Minimal-Footer */}
-      <footer className="py-8 text-center">
-        <p className="text-xs text-muted-foreground">
-          © 2025 Meine Traum Webseite · QK Marketing ·{" "}
-          <Link to="/impressum" className="underline hover:text-foreground">Impressum</Link>{" "}·{" "}
-          <Link to="/datenschutz" className="underline hover:text-foreground">Datenschutz</Link>
-        </p>
-      </footer>
+ {/* BLOCK 7: Minimal-Footer */}
+ <footer className="py-8 text-center">
+ <p className="text-xs text-muted-foreground">
+ © 2025 Meine Traum Webseite · QK Marketing ·{" "}
+ <Link to="/impressum" className="underline hover:text-foreground">Impressum</Link>{" "}·{" "}
+ <Link to="/datenschutz" className="underline hover:text-foreground">Datenschutz</Link>
+ </p>
+ </footer>
 
-      <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
-      {currentFunnelPaket && checkoutPkg && (
-        <CheckoutFunnel
-          open={checkoutPkg !== null}
-          onClose={() => setCheckoutPkg(null)}
-          paket={currentFunnelPaket}
-          pakete={funnelPakete}
-          addons={[]}
-          paymentConfig={{
-            kauf: { enabled: true, mode: "deposit", deposit_percent: 50 },
+ <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
+ {currentFunnelPaket && checkoutPkg && (
+ <CheckoutFunnel
+ open={checkoutPkg !== null}
+ onClose={() => setCheckoutPkg(null)}
+ paket={currentFunnelPaket}
+ pakete={funnelPakete}
+ addons={[]}
+ paymentConfig={{
+ kauf: { enabled: true, mode: "deposit", deposit_percent: 50 },
             miete: { enabled: true, monthly_cents: (currentFunnelPaket.miete_monatlich || 0) * 100, min_months: 12 },
           }}
           defaultPaymentMode={mode}

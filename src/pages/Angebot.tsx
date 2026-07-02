@@ -119,8 +119,8 @@ export default function Angebot() {
   const previewMode = params.get("preview") === "1";
 
   const [resolvedB64, setResolvedB64] = useState<string | null>(d);
-  const [loadingShort, setLoadingShort] = useState<boolean>(!!s && !d);
-  const [shortError, setShortError] = useState<string | null>(null);
+ const [loadingShort, setLoadingShort] = useState<boolean>(!!s && !d);
+ const [shortError, setShortError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!s || d) return;
@@ -162,7 +162,7 @@ export default function Angebot() {
       <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: "100vh", background: BG_SOFT, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, color: TEXT_MUTED }}>
           <Loader2 size={20} className="animate-spin" aria-hidden={true} focusable={false} /> Angebot wird geladen…
-        </div>
+ </div>
       </div>
     );
   }
@@ -199,8 +199,8 @@ export default function Angebot() {
           borderBottom: "1px solid #FCD34D",
         }}>
           <Eye size={16} style={{ display: "inline", marginRight: 6, verticalAlign: "-2px" }} aria-hidden={true} focusable={false} />
-          Vorschau-Modus — so wird der Kunde das Angebot sehen
-        </div>
+ Vorschau-Modus — so wird der Kunde das Angebot sehen
+ </div>
       )}
       {!unlocked && <PinGate pinInput={pinInput} setPinInput={setPinInput} error={pinError} onSubmit={handlePinSubmit} />}
       {unlocked && <AngebotPage data={data} />}
@@ -236,11 +236,11 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
           <Lock size={24} color={BRAND} aria-hidden={true} focusable={false} />
         </div>
         <h1 style={{ fontSize: 26, fontWeight: 800, color: TEXT_DARK, marginBottom: 8 }}>
-          dein persönliches Angebot wartet auf du
-        </h1>
+ Dein persönliches Angebot wartet auf du
+ </h1>
         <p style={{ color: TEXT_MUTED, marginBottom: 28, fontSize: 15 }}>
-          Bitte gib deinen persönlichen Zugangscode ein.
-        </p>
+ Bitte gib deinen persönlichen Zugangscode ein.
+ </p>
         <input
           type="password"
           inputMode="numeric"
@@ -260,8 +260,8 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
         />
         {error && (
           <p style={{ color: "#EF4444", fontSize: 14, marginBottom: 16 }}>
-            Ungültiger Code. Bitte prüfen du deinen Zugangscode.
-          </p>
+ Ungültiger Code. Bitte prüfen du deinen Zugangscode.
+ </p>
         )}
         <button
           type="submit"
@@ -273,11 +273,11 @@ function PinGate({ pinInput, setPinInput, error, onSubmit }: {
             cursor: "pointer", fontFamily: "inherit",
           }}
         >
-          Angebot anzeigen →
-        </button>
+ Angebot anzeigen →
+ </button>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 20, color: TEXT_MUTED, fontSize: 12 }}>
           <Shield size={16} aria-hidden={true} focusable={false} /> SSL-verschlüsselt · Vertraulich
-        </div>
+ </div>
       </form>
     </div>
   );
@@ -289,13 +289,13 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
   const [showSticky, setShowSticky] = useState(false);
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-  const [bookingOpen, setBookingOpen] = useState(false);
-  const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
+ const [bookingOpen, setBookingOpen] = useState(false);
+ const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
 
   // ─── Pakete: Multi-Paket-Auswahl (wenn mehr als 1 Paket) ───
   const pakete = data.pakete ?? [];
   const hasMultiplePakete = pakete.length > 1;
-  const [selectedPaketId, setSelectedPaketId] = useState<string>(pakete[0]?.id || "");
+ const [selectedPaketId, setSelectedPaketId] = useState<string>(pakete[0]?.id || "");
   const selectedPaket = hasMultiplePakete
     ? pakete.find((p) => p.id === selectedPaketId) ?? pakete[0]
     : pakete[0] || null;
@@ -406,7 +406,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
 
   // ─── Preis-Modus (Kauf / Miete) ──────────────────────
   const hasMiete = !!(aktiveMiete && aktiveMiete > 0);
-  const [priceMode, setPriceMode] = useState<"kauf" | "miete">(hasMiete ? "miete" : "kauf");
+ const [priceMode, setPriceMode] = useState<"kauf" | "miete">(hasMiete ? "miete" : "kauf");
   useEffect(() => {
     setPriceMode(hasMiete ? "miete" : "kauf");
   }, [hasMiete, selectedPaketId]);
@@ -453,8 +453,8 @@ function AngebotPage({ data }: { data: AngebotData }) {
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "center", gap: 10 }}>
           <img src={logo} alt="Meine Traum Webseite" width={36} height={36} style={{ display: "block" }} />
           <span style={{ fontWeight: 800, color: TEXT_DARK, fontSize: 15, letterSpacing: "-0.01em" }}>
-            Meine Traum Webseite
-          </span>
+ Meine Traum Webseite
+ </span>
         </div>
       </header>
 
@@ -523,14 +523,14 @@ function AngebotPage({ data }: { data: AngebotData }) {
         <section style={{ padding: "clamp(48px, 8vw, 80px) 24px", background: "#F8F7FF" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-              Häufige <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Fragen</span>
+ Häufige <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Fragen</span>
             </h2>
             <p style={{ fontSize: 18, color: TEXT_MUTED, textAlign: "center", marginBottom: 48, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-              Alles was Du weißt möchten — bevor du den nächsten Schritt gehen.
-            </p>
+ Alles was Du weißt möchten — bevor du den nächsten Schritt gehen.
+ </p>
             <Accordion type="single" collapsible defaultValue="faq-0" className="angebot-faq-accordion">
               {displayFaqs.map((f, i) => (
-                <AccordionItem
+ <AccordionItem
                   key={i}
                   value={`faq-${i}`}
                   className="angebot-faq-item border bg-white"
@@ -545,32 +545,32 @@ function AngebotPage({ data }: { data: AngebotData }) {
               ))}
             </Accordion>
             <style>{`
-              .angebot-faq-accordion .angebot-faq-item {
-                background: #fff !important;
-                border: 1px solid rgba(79,63,240,0.1) !important;
-                border-radius: 14px !important;
-                margin-bottom: 8px !important;
-                padding: 4px 24px !important;
-                transition: all 0.2s ease;
-              }
-              .angebot-faq-accordion .angebot-faq-item[data-state="open"] {
-                border-color: rgba(79,63,240,0.3) !important;
-                box-shadow: 0 2px 12px rgba(79,63,240,0.08);
-              }
-              .angebot-faq-accordion .angebot-faq-trigger {
-                padding: 18px 0 !important;
-              }
-              .angebot-faq-accordion .angebot-faq-trigger svg {
-                color: #4F3FF0 !important;
-                transition: transform 200ms ease;
-              }
-              .angebot-faq-accordion .angebot-faq-content > div {
-                padding-top: 12px !important;
-                padding-bottom: 18px !important;
-                border-top: 1px solid rgba(79,63,240,0.08);
-                margin-top: 4px;
-              }
-            `}</style>
+ .angebot-faq-accordion .angebot-faq-item {
+ background: #fff !important;
+ border: 1px solid rgba(79,63,240,0.1) !important;
+ border-radius: 14px !important;
+ margin-bottom: 8px !important;
+ padding: 4px 24px !important;
+ transition: all 0.2s ease;
+ }
+ .angebot-faq-accordion .angebot-faq-item[data-state="open"] {
+ border-color: rgba(79,63,240,0.3) !important;
+ box-shadow: 0 2px 12px rgba(79,63,240,0.08);
+ }
+ .angebot-faq-accordion .angebot-faq-trigger {
+ padding: 18px 0 !important;
+ }
+ .angebot-faq-accordion .angebot-faq-trigger svg {
+ color: #4F3FF0 !important;
+ transition: transform 200ms ease;
+ }
+ .angebot-faq-accordion .angebot-faq-content > div {
+ padding-top: 12px !important;
+ padding-bottom: 18px !important;
+ border-top: 1px solid rgba(79,63,240,0.08);
+ margin-top: 4px;
+ }
+ `}</style>
           </div>
         </section>
         );
@@ -590,7 +590,7 @@ function AngebotPage({ data }: { data: AngebotData }) {
       {/* ── STICKY BOTTOM BAR ────────────────────────────── */}
       {showSticky && (
         <StickyBar
-          paketName={selectedPaket?.name || data.branche || "dein Angebot"}
+          paketName={selectedPaket?.name || data.branche || "Dein Angebot"}
           preis={anzeigeGesamt}
           miete={aktiveMiete}
           priceMode={priceMode}
@@ -676,8 +676,8 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           textTransform: "uppercase", letterSpacing: "0.06em",
           marginBottom: 28,
         }}>
-          Persönliches Angebot — nur für du
-        </div>
+ Persönliches Angebot — nur für du
+ </div>
 
         <h1 className="ang-reveal ang-d-4" style={{
           fontSize: "clamp(42px, 6.5vw, 72px)", fontWeight: 800, lineHeight: 1.05,
@@ -691,8 +691,8 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
           }}>
-            maßgeschneidertes
-          </span>{" "}
+ maßgeschneidertes
+ </span>{" "}
           Angebot.
         </h1>
 
@@ -726,16 +726,16 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
                   </div>
                   <div className={`ang-count-lab${b.l === "SEK" ? " is-live" : ""}`}>{b.l}</div>
                 </div>
-              );
-              if (idx < arr.length - 1) {
+ );
+ if (idx < arr.length - 1) {
                 return [block, <span key={`sep-${idx}`} className="ang-count-sep" aria-hidden="true"><i /><i /></span>];
               }
               return [block];
             })}
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, marginTop: 18 }}>
-            Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
-          </div>
+ Danach wird die Kapazität neu vergeben — und der Preis neu kalkuliert.
+ </div>
         </div>
 
         {/* Zahlmodell-Optionen */}
@@ -765,8 +765,8 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
             </span>
           </div>
           <div style={{ fontSize: 13, color: TEXT_MUTED, fontStyle: "italic" }}>
-            Du entscheidest nach dem Erstgespräch — wir beraten du ehrlich.
-          </div>
+ Du entscheidest nach dem Erstgespräch — wir beraten du ehrlich.
+ </div>
         </div>
         </div>
       </div>
@@ -784,11 +784,11 @@ function ProblemSection() {
     <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "#fff" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-          Was dein Unternehmen gerade <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>kostet</span><br />ohne professionelle Website
-        </h2>
+ Was dein Unternehmen gerade <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>kostet</span><br />ohne professionelle Website
+ </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
           {problems.map((p, i) => (
-            <div key={i} style={{
+ <div key={i} style={{
               background: "#fff", borderRadius: 20,
               border: "1px solid rgba(79,63,240,0.1)",
               padding: 28,
@@ -808,8 +808,8 @@ function ProblemSection() {
           ))}
         </div>
         <p style={{ marginTop: 40, textAlign: "center", fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
-          Genau das ändern wir — mit deinem individuellen Projekt.
-        </p>
+ Genau das ändern wir — mit deinem individuellen Projekt.
+ </p>
       </div>
     </section>
   );
@@ -826,7 +826,7 @@ function nutzenFor(titel: string, beschreibung?: string): string {
   if (t.includes("kategor")) return "→ Kunden finden sich in deinem Shop sofort zurecht.";
   if (t.includes("design") || t.includes("marke")) return "→ Kunden nimm auf den ersten Blick ernst.";
   if (t.includes("smartphone") || t.includes("mobil") || t.includes("tablet")) return "→ Jeder Kunde erreicht du — egal von welchem Gerät.";
-  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ dein Shop läuft automatisch — du müssen nichts manuell tun.";
+  if (t.includes("shop-funktion") || t.includes("funktion")) return "→ dein Shop läuft automatisch — Du musst nichts manuell tun.";
   if (t.includes("kontaktformular")) return "→ Neue Anfragen landen direkt bei dir — ohne Umwege.";
   if (t.includes("korrektur") || t.includes("runde")) return "→ Du bekommst genau das, was du sich vorgestellt haben.";
   if (t.includes("impressum") || t.includes("datenschutz")) return "→ Rechtlich abgesichert — kein Stress mit Abmahnungen.";
@@ -891,17 +891,17 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
   const anyHasMiete = pakete.some((p) => p.miete_monatlich && p.miete_monatlich > 0);
   const minMiete = anyHasMiete
     ? Math.min(...pakete.filter((p) => p.miete_monatlich && p.miete_monatlich > 0).map((p) => Number(p.miete_monatlich)))
-    : 0;
-  return (
-    <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(180deg, #F5F4FF 0%, #FFFFFF 100%)" }}>
+ : 0;
+ return (
+ <section style={{ padding: "clamp(48px, 8vw, 80px) 16px", background: "linear-gradient(180deg, #F5F4FF 0%, #FFFFFF 100%)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-            Welches <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Paket</span> passt zu dir?
-          </h2>
+ Welches <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Paket</span> passt zu dir?
+ </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            Wählen du deine Variante — alle Inhalte unten passen sich automatisch an.
-          </p>
+ Wählen du deine Variante — alle Inhalte unten passen sich automatisch an.
+ </p>
         </div>
 
         {anyHasMiete && (
@@ -917,7 +917,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
             <span style={{ fontSize: 18 }}>💡</span>
             <span>
               <strong style={{ color: BRAND }}>Zwei Wege zu deiner Website</strong> — mieten ab <strong>{minMiete} €/Monat</strong> oder einmalig kaufen. Du entscheidest später.
-            </span>
+ </span>
           </div>
         )}
 
@@ -931,8 +931,8 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
             const badge = p.badge || badgeFor(idx, pakete.length);
             const recommended = idx === pakete.length - 1 && pakete.length > 1;
             const paketMiete = p.miete_monatlich && p.miete_monatlich > 0 ? Number(p.miete_monatlich) : null;
-            return (
-              <button
+ return (
+ <button
                 key={p.id}
                 type="button"
                 onClick={() => setSelectedPaketId(p.id)}
@@ -959,8 +959,8 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                   }}>{badge}</div>
                 )}
                 <div style={{ fontSize: 13, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
-                  Paket
-                </div>
+ Paket
+ </div>
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>{p.name}</div>
                 {p.beschreibung && (
                   <p style={{ fontSize: 14, color: TEXT_MUTED, margin: "0 0 14px", lineHeight: 1.5 }}>{p.beschreibung}</p>
@@ -969,8 +969,8 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                 {paketMiete ? (
                   <>
                     <div style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>
-                      Ab nur
-                    </div>
+ Ab nur
+ </div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 6, lineHeight: 1 }}>
                       <span style={{ fontSize: 40, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em" }}>
                         {paketMiete} €
@@ -978,16 +978,16 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                       <span style={{ fontSize: 16, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
                     </div>
                     <div style={{ fontSize: 13, color: TEXT_MUTED, marginBottom: 2 }}>
-                      oder einmalig <strong style={{ color: TEXT_DARK }}>{Number(p.preis).toLocaleString("de-DE")} €</strong>
+ oder einmalig <strong style={{ color: TEXT_DARK }}>{Number(p.preis).toLocaleString("de-DE")} €</strong>
                     </div>
                   </>
-                ) : (
-                  <div style={{ fontSize: 40, fontWeight: 800, color: BRAND, marginBottom: 4, lineHeight: 1, letterSpacing: "-0.02em" }}>
+ ) : (
+ <div style={{ fontSize: 40, fontWeight: 800, color: BRAND, marginBottom: 4, lineHeight: 1, letterSpacing: "-0.02em" }}>
                     {Number(p.preis).toLocaleString("de-DE")} €
                   </div>
                 )}
                 {p.leistungen && p.leistungen.length > 0 && (
-                  <Accordion type="single" collapsible className="mt-3">
+ <Accordion type="single" collapsible className="mt-3">
                     <AccordionItem value="leistungen" className="border-none">
                       <AccordionTrigger
                         className="py-2 text-sm font-semibold hover:no-underline"
@@ -998,7 +998,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                       <AccordionContent>
                         <ul style={{ listStyle: "none", padding: 0, margin: "8px 0 0", display: "grid", gap: 10 }}>
                           {p.leistungen.map((l, i) => (
-                            <li key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+ <li key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
                               <CheckIcon size={16} color="#059669" style={{ marginTop: 4, flexShrink: 0 }} aria-hidden={true} focusable={false} />
                               <div>
                                 <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK }}>{l.titel}</div>
@@ -1018,7 +1018,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                 {active && (
                   <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, color: BRAND, fontSize: 13, fontWeight: 700 }}>
                     <CheckCircle2 size={16} aria-hidden={true} focusable={false} /> Ausgewählt
-                  </div>
+ </div>
                 )}
                 {onChoose && (
                   <div
@@ -1040,7 +1040,7 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
                       transition: "all 0.15s",
                     }}
                   >
-                    Dieses Paket wählen <ChevronRight size={16} aria-hidden={true} focusable={false} />
+ Dieses Paket wählen <ChevronRight size={16} aria-hidden={true} focusable={false} />
                   </div>
                 )}
               </button>
@@ -1049,12 +1049,12 @@ function PaketChooserSection({ pakete, selectedPaketId, setSelectedPaketId, onCh
         </div>
 
         {pakete.length > 1 && (
-          <div style={{
+ <div style={{
             marginTop: 20, textAlign: "center",
             fontSize: 14, color: TEXT_MUTED, fontStyle: "italic",
           }}>
-            Mehr Funktionen, mehr Inhalte, längerer Support? → Das größere Paket wählen.
-          </div>
+ Mehr Funktionen, mehr Inhalte, längerer Support? → Das größere Paket wählen.
+ </div>
         )}
       </div>
     </section>
@@ -1068,11 +1068,11 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-            Was wir gemeinsam <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>umsetzen</span>
+ Was wir gemeinsam <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>umsetzen</span>
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, maxWidth: 560, margin: "0 auto" }}>
-            Jede Leistung — mit konkretem Nutzen für du.
-          </p>
+ Jede Leistung — mit konkretem Nutzen für du.
+ </p>
         </div>
         <div className="angebot-leistungen-grid ang-stagger-leist" style={{
           display: "grid",
@@ -1080,7 +1080,7 @@ function LeistungenSection({ leistungen }: { leistungen: Leistung[] }) {
           gap: 16,
         }}>
           {leistungen.map((l, i) => (
-            <div key={i} className="angebot-leistung-card ang-reveal" style={{
+ <div key={i} className="angebot-leistung-card ang-reveal" style={{
               animationDelay: `${i * 80}ms`,
             }}>
               <div className="ang-leist-emoji">
@@ -1132,12 +1132,12 @@ function PriceSection({
           <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 12, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
             {hasMiete ? (
               <>Wie möchtest du <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>zahlen</span>?</>
-            ) : (
-              <>dein <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span></>
+ ) : (
+ <>Dein <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Investitionsvolumen</span></>
             )}
           </h2>
           <p style={{ fontSize: 18, color: TEXT_MUTED, margin: "0 auto", maxWidth: 560 }}>
-            {hasMiete ? "Beide Wege — gleiches Ergebnis. Du entscheidest." : "Einmalige Investition — deine Website gehört dir."}
+            {hasMiete ? "Beide Wege — gleiches Ergebnis. Du entscheidest." : "Einmalige Investition — Deine Website gehört dir."}
           </p>
         </div>
 
@@ -1221,7 +1221,7 @@ function PriceSection({
             lineHeight: 1.6,
           }}>
             <strong style={{ color: TEXT_DARK }}>Beides enthält:</strong> alle Leistungen aus deinem Paket · 2 Korrekturrunden · DSGVO-konform · Hosting & Domain
-          </div>
+ </div>
         )}
 
         {isRechnung && (
@@ -1231,20 +1231,20 @@ function PriceSection({
             padding: "12px 18px", fontSize: 13, color: TEXT_MUTED, textAlign: "center",
             border: "1px solid rgba(79,63,240,0.1)",
           }}>
-            Zahlung per Rechnung · 14 Tage Zahlungsziel nach Auftragserteilung
-          </div>
+ Zahlung per Rechnung · 14 Tage Zahlungsziel nach Auftragserteilung
+ </div>
         )}
 
         {/* OPTIONALE ERWEITERUNGEN */}
         {optionen.length > 0 && (
-          <div style={{ marginTop: 48, maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
+ <div style={{ marginTop: 48, maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ textAlign: "center", marginBottom: 20 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: BRAND, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                Optionale Erweiterungen
-              </div>
+ Optionale Erweiterungen
+ </div>
               <h3 style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
-                Stellen du dein Paket zusammen
-              </h3>
+ Stellen du dein Paket zusammen
+ </h3>
             </div>
             <div style={{ display: "grid", gap: 12 }}>
               {optionen.map((o) => {
@@ -1295,7 +1295,7 @@ function PriceSection({
             </div>
 
             {selectedOptionsCount > 0 && (
-              <div style={{
+ <div style={{
                 marginTop: 16, background: "#fff", borderRadius: 14,
                 padding: "14px 18px", border: `1px solid ${BRAND}20`,
                 display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -1311,19 +1311,19 @@ function PriceSection({
                         {Number(Number(miete) + monatlicheZusatz).toLocaleString("de-DE")} € <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}>/Monat</span>
                       </div>
                       {einmaligeZusatz > 0 && (
-                        <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+ <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
                           + {Number(einmaligeZusatz).toLocaleString("de-DE")} € einmalig
                         </div>
                       )}
                     </>
-                  ) : (
-                    <>
+ ) : (
+ <>
                       <div style={{ fontSize: 18, fontWeight: 800, color: BRAND }}>
                         {Number(anzeigeGesamt).toLocaleString("de-DE")} €
                         {matchedBundle?.gesamt_preis ? null : <span style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 600 }}> ca.</span>}
                       </div>
                       {monatlicheZusatz > 0 && (
-                        <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
+ <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
                           + {Number(monatlicheZusatz).toLocaleString("de-DE")} € / Monat
                         </div>
                       )}
@@ -1339,8 +1339,8 @@ function PriceSection({
                 background: "#FEF3C7", color: "#92400E",
                 borderRadius: 12, fontSize: 13, lineHeight: 1.5,
               }}>
-                Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen du uns kurz an, wir senden dir einen passenden Zahlungslink.
-              </div>
+ Für diese Kombination ist kein Direkt-Checkout hinterlegt — sprechen du uns kurz an, wir senden dir einen passenden Zahlungslink.
+ </div>
             )}
           </div>
         )}
@@ -1427,18 +1427,18 @@ function PriceCard({
           )}
         </div>
         {normalpreis && normalpreis > 0 && (
-          <div style={{ fontSize: 15, color: TEXT_MUTED, textDecoration: "line-through", marginTop: 6 }}>
+ <div style={{ fontSize: 15, color: TEXT_MUTED, textDecoration: "line-through", marginTop: 6 }}>
             {Number(normalpreis).toLocaleString("de-DE")} €
           </div>
         )}
         {anzahlung && anzahlung > 0 && (
-          <div style={{ marginTop: 8 }}>
+ <div style={{ marginTop: 8 }}>
             <div style={{ fontSize: 14, color: TEXT_MUTED, fontWeight: 600 }}>
               + {Number(anzahlung).toLocaleString("de-DE")} € Anzahlung einmalig zum Start
             </div>
             <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 2 }}>
-              Die Anzahlung wird bei Auftragserteilung fällig.
-            </div>
+ Die Anzahlung wird bei Auftragserteilung fällig.
+ </div>
           </div>
         )}
       </div>
@@ -1449,7 +1449,7 @@ function PriceCard({
 
       <ul style={{ listStyle: "none", padding: 0, margin: "0 0 20px", display: "grid", gap: 10, flex: 1 }}>
         {bullets.map((b, i) => (
-          <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 14, color: TEXT_DARK, lineHeight: 1.5 }}>
+ <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 14, color: TEXT_DARK, lineHeight: 1.5 }}>
             <CheckIcon size={16} color="#059669" style={{ marginTop: 2, flexShrink: 0 }} aria-hidden={true} focusable={false} />
             <span>{b}</span>
           </li>
@@ -1484,7 +1484,7 @@ function TimelineSection() {
     {
       n: 1,
       titel: "Auftrag erteilen",
-      text: "du bestätigen heute verbindlich. Wir reservieren deine Kapazitäten und schalten den Zugang frei.",
+      text: "Du bestätigen heute verbindlich. Wir reservieren deine Kapazitäten und schalten den Zugang frei.",
       badge: "Sofort",
       badgeTone: "primary" as const,
     },
@@ -1498,7 +1498,7 @@ function TimelineSection() {
     {
       n: 3,
       titel: "Umsetzung",
-      text: "dein Projekt wird nach höchsten Standards umgesetzt. Du erhältst regelmäßige Updates zum Fortschritt.",
+      text: "Dein Projekt wird nach höchsten Standards umgesetzt. Du erhältst regelmäßige Updates zum Fortschritt.",
       badge: "Hauptphase",
       badgeTone: "neutral" as const,
     },
@@ -1514,11 +1514,11 @@ function TimelineSection() {
     <section className="angebot-timeline-section" style={{ padding: "clamp(58px, 8vw, 92px) 16px", background: "#fff" }}>
       <div className="angebot-timeline-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <h2 className="angebot-timeline-title" style={{ fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 800, color: TEXT_DARK, marginBottom: 48, textAlign: "center", letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-          dein Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
+ Dein Weg zur fertigen <span style={{ background: "linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Website</span>
         </h2>
         <div className="angebot-timeline" style={{ position: "relative" }}>
           {steps.map((s, i) => (
-            <div key={s.n} className="angebot-timeline-step" data-step={s.n}>
+ <div key={s.n} className="angebot-timeline-step" data-step={s.n}>
               <div className="angebot-timeline-dot">
                 <span className="angebot-timeline-dot-num">{s.n}</span>
               </div>
@@ -1531,180 +1531,180 @@ function TimelineSection() {
           ))}
         </div>
         <style>{`
-          .angebot-timeline {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
-            position: relative;
-            padding: 0 6%;
-          }
-          /* Horizontal progress rail behind the dots */
-          .angebot-timeline::before {
-            content: "";
-            position: absolute;
-            top: 40px;
-            left: calc(6% + 40px);
-            right: calc(6% + 40px);
-            height: 4px;
-            background: #E2E8F0;
-            border-radius: 999px;
-            z-index: 0;
-          }
-          .angebot-timeline::after {
-            content: "";
-            position: absolute;
-            top: 40px;
-            left: calc(6% + 40px);
-            width: calc((100% - 12% - 80px) * 0.34);
-            height: 4px;
-            background: linear-gradient(90deg,#4F3FF0 0%,#5B8DEF 100%);
-            border-radius: 999px;
-            z-index: 0;
-          }
-          .angebot-timeline-badge { display: none; }
-          .angebot-timeline-step {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            z-index: 1;
-          }
-          .angebot-timeline-dot {
-            width: 80px; height: 80px; border-radius: 999px;
-            background: #fff;
-            color: #CBD5E1;
-            border: 2px solid #F1F5F9;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 28px;
-            box-shadow: 0 4px 12px rgba(15,23,42,0.05), 0 0 0 8px #fff;
-            position: relative;
-            z-index: 2;
-            transition: transform .3s cubic-bezier(.4,0,.2,1);
-          }
-          .angebot-timeline-step:hover .angebot-timeline-dot { transform: scale(1.06); }
-          .angebot-timeline-dot-num { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
-          .angebot-timeline-step[data-step="1"] .angebot-timeline-dot {
-            background: #4F3FF0;
-            border-color: #4F3FF0;
-            box-shadow: 0 14px 30px rgba(79,63,240,0.32), 0 0 0 8px #fff;
-          }
-          .angebot-timeline-step[data-step="1"] .angebot-timeline-dot-num { color: #fff; }
-          .angebot-timeline-step[data-step="2"] .angebot-timeline-dot-num { color: #4F3FF0; }
-          .angebot-timeline-badge {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            padding: 5px 12px;
-            border-radius: 999px;
-            margin-bottom: 14px;
-            border: 1px solid transparent;
-          }
-          .angebot-timeline-badge.tone-primary { background: #EEF0FF; color: #4F3FF0; border-color: #E0E4FF; }
-          .angebot-timeline-badge.tone-neutral { background: #EFF6FF; color: #5B8DEF; border-color: #DBEAFE; }
-          .angebot-timeline-badge.tone-success { background: #F1F5F9; color: #64748B; border-color: #E2E8F0; }
-          .angebot-timeline-step[data-step="4"] .angebot-timeline-badge { background: #ECFDF5; color: #059669; border-color: #D1FAE5; }
-          .angebot-timeline-card {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            padding: 0 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: none;
-          }
-          .angebot-timeline-card h3 {
-            font-size: 20px; font-weight: 800; color: ${TEXT_DARK};
-            margin: 0 0 12px; letter-spacing: -0.015em;
-          }
-          .angebot-timeline-card p {
-            font-size: 14px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.6;
-          }
-          @media (max-width: 720px) {
-            .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
-            .angebot-timeline-inner { padding: 0 !important; max-width: 430px !important; }
-            .angebot-timeline-title { font-size: 32px !important; line-height: 1.08 !important; margin: 0 auto 30px !important; max-width: 300px !important; }
-            .angebot-timeline {
-              grid-template-columns: 1fr !important;
-              gap: 24px !important;
-              text-align: left !important;
-              position: relative !important;
-              padding: 0 !important;
-            }
-            .angebot-timeline::after { display: none !important; }
-            /* Vertical timeline line behind dots */
-            .angebot-timeline::before {
-              content: "";
-              position: absolute;
-              left: 23px !important;
-              right: auto !important;
-              top: 28px;
-              bottom: 28px;
-              height: auto !important;
-              width: 2px;
-              background: #E2E8F0;
-              z-index: 0;
-            }
-            .angebot-timeline-track, .angebot-timeline-track-fill { display: none !important; }
-            .angebot-timeline-step {
-              display: grid !important;
-              grid-template-columns: 46px minmax(0, 1fr) !important;
-              gap: 16px !important;
-              align-items: flex-start !important;
-              text-align: left !important;
-              padding: 0 !important;
-              border: none !important;
-              border-radius: 0 !important;
-              background: transparent !important;
-              box-shadow: none !important;
-              position: relative !important;
-            }
-            .angebot-timeline-dot {
-              width: 32px !important; height: 32px !important;
-              border-radius: 999px !important;
-              margin: 18px 0 0 8px !important;
-              background: #fff !important;
-              border: 2px solid #4F3FF0 !important;
-              box-shadow: 0 0 0 4px #fff !important;
-              position: relative !important;
-              z-index: 1 !important;
-            }
-            .angebot-timeline-step[data-step="1"] .angebot-timeline-dot {
-              background: #4F3FF0 !important;
-              border-color: #4F3FF0 !important;
-              box-shadow: 0 8px 20px rgba(79,63,240,0.30), 0 0 0 4px #fff !important;
-            }
-            .angebot-timeline-step[data-step="1"] .angebot-timeline-dot-num { color: #fff !important; }
-            .angebot-timeline-dot-num { font-size: 14px !important; font-weight: 700 !important; color: #4F3FF0 !important; }
-            .angebot-timeline-card {
-              padding: 18px 18px 20px !important;
-              border: 1px solid #F1F5F9 !important;
-              background: #fff !important;
-              border-radius: 24px !important;
-              box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 12px 28px -20px rgba(15,23,42,0.18) !important;
-            }
-            .angebot-timeline-card:hover { transform: none !important; }
-            .angebot-timeline-card h3 { margin: 8px 0 6px !important; font-size: 16px !important; line-height: 1.25 !important; font-weight: 700 !important; }
-            .angebot-timeline-card p { font-size: 13.5px !important; line-height: 1.5 !important; color: #64748B !important; }
-            .angebot-timeline-badge {
-              display: inline-block !important;
-              font-size: 10px !important;
-              font-weight: 700 !important;
-              text-transform: uppercase !important;
-              letter-spacing: 0.08em !important;
-              padding: 4px 10px !important;
-              border-radius: 999px !important;
-            }
-            .angebot-timeline-badge.tone-primary { background: #EFF6FF !important; color: #5B8DEF !important; }
-            .angebot-timeline-badge.tone-neutral { background: #F1F5F9 !important; color: #64748B !important; }
-            .angebot-timeline-badge.tone-success { background: #ECFDF5 !important; color: #059669 !important; }
-          }
-        `}</style>
+ .angebot-timeline {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 32px;
+ position: relative;
+ padding: 0 6%;
+ }
+ /* Horizontal progress rail behind the dots */
+ .angebot-timeline::before {
+ content: "";
+ position: absolute;
+ top: 40px;
+ left: calc(6% + 40px);
+ right: calc(6% + 40px);
+ height: 4px;
+ background: #E2E8F0;
+ border-radius: 999px;
+ z-index: 0;
+ }
+ .angebot-timeline::after {
+ content: "";
+ position: absolute;
+ top: 40px;
+ left: calc(6% + 40px);
+ width: calc((100% - 12% - 80px) * 0.34);
+ height: 4px;
+ background: linear-gradient(90deg,#4F3FF0 0%,#5B8DEF 100%);
+ border-radius: 999px;
+ z-index: 0;
+ }
+ .angebot-timeline-badge { display: none; }
+ .angebot-timeline-step {
+ position: relative;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ text-align: center;
+ z-index: 1;
+ }
+ .angebot-timeline-dot {
+ width: 80px; height: 80px; border-radius: 999px;
+ background: #fff;
+ color: #CBD5E1;
+ border: 2px solid #F1F5F9;
+ display: flex; align-items: center; justify-content: center;
+ margin: 0 auto 28px;
+ box-shadow: 0 4px 12px rgba(15,23,42,0.05), 0 0 0 8px #fff;
+ position: relative;
+ z-index: 2;
+ transition: transform .3s cubic-bezier(.4,0,.2,1);
+ }
+ .angebot-timeline-step:hover .angebot-timeline-dot { transform: scale(1.06); }
+ .angebot-timeline-dot-num { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+ .angebot-timeline-step[data-step="1"] .angebot-timeline-dot {
+ background: #4F3FF0;
+ border-color: #4F3FF0;
+ box-shadow: 0 14px 30px rgba(79,63,240,0.32), 0 0 0 8px #fff;
+ }
+ .angebot-timeline-step[data-step="1"] .angebot-timeline-dot-num { color: #fff; }
+ .angebot-timeline-step[data-step="2"] .angebot-timeline-dot-num { color: #4F3FF0; }
+ .angebot-timeline-badge {
+ display: inline-block;
+ font-size: 10px;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.14em;
+ padding: 5px 12px;
+ border-radius: 999px;
+ margin-bottom: 14px;
+ border: 1px solid transparent;
+ }
+ .angebot-timeline-badge.tone-primary { background: #EEF0FF; color: #4F3FF0; border-color: #E0E4FF; }
+ .angebot-timeline-badge.tone-neutral { background: #EFF6FF; color: #5B8DEF; border-color: #DBEAFE; }
+ .angebot-timeline-badge.tone-success { background: #F1F5F9; color: #64748B; border-color: #E2E8F0; }
+ .angebot-timeline-step[data-step="4"] .angebot-timeline-badge { background: #ECFDF5; color: #059669; border-color: #D1FAE5; }
+ .angebot-timeline-card {
+ width: 100%;
+ background: transparent;
+ border: none;
+ border-radius: 0;
+ padding: 0 8px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ text-align: center;
+ box-shadow: none;
+ }
+ .angebot-timeline-card h3 {
+ font-size: 20px; font-weight: 800; color: ${TEXT_DARK};
+ margin: 0 0 12px; letter-spacing: -0.015em;
+ }
+ .angebot-timeline-card p {
+ font-size: 14px; color: ${TEXT_MUTED}; margin: 0; line-height: 1.6;
+ }
+ @media (max-width: 720px) {
+ .angebot-timeline-section { padding: 52px 16px 64px !important; overflow: hidden; }
+ .angebot-timeline-inner { padding: 0 !important; max-width: 430px !important; }
+ .angebot-timeline-title { font-size: 32px !important; line-height: 1.08 !important; margin: 0 auto 30px !important; max-width: 300px !important; }
+ .angebot-timeline {
+ grid-template-columns: 1fr !important;
+ gap: 24px !important;
+ text-align: left !important;
+ position: relative !important;
+ padding: 0 !important;
+ }
+ .angebot-timeline::after { display: none !important; }
+ /* Vertical timeline line behind dots */
+ .angebot-timeline::before {
+ content: "";
+ position: absolute;
+ left: 23px !important;
+ right: auto !important;
+ top: 28px;
+ bottom: 28px;
+ height: auto !important;
+ width: 2px;
+ background: #E2E8F0;
+ z-index: 0;
+ }
+ .angebot-timeline-track, .angebot-timeline-track-fill { display: none !important; }
+ .angebot-timeline-step {
+ display: grid !important;
+ grid-template-columns: 46px minmax(0, 1fr) !important;
+ gap: 16px !important;
+ align-items: flex-start !important;
+ text-align: left !important;
+ padding: 0 !important;
+ border: none !important;
+ border-radius: 0 !important;
+ background: transparent !important;
+ box-shadow: none !important;
+ position: relative !important;
+ }
+ .angebot-timeline-dot {
+ width: 32px !important; height: 32px !important;
+ border-radius: 999px !important;
+ margin: 18px 0 0 8px !important;
+ background: #fff !important;
+ border: 2px solid #4F3FF0 !important;
+ box-shadow: 0 0 0 4px #fff !important;
+ position: relative !important;
+ z-index: 1 !important;
+ }
+ .angebot-timeline-step[data-step="1"] .angebot-timeline-dot {
+ background: #4F3FF0 !important;
+ border-color: #4F3FF0 !important;
+ box-shadow: 0 8px 20px rgba(79,63,240,0.30), 0 0 0 4px #fff !important;
+ }
+ .angebot-timeline-step[data-step="1"] .angebot-timeline-dot-num { color: #fff !important; }
+ .angebot-timeline-dot-num { font-size: 14px !important; font-weight: 700 !important; color: #4F3FF0 !important; }
+ .angebot-timeline-card {
+ padding: 18px 18px 20px !important;
+ border: 1px solid #F1F5F9 !important;
+ background: #fff !important;
+ border-radius: 24px !important;
+ box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 12px 28px -20px rgba(15,23,42,0.18) !important;
+ }
+ .angebot-timeline-card:hover { transform: none !important; }
+ .angebot-timeline-card h3 { margin: 8px 0 6px !important; font-size: 16px !important; line-height: 1.25 !important; font-weight: 700 !important; }
+ .angebot-timeline-card p { font-size: 13.5px !important; line-height: 1.5 !important; color: #64748B !important; }
+ .angebot-timeline-badge {
+ display: inline-block !important;
+ font-size: 10px !important;
+ font-weight: 700 !important;
+ text-transform: uppercase !important;
+ letter-spacing: 0.08em !important;
+ padding: 4px 10px !important;
+ border-radius: 999px !important;
+ }
+ .angebot-timeline-badge.tone-primary { background: #EFF6FF !important; color: #5B8DEF !important; }
+ .angebot-timeline-badge.tone-neutral { background: #F1F5F9 !important; color: #64748B !important; }
+ .angebot-timeline-badge.tone-success { background: #ECFDF5 !important; color: #059669 !important; }
+ }
+ `}</style>
       </div>
     </section>
   );
@@ -1745,7 +1745,7 @@ function TrustSection() {
         <div className="ang-trust-mobile">
           <div className="ang-trust-list">
             {stats.map((s, i) => (
-              <div key={i}>
+ <div key={i}>
                 <div className="ang-trust-row-item">
                   <div className="ang-trust-icon" aria-hidden="true">{s.icon}</div>
                   <div className="ang-trust-value">{s.v}</div>
@@ -1760,7 +1760,7 @@ function TrustSection() {
         {/* Desktop: classic 4-column row */}
         <div className="ang-trust-row">
           {stats.map((s, i) => (
-            <div key={i} className="ang-trust-item">
+ <div key={i} className="ang-trust-item">
               <div className="ang-trust-item-icon" aria-hidden="true">{s.icon}</div>
               <div className="ang-trust-item-value">{s.v}</div>
               <div className="ang-trust-item-label">{s.l}</div>
@@ -1800,24 +1800,24 @@ function FinalCtaSection({
         boxShadow: `0 30px 80px ${BRAND}40`,
       }}>
         <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 800, color: "#fff", marginBottom: 12, letterSpacing: "-0.02em" }}>
-          Bereit, loszulegen?
-        </h2>
+ Bereit, loszulegen?
+ </h2>
         <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", marginBottom: 8, lineHeight: 1.6 }}>
-          {leadName ? `${leadName}, dein Projekt wartet auf den Startschuss.` : "dein Projekt wartet auf den Startschuss."}
+          {leadName ? `${leadName}, dein Projekt wartet auf den Startschuss.` : "Dein Projekt wartet auf den Startschuss."}
         </p>
         <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", marginBottom: 32, lineHeight: 1.6 }}>
-          Ein Klick — und wir kümmern uns um den Rest.
-        </p>
+ Ein Klick — und wir kümmern uns um den Rest.
+ </p>
         {ctaLink ? (
           <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={buttonBaseStyle}>
             {ctaLabel}
           </a>
-        ) : isRechnung && ctaMode !== "anfrage" ? (
-          <button type="button" onClick={openBooking} style={buttonBaseStyle}>
+ ) : isRechnung && ctaMode !== "anfrage" ? (
+ <button type="button" onClick={openBooking} style={buttonBaseStyle}>
             {ctaLabel}
           </button>
-        ) : (
-          <a
+ ) : (
+ <a
             href={`mailto:hallo@meine-traum-webseite.de?subject=${encodeURIComponent("Angebot-Auswahl für " + leadName)}&body=${encodeURIComponent("Ich möchte folgende Optionen dazubuchen: " + selectedOptions.map((o) => o.titel).join(", "))}`}
             style={buttonBaseStyle}
           >
@@ -1902,29 +1902,29 @@ function StickyBar({
         <a href={ctaLink} target="_blank" rel="noopener noreferrer" style={btnStyle}>
           {btnLabel} <ChevronRight size={16} aria-hidden={true} focusable={false} />
         </a>
-      ) : isRechnung && ctaMode !== "anfrage" ? (
-        <button type="button" onClick={openBooking} style={btnStyle}>
+ ) : isRechnung && ctaMode !== "anfrage" ? (
+ <button type="button" onClick={openBooking} style={btnStyle}>
           {btnLabel} <ChevronRight size={16} aria-hidden={true} focusable={false} />
         </button>
-      ) : (
-        <a href="mailto:hallo@meine-traum-webseite.de" style={btnStyle}>
-          Auf Anfrage <ChevronRight size={16} aria-hidden={true} focusable={false} />
+ ) : (
+ <a href="mailto:hallo@meine-traum-webseite.de" style={btnStyle}>
+ Auf Anfrage <ChevronRight size={16} aria-hidden={true} focusable={false} />
         </a>
       )}
       <style>{`
-        @keyframes angebot-slide-up {
-          from { transform: translateY(100%); }
-          to { transform: translateY(0); }
-        }
-        @media (max-width: 640px) {
-          .angebot-sticky-bar { padding: 10px 14px max(12px, env(safe-area-inset-bottom)) !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
-          .angebot-sticky-bar > div:first-child { text-align: center; }
-          .angebot-sticky-bar > div:first-child > div:first-child { font-size: 10px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-          .angebot-sticky-bar > div:first-child > div:nth-child(2) { font-size: 20px !important; }
-          .angebot-sticky-bar > div:first-child > div:nth-child(3) { justify-content: center; margin-top: 3px !important; }
-          .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; min-height: 42px; padding: 11px 16px !important; font-size: 14px !important; white-space: normal !important; line-height: 1.2 !important; }
-        }
-      `}</style>
+ @keyframes angebot-slide-up {
+ from { transform: translateY(100%); }
+ to { transform: translateY(0); }
+ }
+ @media (max-width: 640px) {
+ .angebot-sticky-bar { padding: 10px 14px max(12px, env(safe-area-inset-bottom)) !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
+ .angebot-sticky-bar > div:first-child { text-align: center; }
+ .angebot-sticky-bar > div:first-child > div:first-child { font-size: 10px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+ .angebot-sticky-bar > div:first-child > div:nth-child(2) { font-size: 20px !important; }
+ .angebot-sticky-bar > div:first-child > div:nth-child(3) { justify-content: center; margin-top: 3px !important; }
+ .angebot-sticky-bar > a, .angebot-sticky-bar > button { width: 100%; min-height: 42px; padding: 11px 16px !important; font-size: 14px !important; white-space: normal !important; line-height: 1.2 !important; }
+ }
+ `}</style>
     </div>
   );
 }
@@ -1951,11 +1951,11 @@ function ExpiredOverlay() {
           <Clock size={24} color={TEXT_MUTED} aria-hidden={true} focusable={false} />
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 12 }}>
-          Dieses Angebot ist abgelaufen.
-        </h2>
+ Dieses Angebot ist abgelaufen.
+ </h2>
         <p style={{ color: TEXT_MUTED, marginBottom: 24, fontSize: 15 }}>
-          Sprechen du uns gerne an — wir erstellen ein aktuelles Angebot.
-        </p>
+ Sprechen du uns gerne an — wir erstellen ein aktuelles Angebot.
+ </p>
         <a
           href="https://meine-traum-webseite.de/kontakt"
           style={{
@@ -1966,8 +1966,8 @@ function ExpiredOverlay() {
             textDecoration: "none", fontFamily: "'Plus Jakarta Sans', sans-serif",
           }}
         >
-          Jetzt Kontakt aufnehmen
-        </a>
+ Jetzt Kontakt aufnehmen
+ </a>
       </div>
     </div>
   );
@@ -2045,13 +2045,13 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
           </button>
         </div>
         <p style={{ color: TEXT_MUTED, fontSize: 14, marginBottom: 20 }}>
-          Bezahlung per Rechnung · 14 Tage Zahlungsziel nach Lieferung
-        </p>
+ Bezahlung per Rechnung · 14 Tage Zahlungsziel nach Lieferung
+ </p>
 
         {/* Positionen */}
         <div style={{ background: BG_SOFT, borderRadius: 12, padding: "14px 16px", marginBottom: 20 }}>
           {positions.map((p, i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: TEXT_DARK, padding: "4px 0" }}>
+ <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: TEXT_DARK, padding: "4px 0" }}>
               <span>{p.titel}</span>
               <strong>{p.preis.toLocaleString("de-DE")} €</strong>
             </div>
@@ -2104,8 +2104,8 @@ function BookingModal({ data, positions, onClose, onSuccess }: {
           {submitting ? <><Loader2 size={16} className="animate-spin" aria-hidden={true} focusable={false} /> Wird verarbeitet…</> : <>Zahlungspflichtig bestellen →</>}
         </button>
         <p style={{ marginTop: 12, fontSize: 11, color: TEXT_MUTED, textAlign: "center" }}>
-          Mit Klick erteilen du einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
-        </p>
+ Mit Klick erteilen du einen verbindlichen Auftrag. Zeitstempel und IP-Adresse werden zu Beweiszwecken gespeichert.
+ </p>
       </form>
     </div>
   );
@@ -2165,16 +2165,16 @@ function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; on
           <CheckCheck size={24} aria-hidden={true} focusable={false} />
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 800, color: TEXT_DARK, marginBottom: 10 }}>
-          Vielen Dank für deinen Auftrag!
-        </h2>
+ Vielen Dank für deinen Auftrag!
+ </h2>
         <p style={{ color: TEXT_MUTED, fontSize: 15, marginBottom: 16 }}>
-          deine Bestellung wurde verbindlich erfasst. Du erhältst in Kürze eine Bestätigung per E-Mail.
-        </p>
+ Deine Bestellung wurde verbindlich erfasst. Du erhältst in Kürze eine Bestätigung per E-Mail.
+ </p>
         <div style={{
           display: "inline-block", background: BG_SOFT, color: TEXT_DARK,
           padding: "10px 18px", borderRadius: 12, fontWeight: 700, fontSize: 15, marginBottom: 24,
         }}>
-          Auftrags-Nr.: <span style={{ color: BRAND }}>{auftragsNr}</span>
+ Auftrags-Nr.: <span style={{ color: BRAND }}>{auftragsNr}</span>
         </div>
         <div>
           <button
@@ -2186,8 +2186,8 @@ function BookingSuccessOverlay({ auftragsNr, onClose }: { auftragsNr: string; on
               fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "inherit",
             }}
           >
-            Schließen
-          </button>
+ Schließen
+ </button>
         </div>
       </div>
     </div>
@@ -2211,348 +2211,348 @@ function SectionDivider() {
 function AngebotGlobalStyles() {
   return (
     <style>{`
-      :root {
-        --angebot-sticky-space: 96px;
-      }
-      @media (max-width: 640px) {
-        :root {
-          --angebot-sticky-space: 172px;
-        }
-      }
+ :root {
+ --angebot-sticky-space: 96px;
+ }
+ @media (max-width: 640px) {
+ :root {
+ --angebot-sticky-space: 172px;
+ }
+ }
 
-      @keyframes ang-blob-float {
-        0%, 100% { transform: translate(0,0) scale(1); }
-        33% { transform: translate(15px,-20px) scale(1.05); }
-        66% { transform: translate(-10px,10px) scale(0.97); }
-      }
-      @keyframes ang-pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(0.8); }
-      }
-      @keyframes ang-reveal-in {
-        from { opacity: 0; transform: translateY(24px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+ @keyframes ang-blob-float {
+ 0%, 100% { transform: translate(0,0) scale(1); }
+ 33% { transform: translate(15px,-20px) scale(1.05); }
+ 66% { transform: translate(-10px,10px) scale(0.97); }
+ }
+ @keyframes ang-pulse {
+ 0%, 100% { opacity: 1; transform: scale(1); }
+ 50% { opacity: 0.5; transform: scale(0.8); }
+ }
+ @keyframes ang-reveal-in {
+ from { opacity: 0; transform: translateY(24px); }
+ to { opacity: 1; transform: translateY(0); }
+ }
 
-      .ang-blob {
-        position: absolute; border-radius: 50%;
-        pointer-events: none; z-index: 0;
-        animation: ang-blob-float 8s ease-in-out infinite;
-      }
+ .ang-blob {
+ position: absolute; border-radius: 50%;
+ pointer-events: none; z-index: 0;
+ animation: ang-blob-float 8s ease-in-out infinite;
+ }
 
-      /* Hero deco — geometrische Kreise (wie Hauptseite) */
-      .ang-hero-deco {
-        position: absolute; inset: 0;
-        overflow: hidden; pointer-events: none; z-index: 1;
-      }
-      .ang-deco-circle-lg {
-        position: absolute; top: -60px; right: -60px;
-        width: 320px; height: 320px; border-radius: 50%;
-        border: 2px solid rgba(79,63,240,0.12);
-      }
-      .ang-deco-circle-md {
-        position: absolute; top: 35%; right: 8%;
-        width: 180px; height: 180px; border-radius: 50%;
-        border: 1.5px solid rgba(79,63,240,0.08);
-      }
-      .ang-deco-dot {
-        position: absolute; border-radius: 50%;
-      }
-      .ang-deco-dot-1 {
-        top: 15%; right: 20%;
-        width: 10px; height: 10px;
-        background: rgba(79,63,240,0.25);
-      }
-      .ang-deco-dot-2 {
-        bottom: 20%; right: 35%;
-        width: 6px; height: 6px;
-        background: rgba(123,94,248,0.2);
-      }
-      .ang-deco-circle-bl {
-        position: absolute; bottom: -140px; left: -80px;
-        width: 280px; height: 280px; border-radius: 50%;
-        border: 2px solid rgba(79,63,240,0.08);
-      }
-      @media (max-width: 720px) {
-        .ang-deco-circle-lg { width: 220px; height: 220px; top: -40px; right: -80px; }
-        .ang-deco-circle-md { display: none; }
-        .ang-deco-circle-bl { width: 200px; height: 200px; bottom: -120px; left: -100px; }
-      }
+ /* Hero deco — geometrische Kreise (wie Hauptseite) */
+ .ang-hero-deco {
+ position: absolute; inset: 0;
+ overflow: hidden; pointer-events: none; z-index: 1;
+ }
+ .ang-deco-circle-lg {
+ position: absolute; top: -60px; right: -60px;
+ width: 320px; height: 320px; border-radius: 50%;
+ border: 2px solid rgba(79,63,240,0.12);
+ }
+ .ang-deco-circle-md {
+ position: absolute; top: 35%; right: 8%;
+ width: 180px; height: 180px; border-radius: 50%;
+ border: 1.5px solid rgba(79,63,240,0.08);
+ }
+ .ang-deco-dot {
+ position: absolute; border-radius: 50%;
+ }
+ .ang-deco-dot-1 {
+ top: 15%; right: 20%;
+ width: 10px; height: 10px;
+ background: rgba(79,63,240,0.25);
+ }
+ .ang-deco-dot-2 {
+ bottom: 20%; right: 35%;
+ width: 6px; height: 6px;
+ background: rgba(123,94,248,0.2);
+ }
+ .ang-deco-circle-bl {
+ position: absolute; bottom: -140px; left: -80px;
+ width: 280px; height: 280px; border-radius: 50%;
+ border: 2px solid rgba(79,63,240,0.08);
+ }
+ @media (max-width: 720px) {
+ .ang-deco-circle-lg { width: 220px; height: 220px; top: -40px; right: -80px; }
+ .ang-deco-circle-md { display: none; }
+ .ang-deco-circle-bl { width: 200px; height: 200px; bottom: -120px; left: -100px; }
+ }
 
-      /* Reveal */
-      .ang-reveal {
-        opacity: 0;
-        animation: ang-reveal-in 0.55s ease-out forwards;
-      }
-      .ang-d-3 { animation-delay: 300ms; }
-      .ang-d-4 { animation-delay: 400ms; }
-      .ang-d-5 { animation-delay: 500ms; }
-      .ang-d-6 { animation-delay: 600ms; }
-      .ang-d-7 { animation-delay: 700ms; }
-      .ang-stagger-leist > .ang-reveal { /* delays set inline */ }
+ /* Reveal */
+ .ang-reveal {
+ opacity: 0;
+ animation: ang-reveal-in 0.55s ease-out forwards;
+ }
+ .ang-d-3 { animation-delay: 300ms; }
+ .ang-d-4 { animation-delay: 400ms; }
+ .ang-d-5 { animation-delay: 500ms; }
+ .ang-d-6 { animation-delay: 600ms; }
+ .ang-d-7 { animation-delay: 700ms; }
+ .ang-stagger-leist > .ang-reveal { /* delays set inline */ }
 
-      /* Countdown — inline (kein Kasten) */
-      /* Countdown — Glassmorphism Gradient */
-      .ang-count-wrap { display: flex; flex-direction: column; align-items: flex-start; }
-      .ang-count-pill {
-        display: inline-flex; align-items: center; gap: 8px;
-        padding: 7px 14px;
-        background: rgba(255,255,255,0.85);
-        border: 1px solid rgba(15,23,42,0.08);
-        border-radius: 999px;
-        box-shadow: 0 1px 2px rgba(15,23,42,0.04);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        font-size: 13px; font-weight: 600; color: #475569;
-        letter-spacing: 0.01em;
-        margin-bottom: 22px;
-      }
-      .ang-count-pill strong { color: #4F3FF0; font-weight: 700; }
-      .ang-count-row {
-        position: relative;
-        display: flex; align-items: flex-start; justify-content: flex-start;
-        gap: 16px; flex-wrap: nowrap;
-      }
-      .ang-count-glow {
-        position: absolute; inset: -10px -20px;
-        background: linear-gradient(90deg, rgba(79,63,240,0.12), rgba(91,141,239,0.12));
-        filter: blur(48px);
-        border-radius: 999px;
-        opacity: 0.55;
-        pointer-events: none; z-index: 0;
-      }
-      .ang-count-block {
-        position: relative; z-index: 1;
-        display: flex; flex-direction: column; align-items: center;
-      }
-      .ang-count-card {
-        position: relative;
-        width: 84px; height: 96px;
-        display: flex; align-items: center; justify-content: center;
-        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-        border: 1px solid #FFFFFF;
-        border-radius: 20px;
-        box-shadow:
-          0 1px 2px rgba(15,23,42,0.04),
-          0 12px 32px -8px rgba(79,63,240,0.18),
-          inset 0 1px 0 rgba(255,255,255,0.9);
-        overflow: hidden;
-      }
-      .ang-count-num {
-        font-family: 'Poppins', sans-serif;
-        font-size: 44px; font-weight: 700; line-height: 1;
-        font-variant-numeric: tabular-nums;
-        background: linear-gradient(135deg, #4F3FF0 0%, #5B8DEF 100%);
-        -webkit-background-clip: text; background-clip: text;
-        -webkit-text-fill-color: transparent; color: transparent;
-      }
-      .ang-count-lab {
-        margin-top: 12px;
-        font-size: 11px; font-weight: 700; color: #94A3B8;
-        text-transform: uppercase; letter-spacing: 0.22em;
-      }
-      .ang-count-lab.is-live { color: #4F3FF0; }
-      .ang-count-sep {
-        position: relative; z-index: 1;
-        display: inline-flex; flex-direction: column; gap: 6px;
-        align-self: center;
-        padding-bottom: 28px;
-      }
-      .ang-count-sep i {
-        width: 5px; height: 5px; border-radius: 999px;
-        background: #CBD5E1; display: block;
-      }
-      @media (max-width: 560px) {
-        .ang-count-row { gap: 10px; }
-        .ang-count-card { width: 64px; height: 78px; border-radius: 16px; }
-        .ang-count-num { font-size: 32px; }
-        .ang-count-lab { font-size: 10px; letter-spacing: 0.18em; margin-top: 10px; }
-        .ang-count-sep { padding-bottom: 24px; }
-        .ang-count-sep i { width: 4px; height: 4px; }
-        .ang-count-pill { font-size: 12px; padding: 6px 12px; }
-      }
+ /* Countdown — inline (kein Kasten) */
+ /* Countdown — Glassmorphism Gradient */
+ .ang-count-wrap { display: flex; flex-direction: column; align-items: flex-start; }
+ .ang-count-pill {
+ display: inline-flex; align-items: center; gap: 8px;
+ padding: 7px 14px;
+ background: rgba(255,255,255,0.85);
+ border: 1px solid rgba(15,23,42,0.08);
+ border-radius: 999px;
+ box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+ backdrop-filter: blur(8px);
+ -webkit-backdrop-filter: blur(8px);
+ font-size: 13px; font-weight: 600; color: #475569;
+ letter-spacing: 0.01em;
+ margin-bottom: 22px;
+ }
+ .ang-count-pill strong { color: #4F3FF0; font-weight: 700; }
+ .ang-count-row {
+ position: relative;
+ display: flex; align-items: flex-start; justify-content: flex-start;
+ gap: 16px; flex-wrap: nowrap;
+ }
+ .ang-count-glow {
+ position: absolute; inset: -10px -20px;
+ background: linear-gradient(90deg, rgba(79,63,240,0.12), rgba(91,141,239,0.12));
+ filter: blur(48px);
+ border-radius: 999px;
+ opacity: 0.55;
+ pointer-events: none; z-index: 0;
+ }
+ .ang-count-block {
+ position: relative; z-index: 1;
+ display: flex; flex-direction: column; align-items: center;
+ }
+ .ang-count-card {
+ position: relative;
+ width: 84px; height: 96px;
+ display: flex; align-items: center; justify-content: center;
+ background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+ border: 1px solid #FFFFFF;
+ border-radius: 20px;
+ box-shadow:
+ 0 1px 2px rgba(15,23,42,0.04),
+ 0 12px 32px -8px rgba(79,63,240,0.18),
+ inset 0 1px 0 rgba(255,255,255,0.9);
+ overflow: hidden;
+ }
+ .ang-count-num {
+ font-family: 'Poppins', sans-serif;
+ font-size: 44px; font-weight: 700; line-height: 1;
+ font-variant-numeric: tabular-nums;
+ background: linear-gradient(135deg, #4F3FF0 0%, #5B8DEF 100%);
+ -webkit-background-clip: text; background-clip: text;
+ -webkit-text-fill-color: transparent; color: transparent;
+ }
+ .ang-count-lab {
+ margin-top: 12px;
+ font-size: 11px; font-weight: 700; color: #94A3B8;
+ text-transform: uppercase; letter-spacing: 0.22em;
+ }
+ .ang-count-lab.is-live { color: #4F3FF0; }
+ .ang-count-sep {
+ position: relative; z-index: 1;
+ display: inline-flex; flex-direction: column; gap: 6px;
+ align-self: center;
+ padding-bottom: 28px;
+ }
+ .ang-count-sep i {
+ width: 5px; height: 5px; border-radius: 999px;
+ background: #CBD5E1; display: block;
+ }
+ @media (max-width: 560px) {
+ .ang-count-row { gap: 10px; }
+ .ang-count-card { width: 64px; height: 78px; border-radius: 16px; }
+ .ang-count-num { font-size: 32px; }
+ .ang-count-lab { font-size: 10px; letter-spacing: 0.18em; margin-top: 10px; }
+ .ang-count-sep { padding-bottom: 24px; }
+ .ang-count-sep i { width: 4px; height: 4px; }
+ .ang-count-pill { font-size: 12px; padding: 6px 12px; }
+ }
 
-      /* Trust stats row — Icon-Liste mit Hairlines */
-      .ang-trust-row {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 1120px;
-        margin: 0 auto;
-        gap: 24px;
-        background: transparent;
-      }
-      .ang-trust-item {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 16px;
-        padding: 32px 24px;
-        background: #FFFFFF;
-        border: 1px solid #F1F5F9;
-        border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-        transition: transform .3s ease, box-shadow .3s ease;
-      }
-      .ang-trust-item:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 40px rgba(79,63,240,0.08);
-      }
-      .ang-trust-item:hover .ang-trust-item-icon {
-        background: rgba(79,63,240,0.1);
-      }
-      .ang-trust-item-icon {
-        flex-shrink: 0;
-        width: 48px; height: 48px;
-        border-radius: 14px;
-        background: rgba(79,63,240,0.05);
-        color: #4F3FF0;
-        display: flex; align-items: center; justify-content: center;
-        transition: background .3s ease;
-      }
-      .ang-trust-item-icon svg { width: 24px; height: 24px; }
-      .ang-trust-item-value {
-        font-size: clamp(30px, 2.6vw, 38px);
-        font-weight: 800;
-        color: #4F3FF0;
-        line-height: 1;
-        letter-spacing: -0.03em;
-        margin-bottom: 4px;
-      }
-      .ang-trust-item-label {
-        font-size: 11px;
-        color: #94A3B8;
-        font-weight: 700;
-        line-height: 1.4;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-      }
-      .ang-trust-mobile { display: none; }
-      @media (max-width: 720px) {
-        .ang-trust-row { display: none; }
-        .ang-trust-mobile { display: block; }
-      }
+ /* Trust stats row — Icon-Liste mit Hairlines */
+ .ang-trust-row {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ max-width: 1120px;
+ margin: 0 auto;
+ gap: 24px;
+ background: transparent;
+ }
+ .ang-trust-item {
+ position: relative;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ text-align: center;
+ gap: 16px;
+ padding: 32px 24px;
+ background: #FFFFFF;
+ border: 1px solid #F1F5F9;
+ border-radius: 20px;
+ box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+ transition: transform .3s ease, box-shadow .3s ease;
+ }
+ .ang-trust-item:hover {
+ transform: translateY(-4px);
+ box-shadow: 0 20px 40px rgba(79,63,240,0.08);
+ }
+ .ang-trust-item:hover .ang-trust-item-icon {
+ background: rgba(79,63,240,0.1);
+ }
+ .ang-trust-item-icon {
+ flex-shrink: 0;
+ width: 48px; height: 48px;
+ border-radius: 14px;
+ background: rgba(79,63,240,0.05);
+ color: #4F3FF0;
+ display: flex; align-items: center; justify-content: center;
+ transition: background .3s ease;
+ }
+ .ang-trust-item-icon svg { width: 24px; height: 24px; }
+ .ang-trust-item-value {
+ font-size: clamp(30px, 2.6vw, 38px);
+ font-weight: 800;
+ color: #4F3FF0;
+ line-height: 1;
+ letter-spacing: -0.03em;
+ margin-bottom: 4px;
+ }
+ .ang-trust-item-label {
+ font-size: 11px;
+ color: #94A3B8;
+ font-weight: 700;
+ line-height: 1.4;
+ text-transform: uppercase;
+ letter-spacing: 0.12em;
+ }
+ .ang-trust-mobile { display: none; }
+ @media (max-width: 720px) {
+ .ang-trust-row { display: none; }
+ .ang-trust-mobile { display: block; }
+ }
 
-      /* Trust stats — Mobile icon list with hairlines */
-      .ang-trust-list {
-        background: #FFFFFF;
-        border: 1px solid rgba(79,63,240,0.08);
-        border-radius: 32px;
-        padding: 8px 0;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 12px 32px -16px rgba(79,63,240,0.16);
-      }
-      .ang-trust-row-item {
-        display: grid;
-        grid-template-columns: 44px 1fr auto;
-        align-items: center;
-        gap: 14px;
-        padding: 16px 20px;
-        min-width: 0;
-      }
-      .ang-trust-icon {
-        width: 44px; height: 44px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, rgba(237,233,255,0.9), rgba(245,244,255,0.9));
-        color: #4F3FF0;
-        display: flex; align-items: center; justify-content: center;
-        flex-shrink: 0;
-      }
-      .ang-trust-label {
-        font-size: 13.5px;
-        color: #6B7280;
-        font-weight: 500;
-        line-height: 1.3;
-        min-width: 0;
-        word-break: normal;
-        overflow-wrap: break-word;
-      }
-      .ang-trust-value {
-        font-size: 24px;
-        font-weight: 800;
-        line-height: 1;
-        background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        letter-spacing: -0.02em;
-        white-space: nowrap;
-        padding-left: 8px;
-        order: 3;
-      }
-      .ang-trust-row-item .ang-trust-label { order: 2; }
-      .ang-trust-hairline {
-        height: 1px;
-        background: rgba(79,63,240,0.08);
-        margin: 0 20px;
-      }
+ /* Trust stats — Mobile icon list with hairlines */
+ .ang-trust-list {
+ background: #FFFFFF;
+ border: 1px solid rgba(79,63,240,0.08);
+ border-radius: 32px;
+ padding: 8px 0;
+ box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 12px 32px -16px rgba(79,63,240,0.16);
+ }
+ .ang-trust-row-item {
+ display: grid;
+ grid-template-columns: 44px 1fr auto;
+ align-items: center;
+ gap: 14px;
+ padding: 16px 20px;
+ min-width: 0;
+ }
+ .ang-trust-icon {
+ width: 44px; height: 44px;
+ border-radius: 14px;
+ background: linear-gradient(135deg, rgba(237,233,255,0.9), rgba(245,244,255,0.9));
+ color: #4F3FF0;
+ display: flex; align-items: center; justify-content: center;
+ flex-shrink: 0;
+ }
+ .ang-trust-label {
+ font-size: 13.5px;
+ color: #6B7280;
+ font-weight: 500;
+ line-height: 1.3;
+ min-width: 0;
+ word-break: normal;
+ overflow-wrap: break-word;
+ }
+ .ang-trust-value {
+ font-size: 24px;
+ font-weight: 800;
+ line-height: 1;
+ background: linear-gradient(135deg,#4F3FF0 0%,#7B5EF8 50%,#5B8DEF 100%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ letter-spacing: -0.02em;
+ white-space: nowrap;
+ padding-left: 8px;
+ order: 3;
+ }
+ .ang-trust-row-item .ang-trust-label { order: 2; }
+ .ang-trust-hairline {
+ height: 1px;
+ background: rgba(79,63,240,0.08);
+ margin: 0 20px;
+ }
 
-      /* Leistungs-Cards */
-      .angebot-leistung-card {
-        background: #FFFFFF;
-        border: 1px solid rgba(79,63,240,0.08);
-        border-left: 3px solid #4F3FF0;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 2px 16px rgba(79,63,240,0.05);
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: default;
-      }
-      .ang-leist-emoji {
-        width: 52px; height: 52px;
-        background: linear-gradient(135deg, #EDE9FF, #F5F4FF);
-        border-radius: 14px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 26px; margin-bottom: 16px;
-      }
-      @media (hover: hover) {
-        .angebot-leistung-card:hover {
-          box-shadow: 0 8px 32px rgba(79,63,240,0.14);
-          transform: translateY(-4px);
-          border-left-color: #7B5EF8;
-          background: linear-gradient(160deg, #FFFFFF 0%, #FAFAFF 100%);
-        }
-      }
+ /* Leistungs-Cards */
+ .angebot-leistung-card {
+ background: #FFFFFF;
+ border: 1px solid rgba(79,63,240,0.08);
+ border-left: 3px solid #4F3FF0;
+ border-radius: 16px;
+ padding: 24px;
+ box-shadow: 0 2px 16px rgba(79,63,240,0.05);
+ transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+ cursor: default;
+ }
+ .ang-leist-emoji {
+ width: 52px; height: 52px;
+ background: linear-gradient(135deg, #EDE9FF, #F5F4FF);
+ border-radius: 14px;
+ display: flex; align-items: center; justify-content: center;
+ font-size: 26px; margin-bottom: 16px;
+ }
+ @media (hover: hover) {
+ .angebot-leistung-card:hover {
+ box-shadow: 0 8px 32px rgba(79,63,240,0.14);
+ transform: translateY(-4px);
+ border-left-color: #7B5EF8;
+ background: linear-gradient(160deg, #FFFFFF 0%, #FAFAFF 100%);
+ }
+ }
 
-      /* Miete-Card decorative glow */
-      .ang-price-miete::before {
-        content: "";
-        position: absolute; top: 0; right: 0;
-        width: 150px; height: 150px;
-        background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
-        border-radius: 0 20px 0 0;
-        pointer-events: none;
-      }
+ /* Miete-Card decorative glow */
+ .ang-price-miete::before {
+ content: "";
+ position: absolute; top: 0; right: 0;
+ width: 150px; height: 150px;
+ background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+ border-radius: 0 20px 0 0;
+ pointer-events: none;
+ }
 
-      /* Buttons */
-      @media (hover: hover) {
-        .ang-btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 32px rgba(79,63,240,0.45) !important;
-        }
-        .ang-btn-outline:hover {
-          background: #F5F4FF !important;
-        }
-      }
+ /* Buttons */
+ @media (hover: hover) {
+ .ang-btn-primary:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 8px 32px rgba(79,63,240,0.45) !important;
+ }
+ .ang-btn-outline:hover {
+ background: #F5F4FF !important;
+ }
+ }
 
-      /* Sticky bar pulse dot */
-      .ang-pulse-dot {
-        width: 6px; height: 6px; border-radius: 50%;
-        background: #EF4444; display: inline-block;
-        animation: ang-pulse 1.5s ease-in-out infinite;
-      }
+ /* Sticky bar pulse dot */
+ .ang-pulse-dot {
+ width: 6px; height: 6px; border-radius: 50%;
+ background: #EF4444; display: inline-block;
+ animation: ang-pulse 1.5s ease-in-out infinite;
+ }
 
-      /* Reduced motion */
-      @media (prefers-reduced-motion: reduce) {
-        .ang-pulse-dot, .ang-reveal,
-        .angebot-leistung-card { animation: none !important; transition: none !important; }
-        .ang-reveal { opacity: 1 !important; transform: none !important; }
-      }
+ /* Reduced motion */
+ @media (prefers-reduced-motion: reduce) {
+ .ang-pulse-dot, .ang-reveal,
+ .angebot-leistung-card { animation: none !important; transition: none !important; }
+ .ang-reveal { opacity: 1 !important; transform: none !important; }
+ }
 
-      /* Mobile: disable hover transforms */
-      @media (hover: none) {
-        .angebot-leistung-card:hover { transform: none !important; }
-      }
-    `}</style>
+ /* Mobile: disable hover transforms */
+ @media (hover: none) {
+ .angebot-leistung-card:hover { transform: none !important; }
+ }
+ `}</style>
   );
 }

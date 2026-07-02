@@ -20,8 +20,8 @@ const TradeBreadcrumbs = () => {
         <li>
           {subLabel ? (
             <Link to={trade.hubPath} className="hover:text-foreground transition-colors">{trade.hubLabel}</Link>
-          ) : (
-            <span className="text-foreground/80 font-medium">{trade.hubLabel}</span>
+ ) : (
+ <span className="text-foreground/80 font-medium">{trade.hubLabel}</span>
           )}
         </li>
         {subLabel && (

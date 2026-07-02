@@ -26,7 +26,7 @@ const Eyebrow = ({
   children: React.ReactNode;
   light?: boolean;
 }) => (
-  <div
+ <div
     className={`mb-4 text-[10px] font-sans uppercase tracking-[0.3em] ${
       light ? "text-[color:var(--mtw-brand)]/70" : "text-white/65"
     }`}
@@ -36,7 +36,7 @@ const Eyebrow = ({
 );
 
 const ChessKing = ({ className = "" }: { className?: string }) => (
-  <svg
+ <svg
     viewBox="0 0 100 140"
     fill="currentColor"
     className={className}
@@ -53,7 +53,7 @@ const ChessKing = ({ className = "" }: { className?: string }) => (
 );
 
 const DotPattern = () => (
-  <svg
+ <svg
     className="absolute bottom-6 right-6 h-12 w-12 text-[color:var(--mtw-brand)]/15"
     viewBox="0 0 40 40"
     aria-hidden={true}
@@ -61,7 +61,7 @@ const DotPattern = () => (
   >
     {[0, 1, 2].map((r) =>
       [0, 1, 2].map((c) => (
-        <circle key={`${r}-${c}`} cx={5 + c * 14} cy={5 + r * 14} r="1.6" fill="currentColor" />
+ <circle key={`${r}-${c}`} cx={5 + c * 14} cy={5 + r * 14} r="1.6" fill="currentColor" />
       ))
     )}
   </svg>
@@ -142,23 +142,23 @@ const Premium = () => {
       }
     >
       <style>{`
-        .premium-page h1, .premium-page h2, .premium-page h3 {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 400;
-          letter-spacing: -0.01em;
-        }
-        .premium-page .serif-num {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-weight: 400;
-        }
-        .premium-page .card-noise::before {
-          content: "";
-          position: absolute; inset: 0;
-          pointer-events: none;
-          opacity: 0.03;
-          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
-        }
-      `}</style>
+ .premium-page h1, .premium-page h2, .premium-page h3 {
+ font-family: 'Playfair Display', Georgia, serif;
+ font-weight: 400;
+ letter-spacing: -0.01em;
+ }
+ .premium-page .serif-num {
+ font-family: 'Playfair Display', Georgia, serif;
+ font-weight: 400;
+ }
+ .premium-page .card-noise::before {
+ content: "";
+ position: absolute; inset: 0;
+ pointer-events: none;
+ opacity: 0.03;
+ background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+ }
+ `}</style>
 
       {/* HERO */}
       <section className="relative min-h-screen overflow-hidden border-b border-[color:var(--mtw-brand)]/15 px-6 md:px-12">
@@ -178,17 +178,17 @@ const Premium = () => {
             </h1>
 
             <p className="mt-10 max-w-[480px] text-base leading-[1.9] text-white/75">
-              Wir entwickeln digitale Präsenzen für Unternehmen, die nicht nach
-              Kompromissen suchen — sondern nach Ergebnissen.
-            </p>
+ Wir entwickeln digitale Präsenzen für Unternehmen, die nicht nach
+ Kompromissen suchen — sondern nach Ergebnissen.
+ </p>
 
             <div className="mt-12">
               <a
                 href="#bewerbung"
                 className="group inline-flex items-center gap-3 rounded-none border border-[color:var(--mtw-brand)]/50 px-8 py-3 text-sm uppercase tracking-[0.2em] text-[color:var(--mtw-brand)] transition-all duration-300 hover:bg-[color:var(--mtw-brand)] hover:text-white"
               >
-                Projekt anfragen
-                <ArrowRight
+ Projekt anfragen
+ <ArrowRight
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   aria-hidden={true}
                   focusable={false}
@@ -219,16 +219,16 @@ const Premium = () => {
                 <em className="italic text-[color:var(--mtw-brand)]">arbeiten</em>
               </h2>
               <p className="mt-8 max-w-md text-base leading-[1.9] text-[#0A0A1F]">
-                Wir arbeiten nicht mit jedem. Unsere Kapazität ist bewusst
-                begrenzt — damit jedes Projekt die Aufmerksamkeit bekommt, die
-                es verdient.
-              </p>
+ Wir arbeiten nicht mit jedem. Unsere Kapazität ist bewusst
+ begrenzt — damit jedes Projekt die Aufmerksamkeit bekommt, die
+ es verdient.
+ </p>
             </div>
             <div className="space-y-12">
               <div>
                 <div className="mb-5 text-[10px] uppercase tracking-[0.3em] text-[color:var(--mtw-brand)]/60">
-                  Das sind unsere Kunden
-                </div>
+ Das sind unsere Kunden
+ </div>
                 <ul className="space-y-4">
                   {[
                     "Unternehmen mit klaren Wachstumszielen",
@@ -236,7 +236,7 @@ const Premium = () => {
                     "Gründer und Geschäftsführer, die Qualität über Preis stellen",
                     "Betriebe, die eine langfristige digitale Partnerschaft suchen",
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[#0A0A1F]">
+ <li key={item} className="flex items-start gap-3 text-[#0A0A1F]">
                       <Check
                         className="mt-1 h-4 w-4 flex-shrink-0 text-[color:var(--mtw-brand)]"
                         aria-hidden={true}
@@ -249,15 +249,15 @@ const Premium = () => {
               </div>
               <div>
                 <div className="mb-5 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/45">
-                  Das sind nicht unsere Kunden
-                </div>
+ Das sind nicht unsere Kunden
+ </div>
                 <ul className="space-y-4">
                   {[
                     "Wer hauptsächlich nach dem günstigsten Anbieter sucht",
                     "Wer eine Webseite in 3 Tagen braucht",
                     "Wer keine klare Vision für sein Unternehmen hat",
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[#0A0A1F]/45">
+ <li key={item} className="flex items-start gap-3 text-[#0A0A1F]/45">
                       <X
                         className="mt-1 h-4 w-4 flex-shrink-0"
                         aria-hidden={true}
@@ -311,7 +311,7 @@ const Premium = () => {
                   "Wir bauen nicht für Ästhetik. Wir bauen für Conversions, Sichtbarkeit und Wachstum — mit klaren KPIs von Anfang an.",
               },
             ].map((c, i) => (
-              <motion.div
+ <motion.div
                 key={c.n}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.08 }}
@@ -353,9 +353,9 @@ const Premium = () => {
               <em className="italic text-[color:var(--mtw-brand)]">arbeiten</em>
             </h2>
             <p className="mt-6 text-base leading-[1.9] text-white/75">
-              Kein Template. Kein Copy-Paste. Jedes Projekt beginnt mit
-              Verstehen.
-            </p>
+ Kein Template. Kein Copy-Paste. Jedes Projekt beginnt mit
+ Verstehen.
+ </p>
           </motion.div>
 
           <div className="mt-16">
@@ -381,7 +381,7 @@ const Premium = () => {
                 d: "Nach dem Launch lassen wir Sie nicht allein. Wir begleiten, optimieren und wachsen mit Ihnen.",
               },
             ].map((s, i, arr) => (
-              <motion.div
+ <motion.div
                 key={s.n}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.05 }}
@@ -413,7 +413,7 @@ const Premium = () => {
               { n: "48h", l: "Bis zur ersten Vorschau" },
               { n: "100%", l: "Individuelle Umsetzung" },
             ].map((s) => (
-              <div key={s.n} className="px-6 py-14 text-center">
+ <div key={s.n} className="px-6 py-14 text-center">
                 <div
                   className="serif-num text-[color:var(--mtw-brand)]"
                   style={{ fontSize: "clamp(64px, 8vw, 112px)" }}
@@ -442,8 +442,8 @@ const Premium = () => {
               <em className="italic text-[color:var(--mtw-brand)]">Projekte</em>
             </h2>
             <p className="mt-6 text-base leading-[1.9] text-white/75">
-              Jedes Projekt ist einzigartig. Hier ein Einblick in unsere Arbeit.
-            </p>
+ Jedes Projekt ist einzigartig. Hier ein Einblick in unsere Arbeit.
+ </p>
           </motion.div>
 
           <div className="mt-16 space-y-6">
@@ -463,7 +463,7 @@ const Premium = () => {
                 title: "Premium-Positionierung im B2B-Markt",
               },
             ].map((p, i) => (
-              <motion.article
+ <motion.article
                 key={p.n}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.1 }}
@@ -479,7 +479,7 @@ const Premium = () => {
                   </h3>
                   <div className="mt-8 flex flex-wrap gap-2">
                     {["Custom Design", "SEO", "DSGVO-konform"].map((t) => (
-                      <span
+ <span
                         key={t}
                         className="border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/55"
                       >
@@ -511,20 +511,20 @@ const Premium = () => {
               >
                 Warum Meine{" "}
                 <em className="italic text-[color:var(--mtw-brand)]">
-                  Traum Webseite
-                </em>
+ Traum Webseite
+ </em>
               </h2>
               <div className="mt-8 space-y-5 text-base leading-[1.9] text-white/75">
                 <p>
-                  Wir sind keine große Agentur mit 50 Mitarbeitern und
-                  Standardprozessen. Wir sind ein spezialisiertes Team, das
-                  bewusst klein bleibt — damit jedes Projekt persönliche
-                  Aufmerksamkeit bekommt.
-                </p>
+ Wir sind keine große Agentur mit 50 Mitarbeitern und
+ Standardprozessen. Wir sind ein spezialisiertes Team, das
+ bewusst klein bleibt — damit jedes Projekt persönliche
+ Aufmerksamkeit bekommt.
+ </p>
                 <p>
-                  Unsere Kunden wählen uns nicht wegen des Preises. Sie wählen
-                  uns wegen der Ergebnisse.
-                </p>
+ Unsere Kunden wählen uns nicht wegen des Preises. Sie wählen
+ uns wegen der Ergebnisse.
+ </p>
               </div>
             </motion.div>
 
@@ -560,18 +560,18 @@ const Premium = () => {
                 className="mt-6 text-3xl text-white"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                Vielen Dank.
-              </h2>
+ Vielen Dank.
+ </h2>
               <p className="mt-4 text-base leading-[1.7] text-white/60">
-                Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 24
-                Stunden persönlich bei Ihnen.
-              </p>
+ Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 24
+ Stunden persönlich bei Ihnen.
+ </p>
             </motion.div>
-          ) : (
-            <motion.div {...fadeUp}>
+ ) : (
+ <motion.div {...fadeUp}>
               <div className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/60">
-                Projekt anfragen
-              </div>
+ Projekt anfragen
+ </div>
               <h2
                 className="text-3xl font-normal leading-[1.15] text-white"
                 style={{ fontFamily: "'Playfair Display', serif" }}
@@ -581,9 +581,9 @@ const Premium = () => {
                 Projekt.
               </h2>
               <p className="mb-12 mt-6 text-base text-white/75">
-                Wir melden uns innerhalb von 24 Stunden — persönlich, nicht
-                automatisiert.
-              </p>
+ Wir melden uns innerhalb von 24 Stunden — persönlich, nicht
+ automatisiert.
+ </p>
 
               <div className="flex flex-col gap-8">
                 {[
@@ -616,8 +616,8 @@ const Premium = () => {
 
                 <div>
                   <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/70">
-                    WAS MÖCHTEN SIE ERREICHEN?
-                  </label>
+ WAS MÖCHTEN SIE ERREICHEN?
+ </label>
                   <textarea
                     rows={4}
                     value={formData.message}
@@ -633,8 +633,8 @@ const Premium = () => {
 
                 <div>
                   <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/70">
-                    WIE HABEN SIE UNS GEFUNDEN?
-                  </label>
+ WIE HABEN SIE UNS GEFUNDEN?
+ </label>
                   <div className="relative">
                     <select
                       value={formData.source}
@@ -644,8 +644,8 @@ const Premium = () => {
                       className="w-full appearance-none border-0 border-b border-white/[0.12] bg-transparent py-4 pr-8 text-base text-white outline-none transition-colors focus:border-[color:var(--mtw-brand)] [&>option]:bg-[#0C0C1E] [&>option]:text-white"
                     >
                       <option value="" disabled>
-                        Bitte wählen...
-                      </option>
+ Bitte wählen...
+ </option>
                       <option value="google">Google-Suche</option>
                       <option value="empfehlung">Empfehlung</option>
                       <option value="social">Social Media</option>
@@ -671,8 +671,8 @@ const Premium = () => {
                   <p className="mt-3 text-center text-xs text-red-400">{submitError}</p>
                 )}
                 <p className="mt-4 text-center text-xs text-white/25">
-                  🔒 Ihre Daten werden vertraulich behandelt. Kein Spam, keine Weitergabe.
-                </p>
+ 🔒 Ihre Daten werden vertraulich behandelt. Kein Spam, keine Weitergabe.
+ </p>
               </div>
             </motion.div>
           )}
@@ -685,8 +685,8 @@ const Premium = () => {
       >
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <div className="mb-4 text-[10px] uppercase tracking-[0.3em] text-[color:var(--mtw-brand)]/60">
-            Nächster Schritt
-          </div>
+ Nächster Schritt
+ </div>
           <h2
             className="leading-[1.1] text-[#0A0A1F]"
             style={{ fontSize: "clamp(36px, 5vw, 64px)" }}
@@ -695,36 +695,36 @@ const Premium = () => {
             <em className="italic text-[color:var(--mtw-brand)]">arbeitet?</em>
           </h2>
           <p className="mx-auto mt-8 max-w-xl text-base leading-[1.9] text-[#0A0A1F]/70">
-            Wir nehmen uns Zeit für jedes Projekt — deshalb limitieren wir uns
-            auf 5 neue Kunden pro Monat. Wenn Sie ernsthaft über einen neuen
-            Webauftritt nachdenken, sprechen Sie jetzt mit uns.
-          </p>
+ Wir nehmen uns Zeit für jedes Projekt — deshalb limitieren wir uns
+ auf 5 neue Kunden pro Monat. Wenn Sie ernsthaft über einen neuen
+ Webauftritt nachdenken, sprechen Sie jetzt mit uns.
+ </p>
 
           <div className="mt-10 inline-flex items-center gap-2 rounded-none border border-[color:var(--mtw-brand)]/30 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[color:var(--mtw-brand)]">
             <span className="text-[color:var(--mtw-brand)]">●</span>
-            3 von 5 Plätzen für Juli verfügbar
-          </div>
+ 3 von 5 Plätzen für Juli verfügbar
+ </div>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#bewerbung"
               className="inline-flex items-center gap-3 rounded-none bg-[#08081A] px-10 py-4 text-sm uppercase tracking-[0.2em] text-white transition-all hover:bg-[color:var(--mtw-brand)]"
             >
-              Projekt jetzt anfragen
-              <ArrowRight className="h-4 w-4" aria-hidden={true} focusable={false} />
+ Projekt jetzt anfragen
+ <ArrowRight className="h-4 w-4" aria-hidden={true} focusable={false} />
             </a>
             <a
               href="tel:+4961313076498"
               className="inline-flex items-center gap-3 rounded-none border border-[#0A0A1F]/30 px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#0A0A1F]/70 transition-all hover:border-[#0A0A1F] hover:text-[#0A0A1F]"
             >
               <Phone className="h-4 w-4" aria-hidden={true} focusable={false} />
-              06131 3076498
-            </a>
+ 06131 3076498
+ </a>
           </div>
 
           <p className="mt-8 text-[10px] uppercase tracking-[0.3em] text-[#0A0A1F]/50">
-            Kein Verkaufsgespräch · Kein Druck
-          </p>
+ Kein Verkaufsgespräch · Kein Druck
+ </p>
         </motion.div>
       </section>
 
@@ -732,8 +732,8 @@ const Premium = () => {
       <section className="bg-[#08081A] px-6 py-24 md:px-12 md:py-32">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl">
           <div className="mb-4 text-center text-[10px] uppercase tracking-[0.3em] text-white/30">
-            Häufige Fragen
-          </div>
+ Häufige Fragen
+ </div>
           <h2
             className="text-center leading-[1.1] text-white"
             style={{ fontSize: "clamp(36px, 4.5vw, 56px)" }}
@@ -756,7 +756,7 @@ const Premium = () => {
                 a: "Kein Problem. Viele unserer Kunden kommen mit bestehenden Seiten zu uns. Wir analysieren was da ist und entwickeln daraus — oder bauen komplett neu, wenn das sinnvoller ist.",
               },
             ].map((f, i) => (
-              <AccordionItem
+ <AccordionItem
                 key={i}
                 value={`item-${i}`}
                 className="border-white/[0.12]"
@@ -782,14 +782,14 @@ const Premium = () => {
               to="/impressum"
               className="transition-colors hover:text-[color:var(--mtw-brand)]"
             >
-              Impressum
-            </Link>
+ Impressum
+ </Link>
             <Link
               to="/datenschutz"
               className="transition-colors hover:text-[color:var(--mtw-brand)]"
             >
-              Datenschutz
-            </Link>
+ Datenschutz
+ </Link>
           </div>
         </div>
       </footer>

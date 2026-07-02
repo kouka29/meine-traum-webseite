@@ -21,7 +21,7 @@ const KostenloserWebsiteCheck = () => {
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
     setLoading(true);
@@ -73,16 +73,16 @@ const KostenloserWebsiteCheck = () => {
                 <span className="gradient-text">So gut ist deine Website wirklich</span>
               </h1>
               <p className="text-muted-foreground text-lg">
-                Erhältst du eine kostenlose Website-Analyse mit konkreten Handlungsempfehlungen.
-                Wir prüfen deine Website auf Performance, SEO, Mobile-Optimierung und Conversion-Potenzial.
-              </p>
+ Erhältst du eine kostenlose Website-Analyse mit konkreten Handlungsempfehlungen.
+ Wir prüfen deine Website auf Performance, SEO, Mobile-Optimierung und Conversion-Potenzial.
+ </p>
               <div className="flex flex-wrap justify-center gap-5 mt-8">
                 {[
                   { icon: Gift, text: "100 % kostenlos" },
                   { icon: Shield, text: "Unverbindlich" },
                   { icon: Clock, text: "Ergebnis in 48 h" },
                 ].map((b) => (
-                  <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
+ <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
                     <b.icon size={16} className="text-primary" />
                     <span>{b.text}</span>
                   </div>
@@ -99,7 +99,7 @@ const KostenloserWebsiteCheck = () => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
                     <label className="text-sm font-medium mb-2 block">Name *</label>
-                    <Input required name="name" placeholder="dein Name" className="bg-background h-12" />
+                    <Input required name="name" placeholder="Dein Name" className="bg-background h-12" />
                   </div>
                   <div>
                     <label className="text-sm font-medium mb-2 block">E-Mail *</label>
@@ -110,7 +110,7 @@ const KostenloserWebsiteCheck = () => {
                     <Input type="tel" name="phone" placeholder="+49 123 456 789" className="bg-background h-12" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">deine aktuelle Website-URL *</label>
+                    <label className="text-sm font-medium mb-2 block">Deine aktuelle Website-URL *</label>
                     <Input required name="website" placeholder="www.ihre-website.de" className="bg-background h-12" />
                   </div>
                   <Button variant="gradient" size="lg" type="submit" disabled={loading} className="w-full text-base py-6">
@@ -137,13 +137,13 @@ const KostenloserWebsiteCheck = () => {
                     <p className="text-sm text-destructive text-center">
                       Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
                       <a href="tel:+4961313076498" className="font-semibold underline">
-                        06131 3076498
-                      </a>
+ 06131 3076498
+ </a>
                     </p>
                   )}
                   <p className="text-xs text-muted-foreground text-center">
-                    Kein Spam. Keine versteckten Kosten. Wir melden uns persönlich bei dir.
-                  </p>
+ Kein Spam. Keine versteckten Kosten. Wir melden uns persönlich bei dir.
+ </p>
                 </form>
               </div>
             </AnimatedSection>
@@ -154,7 +154,7 @@ const KostenloserWebsiteCheck = () => {
                   <h2 className="mb-5">Was wir bei deinem Website-Check prüfen</h2>
                   <div className="space-y-4">
                     {checkPoints.map((p) => (
-                      <div key={p} className="flex items-center gap-3 p-4 rounded-xl border border-border">
+ <div key={p} className="flex items-center gap-3 p-4 rounded-xl border border-border">
                         <Search size={20} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                         <span className="text-sm font-medium">{p}</span>
                       </div>
@@ -165,11 +165,11 @@ const KostenloserWebsiteCheck = () => {
                 <div className="gradient-hero-bg rounded-2xl p-8 text-primary-foreground">
                   <h3 className="font-heading text-xl font-semibold text-primary-foreground mb-4">Warum ein Website-Check?</h3>
                   <p className="text-sm text-primary-foreground/70 leading-relaxed mb-4">
-                    Die meisten Unternehmen wissen nicht, warum ihre Website keine Anfragen bringt.
-                    Unser kostenloser Website-Check deckt die wahren Probleme auf und gibt dir konkrete Empfehlungen.
-                  </p>
+ Die meisten Unternehmen wissen nicht, warum ihre Website keine Anfragen bringt.
+ Unser kostenloser Website-Check deckt die wahren Probleme auf und gibt dir konkrete Empfehlungen.
+ </p>
                   <Link to="/kontakt" className="inline-flex items-center gap-2 text-sm text-primary-foreground font-semibold hover:underline">
-                    Oder direkt Vorschau anfordern <ArrowRight size={16} aria-hidden={true} focusable={false} />
+ Oder direkt Vorschau anfordern <ArrowRight size={16} aria-hidden={true} focusable={false} />
                   </Link>
                 </div>
               </div>

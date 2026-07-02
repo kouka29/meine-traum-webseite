@@ -9,8 +9,8 @@ import { toast } from "sonner";
 
 export default function TicketDetail() {
   const { id } = useParams<{ id: string }>();
-  const [ticket, setTicket] = useState<any>(null);
-  const [messages, setMessages] = useState<any[]>([]);
+ const [ticket, setTicket] = useState<any>(null);
+ const [messages, setMessages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
@@ -39,13 +39,13 @@ export default function TicketDetail() {
   };
 
   if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
-  if (!ticket) return <p>Wunsch nicht gefunden.</p>;
+ if (!ticket) return <p>Wunsch nicht gefunden.</p>;
 
-  return (
-    <div className="space-y-6 max-w-3xl">
+ return (
+ <div className="space-y-6 max-w-3xl">
       <Link to="/kundenportal/wuensche" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
         <ArrowLeft size={14} aria-hidden={true} focusable={false} /> Zurück
-      </Link>
+ </Link>
       <div>
         <h1 className="font-heading text-2xl font-bold">{ticket.subject}</h1>
         <p className="text-xs text-muted-foreground mt-1">
@@ -59,7 +59,7 @@ export default function TicketDetail() {
 
       <div className="space-y-3">
         {messages.map((m) => (
-          <div key={m.id} className={`p-4 rounded-lg ${m.author_type === "admin" ? "bg-primary/10 border border-primary/20" : "bg-muted"}`}>
+ <div key={m.id} className={`p-4 rounded-lg ${m.author_type === "admin" ? "bg-primary/10 border border-primary/20" : "bg-muted"}`}>
             <div className="text-xs font-medium mb-1 text-muted-foreground">
               {m.author_type === "admin" ? "QK Marketing Team" : "Du"} · {new Date(m.created_at).toLocaleString("de-DE")}
             </div>

@@ -43,7 +43,7 @@ const Picture = ({
   return (
     <picture>
       {Object.entries(sources).map(([type, srcSet]) => (
-        <source key={type} type={`image/${type}`} srcSet={srcSet} sizes={sizes} />
+ <source key={type} type={`image/${type}`} srcSet={srcSet} sizes={sizes} />
       ))}
       <img
         src={img.src}

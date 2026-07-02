@@ -137,15 +137,15 @@ const Portfolio = () => {
                 <span className="gradient-text">echte Ergebnisse für echte Unternehmen</span>
               </h1>
               <p className="text-muted-foreground text-lg">
-                Keine Stockfotos, keine leeren Versprechen – sondern messbare Resultate von Unternehmen,
-                die ihre Website erstellen lassen haben und jetzt mehr Kunden gewinnen.
-              </p>
+ Keine Stockfotos, keine leeren Versprechen – sondern messbare Resultate von Unternehmen,
+ die ihre Website erstellen lassen haben und jetzt mehr Kunden gewinnen.
+ </p>
             </div>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             {loading && projects.length === 0 && Array.from({ length: 6 }).map((_, i) => (
-              <div key={`skel-${i}`} className="rounded-2xl bg-muted/60 h-80 animate-pulse" />
+ <div key={`skel-${i}`} className="rounded-2xl bg-muted/60 h-80 animate-pulse" />
             ))}
             {projects.map((p, i) => {
                 const rawSrc = p.image_url || p.screenshot_url || "";
@@ -182,10 +182,10 @@ const Portfolio = () => {
                               style={reducedMotion || flatImages[p.id] ? undefined : { transition: "object-position 9s linear" }}
                             />
                           </div>
-                        ) : p.mockup_desktop_url ? (
-                          <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                        ) : (
-                          <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+ ) : p.mockup_desktop_url ? (
+ <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
+ ) : (
+ <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
                             <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
                             <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
                             <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
@@ -196,8 +196,8 @@ const Portfolio = () => {
                         <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-200">
                           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-flex items-center gap-2 rounded-full bg-card text-foreground px-4 py-2 text-sm font-semibold shadow-lg">
                             <ExternalLink className="w-4 h-4" aria-hidden={true} focusable={false} />
-                            Live ansehen
-                          </span>
+ Live ansehen
+ </span>
                         </div>
                       )}
                     </div>
@@ -233,15 +233,15 @@ const Portfolio = () => {
                       {p.external_url && (
                         <div className="flex items-center justify-end">
                           <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
-                            Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" aria-hidden={true} focusable={false} />
+ Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" aria-hidden={true} focusable={false} />
                           </span>
                         </div>
                       )}
                     </div>
                   </div>
-                );
-                return (
-                  <AnimatedSection key={p.id} delay={i * 0.08} className="h-full">
+ );
+ return (
+ <AnimatedSection key={p.id} delay={i * 0.08} className="h-full">
                     {p.external_url ? (
                       <a
                         href={normalizeUrl(p.external_url)}
@@ -261,8 +261,8 @@ const Portfolio = () => {
 
           <div className="text-center mt-16">
             <p className="text-muted-foreground mb-5 text-lg">
-              Willst du ähnliche Ergebnisse? Lass deine Website von unserer Webdesign Agentur erstellen.
-            </p>
+ Willst du ähnliche Ergebnisse? Lass deine Website von unserer Webdesign Agentur erstellen.
+ </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="gradient" size="lg" asChild>
                 <Link to="/kontakt">Kostenlose Vorschau anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>

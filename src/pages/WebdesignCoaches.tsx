@@ -6,30 +6,30 @@ import { ArrowRight, Check, Lightbulb, Search, Users, Smartphone, TrendingUp, Ta
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const painPoints = [
-  "deine Website vermittelt nicht die Expertise und Persönlichkeit, die deine Klienten erwarten",
-  "Du gewinnst Klienten nur über Empfehlungen – deine Website bringt keine neuen Anfragen",
+  "Deine Website vermittelt nicht die Expertise und Persönlichkeit, die deine Klienten erwarten",
+  "Du gewinnst Klienten nur über Empfehlungen – Deine Website bringt keine neuen Anfragen",
   "Besucher verstehen nicht sofort, wie du ihnen helfen können, und springen ab",
   "Du hast kein System für automatisierte Terminbuchung oder Lead-Generierung",
 ];
 
 const features = [
-  { icon: Lightbulb, title: "Persönliches Branding", desc: "deine Website wird zur Bühne für deine Expertise – mit einem Design, das deine Persönlichkeit und Methodik widerspiegelt." },
+  { icon: Lightbulb, title: "Persönliches Branding", desc: "Deine Website wird zur Bühne für deine Expertise – mit einem Design, das deine Persönlichkeit und Methodik widerspiegelt." },
   { icon: Search, title: "SEO für Coaches", desc: 'Gefunden werden bei "Coach für Dein Thema in Deiner Stadt", "Berater für Dein Thema" und ähnlichen Suchanfragen.' },
-  { icon: Target, title: "Klare Positionierung", desc: "deine Zielgruppe erkennt sofort, ob du der richtige Coach oder Berater sind – durch gezielte Ansprache." },
+  { icon: Target, title: "Klare Positionierung", desc: "Deine Zielgruppe erkennt sofort, ob du der richtige Coach oder Berater sind – durch gezielte Ansprache." },
   { icon: Users, title: "Vertrauensaufbau", desc: "Testimonials, Erfolgsgeschichten und Zertifizierungen werden professionell präsentiert." },
-  { icon: Smartphone, title: "Mobilfreundlich", desc: "deine Website sieht auf jedem Gerät professionell aus – wichtig, da viele Klienten unterwegs recherchieren." },
+  { icon: Smartphone, title: "Mobilfreundlich", desc: "Deine Website sieht auf jedem Gerät professionell aus – wichtig, da viele Klienten unterwegs recherchieren." },
   { icon: TrendingUp, title: "Mehr Klienten gewinnen", desc: "Conversion-optimierter Aufbau mit klaren CTAs – von der Erstberatung bis zur Buchung." },
 ];
 
 const faqs = [
-  { q: "Warum brauche ich als Coach eine professionelle Website?", a: "deine Website ist dein digitales Aushängeschild. Potenzielle Klienten prüfen deine Online-Präsenz, bevor sie Kontakt aufnehmen. Eine professionelle Website schafft Vertrauen und positioniert du als Experte." },
+  { q: "Warum brauche ich als Coach eine professionelle Website?", a: "Deine Website ist dein digitales Aushängeschild. Potenzielle Klienten prüfen deine Online-Präsenz, bevor sie Kontakt aufnehmen. Eine professionelle Website schafft Vertrauen und positioniert du als Experte." },
   { q: "Was kostet eine Coach-Website?", a: "Unsere Websites für Coaches und Berater starten ab 990 €. Inkl. persönlichem Branding, SEO und Conversion-Optimierung. Kostenlose Vorschau in 48 h." },
   { q: "Kann ich Testimonials und Erfolgsgeschichten selbst einpflegen?", a: "Ja, wir richten deine Website so ein, dass du Inhalte wie Testimonials, Blog-Beiträge und Angebote einfach selbst aktualisieren können." },
   { q: "Bietet ihr auch Landingpages für einzelne Angebote an?", a: "Ja! Für Webinare, Online-Kurse oder spezielle Programme erstellen wir gezielte Landingpages, die Teilnehmer und Klienten gewinnen." },
 ];
 
 const WebdesignCoaches = () => (
-  <main id="main-content" className="pt-20">
+ <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -40,9 +40,9 @@ const WebdesignCoaches = () => (
               <span className="gradient-text">Die Website, die Klienten überzeugt</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Als Coach oder Berater bist du Experte auf deinem Gebiet. Deine Website sollte das widerspiegeln –
-              professionell, vertrauenswürdig und mit einer klaren Botschaft, die Klienten gewinnt.
-            </p>
+ Als Coach oder Berater bist du Experte auf deinem Gebiet. Deine Website sollte das widerspiegeln –
+ professionell, vertrauenswürdig und mit einer klaren Botschaft, die Klienten gewinnt.
+ </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
                 <Link to="/kontakt">Kostenlose Website-Vorschau für Coaches <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
@@ -59,7 +59,7 @@ const WebdesignCoaches = () => (
             <h2 className="text-center mb-10 text-balance">Kennst du diese Herausforderungen?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
-                <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
+ <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
                   <span className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-destructive" />
                   </span>
@@ -75,7 +75,7 @@ const WebdesignCoaches = () => (
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
-            <AnimatedSection key={f.title} delay={i * 0.08}>
+ <AnimatedSection key={f.title} delay={i * 0.08}>
               <div className="p-7 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 bg-background h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                   <f.icon size={20} className="text-primary" />
@@ -96,7 +96,7 @@ const WebdesignCoaches = () => (
                 { value: "48 h", label: "Bis zur Vorschau" },
                 { value: "24/7", label: "Automatische Terminbuchung" },
               ].map((s) => (
-                <div key={s.label} className="text-center">
+ <div key={s.label} className="text-center">
                   <span className="font-heading text-4xl font-bold text-primary-foreground">{s.value}</span>
                   <p className="text-sm text-primary-foreground/70 mt-2">{s.label}</p>
                 </div>
@@ -117,7 +117,7 @@ const WebdesignCoaches = () => (
                 { label: "Kostenloser Website-Check", to: "/kostenloser-website-check" },
                 { label: "Webdesign Preise", to: "/webdesign-preise" },
               ].map((l) => (
-                <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
+ <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
                   <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm font-medium">{l.label}</span>
                   <ArrowRight size={16} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
@@ -132,7 +132,7 @@ const WebdesignCoaches = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+ <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

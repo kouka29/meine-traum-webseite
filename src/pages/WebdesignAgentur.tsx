@@ -22,7 +22,7 @@ const faqs = [
 ];
 
 const WebdesignAgentur = () => (
-  <main id="main-content" className="pt-20">
+ <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -33,9 +33,9 @@ const WebdesignAgentur = () => (
               <span className="gradient-text">moderne Websites, die Kunden gewinnen</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Du suchst eine Webdesign Agentur, die mehr liefert als nur ein hübsches Design? Wir erstellen Websites,
-              die als Verkaufsinstrument funktionieren – conversion-optimiert, schnell und mobilfreundlich.
-            </p>
+ Du suchst eine Webdesign Agentur, die mehr liefert als nur ein hübsches Design? Wir erstellen Websites,
+ die als Verkaufsinstrument funktionieren – conversion-optimiert, schnell und mobilfreundlich.
+ </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
                 <Link to="/kontakt">Kostenlose Website-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
@@ -52,7 +52,7 @@ const WebdesignAgentur = () => (
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
-            <AnimatedSection key={f.title} delay={i * 0.08}>
+ <AnimatedSection key={f.title} delay={i * 0.08}>
               <div className="p-7 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 bg-background h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                   <f.icon size={20} className="text-primary" />
@@ -74,7 +74,7 @@ const WebdesignAgentur = () => (
                 { step: "3", title: "Entwicklung", desc: "Umsetzung mit modernster Technik – schnell, responsiv, SEO-optimiert." },
                 { step: "4", title: "Launch & Optimierung", desc: "Go-Live mit Tracking und laufender Conversion-Optimierung." },
               ].map((s) => (
-                <div key={s.step} className="text-center">
+ <div key={s.step} className="text-center">
                   <span className="font-heading text-4xl font-bold text-primary-foreground/30">{s.step}</span>
                   <h3 className="font-heading text-lg font-semibold text-primary-foreground mt-2 mb-2">{s.title}</h3>
                   <p className="text-sm text-primary-foreground/70">{s.desc}</p>
@@ -88,11 +88,11 @@ const WebdesignAgentur = () => (
           <div className="mb-20">
             <h2 className="text-center mb-5 text-balance">Webdesign für kleine Unternehmen und KMUs</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-center text-lg mb-10">
-              Du bist Handwerker, Coach, Berater oder führen ein lokales Unternehmen? Eine moderne Website, die Kunden gewinnt, muss kein Vermögen kosten. Wir erstellen professionelle Webseiten speziell für kleine Unternehmen.
-            </p>
+ Du bist Handwerker, Coach, Berater oder führen ein lokales Unternehmen? Eine moderne Website, die Kunden gewinnt, muss kein Vermögen kosten. Wir erstellen professionelle Webseiten speziell für kleine Unternehmen.
+ </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
                {["Professioneller Online-Auftritt ab 990 €", "Kostenlose Vorschau in 48 Stunden", "Keine laufenden Agenturkosten", "Persönlicher Ansprechpartner", "SEO-Grundlagen inklusive", "Mobile-optimiert"].map((p) => (
-                <div key={p} className="flex items-center gap-3">
+ <div key={p} className="flex items-center gap-3">
                   <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm">{p}</span>
                 </div>
@@ -106,7 +106,7 @@ const WebdesignAgentur = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+ <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

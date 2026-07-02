@@ -49,8 +49,8 @@ export default function KundenportalWachstumspaket() {
           <p className="text-muted-foreground mt-1">Du hast aktuell kein Wachstumspaket gebucht.</p>
         </div>
         <Card><CardContent className="py-10 text-center text-muted-foreground text-sm">
-          Wenn du beim Kauf deiner Webseite ein Wachstumspaket dazugebucht hast, erscheint es hier nach der ersten Bestätigung.
-        </CardContent></Card>
+ Wenn du beim Kauf deiner Webseite ein Wachstumspaket dazugebucht hast, erscheint es hier nach der ersten Bestätigung.
+ </CardContent></Card>
       </div>
     );
   }
@@ -84,9 +84,9 @@ export default function KundenportalWachstumspaket() {
               <div className="text-xs text-muted-foreground">Status</div>
               <div className="text-sm font-semibold">
                 {isCancelled ? <span className="text-red-600">Gekündigt</span>
-                  : isPending ? <span className="text-amber-600">Wartet auf Go-Live</span>
-                  : row.status === "past_due" ? <span className="text-orange-600">Zahlung überfällig</span>
-                  : <span className="text-emerald-600 inline-flex items-center gap-1"><CheckCircle2 size={14} aria-hidden={true} focusable={false} /> Aktiv</span>}
+ : isPending ? <span className="text-amber-600">Wartet auf Go-Live</span>
+ : row.status === "past_due" ? <span className="text-orange-600">Zahlung überfällig</span>
+ : <span className="text-emerald-600 inline-flex items-center gap-1"><CheckCircle2 size={14} aria-hidden={true} focusable={false} /> Aktiv</span>}
               </div>
             </div>
             <div>
@@ -94,7 +94,7 @@ export default function KundenportalWachstumspaket() {
               <div className="text-sm font-semibold inline-flex items-center gap-1">
                 {isStripeAuto
                   ? <><CreditCard size={14} className="text-primary" aria-hidden={true} focusable={false} /> Automatisch (Stripe)</>
-                  : <><FileText size={14} className="text-muted-foreground" aria-hidden={true} focusable={false} /> Per Rechnung</>}
+ : <><FileText size={14} className="text-muted-foreground" aria-hidden={true} focusable={false} /> Per Rechnung</>}
               </div>
             </div>
             <div>
@@ -105,25 +105,25 @@ export default function KundenportalWachstumspaket() {
 
           {isPending && (
             <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900">
-              Dein Wachstumspaket startet automatisch, sobald deine Website live geht. Erst danach werden Rechnungen erstellt.
-            </div>
+ Dein Wachstumspaket startet automatisch, sobald deine Website live geht. Erst danach werden Rechnungen erstellt.
+ </div>
           )}
 
           {!isStripeAuto && !isCancelled && (
             <div className="rounded-lg bg-primary/5 border border-primary/20 p-4">
               <div className="font-semibold text-sm mb-1 inline-flex items-center gap-2">
                 <CreditCard size={16} className="text-primary" aria-hidden={true} focusable={false} />
-                Auf automatische Stripe-Zahlung umstellen
-              </div>
+ Auf automatische Stripe-Zahlung umstellen
+ </div>
               <p className="text-xs text-muted-foreground mb-3">
-                Spare dir den manuellen Klick. Karte oder SEPA wird automatisch monatlich abgebucht, du erhältst weiterhin eine Rechnung per Mail.
-              </p>
+ Spare dir den manuellen Klick. Karte oder SEPA wird automatisch monatlich abgebucht, du erhältst weiterhin eine Rechnung per Mail.
+ </p>
               {!showCheckout ? (
                 <Button size="sm" onClick={() => setShowCheckout(true)} disabled={isPending}>
-                  Jetzt umstellen
-                </Button>
-              ) : priceId ? (
-                <div className="mt-3">
+ Jetzt umstellen
+ </Button>
+ ) : priceId ? (
+ <div className="mt-3">
                   <StripeEmbeddedCheckoutBox
                     items={[{
                       name: PACKAGE_LABELS[row.package],
@@ -143,8 +143,8 @@ export default function KundenportalWachstumspaket() {
 
           {isStripeAuto && !isCancelled && (
             <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-900">
-              Du zahlst automatisch per Stripe. Karte/SEPA ändern oder kündigen: Über „Einstellungen → Stripe-Kundenportal".
-            </div>
+ Du zahlst automatisch per Stripe. Karte/SEPA ändern oder kündigen: Über „Einstellungen → Stripe-Kundenportal".
+ </div>
           )}
         </CardContent>
       </Card>

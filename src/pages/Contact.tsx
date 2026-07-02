@@ -19,7 +19,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
     setLoading(true);
@@ -68,24 +68,24 @@ const Contact = () => {
           <AnimatedSection>
             <div className="text-center mb-12 md:mb-20 max-w-2xl mx-auto">
               <span className="badge-label bg-primary/10 text-primary mb-5">
-                Kostenloses Erstgespräch
-              </span>
+ Kostenloses Erstgespräch
+ </span>
               <h1 className="mb-5 text-balance">
-                <span className="block">dein kostenloses Erstgespräch –</span>
+                <span className="block">Dein kostenloses Erstgespräch –</span>
                 <span className="gradient-text block mt-3">in 15 Minuten zur Klarheit</span>
               </h1>
               <p className="text-muted-foreground text-lg">
-                Du hast sich für ein persönliches Erstgespräch entschieden. Perfekt. In 15 Minuten besprechen
-                wir dein Projekt, klären deine Ziele und Du erhältst eine konkrete Empfehlung – ohne Verkaufsdruck,
-                ohne Verpflichtung.
-              </p>
+ Du hast sich für ein persönliches Erstgespräch entschieden. Perfekt. In 15 Minuten besprechen
+ wir dein Projekt, klären deine Ziele und Du erhältst eine konkrete Empfehlung – ohne Verkaufsdruck,
+ ohne Verpflichtung.
+ </p>
               <div className="flex flex-wrap justify-center gap-5 mt-8">
                 {[
                   { icon: Clock, text: "15 Minuten" },
                   { icon: Shield, text: "Unverbindlich" },
                   { icon: Phone, text: "Persönlich am Telefon" },
                 ].map((b) => (
-                  <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
+ <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
                     <b.icon size={16} className="text-primary" />
                     <span>{b.text}</span>
                   </div>
@@ -100,7 +100,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <label className="text-sm font-medium mb-2 block">Name *</label>
-                    <Input required placeholder="dein Name" className="bg-card h-12" />
+                    <Input required placeholder="Dein Name" className="bg-card h-12" />
                   </div>
                   <div>
                     <label className="text-sm font-medium mb-2 block">E-Mail *</label>
@@ -159,13 +159,13 @@ const Contact = () => {
                   <p className="text-sm text-destructive">
                     Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
                     <a href="tel:+4961313076498" className="font-semibold underline">
-                      06131 3076498
-                    </a>
+ 06131 3076498
+ </a>
                   </p>
                 )}
                 <p className="text-xs text-muted-foreground">
-                  Kein Verkaufsgespräch. Keine versteckten Kosten. Wir melden uns persönlich bei dir.
-                </p>
+ Kein Verkaufsgespräch. Keine versteckten Kosten. Wir melden uns persönlich bei dir.
+ </p>
               </form>
             </AnimatedSection>
 
@@ -173,21 +173,21 @@ const Contact = () => {
               <div className="space-y-10">
                 <div className="p-8 rounded-2xl gradient-hero-bg">
                   <h2 className="font-heading font-semibold text-primary-foreground mb-4 text-lg">
-                    So läuft dein Erstgespräch ab
-                  </h2>
+ So läuft dein Erstgespräch ab
+ </h2>
                   <ol className="space-y-4 text-sm text-primary-foreground/75">
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">1.</span>
-                      du füllen das Formular aus (2 Minuten)
-                    </li>
+ Du füllen das Formular aus (2 Minuten)
+ </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">2.</span>
-                      Wir melden uns in 24 h mit Terminvorschlägen
-                    </li>
+ Wir melden uns in 24 h mit Terminvorschlägen
+ </li>
                     <li className="flex gap-3">
                       <span className="font-bold text-primary-foreground text-base">3.</span>
-                      15-Minuten-Call: Klarheit, Empfehlung, Preisinfo
-                    </li>
+ 15-Minuten-Call: Klarheit, Empfehlung, Preisinfo
+ </li>
                   </ol>
                 </div>
 
@@ -195,7 +195,7 @@ const Contact = () => {
                   <h3 className="font-heading font-semibold mb-5 text-lg">Das bekommst du</h3>
                   <div className="space-y-3.5">
                     {trustPoints.map((t) => (
-                      <div key={t} className="flex items-center gap-3">
+ <div key={t} className="flex items-center gap-3">
                         <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                         <span className="text-sm">{t}</span>
                       </div>
@@ -211,7 +211,7 @@ const Contact = () => {
                       { icon: Mail, text: "info@meine-traum-webseite.de", label: "E-Mail schreiben" },
                       { icon: MapPin, text: "Rheinallee 88, 55120 Mainz", label: "Standort" },
                     ].map((item) => (
-                      <div key={item.text} className="flex items-center gap-4">
+ <div key={item.text} className="flex items-center gap-4">
                         <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
                           <item.icon size={20} className="text-primary" />
                         </div>

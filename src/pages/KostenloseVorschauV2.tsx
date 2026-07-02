@@ -97,7 +97,7 @@ const processSteps = [
   {
     icon: Wand2,
     title: "Ich baue deine Vorschau (48 h)",
-    text: "du lehnen sich zurück, ich arbeite.",
+    text: "Du lehnen sich zurück, ich arbeite.",
   },
   {
     icon: Sparkles,
@@ -136,7 +136,7 @@ const testimonials = [
 const faqs = [
   {
     q: "Lohnt sich eine Website überhaupt für meinen Betrieb?",
-    a: "Ja – und zwar schneller als du denken. Ein einziger neuer Auftrag reicht. Den Rest verdienen du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
+    a: "Ja – und zwar schneller als du denkst. Ein einziger neuer Auftrag reicht. Den Rest verdienen du. Handwerker die wir betreuen berichten von durchschnittlich 6–12 neuen Anfragen pro Monat allein über ihre neue Website.",
   },
   {
     q: "Was passiert wenn mir die Vorschau nicht gefällt?",
@@ -197,7 +197,7 @@ function useCountdown(targetISO?: string | null, mode: string = "end_of_month") 
 }
 
 const CountdownBox = ({ value, label }: { value: number; label: string }) => (
-  <div className="flex flex-col items-center">
+ <div className="flex flex-col items-center">
     <div className="bg-gradient-to-br from-primary to-accent text-primary-foreground rounded-xl px-3 py-3 sm:px-5 sm:py-4 min-w-[64px] sm:min-w-[80px] shadow-lg">
       <div className="text-2xl sm:text-4xl font-bold tabular-nums leading-none">
         {String(value).padStart(2, "0")}
@@ -228,7 +228,7 @@ const Countdown = ({
           { v: minutes, l: "Min." },
           { v: seconds, l: "Sek." },
         ].map((it) => (
-          <div key={it.l} className="flex flex-col items-center">
+ <div key={it.l} className="flex flex-col items-center">
             <div className="bg-primary-foreground/15 border border-primary-foreground/25 text-primary-foreground rounded-xl px-3 py-3 sm:px-5 sm:py-4 min-w-[64px] sm:min-w-[80px]">
               <div className="text-2xl sm:text-4xl font-bold tabular-nums leading-none">
                 {String(it.v).padStart(2, "0")}
@@ -301,7 +301,7 @@ const TileButton = ({
 }: {
   selected: boolean;
   onClick: () => void;
-  icon: React.ComponentType<{ className?: string }>;
+ icon: React.ComponentType<{ className?: string }>;
   label: string;
   tone?: "success" | "warning" | "danger";
 }) => {
@@ -362,7 +362,7 @@ const SlotPill = ({
   total: number;
   taken: number;
 }) => (
-  <span
+ <span
     className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs sm:text-sm font-semibold ${
       inverse
         ? "bg-primary-foreground/15 text-primary-foreground border border-primary-foreground/25"
@@ -490,8 +490,8 @@ const SuccessScreen = ({
   nextMonthLabel,
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
-  const [bookingSubmitting, setBookingSubmitting] = useState(false);
-  const screenRef = useRef<HTMLDivElement | null>(null);
+ const [bookingSubmitting, setBookingSubmitting] = useState(false);
+ const screenRef = useRef<HTMLDivElement | null>(null);
 
   // Whenever the success screen mounts or switches sub-state (booking
   // selector, confirmation), pull the user back up so they see the new
@@ -630,9 +630,9 @@ const SuccessScreen = ({
   // Booking bestätigt → Thank-You mit Ablauf-Erklärung
   if (bookingConfirmed) {
     const dateLabel = dates.find((d) => d.iso === bookingDate)?.label ?? bookingDate;
-    const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
-    return (
-      <div ref={screenRef} className="text-center py-8 px-2 sm:px-4 scroll-mt-20">
+ const methodLabel = contactMethod === "online" ? "Online-Meeting" : "Telefonat";
+ return (
+ <div ref={screenRef} className="text-center py-8 px-2 sm:px-4 scroll-mt-20">
         <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 animate-in zoom-in duration-500">
           <Check className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
         </div>
@@ -649,235 +649,235 @@ const SuccessScreen = ({
           {methodLabel}
         </div>
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
-          Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.{" "}
+ Eine Bestätigung mit allen Details kommt gleich an <strong>{email}</strong>.{" "}
           {isWaitlist
             ? `Sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir, um den Termin zu bestätigen.`
-            : "dein Platz ist für du vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
+            : "Dein Platz ist für du vorgemerkt – nach unserem kurzen Gespräch ist er fix deiner."}
         </p>
         <div className="bg-secondary/40 border border-border rounded-2xl p-5 sm:p-6 text-left max-w-lg mx-auto">
           <p className="font-bold mb-4 text-center">So geht's weiter:</p>
-          <ol className="space-y-3 text-sm">
-            <li className="flex gap-3">
-              <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">1</span>
-              <span><strong>Kurzes Gespräch (5–10 Min.)</strong> – telefonisch oder per Online-Meeting. Ich stelle dir ein paar Fragen, damit deine Vorschau perfekt zu deinem Betrieb passt.</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">2</span>
-              <span><strong>Ich baue deine Vorschau (kostenlos, 48 h)</strong> – maßgeschneidert für deinen Betrieb.</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">3</span>
-              <span><strong>Wir schauen sie gemeinsam an</strong> – Du entscheidest in Ruhe, ob du weitermachen wollen. Ohne Druck, ohne Verpflichtung.</span>
-            </li>
-          </ol>
-        </div>
-        <p className="text-xs text-muted-foreground mt-6">
-          📧 Falls du keine E-Mail bekommen, schau bitte in deinen Spam-Ordner.
-        </p>
-      </div>
-    );
-  }
+ <ol className="space-y-3 text-sm">
+ <li className="flex gap-3">
+ <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">1</span>
+ <span><strong>Kurzes Gespräch (5–10 Min.)</strong> – telefonisch oder per Online-Meeting. Ich stelle dir ein paar Fragen, damit deine Vorschau perfekt zu deinem Betrieb passt.</span>
+ </li>
+ <li className="flex gap-3">
+ <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">2</span>
+ <span><strong>Ich baue deine Vorschau (kostenlos, 48 h)</strong> – maßgeschneidert für deinen Betrieb.</span>
+ </li>
+ <li className="flex gap-3">
+ <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-xs">3</span>
+ <span><strong>Wir schauen sie gemeinsam an</strong> – Du entscheidest in Ruhe, ob du weitermachen wollen. Ohne Druck, ohne Verpflichtung.</span>
+ </li>
+ </ol>
+ </div>
+ <p className="text-xs text-muted-foreground mt-6">
+ 📧 Falls du keine E-Mail bekommen, schau bitte in deinen Spam-Ordner.
+ </p>
+ </div>
+ );
+ }
 
-  // Booking-Modus: Datum + Uhrzeit auswählen
-  if (bookingMode) {
-    return (
-      <div ref={screenRef} className="py-2 px-1 sm:px-2 scroll-mt-20">
-        <div className="text-center mb-6">
-          <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-            <CalendarIcon className="w-7 h-7 text-primary" aria-hidden={true} focusable={false} />
-          </div>
-          <h3 className="text-xl sm:text-2xl font-bold mb-2">
-            Wann passt es dir am besten?
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            Wähle Datum & Uhrzeit – das Gespräch dauert nur 5–10 Minuten.
-          </p>
-        </div>
+ // Booking-Modus: Datum + Uhrzeit auswählen
+ if (bookingMode) {
+ return (
+ <div ref={screenRef} className="py-2 px-1 sm:px-2 scroll-mt-20">
+ <div className="text-center mb-6">
+ <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+ <CalendarIcon className="w-7 h-7 text-primary" aria-hidden={true} focusable={false} />
+ </div>
+ <h3 className="text-xl sm:text-2xl font-bold mb-2">
+ Wann passt es dir am besten?
+ </h3>
+ <p className="text-sm text-muted-foreground">
+ Wähle Datum & Uhrzeit – das Gespräch dauert nur 5–10 Minuten.
+ </p>
+ </div>
 
-        <div className="space-y-5">
-          <div>
-            <label className="text-sm font-medium mb-2 block">Datum auswählen</label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {dates.map((d) => (
-                <button
-                  key={d.iso}
-                  type="button"
-                  onClick={() => setBookingDate(d.iso)}
-                  className={`rounded-xl border-2 px-3 py-3 text-sm font-semibold transition-all ${
-                    bookingDate === d.iso
-                      ? "border-primary bg-primary text-primary-foreground shadow-md"
-                      : "border-border bg-card hover:border-primary/40"
-                  }`}
-                >
-                  {d.label}
-                </button>
-              ))}
-            </div>
-          </div>
+ <div className="space-y-5">
+ <div>
+ <label className="text-sm font-medium mb-2 block">Datum auswählen</label>
+ <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+ {dates.map((d) => (
+ <button
+ key={d.iso}
+ type="button"
+ onClick={() => setBookingDate(d.iso)}
+ className={`rounded-xl border-2 px-3 py-3 text-sm font-semibold transition-all ${
+ bookingDate === d.iso
+ ? "border-primary bg-primary text-primary-foreground shadow-md"
+ : "border-border bg-card hover:border-primary/40"
+ }`}
+ >
+ {d.label}
+ </button>
+ ))}
+ </div>
+ </div>
 
-          {bookingDate && (
-            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-              <label className="text-sm font-medium mb-2 block">Uhrzeit auswählen</label>
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                {TIME_SLOTS.map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setBookingTime(t)}
-                    className={`rounded-xl border-2 px-3 py-2.5 text-sm font-semibold transition-all ${
-                      bookingTime === t
-                        ? "border-primary bg-primary text-primary-foreground shadow-md"
-                        : "border-border bg-card hover:border-primary/40"
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+ {bookingDate && (
+ <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+ <label className="text-sm font-medium mb-2 block">Uhrzeit auswählen</label>
+ <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+ {TIME_SLOTS.map((t) => (
+ <button
+ key={t}
+ type="button"
+ onClick={() => setBookingTime(t)}
+ className={`rounded-xl border-2 px-3 py-2.5 text-sm font-semibold transition-all ${
+ bookingTime === t
+ ? "border-primary bg-primary text-primary-foreground shadow-md"
+ : "border-border bg-card hover:border-primary/40"
+ }`}
+ >
+ {t}
+ </button>
+ ))}
+ </div>
+ </div>
+ )}
 
-          {bookingDate && bookingTime && (
-            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-              <label className="text-sm font-medium mb-2 block">
-                Wie möchtest du das Gespräch führen?
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setContactMethod("phone")}
-                  className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
-                    contactMethod === "phone"
-                      ? "border-primary bg-primary text-primary-foreground shadow-md"
-                      : "border-border bg-card hover:border-primary/40"
-                  }`}
-                >
-                  <Phone className="w-4 h-4" aria-hidden={true} focusable={false} /> Telefonat
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setContactMethod("online")}
-                  className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
-                    contactMethod === "online"
-                      ? "border-primary bg-primary text-primary-foreground shadow-md"
-                      : "border-border bg-card hover:border-primary/40"
-                  }`}
-                >
-                  <Video className="w-4 h-4" aria-hidden={true} focusable={false} /> Online-Meeting
-                </button>
-              </div>
-            </div>
-          )}
+ {bookingDate && bookingTime && (
+ <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+ <label className="text-sm font-medium mb-2 block">
+ Wie möchtest du das Gespräch führen?
+ </label>
+ <div className="grid grid-cols-2 gap-2">
+ <button
+ type="button"
+ onClick={() => setContactMethod("phone")}
+ className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+ contactMethod === "phone"
+ ? "border-primary bg-primary text-primary-foreground shadow-md"
+ : "border-border bg-card hover:border-primary/40"
+ }`}
+ >
+ <Phone className="w-4 h-4" aria-hidden={true} focusable={false} /> Telefonat
+ </button>
+ <button
+ type="button"
+ onClick={() => setContactMethod("online")}
+ className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+ contactMethod === "online"
+ ? "border-primary bg-primary text-primary-foreground shadow-md"
+ : "border-border bg-card hover:border-primary/40"
+ }`}
+ >
+ <Video className="w-4 h-4" aria-hidden={true} focusable={false} /> Online-Meeting
+ </button>
+ </div>
+ </div>
+ )}
 
-          <Button
-            type="button"
-            size="lg"
-            disabled={!bookingDate || !bookingTime || !contactMethod || bookingSubmitting}
-            onClick={confirmBooking}
-            className="w-full"
-          >
-            {bookingSubmitting ? "Wird gebucht..." : (
-              <>Termin verbindlich sichern <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} /></>
-            )}
-          </Button>
+ <Button
+ type="button"
+ size="lg"
+ disabled={!bookingDate || !bookingTime || !contactMethod || bookingSubmitting}
+ onClick={confirmBooking}
+ className="w-full"
+ >
+ {bookingSubmitting ? "Wird gebucht..." : (
+ <>Termin verbindlich sichern <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} /></>
+ )}
+ </Button>
 
-          <button
-            type="button"
-            onClick={() => setBookingMode(false)}
-            className="w-full text-sm text-muted-foreground hover:text-foreground inline-flex items-center justify-center gap-1 underline-offset-4 hover:underline"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" aria-hidden={true} focusable={false} /> Zurück zur Übersicht
-          </button>
-        </div>
-      </div>
-    );
-  }
+ <button
+ type="button"
+ onClick={() => setBookingMode(false)}
+ className="w-full text-sm text-muted-foreground hover:text-foreground inline-flex items-center justify-center gap-1 underline-offset-4 hover:underline"
+ >
+ <ArrowLeft className="w-3.5 h-3.5" aria-hidden={true} focusable={false} /> Zurück zur Übersicht
+ </button>
+ </div>
+ </div>
+ );
+ }
 
-  // Standard-Erfolgs-Screen mit beiden Optionen
-  return (
-    <div ref={screenRef} className="py-6 px-2 sm:px-4 scroll-mt-20">
-      <div className="text-center mb-8">
-        <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-5 animate-in zoom-in duration-500">
-          <Check className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
-        </div>
-        <h3 className="text-2xl sm:text-3xl font-bold mb-2">
-          {isWaitlist
-            ? `Danke ${firstName}! Du stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
-            : `Danke ${firstName}! Deine Anfrage ist da. 🙌`}
-        </h3>
-        <p className="text-muted-foreground max-w-md mx-auto">
-          {isWaitlist ? (
-            <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei dir. Eine Bestätigung kommt an <strong>{email}</strong>.</>
-          ) : (
-            <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
-          )}
-        </p>
-      </div>
+ // Standard-Erfolgs-Screen mit beiden Optionen
+ return (
+ <div ref={screenRef} className="py-6 px-2 sm:px-4 scroll-mt-20">
+ <div className="text-center mb-8">
+ <div className="mx-auto w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-5 animate-in zoom-in duration-500">
+ <Check className="w-12 h-12 text-emerald-600" strokeWidth={2.5} aria-hidden={true} focusable={false} />
+ </div>
+ <h3 className="text-2xl sm:text-3xl font-bold mb-2">
+ {isWaitlist
+ ? `Danke ${firstName}! Du stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
+ : `Danke ${firstName}! Deine Anfrage ist da. 🙌`}
+ </h3>
+ <p className="text-muted-foreground max-w-md mx-auto">
+ {isWaitlist ? (
+ <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei dir. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+ ) : (
+ <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+ )}
+ </p>
+ </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Option 1: Was passiert jetzt */}
-        <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6 flex flex-col">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <Phone className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
-            </div>
-            <h4 className="font-bold text-base sm:text-lg">Was jetzt passiert</h4>
-          </div>
-          <ol className="space-y-2.5 text-sm text-muted-foreground mb-4 flex-1">
-            <li className="flex gap-2">
-              <span className="text-primary font-bold shrink-0">1.</span>
-              <span>Ich melde mich <strong className="text-foreground">am nächsten Werktag</strong> bei dir.</span>
-            </li>
-            <li className="flex gap-2">
-              <span className="text-primary font-bold shrink-0">2.</span>
-              <span>Wir führen ein <strong className="text-foreground">5–10 Min. Telefonat</strong>, in dem ich kurz ein paar Fragen stelle, damit deine Vorschau zu 100 % zu deinem Betrieb passt.</span>
-            </li>
-            <li className="flex gap-2">
-              <span className="text-primary font-bold shrink-0">3.</span>
-              <span>Innerhalb von <strong className="text-foreground">48 Stunden</strong> bekommst du deine fertige Vorschau – kostenlos.</span>
-            </li>
-          </ol>
-          <div className="bg-secondary/40 rounded-lg px-3 py-3 mt-auto space-y-2">
-            <p className="text-xs font-semibold text-foreground">
-              Wie sollen wir uns melden?
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setContactMethod("phone")}
-                className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
-                  contactMethod === "phone"
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-card hover:border-primary/40"
-                }`}
-              >
-                <Phone className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefonat
-              </button>
-              <button
-                type="button"
-                onClick={() => setContactMethod("online")}
-                className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
-                  contactMethod === "online"
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-card hover:border-primary/40"
-                }`}
-              >
-                <Video className="w-3 h-3" aria-hidden={true} focusable={false} /> Online-Meeting
-              </button>
-            </div>
-            {contactMethod && (
-              <p className="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1 pt-1">
-                <Check className="w-3 h-3" aria-hidden={true} focusable={false} /> Notiert – wir melden uns wie gewünscht.
-              </p>
-            )}
-          </div>
-        </div>
+ <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+ {/* Option 1: Was passiert jetzt */}
+ <div className="rounded-2xl border-2 border-border bg-card p-5 sm:p-6 flex flex-col">
+ <div className="flex items-center gap-3 mb-3">
+ <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+ <Phone className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
+ </div>
+ <h4 className="font-bold text-base sm:text-lg">Was jetzt passiert</h4>
+ </div>
+ <ol className="space-y-2.5 text-sm text-muted-foreground mb-4 flex-1">
+ <li className="flex gap-2">
+ <span className="text-primary font-bold shrink-0">1.</span>
+ <span>Ich melde mich <strong className="text-foreground">am nächsten Werktag</strong> bei dir.</span>
+ </li>
+ <li className="flex gap-2">
+ <span className="text-primary font-bold shrink-0">2.</span>
+ <span>Wir führen ein <strong className="text-foreground">5–10 Min. Telefonat</strong>, in dem ich kurz ein paar Fragen stelle, damit deine Vorschau zu 100 % zu deinem Betrieb passt.</span>
+ </li>
+ <li className="flex gap-2">
+ <span className="text-primary font-bold shrink-0">3.</span>
+ <span>Innerhalb von <strong className="text-foreground">48 Stunden</strong> bekommst du deine fertige Vorschau – kostenlos.</span>
+ </li>
+ </ol>
+ <div className="bg-secondary/40 rounded-lg px-3 py-3 mt-auto space-y-2">
+ <p className="text-xs font-semibold text-foreground">
+ Wie sollen wir uns melden?
+ </p>
+ <div className="grid grid-cols-2 gap-2">
+ <button
+ type="button"
+ onClick={() => setContactMethod("phone")}
+ className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+ contactMethod === "phone"
+ ? "border-primary bg-primary text-primary-foreground"
+ : "border-border bg-card hover:border-primary/40"
+ }`}
+ >
+ <Phone className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefonat
+ </button>
+ <button
+ type="button"
+ onClick={() => setContactMethod("online")}
+ className={`rounded-lg border px-2 py-1.5 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+ contactMethod === "online"
+ ? "border-primary bg-primary text-primary-foreground"
+ : "border-border bg-card hover:border-primary/40"
+ }`}
+ >
+ <Video className="w-3 h-3" aria-hidden={true} focusable={false} /> Online-Meeting
+ </button>
+ </div>
+ {contactMethod && (
+ <p className="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1 pt-1">
+ <Check className="w-3 h-3" aria-hidden={true} focusable={false} /> Notiert – wir melden uns wie gewünscht.
+ </p>
+ )}
+ </div>
+ </div>
 
-        {/* Option 2: Termin direkt buchen */}
-        <div className="rounded-2xl border-2 border-primary bg-gradient-to-br from-primary/5 to-accent/5 p-5 sm:p-6 flex flex-col relative">
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full shadow-md whitespace-nowrap">
-            ⚡ Schneller geht's nicht
-          </div>
+ {/* Option 2: Termin direkt buchen */}
+ <div className="rounded-2xl border-2 border-primary bg-gradient-to-br from-primary/5 to-accent/5 p-5 sm:p-6 flex flex-col relative">
+ <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full shadow-md whitespace-nowrap">
+ ⚡ Schneller geht's nicht
+ </div>
           <div className="flex items-center gap-3 mb-3 mt-2">
             <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
               <CalendarIcon className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
@@ -885,8 +885,8 @@ const SuccessScreen = ({
             <h4 className="font-bold text-base sm:text-lg">Lieber direkt Termin buchen?</h4>
           </div>
           <p className="text-sm text-muted-foreground mb-4 flex-1">
-            Wähle direkt Datum und Uhrzeit für dein 5–10 Min. Gespräch – telefonisch oder per Online-Meeting. Du sparst sich das Hin und Her.
-          </p>
+ Wähle direkt Datum und Uhrzeit für dein 5–10 Min. Gespräch – telefonisch oder per Online-Meeting. Du sparst sich das Hin und Her.
+ </p>
           <Button
             type="button"
             size="lg"
@@ -894,8 +894,8 @@ const SuccessScreen = ({
             className="w-full shadow-md"
           >
             <CalendarIcon className="mr-2 w-4 h-4" aria-hidden={true} focusable={false} />
-            Termin jetzt auswählen
-          </Button>
+ Termin jetzt auswählen
+ </Button>
           <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" aria-hidden={true} focusable={false} /> Telefon</span>
             <span className="inline-flex items-center gap-1"><Video className="w-3 h-3" aria-hidden={true} focusable={false} /> oder Online</span>
@@ -905,8 +905,8 @@ const SuccessScreen = ({
 
       <p className="text-xs text-muted-foreground text-center mt-6 flex items-center justify-center gap-1.5">
         <MessageCircle className="w-3.5 h-3.5" aria-hidden={true} focusable={false} />
-        Schau auch in deinen Spam-Ordner – manchmal landet die Bestätigung dort.
-      </p>
+ Schau auch in deinen Spam-Ordner – manchmal landet die Bestätigung dort.
+ </p>
     </div>
   );
 };
@@ -918,14 +918,14 @@ type MultiStepFormProps = {
 
 const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
   const [state, setState] = useState<FormState>(initialState);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [honeypot, setHoneypot] = useState("");
-  const [done, setDone] = useState(false);
-  const [bookingMode, setBookingMode] = useState(false);
-  const [bookingConfirmed, setBookingConfirmed] = useState(false);
-  const [leadId, setLeadId] = useState<string | null>(null);
-  const cardRef = useRef<HTMLDivElement | null>(null);
+ const [submitting, setSubmitting] = useState(false);
+ const [submitError, setSubmitError] = useState<string | null>(null);
+ const [honeypot, setHoneypot] = useState("");
+ const [done, setDone] = useState(false);
+ const [bookingMode, setBookingMode] = useState(false);
+ const [bookingConfirmed, setBookingConfirmed] = useState(false);
+ const [leadId, setLeadId] = useState<string | null>(null);
+ const cardRef = useRef<HTMLDivElement | null>(null);
   const isFirstRender = useRef(true);
 
   // Smoothly scroll the form card to a comfortable position below the sticky
@@ -1216,7 +1216,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           <h3 className="text-xl sm:text-2xl font-bold">Was machst du beruflich?</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {tradeOptions.map((opt) => (
-              <TileButton
+ <TileButton
                 key={opt.value}
                 icon={opt.icon}
                 label={opt.value}
@@ -1233,8 +1233,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           {state.trade === "Sonstiges" && (
             <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
               <label className="text-sm font-medium block">
-                Beschreibe kurz, was du beruflich machen *
-              </label>
+ Beschreibe kurz, was du beruflich machen *
+ </label>
               <Input
                 value={state.tradeOther}
                 onChange={(e) => update({ tradeOther: e.target.value })}
@@ -1249,7 +1249,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 onClick={next}
                 className="w-full sm:w-auto"
               >
-                Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+ Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
               </Button>
             </div>
           )}
@@ -1262,7 +1262,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           <h3 className="text-xl sm:text-2xl font-bold">Hast du aktuell eine Webseite?</h3>
           <div className="grid grid-cols-1 gap-3">
             {websiteOptions.map((opt) => (
-              <TileButton
+ <TileButton
                 key={opt.value}
                 icon={opt.icon}
                 label={opt.value}
@@ -1286,11 +1286,11 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 style={{ backgroundColor: "#F0FFF4", borderColor: "#C6F6D5" }}
               >
                 <p className="text-emerald-800 leading-relaxed">
-                  💡 Gut! Wusstest du dass man auch eine bestehende Website noch
-                  deutlich mehr Kunden bringen kann?
-                  <br />
-                  Wir zeigen dir kostenlos was möglich ist.
-                </p>
+ 💡 Gut! Wusstest du dass man auch eine bestehende Website noch
+ deutlich mehr Kunden bringen kann?
+ <br />
+ Wir zeigen dir kostenlos was möglich ist.
+ </p>
               </div>
               <Button
                 type="button"
@@ -1298,7 +1298,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 onClick={next}
                 className="w-full sm:w-auto"
               >
-                Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+ Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
               </Button>
             </div>
           )}
@@ -1312,7 +1312,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           <p className="text-sm text-muted-foreground">Mehrfachauswahl möglich.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {goalOptions.map((opt) => (
-              <TileButton
+ <TileButton
                 key={opt.value}
                 icon={opt.icon}
                 label={opt.value}
@@ -1328,7 +1328,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
             onClick={next}
             className="w-full sm:w-auto"
           >
-            Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+ Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
           </Button>
         </div>
       )}
@@ -1339,7 +1339,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           <h3 className="text-xl sm:text-2xl font-bold">Wie dringend ist das Thema für du?</h3>
           <div className="grid grid-cols-1 gap-3">
             {urgencyOptions.map((opt) => (
-              <TileButton
+ <TileButton
                 key={opt.value}
                 icon={opt.icon}
                 label={opt.value}
@@ -1358,8 +1358,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {state.step === 5 && (
         <form onSubmit={handleSubmit} className="space-y-5">
           <h3 className="text-xl sm:text-2xl font-bold">
-            Fast geschafft! Wie kann ich du erreichen?
-          </h3>
+ Fast geschafft! Wie kann ich du erreichst?
+ </h3>
           <div className="grid grid-cols-1 gap-4">
             <div>
               <label className="text-sm font-medium mb-1.5 block">Vorname *</label>
@@ -1373,8 +1373,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
             </div>
             <div>
               <label className="text-sm font-medium mb-1.5 block">
-                Telefonnummer *
-              </label>
+ Telefonnummer *
+ </label>
               <Input
                 required
                 type="tel"
@@ -1426,29 +1426,29 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
             <p className="text-sm text-destructive text-center">
               Etwas ist schiefgelaufen. Bitte ruf mich direkt an:{" "}
               <a href="tel:+4961313076498" className="font-semibold underline">
-                06131 3076498
-              </a>
+ 06131 3076498
+ </a>
             </p>
           )}
           <p className="text-xs text-muted-foreground flex items-start gap-2">
             <Lock className="w-3.5 h-3.5 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
             <span>
-              deine Daten sind sicher. Kein Spam. Keine Verpflichtung. Du kannst jederzeit zurückgehen und Antworten ändern.
-            </span>
+ Deine Daten sind sicher. Kein Spam. Keine Verpflichtung. Du kannst jederzeit zurückgehen und Antworten ändern.
+ </span>
           </p>
         </form>
       )}
 
       {/* Back link */}
       {state.step > 1 && (
-        <div className="mt-6 text-center">
+ <div className="mt-6 text-center">
           <button
             type="button"
             onClick={prev}
             className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1 underline-offset-4 hover:underline"
           >
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden={true} focusable={false} /> Zurück
-          </button>
+ </button>
         </div>
       )}
     </div>
@@ -1462,7 +1462,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
 const KostenloseVorschauV2 = () => {
   const { settings, demos: dbDemos, faqs: dbFaqs, portfolio, testimonials: dbTestimonials } = useVorschauSettings("v2");
   const [demosApi, setDemosApi] = useState<CarouselApi>();
-  const [testimonialsApi, setTestimonialsApi] = useState<CarouselApi>();
+ const [testimonialsApi, setTestimonialsApi] = useState<CarouselApi>();
   const totalSlots = settings?.total_slots ?? 5;
   const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
   const remainingSlots = Math.max(0, totalSlots - takenSlots);
@@ -1527,11 +1527,11 @@ const KostenloseVorschauV2 = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-bold">
-              W
-            </div>
+ W
+ </div>
             <span className="font-bold text-sm sm:text-base hidden sm:inline">
-              Meine Traum Webseite
-            </span>
+ Meine Traum Webseite
+ </span>
           </Link>
           <a
             href={`tel:${(settings?.phone_number ?? "+49 170 123 45 67").replace(/\s/g, "")}`}
@@ -1556,7 +1556,7 @@ const KostenloseVorschauV2 = () => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-5">
-              {settings?.hero_h1_line1 ?? "dein Handwerksbetrieb."}
+              {settings?.hero_h1_line1 ?? "Dein Handwerksbetrieb."}
               <br />
               {settings?.hero_h1_line2 ?? "Eine neue Webseite."}
               <br />
@@ -1566,8 +1566,8 @@ const KostenloseVorschauV2 = () => {
             </h1>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              Ich zeige dir in 48 Stunden, wie dein Betrieb online wirkt – speziell für Handwerksbetriebe. Kostenlos. Unverbindlich. Ohne Risiko.
-            </p>
+ Ich zeige dir in 48 Stunden, wie dein Betrieb online wirkt – speziell für Handwerksbetriebe. Kostenlos. Unverbindlich. Ohne Risiko.
+ </p>
 
             {/* Countdown */}
             {(settings?.show_countdown ?? true) && (
@@ -1611,7 +1611,7 @@ const KostenloseVorschauV2 = () => {
               </p>
               <p className="text-center mt-2">
                 <Link to="/preise" className="text-xs text-primary/80 hover:text-primary inline-flex items-center gap-1 transition-colors">
-                  Lieber einmalig kaufen? <ArrowRight className="w-3 h-3" aria-hidden={true} focusable={false} />
+ Lieber einmalig kaufen? <ArrowRight className="w-3 h-3" aria-hidden={true} focusable={false} />
                 </Link>
               </p>
             </div>
@@ -1634,7 +1634,7 @@ const KostenloseVorschauV2 = () => {
                 { icon: Clock, text: "Fertig in 48 Stunden" },
                 { icon: Check, text: "Kein technisches Wissen nötig" },
               ].map((it) => (
-                <div key={it.text} className="flex items-center justify-center gap-2 text-sm font-medium">
+ <div key={it.text} className="flex items-center justify-center gap-2 text-sm font-medium">
                   <it.icon className="w-5 h-5 text-primary shrink-0" />
                   <span>{it.text}</span>
                 </div>
@@ -1649,11 +1649,11 @@ const KostenloseVorschauV2 = () => {
       <section className="py-16 sm:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl text-3xl font-bold text-center mb-12">
-            Erkennst du sich wieder?
-          </h2>
+ Erkennst du sich wieder?
+ </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {painPoints.map((p) => (
-              <div key={p.title} className="bg-card rounded-2xl p-6 border border-border shadow-sm">
+ <div key={p.title} className="bg-card rounded-2xl p-6 border border-border shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <p.icon className="w-6 h-6 text-primary" />
                 </div>
@@ -1664,7 +1664,7 @@ const KostenloseVorschauV2 = () => {
           </div>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              Jetzt kostenlose Vorschau sichern <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
+ Jetzt kostenlose Vorschau sichern <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -1676,11 +1676,11 @@ const KostenloseVorschauV2 = () => {
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl text-3xl font-bold text-center mb-12">
-            In 3 Schritten zu deiner Vorschau
-          </h2>
+ In 3 Schritten zu deiner Vorschau
+ </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 max-w-5xl mx-auto items-stretch">
             {processSteps.map((s, i) => (
-              <div key={s.title} className="relative flex">
+ <div key={s.title} className="relative flex">
                 <div className="bg-card rounded-2xl p-6 border border-border shadow-sm w-full">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground font-bold flex items-center justify-center shrink-0">
@@ -1699,7 +1699,7 @@ const KostenloseVorschauV2 = () => {
           </div>
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              Schritt 1 starten – Formular ausfüllen <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
+ Schritt 1 starten – Formular ausfüllen <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -1721,8 +1721,8 @@ const KostenloseVorschauV2 = () => {
                 <Calendar className="w-4 h-4" aria-hidden={true} focusable={false} />
                 {monatName} ist ausgebucht – Warteliste für {nextMonthLabel}
               </div>
-            ) : (
-              (settings?.show_slots ?? true) && <SlotPill total={totalSlots} taken={takenSlots} />
+ ) : (
+ (settings?.show_slots ?? true) && <SlotPill total={totalSlots} taken={takenSlots} />
             )}
           </div>
           <div className="max-w-2xl mx-auto">
@@ -1733,7 +1733,7 @@ const KostenloseVorschauV2 = () => {
 
       {/* DEMOS */}
       {(settings?.show_demos ?? true) && activeDemos.length > 0 && (
-      <section className="py-16 sm:py-20">
+ <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-3xl text-3xl font-bold mb-3">So könnte deine Webseite aussehen</h2>
@@ -1746,7 +1746,7 @@ const KostenloseVorschauV2 = () => {
           >
             <CarouselContent className="-ml-4">
               {activeDemos.map((d, idx) => (
-                <CarouselItem key={`${d.company}-${idx}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+ <CarouselItem key={`${d.company}-${idx}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                   <button
                     type="button"
                     onClick={() => {
@@ -1776,8 +1776,8 @@ const KostenloseVorschauV2 = () => {
                             loading="lazy"
                             decoding="async"
                           />
-                        ) : (
-                          <div className="aspect-[8/5] bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+ ) : (
+ <div className="aspect-[8/5] bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
                             <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
                             <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
                             <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
@@ -1788,8 +1788,8 @@ const KostenloseVorschauV2 = () => {
                         <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-200">
                           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-flex items-center gap-2 rounded-full bg-card text-foreground px-4 py-2 text-sm font-semibold shadow-lg">
                             <ExternalLink className="w-4 h-4" aria-hidden={true} focusable={false} />
-                            Live ansehen
-                          </span>
+ Live ansehen
+ </span>
                         </div>
                       )}
                     </div>
@@ -1802,13 +1802,13 @@ const KostenloseVorschauV2 = () => {
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1 text-amber-500 text-sm">
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <Star key={i} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
+ <Star key={i} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
                           ))}
                           <span className="ml-1 text-muted-foreground">Kunde ist begeistert</span>
                         </div>
                         {d.external_url && (
                           <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
-                            Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" aria-hidden={true} focusable={false} />
+ Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" aria-hidden={true} focusable={false} />
                           </span>
                         )}
                       </div>
@@ -1821,7 +1821,7 @@ const KostenloseVorschauV2 = () => {
           <CarouselDots api={demosApi} count={activeDemos.length} />
           <div className="text-center mt-10">
             <Button size="lg" onClick={scrollToForm} className="shadow-md">
-              So eine Vorschau für meinen Betrieb <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
+ So eine Vorschau für meinen Betrieb <ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
             </Button>
           </div>
         </div>
@@ -1833,8 +1833,8 @@ const KostenloseVorschauV2 = () => {
       <section className="py-16 sm:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl text-3xl font-bold text-center mb-12">
-            Was Kunden über ihre Vorschau sagen
-          </h2>
+ Was Kunden über ihre Vorschau sagen
+ </h2>
           <Carousel
             opts={{ align: "start", loop: activeTestimonials.length > 3 }}
             plugins={[Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]}
@@ -1843,142 +1843,142 @@ const KostenloseVorschauV2 = () => {
           >
             <CarouselContent className="-ml-4">
               {activeTestimonials.map((t, idx) => (
-                <CarouselItem key={`${t.name}-${idx}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+ <CarouselItem key={`${t.name}-${idx}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                   <div className="h-full bg-card rounded-2xl p-6 border border-border shadow-sm flex flex-col">
                     <div className="flex items-center gap-1 text-amber-500 mb-3">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
+ <Star key={i} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
                       ))}
                     </div>
                     <blockquote className="text-foreground/90 mb-4 flex-1">
                       „{t.quote}"
-                    </blockquote>
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <div className="font-bold">{t.name}</div>
-                        <div className="text-sm text-muted-foreground">{t.role}</div>
-                      </div>
-                      {t.result && (
-                        <span className="shrink-0 inline-flex items-center rounded-full bg-primary/10 text-primary px-2.5 py-1 text-xs font-semibold">
-                          {t.result}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-          <CarouselDots api={testimonialsApi} count={activeTestimonials.length} />
-          <div className="mt-10 flex justify-center px-4">
-            <Button
-              size="lg"
-              onClick={scrollToForm}
-              className="shadow-md w-full sm:w-auto max-w-full whitespace-normal text-center h-auto min-h-12 py-3"
-            >
-              <span className="flex-1">Jetzt meine kostenlose Vorschau anfordern</span>
-              <ArrowRight className="ml-2 w-5 h-5 shrink-0" aria-hidden={true} focusable={false} />
-            </Button>
-          </div>
-        </div>
-      </section>
-      )}
+ </blockquote>
+ <div className="flex items-center justify-between gap-3">
+ <div>
+ <div className="font-bold">{t.name}</div>
+ <div className="text-sm text-muted-foreground">{t.role}</div>
+ </div>
+ {t.result && (
+ <span className="shrink-0 inline-flex items-center rounded-full bg-primary/10 text-primary px-2.5 py-1 text-xs font-semibold">
+ {t.result}
+ </span>
+ )}
+ </div>
+ </div>
+ </CarouselItem>
+ ))}
+ </CarouselContent>
+ </Carousel>
+ <CarouselDots api={testimonialsApi} count={activeTestimonials.length} />
+ <div className="mt-10 flex justify-center px-4">
+ <Button
+ size="lg"
+ onClick={scrollToForm}
+ className="shadow-md w-full sm:w-auto max-w-full whitespace-normal text-center h-auto min-h-12 py-3"
+ >
+ <span className="flex-1">Jetzt meine kostenlose Vorschau anfordern</span>
+ <ArrowRight className="ml-2 w-5 h-5 shrink-0" aria-hidden={true} focusable={false} />
+ </Button>
+ </div>
+ </div>
+ </section>
+ )}
 
-      {/* FAQ */}
-      {(settings?.show_faq ?? true) && activeFaqs.length > 0 && (
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="text-3xl text-3xl font-bold text-center mb-3">
-            Das fragen Handwerker am häufigsten
-          </h2>
-          <p className="text-center text-muted-foreground mb-10">
-            Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.
-          </p>
-          <Accordion type="single" collapsible className="bg-card rounded-2xl border border-border px-5 shadow-sm">
-            {activeFaqs.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-b last:border-b-0">
-                <AccordionTrigger className="text-left text-base sm:text-lg font-semibold">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-base whitespace-pre-line">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
-      )}
+ {/* FAQ */}
+ {(settings?.show_faq ?? true) && activeFaqs.length > 0 && (
+ <section className="py-16 sm:py-20">
+ <div className="container mx-auto px-4 max-w-3xl">
+ <h2 className="text-3xl text-3xl font-bold text-center mb-3">
+ Das fragen Handwerker am häufigsten
+ </h2>
+ <p className="text-center text-muted-foreground mb-10">
+ Keine Fachbegriffe. Keine Ausreden. Nur ehrliche Antworten.
+ </p>
+ <Accordion type="single" collapsible className="bg-card rounded-2xl border border-border px-5 shadow-sm">
+ {activeFaqs.map((f, i) => (
+ <AccordionItem key={i} value={`item-${i}`} className="border-b last:border-b-0">
+ <AccordionTrigger className="text-left text-base sm:text-lg font-semibold">
+ {f.q}
+ </AccordionTrigger>
+ <AccordionContent className="text-muted-foreground text-base whitespace-pre-line">
+ {f.a}
+ </AccordionContent>
+ </AccordionItem>
+ ))}
+ </Accordion>
+ </div>
+ </section>
+ )}
 
-      {/* FINAL CTA */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-primary via-primary to-accent text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            {(settings?.show_countdown ?? true) && (
-              <div className="mb-6">
-                <Countdown inverse targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
-              </div>
-            )}
-            {(settings?.show_slots ?? true) && (
-              <div className="mb-6 flex justify-center">
-                <SlotPill inverse total={totalSlots} taken={takenSlots} />
-              </div>
-            )}
-            <h2 className="text-3xl text-3xl font-bold mb-4 leading-tight">
-              {isWaitlist
-                ? `${monatName} ist ausgebucht – sichere sich ${nextMonthLabel}.`
-                : (settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut.")}
-            </h2>
-            <p className="text-base sm:text-xl text-primary-foreground/85 mb-8">
-              {isWaitlist
-                ? `Lass sich auf die Warteliste setzen – sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir.`
-                : (settings?.final_cta_subtext ?? "deine kostenlose Webseiten-Vorschau wartet.")}
-            </p>
-            <Button
-              size="lg"
-              variant="secondary"
-              onClick={scrollToForm}
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-xl"
-            >
-              {isWaitlist
-                ? `Auf die ${nextMonthLabel}-Warteliste`
-                : (settings?.final_cta_button ?? "Jetzt letzten Platz sichern")}
-              {" "}<ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
-            </Button>
-          </div>
-        </div>
-      </section>
+ {/* FINAL CTA */}
+ <section className="py-16 sm:py-20 bg-gradient-to-br from-primary via-primary to-accent text-primary-foreground">
+ <div className="container mx-auto px-4 text-center">
+ <div className="max-w-3xl mx-auto">
+ {(settings?.show_countdown ?? true) && (
+ <div className="mb-6">
+ <Countdown inverse targetISO={settings?.countdown_target} mode={settings?.countdown_mode} />
+ </div>
+ )}
+ {(settings?.show_slots ?? true) && (
+ <div className="mb-6 flex justify-center">
+ <SlotPill inverse total={totalSlots} taken={takenSlots} />
+ </div>
+ )}
+ <h2 className="text-3xl text-3xl font-bold mb-4 leading-tight">
+ {isWaitlist
+ ? `${monatName} ist ausgebucht – sichere sich ${nextMonthLabel}.`
+ : (settings?.final_cta_headline ?? "Warte nicht, bis es dein Mitbewerber tut.")}
+ </h2>
+ <p className="text-base sm:text-xl text-primary-foreground/85 mb-8">
+ {isWaitlist
+ ? `Lass sich auf die Warteliste setzen – sobald die Plätze für ${nextMonthLabel} freigeschaltet werden, melden wir uns zuerst bei dir.`
+ : (settings?.final_cta_subtext ?? "deine kostenlose Webseiten-Vorschau wartet.")}
+ </p>
+ <Button
+ size="lg"
+ variant="secondary"
+ onClick={scrollToForm}
+ className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-xl"
+ >
+ {isWaitlist
+ ? `Auf die ${nextMonthLabel}-Warteliste`
+ : (settings?.final_cta_button ?? "Jetzt letzten Platz sichern")}
+ {" "}<ArrowRight className="ml-2 w-5 h-5" aria-hidden={true} focusable={false} />
+ </Button>
+ </div>
+ </div>
+ </section>
 
-      {/* Demo-Vorschau: Bestätigungs-Dialog vor externem Link */}
-      <AlertDialog open={!!previewDemo} onOpenChange={(open) => !open && setPreviewDemo(null)}>
-        <AlertDialogContent className="max-w-md">
-          <AlertDialogHeader>
-            <div className="mx-auto mb-2 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-              <ExternalLink className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
-            </div>
-            <AlertDialogTitle className="text-center">
-              Live-Vorschau von {previewDemo?.company}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-center">
-              Die Vorschau öffnet sich in einem neuen Tab. So bleibt diese Seite für du offen –
-              und Du kannst danach direkt deine eigene Vorschau anfordern.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="sm:flex-col sm:space-x-0 gap-2">
-            <AlertDialogAction
-              onClick={() => {
-                if (previewDemo?.url) {
-                  window.open(previewDemo.url, "_blank", "noopener,noreferrer");
-                }
-                setPreviewDemo(null);
-              }}
-              className="w-full"
-            >
-              Vorschau öffnen <ExternalLink className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
-            </AlertDialogAction>
-            <AlertDialogCancel className="w-full mt-0">
-              Hier bleiben
-            </AlertDialogCancel>
+ {/* Demo-Vorschau: Bestätigungs-Dialog vor externem Link */}
+ <AlertDialog open={!!previewDemo} onOpenChange={(open) => !open && setPreviewDemo(null)}>
+ <AlertDialogContent className="max-w-md">
+ <AlertDialogHeader>
+ <div className="mx-auto mb-2 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+ <ExternalLink className="w-5 h-5 text-primary" aria-hidden={true} focusable={false} />
+ </div>
+ <AlertDialogTitle className="text-center">
+ Live-Vorschau von {previewDemo?.company}
+ </AlertDialogTitle>
+ <AlertDialogDescription className="text-center">
+ Die Vorschau öffnet sich in einem neuen Tab. So bleibt diese Seite für du offen –
+ und Du kannst danach direkt deine eigene Vorschau anfordern.
+ </AlertDialogDescription>
+ </AlertDialogHeader>
+ <AlertDialogFooter className="sm:flex-col sm:space-x-0 gap-2">
+ <AlertDialogAction
+ onClick={() => {
+ if (previewDemo?.url) {
+ window.open(previewDemo.url, "_blank", "noopener,noreferrer");
+ }
+ setPreviewDemo(null);
+ }}
+ className="w-full"
+ >
+ Vorschau öffnen <ExternalLink className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+ </AlertDialogAction>
+ <AlertDialogCancel className="w-full mt-0">
+ Hier bleiben
+ </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

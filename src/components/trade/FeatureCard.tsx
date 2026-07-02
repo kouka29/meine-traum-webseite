@@ -8,7 +8,7 @@ interface Props {
 }
 
 const FeatureCard = ({ emoji, title, description }: Props) => (
-  <MarketingCard variant="feature">
+ <MarketingCard variant="feature">
     <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 mb-1">
       <EmojiIcon emoji={emoji} size={24} />
     </div>

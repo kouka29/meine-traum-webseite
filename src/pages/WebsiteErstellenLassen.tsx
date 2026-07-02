@@ -30,7 +30,7 @@ const faqs = [
 ];
 
 const WebsiteErstellenLassen = () => (
-  <main id="main-content" className="pt-20">
+ <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -41,16 +41,16 @@ const WebsiteErstellenLassen = () => (
               <span className="gradient-text">die aktiv Kunden gewinnt</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Du möchtest eine moderne Website für dein Unternehmen erstellen lassen? Wir gestalten conversion-optimierte
-              Webseiten, die nicht nur gut aussehen, sondern messbar mehr Anfragen und Umsatz generieren.
-            </p>
+ Du möchtest eine moderne Website für dein Unternehmen erstellen lassen? Wir gestalten conversion-optimierte
+ Webseiten, die nicht nur gut aussehen, sondern messbar mehr Anfragen und Umsatz generieren.
+ </p>
             <div className="flex flex-wrap justify-center gap-5 mt-8">
               {[
                 { icon: Gift, text: "Kostenlose Vorschau" },
                 { icon: Shield, text: "Unverbindlich" },
                 { icon: Clock, text: "In 48 h fertig" },
               ].map((b) => (
-                <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
+ <div key={b.text} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <b.icon size={16} className="text-primary" />
                   <span>{b.text}</span>
                 </div>
@@ -67,11 +67,11 @@ const WebsiteErstellenLassen = () => (
         <AnimatedSection>
           <h2 className="text-center mb-5 text-balance">Was Du bekommst, wenn du deine Website bei uns erstellen lassen</h2>
           <p className="text-muted-foreground text-center max-w-2xl mx-auto text-lg mb-12">
-            Jede Website, die wir erstellen, ist ein strategisches Verkaufsinstrument – kein Template von der Stange.
-          </p>
+ Jede Website, die wir erstellen, ist ein strategisches Verkaufsinstrument – kein Template von der Stange.
+ </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-20">
             {benefits.map((b) => (
-              <div key={b} className="flex items-center gap-3">
+ <div key={b} className="flex items-center gap-3">
                 <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{b}</span>
               </div>
@@ -83,7 +83,7 @@ const WebsiteErstellenLassen = () => (
           <h2 className="text-center mb-12 text-balance">So funktioniert es – Website erstellen in 4 Schritten</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-20">
             {steps.map((s) => (
-              <div key={s.step} className="text-center p-6 rounded-2xl border border-border hover:border-primary/20 transition-all">
+ <div key={s.step} className="text-center p-6 rounded-2xl border border-border hover:border-primary/20 transition-all">
                 <span className="font-heading text-4xl font-bold text-foreground">{s.step}</span>
                 <h3 className="font-heading text-lg font-semibold mt-3 mb-2">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
@@ -97,7 +97,7 @@ const WebsiteErstellenLassen = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+ <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

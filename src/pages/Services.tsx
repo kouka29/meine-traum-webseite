@@ -17,7 +17,7 @@ const services = [
   {
     icon: TrendingUp,
     title: "Conversion-Optimierung",
-    desc: "deine Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
+    desc: "Deine Website hat Besucher, aber keine Anfragen? Wir analysieren, optimieren und machen aus Besuchern zahlende Kunden.",
     features: ["Conversion-Analyse", "Optimierte Landingpages", "A/B Testing", "Tracking & Analytics"],
     result: "Bis zu 400% mehr Conversions",
     link: "/conversion-optimierung",
@@ -58,28 +58,28 @@ const faqs = [
 ];
 
 const Services = () => (
-  <main id="main-content" className="pt-20">
+ <main id="main-content" className="pt-20">
     <section className="section-padding pb-0">
       <div className="container-narrow px-4">
         <AnimatedSection>
           <div className="text-center mb-20 max-w-2xl mx-auto">
             <span className="badge-label bg-primary/10 text-primary mb-5">
-              Unsere Leistungen
-            </span>
+ Unsere Leistungen
+ </span>
             <h1 className="mb-5 text-balance">
               Webdesign, Conversion & SEO –{" "}
               <span className="gradient-text">alles für deinen Online-Erfolg</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Wir erstellen keine Standard-Websites, sondern Verkaufsinstrumente, die sich bezahlt machen –
-              für Handwerker, Coaches, Berater und kleine Unternehmen.
-            </p>
+ Wir erstellen keine Standard-Websites, sondern Verkaufsinstrumente, die sich bezahlt machen –
+ für Handwerker, Coaches, Berater und kleine Unternehmen.
+ </p>
           </div>
         </AnimatedSection>
 
         <div className="space-y-6">
           {services.map((s, i) => (
-            <AnimatedSection key={s.title} delay={i * 0.08}>
+ <AnimatedSection key={s.title} delay={i * 0.08}>
               <Link to={s.link} className="flex flex-col md:flex-row gap-7 p-8 md:p-10 rounded-2xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 bg-background block">
                 <div className="w-14 h-14 rounded-xl gradient-bg flex items-center justify-center shrink-0">
                   <s.icon size={26} className="text-primary-foreground" />
@@ -94,7 +94,7 @@ const Services = () => (
                   <p className="text-muted-foreground mb-5 leading-relaxed">{s.desc}</p>
                   <div className="flex flex-wrap gap-4">
                     {s.features.map((f) => (
-                      <span key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
+ <span key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Check size={16} className="text-primary" aria-hidden={true} focusable={false} />
                         {f}
                       </span>
@@ -112,19 +112,19 @@ const Services = () => (
               <span className="badge-label bg-primary/10 text-primary mb-5">FAQ</span>
               <h2 className="mb-5 text-balance">Häufige Fragen zu unseren Leistungen</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Keine Standard-Antworten. Hier findest du klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
-              </p>
+ Keine Standard-Antworten. Hier findest du klare Infos zu Leistungen, Preisen und Ablauf – ohne Fachchinesisch.
+ </p>
               <div className="hidden lg:block p-6 rounded-2xl border border-border bg-muted/30">
-                <p className="font-heading font-semibold mb-2">deine Frage ist nicht dabei?</p>
+                <p className="font-heading font-semibold mb-2">Deine Frage ist nicht dabei?</p>
                 <p className="text-sm text-muted-foreground mb-4">Wir beantworten sie gerne persönlich – unverbindlich und kostenfrei.</p>
                 <Link to="/kontakt" className="text-sm font-semibold text-primary hover:underline">
-                  Jetzt Kontakt aufnehmen →
-                </Link>
+ Jetzt Kontakt aufnehmen →
+ </Link>
               </div>
             </div>
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+ <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

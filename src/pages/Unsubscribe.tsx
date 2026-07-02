@@ -71,11 +71,11 @@ const Unsubscribe = () => {
               <MailX className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">E-Mails abbestellen?</h1>
               <p className="text-muted-foreground mb-6">
-                Klick auf bestätigen, um keine weiteren E-Mails von uns zu erhalten.
-              </p>
+ Klick auf bestätigen, um keine weiteren E-Mails von uns zu erhalten.
+ </p>
               <Button variant="gradient" size="lg" onClick={confirm} className="w-full">
-                Abbestellung bestätigen
-              </Button>
+ Abbestellung bestätigen
+ </Button>
             </>
           )}
           {state.status === "submitting" && (
@@ -89,8 +89,8 @@ const Unsubscribe = () => {
               <Check className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Erfolgreich abgemeldet</h1>
               <p className="text-muted-foreground">
-                Du erhältst keine weiteren E-Mails von uns.
-              </p>
+ Du erhältst keine weiteren E-Mails von uns.
+ </p>
             </>
           )}
           {state.status === "already" && (
@@ -98,8 +98,8 @@ const Unsubscribe = () => {
               <Check className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Bereits abgemeldet</h1>
               <p className="text-muted-foreground">
-                Diese E-Mail-Adresse wurde bereits abgemeldet.
-              </p>
+ Diese E-Mail-Adresse wurde bereits abgemeldet.
+ </p>
             </>
           )}
           {state.status === "invalid" && (
@@ -107,8 +107,8 @@ const Unsubscribe = () => {
               <XCircle className="w-12 h-12 mx-auto mb-4 text-destructive" aria-hidden={true} focusable={false} />
               <h1 className="text-2xl font-bold mb-2">Ungültiger Link</h1>
               <p className="text-muted-foreground">
-                Dieser Abmelde-Link ist ungültig oder abgelaufen.
-              </p>
+ Dieser Abmelde-Link ist ungültig oder abgelaufen.
+ </p>
             </>
           )}
           {state.status === "error" && (

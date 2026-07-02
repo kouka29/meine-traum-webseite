@@ -27,15 +27,15 @@ export default function ZahlungErfolgreich() {
           <Check size={24} strokeWidth={3} aria-hidden={true} focusable={false} />
         </div>
         <h1 style={{ fontSize: 28, fontWeight: 800, color: "#1E1B4B", marginBottom: 10, letterSpacing: "-0.02em" }}>
-          Zahlung erfolgreich
-        </h1>
+ Zahlung erfolgreich
+ </h1>
         <p style={{ fontSize: 15, color: "#6B7280", lineHeight: 1.6, marginBottom: 18 }}>
           Vielen Dank! Deine Zahlung wurde erfolgreich verarbeitet.
           {auftrag && (<> dein Auftrag <strong style={{ color: "#1E1B4B" }}>{auftrag}</strong> ist bestätigt.</>)}
         </p>
         <p style={{ fontSize: 13, color: "#6B7280", marginBottom: 24 }}>
-          Du erhältst in Kürze eine Bestätigung per E-Mail. Wir melden uns innerhalb von 24 h für die nächsten Schritte.
-        </p>
+ Du erhältst in Kürze eine Bestätigung per E-Mail. Wir melden uns innerhalb von 24 h für die nächsten Schritte.
+ </p>
         {sessionId && (
           <div style={{ fontSize: 11, color: "#9CA3AF", marginBottom: 24, fontFamily: "monospace" }}>
             Ref: {sessionId.slice(0, 24)}…
@@ -47,8 +47,8 @@ export default function ZahlungErfolgreich() {
           fontSize: 15, fontWeight: 700, borderRadius: 12,
           textDecoration: "none",
         }}>
-          Zur Startseite
-        </Link>
+ Zur Startseite
+ </Link>
       </div>
     </main>
   );

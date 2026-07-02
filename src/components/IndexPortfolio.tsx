@@ -132,8 +132,8 @@ const IndexPortfolio = () => {
         <AnimatedSection>
           <div className="text-center mb-12 md:mb-20">
             <h2 className="mb-5 text-balance">
-              Webdesign-Projekte, die Ergebnisse sprechen lassen
-            </h2>
+ Webdesign-Projekte, die Ergebnisse sprechen lassen
+ </h2>
           </div>
         </AnimatedSection>
         <Carousel
@@ -181,10 +181,10 @@ const IndexPortfolio = () => {
                               style={reducedMotion || flatImages[p.id] ? undefined : { transition: "object-position 9s linear" }}
                             />
                           </div>
-                        ) : p.mockup_desktop_url ? (
-                          <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
-                        ) : (
-                          <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
+ ) : p.mockup_desktop_url ? (
+ <DeviceMockup desktopUrl={p.mockup_desktop_url} title={p.title} />
+ ) : (
+ <div className="aspect-video bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 p-4 flex flex-col justify-end">
                             <div className="h-2 w-2/3 bg-foreground/20 rounded mb-2" />
                             <div className="h-1.5 w-1/2 bg-foreground/15 rounded mb-1" />
                             <div className="h-1.5 w-1/3 bg-foreground/15 rounded" />
@@ -195,8 +195,8 @@ const IndexPortfolio = () => {
                         <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-200">
                           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-flex items-center gap-2 rounded-full bg-card text-foreground px-4 py-2 text-sm font-semibold shadow-lg">
                             <ExternalLink className="w-4 h-4" aria-hidden={true} focusable={false} />
-                            Live ansehen
-                          </span>
+ Live ansehen
+ </span>
                         </div>
                       )}
                     </div>
@@ -232,15 +232,15 @@ const IndexPortfolio = () => {
                     {p.external_url && (
                       <div className="flex items-center justify-end">
                         <span className="text-xs font-semibold text-primary inline-flex items-center gap-1 shrink-0">
-                          Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" aria-hidden={true} focusable={false} />
+ Ansehen <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" aria-hidden={true} focusable={false} />
                         </span>
                       </div>
                     )}
                   </div>
                 </div>
-              );
-              return (
-                <CarouselItem key={p.id} className="pl-6 basis-full sm:basis-1/2 lg:basis-1/3 h-auto">
+ );
+ return (
+ <CarouselItem key={p.id} className="pl-6 basis-full sm:basis-1/2 lg:basis-1/3 h-auto">
                   <AnimatedSection delay={i * 0.05} className="h-full">
                     {p.external_url ? (
                       <a href={normalizeUrl(p.external_url)} target="_blank" rel="noopener noreferrer" className="block h-full">

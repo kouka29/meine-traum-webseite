@@ -25,7 +25,7 @@ export default function StripeEmbeddedCheckoutBox({
   items, mode, description, customerEmail, metadata, returnUrl,
 }: Props) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+ const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;

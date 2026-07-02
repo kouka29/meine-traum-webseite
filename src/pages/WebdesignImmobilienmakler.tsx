@@ -7,17 +7,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const painPoints = [
   "Verkäufer und Käufer findest du nicht über Google, sondern gehen zur Konkurrenz",
-  "deine Website präsentiert deine Objekte nicht ansprechend genug",
+  "Deine Website präsentiert deine Objekte nicht ansprechend genug",
   "Du hast keine automatisierte Wertermittlung oder Lead-Generierung auf deiner Seite",
-  "deine Online-Präsenz vermittelt nicht das Vertrauen, das Eigentümer erwarten",
+  "Deine Online-Präsenz vermittelt nicht das Vertrauen, das Eigentümer erwarten",
 ];
 
 const features = [
   { icon: Home, title: "Immobilien-Design", desc: "Hochwertige Objektpräsentation mit großen Bildern, virtuellen Rundgängen und übersichtlicher Darstellung deiner Angebote." },
   { icon: Search, title: "SEO für Immobilienmakler", desc: 'Gefunden werden bei "Immobilienmakler in Deiner Stadt", "Haus verkaufen" und lokalen Suchanfragen.' },
-  { icon: Camera, title: "Objekt-Präsentation", desc: "deine Immobilien werden professionell in Szene gesetzt – mit Bildergalerien und strukturierten Exposés." },
+  { icon: Camera, title: "Objekt-Präsentation", desc: "Deine Immobilien werden professionell in Szene gesetzt – mit Bildergalerien und strukturierten Exposés." },
   { icon: MapPin, title: "Regionale Sichtbarkeit", desc: "Lokale SEO-Optimierung sorgt dafür, dass Eigentümer und Käufer aus deiner Region Du findest." },
-  { icon: Smartphone, title: "Mobile Optimierung", desc: "Immobiliensuche findet unterwegs statt – deine Website funktioniert perfekt auf jedem Gerät." },
+  { icon: Smartphone, title: "Mobile Optimierung", desc: "Immobiliensuche findet unterwegs statt – Deine Website funktioniert perfekt auf jedem Gerät." },
   { icon: TrendingUp, title: "Lead-Generierung", desc: "Wertermittlungs-Formulare und Kontaktmöglichkeiten, die Eigentümer-Leads generieren." },
 ];
 
@@ -29,7 +29,7 @@ const faqs = [
 ];
 
 const WebdesignImmobilienmakler = () => (
-  <main id="main-content" className="pt-20">
+ <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -40,9 +40,9 @@ const WebdesignImmobilienmakler = () => (
               <span className="gradient-text">Mehr Eigentümer-Leads durch eine starke Website</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Als Immobilienmakler brauchst du eine Website, die Vertrauen schafft, deine Objekte hochwertig präsentiert
-              und kontinuierlich neue Leads generiert. Genau das liefern wir.
-            </p>
+ Als Immobilienmakler brauchst du eine Website, die Vertrauen schafft, deine Objekte hochwertig präsentiert
+ und kontinuierlich neue Leads generiert. Genau das liefern wir.
+ </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
                 <Link to="/kontakt">Kostenlose Website-Vorschau für Makler <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
@@ -59,7 +59,7 @@ const WebdesignImmobilienmakler = () => (
             <h2 className="text-center mb-10 text-balance">Kennst du diese Herausforderungen?</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
-                <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
+ <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
                   <span className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-destructive" />
                   </span>
@@ -75,7 +75,7 @@ const WebdesignImmobilienmakler = () => (
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
-            <AnimatedSection key={f.title} delay={i * 0.08}>
+ <AnimatedSection key={f.title} delay={i * 0.08}>
               <div className="p-7 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 bg-background h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                   <f.icon size={20} className="text-primary" />
@@ -96,7 +96,7 @@ const WebdesignImmobilienmakler = () => (
                 { value: "Seite 1", label: "Google-Rankings lokal" },
                 { value: "24/7", label: "Automatische Lead-Generierung" },
               ].map((s) => (
-                <div key={s.label} className="text-center">
+ <div key={s.label} className="text-center">
                   <span className="font-heading text-4xl font-bold text-primary-foreground">{s.value}</span>
                   <p className="text-sm text-primary-foreground/70 mt-2">{s.label}</p>
                 </div>
@@ -117,7 +117,7 @@ const WebdesignImmobilienmakler = () => (
                 { label: "Kostenloser Website-Check", to: "/kostenloser-website-check" },
                 { label: "Webdesign Preise", to: "/webdesign-preise" },
               ].map((l) => (
-                <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
+ <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
                   <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm font-medium">{l.label}</span>
                   <ArrowRight size={16} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
@@ -132,7 +132,7 @@ const WebdesignImmobilienmakler = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+ <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

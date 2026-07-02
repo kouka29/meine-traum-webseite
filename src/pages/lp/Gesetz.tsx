@@ -118,8 +118,8 @@ const Gesetz = () => {
   const [form, setForm] = useState({ name: "", firma: "", url: "", email: "", telefon: "" });
   const [submitted, setSubmitted] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"slot_assigned" | "waitlist" | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+ const [submitting, setSubmitting] = useState(false);
+ const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     setSubmitError(null);
@@ -258,8 +258,8 @@ const Gesetz = () => {
         <section className="py-20 md:py-28 bg-muted/40">
           <div className="container mx-auto px-4 max-w-6xl">
             <motion.h2 {...fadeUp} className="font-display text-3xl md:text-4xl font-bold text-center mb-14">
-              Was passiert, wenn Sie nichts tun?
-            </motion.h2>
+ Was passiert, wenn Sie nichts tun?
+ </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {scenarios.map(({ Icon, title, text }, i) => {
                 const variants = [
@@ -300,7 +300,7 @@ const Gesetz = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               {c.problems.map((p, i) => (
-                <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
+ <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
                   <Card className="p-8 h-full rounded-2xl border-2 hover:border-primary/40 transition-colors">
                     <div className="mb-4"><EmojiIcon emoji={p.icon} size={20} /></div>
                     <h3 className="font-display text-xl font-bold mb-3">{p.title}</h3>
@@ -318,8 +318,8 @@ const Gesetz = () => {
         <div className="container mx-auto px-4 max-w-3xl text-center">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl font-display text-3xl font-bold mb-10">
-              Das sagt der Staat — keine Meinung, Fakten
-            </h2>
+ Das sagt der Staat — keine Meinung, Fakten
+ </h2>
             <Card className="p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
               <div className="flex items-center gap-5 mb-5 flex-wrap">
                 <div className="shrink-0 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100 flex items-center justify-center">
@@ -329,30 +329,30 @@ const Gesetz = () => {
               </div>
               <blockquote className="text-muted-foreground italic border-l-4 border-primary/40 pl-4 mb-6">
                 „{c.source.quote}"
-              </blockquote>
-              <a href={c.source.link} target="_blank" rel="noopener noreferrer">
-                <Button variant="outline-primary">Offizielle Quelle ansehen →</Button>
-              </a>
-            </Card>
-            {isBfsg && (
-              <Card className="mt-6 p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
-                <div className="flex items-center gap-5 mb-5 flex-wrap">
-                  <div className="shrink-0 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100 flex items-center justify-center">
-                    <img src={bfdiLogo.url} alt="Logo Bundesbeauftragte für den Datenschutz und die Informationsfreiheit" width={160} height={48} className="h-10 md:h-12 w-auto" loading="lazy" decoding="async" />
-                  </div>
-                  <div className="font-semibold text-lg">Bundesbeauftragte für den Datenschutz (BfDI)</div>
-                </div>
-                <blockquote className="text-muted-foreground italic border-l-4 border-primary/40 pl-4 mb-6">
-                  „Für Cookies und Tracking-Tools gilt: Ohne aktive Einwilligung des Nutzers ist der Einsatz illegal. Falsche Cookie-Banner führen zu Abmahnungen und DSGVO-Bußgeldern."
-                </blockquote>
+ </blockquote>
+ <a href={c.source.link} target="_blank" rel="noopener noreferrer">
+ <Button variant="outline-primary">Offizielle Quelle ansehen →</Button>
+ </a>
+ </Card>
+ {isBfsg && (
+ <Card className="mt-6 p-8 md:p-10 rounded-2xl border-2 border-primary/20 bg-card shadow-lg text-left">
+ <div className="flex items-center gap-5 mb-5 flex-wrap">
+ <div className="shrink-0 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100 flex items-center justify-center">
+ <img src={bfdiLogo.url} alt="Logo Bundesbeauftragte für den Datenschutz und die Informationsfreiheit" width={160} height={48} className="h-10 md:h-12 w-auto" loading="lazy" decoding="async" />
+ </div>
+ <div className="font-semibold text-lg">Bundesbeauftragte für den Datenschutz (BfDI)</div>
+ </div>
+ <blockquote className="text-muted-foreground italic border-l-4 border-primary/40 pl-4 mb-6">
+ „Für Cookies und Tracking-Tools gilt: Ohne aktive Einwilligung des Nutzers ist der Einsatz illegal. Falsche Cookie-Banner führen zu Abmahnungen und DSGVO-Bußgeldern."
+ </blockquote>
                 <a href="https://www.bfdi.bund.de/DE/Buerger/Inhalte/Telemedien/Cookie-Banner.html" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline-primary">Offizielle Quelle ansehen →</Button>
                 </a>
               </Card>
             )}
             <p className="text-xs text-muted-foreground/80 italic mt-6 text-center">
-              Hinweis: Die Nutzung der Logos dient ausschließlich der Quellenangabe. Es besteht keine Verbindung, Kooperation oder Empfehlung durch die genannten Behörden.
-            </p>
+ Hinweis: Die Nutzung der Logos dient ausschließlich der Quellenangabe. Es besteht keine Verbindung, Kooperation oder Empfehlung durch die genannten Behörden.
+ </p>
           </motion.div>
         </div>
       </section>
@@ -363,17 +363,17 @@ const Gesetz = () => {
           <div className="container mx-auto px-4 max-w-[680px]">
             <motion.div {...fadeUp} className="text-center mb-10">
               <h2 className="text-3xl font-display text-3xl font-bold mb-4">
-                Wie viele dieser Punkte treffen auf Ihre Webseite zu?
-              </h2>
+ Wie viele dieser Punkte treffen auf Ihre Webseite zu?
+ </h2>
               <p className="text-muted-foreground">
-                Jeder Punkt ist ein potenzielles Risiko. Je mehr zutreffen, desto dringender besteht Handlungsbedarf.
-              </p>
+ Jeder Punkt ist ein potenzielles Risiko. Je mehr zutreffen, desto dringender besteht Handlungsbedarf.
+ </p>
             </motion.div>
             <motion.div {...fadeUp}>
               <Card className="p-6 md:p-8 rounded-2xl border-2">
                 <ul className="space-y-4">
                   {checklist.map((item) => (
-                    <li key={item} className="flex items-start gap-3">
+ <li key={item} className="flex items-start gap-3">
                       <AlertTriangle className="w-5 h-5 text-destructive mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                       <span className="text-foreground/90">{item}</span>
                     </li>
@@ -385,11 +385,11 @@ const Gesetz = () => {
               <div className="rounded-2xl p-8 text-center shadow-xl"
                 style={{ background: "linear-gradient(135deg, hsl(250 56% 30%), hsl(250 56% 48%))" }}>
                 <p className="text-white text-lg mb-6">
-                  Wenn Sie auch nur 2 dieser Punkte mit Ja beantwortet haben — lassen Sie Ihre Webseite jetzt kostenlos prüfen.
-                </p>
+ Wenn Sie auch nur 2 dieser Punkte mit Ja beantwortet haben — lassen Sie Ihre Webseite jetzt kostenlos prüfen.
+ </p>
                 <Button size="lg" onClick={() => scrollTo("form-card")} className="bg-white text-primary hover:bg-white/90 font-semibold shadow-lg">
-                  Kostenlose Prüfung anfordern →
-                </Button>
+ Kostenlose Prüfung anfordern →
+ </Button>
               </div>
             </motion.div>
           </div>
@@ -417,15 +417,15 @@ const Gesetz = () => {
                 "BFSG- und DSGVO-konform von Anfang an",
                 "Kein Risiko — keine Verpflichtung",
               ]).map((t) => (
-                <li key={t} className="flex items-start gap-3">
+ <li key={t} className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-primary mt-1 shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-foreground/90">{t}</span>
                 </li>
               ))}
             </ul>
             <Button size="lg" onClick={() => scrollTo("form-card")} className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg">
-              Jetzt kostenlose Vorschau anfordern →
-            </Button>
+ Jetzt kostenlose Vorschau anfordern →
+ </Button>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}>
             {isBfsg ? (
@@ -433,15 +433,15 @@ const Gesetz = () => {
                 style={{ background: "linear-gradient(135deg, hsl(228 24% 12%), hsl(250 56% 18%))", border: "2px solid hsl(250 56% 48% / 0.3)" }}>
                 <div className="flex items-center gap-2 text-green-400 font-semibold mb-5">
                   <Check className="w-5 h-5" aria-hidden={true} focusable={false} />
-                  Analyse abgeschlossen
-                </div>
+ Analyse abgeschlossen
+ </div>
                 <ul className="space-y-3 mb-5">
                   {[
                     "Cookie-Banner nicht konform",
                     "Alt-Texte fehlen (12 Bilder)",
                     "Barrierefreiheitserklärung fehlt",
                   ].map((t) => (
-                    <li key={t} className="flex items-start gap-3 bg-white/5 rounded-lg px-3 py-2.5">
+ <li key={t} className="flex items-start gap-3 bg-white/5 rounded-lg px-3 py-2.5">
                       <X className="w-5 h-5 text-red-400 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
                       <span className="text-white/90 text-sm">{t}</span>
                     </li>
@@ -456,8 +456,8 @@ const Gesetz = () => {
                   <div className="text-white/50 text-xs mt-2">So könnte Ihr Analysebericht aussehen</div>
                 </div>
               </div>
-            ) : (
-              <div className="relative aspect-[4/3] rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-muted to-muted/40 overflow-hidden shadow-xl">
+ ) : (
+ <div className="relative aspect-[4/3] rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-muted to-muted/40 overflow-hidden shadow-xl">
                 <div className="absolute inset-0 -translate-x-full animate-[shimmer_2.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-muted-foreground font-medium">Ihre neue Webseite</div>
@@ -476,8 +476,8 @@ const Gesetz = () => {
             {isBfsg && !submitted && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8 text-center">
                 <p className="text-amber-800 text-sm font-medium">
-                  🕐 Die Abmahnwelle läuft bereits. Jeden Tag ohne konforme Webseite ist ein Risikotag.
-                </p>
+ 🕐 Die Abmahnwelle läuft bereits. Jeden Tag ohne konforme Webseite ist ein Risikotag.
+ </p>
               </div>
             )}
             <Card className="p-8 md:p-10 rounded-2xl shadow-xl border-2 border-primary/20">
@@ -494,28 +494,28 @@ const Gesetz = () => {
                         Wir haben Ihre Anfrage vermerkt und melden uns, sobald wieder ein Platz frei wird —
                         meist innerhalb der ersten Tage des nächsten Monats. Sie können uns auch direkt anrufen:{" "}
                         <a href="tel:+4961313076498" className="font-semibold underline">06131 3076498</a>.
-                      </p>
+ </p>
                     </>
-                  ) : (
-                    <>
+ ) : (
+ <>
                       <h2 className="font-display text-2xl font-bold mb-2">✓ Ihr Platz ist reserviert!</h2>
                       <p className="text-muted-foreground">
-                        Wir melden uns innerhalb von 48 Stunden mit Ihrer kostenlosen Vorschau.
-                      </p>
+ Wir melden uns innerhalb von 48 Stunden mit Ihrer kostenlosen Vorschau.
+ </p>
                     </>
                   )}
                 </div>
-              ) : (
-                <>
+ ) : (
+ <>
                   <div className="flex items-center justify-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: "var(--brand-purple)" }}>
-                      MA
-                    </div>
+ MA
+ </div>
                     <div className="text-sm text-muted-foreground">
                       <span className="text-foreground font-medium">Muad Amar antwortet persönlich</span>
                       <span className="mx-1">—</span>
-                      kein Callcenter, keine Bots.
-                      <a href="tel:+4961313076498" className="ml-1 font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>06131 3076498</a>
+ kein Callcenter, keine Bots.
+ <a href="tel:+4961313076498" className="ml-1 font-semibold hover:underline" style={{ color: "var(--brand-purple)" }}>06131 3076498</a>
                     </div>
                   </div>
                   <h2 className="font-display text-3xl font-bold text-center mb-3">
@@ -534,7 +534,7 @@ const Gesetz = () => {
                       { k: "email", label: "E-Mail", type: "email" },
                       { k: "telefon", label: "Telefon (optional)", type: "tel" },
                     ].map((f) => (
-                      <div key={f.k}>
+ <div key={f.k}>
                         <Label htmlFor={f.k} className="mb-1.5 block">{f.label}</Label>
                         <Input
                           id={f.k}
@@ -556,8 +556,8 @@ const Gesetz = () => {
                       <p className="text-sm text-destructive text-center">{submitError}</p>
                     )}
                     <p className="text-xs text-muted-foreground text-center">
-                      Kein Spam. Keine Verpflichtung. Ihre Daten werden vertraulich behandelt.
-                    </p>
+ Kein Spam. Keine Verpflichtung. Ihre Daten werden vertraulich behandelt.
+ </p>
                   </div>
                 </>
               )}
@@ -570,84 +570,84 @@ const Gesetz = () => {
       <section className="py-20 md:py-28 bg-muted/40">
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.h2 {...fadeUp} className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
-            Was unsere Kunden sagen
-          </motion.h2>
+ Was unsere Kunden sagen
+ </motion.h2>
           <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
+ <motion.div key={i} {...fadeUp} transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}>
                 <Card className="p-6 h-full rounded-2xl bg-card border">
                   <div className="flex gap-1 mb-3 text-yellow-500">
                     {Array.from({ length: 5 }).map((_, k) => (
-                      <Star key={k} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
+ <Star key={k} className="w-4 h-4 fill-current" aria-hidden={true} focusable={false} />
                     ))}
                   </div>
                   <p className="text-foreground/90 italic mb-4">„{t.quote}"</p>
-                  <p className="text-sm font-semibold text-muted-foreground">— {t.name}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+ <p className="text-sm font-semibold text-muted-foreground">— {t.name}</p>
+ </Card>
+ </motion.div>
+ ))}
+ </div>
+ </div>
+ </section>
 
-      {/* FAQ */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <motion.h2 {...fadeUp} className="font-display text-3xl md:text-4xl font-bold text-center mb-10">
-            Häufige Fragen
-          </motion.h2>
-          <Accordion type="single" collapsible className="w-full">
-            {allFaq.map((item, i) => (
-              <AccordionItem key={i} value={`item-${i}`}>
-                <AccordionTrigger className="text-left font-semibold text-base md:text-lg">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                  {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
+ {/* FAQ */}
+ <section className="py-20 md:py-28">
+ <div className="container mx-auto px-4 max-w-3xl">
+ <motion.h2 {...fadeUp} className="font-display text-3xl md:text-4xl font-bold text-center mb-10">
+ Häufige Fragen
+ </motion.h2>
+ <Accordion type="single" collapsible className="w-full">
+ {allFaq.map((item, i) => (
+ <AccordionItem key={i} value={`item-${i}`}>
+ <AccordionTrigger className="text-left font-semibold text-base md:text-lg">
+ {item.q}
+ </AccordionTrigger>
+ <AccordionContent className="text-muted-foreground leading-relaxed whitespace-pre-line">
+ {item.a}
+ </AccordionContent>
+ </AccordionItem>
+ ))}
+ </Accordion>
+ </div>
+ </section>
 
-      {/* FINAL CTA */}
-      <section className="py-20 md:py-28 relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(250 56% 30%), hsl(250 56% 48%) 60%, hsl(215 100% 50%))" }}>
-        <div className="container mx-auto px-4 text-center max-w-3xl">
-          <div>
-            <h2 className="text-3xl font-display text-3xl font-bold text-white mb-4">
-              Jetzt kostenlose Vorschau anfordern
-            </h2>
-            <p className="text-white/85 text-lg mb-6">
-              Unverbindlich. Kostenlos. Innerhalb von 48 Stunden.
-            </p>
-            <div className="flex justify-center mb-8">
-              <VorschauVerfuegbarkeit variant="dark" />
-            </div>
-            <Button
-              size="lg"
-              onClick={() => scrollTo("form-card")}
-              className="bg-white text-primary hover:bg-white/90 font-semibold shadow-xl"
-            >
-              Zur kostenlosen Vorschau →
-            </Button>
-            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-white/80 text-sm">
-              <span className="flex items-center gap-1.5"><Lock className="w-4 h-4" aria-hidden={true} focusable={false} /> SSL-gesichert</span>
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4" aria-hidden={true} focusable={false} /> Kein Spam</span>
-              <span className="flex items-center gap-1.5"><Star className="w-4 h-4 fill-current text-yellow-300" aria-hidden={true} focusable={false} /> 5-Sterne bewertet</span>
-            </div>
-          </div>
-        </div>
-      </section>
+ {/* FINAL CTA */}
+ <section className="py-20 md:py-28 relative overflow-hidden"
+ style={{ background: "linear-gradient(135deg, hsl(250 56% 30%), hsl(250 56% 48%) 60%, hsl(215 100% 50%))" }}>
+ <div className="container mx-auto px-4 text-center max-w-3xl">
+ <div>
+ <h2 className="text-3xl font-display text-3xl font-bold text-white mb-4">
+ Jetzt kostenlose Vorschau anfordern
+ </h2>
+ <p className="text-white/85 text-lg mb-6">
+ Unverbindlich. Kostenlos. Innerhalb von 48 Stunden.
+ </p>
+ <div className="flex justify-center mb-8">
+ <VorschauVerfuegbarkeit variant="dark" />
+ </div>
+ <Button
+ size="lg"
+ onClick={() => scrollTo("form-card")}
+ className="bg-white text-primary hover:bg-white/90 font-semibold shadow-xl"
+ >
+ Zur kostenlosen Vorschau →
+ </Button>
+ <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-white/80 text-sm">
+ <span className="flex items-center gap-1.5"><Lock className="w-4 h-4" aria-hidden={true} focusable={false} /> SSL-gesichert</span>
+ <span className="flex items-center gap-1.5"><Check className="w-4 h-4" aria-hidden={true} focusable={false} /> Kein Spam</span>
+ <span className="flex items-center gap-1.5"><Star className="w-4 h-4 fill-current text-yellow-300" aria-hidden={true} focusable={false} /> 5-Sterne bewertet</span>
+ </div>
+ </div>
+ </div>
+ </section>
 
-      {/* Minimaler Footer */}
-      <footer className="py-8 bg-background border-t">
-        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
-          <div>© {new Date().getFullYear()} Meine Traum Webseite — QK Marketing</div>
-          <div className="flex gap-5">
-            <Link to="/impressum" className="hover:text-foreground">Impressum</Link>
-            <Link to="/datenschutz" className="hover:text-foreground">Datenschutz</Link>
+ {/* Minimaler Footer */}
+ <footer className="py-8 bg-background border-t">
+ <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
+ <div>© {new Date().getFullYear()} Meine Traum Webseite — QK Marketing</div>
+ <div className="flex gap-5">
+ <Link to="/impressum" className="hover:text-foreground">Impressum</Link>
+ <Link to="/datenschutz" className="hover:text-foreground">Datenschutz</Link>
           </div>
         </div>
       </footer>

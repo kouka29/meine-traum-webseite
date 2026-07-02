@@ -38,8 +38,8 @@ export default function KundenportalRechnungen() {
 
   if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
-  return (
-    <div className="space-y-6">
+ return (
+ <div className="space-y-6">
       <div>
         <h1 className="font-heading text-3xl font-bold">Rechnungen</h1>
         <p className="text-muted-foreground mt-1">Alle deine Zahlungen und Rechnungen als PDF.</p>
@@ -53,12 +53,12 @@ export default function KundenportalRechnungen() {
             <p className="text-xs text-muted-foreground mt-2">Sobald eine Zahlung erfolgt ist, findest du hier alle Rechnungen.</p>
           </CardContent>
         </Card>
-      ) : (
-        <Card>
+ ) : (
+ <Card>
           <CardContent className="p-0">
             <ul className="divide-y divide-border">
               {invoices.map((inv) => (
-                <li key={inv.id} className="p-4 flex items-center justify-between gap-4 flex-wrap">
+ <li key={inv.id} className="p-4 flex items-center justify-between gap-4 flex-wrap">
                   <div className="min-w-0">
                     <div className="font-medium">
                       {inv.number || inv.id.slice(0, 12)}

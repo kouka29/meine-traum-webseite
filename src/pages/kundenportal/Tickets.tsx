@@ -58,17 +58,17 @@ export default function KundenportalTickets() {
 
       {loading ? (
         <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>
-      ) : tickets.length === 0 ? (
-        <Card><CardContent className="py-16 text-center">
+ ) : tickets.length === 0 ? (
+ <Card><CardContent className="py-16 text-center">
           <MessageSquare size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Noch keine Wünsche eingereicht.</p>
           <Button className="mt-4" onClick={() => setOpen(true)}><Plus size={16} className="mr-1" aria-hidden={true} focusable={false} /> Ersten Wunsch senden</Button>
         </CardContent></Card>
-      ) : (
-        <Card><CardContent className="p-0">
+ ) : (
+ <Card><CardContent className="p-0">
           <ul className="divide-y divide-border">
             {tickets.map((t) => (
-              <li key={t.id}>
+ <li key={t.id}>
                 <Link to={`/kundenportal/wuensche/${t.id}`} className="block p-4 hover:bg-muted/40 transition-colors">
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0 flex-1">

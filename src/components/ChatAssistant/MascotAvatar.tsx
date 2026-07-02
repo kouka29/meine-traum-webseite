@@ -7,7 +7,7 @@ type Props = { className?: string; size?: number };
  * Nutzt Brand-Farben über currentColor/Tailwind-Klassen.
  */
 export const MascotAvatar = ({ className, size = 40 }: Props) => (
-  <svg
+ <svg
     width={size}
     height={size}
     viewBox="0 0 48 48"
