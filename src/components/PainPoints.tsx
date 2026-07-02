@@ -10,7 +10,7 @@ const painPoints = [
   {
     icon: EyeOff,
     problem: "Besucher scrollen – und gehen wieder?",
-    detail: "Ohne klare Nutzerführung wissen Besucher nicht, was sie tun sollen. Du verlassen die Seite – und rufen bei deinem Wettbewerber an.",
+    detail: "Ohne klare Nutzerführung wissen Besucher nicht, was sie tun sollen. Sie verlassen die Seite – und rufen bei deinem Wettbewerber an.",
   },
   {
     icon: AlertTriangle,
