@@ -144,7 +144,7 @@ const Empfehlung = () => (
               Persönliche Empfehlung
             </span>
             <h1 className="mb-6 text-balance">
-              Jemand aus deinem Netzwerk hat uns empfohlen.{" "}
+              Jemand aus Deinem Netzwerk hat uns empfohlen.{" "}
               <span className="gradient-text">Kein Zufall.</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">

@@ -132,7 +132,7 @@ const Datenschutz = () => (
 
             <h3 className="text-lg font-medium text-foreground mt-4">Meta-Pixel (Facebook)</h3>
             <p>
-              Diese Website nutzt das Besucheraktions-Pixel von Meta Platforms Ireland Ltd. (4 Grand Canal Square, Dublin 2, Irland). Damit kann das Verhalten von Besuchern nach Klick auf eine Meta-Werbeanzeige statistisch ausgewertet und für Remarketing genutzt werden. Der Einsatz erfolgt ausschließlich nach deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), widerrufbar jederzeit mit Wirkung für die Zukunft. Eine Datenübermittlung in die USA ist möglich. Mehr:{" "}
+              Diese Website nutzt das Besucheraktions-Pixel von Meta Platforms Ireland Ltd. (4 Grand Canal Square, Dublin 2, Irland). Damit kann das Verhalten von Besuchern nach Klick auf eine Meta-Werbeanzeige statistisch ausgewertet und für Remarketing genutzt werden. Der Einsatz erfolgt ausschließlich nach Deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), widerrufbar jederzeit mit Wirkung für die Zukunft. Eine Datenübermittlung in die USA ist möglich. Mehr:{" "}
               <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                 facebook.com/privacy/policy
               </a>

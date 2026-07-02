@@ -17,7 +17,7 @@ const IndexServices = () => (
         <div className="text-center mb-12 md:mb-20">
           <span className="badge-label bg-primary/10 text-primary mb-5">Unser Ansatz</span>
           <h2 className="mb-5 text-balance">
-            So machen wir aus deiner Website einen{" "}
+            So machen wir aus Deiner Website einen{" "}
             <span className="text-foreground">Kundenmagneten</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">

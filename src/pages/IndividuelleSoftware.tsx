@@ -88,7 +88,7 @@ const IndividuelleSoftware = () => (
               Individuelle Apps & Softwarelösungen
             </span>
             <h1 className="mb-5 text-balance">
-              Individuelle Apps & Software, die Prozesse automatisieren und dein{" "}
+              Individuelle Apps & Software, die Prozesse automatisieren und Dein{" "}
               <span className="gradient-text">Business skalieren</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-6 leading-relaxed">

@@ -509,7 +509,7 @@ const ChatAssistant = () => {
           {!consentDismissed && (
             <div className="text-[11px] text-muted-foreground bg-muted/50 px-3 py-2 border-b border-border leading-snug">
               Dieser Chat wird KI-gestützt verarbeitet (Google Gemini via Lovable). Mit dem
-              Senden stimmst du zu. Mehr:{" "}
+              Senden stimmst Du zu. Mehr:{" "}
               <a href="/datenschutz" className="underline text-primary">
                 Datenschutz
               </a>

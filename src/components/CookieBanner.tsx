@@ -96,9 +96,9 @@ const CookieBanner = () => {
         </div>
 
         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-          Wir verwenden Cookies, um dir die bestmögliche Erfahrung auf unserer Website zu bieten. 
+          Wir verwenden Cookies, um Dir die bestmögliche Erfahrung auf unserer Website zu bieten. 
           Einige Cookies sind technisch notwendig, während andere uns helfen, die Website zu verbessern 
-          und dir relevante Inhalte anzuzeigen. Du kannst deine Einwilligung jederzeit widerrufen.{" "}
+          und Dir relevante Inhalte anzuzeigen. Du kannst Deine Einwilligung jederzeit widerrufen.{" "}
           <a href="/datenschutz" className="text-primary underline underline-offset-2 hover:text-primary/80">
             Mehr erfahren
           </a>

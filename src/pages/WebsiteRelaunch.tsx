@@ -10,7 +10,7 @@ const signs = [
   "Du bekommst kaum Anfragen über Deine aktuelle Website",
   "Deine Website lädt langsam (über 3 Sekunden)",
   "Deine Website ist nicht mobilfreundlich",
-  "deine Konkurrenz wirkt online deutlich professioneller",
+  "Deine Konkurrenz wirkt online deutlich professioneller",
   "Du kannst Inhalte nicht selbst aktualisieren",
 ];
 

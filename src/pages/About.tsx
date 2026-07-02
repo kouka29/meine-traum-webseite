@@ -30,7 +30,7 @@ const About = () => (
               Über unsere Webdesign Agentur
             </span>
             <h1 className="mb-5 text-balance">
-              deine Webdesign Agentur, die Websites zu{" "}
+              Deine Webdesign Agentur, die Websites zu{" "}
               <span className="gradient-text">Verkaufsinstrumenten</span> macht
             </h1>
             <p className="text-muted-foreground text-lg">

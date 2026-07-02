@@ -684,7 +684,7 @@ function HeroSection({ leadName, nachricht, ablaufStr, days, hours, mins, secs }
           color: TEXT_DARK, marginBottom: 24, letterSpacing: "-0.025em",
           maxWidth: 800,
         }}>
-          Hallo {leadName},<br />hier ist dein{" "}
+          Hallo {leadName},<br />hier ist Dein{" "}
           <span style={{
             background: "linear-gradient(135deg, #4F3FF0 0%, #7B5EF8 50%, #5B8DEF 100%)",
             WebkitBackgroundClip: "text",
@@ -1302,7 +1302,7 @@ function PriceSection({
                 flexWrap: "wrap", gap: 8,
               }}>
                 <div style={{ fontSize: 13, color: TEXT_MUTED, fontWeight: 600 }}>
-                  deine Auswahl ({selectedOptionsCount} Option{selectedOptionsCount !== 1 ? "en" : ""})
+                  Deine Auswahl ({selectedOptionsCount} Option{selectedOptionsCount !== 1 ? "en" : ""})
                 </div>
                 <div style={{ textAlign: "right" }}>
                   {priceMode === "miete" && miete ? (

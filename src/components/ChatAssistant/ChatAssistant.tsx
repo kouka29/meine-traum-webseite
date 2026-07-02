@@ -305,7 +305,7 @@ const ChatAssistant = () => {
                     )}
                   </Button>
                   <p className="text-[10px] text-muted-foreground leading-tight">
-                    Mit Absenden stimmst du zu, dass wir dich kontaktieren dürfen. Details in der{" "}
+                    Mit Absenden stimmst Du zu, dass wir Dich kontaktieren dürfen. Details in der{" "}
                     <a href="/datenschutz" className="underline">Datenschutzerklärung</a>.
                   </p>
                 </form>

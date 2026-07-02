@@ -423,7 +423,7 @@ const Starter = () => (
                 </div>
                 <div className="border-t border-border pt-6 text-center">
                   <p className="text-sm text-muted-foreground mb-6">
-                    Brauchst du mehr Seiten, einen Shop oder spezielle Funktionen?{" "}
+                    Brauchst Du mehr Seiten, einen Shop oder spezielle Funktionen?{" "}
                     <strong className="text-foreground">
                       Wir erstellen Dir ein individuelles Angebot.
                     </strong>
