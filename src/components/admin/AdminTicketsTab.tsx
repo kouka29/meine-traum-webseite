@@ -33,10 +33,10 @@ const STATUS_OPTIONS: { value: Ticket["status"]; label: string; cls: string }[] 
 
 export default function AdminTicketsTab({ password }: { password: string }) {
   const [tickets, setTickets] = useState<Ticket[]>([]);
- const [loading, setLoading] = useState(false);
- const [filter, setFilter] = useState<"all" | Ticket["status"]>("all");
- const [selected, setSelected] = useState<Ticket | null>(null);
- const [messages, setMessages] = useState<TicketMessage[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState<"all" | Ticket["status"]>("all");
+  const [selected, setSelected] = useState<Ticket | null>(null);
+  const [messages, setMessages] = useState<TicketMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
@@ -104,8 +104,8 @@ export default function AdminTicketsTab({ password }: { password: string }) {
 
   const filtered = filter === "all" ? tickets : tickets.filter((t) => t.status === filter);
 
- return (
- <div className="space-y-4">
+  return (
+    <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-1 bg-muted/50 rounded-lg p-1">
           {[
@@ -115,7 +115,7 @@ export default function AdminTicketsTab({ password }: { password: string }) {
               label: `${s.label} (${tickets.filter((t) => t.status === s.value).length})`,
             })),
           ].map((f) => (
- <button
+            <button
               key={f.value}
               onClick={() => setFilter(f.value)}
               className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
@@ -128,23 +128,23 @@ export default function AdminTicketsTab({ password }: { password: string }) {
         </div>
         <Button variant="outline" size="sm" onClick={fetchTickets} disabled={loading}>
           <RefreshCw size={14} className={loading ? "animate-spin mr-1" : "mr-1"} aria-hidden={true} focusable={false} /> Aktualisieren
- </Button>
+        </Button>
       </div>
 
       {loading ? (
         <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>
- ) : filtered.length === 0 ? (
- <Card><CardContent className="py-16 text-center">
+      ) : filtered.length === 0 ? (
+        <Card><CardContent className="py-16 text-center">
           <MessageSquare size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Keine Tickets in dieser Ansicht.</p>
         </CardContent></Card>
- ) : (
- <Card><CardContent className="p-0">
+      ) : (
+        <Card><CardContent className="p-0">
           <ul className="divide-y divide-border">
             {filtered.map((t) => {
               const cfg = STATUS_OPTIONS.find((s) => s.value === t.status);
- return (
- <li key={t.id} className="p-4 hover:bg-muted/40 transition-colors flex items-center gap-4 cursor-pointer" onClick={() => openTicket(t)}>
+              return (
+                <li key={t.id} className="p-4 hover:bg-muted/40 transition-colors flex items-center gap-4 cursor-pointer" onClick={() => openTicket(t)}>
                   <div className="min-w-0 flex-1">
                     <div className="font-medium truncate">{t.subject}</div>
                     <div className="text-xs text-muted-foreground mt-0.5 truncate">
@@ -175,7 +175,7 @@ export default function AdminTicketsTab({ password }: { password: string }) {
             <div className="flex-1 overflow-y-auto space-y-4">
               <div className="flex flex-wrap gap-2">
                 {STATUS_OPTIONS.map((s) => (
- <Button
+                  <Button
                     key={s.value}
                     size="sm"
                     variant={selected.status === s.value ? "default" : "outline"}
@@ -195,12 +195,12 @@ export default function AdminTicketsTab({ password }: { password: string }) {
                 <div className="text-xs font-semibold text-muted-foreground">Verlauf</div>
                 {loadingMessages ? (
                   <div className="flex justify-center py-4"><Loader2 className="animate-spin" size={18} aria-hidden={true} focusable={false} /></div>
- ) : messages.length === 0 ? (
- <p className="text-xs text-muted-foreground text-center py-4">Noch keine Antworten.</p>
- ) : (
- <ul className="space-y-2">
+                ) : messages.length === 0 ? (
+                  <p className="text-xs text-muted-foreground text-center py-4">Noch keine Antworten.</p>
+                ) : (
+                  <ul className="space-y-2">
                     {messages.map((m) => (
- <li key={m.id} className={`rounded-lg p-3 text-sm ${m.author_type === "admin" ? "bg-primary/10 ml-6" : "bg-muted mr-6"}`}>
+                      <li key={m.id} className={`rounded-lg p-3 text-sm ${m.author_type === "admin" ? "bg-primary/10 ml-6" : "bg-muted mr-6"}`}>
                         <div className="text-[10px] font-semibold uppercase mb-1 text-muted-foreground">
                           {m.author_type === "admin" ? "Du" : "Kunde"} · {new Date(m.created_at).toLocaleString("de-DE")}
                         </div>

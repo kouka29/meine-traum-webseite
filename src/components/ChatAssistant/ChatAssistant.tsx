@@ -38,11 +38,11 @@ const ChatAssistant = () => {
     () =>
       pathname === "/a" ||
       HIDE_ON_ROUTES.some((p) => pathname === p || pathname.startsWith(p + "/") || pathname.startsWith(p)),
- [pathname],
- );
+    [pathname],
+  );
 
- const [open, setOpen] = useState(false);
- const [messages, setMessages] = useState<ChatMsg[]>(() => {
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState<ChatMsg[]>(() => {
     if (typeof window === "undefined") return [INITIAL_GREETING];
     try {
       const raw = sessionStorage.getItem(STORAGE_KEY);
@@ -58,10 +58,10 @@ const ChatAssistant = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [availability, setAvailability] = useState<{ available: number; isFull: boolean } | null>(
- null,
- );
- const [showLeadForm, setShowLeadForm] = useState(false);
- const [leadSubmitted, setLeadSubmitted] = useState<boolean>(() => {
+    null,
+  );
+  const [showLeadForm, setShowLeadForm] = useState(false);
+  const [leadSubmitted, setLeadSubmitted] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return sessionStorage.getItem(LEAD_KEY) === "1";
   });
@@ -71,8 +71,8 @@ const ChatAssistant = () => {
   const [leadLoading, setLeadLoading] = useState(false);
   const [leadError, setLeadError] = useState<string | null>(null);
 
- const scrollRef = useRef<HTMLDivElement>(null);
- const inputRef = useRef<HTMLTextAreaElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     try {
@@ -225,8 +225,8 @@ const ChatAssistant = () => {
               <div className="font-semibold text-sm leading-tight">Mia — KI von MTW</div>
               <div className="text-xs text-muted-foreground flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
- Online — antwortet meist in Sekunden
- </div>
+                Online — antwortet meist in Sekunden
+              </div>
             </div>
             <button
               type="button"
@@ -241,7 +241,7 @@ const ChatAssistant = () => {
           {/* Messages */}
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
             {messages.map((m, i) => (
- <div
+              <div
                 key={i}
                 className={cn("flex gap-2", m.role === "user" ? "justify-end" : "justify-start")}
               >
@@ -307,7 +307,7 @@ const ChatAssistant = () => {
                   <p className="text-[10px] text-muted-foreground leading-tight">
                     Mit Absenden stimmst du zu, dass wir dich kontaktieren dürfen. Details in der{" "}
                     <a href="/datenschutz" className="underline">Datenschutzerklärung</a>.
- </p>
+                  </p>
                 </form>
               </div>
             )}
@@ -315,8 +315,8 @@ const ChatAssistant = () => {
             {leadSubmitted && (
               <div className="border border-green-500/30 bg-green-500/5 rounded-xl p-3 text-sm flex items-center gap-2 text-green-700 dark:text-green-400">
                 <CheckCircle2 size={18} />
- Anfrage erhalten — wir melden uns.
- </div>
+                Anfrage erhalten — wir melden uns.
+              </div>
             )}
           </div>
 

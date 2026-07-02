@@ -20,7 +20,7 @@ const faqs = [
 ];
 
 const LandingpageErstellen = () => (
- <main id="main-content" className="pt-20">
+  <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -31,9 +31,9 @@ const LandingpageErstellen = () => (
               <span className="gradient-text">maximale Conversions garantiert</span>
             </h1>
             <p className="text-muted-foreground text-lg">
- Eine professionelle Landingpage verwandelt Besucher in Kunden. Wir erstellen conversion-optimierte
- Landingpages mit verkaufspsychologischem Aufbau – perfekt für Google Ads, Social Media und Lead-Generierung.
- </p>
+              Eine professionelle Landingpage verwandelt Besucher in Kunden. Wir erstellen conversion-optimierte
+              Landingpages mit verkaufspsychologischem Aufbau – perfekt für Google Ads, Social Media und Lead-Generierung.
+            </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
               <Link to="/kontakt">Landingpage anfragen <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
@@ -45,7 +45,7 @@ const LandingpageErstellen = () => (
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
           {benefits.map((b, i) => (
- <AnimatedSection key={b.title} delay={i * 0.1}>
+            <AnimatedSection key={b.title} delay={i * 0.1}>
               <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all bg-background hover:shadow-card">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <b.icon size={20} className="text-primary" />
@@ -73,7 +73,7 @@ const LandingpageErstellen = () => (
                 "A/B-Testing-Vorbereitung",
                 "DSGVO-konforme Umsetzung",
               ].map((item) => (
- <div key={item} className="flex items-center gap-3">
+                <div key={item} className="flex items-center gap-3">
                   <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm">{item}</span>
                 </div>
@@ -87,7 +87,7 @@ const LandingpageErstellen = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
- <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

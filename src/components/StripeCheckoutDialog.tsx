@@ -23,7 +23,7 @@ export default function StripeCheckoutDialog({
   kind = "deposit",
 }: StripeCheckoutDialogProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
- const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -87,8 +87,8 @@ export default function StripeCheckoutDialog({
           {loading && (
             <div className="flex items-center justify-center py-20 text-muted-foreground">
               <Loader2 className="animate-spin mr-2" size={20} aria-hidden={true} focusable={false} />
- Checkout wird geladen…
- </div>
+              Checkout wird geladen…
+            </div>
           )}
           {error && (
             <div className="flex items-start gap-3 mx-6 p-4 rounded-lg border border-destructive/30 bg-destructive/5 text-sm">

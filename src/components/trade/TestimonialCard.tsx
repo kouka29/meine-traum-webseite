@@ -11,7 +11,7 @@ interface Props {
 }
 
 const TestimonialCard = ({ stars = 5, badge, badgeColor, quote, name, business }: Props) => (
- <div className="rounded-card bg-background p-7 shadow-marketing flex flex-col gap-4 border border-border">
+  <div className="rounded-card bg-background p-7 shadow-marketing flex flex-col gap-4 border border-border">
     <Stars count={stars} />
     {badge && (
       <span

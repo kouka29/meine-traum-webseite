@@ -19,7 +19,7 @@ const bgClass: Record<Bg, string> = {
 
 /** Unified marketing section. Single source of vertical rhythm + bg variants. */
 const Section = ({ bg = "white", id, className, children, spacious }: Props) => (
- <section
+  <section
     id={id}
     className={cn(
       spacious ? "py-24 md:py-32" : "py-20 md:py-28",

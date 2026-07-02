@@ -64,13 +64,13 @@ export default function KundenportalLayout() {
     <>
       <Link to="/" className="block px-6 py-5 border-b border-border">
         <span className="font-heading text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
- QK Marketing
- </span>
+          QK Marketing
+        </span>
         <p className="text-xs text-muted-foreground mt-0.5">Kundenportal</p>
       </Link>
       <nav className="flex-1 p-3 space-y-1">
         {NAV.map((item) => (
- <NavLink
+          <NavLink
             key={item.to}
             to={item.to}
             end={item.end}
@@ -89,13 +89,13 @@ export default function KundenportalLayout() {
         <div className="px-3 py-2 mb-2 text-xs text-muted-foreground truncate" title={email}>{email}</div>
         <Button variant="ghost" className="w-full justify-start" onClick={logout}>
           <LogOut size={16} className="mr-2" aria-hidden={true} focusable={false} /> Abmelden
- </Button>
+        </Button>
       </div>
     </>
- );
+  );
 
- return (
- <div className="min-h-screen flex bg-muted/30">
+  return (
+    <div className="min-h-screen flex bg-muted/30">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex w-64 flex-col bg-card border-r border-border sticky top-0 h-screen">
         {SidebarContent}

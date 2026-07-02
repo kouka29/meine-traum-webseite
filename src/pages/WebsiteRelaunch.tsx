@@ -6,11 +6,11 @@ import { ArrowRight, Check, RefreshCw, TrendingUp, Zap, Search } from "lucide-re
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const signs = [
-  "Deine Website sieht veraltet aus und schreckt Kunden ab",
+  "deine Website sieht veraltet aus und schreckt Kunden ab",
   "Du bekommst kaum Anfragen über deine aktuelle Website",
-  "Deine Website lädt langsam (über 3 Sekunden)",
-  "Deine Website ist nicht mobilfreundlich",
-  "Deine Konkurrenz wirkt online deutlich professioneller",
+  "deine Website lädt langsam (über 3 Sekunden)",
+  "deine Website ist nicht mobilfreundlich",
+  "deine Konkurrenz wirkt online deutlich professioneller",
   "Du kannst Inhalte nicht selbst aktualisieren",
 ];
 
@@ -21,7 +21,7 @@ const faqs = [
 ];
 
 const WebsiteRelaunch = () => (
- <main id="main-content" className="pt-20">
+  <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -29,12 +29,12 @@ const WebsiteRelaunch = () => (
             <span className="badge-label bg-primary/10 text-primary mb-5">Website Relaunch</span>
             <h1 className="mb-5 text-balance">
               Website Relaunch –{" "}
-              <span className="gradient-text">Deine veraltete Website wird zum Kundenmagnet</span>
+              <span className="gradient-text">deine veraltete Website wird zum Kundenmagnet</span>
             </h1>
             <p className="text-muted-foreground text-lg">
- Deine Website bringt keine Anfragen mehr? Ein professioneller Website Relaunch verwandelt deine veraltete
- Online-Präsenz in ein modernes Verkaufsinstrument – mit mehr Anfragen, besserem Design und schnelleren Ladezeiten.
- </p>
+              deine Website bringt keine Anfragen mehr? Ein professioneller Website Relaunch verwandelt deine veraltete
+              Online-Präsenz in ein modernes Verkaufsinstrument – mit mehr Anfragen, besserem Design und schnelleren Ladezeiten.
+            </p>
             <Button variant="gradient" size="lg" className="mt-10 animate-cta-pulse" asChild>
               <Link to="/kostenloser-website-check">Kostenlosen Website-Check starten <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
             </Button>
@@ -44,11 +44,11 @@ const WebsiteRelaunch = () => (
         <AnimatedSection>
           <h2 className="text-center mb-5 text-balance">Wann ist ein Website Relaunch notwendig?</h2>
           <p className="text-muted-foreground text-center max-w-2xl mx-auto text-lg mb-12">
- Erkennst du eines dieser Anzeichen? Dann wird es Zeit für einen professionellen Relaunch.
- </p>
+            Erkennst du eines dieser Anzeichen? Dann wird es Zeit für einen professionellen Relaunch.
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-20">
             {signs.map((s) => (
- <div key={s} className="flex items-center gap-3">
+              <div key={s} className="flex items-center gap-3">
                 <RefreshCw size={17} className="text-destructive shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{s}</span>
               </div>
@@ -65,7 +65,7 @@ const WebsiteRelaunch = () => (
                 { value: "<3s", label: "Ladezeit nach Relaunch" },
                 { value: "150+", label: "Erfolgreiche Relaunches" },
               ].map((s) => (
- <div key={s.label}>
+                <div key={s.label}>
                   <span className="font-heading text-5xl font-bold text-primary-foreground">{s.value}</span>
                   <p className="text-sm text-primary-foreground/70 mt-2">{s.label}</p>
                 </div>
@@ -87,7 +87,7 @@ const WebsiteRelaunch = () => (
               "Analytics & Tracking Setup",
               "Einweisung & Support nach Launch",
             ].map((item) => (
- <div key={item} className="flex items-center gap-3">
+              <div key={item} className="flex items-center gap-3">
                 <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                 <span className="text-sm">{item}</span>
               </div>
@@ -100,7 +100,7 @@ const WebsiteRelaunch = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
- <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

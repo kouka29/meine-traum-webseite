@@ -127,7 +127,7 @@ const PopoverCard = ({
   cta: string;
   items: { name: string; path: string; icon: typeof Hammer }[];
 }) => (
- <Popover>
+  <Popover>
     <PopoverTrigger asChild>
       <button
         type="button"
@@ -166,7 +166,7 @@ const PopoverCard = ({
       </div>
       <div className="flex flex-col">
         {items.map(({ name: itemName, path, icon: ItemIcon }) => (
- <Link
+          <Link
             key={path}
             to={path}
             className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-muted transition-colors text-sm text-foreground"
@@ -194,7 +194,7 @@ const LinkCard = ({
   text: string;
   path: string;
 }) => (
- <Link
+  <Link
     to={path}
     className="group relative flex flex-col gap-4 p-6 rounded-2xl border border-border bg-card hover:border-primary/40 hover:shadow-elegant transition-all duration-300 h-full"
   >
@@ -210,8 +210,8 @@ const LinkCard = ({
       </p>
     </div>
     <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
- Mehr erfahren
- <ArrowRight
+      Mehr erfahren
+      <ArrowRight
         size={16}
         className="transition-transform group-hover:translate-x-1"
         aria-hidden
@@ -222,24 +222,24 @@ const LinkCard = ({
 );
 
 const IndexBranchen = () => (
- <section id="branchen" className="section-padding bg-muted/30 scroll-mt-24">
+  <section id="branchen" className="section-padding bg-muted/30 scroll-mt-24">
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="max-w-2xl mb-12">
           <span className="badge-label bg-primary/10 text-primary mb-4">Branchen</span>
           <h2 className="mb-4">Webdesign für Ihre Branche</h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
- Spezialisierte Landingpages mit branchenspezifischen Argumenten,
- Referenzen und Funktionen – damit Ihre Website genau die Kunden
- anzieht, die zu Ihnen passen.
- </p>
+            Spezialisierte Landingpages mit branchenspezifischen Argumenten,
+            Referenzen und Funktionen – damit Ihre Website genau die Kunden
+            anzieht, die zu Ihnen passen.
+          </p>
         </div>
       </AnimatedSection>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {metaBranchen.map((branche) =>
- "items" in branche && branche.items ? (
- <PopoverCard
+          "items" in branche && branche.items ? (
+            <PopoverCard
               key={branche.name}
               name={branche.name}
               icon={branche.icon}
@@ -247,8 +247,8 @@ const IndexBranchen = () => (
               cta={branche.cta ?? "Branche wählen"}
               items={branche.items}
             />
- ) : (
- <LinkCard
+          ) : (
+            <LinkCard
               key={branche.name}
               name={branche.name}
               icon={branche.icon}

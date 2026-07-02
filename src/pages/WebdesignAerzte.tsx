@@ -7,17 +7,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const painPoints = [
   "Patienten findest du online nicht – aber deine Kollegen in der Nachbarschaft schon",
-  "Deine Website wirkt veraltet und vermittelt nicht den professionellen Eindruck deiner Praxis",
+  "deine Website wirkt veraltet und vermittelt nicht den professionellen Eindruck deiner Praxis",
   "Neue Patienten informieren sich online, bevor sie einen Termin buchen – und springen ab",
   "Du hast keine Online-Terminbuchung und verlieren Patienten an modernere Praxen",
 ];
 
 const features = [
-  { icon: Heart, title: "Praxis-gerechtes Design", desc: "Deine Website vermittelt Vertrauen und Kompetenz – mit einem Design, das deine Praxis professionell repräsentiert." },
+  { icon: Heart, title: "Praxis-gerechtes Design", desc: "deine Website vermittelt Vertrauen und Kompetenz – mit einem Design, das deine Praxis professionell repräsentiert." },
   { icon: Search, title: "Lokales SEO für Ärzte", desc: 'Gefunden werden bei "Arzt in Deiner Stadt", "Zahnarzt in der Nähe" und ähnlichen Suchanfragen deiner Patienten.' },
   { icon: Clock, title: "Online-Terminbuchung", desc: "Integration einer Online-Terminbuchung – damit Patienten rund um die Uhr Termine vereinbaren können." },
-  { icon: Shield, title: "DSGVO-konform", desc: "Deine Praxis-Website erfüllt alle Datenschutz-Anforderungen – inklusive Impressum und Datenschutzerklärung." },
-  { icon: Smartphone, title: "Mobilfreundlich", desc: "Patienten suchen unterwegs – Deine Website sieht auf jedem Gerät professionell aus." },
+  { icon: Shield, title: "DSGVO-konform", desc: "deine Praxis-Website erfüllt alle Datenschutz-Anforderungen – inklusive Impressum und Datenschutzerklärung." },
+  { icon: Smartphone, title: "Mobilfreundlich", desc: "Patienten suchen unterwegs – deine Website sieht auf jedem Gerät professionell aus." },
   { icon: TrendingUp, title: "Mehr Patienten gewinnen", desc: "Conversion-optimierter Aufbau sorgt dafür, dass Besucher zu Patienten werden." },
 ];
 
@@ -29,7 +29,7 @@ const faqs = [
 ];
 
 const WebdesignAerzte = () => (
- <main id="main-content" className="pt-20">
+  <main id="main-content" className="pt-20">
     <section className="section-padding">
       <div className="container-narrow px-4">
         <AnimatedSection>
@@ -40,9 +40,9 @@ const WebdesignAerzte = () => (
               <span className="gradient-text">Die Praxis-Website, die Patienten gewinnt</span>
             </h1>
             <p className="text-muted-foreground text-lg">
- Patienten suchen online nach Ärzten – und entscheiden sich für die Praxis mit der besten Website.
- Wir erstellen professionelle, vertrauenswürdige Websites speziell für Arztpraxen.
- </p>
+              Patienten suchen online nach Ärzten – und entscheiden sich für die Praxis mit der besten Website.
+              Wir erstellen professionelle, vertrauenswürdige Websites speziell für Arztpraxen.
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button variant="gradient" size="lg" className="animate-cta-pulse" asChild>
                 <Link to="/kontakt">Kostenlose Website-Vorschau für Ärzte <ArrowRight size={20} aria-hidden={true} focusable={false} /></Link>
@@ -59,7 +59,7 @@ const WebdesignAerzte = () => (
             <h2 className="text-center mb-10 text-balance">Diese Probleme kennen viele Arztpraxen</h2>
             <div className="space-y-4">
               {painPoints.map((p) => (
- <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
+                <div key={p} className="flex items-start gap-4 p-5 rounded-2xl border border-border bg-background">
                   <span className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-destructive" />
                   </span>
@@ -75,7 +75,7 @@ const WebdesignAerzte = () => (
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {features.map((f, i) => (
- <AnimatedSection key={f.title} delay={i * 0.08}>
+            <AnimatedSection key={f.title} delay={i * 0.08}>
               <div className="p-7 rounded-2xl border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300 bg-background h-full">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                   <f.icon size={20} className="text-primary" />
@@ -96,7 +96,7 @@ const WebdesignAerzte = () => (
                 { value: "DSGVO", label: "Vollständig konform" },
                 { value: "Top 3", label: "Google-Rankings lokal" },
               ].map((s) => (
- <div key={s.label} className="text-center">
+                <div key={s.label} className="text-center">
                   <span className="font-heading text-4xl font-bold text-primary-foreground">{s.value}</span>
                   <p className="text-sm text-primary-foreground/70 mt-2">{s.label}</p>
                 </div>
@@ -117,7 +117,7 @@ const WebdesignAerzte = () => (
                 { label: "Webdesign Preise", to: "/webdesign-preise" },
                 { label: "Landingpage erstellen", to: "/landingpage-erstellen-lassen" },
               ].map((l) => (
- <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
+                <Link key={l.to} to={l.to} className="flex items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all">
                   <Check size={17} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span className="text-sm font-medium">{l.label}</span>
                   <ArrowRight size={16} className="text-muted-foreground ml-auto" aria-hidden={true} focusable={false} />
@@ -132,7 +132,7 @@ const WebdesignAerzte = () => (
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
- <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+                <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                   <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">{faq.q}</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{faq.a}</AccordionContent>
                 </AccordionItem>

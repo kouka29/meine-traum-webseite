@@ -71,15 +71,15 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
       <div className="rounded-2xl border border-border bg-card p-8 text-center flex flex-col items-center gap-4 shadow-card">
         <Check size={24} style={{ color: "#10B981" }} aria-hidden={true} focusable={false} />
         <p className="text-base font-semibold text-foreground">
- ✅ Super! Ich melde mich innerhalb von 2 Stunden bei Dir. Schau kurz auf Dein Handy!
- </p>
+          ✅ Super! Ich melde mich innerhalb von 2 Stunden bei Dir. Schau kurz auf Dein Handy!
+        </p>
         <a
           href="tel:+4961313076498"
           className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
           style={{ color: "#5B5FEF" }}
         >
           <Phone size={16} aria-hidden={true} focusable={false} /> Lieber direkt anrufen? 06131 3076498
- </a>
+        </a>
       </div>
     );
   }
@@ -119,7 +119,7 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
         >
           <option value="">Bitte wählen</option>
           {BRANCHEN.map((b) => (
- <option key={b} value={b}>{b}</option>
+            <option key={b} value={b}>{b}</option>
           ))}
         </select>
         {errors.branche && <p className="text-xs text-red-500 mt-1">{errors.branche}</p>}
@@ -175,8 +175,8 @@ const HandwerkerLeadForm = ({ branche = "", withMessage = false }: Props) => {
         {loading ? "Wird gesendet…" : "Kostenlose Vorschau anfordern →"}
       </button>
       <p className="text-xs text-center text-muted-foreground">
- ⏱ Meldung innerhalb 2 Stunden · 🔒 Keine Datenweitergabe · Kein Spam
- </p>
+        ⏱ Meldung innerhalb 2 Stunden · 🔒 Keine Datenweitergabe · Kein Spam
+      </p>
     </form>
   );
 };

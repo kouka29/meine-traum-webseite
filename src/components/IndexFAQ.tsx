@@ -34,21 +34,21 @@ const faqs = [
 ];
 
 const IndexFAQ = () => (
- <section className="section-padding">
+  <section className="section-padding">
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="text-center mb-16">
           <h2 className="mb-5 text-balance">Häufige Fragen – ehrlich beantwortet</h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
- Kein Fachchinesisch. Klare Antworten auf die Fragen, die uns am häufigsten gestellt werden.
- </p>
+            Kein Fachchinesisch. Klare Antworten auf die Fragen, die uns am häufigsten gestellt werden.
+          </p>
         </div>
       </AnimatedSection>
       <AnimatedSection delay={0.1}>
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, i) => (
- <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
+              <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-2xl px-6 data-[state=open]:border-primary/20 data-[state=open]:shadow-card transition-all">
                 <AccordionTrigger className="text-left font-heading font-semibold text-base hover:no-underline py-5">
                   {faq.q}
                 </AccordionTrigger>

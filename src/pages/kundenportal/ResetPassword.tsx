@@ -120,19 +120,19 @@ export default function KundenportalResetPassword() {
               <h2 className="font-heading text-2xl font-bold">Link wird geprüft</h2>
               <p className="text-muted-foreground text-sm">Einen Moment bitte.</p>
             </div>
- ) : done ? (
- <div className="text-center space-y-4">
+          ) : done ? (
+            <div className="text-center space-y-4">
               <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                 <CheckCircle2 className="text-primary" size={32} aria-hidden={true} focusable={false} />
               </div>
               <h2 className="font-heading text-2xl font-bold">Passwort gespeichert</h2>
               <p className="text-muted-foreground text-sm">Du kannst dich jetzt im Kundenportal anmelden.</p>
               <Button className="w-full" onClick={() => navigate("/kundenportal", { replace: true })}>
- Zum Kundenportal
- </Button>
+                Zum Kundenportal
+              </Button>
             </div>
- ) : (
- <form onSubmit={submit} className="space-y-5">
+          ) : (
+            <form onSubmit={submit} className="space-y-5">
               <div className="text-center mb-6">
                 <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-3">
                   <LockKeyhole className="text-primary" size={24} aria-hidden={true} focusable={false} />

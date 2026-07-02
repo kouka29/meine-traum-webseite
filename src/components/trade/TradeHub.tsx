@@ -52,7 +52,7 @@ const TRADE_RENT_PACKAGES = rentPackages.filter((p) => !p.enterprise);
 const scrollToForm = () => document.getElementById("vorschau-formular")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
 const TradeHub = ({ config }: { config: TradeHubConfig }) => (
- <main id="main-content" className="pt-[110px]">
+  <main id="main-content" className="pt-[110px]">
     {/* HERO */}
     <Section bg="dark">
         <div className="max-w-4xl mx-auto text-center">
@@ -63,17 +63,17 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           <p className="text-lg max-w-2xl mx-auto mb-8 text-on-dark-muted">{config.heroSub}</p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white mb-8">
             {config.trustBadges.map((b) => (
- <span key={b} className="flex items-center gap-2"><Check size={16} className="text-success" aria-hidden={true} focusable={false} /> {b}</span>
+              <span key={b} className="flex items-center gap-2"><Check size={16} className="text-success" aria-hidden={true} focusable={false} /> {b}</span>
             ))}
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button variant="brand" size="lg" onClick={scrollToForm}>
- Kostenlose Vorschau anfordern →
- </Button>
+              Kostenlose Vorschau anfordern →
+            </Button>
             <Button variant="brand-soft" size="lg" asChild>
               <a href="tel:+4961313076498">
                 <Phone size={16} aria-hidden focusable={false} /> 06131 3076498
- </a>
+              </a>
             </Button>
           </div>
           <p className="mt-6 text-sm text-on-dark-muted">{config.socialProof}</p>
@@ -85,7 +85,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
         <SectionHeading tone="onDark" title="Kommt Dir das bekannt vor?" />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {config.painPoints.map((p) => (
- <div
+            <div
               key={p.title}
               className="rounded-card bg-white p-6 flex flex-col gap-3 transition duration-300 hover:-translate-y-0.5 shadow-elevated"
             >
@@ -104,7 +104,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
         <SectionHeading eyebrow="So einfach geht's" title={config.stepsH2} />
         <div className="grid md:grid-cols-3 gap-6 mb-10">
           {STEPS.map((s, i) => (
- <div key={s.title} className="rounded-card bg-white p-7 shadow-marketing flex flex-col gap-3 border border-border">
+            <div key={s.title} className="rounded-card bg-white p-7 shadow-marketing flex flex-col gap-3 border border-border">
               <div className="flex items-center gap-3">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center bg-brand text-brand-foreground font-bold text-sm">{i + 1}</span>
                 <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
@@ -147,14 +147,14 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
         <PricingNamesProvider names={config.pricingNames ?? DEFAULT_TRADE_NAMES}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {TRADE_RENT_PACKAGES.map((pkg, i) => (
- <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={scrollToForm} />
+              <PackageCard key={pkg.name} pkg={pkg} i={i} onOpen={scrollToForm} />
             ))}
           </div>
         </PricingNamesProvider>
         <div className="text-center">
           <Link to={config.pricingContactPath ?? "/handwerker/kontakt"} className="text-sm font-semibold hover:underline text-brand">
- Nicht sicher welches Paket passt? → Kostenlos beraten lassen
- </Link>
+            Nicht sicher welches Paket passt? → Kostenlos beraten lassen
+          </Link>
         </div>
     </Section>
 
@@ -163,7 +163,7 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
         <SectionHeading title={config.crossLinksH2 ?? "Auch für andere Handwerksbetriebe"} />
         <div className="grid sm:grid-cols-3 gap-5 mb-6">
           {config.crossLinks.map((t) => (
- <Link
+            <Link
               key={t.label}
               to={t.to}
               className="group rounded-card bg-white p-7 flex flex-col items-center gap-3 shadow-marketing border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:shadow-marketing-hover"
@@ -187,19 +187,19 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div className="text-foreground">
             <span className="inline-block text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-warning text-warning-foreground mb-5">
- Kostenlos & unverbindlich
- </span>
+              Kostenlos & unverbindlich
+            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">{config.formH2}</h2>
             <ul className="space-y-3 mb-8">
               {["Individuell für Deinen Betrieb", "Ich melde mich innerhalb von 2 Stunden", "Kein Risiko — Du entscheidest danach frei", "Kostenlos — auch wenn Du nicht kaufst"].map((t) => (
- <li key={t} className="flex items-start gap-2 text-sm text-foreground">
+                <li key={t} className="flex items-start gap-2 text-sm text-foreground">
                   <Check size={20} className="mt-0.5 shrink-0 text-success" aria-hidden={true} focusable={false} /> {t}
                 </li>
               ))}
             </ul>
             <a href="tel:+4961313076498" className="inline-flex items-center gap-3 text-2xl font-bold text-foreground hover:underline">
               <Phone size={24} aria-hidden={true} focusable={false} /> 06131 3076498
- </a>
+            </a>
             <p className="text-sm mt-1 text-muted-foreground">Mo–Fr 9–18 Uhr</p>
           </div>
           <div>
@@ -216,12 +216,12 @@ const TradeHub = ({ config }: { config: TradeHubConfig }) => (
           <p className="text-lg mb-8 text-on-dark-muted">{config.finalSub}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button variant="brand" size="lg" onClick={scrollToForm}>
- Kostenlose Vorschau anfordern →
- </Button>
+              Kostenlose Vorschau anfordern →
+            </Button>
             <Button variant="brand-soft" size="lg" asChild>
               <a href="tel:+4961313076498">
                 <Phone size={16} aria-hidden focusable={false} /> 06131 3076498
- </a>
+              </a>
             </Button>
           </div>
         </div>

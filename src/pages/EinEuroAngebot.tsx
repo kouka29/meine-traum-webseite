@@ -119,16 +119,16 @@ const EinEuroAngebot = () => {
         />
         <div className="relative max-w-5xl mx-auto px-4 py-20 md:py-28 text-center">
           <span className="inline-block bg-white/10 border border-white/20 text-white text-sm rounded-full px-4 py-1.5 mb-6">
- 🎉 Zeitlich begrenztes Einführungsangebot
- </span>
+            🎉 Zeitlich begrenztes Einführungsangebot
+          </span>
           <h1 className="font-bold text-4xl md:text-6xl leading-tight mb-6">
- Ihre neue Webseite —<br />
- den ersten Monat für nur 1 €.
- </h1>
+            Ihre neue Webseite —<br />
+            den ersten Monat für nur 1 €.
+          </h1>
           <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto mb-10">
- Professionelle Webseite, BFSG- und DSGVO-konform, in 2-4 Wochen umgesetzt.
- Danach 59 € im Monat — kündbar mit den üblichen Konditionen. Keine versteckten Kosten.
- </p>
+            Professionelle Webseite, BFSG- und DSGVO-konform, in 2-4 Wochen umgesetzt.
+            Danach 59 € im Monat — kündbar mit den üblichen Konditionen. Keine versteckten Kosten.
+          </p>
 
           <div className="flex flex-col items-center mb-8">
             <div className="flex items-end gap-6 mb-2">
@@ -143,11 +143,11 @@ const EinEuroAngebot = () => {
             className="bg-white font-bold px-8 py-4 rounded-lg hover:scale-105 transition-transform shadow-xl"
             style={{ color: "var(--brand-purple)" }}
           >
- Jetzt 1€-Angebot sichern →
- </button>
+            Jetzt 1€-Angebot sichern →
+          </button>
           <p className="text-white/60 text-sm mt-4">
- Danach 59 €/Monat. 12 Monate Mindestlaufzeit. Jederzeit einsehbare AGB.
- </p>
+            Danach 59 €/Monat. 12 Monate Mindestlaufzeit. Jederzeit einsehbare AGB.
+          </p>
         </div>
       </section>
 
@@ -155,11 +155,11 @@ const EinEuroAngebot = () => {
       <section className="bg-white py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl text-3xl font-bold text-center mb-12 text-foreground">
- Das bekommen Sie für 1 €
- </h2>
+            Das bekommen Sie für 1 €
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {includes.map((i) => (
- <div key={i.title} className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm">
+              <div key={i.title} className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm">
                 <div className="mb-3 flex justify-center"><EmojiIcon emoji={i.icon} size={20} /></div>
                 <h3 className="font-semibold text-lg mb-2">{i.title}</h3>
                 <p className="text-muted-foreground text-sm">{i.text}</p>
@@ -175,7 +175,7 @@ const EinEuroAngebot = () => {
           <h2 className="text-3xl text-3xl font-bold text-center mb-12">So funktioniert's</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {steps.map((s) => (
- <div key={s.n} className="rounded-2xl bg-card border border-border p-6 shadow-sm">
+              <div key={s.n} className="rounded-2xl bg-card border border-border p-6 shadow-sm">
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4"
                   style={{ backgroundColor: "var(--brand-purple)" }}
@@ -197,7 +197,7 @@ const EinEuroAngebot = () => {
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Transparenz ist uns wichtig</h2>
             <ul className="space-y-3">
               {transparency.map((t) => (
- <li key={t} className="flex gap-3 items-start text-foreground">
+                <li key={t} className="flex gap-3 items-start text-foreground">
                   <span className="font-bold mt-0.5" style={{ color: "var(--brand-purple)" }}>✓</span>
                   <span>{t}</span>
                 </li>
@@ -211,8 +211,8 @@ const EinEuroAngebot = () => {
                 className="font-semibold hover:underline"
                 style={{ color: "var(--brand-purple)" }}
               >
- → Zu den AGB
- </a>
+                → Zu den AGB
+              </a>
             </div>
           </div>
         </div>
@@ -225,8 +225,8 @@ const EinEuroAngebot = () => {
       >
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl text-3xl font-bold text-center mb-12">
- Was würde das normalerweise kosten?
- </h2>
+            Was würde das normalerweise kosten?
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="rounded-2xl p-6" style={{ color: "hsl(228 24% 12%)", backgroundColor: "#ffffff" }}>
               <h3 className="font-semibold text-xl mb-4" style={{ color: "hsl(228 24% 12%)" }}>Klassische Agentur</h3>
@@ -257,7 +257,7 @@ const EinEuroAngebot = () => {
           <h2 className="text-3xl text-3xl font-bold text-center mb-12">Das sagen unsere Kunden</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
- <div key={t.name} className="rounded-2xl bg-card border border-border p-6 shadow-sm">
+              <div key={t.name} className="rounded-2xl bg-card border border-border p-6 shadow-sm">
                 <p className="text-foreground mb-4 italic">"{t.quote}"</p>
                 <p className="text-sm font-semibold text-muted-foreground">— {t.name}</p>
               </div>
@@ -272,7 +272,7 @@ const EinEuroAngebot = () => {
           <h2 className="text-3xl text-3xl font-bold text-center mb-10">Häufige Fragen</h2>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, idx) => (
- <AccordionItem key={idx} value={`item-${idx}`}>
+              <AccordionItem key={idx} value={`item-${idx}`}>
                 <AccordionTrigger className="text-left font-semibold">{f.q}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
               </AccordionItem>
@@ -287,26 +287,26 @@ const EinEuroAngebot = () => {
           <div className="rounded-2xl border border-border p-8 shadow-lg">
             <h2 className="text-3xl font-bold mb-2 text-center">Jetzt 1€-Angebot sichern</h2>
             <p className="text-muted-foreground text-center mb-6">
- Unverbindliches Kennenlerngespräch — wir melden uns innerhalb von 48 Stunden.
- </p>
+              Unverbindliches Kennenlerngespräch — wir melden uns innerhalb von 48 Stunden.
+            </p>
 
             {submitted ? (
               <div className="text-center py-8">
                 <div className="text-5xl mb-4">✅</div>
                 <h3 className="text-xl font-bold mb-2">Vielen Dank!</h3>
                 <p className="text-muted-foreground">
- Wir melden uns innerhalb von 48 Stunden bei Ihnen.
- </p>
+                  Wir melden uns innerhalb von 48 Stunden bei Ihnen.
+                </p>
               </div>
- ) : (
- <div className="space-y-4">
+            ) : (
+              <div className="space-y-4">
                 {[
                   { k: "name", label: "Ihr Name", type: "text" },
                   { k: "firma", label: "Firmenname", type: "text" },
                   { k: "email", label: "E-Mail", type: "email" },
                   { k: "telefon", label: "Telefon (optional)", type: "tel" },
                 ].map((f) => (
- <div key={f.k}>
+                  <div key={f.k}>
                     <Label htmlFor={f.k} className="mb-1.5 block">{f.label}</Label>
                     <Input
                       id={f.k}
@@ -327,9 +327,9 @@ const EinEuroAngebot = () => {
                   {submitting ? "Wird gesendet..." : "1€-Angebot anfordern →"}
                 </Button>
                 <p className="text-xs text-muted-foreground text-center">
- Mit dem Absenden akzeptieren Sie, dass wir Sie zur Angebotsbesprechung kontaktieren.
- Es entstehen keine Verpflichtungen.
- </p>
+                  Mit dem Absenden akzeptieren Sie, dass wir Sie zur Angebotsbesprechung kontaktieren.
+                  Es entstehen keine Verpflichtungen.
+                </p>
               </div>
             )}
           </div>
@@ -346,16 +346,16 @@ const EinEuroAngebot = () => {
       >
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl text-3xl font-bold mb-4">
- Bereit für Ihre neue Webseite — für 1 €?
- </h2>
+            Bereit für Ihre neue Webseite — für 1 €?
+          </h2>
           <p className="text-white/70 mb-8">Limitiertes Einführungsangebot. Jetzt sichern.</p>
           <button
             onClick={() => scrollTo("angebot-form")}
             className="bg-white font-bold px-8 py-4 rounded-lg hover:scale-105 transition-transform shadow-xl"
             style={{ color: "var(--brand-purple)" }}
           >
- Jetzt 1€-Angebot sichern →
- </button>
+            Jetzt 1€-Angebot sichern →
+          </button>
         </div>
       </section>
     </div>

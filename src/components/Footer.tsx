@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 
 const Footer = () => (
- <footer className="bg-foreground text-background/70 section-padding">
+  <footer className="bg-foreground text-background/70 section-padding">
     <div className="container-narrow px-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-14 mb-16">
         <div>
           <h3 className="font-heading text-xl font-bold text-background mb-4 tracking-tight">
- Meine Traum Webseite
- </h3>
+            Meine Traum Webseite
+          </h3>
           <p className="text-sm leading-relaxed">
- Professionelle Webdesign Agentur – wir erstellen Websites, die aktiv Kunden gewinnen.
- Spezialisiert auf Handwerksbetriebe im DACH-Raum.
- </p>
+            Professionelle Webdesign Agentur – wir erstellen Websites, die aktiv Kunden gewinnen.
+            Spezialisiert auf Handwerksbetriebe im DACH-Raum.
+          </p>
         </div>
         <div>
           <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Branchen</h4>
@@ -28,7 +28,7 @@ const Footer = () => (
               ["Website für Gastronomie", "/gastronomie"],
               ["Website für Fitnessstudios", "/fitness"],
             ].map(([label, path]) => (
- <li key={path}>
+              <li key={path}>
                 <Link to={path} className="hover:text-background transition-colors">
                   {label}
                 </Link>
@@ -36,8 +36,8 @@ const Footer = () => (
             ))}
             <li>
               <Link to="/#branchen" className="hover:text-background transition-colors font-medium">
- Weitere Branchen →
- </Link>
+                Weitere Branchen →
+              </Link>
             </li>
           </ul>
         </div>
@@ -53,7 +53,7 @@ const Footer = () => (
               ["Kontakt", "/kontakt"],
               ["Kostenloser Website-Check", "/kostenloser-website-check"],
             ].map(([label, path]) => (
- <li key={path}>
+              <li key={path}>
                 <Link to={path} className="hover:text-background transition-colors">
                   {label}
                 </Link>
@@ -64,12 +64,12 @@ const Footer = () => (
         <div>
           <h4 className="font-heading font-semibold text-background mb-5 text-sm tracking-wide uppercase">Kontakt</h4>
           <p className="text-sm leading-relaxed mb-3">
- info@meine-traum-webseite.de<br />
- 06131 3076498
- </p>
+            info@meine-traum-webseite.de<br />
+            06131 3076498
+          </p>
           <p className="text-xs text-background/70 mb-6">
- Mo–Fr: 9:00 – 18:00 Uhr
- </p>
+            Mo–Fr: 9:00 – 18:00 Uhr
+          </p>
           <h4 className="font-heading font-semibold text-background mb-3 text-sm tracking-wide uppercase">Rechtliches</h4>
           <ul className="space-y-2 text-sm">
             <li>
@@ -90,8 +90,8 @@ const Footer = () => (
                 onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
                 className="hover:text-background transition-colors text-left"
               >
- Cookie-Einstellungen
- </button>
+                Cookie-Einstellungen
+              </button>
             </li>
           </ul>
         </div>

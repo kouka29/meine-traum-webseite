@@ -75,7 +75,7 @@ const faqsByPage: Record<string, FaqItem[]> = {
     { q: "Bietet ihr auch Landingpages für Wertermittlung an?", a: "Ja! Spezielle Landingpages für kostenlose Wertermittlung sind einer der besten Wege, um Eigentümer-Leads zu generieren." },
   ],
   "/webdesign-coaches": [
-    { q: "Warum brauche ich als Coach eine professionelle Website?", a: "Deine Website ist dein digitales Aushängeschild. Potenzielle Klienten prüfen deine Online-Präsenz, bevor sie Kontakt aufnehmen." },
+    { q: "Warum brauche ich als Coach eine professionelle Website?", a: "deine Website ist dein digitales Aushängeschild. Potenzielle Klienten prüfen deine Online-Präsenz, bevor sie Kontakt aufnehmen." },
     { q: "Was kostet eine Coach-Website?", a: "Unsere Websites für Coaches und Berater starten ab 990 €. Inkl. persönlichem Branding, SEO und Conversion-Optimierung." },
     { q: "Kann ich Testimonials und Erfolgsgeschichten selbst einpflegen?", a: "Ja, wir richten deine Website so ein, dass du Inhalte wie Testimonials, Blog-Beiträge und Angebote einfach selbst aktualisieren können." },
     { q: "Bietet ihr auch Landingpages für einzelne Angebote an?", a: "Ja! Für Webinare, Online-Kurse oder spezielle Programme erstellen wir gezielte Landingpages, die Teilnehmer und Klienten gewinnen." },

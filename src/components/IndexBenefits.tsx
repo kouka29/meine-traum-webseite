@@ -11,21 +11,21 @@ const benefits = [
 ];
 
 const IndexBenefits = () => (
- <section className="section-padding gradient-subtle-bg">
+  <section className="section-padding gradient-subtle-bg">
     <div className="container-narrow px-4">
       <AnimatedSection>
         <div className="text-center mb-12 md:mb-20">
           <h2 className="mb-5 text-balance">
- Das Ergebnis: Mehr Anfragen, planbar und messbar
- </h2>
+            Das Ergebnis: Mehr Anfragen, planbar und messbar
+          </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
- Keine vagen Versprechen. Wir zeigen, was sich konkret ändert, wenn deine Website endlich als Vertriebskanal funktioniert.
- </p>
+            Keine vagen Versprechen. Wir zeigen, was sich konkret ändert, wenn deine Website endlich als Vertriebskanal funktioniert.
+          </p>
         </div>
       </AnimatedSection>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {benefits.map((b, i) => (
- <AnimatedSection key={b.title} delay={i * 0.1}>
+          <AnimatedSection key={b.title} delay={i * 0.1}>
             <div className="flex gap-5 p-7 rounded-2xl border border-border hover:border-primary/20 transition-all duration-300 bg-background hover:shadow-card">
               <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center shrink-0">
                 <b.icon size={20} className="text-primary" />
@@ -41,7 +41,7 @@ const IndexBenefits = () => (
       <div className="text-center mt-12 px-4">
         <Button variant="gradient" size="lg" className="animate-cta-pulse text-xs sm:text-base px-4 sm:px-8 h-auto min-h-12 py-3 w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
           <Link to="/kontakt">
- Kostenlose Strategie-Vorschau anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} />
+            Kostenlose Strategie-Vorschau anfordern <ArrowRight size={20} aria-hidden={true} focusable={false} />
           </Link>
         </Button>
       </div>

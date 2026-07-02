@@ -24,7 +24,7 @@ const IndexFAQ = lazy(() => import("@/components/IndexFAQ"));
 const SectionPlaceholder = () => <div className="min-h-[200px]" aria-hidden="true" />;
 
 const Index = () => (
- <main id="main-content">
+  <main id="main-content">
     <SEOHead
       title="Website erstellen lassen | Meine Traum Webseite"
       description="Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h."
@@ -49,19 +49,19 @@ const Index = () => (
         <AnimatedSection>
           <div className="max-w-3xl">
             <span className="badge-label bg-destructive/10 text-destructive mb-6 sm:mb-8 text-[10px] sm:text-xs uppercase">
- DEINE WEBSITE BRINGT KEINE KUNDEN? DAS ÄNDERN WIR.
- </span>
+              DEINE WEBSITE BRINGT KEINE KUNDEN? DAS ÄNDERN WIR.
+            </span>
             <h1 className="mb-4 sm:mb-6 text-balance">
               Webseiten, die planbar Kundenanfragen bringen –{" "}
               <span className="gradient-text">nicht nur gut aussehen</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-5 leading-relaxed">
- Wir entwickeln strategische, conversion-optimierte Webseiten für Selbstständige und Unternehmen –
- damit aus Besuchern <strong className="text-foreground">zuverlässig neue Kunden</strong> werden.
- </p>
+              Wir entwickeln strategische, conversion-optimierte Webseiten für Selbstständige und Unternehmen –
+              damit aus Besuchern <strong className="text-foreground">zuverlässig neue Kunden</strong> werden.
+            </p>
             <div className="flex items-center gap-3 sm:gap-5 mb-8 sm:mb-10 flex-wrap">
               {["Kostenloses Konzept", "Keine Verpflichtung", "Umsetzung in 48 h möglich"].map((t) => (
- <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
+                <div key={t} className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
                   <Check size={16} className="text-primary shrink-0" aria-hidden={true} focusable={false} />
                   <span>{t}</span>
                 </div>
@@ -73,13 +73,13 @@ const Index = () => (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button variant="gradient" size="lg" className="text-xs sm:text-base py-5 sm:py-6 px-4 sm:px-8 h-auto min-h-12 animate-cta-pulse w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
                 <Link to="/kontakt">
- Kostenlose Strategie-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
+                  Kostenlose Strategie-Vorschau sichern <ArrowRight size={20} aria-hidden={true} focusable={false} />
                 </Link>
               </Button>
               <Button variant="outline-primary" size="lg" className="text-xs sm:text-base py-5 sm:py-6 px-4 sm:px-8 h-auto min-h-12 w-full sm:w-auto whitespace-normal text-center leading-tight" asChild>
                 <Link to="/kontakt">
                   <Phone size={20} aria-hidden={true} focusable={false} /> Rückruf vereinbaren
- </Link>
+                </Link>
               </Button>
             </div>
           </div>

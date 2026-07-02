@@ -100,8 +100,8 @@ const CookieBanner = () => {
           Einige Cookies sind technisch notwendig, während andere uns helfen, die Website zu verbessern 
           und dir relevante Inhalte anzuzeigen. Du kannst deine Einwilligung jederzeit widerrufen.{" "}
           <a href="/datenschutz" className="text-primary underline underline-offset-2 hover:text-primary/80">
- Mehr erfahren
- </a>
+            Mehr erfahren
+          </a>
         </p>
 
         {showDetails && (
@@ -142,30 +142,30 @@ const CookieBanner = () => {
 
         <div className="flex flex-col sm:flex-row gap-3">
           <Button variant="gradient" className="flex-1" onClick={acceptAll}>
- Alle akzeptieren
- </Button>
+            Alle akzeptieren
+          </Button>
           {showDetails ? (
             <Button variant="outline-primary" className="flex-1" onClick={acceptSelected}>
- Auswahl speichern
- </Button>
- ) : (
- <Button
+              Auswahl speichern
+            </Button>
+          ) : (
+            <Button
               variant="outline-primary"
               className="flex-1"
               onClick={() => setShowDetails(true)}
             >
               <Settings size={16} aria-hidden={true} focusable={false} /> Einstellungen
- </Button>
+            </Button>
           )}
           <Button variant="outline" className="flex-1" onClick={rejectAll}>
- Nur notwendige
- </Button>
+            Nur notwendige
+          </Button>
         </div>
 
         <p className="text-[11px] text-muted-foreground mt-4 text-center">
- Gemäß DSGVO Art. 6 Abs. 1 lit. a und § 25 TDDDG (ehemals TTDSG) · 
- <a href="/impressum" className="underline underline-offset-2 hover:text-foreground ml-1">Impressum</a> · 
- <a href="/datenschutz" className="underline underline-offset-2 hover:text-foreground ml-1">Datenschutz</a>
+          Gemäß DSGVO Art. 6 Abs. 1 lit. a und § 25 TDDDG (ehemals TTDSG) · 
+          <a href="/impressum" className="underline underline-offset-2 hover:text-foreground ml-1">Impressum</a> · 
+          <a href="/datenschutz" className="underline underline-offset-2 hover:text-foreground ml-1">Datenschutz</a>
         </p>
       </div>
     </div>

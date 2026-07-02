@@ -14,8 +14,8 @@ export default function KaufErfolgreich() {
     : "Vielen Dank für deine Anzahlung!";
 
   const subline = isRent
-    ? "Dein Miet-Abo ist aktiv. Wir starten jetzt mit deiner neuen Website."
-    : "Deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit deiner neuen Website.";
+    ? "dein Miet-Abo ist aktiv. Wir starten jetzt mit deiner neuen Website."
+    : "deine 50 % Anzahlung ist eingegangen. Wir starten jetzt mit deiner neuen Website.";
 
   const emailText = isRent
     ? "Du erhältst in Kürze eine Bestätigung mit deiner ersten Monatsrechnung als PDF."
@@ -45,9 +45,9 @@ export default function KaufErfolgreich() {
             <div>
               <p className="font-semibold mb-1">Onboarding innerhalb von 24 h</p>
               <p className="text-sm text-muted-foreground">
- Wir melden uns persönlich, um die nächsten Schritte zu besprechen und deinen
- Onboarding-Fragebogen zu schicken.
- </p>
+                Wir melden uns persönlich, um die nächsten Schritte zu besprechen und deinen
+                Onboarding-Fragebogen zu schicken.
+              </p>
             </div>
           </div>
           {isRent ? (
@@ -56,19 +56,19 @@ export default function KaufErfolgreich() {
               <div>
                 <p className="font-semibold mb-1">Monatliche Abrechnung</p>
                 <p className="text-sm text-muted-foreground">
- Die erste Monatsmiete wurde eingezogen, danach erfolgt die Abrechnung automatisch
- monatlich. Mindestlaufzeit 12 Monate – danach jederzeit kündbar.
- </p>
+                  Die erste Monatsmiete wurde eingezogen, danach erfolgt die Abrechnung automatisch
+                  monatlich. Mindestlaufzeit 12 Monate – danach jederzeit kündbar.
+                </p>
               </div>
             </div>
- ) : (
- <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
+          ) : (
+            <div className="flex items-start gap-4 p-5 rounded-xl border bg-card">
               <Check className="text-primary shrink-0 mt-0.5" size={20} aria-hidden={true} focusable={false} />
               <div>
                 <p className="font-semibold mb-1">Restzahlung bei Go-Live</p>
                 <p className="text-sm text-muted-foreground">
- Die restlichen 50 % werden erst fällig, wenn deine Website live geht – per Rechnung.
- </p>
+                  Die restlichen 50 % werden erst fällig, wenn deine Website live geht – per Rechnung.
+                </p>
               </div>
             </div>
           )}
@@ -76,13 +76,13 @@ export default function KaufErfolgreich() {
 
         <Button asChild size="lg" variant="outline-primary">
           <Link to="/">
- Zurück zur Startseite <ArrowRight size={16} aria-hidden={true} focusable={false} />
+            Zurück zur Startseite <ArrowRight size={16} aria-hidden={true} focusable={false} />
           </Link>
         </Button>
 
         {sessionId && (
           <p className="text-xs text-muted-foreground mt-8">
- Referenz: <code className="font-mono">{sessionId}</code>
+            Referenz: <code className="font-mono">{sessionId}</code>
           </p>
         )}
       </div>

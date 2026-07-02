@@ -16,8 +16,8 @@ export default function KundenportalAngebote() {
 
   if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
- return (
- <div className="space-y-6">
+  return (
+    <div className="space-y-6">
       <div>
         <h1 className="font-heading text-3xl font-bold">Angebote</h1>
         <p className="text-muted-foreground mt-1">Alle Angebote, die wir dir erstellt haben.</p>
@@ -28,10 +28,10 @@ export default function KundenportalAngebote() {
           <FileCheck size={40} className="mx-auto text-muted-foreground mb-3" aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Aktuell keine Angebote.</p>
         </CardContent></Card>
- ) : (
- <div className="grid gap-3">
+      ) : (
+        <div className="grid gap-3">
           {angebote.map((a) => (
- <Card key={a.id}>
+            <Card key={a.id}>
               <CardContent className="p-4 flex items-center justify-between gap-4 flex-wrap">
                 <div>
                   <div className="font-medium">Angebot für {a.lead_name || "—"}</div>

@@ -60,7 +60,7 @@ function getGreeting(pathname: string): string {
   if (pathname.startsWith("/portfolio")) {
     return "Suchst du ein Beispiel für deine Branche?";
   }
-  return "Hi! Ich bin dein Assistent von MTW. Was möchtest du weißt?";
+  return "Hi! Ich bin dein Assistent von MTW. Was möchtest du wissen?";
 }
 
 const DEFAULT_CHIPS = [
@@ -92,11 +92,11 @@ const ChatAssistant = () => {
       pathname === "/a" ||
       HIDE_PREFIXES.some(
         (p) => pathname === p || pathname.startsWith(p + "/") || pathname.startsWith(p),
- ),
- [pathname],
- );
+      ),
+    [pathname],
+  );
 
- const [open, setOpen] = useState<boolean>(() => {
+  const [open, setOpen] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return sessionStorage.getItem(OPEN_KEY) === "1";
   });
@@ -116,10 +116,10 @@ const ChatAssistant = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [availability, setAvailability] = useState<{ available: number; isFull: boolean } | null>(
- null,
- );
- const [avatarState, setAvatarState] = useState<AvatarState>("idle");
- const [consentDismissed, setConsentDismissed] = useState<boolean>(() => {
+    null,
+  );
+  const [avatarState, setAvatarState] = useState<AvatarState>("idle");
+  const [consentDismissed, setConsentDismissed] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return sessionStorage.getItem(CONSENT_KEY) === "1";
   });
@@ -133,10 +133,10 @@ const ChatAssistant = () => {
   const [leadHoney, setLeadHoney] = useState("");
   const [leadLoading, setLeadLoading] = useState(false);
   const [leadError, setLeadError] = useState<string | null>(null);
- const [showExtraSuggestions, setShowExtraSuggestions] = useState(false);
+  const [showExtraSuggestions, setShowExtraSuggestions] = useState(false);
 
- const scrollRef = useRef<HTMLDivElement>(null);
- const inputRef = useRef<HTMLTextAreaElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const availLoadedRef = useRef(false);
 
   // Persist messages
@@ -414,16 +414,16 @@ const ChatAssistant = () => {
   return createPortal(
     <>
       <style>{`
- @keyframes mtw-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
- .mtw-float { animation: mtw-float 3s ease-in-out infinite; }
- @media (prefers-reduced-motion: reduce) { .mtw-float { animation: none; } }
- @keyframes mtw-dot { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
- .mtw-dot { animation: mtw-dot 1.2s infinite ease-in-out; }
- .mtw-fab{position:fixed!important;right:1.25rem!important;left:auto!important;bottom:4rem!important;z-index:50!important}
- @media(min-width:768px){.mtw-fab{bottom:1.25rem!important}}
- .mtw-panel{position:fixed!important;left:1rem!important;right:1rem!important;bottom:4rem!important;z-index:50!important;width:auto!important;max-width:calc(100vw - 2rem)!important}
- @media(min-width:768px){.mtw-panel{left:auto!important;right:1.25rem!important;bottom:1.25rem!important;width:360px!important}}
- `}</style>
+        @keyframes mtw-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+        .mtw-float { animation: mtw-float 3s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) { .mtw-float { animation: none; } }
+        @keyframes mtw-dot { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+        .mtw-dot { animation: mtw-dot 1.2s infinite ease-in-out; }
+        .mtw-fab{position:fixed!important;right:1.25rem!important;left:auto!important;bottom:4rem!important;z-index:50!important}
+        @media(min-width:768px){.mtw-fab{bottom:1.25rem!important}}
+        .mtw-panel{position:fixed!important;left:1rem!important;right:1rem!important;bottom:4rem!important;z-index:50!important;width:auto!important;max-width:calc(100vw - 2rem)!important}
+        @media(min-width:768px){.mtw-panel{left:auto!important;right:1.25rem!important;bottom:1.25rem!important;width:360px!important}}
+      `}</style>
 
       {/* Floating trigger */}
       {!open && (
@@ -480,10 +480,10 @@ const ChatAssistant = () => {
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-semibold font-poppins text-sm leading-tight flex items-center gap-2">
- KI-Assistent
- <span className="text-[10px] font-medium bg-white/20 rounded px-1.5 py-0.5 tracking-wide">
- KI
- </span>
+                KI-Assistent
+                <span className="text-[10px] font-medium bg-white/20 rounded px-1.5 py-0.5 tracking-wide">
+                  KI
+                </span>
               </div>
               <div className="text-xs text-white/80">Antwortet in Sekunden</div>
             </div>
@@ -511,10 +511,10 @@ const ChatAssistant = () => {
               Dieser Chat wird KI-gestützt verarbeitet (Google Gemini via Lovable). Mit dem
               Senden stimmst du zu. Mehr:{" "}
               <a href="/datenschutz" className="underline text-primary">
- Datenschutz
- </a>
- .
- </div>
+                Datenschutz
+              </a>
+              .
+            </div>
           )}
 
           {/* Messages */}
@@ -524,7 +524,7 @@ const ChatAssistant = () => {
             className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5 bg-background"
           >
             {messages.map((m, i) => (
- <div
+              <div
                 key={i}
                 className={cn(
                   "flex gap-2",
@@ -576,13 +576,13 @@ const ChatAssistant = () => {
             {/* Quick-reply chips */}
             {(() => {
               const hasUserMessage = messages.some((m) => m.role === "user");
- const showChips = !hasUserMessage || showExtraSuggestions;
- const chips = getSuggestions(pathname).slice(0, 4);
- if (!showChips || chips.length === 0) return null;
- return (
- <div className="flex flex-wrap gap-2 mt-1">
+              const showChips = !hasUserMessage || showExtraSuggestions;
+              const chips = getSuggestions(pathname).slice(0, 4);
+              if (!showChips || chips.length === 0) return null;
+              return (
+                <div className="flex flex-wrap gap-2 mt-1">
                   {chips.map((chip) => (
- <button
+                    <button
                       key={chip}
                       type="button"
                       onClick={() => {
@@ -602,17 +602,17 @@ const ChatAssistant = () => {
             {/* "Weitere Fragen" link */}
             {(() => {
               const hasUserMessage = messages.some((m) => m.role === "user");
- const lastIsAssistant = messages[messages.length - 1]?.role === "assistant";
- if (!hasUserMessage || !lastIsAssistant || loading || showExtraSuggestions) return null;
- return (
- <div className="flex justify-start mt-1">
+              const lastIsAssistant = messages[messages.length - 1]?.role === "assistant";
+              if (!hasUserMessage || !lastIsAssistant || loading || showExtraSuggestions) return null;
+              return (
+                <div className="flex justify-start mt-1">
                   <button
                     type="button"
                     onClick={() => setShowExtraSuggestions(true)}
                     className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2"
                   >
- Weitere Fragen
- </button>
+                    Weitere Fragen
+                  </button>
                 </div>
               );
             })()}
@@ -659,8 +659,8 @@ const ChatAssistant = () => {
                     onClick={() => setShowLeadForm(false)}
                     className="flex-1"
                   >
- Abbrechen
- </Button>
+                    Abbrechen
+                  </Button>
                   <Button type="submit" size="sm" disabled={leadLoading} className="flex-1">
                     {leadLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -707,10 +707,10 @@ const ChatAssistant = () => {
           <div className="border-t border-border px-3 py-2.5 bg-muted/30">
             {leadSubmitted ? (
               <div className="text-xs text-center text-muted-foreground">
- ✓ Anfrage erhalten — wir melden uns.
- </div>
- ) : (
- <Button
+                ✓ Anfrage erhalten — wir melden uns.
+              </div>
+            ) : (
+              <Button
                 type="button"
                 size="sm"
                 onClick={() => setShowLeadForm(true)}

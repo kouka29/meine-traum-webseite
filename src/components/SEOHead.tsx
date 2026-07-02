@@ -96,81 +96,81 @@ export interface ServiceSchema {
     priceSpecificationMinPrice?: boolean;
   };
   /** Provider override — defaults to the site's ProfessionalService */
- provider?: Record<string, unknown>;
+  provider?: Record<string, unknown>;
 }
 
 export interface ProfessionalServiceSchema {
- type: "ProfessionalService";
- /** Override default address (defaults to Mainz HQ) */
- address?: Record<string, unknown>;
- /** Override default areaServed (defaults to ["DE","AT","CH"]) */
- areaServed?: string[];
- /** Override default contact info */
- telephone?: string;
- email?: string;
- priceRange?: string;
- alternateName?: string;
- founder?: Record<string, unknown>;
+  type: "ProfessionalService";
+  /** Override default address (defaults to Mainz HQ) */
+  address?: Record<string, unknown>;
+  /** Override default areaServed (defaults to ["DE","AT","CH"]) */
+  areaServed?: string[];
+  /** Override default contact info */
+  telephone?: string;
+  email?: string;
+  priceRange?: string;
+  alternateName?: string;
+  founder?: Record<string, unknown>;
 }
 
 export type StructuredDataInput =
- | ArticleSchema
- | ProductSchema
- | ServiceSchema
- | ProfessionalServiceSchema;
+  | ArticleSchema
+  | ProductSchema
+  | ServiceSchema
+  | ProfessionalServiceSchema;
 
 /* --------------------------------- Props --------------------------------- */
 
 export interface SEOHeadProps {
- /** Page title — used for <title>, og:title */
- title: string;
- /** Meta description / og:description / JSON-LD description */
- description: string;
- /** Canonical path (e.g. "/leistungen") or absolute URL */
- path?: string;
- /** Main page/cover image (absolute URL recommended) */
- image?: string;
- /** Structured data block. Determines og:type and emitted JSON-LD. */
- structuredData?: StructuredDataInput;
- /** Breadcrumb trail (root → current page) */
- breadcrumbs?: BreadcrumbItem[];
- /** noindex this page */
- noindex?: boolean;
+  /** Page title — used for <title>, og:title */
+  title: string;
+  /** Meta description / og:description / JSON-LD description */
+  description: string;
+  /** Canonical path (e.g. "/leistungen") or absolute URL */
+  path?: string;
+  /** Main page/cover image (absolute URL recommended) */
+  image?: string;
+  /** Structured data block. Determines og:type and emitted JSON-LD. */
+  structuredData?: StructuredDataInput;
+  /** Breadcrumb trail (root → current page) */
+  breadcrumbs?: BreadcrumbItem[];
+  /** noindex this page */
+  noindex?: boolean;
 }
 
 /** Words per minute used for reading-time estimate (German prose avg). */
 const WPM = 220;
 
 const estimateReadingTime = (text?: string): number | undefined => {
- if (!text) return undefined;
- const words = text.trim().split(/\s+/).filter(Boolean).length;
- if (!words) return undefined;
- return Math.max(1, Math.round(words / WPM));
+  if (!text) return undefined;
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  if (!words) return undefined;
+  return Math.max(1, Math.round(words / WPM));
 };
 
 const toAuthorObj = (a: string | ArticleAuthor): ArticleAuthor =>
- typeof a === "string" ? { name: a } : a;
+  typeof a === "string" ? { name: a } : a;
 
 const absoluteUrl = (urlOrPath: string): string => {
- if (/^https?:\/\//i.test(urlOrPath)) return urlOrPath;
- return `${SITE_ORIGIN}${urlOrPath.startsWith("/") ? "" : "/"}${urlOrPath}`;
+  if (/^https?:\/\//i.test(urlOrPath)) return urlOrPath;
+  return `${SITE_ORIGIN}${urlOrPath.startsWith("/") ? "" : "/"}${urlOrPath}`;
 };
 
 /** SEO_HEAD_ATTR marks every tag this component owns so we can clean up on unmount. */
 const OWN_ATTR = "data-seo-head";
 
 type TagSpec =
- | { type: "meta"; key: "name" | "property"; keyValue: string; content: string }
- | { type: "link"; rel: string; href: string }
- | { type: "ld"; id: string; json: unknown };
+  | { type: "meta"; key: "name" | "property"; keyValue: string; content: string }
+  | { type: "link"; rel: string; href: string }
+  | { type: "ld"; id: string; json: unknown };
 
 const applyTags = (specs: TagSpec[]) => {
- // Remove previously injected tags from this component
- document.querySelectorAll(`[${OWN_ATTR}]`).forEach((el) => el.remove());
+  // Remove previously injected tags from this component
+  document.querySelectorAll(`[${OWN_ATTR}]`).forEach((el) => el.remove());
 
- for (const spec of specs) {
- if (spec.type === "meta") {
- // Replace any existing static tag with the same key/value so og:* etc. don't duplicate
+  for (const spec of specs) {
+    if (spec.type === "meta") {
+      // Replace any existing static tag with the same key/value so og:* etc. don't duplicate
       document
         .querySelectorAll(`meta[${spec.key}="${spec.keyValue}"]`)
         .forEach((el) => el.remove());

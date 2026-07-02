@@ -56,14 +56,14 @@ const DesignToggleBanner = ({ password }: { password: string }) => {
         </div>
         <div>
           <div className="font-heading font-semibold text-base flex items-center gap-2">
- Apple Design
- <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${appleDesign ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+            Apple Design
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${appleDesign ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
               {appleDesign ? "AKTIV" : "AUS"}
             </span>
           </div>
           <p className="text-xs text-muted-foreground mt-0.5">
- Schaltet das Premium-Design global für alle Besucher um. Auf <code>/handwerker</code> wechselt die Version automatisch.
- </p>
+            Schaltet das Premium-Design global für alle Besucher um. Auf <code>/handwerker</code> wechselt die Version automatisch.
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-3">
@@ -165,42 +165,42 @@ const PAGE_NAMES: Record<string, string> = {
 
 const DeviceIcon = ({ type }: { type: string }) => {
   if (type === "mobile") return <Smartphone size={14} aria-hidden={true} focusable={false} />;
- if (type === "tablet") return <Tablet size={14} aria-hidden={true} focusable={false} />;
- return <Monitor size={14} aria-hidden={true} focusable={false} />;
+  if (type === "tablet") return <Tablet size={14} aria-hidden={true} focusable={false} />;
+  return <Monitor size={14} aria-hidden={true} focusable={false} />;
 };
 
 const AdminLeads = () => {
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
- const [analytics, setAnalytics] = useState<Analytics | null>(null);
- const [loading, setLoading] = useState(false);
- const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "angebote" | "tickets" | "vorschau" | "wachstum">("dashboard");
- const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer" | "waitlist">("all");
- const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
+  const [analytics, setAnalytics] = useState<Analytics | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "angebote" | "tickets" | "vorschau" | "wachstum">("dashboard");
+  const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer" | "waitlist">("all");
+  const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
 
- // Angebot-Modal state
- const [angebotModalLead, setAngebotModalLead] = useState<Lead | null>(null);
+  // Angebot-Modal state
+  const [angebotModalLead, setAngebotModalLead] = useState<Lead | null>(null);
 
- // Neues Lead Modal
- const [newLeadOpen, setNewLeadOpen] = useState(false);
+  // Neues Lead Modal
+  const [newLeadOpen, setNewLeadOpen] = useState(false);
 
- // Portfolio state
- const [projects, setProjects] = useState<PortfolioProject[]>([]);
- const [portfolioLoading, setPortfolioLoading] = useState(false);
- const [showProjectDialog, setShowProjectDialog] = useState(false);
- const [editingProject, setEditingProject] = useState<PortfolioProject | null>(null);
+  // Portfolio state
+  const [projects, setProjects] = useState<PortfolioProject[]>([]);
+  const [portfolioLoading, setPortfolioLoading] = useState(false);
+  const [showProjectDialog, setShowProjectDialog] = useState(false);
+  const [editingProject, setEditingProject] = useState<PortfolioProject | null>(null);
   const [projectForm, setProjectForm] = useState({
     title: "", category: "", description: "", result: "", external_url: "", is_visible: true,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
- const [clearImage, setClearImage] = useState(false);
- const [savingProject, setSavingProject] = useState(false);
- const [generatingMockup, setGeneratingMockup] = useState(false);
- const [regeneratingId, setRegeneratingId] = useState<string | null>(null);
- const [generatingDesc, setGeneratingDesc] = useState(false);
- const [advancedOpenId, setAdvancedOpenId] = useState<string | null>(null);
- const [advancedSettings, setAdvancedSettings] = useState<
+  const [clearImage, setClearImage] = useState(false);
+  const [savingProject, setSavingProject] = useState(false);
+  const [generatingMockup, setGeneratingMockup] = useState(false);
+  const [regeneratingId, setRegeneratingId] = useState<string | null>(null);
+  const [generatingDesc, setGeneratingDesc] = useState(false);
+  const [advancedOpenId, setAdvancedOpenId] = useState<string | null>(null);
+  const [advancedSettings, setAdvancedSettings] = useState<
     Record<string, {
       waitMs: string;
       hideSelectors: string;
@@ -214,9 +214,9 @@ const AdminLeads = () => {
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
- const [testimonialsLoading, setTestimonialsLoading] = useState(false);
- const [showTestimonialDialog, setShowTestimonialDialog] = useState(false);
- const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(false);
+  const [showTestimonialDialog, setShowTestimonialDialog] = useState(false);
+  const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
   const [testimonialForm, setTestimonialForm] = useState({
     name: "", role: "", text: "", result: "", is_visible: true,
   });
@@ -761,8 +761,8 @@ const AdminLeads = () => {
           </div>
           <Button variant="outline-primary" size="sm" onClick={refreshAll} disabled={loading}>
             <RefreshCw size={14} className={loading ? "animate-spin" : ""} aria-hidden={true} focusable={false} />
- Aktualisieren
- </Button>
+            Aktualisieren
+          </Button>
         </div>
 
         {/* Tab Navigation */}
@@ -777,7 +777,7 @@ const AdminLeads = () => {
             { key: "wachstum" as const, icon: Sparkles, label: "Wachstumspakete" },
             { key: "vorschau" as const, icon: Sparkles, label: "Kostenlose Vorschau" },
           ]).map(tab => (
- <button
+            <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2 ${
@@ -802,7 +802,7 @@ const AdminLeads = () => {
                 { label: "Leads gesamt", value: analytics.leadsCount, icon: Users },
                 { label: "Conversion Rate", value: `${analytics.conversionRate}%`, icon: ArrowUpRight },
               ].map(kpi => (
- <Card key={kpi.label}>
+                <Card key={kpi.label}>
                   <CardContent className="p-5">
                     <div className="flex items-center justify-between">
                       <div>
@@ -855,7 +855,7 @@ const AdminLeads = () => {
                   </div>
                   <div className="flex flex-col gap-2 mt-2">
                     {deviceData.map((d, i) => (
- <div key={d.name} className="flex items-center justify-between text-sm">
+                      <div key={d.name} className="flex items-center justify-between text-sm">
                         <div className="flex items-center gap-2 text-muted-foreground">
                           <div className="w-3 h-3 rounded-full" style={{ background: CHART_COLORS[i] }} />
                           <DeviceIcon type={d.name.toLowerCase()} />
@@ -982,10 +982,10 @@ const AdminLeads = () => {
               <div className="flex items-center gap-2">
                 <Button type="button" variant="default" size="sm" onClick={() => setNewLeadOpen(true)}>
                   <Plus size={14} aria-hidden={true} focusable={false} /> Lead manuell hinzufügen
- </Button>
+                </Button>
                 <Button variant="outline-primary" size="sm" onClick={exportCSV} disabled={leads.length === 0}>
                   <FileDown size={14} aria-hidden={true} focusable={false} /> CSV Export
- </Button>
+                </Button>
               </div>
             </div>
             {/* Status-Filter */}
@@ -1003,8 +1003,8 @@ const AdminLeads = () => {
                   : f.key === "waitlist"
                     ? leads.filter((l) => l.is_waitlist).length
                     : leads.filter((l) => (l.status || "new") === f.key).length;
- return (
- <button
+                return (
+                  <button
                     key={f.key}
                     onClick={() => setLeadStatusFilter(f.key)}
                     className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
@@ -1020,8 +1020,8 @@ const AdminLeads = () => {
             </div>
             {leads.length === 0 ? (
               <div className="text-center py-20 text-muted-foreground"><p className="text-lg">Noch keine Leads vorhanden.</p></div>
- ) : (
- <div className="grid gap-4">
+            ) : (
+              <div className="grid gap-4">
                 {leads
                   .filter((l) => {
                     if (leadStatusFilter === "all") return true;
@@ -1057,13 +1057,13 @@ const AdminLeads = () => {
                       </span>
                       {lead.is_waitlist && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 px-2.5 py-1 text-xs font-medium">
- 📋 Warteliste – nächster Monat
- </span>
+                          📋 Warteliste – nächster Monat
+                        </span>
                       )}
                       {lead.slot_reserved && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
                           <CheckCircle2 size={11} aria-hidden={true} focusable={false} /> Platz reserviert
- </span>
+                        </span>
                       )}
                       <div className="ml-auto flex flex-wrap gap-1.5">
                         {status === "new" && (
@@ -1074,443 +1074,443 @@ const AdminLeads = () => {
                             </Button>
                             <Button size="sm" variant="outline" disabled={isUpdating}
                               onClick={() => updateLeadStatus(lead.id, "qualified", false)}>
- Nur reservieren
- </Button>
+                              Nur reservieren
+                            </Button>
                             <Button size="sm" variant="ghost" disabled={isUpdating}
                               onClick={() => updateLeadStatus(lead.id, "rejected")}>
- Ablehnen
- </Button>
+                              Ablehnen
+                            </Button>
                           </>
                         )}
                         {status === "qualified" && (
                           <>
                             <Button size="sm" variant="default" disabled={isUpdating}
                               onClick={() => updateLeadStatus(lead.id, "customer")}>
- Zu Kunde machen
- </Button>
+                              Zu Kunde machen
+                            </Button>
                             <Button size="sm" variant="ghost" disabled={isUpdating}
                               onClick={() => updateLeadStatus(lead.id, "rejected")}>
- Doch ablehnen
- </Button>
+                              Doch ablehnen
+                            </Button>
                           </>
                         )}
                         {(status === "rejected" || status === "customer") && (
                           <Button size="sm" variant="ghost" disabled={isUpdating}
                             onClick={() => updateLeadStatus(lead.id, "new")}>
- Zurück zu „Neu"
- </Button>
- )}
- <Button
- size="sm"
- variant="outline"
- onClick={() => setAngebotModalLead(lead)}
- className="border-[#4F3FF0] text-[#4F3FF0] bg-transparent hover:bg-[#4F3FF0]/10 hover:text-[#4F3FF0]"
- >
- <FileText size={12} aria-hidden={true} focusable={false} /> Angebot erstellen
- </Button>
- <Button
- size="sm"
- variant="outline"
- disabled={updatingLeadId === lead.id}
- onClick={async () => {
- setUpdatingLeadId(lead.id);
- const { data, error } = await supabase.functions.invoke("customer-create-account", {
- body: {
- password,
- email: lead.email,
- first_name: lead.first_name,
- company_name: lead.company_name,
- phone: lead.phone,
- lead_id: lead.id,
- send_welcome: true,
- },
- });
- setUpdatingLeadId(null);
- if (error || data?.error) {
- toast.error(data?.error || error?.message || "Fehler");
- } else {
- toast.success(data?.new_account ? "Portal-Zugang angelegt & Mail gesendet" : "Bereits vorhanden – verknüpft");
- }
- }}
- >
- 🔑 Portal-Zugang
- </Button>
- </div>
- </div>
- {/* Funnel-Antworten: Branche, Webseite, Ziele, Dringlichkeit, Notizen */}
- <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-3 border-t border-border text-sm">
- <div className="flex items-start gap-2">
- <Briefcase size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
- <div>
- <div className="text-xs text-muted-foreground uppercase tracking-wide">Branche</div>
- <div className="text-foreground">
- {lead.trade
- ? lead.trade === "Sonstiges" && lead.trade_other
- ? `Sonstiges: ${lead.trade_other}`
- : lead.trade
- : "Nicht angegeben"}
- </div>
- </div>
- </div>
- <div className="flex items-start gap-2">
- <Globe size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
- <div>
- <div className="text-xs text-muted-foreground uppercase tracking-wide">Aktuelle Webseite</div>
- <div className="text-foreground">{lead.has_website || "Nicht angegeben"}</div>
- </div>
- </div>
- <div className="flex items-start gap-2">
- <Target size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
- <div>
- <div className="text-xs text-muted-foreground uppercase tracking-wide">Wichtigste Ziele</div>
- {lead.goals && lead.goals.length > 0 ? (
- <div className="flex flex-wrap gap-1 mt-0.5">
- {lead.goals.map((g) => (
- <span key={g} className="inline-flex items-center rounded-full bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 text-xs">
- {g}
- </span>
- ))}
- </div>
- ) : (
- <div className="text-foreground">Nicht angegeben</div>
- )}
- </div>
- </div>
- <div className="flex items-start gap-2">
- <Flame size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
- <div>
- <div className="text-xs text-muted-foreground uppercase tracking-wide">Dringlichkeit</div>
- <div className="text-foreground">{lead.urgency || "Nicht angegeben"}</div>
- </div>
- </div>
- <div className="flex items-start gap-2 md:col-span-2">
- <LinkIcon size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
- <div className="min-w-0 flex-1">
- <div className="text-xs text-muted-foreground uppercase tracking-wide">Webseiten-URL</div>
- {lead.current_website ? (
- <a
- href={lead.current_website.startsWith("http") ? lead.current_website : `https://${lead.current_website}`}
- target="_blank" rel="noopener noreferrer"
- className="text-primary hover:underline break-all"
- >
- {lead.current_website}
- </a>
- ) : (
- <div className="text-foreground">Nicht angegeben</div>
- )}
- </div>
- </div>
- <div className="flex items-start gap-2 md:col-span-2">
- <FileText size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
- <div className="min-w-0 flex-1">
- <div className="text-xs text-muted-foreground uppercase tracking-wide">Sonstige Anmerkungen</div>
- <div className="text-foreground whitespace-pre-wrap break-words">{lead.notes || "Nicht angegeben"}</div>
- </div>
- </div>
- </div>
- {(lead.booking_date || lead.booking_time || lead.contact_method) ? (
- <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
- <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 text-xs font-semibold">
- <CheckCircle2 size={12} aria-hidden={true} focusable={false} /> Termin gebucht
- </span>
- {lead.booking_date && (
- <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
- <Calendar size={12} aria-hidden={true} focusable={false} /> {new Date(lead.booking_date).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}
- </span>
- )}
- {lead.booking_time && (
- <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
- <Clock size={12} aria-hidden={true} focusable={false} /> {lead.booking_time} Uhr
- </span>
- )}
- {lead.contact_method && (
- <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 text-accent border border-accent/20 px-2.5 py-1 text-xs font-medium">
- {lead.contact_method === "online" ? (<><Monitor size={12} aria-hidden={true} focusable={false} /> Online-Meeting</>) : (<><Phone size={12} aria-hidden={true} focusable={false} /> Telefonat</>)}
- </span>
- )}
- </div>
- ) : (
- <div className="pt-3 border-t border-border">
- <span className="inline-flex items-center gap-1.5 rounded-full bg-muted text-muted-foreground border border-border px-2.5 py-1 text-xs">
- <Clock size={12} aria-hidden={true} focusable={false} /> Kein Termin gebucht
- </span>
- </div>
- )}
- </div>
- );
- })}
- </div>
- )}
- </div>
- )}
+                            Zurück zu „Neu"
+                          </Button>
+                        )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setAngebotModalLead(lead)}
+                          className="border-[#4F3FF0] text-[#4F3FF0] bg-transparent hover:bg-[#4F3FF0]/10 hover:text-[#4F3FF0]"
+                        >
+                          <FileText size={12} aria-hidden={true} focusable={false} /> Angebot erstellen
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={updatingLeadId === lead.id}
+                          onClick={async () => {
+                            setUpdatingLeadId(lead.id);
+                            const { data, error } = await supabase.functions.invoke("customer-create-account", {
+                              body: {
+                                password,
+                                email: lead.email,
+                                first_name: lead.first_name,
+                                company_name: lead.company_name,
+                                phone: lead.phone,
+                                lead_id: lead.id,
+                                send_welcome: true,
+                              },
+                            });
+                            setUpdatingLeadId(null);
+                            if (error || data?.error) {
+                              toast.error(data?.error || error?.message || "Fehler");
+                            } else {
+                              toast.success(data?.new_account ? "Portal-Zugang angelegt & Mail gesendet" : "Bereits vorhanden – verknüpft");
+                            }
+                          }}
+                        >
+                          🔑 Portal-Zugang
+                        </Button>
+                      </div>
+                    </div>
+                    {/* Funnel-Antworten: Branche, Webseite, Ziele, Dringlichkeit, Notizen */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-3 border-t border-border text-sm">
+                      <div className="flex items-start gap-2">
+                        <Briefcase size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Branche</div>
+                          <div className="text-foreground">
+                            {lead.trade
+                              ? lead.trade === "Sonstiges" && lead.trade_other
+                                ? `Sonstiges: ${lead.trade_other}`
+                                : lead.trade
+                              : "Nicht angegeben"}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Globe size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Aktuelle Webseite</div>
+                          <div className="text-foreground">{lead.has_website || "Nicht angegeben"}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Target size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Wichtigste Ziele</div>
+                          {lead.goals && lead.goals.length > 0 ? (
+                            <div className="flex flex-wrap gap-1 mt-0.5">
+                              {lead.goals.map((g) => (
+                                <span key={g} className="inline-flex items-center rounded-full bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 text-xs">
+                                  {g}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="text-foreground">Nicht angegeben</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Flame size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                        <div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Dringlichkeit</div>
+                          <div className="text-foreground">{lead.urgency || "Nicht angegeben"}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2 md:col-span-2">
+                        <LinkIcon size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Webseiten-URL</div>
+                          {lead.current_website ? (
+                            <a
+                              href={lead.current_website.startsWith("http") ? lead.current_website : `https://${lead.current_website}`}
+                              target="_blank" rel="noopener noreferrer"
+                              className="text-primary hover:underline break-all"
+                            >
+                              {lead.current_website}
+                            </a>
+                          ) : (
+                            <div className="text-foreground">Nicht angegeben</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2 md:col-span-2">
+                        <FileText size={14} className="text-primary mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">Sonstige Anmerkungen</div>
+                          <div className="text-foreground whitespace-pre-wrap break-words">{lead.notes || "Nicht angegeben"}</div>
+                        </div>
+                      </div>
+                    </div>
+                    {(lead.booking_date || lead.booking_time || lead.contact_method) ? (
+                      <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-border">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 text-xs font-semibold">
+                          <CheckCircle2 size={12} aria-hidden={true} focusable={false} /> Termin gebucht
+                        </span>
+                        {lead.booking_date && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
+                            <Calendar size={12} aria-hidden={true} focusable={false} /> {new Date(lead.booking_date).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}
+                          </span>
+                        )}
+                        {lead.booking_time && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 px-2.5 py-1 text-xs font-medium">
+                            <Clock size={12} aria-hidden={true} focusable={false} /> {lead.booking_time} Uhr
+                          </span>
+                        )}
+                        {lead.contact_method && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 text-accent border border-accent/20 px-2.5 py-1 text-xs font-medium">
+                            {lead.contact_method === "online" ? (<><Monitor size={12} aria-hidden={true} focusable={false} /> Online-Meeting</>) : (<><Phone size={12} aria-hidden={true} focusable={false} /> Telefonat</>)}
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="pt-3 border-t border-border">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-muted text-muted-foreground border border-border px-2.5 py-1 text-xs">
+                          <Clock size={12} aria-hidden={true} focusable={false} /> Kein Termin gebucht
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
 
- {/* Portfolio Tab */}
- {activeTab === "portfolio" && (
- <div>
- <div className="flex items-center justify-between mb-6">
- <p className="text-muted-foreground">{projects.length} Projekt{projects.length !== 1 ? "e" : ""}</p>
- <div className="flex items-center gap-2">
- <Button
- variant="outline"
- size="sm"
- onClick={backfillScreenshots}
- disabled={backfillRunning}
- title="Erzeugt Screenshots für alle Projekte ohne Bild (einmalig)"
- >
- {backfillRunning ? (
- <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} />
- ) : (
- <Image size={14} aria-hidden={true} focusable={false} />
- )}{" "}
- Fehlende Screenshots erzeugen
- </Button>
- <Button variant="gradient" size="sm" onClick={openNewProject}>
- <Plus size={14} aria-hidden={true} focusable={false} /> Neues Projekt
- </Button>
- </div>
- </div>
+        {/* Portfolio Tab */}
+        {activeTab === "portfolio" && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-muted-foreground">{projects.length} Projekt{projects.length !== 1 ? "e" : ""}</p>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={backfillScreenshots}
+                  disabled={backfillRunning}
+                  title="Erzeugt Screenshots für alle Projekte ohne Bild (einmalig)"
+                >
+                  {backfillRunning ? (
+                    <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} />
+                  ) : (
+                    <Image size={14} aria-hidden={true} focusable={false} />
+                  )}{" "}
+                  Fehlende Screenshots erzeugen
+                </Button>
+                <Button variant="gradient" size="sm" onClick={openNewProject}>
+                  <Plus size={14} aria-hidden={true} focusable={false} /> Neues Projekt
+                </Button>
+              </div>
+            </div>
 
- {portfolioLoading ? (
- <div className="text-center py-20">
- <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
- <p className="text-muted-foreground">Lade Projekte...</p>
- </div>
- ) : projects.length === 0 ? (
- <div className="text-center py-20 text-muted-foreground">
- <FolderOpen size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
- <p className="text-lg mb-2">Noch keine Projekte vorhanden.</p>
- <p className="text-sm">Erstellen du dein erstes Portfolio-Projekt.</p>
- </div>
- ) : (
- <div className="grid gap-4">
- {projects.map((p, i) => {
- const previewSrc = p.image_url
- ? p.image_url
- : p.screenshot_url
- ? `${p.screenshot_url}${p.screenshot_url.includes("?") ? "&" : "?"}v=${encodeURIComponent(p.screenshot_updated_at || "")}`
- : "";
- const lastShot = p.screenshot_updated_at
- ? new Date(p.screenshot_updated_at).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" })
- : null;
- const regenerating = regeneratingId === p.id;
- const advOpen = advancedOpenId === p.id;
- const adv = advancedSettings[p.id] || {
- waitMs: "4500",
- hideSelectors: "",
- clickSelector: "",
- viewportHeight: "900",
- fullPage: false,
- scrollBefore: false,
- retina: true,
- };
- const updateAdv = (patch: Partial<typeof adv>) =>
- setAdvancedSettings((s) => ({ ...s, [p.id]: { ...adv, ...patch } }));
- return (
- <div key={p.id} className={`bg-card rounded-xl border border-border p-4 transition-all ${!p.is_visible ? "opacity-60" : ""}`}>
- <div className="flex items-start gap-4">
- {/* Image preview */}
- <div className="shrink-0 w-[200px]">
- <div className="aspect-video rounded-lg overflow-hidden bg-muted border border-border">
- {previewSrc ? (
- <img src={previewSrc} alt={p.title} className="w-full h-full object-cover object-top" />
- ) : (
- <div className="w-full h-full flex items-center justify-center"><Image size={24} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
- )}
- </div>
- <p className="text-[11px] text-muted-foreground mt-1 truncate">
- {lastShot ? `zuletzt generiert: ${lastShot}` : p.image_url ? "manuelles Bild" : "noch nicht generiert"}
- </p>
- </div>
+            {portfolioLoading ? (
+              <div className="text-center py-20">
+                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
+                <p className="text-muted-foreground">Lade Projekte...</p>
+              </div>
+            ) : projects.length === 0 ? (
+              <div className="text-center py-20 text-muted-foreground">
+                <FolderOpen size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
+                <p className="text-lg mb-2">Noch keine Projekte vorhanden.</p>
+                <p className="text-sm">Erstellen du dein erstes Portfolio-Projekt.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {projects.map((p, i) => {
+                  const previewSrc = p.image_url
+                    ? p.image_url
+                    : p.screenshot_url
+                      ? `${p.screenshot_url}${p.screenshot_url.includes("?") ? "&" : "?"}v=${encodeURIComponent(p.screenshot_updated_at || "")}`
+                      : "";
+                  const lastShot = p.screenshot_updated_at
+                    ? new Date(p.screenshot_updated_at).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" })
+                    : null;
+                  const regenerating = regeneratingId === p.id;
+                  const advOpen = advancedOpenId === p.id;
+                  const adv = advancedSettings[p.id] || {
+                    waitMs: "4500",
+                    hideSelectors: "",
+                    clickSelector: "",
+                    viewportHeight: "900",
+                    fullPage: false,
+                    scrollBefore: false,
+                    retina: true,
+                  };
+                  const updateAdv = (patch: Partial<typeof adv>) =>
+                    setAdvancedSettings((s) => ({ ...s, [p.id]: { ...adv, ...patch } }));
+                  return (
+                  <div key={p.id} className={`bg-card rounded-xl border border-border p-4 transition-all ${!p.is_visible ? "opacity-60" : ""}`}>
+                   <div className="flex items-start gap-4">
+                    {/* Image preview */}
+                    <div className="shrink-0 w-[200px]">
+                      <div className="aspect-video rounded-lg overflow-hidden bg-muted border border-border">
+                        {previewSrc ? (
+                          <img src={previewSrc} alt={p.title} className="w-full h-full object-cover object-top" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center"><Image size={24} className="text-muted-foreground" aria-hidden={true} focusable={false} /></div>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-muted-foreground mt-1 truncate">
+                        {lastShot ? `zuletzt generiert: ${lastShot}` : p.image_url ? "manuelles Bild" : "noch nicht generiert"}
+                      </p>
+                    </div>
 
- {/* Info */}
- <div className="flex-1 min-w-0">
- <div className="flex items-center gap-2">
- <h3 className="font-semibold text-foreground truncate">{p.title}</h3>
- {!p.is_visible && <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Versteckt</span>}
- </div>
- <p className="text-sm text-muted-foreground truncate">{p.category} {p.result && `• ${p.result}`}</p>
- </div>
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-foreground truncate">{p.title}</h3>
+                        {!p.is_visible && <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Versteckt</span>}
+                      </div>
+                      <p className="text-sm text-muted-foreground truncate">{p.category} {p.result && `• ${p.result}`}</p>
+                    </div>
 
- {/* Actions */}
- <div className="flex items-center gap-1 shrink-0">
- {p.external_url && (
- <Button
- variant="ghost"
- size="icon"
- onClick={() => regenerateScreenshot(p)}
- disabled={regenerating}
- className="h-8 w-8"
- title="Screenshot neu generieren"
- >
- {regenerating ? (
- <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} />
- ) : (
- <RefreshCw size={14} aria-hidden={true} focusable={false} />
- )}
- </Button>
- )}
- {p.external_url && (
- <Button
- variant="ghost"
- size="icon"
- onClick={() => setAdvancedOpenId(advOpen ? null : p.id)}
- className="h-8 w-8"
- title="Erweiterte Screenshot-Optionen"
- >
- {advOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
- </Button>
- )}
- <Button variant="ghost" size="icon" onClick={() => moveProject(i, "up")} disabled={i === 0} className="h-8 w-8">
- <ChevronUp size={14} aria-hidden={true} focusable={false} />
- </Button>
- <Button variant="ghost" size="icon" onClick={() => moveProject(i, "down")} disabled={i === projects.length - 1} className="h-8 w-8">
- <ChevronDown size={14} aria-hidden={true} focusable={false} />
- </Button>
- <Button variant="ghost" size="icon" onClick={() => toggleVisibility(p)} className="h-8 w-8">
- {p.is_visible ? <Eye size={14} aria-hidden={true} focusable={false} /> : <EyeOff size={14} aria-hidden={true} focusable={false} />}
- </Button>
- <Button variant="ghost" size="icon" onClick={() => openEditProject(p)} className="h-8 w-8">
- <Pencil size={14} aria-hidden={true} focusable={false} />
- </Button>
- {p.external_url && (
- <Button variant="ghost" size="icon" onClick={() => generateMockup(p)} disabled={generatingMockup} className="h-8 w-8" title="Mockup generieren">
- {generatingMockup ? <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} /> : <Monitor size={14} aria-hidden={true} focusable={false} />}
- </Button>
- )}
- <Button variant="ghost" size="icon" onClick={() => deleteProject(p.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
- <Trash2 size={14} aria-hidden={true} focusable={false} />
- </Button>
- </div>
- </div>
- {advOpen && p.external_url && (
- <div className="mt-4 border-t border-border pt-4 grid gap-3 sm:grid-cols-3">
- <div>
- <label className="text-xs text-muted-foreground block mb-1">Wartezeit (ms)</label>
- <input
- type="number"
- value={adv.waitMs}
- onChange={(e) => updateAdv({ waitMs: e.target.value })}
- placeholder="4500"
- className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
- />
- </div>
- <div>
- <label className="text-xs text-muted-foreground block mb-1">Viewport-Höhe (px)</label>
- <input
- type="number"
- value={adv.viewportHeight}
- onChange={(e) => updateAdv({ viewportHeight: e.target.value })}
- placeholder="900"
- className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
- />
- </div>
- <div>
- <label className="text-xs text-muted-foreground block mb-1">Banner-Selektor ausblenden</label>
- <input
- type="text"
- value={adv.hideSelectors}
- onChange={(e) => updateAdv({ hideSelectors: e.target.value })}
- placeholder="#mein-cookie-banner, .overlay"
- className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
- />
- </div>
- <div>
- <label className="text-xs text-muted-foreground block mb-1">Akzeptieren-Button klicken</label>
- <input
- type="text"
- value={adv.clickSelector}
- onChange={(e) => updateAdv({ clickSelector: e.target.value })}
- placeholder="#accept-cookies"
- className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
- />
- </div>
- <div className="sm:col-span-3 flex flex-wrap gap-4 pt-1">
- <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
- <input type="checkbox" checked={adv.fullPage} onChange={(e) => updateAdv({ fullPage: e.target.checked })} />
- Vollständige Seite (Long-Scroll)
- </label>
- <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
- <input type="checkbox" checked={adv.scrollBefore} onChange={(e) => updateAdv({ scrollBefore: e.target.checked })} />
- Vor Aufnahme scrollen (Lazy-Load)
- </label>
- <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
- <input type="checkbox" checked={adv.retina} onChange={(e) => updateAdv({ retina: e.target.checked })} />
- Retina (2× Schärfe)
- </label>
- </div>
- <div className="sm:col-span-3 flex items-center justify-between gap-3 flex-wrap">
- <p className="text-[11px] text-muted-foreground">
- Tipps: Inhalt fehlt? Wartezeit erhöhen oder "Vor Aufnahme scrollen" aktivieren. Lange Seite komplett? "Vollständige Seite" anhaken. Cookie-Banner sichtbar? Banner-Selektor ausblenden oder Akzeptieren-Button klicken.
- </p>
- <Button
- size="sm"
- onClick={() =>
- regenerateScreenshot(p, {
- waitMs: Number(adv.waitMs) || 4500,
- hideSelectors: adv.hideSelectors.trim(),
- clickSelector: adv.clickSelector.trim(),
- viewportHeight: Number(adv.viewportHeight) || 900,
- fullPage: adv.fullPage,
- scrollBefore: adv.scrollBefore,
- retina: adv.retina,
- })
- }
- disabled={regenerating}
- >
- {regenerating ? (
- <Loader2 size={14} className="animate-spin mr-2" />
- ) : (
- <RefreshCw size={14} className="mr-2" />
- )}
- Mit diesen Einstellungen neu generieren
- </Button>
- </div>
- </div>
- )}
- </div>
- );
- })}
- </div>
- )}
- </div>
- )}
+                    {/* Actions */}
+                    <div className="flex items-center gap-1 shrink-0">
+                      {p.external_url && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => regenerateScreenshot(p)}
+                          disabled={regenerating}
+                          className="h-8 w-8"
+                          title="Screenshot neu generieren"
+                        >
+                          {regenerating ? (
+                            <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} />
+                          ) : (
+                            <RefreshCw size={14} aria-hidden={true} focusable={false} />
+                          )}
+                        </Button>
+                      )}
+                      {p.external_url && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setAdvancedOpenId(advOpen ? null : p.id)}
+                          className="h-8 w-8"
+                          title="Erweiterte Screenshot-Optionen"
+                        >
+                          {advOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="icon" onClick={() => moveProject(i, "up")} disabled={i === 0} className="h-8 w-8">
+                        <ChevronUp size={14} aria-hidden={true} focusable={false} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => moveProject(i, "down")} disabled={i === projects.length - 1} className="h-8 w-8">
+                        <ChevronDown size={14} aria-hidden={true} focusable={false} />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => toggleVisibility(p)} className="h-8 w-8">
+                        {p.is_visible ? <Eye size={14} aria-hidden={true} focusable={false} /> : <EyeOff size={14} aria-hidden={true} focusable={false} />}
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => openEditProject(p)} className="h-8 w-8">
+                        <Pencil size={14} aria-hidden={true} focusable={false} />
+                      </Button>
+                      {p.external_url && (
+                        <Button variant="ghost" size="icon" onClick={() => generateMockup(p)} disabled={generatingMockup} className="h-8 w-8" title="Mockup generieren">
+                          {generatingMockup ? <Loader2 size={14} className="animate-spin" aria-hidden={true} focusable={false} /> : <Monitor size={14} aria-hidden={true} focusable={false} />}
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="icon" onClick={() => deleteProject(p.id)} className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
+                        <Trash2 size={14} aria-hidden={true} focusable={false} />
+                      </Button>
+                    </div>
+                   </div>
+                   {advOpen && p.external_url && (
+                     <div className="mt-4 border-t border-border pt-4 grid gap-3 sm:grid-cols-3">
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Wartezeit (ms)</label>
+                         <input
+                           type="number"
+                           value={adv.waitMs}
+                           onChange={(e) => updateAdv({ waitMs: e.target.value })}
+                           placeholder="4500"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Viewport-Höhe (px)</label>
+                         <input
+                           type="number"
+                           value={adv.viewportHeight}
+                           onChange={(e) => updateAdv({ viewportHeight: e.target.value })}
+                           placeholder="900"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Banner-Selektor ausblenden</label>
+                         <input
+                           type="text"
+                           value={adv.hideSelectors}
+                           onChange={(e) => updateAdv({ hideSelectors: e.target.value })}
+                           placeholder="#mein-cookie-banner, .overlay"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div>
+                         <label className="text-xs text-muted-foreground block mb-1">Akzeptieren-Button klicken</label>
+                         <input
+                           type="text"
+                           value={adv.clickSelector}
+                           onChange={(e) => updateAdv({ clickSelector: e.target.value })}
+                           placeholder="#accept-cookies"
+                           className="w-full px-3 py-2 text-sm rounded-md border border-border bg-background"
+                         />
+                       </div>
+                       <div className="sm:col-span-3 flex flex-wrap gap-4 pt-1">
+                         <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
+                           <input type="checkbox" checked={adv.fullPage} onChange={(e) => updateAdv({ fullPage: e.target.checked })} />
+                           Vollständige Seite (Long-Scroll)
+                         </label>
+                         <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
+                           <input type="checkbox" checked={adv.scrollBefore} onChange={(e) => updateAdv({ scrollBefore: e.target.checked })} />
+                           Vor Aufnahme scrollen (Lazy-Load)
+                         </label>
+                         <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
+                           <input type="checkbox" checked={adv.retina} onChange={(e) => updateAdv({ retina: e.target.checked })} />
+                           Retina (2× Schärfe)
+                         </label>
+                       </div>
+                       <div className="sm:col-span-3 flex items-center justify-between gap-3 flex-wrap">
+                         <p className="text-[11px] text-muted-foreground">
+                           Tipps: Inhalt fehlt? Wartezeit erhöhen oder "Vor Aufnahme scrollen" aktivieren. Lange Seite komplett? "Vollständige Seite" anhaken. Cookie-Banner sichtbar? Banner-Selektor ausblenden oder Akzeptieren-Button klicken.
+                         </p>
+                         <Button
+                           size="sm"
+                           onClick={() =>
+                             regenerateScreenshot(p, {
+                               waitMs: Number(adv.waitMs) || 4500,
+                               hideSelectors: adv.hideSelectors.trim(),
+                               clickSelector: adv.clickSelector.trim(),
+                               viewportHeight: Number(adv.viewportHeight) || 900,
+                               fullPage: adv.fullPage,
+                               scrollBefore: adv.scrollBefore,
+                               retina: adv.retina,
+                             })
+                           }
+                           disabled={regenerating}
+                         >
+                           {regenerating ? (
+                             <Loader2 size={14} className="animate-spin mr-2" />
+                           ) : (
+                             <RefreshCw size={14} className="mr-2" />
+                           )}
+                           Mit diesen Einstellungen neu generieren
+                         </Button>
+                       </div>
+                     </div>
+                   )}
+                  </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
 
- {/* Testimonials Tab */}
- {activeTab === "testimonials" && (
- <div>
- <div className="flex items-center justify-between mb-6">
- <p className="text-muted-foreground">{testimonials.length} Referenz{testimonials.length !== 1 ? "en" : ""}</p>
- <Button variant="gradient" size="sm" onClick={openNewTestimonial}>
- <Plus size={14} aria-hidden={true} focusable={false} /> Neue Referenz
- </Button>
- </div>
+        {/* Testimonials Tab */}
+        {activeTab === "testimonials" && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-muted-foreground">{testimonials.length} Referenz{testimonials.length !== 1 ? "en" : ""}</p>
+              <Button variant="gradient" size="sm" onClick={openNewTestimonial}>
+                <Plus size={14} aria-hidden={true} focusable={false} /> Neue Referenz
+              </Button>
+            </div>
 
- {testimonialsLoading ? (
- <div className="text-center py-20">
- <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
- <p className="text-muted-foreground">Lade Referenzen...</p>
- </div>
- ) : testimonials.length === 0 ? (
- <div className="text-center py-20 text-muted-foreground">
- <MessageSquare size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
- <p className="text-lg mb-2">Noch keine Referenzen vorhanden.</p>
- <p className="text-sm">Erstellen du deine erste Kundenreferenz.</p>
- </div>
- ) : (
- <div className="grid gap-4">
- {testimonials.map((t, i) => (
- <div key={t.id} className={`bg-card rounded-xl border border-border p-4 flex items-center gap-4 transition-all ${!t.is_visible ? "opacity-60" : ""}`}>
- <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
- <Star size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
- </div>
- <div className="flex-1 min-w-0">
- <div className="flex items-center gap-2">
- <h3 className="font-semibold text-foreground truncate">{t.name}</h3>
- {t.result && <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{t.result}</span>}
- {!t.is_visible && <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Versteckt</span>}
- </div>
- <p className="text-sm text-muted-foreground truncate">{t.role}</p>
- <p className="text-xs text-muted-foreground mt-1 truncate italic">„{t.text}"</p>
+            {testimonialsLoading ? (
+              <div className="text-center py-20">
+                <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
+                <p className="text-muted-foreground">Lade Referenzen...</p>
+              </div>
+            ) : testimonials.length === 0 ? (
+              <div className="text-center py-20 text-muted-foreground">
+                <MessageSquare size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
+                <p className="text-lg mb-2">Noch keine Referenzen vorhanden.</p>
+                <p className="text-sm">Erstellen du deine erste Kundenreferenz.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {testimonials.map((t, i) => (
+                  <div key={t.id} className={`bg-card rounded-xl border border-border p-4 flex items-center gap-4 transition-all ${!t.is_visible ? "opacity-60" : ""}`}>
+                    <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center shrink-0">
+                      <Star size={16} className="text-primary-foreground" aria-hidden={true} focusable={false} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-foreground truncate">{t.name}</h3>
+                        {t.result && <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{t.result}</span>}
+                        {!t.is_visible && <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Versteckt</span>}
+                      </div>
+                      <p className="text-sm text-muted-foreground truncate">{t.role}</p>
+                      <p className="text-xs text-muted-foreground mt-1 truncate italic">„{t.text}"</p>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
                       <Button variant="ghost" size="icon" onClick={() => moveTestimonial(i, "up")} disabled={i === 0} className="h-8 w-8">
@@ -1634,7 +1634,7 @@ const AdminLeads = () => {
                 >
                   {generatingDesc
                     ? <><Loader2 size={12} className="animate-spin" aria-hidden /> Generiere…</>
- : <><Sparkles size={12} aria-hidden /> KI generieren</>}
+                    : <><Sparkles size={12} aria-hidden /> KI generieren</>}
                 </Button>
               </div>
               <Textarea id="proj-desc" value={projectForm.description} onChange={e => setProjectForm(f => ({ ...f, description: e.target.value }))} placeholder="Kurze Projektbeschreibung..." rows={3} />
@@ -1653,15 +1653,15 @@ const AdminLeads = () => {
                   </div>
                   <Button type="button" variant="outline" size="sm" onClick={() => { setClearImage(true); setImageFile(null); }}>
                     <Trash2 size={14} aria-hidden={true} focusable={false} /> Entfernen
- </Button>
+                  </Button>
                 </div>
               )}
               {clearImage && !imageFile && (
                 <div className="flex items-center gap-3 mb-2 p-2 border border-destructive/40 bg-destructive/5 rounded-md">
                   <p className="text-xs text-destructive flex-1">Bild wird beim Speichern entfernt.</p>
                   <Button type="button" variant="ghost" size="sm" onClick={() => setClearImage(false)}>
- Rückgängig
- </Button>
+                    Rückgängig
+                  </Button>
                 </div>
               )}
               <Input id="proj-image" type="file" accept="image/*" onChange={e => { setImageFile(e.target.files?.[0] || null); setClearImage(false); }} />

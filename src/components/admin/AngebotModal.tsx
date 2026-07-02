@@ -21,303 +21,303 @@ interface AngebotModalProps {
   lead: { first_name: string; email: string; trade?: string | null; trade_other?: string | null };
   onCreated?: () => void;
   /** Wenn gesetzt: Bearbeitungs-Modus. Felder werden aus base64_data vorbefüllt und „Speichern" updated statt zu erstellen. */
- editing?: {
- angebotId: string;
- base64_data: string;
- short_id?: string | null;
- } | null;
+  editing?: {
+    angebotId: string;
+    base64_data: string;
+    short_id?: string | null;
+  } | null;
 }
 
 interface Leistung { emoji: string; titel: string; beschreibung: string; }
 interface Faq { frage: string; antwort: string; }
 interface Option {
- id: string; emoji: string; titel: string; beschreibung: string;
- preis: string; preis_typ: "einmalig" | "monatlich"; stripe_link: string;
+  id: string; emoji: string; titel: string; beschreibung: string;
+  preis: string; preis_typ: "einmalig" | "monatlich"; stripe_link: string;
 }
 interface Bundle { id: string; label: string; option_ids: string[]; gesamt_preis: string; stripe_link: string; }
 interface Paket {
- id: string; name: string; badge: string; beschreibung: string;
- preis: string; normalpreis: string; miete_monatlich: string; anzahlung: string;
- stripe_link: string; leistungen: Leistung[]; optionen: Option[];
+  id: string; name: string; badge: string; beschreibung: string;
+  preis: string; normalpreis: string; miete_monatlich: string; anzahlung: string;
+  stripe_link: string; leistungen: Leistung[]; optionen: Option[];
 }
 
 const BRAND = "#4F3FF0";
 const ANGEBOT_BASE_URL = "https://meine-traum-webseite.de/a";
 
 function encodeBase64Utf8(payload: unknown): string {
- return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
 }
 const genPin = () => String(Math.floor(10000 + Math.random() * 90000));
 const genId = () =>
- typeof crypto !== "undefined" && "randomUUID" in crypto
- ? crypto.randomUUID().slice(0, 8)
- : Math.random().toString(36).slice(2, 10);
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID().slice(0, 8)
+    : Math.random().toString(36).slice(2, 10);
 const emptyLeistung = (): Leistung => ({ emoji: "", titel: "", beschreibung: "" });
 const emptyFaq = (): Faq => ({ frage: "", antwort: "" });
 const emptyOption = (): Option => ({
- id: genId(), emoji: "", titel: "", beschreibung: "",
- preis: "", preis_typ: "einmalig", stripe_link: "",
+  id: genId(), emoji: "", titel: "", beschreibung: "",
+  preis: "", preis_typ: "einmalig", stripe_link: "",
 });
 const emptyBundle = (): Bundle => ({ id: genId(), label: "", option_ids: [], gesamt_preis: "", stripe_link: "" });
 const emptyPaket = (name = ""): Paket => ({
- id: genId(), name, badge: "", beschreibung: "",
- preis: "", normalpreis: "", miete_monatlich: "", anzahlung: "",
- stripe_link: "", leistungen: [emptyLeistung(), emptyLeistung()], optionen: [],
+  id: genId(), name, badge: "", beschreibung: "",
+  preis: "", normalpreis: "", miete_monatlich: "", anzahlung: "",
+  stripe_link: "", leistungen: [emptyLeistung(), emptyLeistung()], optionen: [],
 });
 
 // Sparkles-Button für KI-Neuformulierung
 function RephraseButton({
- password, text, kontext, onResult, disabled,
+  password, text, kontext, onResult, disabled,
 }: {
- password: string; text: string;
- kontext: "nachricht" | "leistung" | "wachstumspaket" | "paket" | "allgemein";
- onResult: (s: string) => void; disabled?: boolean;
+  password: string; text: string;
+  kontext: "nachricht" | "leistung" | "wachstumspaket" | "paket" | "allgemein";
+  onResult: (s: string) => void; disabled?: boolean;
 }) {
- const [busy, setBusy] = useState(false);
- const handle = async () => {
- if (!text.trim()) { toast.error("Bitte erst etwas Text eingeben"); return; }
- setBusy(true);
- const { data, error } = await supabase.functions.invoke("rephrase-text", {
- body: { password, text, kontext, ton: "professionell" },
- });
- setBusy(false);
- if (error || data?.error) { toast.error(data?.error || error?.message || "KI-Fehler"); return; }
- if (data?.text) { onResult(data.text); toast.success("Text neu formuliert"); }
- };
- return (
- <Button type="button" size="sm" variant="ghost" disabled={busy || disabled} onClick={handle}
- className="h-7 px-2 text-xs" style={{ color: BRAND }} title="KI-Neuformulierung">
- {busy ? <Loader2 size={12} className="animate-spin" aria-hidden={true} focusable={false} /> : <Sparkles size={12} aria-hidden={true} focusable={false} />}
- KI
- </Button>
- );
+  const [busy, setBusy] = useState(false);
+  const handle = async () => {
+    if (!text.trim()) { toast.error("Bitte erst etwas Text eingeben"); return; }
+    setBusy(true);
+    const { data, error } = await supabase.functions.invoke("rephrase-text", {
+      body: { password, text, kontext, ton: "professionell" },
+    });
+    setBusy(false);
+    if (error || data?.error) { toast.error(data?.error || error?.message || "KI-Fehler"); return; }
+    if (data?.text) { onResult(data.text); toast.success("Text neu formuliert"); }
+  };
+  return (
+    <Button type="button" size="sm" variant="ghost" disabled={busy || disabled} onClick={handle}
+      className="h-7 px-2 text-xs" style={{ color: BRAND }} title="KI-Neuformulierung">
+      {busy ? <Loader2 size={12} className="animate-spin" aria-hidden={true} focusable={false} /> : <Sparkles size={12} aria-hidden={true} focusable={false} />}
+      KI
+    </Button>
+  );
 }
 
 function decodeBase64Utf8Safe(b64: string): any | null {
- try { return JSON.parse(decodeURIComponent(escape(atob(b64)))); } catch { return null; }
+  try { return JSON.parse(decodeURIComponent(escape(atob(b64)))); } catch { return null; }
 }
 
 export default function AngebotModal({ open, onOpenChange, password, lead, onCreated, editing }: AngebotModalProps) {
- const branche = lead.trade === "Sonstiges" && lead.trade_other ? lead.trade_other : (lead.trade || "");
+  const branche = lead.trade === "Sonstiges" && lead.trade_other ? lead.trade_other : (lead.trade || "");
 
- // Globaler Zustand
- const [nachricht, setNachricht] = useState("");
- const [pin, setPin] = useState(genPin());
- const [dauerTage, setDauerTage] = useState("14");
- const [wachstumspaketPreis, setWachstumspaketPreis] = useState("");
- const [wachstumspaketBeschreibung, setWachstumspaketBeschreibung] = useState("");
- const [faqs, setFaqs] = useState<Faq[]>([]);
- const [pdfPath, setPdfPath] = useState<string | null>(null);
- const [pdfFilename, setPdfFilename] = useState<string | null>(null);
+  // Globaler Zustand
+  const [nachricht, setNachricht] = useState("");
+  const [pin, setPin] = useState(genPin());
+  const [dauerTage, setDauerTage] = useState("14");
+  const [wachstumspaketPreis, setWachstumspaketPreis] = useState("");
+  const [wachstumspaketBeschreibung, setWachstumspaketBeschreibung] = useState("");
+  const [faqs, setFaqs] = useState<Faq[]>([]);
+  const [pdfPath, setPdfPath] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState<string | null>(null);
 
- // Single-Mode (wenn !multiMode)
- const [preis, setPreis] = useState("");
- const [normalpreis, setNormalpreis] = useState("");
- const [mieteMonatlich, setMieteMonatlich] = useState("");
- const [anzahlung, setAnzahlung] = useState("");
- const [stripeLink, setStripeLink] = useState("");
- const [leistungen, setLeistungen] = useState<Leistung[]>([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
- const [optionen, setOptionen] = useState<Option[]>([]);
- const [bundles, setBundles] = useState<Bundle[]>([]);
+  // Single-Mode (wenn !multiMode)
+  const [preis, setPreis] = useState("");
+  const [normalpreis, setNormalpreis] = useState("");
+  const [mieteMonatlich, setMieteMonatlich] = useState("");
+  const [anzahlung, setAnzahlung] = useState("");
+  const [stripeLink, setStripeLink] = useState("");
+  const [leistungen, setLeistungen] = useState<Leistung[]>([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
+  const [optionen, setOptionen] = useState<Option[]>([]);
+  const [bundles, setBundles] = useState<Bundle[]>([]);
 
- // Multi-Mode
- const [multiMode, setMultiMode] = useState(false);
- const [pakete, setPakete] = useState<Paket[]>([]);
+  // Multi-Mode
+  const [multiMode, setMultiMode] = useState(false);
+  const [pakete, setPakete] = useState<Paket[]>([]);
 
- // Zahlungsart
- const [paymentMethod, setPaymentMethod] = useState<"stripe" | "rechnung">("stripe");
+  // Zahlungsart
+  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "rechnung">("stripe");
 
- const [saving, setSaving] = useState(false);
- const [parsing, setParsing] = useState(false);
- const [uploading, setUploading] = useState(false);
- const [result, setResult] = useState<{ link: string; pin: string } | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [parsing, setParsing] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [result, setResult] = useState<{ link: string; pin: string } | null>(null);
 
- useEffect(() => {
- if (open) {
- setNachricht(""); setPin(genPin()); setDauerTage("14");
- setWachstumspaketPreis(""); setWachstumspaketBeschreibung(""); setFaqs([]);
- setPdfPath(null); setPdfFilename(null);
- setPreis(""); setNormalpreis(""); setMieteMonatlich(""); setAnzahlung("");
- setStripeLink(""); setLeistungen([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
- setOptionen([]); setBundles([]);
- setMultiMode(false);
- setPakete([emptyPaket("Starter"), emptyPaket("Pro")]);
- setPaymentMethod("stripe");
- setResult(null);
+  useEffect(() => {
+    if (open) {
+      setNachricht(""); setPin(genPin()); setDauerTage("14");
+      setWachstumspaketPreis(""); setWachstumspaketBeschreibung(""); setFaqs([]);
+      setPdfPath(null); setPdfFilename(null);
+      setPreis(""); setNormalpreis(""); setMieteMonatlich(""); setAnzahlung("");
+      setStripeLink(""); setLeistungen([emptyLeistung(), emptyLeistung(), emptyLeistung()]);
+      setOptionen([]); setBundles([]);
+      setMultiMode(false);
+      setPakete([emptyPaket("Starter"), emptyPaket("Pro")]);
+      setPaymentMethod("stripe");
+      setResult(null);
 
- // Edit-Modus: bestehende Daten einladen
- if (editing?.base64_data) {
- const d = decodeBase64Utf8Safe(editing.base64_data);
- if (d && typeof d === "object") {
- setNachricht(String(d.nachricht || "").slice(0, 200));
- if (typeof d.pin === "string" && /^\d{5}$/.test(d.pin)) setPin(d.pin);
- if (d.ablauf_datum) {
- const ms = new Date(d.ablauf_datum).getTime() - Date.now();
- const days = Math.max(1, Math.round(ms / 86400000));
- setDauerTage(String(Math.min(365, days)));
- }
- if (typeof d.wachstumspaket_preis === "number") setWachstumspaketPreis(String(d.wachstumspaket_preis));
- if (typeof d.wachstumspaket_beschreibung === "string") setWachstumspaketBeschreibung(d.wachstumspaket_beschreibung);
- if (Array.isArray(d.faqs)) setFaqs(d.faqs.slice(0, 5).map((f: any) => ({ frage: String(f?.frage || ""), antwort: String(f?.antwort || "") })));
- if (d.pdf_path) setPdfPath(String(d.pdf_path));
- if (d.payment_method === "rechnung") setPaymentMethod("rechnung");
+      // Edit-Modus: bestehende Daten einladen
+      if (editing?.base64_data) {
+        const d = decodeBase64Utf8Safe(editing.base64_data);
+        if (d && typeof d === "object") {
+          setNachricht(String(d.nachricht || "").slice(0, 200));
+          if (typeof d.pin === "string" && /^\d{5}$/.test(d.pin)) setPin(d.pin);
+          if (d.ablauf_datum) {
+            const ms = new Date(d.ablauf_datum).getTime() - Date.now();
+            const days = Math.max(1, Math.round(ms / 86400000));
+            setDauerTage(String(Math.min(365, days)));
+          }
+          if (typeof d.wachstumspaket_preis === "number") setWachstumspaketPreis(String(d.wachstumspaket_preis));
+          if (typeof d.wachstumspaket_beschreibung === "string") setWachstumspaketBeschreibung(d.wachstumspaket_beschreibung);
+          if (Array.isArray(d.faqs)) setFaqs(d.faqs.slice(0, 5).map((f: any) => ({ frage: String(f?.frage || ""), antwort: String(f?.antwort || "") })));
+          if (d.pdf_path) setPdfPath(String(d.pdf_path));
+          if (d.payment_method === "rechnung") setPaymentMethod("rechnung");
 
- if (Array.isArray(d.pakete) && d.pakete.length > 0) {
- setMultiMode(true);
- setPakete(d.pakete.slice(0, 3).map((p: any) => ({
- id: genId(),
- name: String(p?.name || ""), badge: String(p?.badge || ""), beschreibung: String(p?.beschreibung || ""),
- preis: typeof p?.preis === "number" ? String(p.preis) : "",
- normalpreis: typeof p?.normalpreis === "number" ? String(p.normalpreis) : "",
- miete_monatlich: typeof p?.miete_monatlich === "number" ? String(p.miete_monatlich) : "",
- anzahlung: typeof p?.anzahlung === "number" ? String(p.anzahlung) : "",
- stripe_link: String(p?.stripe_link || ""),
- leistungen: Array.isArray(p?.leistungen) && p.leistungen.length > 0
- ? p.leistungen.map((l: any) => ({ emoji: String(l?.emoji || ""), titel: String(l?.titel || ""), beschreibung: String(l?.beschreibung || "") }))
- : [emptyLeistung()],
- optionen: Array.isArray(p?.optionen) ? p.optionen.map((o: any) => ({
- id: genId(), emoji: String(o?.emoji || ""), titel: String(o?.titel || ""), beschreibung: String(o?.beschreibung || ""),
- preis: typeof o?.preis === "number" ? String(o.preis) : "",
- preis_typ: o?.preis_typ === "monatlich" ? "monatlich" : "einmalig",
- stripe_link: String(o?.stripe_link || ""),
- })) : [],
- })));
- } else {
- setMultiMode(false);
- if (typeof d.preis === "number") setPreis(String(d.preis));
- if (typeof d.normalpreis === "number") setNormalpreis(String(d.normalpreis));
- if (typeof d.miete_monatlich === "number") setMieteMonatlich(String(d.miete_monatlich));
- if (typeof d.anzahlung === "number") setAnzahlung(String(d.anzahlung));
- if (typeof d.stripe_link === "string") setStripeLink(d.stripe_link);
- if (Array.isArray(d.leistungen) && d.leistungen.length > 0) {
- setLeistungen(d.leistungen.map((l: any) => ({ emoji: String(l?.emoji || ""), titel: String(l?.titel || ""), beschreibung: String(l?.beschreibung || "") })));
- }
- if (Array.isArray(d.optionen)) {
- const opts = d.optionen.map((o: any) => ({
- id: String(o?.id || genId()),
- emoji: String(o?.emoji || ""), titel: String(o?.titel || ""), beschreibung: String(o?.beschreibung || ""),
- preis: typeof o?.preis === "number" ? String(o.preis) : "",
- preis_typ: o?.preis_typ === "monatlich" ? "monatlich" : "einmalig",
- stripe_link: String(o?.stripe_link || ""),
- }));
- setOptionen(opts);
- }
- if (Array.isArray(d.bundles)) {
- setBundles(d.bundles.map((b: any) => ({
- id: String(b?.id || genId()),
- label: String(b?.label || ""),
- option_ids: Array.isArray(b?.option_ids) ? b.option_ids.map(String) : [],
- gesamt_preis: typeof b?.gesamt_preis === "number" ? String(b.gesamt_preis) : "",
- stripe_link: String(b?.stripe_link || ""),
- })));
- }
- }
- }
- }
- }
- // eslint-disable-next-line react-hooks/exhaustive-deps
- }, [open, editing?.angebotId]);
+          if (Array.isArray(d.pakete) && d.pakete.length > 0) {
+            setMultiMode(true);
+            setPakete(d.pakete.slice(0, 3).map((p: any) => ({
+              id: genId(),
+              name: String(p?.name || ""), badge: String(p?.badge || ""), beschreibung: String(p?.beschreibung || ""),
+              preis: typeof p?.preis === "number" ? String(p.preis) : "",
+              normalpreis: typeof p?.normalpreis === "number" ? String(p.normalpreis) : "",
+              miete_monatlich: typeof p?.miete_monatlich === "number" ? String(p.miete_monatlich) : "",
+              anzahlung: typeof p?.anzahlung === "number" ? String(p.anzahlung) : "",
+              stripe_link: String(p?.stripe_link || ""),
+              leistungen: Array.isArray(p?.leistungen) && p.leistungen.length > 0
+                ? p.leistungen.map((l: any) => ({ emoji: String(l?.emoji || ""), titel: String(l?.titel || ""), beschreibung: String(l?.beschreibung || "") }))
+                : [emptyLeistung()],
+              optionen: Array.isArray(p?.optionen) ? p.optionen.map((o: any) => ({
+                id: genId(), emoji: String(o?.emoji || ""), titel: String(o?.titel || ""), beschreibung: String(o?.beschreibung || ""),
+                preis: typeof o?.preis === "number" ? String(o.preis) : "",
+                preis_typ: o?.preis_typ === "monatlich" ? "monatlich" : "einmalig",
+                stripe_link: String(o?.stripe_link || ""),
+              })) : [],
+            })));
+          } else {
+            setMultiMode(false);
+            if (typeof d.preis === "number") setPreis(String(d.preis));
+            if (typeof d.normalpreis === "number") setNormalpreis(String(d.normalpreis));
+            if (typeof d.miete_monatlich === "number") setMieteMonatlich(String(d.miete_monatlich));
+            if (typeof d.anzahlung === "number") setAnzahlung(String(d.anzahlung));
+            if (typeof d.stripe_link === "string") setStripeLink(d.stripe_link);
+            if (Array.isArray(d.leistungen) && d.leistungen.length > 0) {
+              setLeistungen(d.leistungen.map((l: any) => ({ emoji: String(l?.emoji || ""), titel: String(l?.titel || ""), beschreibung: String(l?.beschreibung || "") })));
+            }
+            if (Array.isArray(d.optionen)) {
+              const opts = d.optionen.map((o: any) => ({
+                id: String(o?.id || genId()),
+                emoji: String(o?.emoji || ""), titel: String(o?.titel || ""), beschreibung: String(o?.beschreibung || ""),
+                preis: typeof o?.preis === "number" ? String(o.preis) : "",
+                preis_typ: o?.preis_typ === "monatlich" ? "monatlich" : "einmalig",
+                stripe_link: String(o?.stripe_link || ""),
+              }));
+              setOptionen(opts);
+            }
+            if (Array.isArray(d.bundles)) {
+              setBundles(d.bundles.map((b: any) => ({
+                id: String(b?.id || genId()),
+                label: String(b?.label || ""),
+                option_ids: Array.isArray(b?.option_ids) ? b.option_ids.map(String) : [],
+                gesamt_preis: typeof b?.gesamt_preis === "number" ? String(b.gesamt_preis) : "",
+                stripe_link: String(b?.stripe_link || ""),
+              })));
+            }
+          }
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, editing?.angebotId]);
 
- // Helpers Single-Mode
- const updateLeistung = (i: number, p: Partial<Leistung>) =>
- setLeistungen((prev) => prev.map((l, idx) => idx === i ? { ...l, ...p } : l));
- const removeLeistung = (i: number) => setLeistungen((prev) => prev.filter((_, idx) => idx !== i));
- const addLeistung = () => leistungen.length < 6 && setLeistungen((prev) => [...prev, emptyLeistung()]);
+  // Helpers Single-Mode
+  const updateLeistung = (i: number, p: Partial<Leistung>) =>
+    setLeistungen((prev) => prev.map((l, idx) => idx === i ? { ...l, ...p } : l));
+  const removeLeistung = (i: number) => setLeistungen((prev) => prev.filter((_, idx) => idx !== i));
+  const addLeistung = () => leistungen.length < 6 && setLeistungen((prev) => [...prev, emptyLeistung()]);
 
- const updateFaq = (i: number, p: Partial<Faq>) =>
- setFaqs((prev) => prev.map((f, idx) => idx === i ? { ...f, ...p } : f));
- const removeFaq = (i: number) => setFaqs((prev) => prev.filter((_, idx) => idx !== i));
- const addFaq = () => faqs.length < 5 && setFaqs((prev) => [...prev, emptyFaq()]);
+  const updateFaq = (i: number, p: Partial<Faq>) =>
+    setFaqs((prev) => prev.map((f, idx) => idx === i ? { ...f, ...p } : f));
+  const removeFaq = (i: number) => setFaqs((prev) => prev.filter((_, idx) => idx !== i));
+  const addFaq = () => faqs.length < 5 && setFaqs((prev) => [...prev, emptyFaq()]);
 
- const updateOption = (i: number, p: Partial<Option>) =>
- setOptionen((prev) => prev.map((o, idx) => idx === i ? { ...o, ...p } : o));
- const removeOption = (i: number) => {
- const removedId = optionen[i]?.id;
- setOptionen((prev) => prev.filter((_, idx) => idx !== i));
- if (removedId) setBundles((prev) => prev.map((b) => ({ ...b, option_ids: b.option_ids.filter((id) => id !== removedId) })));
- };
- const addOption = () => optionen.length < 4 && setOptionen((prev) => [...prev, emptyOption()]);
+  const updateOption = (i: number, p: Partial<Option>) =>
+    setOptionen((prev) => prev.map((o, idx) => idx === i ? { ...o, ...p } : o));
+  const removeOption = (i: number) => {
+    const removedId = optionen[i]?.id;
+    setOptionen((prev) => prev.filter((_, idx) => idx !== i));
+    if (removedId) setBundles((prev) => prev.map((b) => ({ ...b, option_ids: b.option_ids.filter((id) => id !== removedId) })));
+  };
+  const addOption = () => optionen.length < 4 && setOptionen((prev) => [...prev, emptyOption()]);
 
- const updateBundle = (i: number, p: Partial<Bundle>) =>
- setBundles((prev) => prev.map((b, idx) => idx === i ? { ...b, ...p } : b));
- const removeBundle = (i: number) => setBundles((prev) => prev.filter((_, idx) => idx !== i));
- const addBundle = () => bundles.length < 6 && setBundles((prev) => [...prev, emptyBundle()]);
- const toggleBundleOption = (bi: number, optId: string) =>
- setBundles((prev) => prev.map((b, idx) => idx === bi
- ? { ...b, option_ids: b.option_ids.includes(optId) ? b.option_ids.filter((x) => x !== optId) : [...b.option_ids, optId] }
- : b));
+  const updateBundle = (i: number, p: Partial<Bundle>) =>
+    setBundles((prev) => prev.map((b, idx) => idx === i ? { ...b, ...p } : b));
+  const removeBundle = (i: number) => setBundles((prev) => prev.filter((_, idx) => idx !== i));
+  const addBundle = () => bundles.length < 6 && setBundles((prev) => [...prev, emptyBundle()]);
+  const toggleBundleOption = (bi: number, optId: string) =>
+    setBundles((prev) => prev.map((b, idx) => idx === bi
+      ? { ...b, option_ids: b.option_ids.includes(optId) ? b.option_ids.filter((x) => x !== optId) : [...b.option_ids, optId] }
+      : b));
 
- // Helpers Pakete
- const updatePaket = (pi: number, p: Partial<Paket>) =>
- setPakete((prev) => prev.map((x, idx) => idx === pi ? { ...x, ...p } : x));
- const removePaket = (pi: number) => setPakete((prev) => prev.filter((_, idx) => idx !== pi));
- const addPaket = () => pakete.length < 3 && setPakete((prev) => [...prev, emptyPaket(`Paket ${prev.length + 1}`)]);
- const updatePaketLeistung = (pi: number, li: number, p: Partial<Leistung>) =>
- updatePaket(pi, { leistungen: pakete[pi].leistungen.map((l, idx) => idx === li ? { ...l, ...p } : l) });
- const addPaketLeistung = (pi: number) =>
- pakete[pi].leistungen.length < 8 && updatePaket(pi, { leistungen: [...pakete[pi].leistungen, emptyLeistung()] });
- const removePaketLeistung = (pi: number, li: number) =>
- updatePaket(pi, { leistungen: pakete[pi].leistungen.filter((_, idx) => idx !== li) });
- const updatePaketOption = (pi: number, oi: number, p: Partial<Option>) =>
- updatePaket(pi, { optionen: pakete[pi].optionen.map((o, idx) => idx === oi ? { ...o, ...p } : o) });
- const addPaketOption = (pi: number) =>
- pakete[pi].optionen.length < 4 && updatePaket(pi, { optionen: [...pakete[pi].optionen, emptyOption()] });
- const removePaketOption = (pi: number, oi: number) =>
- updatePaket(pi, { optionen: pakete[pi].optionen.filter((_, idx) => idx !== oi) });
+  // Helpers Pakete
+  const updatePaket = (pi: number, p: Partial<Paket>) =>
+    setPakete((prev) => prev.map((x, idx) => idx === pi ? { ...x, ...p } : x));
+  const removePaket = (pi: number) => setPakete((prev) => prev.filter((_, idx) => idx !== pi));
+  const addPaket = () => pakete.length < 3 && setPakete((prev) => [...prev, emptyPaket(`Paket ${prev.length + 1}`)]);
+  const updatePaketLeistung = (pi: number, li: number, p: Partial<Leistung>) =>
+    updatePaket(pi, { leistungen: pakete[pi].leistungen.map((l, idx) => idx === li ? { ...l, ...p } : l) });
+  const addPaketLeistung = (pi: number) =>
+    pakete[pi].leistungen.length < 8 && updatePaket(pi, { leistungen: [...pakete[pi].leistungen, emptyLeistung()] });
+  const removePaketLeistung = (pi: number, li: number) =>
+    updatePaket(pi, { leistungen: pakete[pi].leistungen.filter((_, idx) => idx !== li) });
+  const updatePaketOption = (pi: number, oi: number, p: Partial<Option>) =>
+    updatePaket(pi, { optionen: pakete[pi].optionen.map((o, idx) => idx === oi ? { ...o, ...p } : o) });
+  const addPaketOption = (pi: number) =>
+    pakete[pi].optionen.length < 4 && updatePaket(pi, { optionen: [...pakete[pi].optionen, emptyOption()] });
+  const removePaketOption = (pi: number, oi: number) =>
+    updatePaket(pi, { optionen: pakete[pi].optionen.filter((_, idx) => idx !== oi) });
 
- // Payload bauen (für Save UND Preview)
- const buildPayload = useCallback((): { ok: true; payload: any; error?: never } | { ok: false; error: string } => {
- if (!/^\d{5}$/.test(pin)) return { ok: false, error: "PIN muss genau 5 Ziffern haben" };
- const daysNum = Number(dauerTage);
- if (!Number.isFinite(daysNum) || daysNum < 1 || daysNum > 365) return { ok: false, error: "Gültigkeit: 1–365 Tage" };
- const ablauf = new Date(Date.now() + daysNum * 86400000);
+  // Payload bauen (für Save UND Preview)
+  const buildPayload = useCallback((): { ok: true; payload: any; error?: never } | { ok: false; error: string } => {
+    if (!/^\d{5}$/.test(pin)) return { ok: false, error: "PIN muss genau 5 Ziffern haben" };
+    const daysNum = Number(dauerTage);
+    if (!Number.isFinite(daysNum) || daysNum < 1 || daysNum > 365) return { ok: false, error: "Gültigkeit: 1–365 Tage" };
+    const ablauf = new Date(Date.now() + daysNum * 86400000);
 
- const cleanFaqs = faqs.filter((f) => f.frage.trim() && f.antwort.trim());
+    const cleanFaqs = faqs.filter((f) => f.frage.trim() && f.antwort.trim());
 
- const base: any = {
- v: 1,
- lead_name: lead.first_name,
- lead_email: lead.email,
- branche,
- nachricht: nachricht.trim(),
- pin,
- ablauf_datum: ablauf.toISOString(),
- wachstumspaket_preis: wachstumspaketPreis ? Number(wachstumspaketPreis) : null,
- wachstumspaket_beschreibung: wachstumspaketBeschreibung.trim() || null,
- faqs: cleanFaqs,
- pdf_path: pdfPath || null,
- payment_method: paymentMethod,
- };
+    const base: any = {
+      v: 1,
+      lead_name: lead.first_name,
+      lead_email: lead.email,
+      branche,
+      nachricht: nachricht.trim(),
+      pin,
+      ablauf_datum: ablauf.toISOString(),
+      wachstumspaket_preis: wachstumspaketPreis ? Number(wachstumspaketPreis) : null,
+      wachstumspaket_beschreibung: wachstumspaketBeschreibung.trim() || null,
+      faqs: cleanFaqs,
+      pdf_path: pdfPath || null,
+      payment_method: paymentMethod,
+    };
 
- if (multiMode) {
- if (pakete.length === 0) return { ok: false, error: "Mindestens ein Paket erforderlich" };
- const cleanPakete = pakete.map((p) => {
- const preisN = Number(p.preis);
- if (!p.name.trim()) throw new Error("Paket-Name fehlt");
- if (!Number.isFinite(preisN) || preisN <= 0) throw new Error(`Paket "${p.name || "?"}": Preis ungültig`);
- // Stripe-Link ist optional – Checkout wird dynamisch aus dem Preis erzeugt.
- if (paymentMethod === "stripe" && p.stripe_link.trim() && !/^https?:\/\//i.test(p.stripe_link)) {
- throw new Error(`Paket "${p.name}": Stripe-Link ungültig (muss mit http(s) beginnen)`);
- }
- const cleanL = p.leistungen.filter((l) => l.titel.trim() || l.beschreibung.trim() || l.emoji.trim());
- if (cleanL.length === 0) throw new Error(`Paket "${p.name}": Mindestens eine Leistung`);
- const cleanO = p.optionen
- .filter((o) => o.titel.trim() && Number(o.preis) > 0)
- .map((o) => ({
- id: o.id, emoji: o.emoji.trim(), titel: o.titel.trim(), beschreibung: o.beschreibung.trim(),
- preis: Number(o.preis), preis_typ: o.preis_typ, stripe_link: o.stripe_link.trim(),
- }));
- return {
- id: p.id, name: p.name.trim(), badge: p.badge.trim(), beschreibung: p.beschreibung.trim(),
- preis: preisN,
- normalpreis: p.normalpreis ? Number(p.normalpreis) : null,
- miete_monatlich: p.miete_monatlich ? Number(p.miete_monatlich) : null,
- anzahlung: p.anzahlung ? Number(p.anzahlung) : null,
- stripe_link: paymentMethod === "stripe" ? p.stripe_link.trim() : "",
- leistungen: cleanL, optionen: cleanO,
- };
- });
- // Für DB-Insert nehmen wir Preis/Stripe des ersten Pakets als „Hauptpreis"
+    if (multiMode) {
+      if (pakete.length === 0) return { ok: false, error: "Mindestens ein Paket erforderlich" };
+      const cleanPakete = pakete.map((p) => {
+        const preisN = Number(p.preis);
+        if (!p.name.trim()) throw new Error("Paket-Name fehlt");
+        if (!Number.isFinite(preisN) || preisN <= 0) throw new Error(`Paket "${p.name || "?"}": Preis ungültig`);
+        // Stripe-Link ist optional – Checkout wird dynamisch aus dem Preis erzeugt.
+        if (paymentMethod === "stripe" && p.stripe_link.trim() && !/^https?:\/\//i.test(p.stripe_link)) {
+          throw new Error(`Paket "${p.name}": Stripe-Link ungültig (muss mit http(s) beginnen)`);
+        }
+        const cleanL = p.leistungen.filter((l) => l.titel.trim() || l.beschreibung.trim() || l.emoji.trim());
+        if (cleanL.length === 0) throw new Error(`Paket "${p.name}": Mindestens eine Leistung`);
+        const cleanO = p.optionen
+          .filter((o) => o.titel.trim() && Number(o.preis) > 0)
+          .map((o) => ({
+            id: o.id, emoji: o.emoji.trim(), titel: o.titel.trim(), beschreibung: o.beschreibung.trim(),
+            preis: Number(o.preis), preis_typ: o.preis_typ, stripe_link: o.stripe_link.trim(),
+          }));
+        return {
+          id: p.id, name: p.name.trim(), badge: p.badge.trim(), beschreibung: p.beschreibung.trim(),
+          preis: preisN,
+          normalpreis: p.normalpreis ? Number(p.normalpreis) : null,
+          miete_monatlich: p.miete_monatlich ? Number(p.miete_monatlich) : null,
+          anzahlung: p.anzahlung ? Number(p.anzahlung) : null,
+          stripe_link: paymentMethod === "stripe" ? p.stripe_link.trim() : "",
+          leistungen: cleanL, optionen: cleanO,
+        };
+      });
+      // Für DB-Insert nehmen wir Preis/Stripe des ersten Pakets als „Hauptpreis"
       base.pakete = cleanPakete;
       base.preis = cleanPakete[0].preis;
       base.normalpreis = cleanPakete[0].normalpreis;
@@ -566,10 +566,10 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               <Button onClick={() => onOpenChange(false)} className="flex-1">Schließen</Button>
             </div>
           </div>
- ) : (
- <div className="space-y-5">
+        ) : (
+          <div className="space-y-5">
             <div className="text-xs text-muted-foreground bg-muted/50 rounded-md px-3 py-2">
- Übernommen: <strong>{lead.first_name}</strong> · {lead.email}{branche ? <> · {branche}</> : null}
+              Übernommen: <strong>{lead.first_name}</strong> · {lead.email}{branche ? <> · {branche}</> : null}
             </div>
 
             {/* KI-Upload */}
@@ -578,10 +578,10 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: BRAND }}>
                   <Sparkles size={14} aria-hidden={true} focusable={false} /> Angebot per KI auslesen
- </div>
+                </div>
                 <div className="text-xs text-muted-foreground mt-0.5">
- PDF/Bild hochladen — Felder werden befüllt UND das Original ist später vom Kunden downloadbar.
- </div>
+                  PDF/Bild hochladen — Felder werden befüllt UND das Original ist später vom Kunden downloadbar.
+                </div>
                 {pdfPath && (
                   <div className="text-xs mt-1 flex items-center gap-1.5" style={{ color: BRAND }}>
                     <FileDown size={12} aria-hidden={true} focusable={false} /> {pdfFilename} hochgeladen
@@ -627,7 +627,7 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                   <Input type="number" min={1} max={365} value={dauerTage}
                     onChange={(e) => setDauerTage(e.target.value)} className="flex-1" />
                   {["7", "14", "30"].map((d) => (
- <Button key={d} type="button" variant={dauerTage === d ? "default" : "outline"} size="sm"
+                    <Button key={d} type="button" variant={dauerTage === d ? "default" : "outline"} size="sm"
                       onClick={() => setDauerTage(d)} className="px-2">{d}</Button>
                   ))}
                 </div>
@@ -654,17 +654,17 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                   className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "stripe" ? "text-white" : "bg-background text-muted-foreground"}`}
                   style={paymentMethod === "stripe" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
                   <CreditCard size={14} aria-hidden={true} focusable={false} /> Stripe Checkout
- </button>
+                </button>
                 <button type="button" onClick={() => setPaymentMethod("rechnung")}
                   className={`flex items-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${paymentMethod === "rechnung" ? "text-white" : "bg-background text-muted-foreground"}`}
                   style={paymentMethod === "rechnung" ? { background: BRAND, borderColor: BRAND } : { borderColor: "var(--border)" }}>
                   <Receipt size={14} aria-hidden={true} focusable={false} /> Zahlung per Rechnung
- </button>
+                </button>
               </div>
               {paymentMethod === "rechnung" && (
                 <div className="text-xs text-muted-foreground bg-muted/40 rounded-md p-2 leading-relaxed">
- Der Kunde bucht verbindlich per Bestätigungsflow. Du erhältst eine E-Mail und sendest die Rechnung manuell. Stripe-Link wird nicht benötigt.
- </div>
+                  Der Kunde bucht verbindlich per Bestätigungsflow. Du erhältst eine E-Mail und sendest die Rechnung manuell. Stripe-Link wird nicht benötigt.
+                </div>
               )}
             </div>
 
@@ -680,16 +680,16 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 optionen={optionen} updateOption={updateOption} removeOption={removeOption} addOption={addOption}
                 bundles={bundles} updateBundle={updateBundle} removeBundle={removeBundle} addBundle={addBundle} toggleBundleOption={toggleBundleOption}
               />
- ) : (
- <div className="space-y-3">
+            ) : (
+              <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <Label>Pakete ({pakete.length}/3)</Label>
                   <Button type="button" size="sm" variant="outline" onClick={addPaket} disabled={pakete.length >= 3}>
                     <Plus size={14} aria-hidden={true} focusable={false} /> Paket hinzufügen
- </Button>
+                  </Button>
                 </div>
                 {pakete.map((p, pi) => (
- <PaketEditor key={p.id} password={password} pi={pi} paket={p}
+                  <PaketEditor key={p.id} password={password} pi={pi} paket={p}
                     update={(patch) => updatePaket(pi, patch)} remove={() => removePaket(pi)}
                     updateLeistung={(li, patch) => updatePaketLeistung(pi, li, patch)}
                     addLeistung={() => addPaketLeistung(pi)} removeLeistung={(li) => removePaketLeistung(pi, li)}
@@ -725,10 +725,10 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 <Label>FAQs ({faqs.length}/5)</Label>
                 <Button type="button" size="sm" variant="outline" onClick={addFaq} disabled={faqs.length >= 5}>
                   <Plus size={14} aria-hidden={true} focusable={false} /> FAQ hinzufügen
- </Button>
+                </Button>
               </div>
               {faqs.map((f, i) => (
- <div key={i} className="rounded-lg border p-3 space-y-2 bg-muted/20">
+                <div key={i} className="rounded-lg border p-3 space-y-2 bg-muted/20">
                   <div className="flex gap-2">
                     <Input value={f.frage} onChange={(e) => updateFaq(i, { frage: e.target.value })}
                       placeholder="Frage" className="flex-1" maxLength={200} />
@@ -740,15 +740,15 @@ export default function AngebotModal({ open, onOpenChange, password, lead, onCre
                 </div>
               ))}
               <p className="text-xs text-muted-foreground bg-muted/40 rounded-md px-3 py-2 leading-relaxed">
- Wenn keine FAQs eingetragen werden, erscheinen automatisch 7 bewährte Standard-Fragen auf der Angebotsseite. Bei weniger als 3 eigenen FAQs werden die Standard-Fragen passend ergänzt.
- </p>
+                Wenn keine FAQs eingetragen werden, erscheinen automatisch 7 bewährte Standard-Fragen auf der Angebotsseite. Bei weniger als 3 eigenen FAQs werden die Standard-Fragen passend ergänzt.
+              </p>
             </div>
 
             {/* Buttons */}
             <div className="flex gap-2 sticky bottom-0 pt-3 bg-background border-t">
               <Button type="button" variant="outline" onClick={handlePreview} className="flex-1">
                 <Eye size={16} aria-hidden={true} focusable={false} /> Kundenansicht
- </Button>
+              </Button>
               <Button type="button" onClick={handleGenerate} disabled={saving}
                 className="flex-[2] text-white"
                 style={{ background: `linear-gradient(135deg, ${BRAND}, #7B5EF8)` }}>
@@ -772,11 +772,11 @@ function SingleEditor(props: {
   mieteMonatlich: string; setMieteMonatlich: (v: string) => void;
   anzahlung: string; setAnzahlung: (v: string) => void;
   stripeLink: string; setStripeLink: (v: string) => void;
- leistungen: Leistung[]; updateLeistung: (i: number, p: Partial<Leistung>) => void;
+  leistungen: Leistung[]; updateLeistung: (i: number, p: Partial<Leistung>) => void;
   removeLeistung: (i: number) => void; addLeistung: () => void;
- optionen: Option[]; updateOption: (i: number, p: Partial<Option>) => void;
+  optionen: Option[]; updateOption: (i: number, p: Partial<Option>) => void;
   removeOption: (i: number) => void; addOption: () => void;
- bundles: Bundle[]; updateBundle: (i: number, p: Partial<Bundle>) => void;
+  bundles: Bundle[]; updateBundle: (i: number, p: Partial<Bundle>) => void;
   removeBundle: (i: number) => void; addBundle: () => void;
   toggleBundleOption: (bi: number, optId: string) => void;
 }) {
@@ -816,10 +816,10 @@ function SingleEditor(props: {
           <Label>Leistungen ({props.leistungen.length}/6)</Label>
           <Button type="button" size="sm" variant="outline" onClick={props.addLeistung} disabled={props.leistungen.length >= 6}>
             <Plus size={14} aria-hidden={true} focusable={false} /> Leistung
- </Button>
+          </Button>
         </div>
         {props.leistungen.map((l, i) => (
- <div key={i} className="rounded-lg border p-3 space-y-2 bg-muted/20">
+          <div key={i} className="rounded-lg border p-3 space-y-2 bg-muted/20">
             <div className="flex gap-2">
               <Input value={l.emoji} onChange={(e) => props.updateLeistung(i, { emoji: e.target.value })}
                 placeholder="🚀" className="w-16 text-center text-lg" maxLength={4} />
@@ -843,11 +843,11 @@ function SingleEditor(props: {
           <Label>Optionale Positionen ({props.optionen.length}/4)</Label>
           <Button type="button" size="sm" variant="outline" onClick={props.addOption} disabled={props.optionen.length >= 4}>
             <Plus size={14} aria-hidden={true} focusable={false} /> Option
- </Button>
+          </Button>
         </div>
         <p className="text-xs text-muted-foreground -mt-1">Add-ons per Checkbox dazubuchbar. Eigener Stripe-Link pro Option.</p>
         {props.optionen.map((o, i) => (
- <div key={o.id} className="rounded-lg border p-3 space-y-2 bg-muted/20">
+          <div key={o.id} className="rounded-lg border p-3 space-y-2 bg-muted/20">
             <div className="flex gap-2">
               <Input value={o.emoji} onChange={(e) => props.updateOption(i, { emoji: e.target.value })}
                 placeholder="✨" className="w-14 text-center text-lg" maxLength={4} />
@@ -879,15 +879,15 @@ function SingleEditor(props: {
       </div>
 
       {props.optionen.length >= 2 && (
- <div className="space-y-2">
+        <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label>Bundle-Links ({props.bundles.length}/6)</Label>
             <Button type="button" size="sm" variant="outline" onClick={props.addBundle} disabled={props.bundles.length >= 6}>
               <Plus size={14} aria-hidden={true} focusable={false} /> Bundle
- </Button>
+            </Button>
           </div>
           {props.bundles.map((b, bi) => (
- <div key={b.id} className="rounded-lg border p-3 space-y-2 bg-muted/20">
+            <div key={b.id} className="rounded-lg border p-3 space-y-2 bg-muted/20">
               <div className="flex gap-2">
                 <Input value={b.label} onChange={(e) => props.updateBundle(bi, { label: e.target.value })}
                   placeholder="Bundle-Name" className="flex-1" maxLength={100} />
@@ -927,9 +927,9 @@ function PaketEditor({
 }: {
   password: string; pi: number; paket: Paket;
   update: (p: Partial<Paket>) => void; remove: () => void;
- updateLeistung: (li: number, p: Partial<Leistung>) => void;
+  updateLeistung: (li: number, p: Partial<Leistung>) => void;
   addLeistung: () => void; removeLeistung: (li: number) => void;
- updateOption: (oi: number, p: Partial<Option>) => void;
+  updateOption: (oi: number, p: Partial<Option>) => void;
   addOption: () => void; removeOption: (oi: number) => void;
 }) {
   return (
@@ -980,10 +980,10 @@ function PaketEditor({
           <Label className="text-xs">Leistungen ({paket.leistungen.length}/8)</Label>
           <Button type="button" size="sm" variant="outline" onClick={addLeistung} disabled={paket.leistungen.length >= 8} className="h-7 text-xs">
             <Plus size={12} aria-hidden={true} focusable={false} /> Leistung
- </Button>
+          </Button>
         </div>
         {paket.leistungen.map((l, li) => (
- <div key={li} className="rounded-lg border p-2 space-y-1.5 bg-background">
+          <div key={li} className="rounded-lg border p-2 space-y-1.5 bg-background">
             <div className="flex gap-1.5">
               <Input value={l.emoji} onChange={(e) => updateLeistung(li, { emoji: e.target.value })} placeholder="🚀" className="w-12 text-center" maxLength={4} />
               <Input value={l.titel} onChange={(e) => updateLeistung(li, { titel: e.target.value })} placeholder="Titel" className="flex-1" maxLength={100} />
@@ -1004,10 +1004,10 @@ function PaketEditor({
           <Label className="text-xs">Add-ons in diesem Paket ({paket.optionen.length}/4)</Label>
           <Button type="button" size="sm" variant="outline" onClick={addOption} disabled={paket.optionen.length >= 4} className="h-7 text-xs">
             <Plus size={12} aria-hidden={true} focusable={false} /> Option
- </Button>
+          </Button>
         </div>
         {paket.optionen.map((o, oi) => (
- <div key={o.id} className="rounded-lg border p-2 space-y-1.5 bg-background">
+          <div key={o.id} className="rounded-lg border p-2 space-y-1.5 bg-background">
             <div className="flex gap-1.5">
               <Input value={o.emoji} onChange={(e) => updateOption(oi, { emoji: e.target.value })} placeholder="✨" className="w-12 text-center" maxLength={4} />
               <Input value={o.titel} onChange={(e) => updateOption(oi, { titel: e.target.value })} placeholder="Titel" className="flex-1" maxLength={100} />

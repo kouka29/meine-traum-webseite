@@ -51,8 +51,8 @@ export default function KundenportalEinstellungen() {
 
   if (loading) return <div className="flex justify-center py-16"><Loader2 className="animate-spin text-primary" aria-hidden={true} focusable={false} /></div>;
 
- return (
- <div className="space-y-6">
+  return (
+    <div className="space-y-6">
       <div>
         <h1 className="font-heading text-3xl font-bold">Einstellungen</h1>
         <p className="text-muted-foreground mt-1">Stammdaten, Zahlungsmethode und Abo verwalten.</p>
@@ -90,9 +90,9 @@ export default function KundenportalEinstellungen() {
         <CardHeader><CardTitle>Zahlungsmethode & Abo</CardTitle></CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-muted-foreground">
- Im sicheren Stripe-Kundenportal kannst du Karte oder SEPA-Lastschrift ändern,
- Rechnungen herunterladen und dein Abo verwalten.
- </p>
+            Im sicheren Stripe-Kundenportal kannst du Karte oder SEPA-Lastschrift ändern,
+            Rechnungen herunterladen und dein Abo verwalten.
+          </p>
           <Button variant="outline" onClick={openStripePortal} disabled={portalLoading}>
             {portalLoading ? <Loader2 className="animate-spin" size={16} aria-hidden={true} focusable={false} /> : <><ExternalLink size={14} className="mr-1" aria-hidden={true} focusable={false} /> Stripe-Kundenportal öffnen</>}
           </Button>

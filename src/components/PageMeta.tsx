@@ -20,7 +20,7 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
   "/ueber-uns": {
     title: `Über uns – Webdesign Agentur | ${BRAND}`,
     description:
-      "Lerne Meine Traum Webseite kennen – die Agentur, die Websites zu Verkaufsinstrumenten macht. 150+ Kunden im DACH-Raum.",
+      "Lernen du Meine Traum Webseite kennen – die Agentur, die Websites zu Verkaufsinstrumenten macht. 150+ Kunden im DACH-Raum.",
   },
   "/portfolio": {
     title: `Webdesign Portfolio & Referenzen | ${BRAND}`,
@@ -30,7 +30,7 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
   "/kontakt": {
     title: `Kontakt – Vorschau in 48 h | ${BRAND}`,
     description:
-      "Sichere Dir deine kostenlose Website-Vorschau in 48 h. Unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
+      "Sichere sich deine kostenlose Website-Vorschau in 48 h. Unverbindlich, ohne Risiko. Jetzt Kontakt aufnehmen.",
   },
   "/webdesign-agentur": {
     title: `Webdesign Agentur für moderne Websites | ${BRAND}`,
@@ -65,7 +65,7 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
   "/kostenlose-vorschau": {
     title: `Kostenlose Webseiten-Vorschau in 48 h | ${BRAND}`,
     description:
-      "Handwerker: Sichere Dir einen von 5 Plätzen pro Monat. Kostenlose Vorschau in 48 h. Ohne Risiko und Verpflichtung.",
+      "Handwerker: Sichere sich einen von 5 Plätzen pro Monat. Kostenlose Vorschau in 48 h. Ohne Risiko und Verpflichtung.",
   },
   "/webdesign-preise": {
     title: `Webdesign Preise & Kosten | ${BRAND}`,
@@ -110,12 +110,12 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
   "/empfehlung": {
     title: `Empfehlungsprogramm | ${BRAND}`,
     description:
-      "Empfehle Meine Traum Webseite und profitiere von attraktiven Prämien für jeden vermittelten Neukunden.",
+      "Empfehlen du Meine Traum Webseite und profitierst du von attraktiven Prämien für jeden vermittelten Neukunden.",
   },
   "/erstgespraech": {
     title: `Erstgespräch buchen | ${BRAND}`,
     description:
-      "Buche Dein kostenloses Erstgespräch. Gemeinsam klären wir Ziele, Zielgruppe und Strategie für deine neue Website.",
+      "Buchst du dein kostenloses Erstgespräch. Gemeinsam klären wir Ziele, Zielgruppe und Strategie für deine neue Website.",
   },
   "/starter": {
     title: `Starter-Paket Website | ${BRAND}`,

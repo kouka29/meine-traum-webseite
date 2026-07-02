@@ -25,8 +25,8 @@ const ANGEBOT_BASE_URL = "https://meine-traum-webseite.de/a";
 
 export default function AdminAngeboteTab({ password }: { password: string }) {
   const [angebote, setAngebote] = useState<Angebot[]>([]);
- const [loading, setLoading] = useState(false);
- const [editing, setEditing] = useState<Angebot | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [editing, setEditing] = useState<Angebot | null>(null);
 
   const fetchAngebote = useCallback(async () => {
     setLoading(true);
@@ -75,7 +75,7 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
   };
 
   const isExpired = (a: Angebot) =>
- a.ablauf_datum ? new Date(a.ablauf_datum).getTime() < Date.now() : false;
+    a.ablauf_datum ? new Date(a.ablauf_datum).getTime() < Date.now() : false;
 
   return (
     <div>
@@ -88,14 +88,14 @@ export default function AdminAngeboteTab({ password }: { password: string }) {
           <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} aria-hidden={true} focusable={false} />
           <p className="text-muted-foreground">Lade Angebote...</p>
         </div>
- ) : angebote.length === 0 ? (
- <div className="text-center py-20 text-muted-foreground">
+      ) : angebote.length === 0 ? (
+        <div className="text-center py-20 text-muted-foreground">
           <FileText size={48} className="mx-auto mb-4 opacity-50" aria-hidden={true} focusable={false} />
           <p className="text-lg mb-2">Noch keine Angebote vorhanden.</p>
           <p className="text-sm">Erstellen du ein Angebot aus dem Leads-Tab.</p>
         </div>
- ) : (
- <div className="overflow-x-auto rounded-xl border border-border bg-card">
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-border bg-card">
           <table className="w-full text-sm">
             <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
               <tr>

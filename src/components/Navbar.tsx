@@ -48,8 +48,8 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img src={logo} alt="Meine Traum Webseite Logo" width={40} height={40} className="h-10 w-10 shrink-0" />
           <span className="font-heading text-base lg:text-lg font-bold gradient-text tracking-tight whitespace-nowrap">
- Meine Traum Webseite
- </span>
+            Meine Traum Webseite
+          </span>
         </Link>
 
         <div className="hidden lg:flex items-center gap-6">
@@ -75,8 +75,8 @@ const Navbar = () => {
             className="hidden xl:inline-flex items-center gap-1.5 text-[13px] font-semibold text-foreground whitespace-nowrap hover:text-primary transition-colors"
           >
             <Phone size={16} className="text-primary" aria-hidden={true} focusable={false} />
- 06131 3076498
- </a>
+            06131 3076498
+          </a>
           <Button
             variant="gradient"
             size="sm"
@@ -103,7 +103,7 @@ const Navbar = () => {
         <div id="mobile-nav" className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border animate-fade-in">
           <div className="container-narrow px-4 py-6 flex flex-col gap-5">
             {navItems.map((item) => (
- <Link
+              <Link
                 key={item.path + item.label}
                 to={item.path}
                 onClick={() => setOpen(false)}
@@ -124,8 +124,8 @@ const Navbar = () => {
               onClick={() => setOpen(false)}
             >
               <Phone size={16} className="text-primary" aria-hidden={true} focusable={false} />
- 06131 3076498
- </a>
+              06131 3076498
+            </a>
             <Button
               variant="gradient"
               size="sm"
