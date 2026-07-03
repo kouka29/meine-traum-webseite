@@ -366,13 +366,23 @@ function AngebotPage({ data }: { data: AngebotData }) {
   const anzeigeGesamt = matchedBundle?.gesamt_preis ?? (aktivePreis + einmaligeZusatz);
 
   useEffect(() => {
-    const onScroll = () => {
+    // rAF-throttle: batch layout reads (scrollY + scrollHeight + innerHeight)
+    // into a single frame so the sticky-bar handler can't cause forced reflows
+    // during scroll.
+    let ticking = false;
+    const measure = () => {
+      ticking = false;
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       setShowSticky(docHeight > 0 && scrollTop / docHeight > 0.25);
     };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(measure);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    measure();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 

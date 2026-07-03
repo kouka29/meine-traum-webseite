@@ -7,16 +7,20 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CookieBanner from "@/components/CookieBanner";
-import MetaPixel from "@/components/MetaPixel";
 import SkipLink from "@/components/SkipLink";
-import GlobalCtaPopup from "@/components/GlobalCtaPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageMeta from "@/components/PageMeta";
 import StructuredData from "@/components/StructuredData";
 import PageTracker from "@/components/PageTracker";
 import { DesignModeProvider } from "@/contexts/DesignModeProvider";
-import ChatAssistant from "@/components/ChatAssistant";
+import DeferredMount from "@/components/DeferredMount";
+
+// Non-critical chrome: code-split + mounted after first idle so it never
+// blocks the LCP paint or the initial JS execution budget.
+const CookieBanner = lazy(() => import("@/components/CookieBanner"));
+const MetaPixel = lazy(() => import("@/components/MetaPixel"));
+const GlobalCtaPopup = lazy(() => import("@/components/GlobalCtaPopup"));
+const ChatAssistant = lazy(() => import("@/components/ChatAssistant"));
 
 // Eager load Index for fastest initial paint
 import Index from "./pages/Index.tsx";
@@ -136,10 +140,14 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
       {!standalone && <Navbar />}
       {children}
       {!standalone && <Footer />}
-      <CookieBanner />
-      <MetaPixel />
-      {!standalone && <GlobalCtaPopup />}
-      <ChatAssistant />
+      <DeferredMount>
+        <Suspense fallback={null}>
+          <CookieBanner />
+          <MetaPixel />
+          {!standalone && <GlobalCtaPopup />}
+          <ChatAssistant />
+        </Suspense>
+      </DeferredMount>
     </>
   );
 };
