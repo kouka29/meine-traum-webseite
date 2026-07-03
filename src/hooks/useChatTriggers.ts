@@ -51,15 +51,23 @@ export function useChatTriggers({ enabled, pathname, onTrigger }: Options) {
       cleanups.push(() => document.removeEventListener("mouseout", onMouseOut));
     }
 
-    // Scroll-Depth 70%
+    // Scroll-Depth 70% — batch layout reads in rAF to avoid forced reflows
+    // (scrollY + innerHeight + scrollHeight in a scroll handler is a classic
+    // layout-thrash trigger on low-end mobile).
+    let scrollTicking = false;
     const onScroll = () => {
-      const scrolled = window.scrollY + window.innerHeight;
-      const total = document.documentElement.scrollHeight;
-      if (total <= 0) return;
-      const pct = scrolled / total;
-      if (pct >= 0.7 && Date.now() - mountedAt.current > 30_000) {
-        fire("Sieht so aus als würde dich das Thema interessieren — soll ich dir zeigen wie wir starten würden?");
-      }
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        scrollTicking = false;
+        const scrolled = window.scrollY + window.innerHeight;
+        const total = document.documentElement.scrollHeight;
+        if (total <= 0) return;
+        const pct = scrolled / total;
+        if (pct >= 0.7 && Date.now() - mountedAt.current > 30_000) {
+          fire("Sieht so aus als würde dich das Thema interessieren — soll ich dir zeigen wie wir starten würden?");
+        }
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     cleanups.push(() => window.removeEventListener("scroll", onScroll));
