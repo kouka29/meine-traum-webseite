@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
+    "@fontsource/plus-jakarta-sans": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@lovable.dev/cloud-auth-js": "1.1.2",
     "@radix-ui/react-accordion": "^1.2.11",
