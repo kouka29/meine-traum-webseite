@@ -1,71 +1,91 @@
+
 ## Ziel
 
-Reine Textkorrektur über das gesamte Projekt „Meine Traum Webseite“ — 35 Seiten + 15 Branchen-Hubs + 11 Trade-Seiten + ca. 88 Komponenten. Keine Code-, Layout-, Routing-, Formular-, SEO- oder Design-Änderungen. Nur sichtbare Strings, Meta-Texte, Buttons, FAQs, Testimonials, Datenobjekte in Komponenten.
+Route `/` (Startseite) beim Build statisch prerendern, damit der Hero-Block schon im ersten HTML-Dokument steht — der Browser malt LCP, bevor React/JS gebootet ist. Hydration muss danach ohne Warnings/Layout-Sprünge weiterlaufen.
 
-## Scope (was geprüft wird)
+## Tool-Wahl: `react-snap`
 
-1. **Root-Seiten** (`src/pages/*.tsx`) — 35 Dateien inkl. Index, Portfolio, Preise, Kontakt, About, Rechts-Seiten (Impressum/AGB/Datenschutz *nur Tippfehler*, keine juristischen Umformulierungen).
-2. **Branchen-Hubs** (`src/pages/branchen/*.tsx`) — 15 Dateien + `_shared.ts`.
-3. **Trade-Seiten** (`src/pages/trade/*.tsx`) — 11 Dateien.
-4. **Landingpages** (`src/pages/lp/*`) und **Kundenportal** (`src/pages/kundenportal/*`).
-5. **Komponenten** mit sichtbarem Text (`src/components/**`): Navbar, Footer, PainPoints, IndexServices, IndexBenefits, IndexBranchen, IndexFAQ, IndexTestimonials, FreePreviewCTA, HeroSections, PricingLeadPopup, ChatAssistant Greetings/Quick-Replies, TradeHub, FeatureCard etc.
+- Nutzt Headless-Chrome nach dem Build, besucht die konfigurierten Routen auf `dist/` und speichert das gerenderte DOM als statische `.html`-Datei zurück in `dist/`.
+- Kein Umbau von Routing/Router nötig — funktioniert mit dem bestehenden `BrowserRouter`.
+- Passt zum Lovable-Static-Hosting-Setup (SPA-Fallback + statische HTMLs).
+- `vite-react-ssg` würde ein Umschreiben aller Routen auf ein SSG-Route-Objekt erfordern — deutlich invasiver bei ~65 Routen. Deshalb `react-snap`.
 
-Bereits in dieser Session korrigierte Stellen (PainPoints, IndexServices, IndexBenefits, FreePreviewCTA, Index-Hero-Badge) werden nicht erneut angefasst.
+## Änderungen
 
-## Korrektur-Regeln
+### 1. Dependencies + npm-Scripts
 
-**Konsistente Ansprache**
-- „Du / Dich / Dein / Dir / Deine / Deinem“ **immer groß**.
-- Keine Mischung mit „Sie / Ihr / Ihnen“ in Marketing-Texten. Ausnahme: rechtliche Seiten (Impressum, AGB, Datenschutz) bleiben in ihrer Ansprache erhalten.
+- Dev-Dependency `react-snap` (nutzt intern Puppeteer).
+- `package.json`:
+  - `"postbuild": "react-snap"` — läuft automatisch nach `vite build`.
+  - `"reactSnap"`-Konfigurationsblock:
+    - `source: "dist"`
+    - `include: ["/"]` — bewusst nur die Startseite, keine anderen Routen.
+    - `puppeteerArgs: ["--no-sandbox", "--disable-setuid-sandbox"]` (CI-freundlich).
+    - `inlineCss: false` (Vite kümmert sich schon ums Splitting).
+    - `skipThirdPartyRequests: true` — blockiert Supabase/Stripe/Meta beim Snapshot, damit Netzwerk-Antworten nicht ins HTML einfrieren.
+    - `crawl: false` — folgt keinen Links, prerendert wirklich nur `/`.
 
-**Grammatik / Konjugation**
-- „kostet du" → „kostet Dich"
-- „Du verlassen die Seite" → „Sie verlassen die Seite" (Subjekt ist „Besucher")
-- „wen du erreichen wollen" → „wen Du erreichen möchtest"
-- „was du anbieten" → „was Du anbietest"
-- Satzanfänge und Eigennamen konsequent groß.
+### 2. `src/main.tsx` — Hydrate statt neu mounten
 
-**Rechtschreibung / Zeichensetzung**
-- Doppelte Leerzeichen entfernen.
-- Deutsche Anführungszeichen „…" statt "…" in Fließtext (nur wo bereits Textinhalt, keine JSX-Attribute).
-- Halbgeviertstrich „–" statt „-" bei Gedankenstrichen.
-- Einheitliche Schreibweise: **Website** (nicht „Webseite" wechselnd — Marke „Meine Traum Webseite" bleibt aber unverändert).
+Wenn `#root` schon Kinder hat (Snapshot vorhanden), `hydrateRoot` verwenden; sonst wie bisher `createRoot`.
 
-**Nicht angefasst wird**
-- Zahlen, Preise, Referenzen, Fakten, Versprechen.
-- Slugs, URLs, `to=""`, `href=""`, `path=""`, Klassennamen, `aria-*`, `data-*`.
-- SEO-Slugs und `path`-Props in `SEOHead`/`PageMeta` (Titel/Description werden nur bei Tippfehlern korrigiert).
-- Juristische Formulierungen in AGB/Impressum/Datenschutz.
-- Fremdsprachige Strings (z. B. englische Meta-Fallbacks in Edge Functions).
-- Formular-Feldnamen, Event-Namen, Analytics-Tags.
-
-## Vorgehen (Batches)
-
-Ich arbeite in klar getrennten Batches, um pro Turn eine sinnvolle Einheit abzuschließen und nichts zu übersehen:
-
-```text
-Batch 1: Hauptseiten (Index-Sektionen + Root-Pages ohne trade/branchen)
-Batch 2: Trade-Seiten (Handwerker, Elektriker, Dachdecker, Sanitär, Maler)
-Batch 3: Branchen-Hubs (15 Dateien + _shared.ts)
-Batch 4: Landingpages (/lp/*) + Kundenportal
-Batch 5: Globale Komponenten (Navbar, Footer, Chat, Popups, Pricing, Trade-Komponenten)
-Batch 6: Rechts-Seiten (nur Tippfehler) + Formular-Success-Seiten
+```ts
+const container = document.getElementById("root")!;
+if (container.hasChildNodes()) {
+  hydrateRoot(container, <App />);
+} else {
+  createRoot(container).render(<App />);
+}
 ```
 
-Pro Batch: `rg` nach typischen Fehlern (kleine Satzanfänge, „du" ohne Großschreibung, „kostet du", doppelte Leerzeichen, gemischte Ansprache), gezielte `apply_patch`-Edits, Build-Grün-Prüfung am Ende jedes Batches.
+### 3. Snapshot-Erkennung + Hydration-Safety
 
-## Deliverable am Ende
+Zentrale kleine Utility `src/lib/isPrerender.ts` mit zwei Checks:
+- Beim Snapshot (Node im Puppeteer): `navigator.userAgent.includes("ReactSnap")` → `true`.
+- Zur Hydration: `document.documentElement.dataset.snap === "1"` (wird während des Snapshots per `<script>`-Tag gesetzt bzw. via `react-snap`s `preloadImages: false`-Hooks).
 
-Kurzer Report:
-- Zahl geprüfter Dateien pro Batch.
-- Kategorien der Fixes (Groß-/Kleinschreibung, Konjugation, Zeichensetzung, Ansprache, Tippfehler).
-- Liste **unsicherer Stellen**, die ich bewusst **nicht** angefasst habe (z. B. widersprüchliche Angebotstexte, inhaltlich mehrdeutige Claims, gemischte Du/Sie-Passagen in Rechts-Texten).
-- Empfehlungen für manuelle Prüfung.
+Damit beheben wir gezielt die drei bekannten Mismatch-Quellen im Hero-Baum:
 
-## Sicherheitsnetz
+#### 3a. `AnimatedSection`
+Initial-State `inView` heute `false` → Hero wäre in der Snapshot-Datei mit `opacity: 0` eingefroren, LCP-Gewinn wäre weg.
+Fix: `useState(() => isPrerender() || (typeof document !== "undefined" && document.documentElement.dataset.snap === "1"))`. Snapshot → sofort sichtbar; Hydration liest denselben Wert aus dem DOM-Flag → identisch → kein Mismatch. Für spätere Sektionen bleibt die IntersectionObserver-Animation aktiv.
 
-- Keine Datei-Löschungen, keine neuen Komponenten, keine Import-Änderungen.
-- Nur String-Literale in `.tsx`/`.ts`, JSX-Textknoten, Array-Objekt-Werte (`title`, `desc`, `text`, `question`, `answer` etc.).
-- Nach jedem Batch: `bun run build` implizit via Sandbox, Fehler sofort zurückrollen.
+#### 3b. `VorschauVerfuegbarkeit`
+Rendert erst nach dem Supabase-Fetch etwas. Mit `skipThirdPartyRequests: true` bleibt das Element im Snapshot `null` und hydratisiert konsistent zu `null`. Der Fetch läuft danach live weiter → Pille erscheint nach Hydration. Kein Mismatch, minimaler CLS im Hero-Bereich (kleines Pill-Element, unterhalb der Buttons).
 
-Freigabe bedeutet: ich starte mit Batch 1 und liefere in den folgenden Turns Batch für Batch, mit Zwischenstatus.
+#### 3c. `DesignModeProvider`
+`appleDesign` startet `false` und schaltet erst nach Supabase-Fetch die `apple-mode`-Klasse. Da wir Third-Party beim Snapshot blocken, bleibt der Snapshot im Default-Zustand — matcht Hydration. Live-Umschaltung passiert nach Hydration wie bisher.
+
+### 4. `react-helmet-async`
+
+- `HelmetProvider` ist bereits gesetzt → Titel/Meta/LCP-Preload landen im gesnapshotteten `<head>` und stehen sofort im Dokument.
+- Der bereits vorhandene `<link rel="preload" as="image" fetchpriority="high">` fürs Hero-AVIF wird durch das Prerendering **zusätzlich** wirksam, weil er jetzt schon vor dem ersten JS-Parsing im HTML steht.
+
+### 5. Lazy-Sections & DeferredMount
+
+- Below-the-fold-Sektionen (`PainPoints`, `IndexServices`, …) sind `React.lazy` in einer gemeinsamen `<Suspense>` — im Snapshot wird der `SectionPlaceholder` gerendert. Das ist gewollt und matcht Hydration (weil beim Client-Boot dieselben Chunks erst nachladen).
+- `<DeferredMount>` (CookieBanner, Chat-FAB, Pixel) rendert im Snapshot `null` (State `ready=false`) und hydratisiert genauso → kein Mismatch, und die Chrome-Elemente sind nicht im HTML-Snapshot enthalten (gut für LCP & Datei­größe).
+
+### 6. Router-Randfälle
+
+- `BrowserRouter`-Match auf `/` liefert `<Index />` synchron (eager import), das ist der einzige eager Route — passt.
+- `ScrollToTop`, `PageMeta`, `StructuredData`, `PageTracker` sind alle effect-basiert → SSR/Prerender-sicher.
+
+### 7. Verifikation nach dem Build
+
+- Prüfen, dass `dist/index.html` jetzt echtes Hero-Markup enthält (`<h1>Webseiten, die planbar Kundenanfragen bringen…`).
+- `dist/index.html` weiterhin auch die Fallback-Skript-Referenz behält (`<script type="module" src="/assets/…">`), damit Hydration nach dem Snapshot startet.
+- Kurzer Playwright-Check: keine `Hydration failed`/`did not match`-Warnungen in der Console auf `/`.
+- Lighthouse-LCP-Element bleibt das Hero-`<img>` — jetzt sichtbar vor JS-Execution.
+
+## Explizit NICHT geändert
+
+- Kein Umstieg auf SSG/SSR-Framework, kein neuer Router.
+- Keine anderen Routen werden prerendered (Angebot, Kundenportal, Landingpages) — dynamische Inhalte, Auth, personalisierte Angebote.
+- Kein Eingriff in Framer-Motion oder Below-the-fold-Animationen.
+- `MetaPixel`, `CookieBanner`, `ChatAssistant`, `GlobalCtaPopup` bleiben deferred — sie erscheinen nicht im Prerender-Snapshot (gewollt, dann kein DSGVO-/Consent-Risiko im statischen HTML).
+
+## Risiken / offene Punkte
+
+- `react-snap` ist seit ~2019 nicht mehr aktiv gepflegt, funktioniert aber weiterhin mit React 18 (via `hydrateRoot`). Falls es beim Build zu Puppeteer-Version-Problemen kommt, ist der Fallback ein Wechsel zu `@prerenderer/rollup-plugin` — gleicher Ansatz, gleiches Ergebnis.
+- Falls Lovables Build-Umgebung Chromium nicht bereitstellt, muss `react-snap` bzw. Puppeteer beim Install einen mitliefern (kann Install-Zeit +30 s bedeuten).
