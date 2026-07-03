@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { ArrowRight, Check, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -25,6 +26,20 @@ const SectionPlaceholder = () => <div className="min-h-[200px]" aria-hidden="tru
 
 const Index = () => (
   <main id="main-content">
+    {/* LCP-Preload: entdeckt das Hero-Bild bevor React die <Picture>-Sources
+        parst. imagesrcset/imagesizes lassen den Browser die kleinste passende
+        AVIF-Variante wählen; fetchpriority="high" pusht es vor die anderen
+        Requests. Nur EIN LCP-Kandidat pro Seite. */}
+    <Helmet>
+      <link
+        rel="preload"
+        as="image"
+        type="image/avif"
+        imageSrcSet={heroBg.sources.avif}
+        imageSizes="100vw"
+        fetchpriority="high"
+      />
+    </Helmet>
     <SEOHead
       title="Website erstellen lassen | Meine Traum Webseite"
       description="Webdesign Agentur für conversion-optimierte Websites. Mehr Anfragen für Selbstständige, KMUs und Handwerker. Kostenlose Vorschau in 48 h."
