@@ -37,7 +37,7 @@ const Index = () => (
         type="image/avif"
         imageSrcSet={heroBg.sources.avif}
         imageSizes="100vw"
-        fetchpriority="high"
+        fetchPriority="high"
       />
     </Helmet>
     <SEOHead
