@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import idleAvatar from "@/assets/mascot/MTW-Bot-Brand-01.png";
+import idleAvatarWebp from "@/assets/mascot/MTW-Bot-Brand-01-300.webp";
+import idleAvatarPng from "@/assets/mascot/MTW-Bot-Brand-01-300.png";
 import successAvatar from "@/assets/mascot/MTW-Bot-Brand-04.png";
 import thinkingAvatar from "@/assets/mascot/MTW-Bot-Brand-06.png";
 import nudgeAvatar from "@/assets/mascot/MTW-Bot-Brand-07.png";
