@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+// Self-hosted Plus Jakarta Sans (only weights actually used on this page)
+import "@fontsource/plus-jakarta-sans/400.css";
+import "@fontsource/plus-jakarta-sans/500.css";
+import "@fontsource/plus-jakarta-sans/600.css";
+import "@fontsource/plus-jakarta-sans/700.css";
+import "@fontsource/plus-jakarta-sans/800.css";
 import { Lock, Shield, Clock, Sparkles, CheckCircle2, Eye, Loader2, X, CheckCheck, AlertTriangle, Check as CheckIcon, ChevronRight, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -97,18 +103,8 @@ function useCountdown(targetIso: string) {
 
 function pad(n: number) { return String(n).padStart(2, "0"); }
 
-/** Inject Plus Jakarta Sans once. */
-function useJakartaFont() {
-  useEffect(() => {
-    const id = "pjs-font";
-    if (document.getElementById(id)) return;
-    const link = document.createElement("link");
-    link.id = id;
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
-    document.head.appendChild(link);
-  }, []);
-}
+/** Plus Jakarta Sans is self-hosted via @fontsource (see side-effect imports at top of file). */
+function useJakartaFont() {}
 
 export default function Angebot() {
   useJakartaFont();

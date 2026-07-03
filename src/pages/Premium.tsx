@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+// Self-hosted Playfair Display (only weights actually used on this page)
+import "@fontsource/playfair-display/400.css";
+import "@fontsource/playfair-display/700.css";
+import "@fontsource/playfair-display/400-italic.css";
 import { Check, X, TrendingUp, ShieldCheck, Zap, ChevronDown, Phone, ArrowRight } from "lucide-react";
 import { submitLead } from "@/lib/submitLead";
 import {
