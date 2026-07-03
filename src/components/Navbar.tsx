@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
+import logoWebp from "@/assets/logo.webp";
 import { getTradeContext } from "@/lib/tradeContext";
 
 const defaultNavItems = [
