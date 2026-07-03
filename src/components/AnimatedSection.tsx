@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { isPrerender } from "@/lib/isPrerender";
 
 interface Props {
   children: ReactNode;
@@ -22,7 +23,10 @@ const AnimatedSection = forwardRef<HTMLDivElement, Props>(
   ({ children, className, delay = 0 }, ref) => {
     const innerRef = useRef<HTMLDivElement | null>(null);
     useImperativeHandle(ref, () => innerRef.current as HTMLDivElement);
-    const [inView, setInView] = useState(false);
+    // Snapshot / hydration-from-snapshot: start in the "visible" state so the
+    // prerendered HTML shows the hero at opacity 1 (LCP-friendly) and the
+    // first client render matches the DOM exactly (no hydration mismatch).
+    const [inView, setInView] = useState(() => isPrerender());
 
     useEffect(() => {
       const el = innerRef.current;
