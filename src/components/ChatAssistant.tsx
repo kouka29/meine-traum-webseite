@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import idleAvatar from "@/assets/mascot/MTW-Bot-Brand-01.png";
+import idleAvatarWebp from "@/assets/mascot/MTW-Bot-Brand-01-300.webp";
+import idleAvatarPng from "@/assets/mascot/MTW-Bot-Brand-01-300.png";
 import successAvatar from "@/assets/mascot/MTW-Bot-Brand-04.png";
 import thinkingAvatar from "@/assets/mascot/MTW-Bot-Brand-06.png";
 import nudgeAvatar from "@/assets/mascot/MTW-Bot-Brand-07.png";
@@ -443,13 +445,20 @@ const ChatAssistant = () => {
             "w-[84px] h-[84px] md:w-[92px] md:h-[92px]",
           )}
         >
-          <img
-            src={idleAvatar}
-            alt=""
-            aria-hidden
-            className="mtw-float w-full h-full object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.20)]"
-            draggable={false}
-          />
+          <picture>
+            <source type="image/webp" srcSet={idleAvatarWebp} />
+            <img
+              src={idleAvatarPng}
+              alt=""
+              aria-hidden
+              width="150"
+              height="150"
+              loading="lazy"
+              decoding="async"
+              className="mtw-float w-full h-full object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.20)]"
+              draggable={false}
+            />
+          </picture>
           <span className="sr-only">Chat öffnen</span>
         </button>
       )}

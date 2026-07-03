@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
+import logoWebp from "@/assets/logo.webp";
 import { getTradeContext } from "@/lib/tradeContext";
 
 const defaultNavItems = [
@@ -46,7 +47,17 @@ const Navbar = () => {
       )}
       <nav aria-label="Hauptnavigation" className="container-narrow flex items-center justify-between gap-6 h-[72px] px-4">
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <img src={logo} alt="Meine Traum Webseite Logo" width={40} height={40} className="h-10 w-10 shrink-0" />
+          <picture>
+            <source type="image/webp" srcSet={logoWebp} />
+            <img
+              src={logo}
+              alt="Meine Traum Webseite Logo"
+              width={40}
+              height={40}
+              decoding="async"
+              className="h-10 w-10 shrink-0"
+            />
+          </picture>
           <span className="font-heading text-base lg:text-lg font-bold gradient-text tracking-tight whitespace-nowrap">
             Meine Traum Webseite
           </span>
