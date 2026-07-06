@@ -1,55 +1,24 @@
-## Fixes für `/vorschau-start`
+## KI-Bot auf `/vorschau-start` ausblenden + Overlap fixen
 
-### 1. Header-Cutoff beheben
+### Analyse
+- Der KI-Bot (`ChatAssistant`) wird global in `src/App.tsx` in der `Layout`-Komponente gemountet — also auf jeder Route sichtbar. Position: `fixed`, `right: 1.25rem`, `bottom: 4rem`, `z-index: 50`.
+- Der einzige „floating" WhatsApp-Button liegt in `Step5Danke.tsx` (`fixed bottom-6 right-6`) — genau dort überlappen sich Bot und WA-FAB. Alle anderen WhatsApp-Vorkommen sind inline im Content (keine Overlap-Gefahr).
 
-Die Navbar ist `fixed h-[72px]`. Aktuell hat der Funnel-Container nur `pt-6`, wodurch Konfetti-Badge, Checkmark-Circle und ProgressBar unter der Navbar verschwinden.
+### Änderungen
 
-- In `src/pages/VorschauStart.tsx` das Wrapper-Padding auf `pt-24 md:pt-28` setzen (analog zu Index-Hero `pt-28 sm:pt-36`, minus Extra weil kein voller Hero).
-- Jeder Step erbt dadurch korrekten Abstand — kein Overflow mehr.
+**1. `src/App.tsx` — Bot auf Funnel-Route unterdrücken**
+- `useLocation()` in `Layout` bereits vorhanden (wird für `standalone` genutzt).
+- Neue Bedingung: `const hideChatBot = pathname.startsWith("/vorschau-start");`
+- `<ChatAssistant />` nur rendern, wenn `!hideChatBot`.
 
-### 2. Design-Sprache stärker an MTW angleichen
+**2. `src/pages/vorschau-start/steps/Step5Danke.tsx` — WhatsApp-FAB anheben**
+Auch wenn der Bot auf dieser Route nicht mehr rendert, für zukünftige Fälle sauber:
+- WA-FAB von `bottom-6 right-6` auf `bottom-6 right-6` belassen — nichts überschneidet mehr. (Kein Change nötig auf dieser Route.)
 
-Aktuell wirkt der Funnel etwas „shadcn-generisch". Die restliche Seite nutzt:
+**3. Globale Sicherheit gegen künftige Overlaps**
+Da nur diese eine Kombination existiert und wir sie über Punkt 1 lösen, sind keine weiteren Anpassungen nötig. Falls später weitere Floating-WA-Buttons hinzukommen, sollten sie generell `bottom-24` (statt `bottom-6`) verwenden, damit sie über dem 4rem-Bot sitzen — das kann bei Bedarf pro Fall geregelt werden.
 
-- `variant="gradient"` Buttons (`gradient-bg`, primary → primary-glow)
-- `gradient-hero-bg` als sanfter Seiten-Background
-- Gradient-Headlines (`bg-clip-text`) für H1
-- Große, weiche Cards mit `shadow-elegant`
-- Poppins bold für Headlines
+### Betroffene Datei
+- `src/App.tsx` (ein zusätzlicher Zeilen-Check + Conditional Render)
 
-Änderungen:
-- **VorschauStart.tsx**: Hintergrund von generischem `to-muted/30` auf `gradient-hero-bg` (bestehender Seitenhintergrund) umstellen.
-- **Alle Primary-Buttons** in Step 0/1/2/3/4 auf `variant="gradient"` umstellen (statt Default).
-- **Step-0 Headline** mit Gradient-Text (`bg-gradient-primary bg-clip-text text-transparent`) versehen, größer & prominenter.
-- **Cards** (3-Icon-Ablauf, Recap): `shadow-elegant` statt `shadow-sm`, `rounded-3xl` statt `rounded-2xl` für weicheren Look.
-- **Fragen-Cards** (Stil/Ziel): aktive Selection mit Gradient-Border + Glow statt reinem Ring.
-- **ProgressBar**: Gradient-Fill statt flaches Primary.
-
-### 3. „100% kostenlos" Messaging
-
-Kernpunkt für Trust — soll klar sein: Der User zahlt nichts, Preis kommt erst nach Gefallen.
-
-- **Step 0 (Gratulation)**: Neue Trust-Zeile direkt unter Subline:
-  > „💚 **Komplett kostenlos & unverbindlich** — wir bauen deine Vorschau auf unsere Kosten. Erst wenn sie dir gefällt, sprechen wir über Preise. Gefällt sie dir nicht: entstehen dir keinerlei Kosten."
-
-  Als eigene Card mit `border-primary/20 bg-primary/5` prominent hervorgehoben, direkt vor dem 3-Icon-Ablauf.
-
-- **Step 4 (Termin)**: Kurze Reassurance direkt über dem Submit-Button:
-  > „Kostenlos & unverbindlich · Keine Zahlungsdaten nötig"
-  in kleinem Text mit Check-Icons, damit der letzte Klick angstfrei ist.
-
-- **Step 5 (Danke)**: Reassurance-Line ergänzen:
-  > „Erinnerung: Die Vorschau ist komplett kostenlos. Wenn sie dir nicht gefällt, war's das — ohne Wenn und Aber."
-
-### Betroffene Dateien
-
-- `src/pages/VorschauStart.tsx` (Padding + Background)
-- `src/pages/vorschau-start/steps/Step0Gratulation.tsx` (Trust-Card, Gradient-Headline, Button)
-- `src/pages/vorschau-start/steps/Step1Logo.tsx` (Button-Variant)
-- `src/pages/vorschau-start/steps/Step2Fragen.tsx` (Button-Variant, Card-Polish)
-- `src/pages/vorschau-start/steps/Step3Fotos.tsx` (Button-Variant)
-- `src/pages/vorschau-start/steps/Step4Termin.tsx` (Reassurance + Button-Variant)
-- `src/pages/vorschau-start/steps/Step5Danke.tsx` (Reassurance)
-- `src/pages/vorschau-start/ProgressBar.tsx` (Gradient-Fill)
-
-Keine Änderungen an Datenmodell, Backend oder Logik — reine Visual- & Copy-Anpassungen.
+Keine Backend-, State- oder Style-Token-Änderungen.
