@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useFunnel } from "../state";
@@ -277,11 +277,17 @@ export default function Step4Termin() {
         </div>
       )}
 
+      <div className="flex items-center gap-2 justify-center text-xs text-muted-foreground mb-4">
+        <ShieldCheck className="w-4 h-4 text-primary" />
+        <span>Kostenlos & unverbindlich · Keine Zahlungsdaten nötig</span>
+      </div>
+
       <div className="md:static fixed bottom-0 left-0 right-0 p-4 md:p-0 bg-background/95 md:bg-transparent backdrop-blur md:backdrop-blur-none border-t md:border-0 flex items-center justify-between gap-3">
         <Button variant="ghost" onClick={back} disabled={submitting}>
           ← Zurück
         </Button>
         <Button
+          variant="gradient"
           onClick={handleSubmit}
           disabled={!contactValid || submitting}
           className="min-h-12 flex-1 md:flex-none font-semibold"

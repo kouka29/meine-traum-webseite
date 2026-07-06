@@ -240,7 +240,7 @@ export default function Step2Fragen() {
         <Button variant="ghost" onClick={handleBack}>
           ← Zurück
         </Button>
-        <Button onClick={handleNext} disabled={!valid} className="min-h-12 flex-1 md:flex-none">
+        <Button variant="gradient" onClick={handleNext} disabled={!valid} className="min-h-12 flex-1 md:flex-none">
           {idx === total - 1 ? "Weiter →" : "Weiter →"}
         </Button>
       </div>

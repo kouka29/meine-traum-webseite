@@ -12,9 +12,9 @@ function FunnelInner() {
   const { state } = useFunnel();
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-background to-muted/30">
+    <div className="min-h-[calc(100vh-4rem)] gradient-hero-bg pt-24 md:pt-28">
       {state.step >= 1 && state.step <= 4 && (
-        <div className="max-w-2xl mx-auto px-4 pt-6">
+        <div className="max-w-2xl mx-auto px-4 pb-2">
           <ProgressBar current={state.step} total={4} />
         </div>
       )}

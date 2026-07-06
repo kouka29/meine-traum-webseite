@@ -121,7 +121,7 @@ export default function Step1Logo() {
         <Button variant="ghost" onClick={back}>
           ← Zurück
         </Button>
-        <Button onClick={next} disabled={!canContinue || uploading} className="min-h-12 flex-1 md:flex-none">
+        <Button variant="gradient" onClick={next} disabled={!canContinue || uploading} className="min-h-12 flex-1 md:flex-none">
           Weiter →
         </Button>
       </div>

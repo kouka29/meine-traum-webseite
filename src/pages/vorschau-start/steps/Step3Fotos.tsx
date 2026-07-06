@@ -130,7 +130,7 @@ export default function Step3Fotos() {
         <Button variant="ghost" onClick={back}>
           ← Zurück
         </Button>
-        <Button onClick={next} disabled={uploading} className="min-h-12 flex-1 md:flex-none">
+        <Button variant="gradient" onClick={next} disabled={uploading} className="min-h-12 flex-1 md:flex-none">
           Weiter →
         </Button>
       </div>
