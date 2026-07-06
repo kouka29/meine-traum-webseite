@@ -514,6 +514,7 @@ type SuccessScreenProps = {
   setBookingConfirmed: (v: boolean) => void;
   isWaitlist: boolean;
   nextMonthLabel: string;
+  phoneNumber?: string;
 };
 
 const SuccessScreen = ({
@@ -541,6 +542,7 @@ const SuccessScreen = ({
   setBookingConfirmed,
   isWaitlist,
   nextMonthLabel,
+  phoneNumber,
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
