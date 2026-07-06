@@ -962,6 +962,66 @@ const SuccessScreen = ({
         <MessageCircle className="w-3.5 h-3.5" aria-hidden={true} focusable={false} />
         Schau auch in Deinen Spam-Ordner – manchmal landet die Bestätigung dort.
       </p>
+
+      {/* Warum wir manchmal Nein sagen (nur bei normaler Anfrage) */}
+      {!isWaitlist && (
+        <section className="mt-10 pt-8 border-t border-border">
+          <h4 className="text-lg sm:text-xl font-bold mb-3">Warum wir manchmal Nein sagen</h4>
+          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+            Wir bauen jede Vorschau selbst — kein Baukasten, kein Copy-Paste. Das kostet uns pro
+            Kunde mehrere Stunden. Deshalb sagen wir manchmal ehrlich Nein — zum Beispiel wenn:
+          </p>
+          <ul className="space-y-2.5 text-sm text-foreground/90 mb-4">
+            <li className="flex gap-2.5">
+              <Check className="w-4 h-4 text-primary/70 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+              <span>Wir merken, dass deine Branche nicht zu unserer Expertise passt.</span>
+            </li>
+            <li className="flex gap-2.5">
+              <Check className="w-4 h-4 text-primary/70 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+              <span>Grundlegende Infos zu deinem Betrieb fehlen oder nicht auffindbar sind.</span>
+            </li>
+            <li className="flex gap-2.5">
+              <Check className="w-4 h-4 text-primary/70 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+              <span>Die Erwartung nicht zur Realität passt (z. B. „Website + Online-Shop + App für 500 €").</span>
+            </li>
+          </ul>
+          <p className="text-sm text-muted-foreground">
+            Kein Drama, keine Kosten — wir sagen dir dann direkt, was besser zu dir passt.
+          </p>
+        </section>
+      )}
+
+      {/* Häufige Fragen */}
+      <section className="mt-8 pt-8 border-t border-border">
+        <h4 className="text-lg sm:text-xl font-bold mb-3">Häufige Fragen</h4>
+        <Accordion type="single" collapsible className="w-full">
+          {nachSubmitFAQ.map((item, i) => (
+            <AccordionItem key={i} value={`item-${i}`}>
+              <AccordionTrigger className="text-left text-sm sm:text-base font-semibold">
+                {item.q}
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                {item.a}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </section>
+
+      {/* Sekundär-CTA: WhatsApp */}
+      {phoneNumber && (
+        <p className="text-sm text-center mt-8">
+          <a
+            href={`https://wa.me/${phoneNumber.replace(/[^\d]/g, "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline underline-offset-4"
+          >
+            <MessageCircle className="w-4 h-4" aria-hidden={true} focusable={false} />
+            Frage vorab? Schreib uns direkt auf WhatsApp
+          </a>
+        </p>
+      )}
     </div>
   );
 };
