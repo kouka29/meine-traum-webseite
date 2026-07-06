@@ -42,6 +42,54 @@ import Autoplay from "embla-carousel-autoplay";
 
 const STORAGE_KEY = "kostenlose-vorschau-v2-form";
 
+// Anzahl freier Vorschau-Plätze pro Kalendermonat (dynamisch nur nach "freigegeben"-Leads).
+const PLAETZE_PRO_MONAT = 5;
+
+// Anzahl Funnel-Schritte (1..TOTAL_STEPS).
+const TOTAL_STEPS = 6;
+
+const budgetChipsKaufen = [
+  "bis 1.000 €",
+  "1.000 – 2.500 €",
+  "2.500 – 5.000 €",
+  "5.000 – 10.000 €",
+  "10.000 – 20.000 €",
+  "Über 20.000 €",
+  "Unsicher — beratet mich",
+];
+
+const budgetChipsMieten = [
+  "bis 50 € / Monat",
+  "50 – 100 € / Monat",
+  "100 – 200 € / Monat",
+  "200 – 400 € / Monat",
+  "Über 400 € / Monat",
+  "Unsicher — beratet mich",
+];
+
+const nachSubmitFAQ = [
+  {
+    q: "Kostet die Vorschau wirklich nichts?",
+    a: "Ja. Erst wenn du sie live schalten willst, wird's kostenpflichtig. Vorher kein Cent.",
+  },
+  {
+    q: "Wie lange dauert die Prüfung, ob ich eine kostenlose Vorschau bekomme?",
+    a: "Max. 24 Stunden, meist schneller.",
+  },
+  {
+    q: "Was passiert, wenn ihr Nein sagt?",
+    a: "Wir schreiben dir ehrlich, warum, und empfehlen dir eine Alternative. Keine Kosten, kein Nachhaken.",
+  },
+  {
+    q: "Ich habe schon eine Website — bringt das trotzdem was?",
+    a: "Genau dann besonders. Wir bauen die Vorschau als Vergleich zu deiner aktuellen Seite.",
+  },
+  {
+    q: "Was passiert, wenn's passt?",
+    a: "Du bekommst per Mail/WhatsApp einen Link zum Onboarding. Da lädst du Logo & Fotos hoch, beantwortest 5 kurze Fragen und wählst deinen Vorschau-Termin.",
+  },
+];
+
 const tradeOptions = [
   { value: "Elektriker", icon: Zap },
   { value: "Maler", icon: Brush },
