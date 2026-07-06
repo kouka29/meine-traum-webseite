@@ -1032,13 +1032,32 @@ const SuccessScreen = ({
   );
 };
 
-type MultiStepFormProps = {
+export type MultiStepFormProps = {
   isWaitlist: boolean;
   nextMonthLabel: string;
   phoneNumber?: string;
+  sourceKey?: string;
+  telegramLabel?: string;
+  emailSource?: string;
+  tradeOptions?: TradeOption[];
+  tradeQuestion?: string;
+  sonstigesLabel?: string;
+  sonstigesPlaceholder?: string;
 };
 
-const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFormProps) => {
+export const MultiStepForm = ({
+  isWaitlist,
+  nextMonthLabel,
+  phoneNumber,
+  sourceKey = "kostenlose-vorschau-v2",
+  telegramLabel = "/kostenlose-vorschau",
+  emailSource = "Kostenlose Vorschau V2 (Handwerker)",
+  tradeOptions: tradeOptionsProp,
+  tradeQuestion = "Was machst Du beruflich?",
+  sonstigesLabel = "Beschreibe kurz, was Du beruflich machen *",
+  sonstigesPlaceholder = "z. B. Bodenleger, Fliesenleger, Fensterbauer ...",
+}: MultiStepFormProps) => {
+  const activeTradeOptions = tradeOptionsProp ?? tradeOptions;
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
