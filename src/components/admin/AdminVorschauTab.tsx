@@ -178,7 +178,7 @@ export default function AdminVorschauTab({ password }: { password: string }) {
         .filter(d => d.id !== editingDemo?.id && d.description?.trim())
         .map(d => d.description.trim());
       const { data, error } = await supabase.functions.invoke("generate-demo-description", {
-        body: { trade: demoForm.trade, company: demoForm.company, existing },
+        body: { password, trade: demoForm.trade, company: demoForm.company, existing },
       });
       if (error) throw error;
       const text = (data as any)?.description?.trim();
