@@ -367,6 +367,90 @@ export type Database = {
         }
         Relationships: []
       }
+      funnel_leads: {
+        Row: {
+          created_at: string
+          datenschutz_akzeptiert: boolean
+          email: string | null
+          firmenname: string | null
+          foto_urls: string[]
+          gewerk: string | null
+          hat_website: boolean | null
+          id: string
+          kein_logo: boolean
+          kontaktart: string | null
+          leistungen: string | null
+          logo_url: string | null
+          month_key: string | null
+          name: string | null
+          ort: string | null
+          source_cta: string
+          source_page: string | null
+          status: string
+          stil: string | null
+          telefon: string | null
+          termin_datum: string | null
+          termin_uhrzeit: string | null
+          updated_at: string
+          website_url: string | null
+          ziel: string | null
+        }
+        Insert: {
+          created_at?: string
+          datenschutz_akzeptiert?: boolean
+          email?: string | null
+          firmenname?: string | null
+          foto_urls?: string[]
+          gewerk?: string | null
+          hat_website?: boolean | null
+          id?: string
+          kein_logo?: boolean
+          kontaktart?: string | null
+          leistungen?: string | null
+          logo_url?: string | null
+          month_key?: string | null
+          name?: string | null
+          ort?: string | null
+          source_cta?: string
+          source_page?: string | null
+          status?: string
+          stil?: string | null
+          telefon?: string | null
+          termin_datum?: string | null
+          termin_uhrzeit?: string | null
+          updated_at?: string
+          website_url?: string | null
+          ziel?: string | null
+        }
+        Update: {
+          created_at?: string
+          datenschutz_akzeptiert?: boolean
+          email?: string | null
+          firmenname?: string | null
+          foto_urls?: string[]
+          gewerk?: string | null
+          hat_website?: boolean | null
+          id?: string
+          kein_logo?: boolean
+          kontaktart?: string | null
+          leistungen?: string | null
+          logo_url?: string | null
+          month_key?: string | null
+          name?: string | null
+          ort?: string | null
+          source_cta?: string
+          source_page?: string | null
+          status?: string
+          stil?: string | null
+          telefon?: string | null
+          termin_datum?: string | null
+          termin_uhrzeit?: string | null
+          updated_at?: string
+          website_url?: string | null
+          ziel?: string | null
+        }
+        Relationships: []
+      }
       growth_subscriptions: {
         Row: {
           billing_mode: string
