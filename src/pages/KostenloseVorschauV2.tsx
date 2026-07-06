@@ -855,14 +855,14 @@ const SuccessScreen = ({
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-2">
           {isWaitlist
-            ? `Danke ${firstName}! Du stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
-            : `Danke ${firstName}! Deine Anfrage ist da. 🙌`}
+            ? `Danke, ${firstName} — du stehst auf der Liste.`
+            : `Danke, ${firstName} — wir sind dran.`}
         </h3>
         <p className="text-muted-foreground max-w-md mx-auto">
           {isWaitlist ? (
-            <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei Dir. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+            <>Wir melden uns Anfang <strong>{nextMonthLabel}</strong>, sobald neue Plätze frei sind. Eine Bestätigung kommt an <strong>{email}</strong>.</>
           ) : (
-            <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir Deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+            <>Wir schauen uns deine Infos in den nächsten <strong>24 Stunden</strong> an und melden uns per WhatsApp oder E-Mail. Wenn's passt, schicken wir dir direkt den Link zum Onboarding, wo du Logo, Fotos und Wunschtermin hinterlegst.</>
           )}
         </p>
       </div>
