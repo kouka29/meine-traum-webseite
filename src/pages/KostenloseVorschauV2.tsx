@@ -489,6 +489,8 @@ function getNextWeekdays(count: number): { iso: string; label: string }[] {
 
 const TIME_SLOTS = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 
+export type TradeOption = { value: string; icon: React.ComponentType<{ className?: string }> };
+
 type SuccessScreenProps = {
   firstName: string;
   email: string;
@@ -515,6 +517,8 @@ type SuccessScreenProps = {
   isWaitlist: boolean;
   nextMonthLabel: string;
   phoneNumber?: string;
+  sourceKey?: string;
+  telegramLabel?: string;
 };
 
 const SuccessScreen = ({
@@ -543,6 +547,8 @@ const SuccessScreen = ({
   isWaitlist,
   nextMonthLabel,
   phoneNumber,
+  sourceKey = "kostenlose-vorschau-v2",
+  telegramLabel = "/kostenlose-vorschau",
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
