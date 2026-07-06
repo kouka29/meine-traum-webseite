@@ -665,7 +665,7 @@ const SuccessScreen = ({
           dringlichkeit: urgency,
           aktuelle_website: currentWebsite || "",
           notizen: notes || "",
-          seite: "kostenlose-vorschau-v2",
+          seite: sourceKey,
         }),
       }).catch(() => {});
 
@@ -678,7 +678,7 @@ const SuccessScreen = ({
         phone: phone || "",
         email,
         message: `Termin: ${dateLabel} ${bookingTime} (${methodLabel}) – ${company}`,
-        source_cta: "kostenlose-vorschau-v2:booking",
+        source_cta: `${sourceKey}:booking`,
       });
     } catch (error) {
       console.error("Booking konnte nicht gespeichert werden", error);
