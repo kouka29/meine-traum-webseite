@@ -849,6 +849,66 @@ export type Database = {
         }
         Relationships: []
       }
+      vorschau_bewerbungen: {
+        Row: {
+          budget: string
+          created_at: string
+          email: string
+          firmenname: string
+          gewerk: string
+          hat_website: boolean
+          id: string
+          name: string
+          ort: string
+          source_cta: string
+          status: string
+          telefon: string
+          timeline: string
+          typ: string
+          updated_at: string
+          warum: string
+          website_url: string | null
+        }
+        Insert: {
+          budget: string
+          created_at?: string
+          email: string
+          firmenname: string
+          gewerk: string
+          hat_website?: boolean
+          id?: string
+          name: string
+          ort: string
+          source_cta?: string
+          status?: string
+          telefon: string
+          timeline: string
+          typ?: string
+          updated_at?: string
+          warum: string
+          website_url?: string | null
+        }
+        Update: {
+          budget?: string
+          created_at?: string
+          email?: string
+          firmenname?: string
+          gewerk?: string
+          hat_website?: boolean
+          id?: string
+          name?: string
+          ort?: string
+          source_cta?: string
+          status?: string
+          telefon?: string
+          timeline?: string
+          typ?: string
+          updated_at?: string
+          warum?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       vorschau_demos: {
         Row: {
           company: string
