@@ -1323,28 +1323,50 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 selected={state.hasWebsite === opt.value}
                 onClick={() => {
                   update({ hasWebsite: opt.value });
-                  // Bei "Ja, und ich bin zufrieden" zeigen wir einen Hinweis
-                  // und lassen den Nutzer manuell auf "Weiter" klicken.
-                  if (opt.value !== "Ja, und ich bin zufrieden") {
-                    setTimeout(next, 200);
-                  }
+                  // Bei "Ja"-Optionen bleiben wir stehen, damit der User die
+                  // optionale Website-URL eingeben kann. Nur bei "Nein" gehts
+                  // automatisch weiter.
                 }}
               />
             ))}
           </div>
-          {state.hasWebsite === "Ja, und ich bin zufrieden" && (
-            <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-4">
-              <div
-                className="rounded-lg p-3 text-sm border"
-                style={{ backgroundColor: "#F0FFF4", borderColor: "#C6F6D5" }}
+          <AnimatePresence initial={false}>
+            {state.hasWebsite.startsWith("Ja") && (
+              <motion.div
+                key="website-url-field"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
               >
-                <p className="text-emerald-800 leading-relaxed">
-                  💡 Gut! Wusstest Du dass man auch eine bestehende Website noch
-                  deutlich mehr Kunden bringen kann?
-                  <br />
-                  Wir zeigen Dir kostenlos was möglich ist.
-                </p>
-              </div>
+                <div className="space-y-3 pt-2">
+                  <label className="text-sm font-medium block">
+                    Link zu deiner aktuellen Website{" "}
+                    <span className="text-muted-foreground font-normal">(optional)</span>
+                  </label>
+                  <Input
+                    type="url"
+                    value={state.currentWebsite}
+                    onChange={(e) => update({ currentWebsite: e.target.value })}
+                    placeholder="https://…"
+                    autoComplete="url"
+                    inputMode="url"
+                  />
+                  <Button
+                    type="button"
+                    size="lg"
+                    onClick={next}
+                    className="w-full sm:w-auto"
+                  >
+                    Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          {state.hasWebsite === "Nein, noch gar keine" && (
+            <div className="pt-1">
               <Button
                 type="button"
                 size="lg"
