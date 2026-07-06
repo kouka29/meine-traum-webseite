@@ -2162,7 +2162,26 @@ const KostenloseVorschauV2 = () => {
             )}
           </div>
           <div className="max-w-2xl mx-auto">
-            <MultiStepForm isWaitlist={isWaitlist} nextMonthLabel={nextMonthLabel} />
+            {isWaitlist ? (
+              <WaitlistMiniForm
+                nextMonthLabel={nextMonthLabel}
+                phoneNumber={settings?.phone_number}
+              />
+            ) : (
+              <MultiStepForm
+                isWaitlist={isWaitlist}
+                nextMonthLabel={nextMonthLabel}
+                phoneNumber={settings?.phone_number}
+              />
+            )}
+            {/* Erwartungssetzende Hinweis-Box (nicht abschreckend) */}
+            <div className="mt-4 flex items-start gap-2 rounded-xl border border-border bg-muted/40 px-3 py-2.5 text-xs text-muted-foreground">
+              <Info className="w-3.5 h-3.5 mt-0.5 shrink-0 text-primary/70" aria-hidden={true} focusable={false} />
+              <p className="leading-relaxed">
+                Hinweis: Wir bauen jede Vorschau von Hand. Deshalb schauen wir kurz, ob's für
+                dich und für uns passt. Details dazu bekommst du direkt nach dem Absenden.
+              </p>
+            </div>
           </div>
         </div>
       </section>
