@@ -1,91 +1,87 @@
+## MTW Vorschau-Funnel `/vorschau-start`
 
-## Ziel
+Exklusiver 6-Step Onboarding-Funnel für gesicherte Vorschau-Plätze. Mobile-first, Du-Ansprache, MTW-Branding.
 
-Route `/` (Startseite) beim Build statisch prerendern, damit der Hero-Block schon im ersten HTML-Dokument steht — der Browser malt LCP, bevor React/JS gebootet ist. Hydration muss danach ohne Warnings/Layout-Sprünge weiterlaufen.
+### 1. Datenbank (Migration)
 
-## Tool-Wahl: `react-snap`
+**Neue Tabelle `funnel_leads`:**
+- `id uuid pk`, `created_at`, `updated_at`
+- `firmenname`, `ort`, `gewerk`, `leistungen` (text)
+- `hat_website bool`, `website_url text`
+- `stil text` (hell-modern|dunkel-edel|logo-angepasst|ueberrascht)
+- `ziel text` (mehr-anfragen|professioneller|mitarbeiter|google)
+- `kein_logo bool default false`, `logo_url text`
+- `foto_urls text[] default '{}'`
+- `termin_datum date`, `termin_uhrzeit text`, `kontaktart text` (phone|video)
+- `name`, `telefon`, `email` (validiert), `datenschutz_akzeptiert bool`
+- `source_cta text default 'vorschau-funnel'`, `source_page text`
+- `status text default 'neu'`, `month_key text`
 
-- Nutzt Headless-Chrome nach dem Build, besucht die konfigurierten Routen auf `dist/` und speichert das gerenderte DOM als statische `.html`-Datei zurück in `dist/`.
-- Kein Umbau von Routing/Router nötig — funktioniert mit dem bestehenden `BrowserRouter`.
-- Passt zum Lovable-Static-Hosting-Setup (SPA-Fallback + statische HTMLs).
-- `vite-react-ssg` würde ein Umschreiben aller Routen auf ein SSG-Route-Objekt erfordern — deutlich invasiver bei ~65 Routen. Deshalb `react-snap`.
+**RLS:** Insert für `anon` erlaubt (Formular ist öffentlich), Select/Update nur `service_role`. GRANTs: `INSERT` an `anon`+`authenticated`, `ALL` an `service_role`.
 
-## Änderungen
+**vorschau_settings:** Neue Row `page_key = 'vorschau-funnel'` mit `total_slots = 5`, damit Slot-Zählung getrennt läuft. Bestehende `increment_taken_slot(p_page_key)` und `check-vorschau-availability` Edge Function werden wiederverwendet.
 
-### 1. Dependencies + npm-Scripts
+**Storage:** Neuer public Bucket `funnel-uploads` (RLS: insert anon, read public). Pfade: `{funnel_uuid}/logo/…`, `{funnel_uuid}/fotos/…`.
 
-- Dev-Dependency `react-snap` (nutzt intern Puppeteer).
-- `package.json`:
-  - `"postbuild": "react-snap"` — läuft automatisch nach `vite build`.
-  - `"reactSnap"`-Konfigurationsblock:
-    - `source: "dist"`
-    - `include: ["/"]` — bewusst nur die Startseite, keine anderen Routen.
-    - `puppeteerArgs: ["--no-sandbox", "--disable-setuid-sandbox"]` (CI-freundlich).
-    - `inlineCss: false` (Vite kümmert sich schon ums Splitting).
-    - `skipThirdPartyRequests: true` — blockiert Supabase/Stripe/Meta beim Snapshot, damit Netzwerk-Antworten nicht ins HTML einfrieren.
-    - `crawl: false` — folgt keinen Links, prerendert wirklich nur `/`.
+### 2. Route & Chrome
 
-### 2. `src/main.tsx` — Hydrate statt neu mounten
+- `/vorschau-start` in `App.tsx` mit Navbar + Footer (nicht in `standalone`-Liste).
+- Lazy-loaded page `src/pages/VorschauStart.tsx`.
+- SEO: PageMeta „Deine Website-Vorschau · MTW", `noindex` (exklusiver Bereich).
 
-Wenn `#root` schon Kinder hat (Snapshot vorhanden), `hydrateRoot` verwenden; sonst wie bisher `createRoot`.
+### 3. State-Management
 
-```ts
-const container = document.getElementById("root")!;
-if (container.hasChildNodes()) {
-  hydrateRoot(container, <App />);
-} else {
-  createRoot(container).render(<App />);
-}
+- Zentraler React Context `FunnelStateProvider` in `src/pages/vorschau-start/state.tsx`.
+- Persistenz in `sessionStorage` (Key `mtw_funnel_v1`), rehydriert beim Mount. Uploads (URLs) persistent, aber Files nicht.
+- `funnel_uuid` einmalig via `crypto.randomUUID()` erzeugt, für Storage-Pfade + finale Insert-Row.
+
+### 4. Steps (`src/pages/vorschau-start/steps/`)
+
+Ein Screen pro Step, framer-motion fade+slide (250ms). Progress-Bar oben („Schritt X von 5", Steps 1–5, Step 0 ohne Bar, Step 6 = Danke).
+
+- **Step0Gratulation** — `canvas-confetti` einmalig, Live-Slots via `check-vorschau-availability` (`page_key='vorschau-funnel'`), Fallback-Text falls Fehler. Monat via `Intl.DateTimeFormat('de-DE', {month:'long'})`. CTA „Los geht's".
+- **Step1Logo** — Dropzone (react-dropzone oder nativ), sofort-Upload zu Storage bei Auswahl mit Spinner, Thumbnail-Preview + Entfernen. Link „Ich habe kein Logo" → `kein_logo=true`, überspringt validierungslos.
+- **Step2Fragen** — 5 Sub-Steps (interner Index) mit eigenen Weiter/Zurück Buttons: Firma+Ort, Gewerk+Leistungen, Website (Radio + optionale URL), Stil (4 Karten), Ziel (4 Karten). Karten-UI mit `MarketingCard`-Stil.
+- **Step3Fotos** — Multi-Dropzone max 3, sofort-Upload, Thumbnails, „Weiter" + „Überspringen".
+- **Step4Termin** — shadcn `Calendar` (`pointer-events-auto`), disabled-Logik: Weekends, vor `heute + 2 Werktage`, nach `+14 Tage`. Werktage-Berechnung als kleine Utility (`addBusinessDays`). Zeitslot-Grid 09/10/11/14/15/16/17. Radio Telefon/Video. Kontaktfelder mit `inputmode`/`type`. DE-Handynummer-Validierung via regex `^(\+49|0)[1-9]\d{8,12}$`. Datenschutz-Checkbox verpflichtend. Submit-Button mit Spinner, `disabled` gegen Doppel-Klick.
+- **Step5Danke** — Checkmark-Animation (framer-motion SVG), Recap-Card, WhatsApp-FAB (Nummer `06131 30 765 00` → wa.me-Link `4961313076500`).
+
+### 5. Submit-Flow
+
+1. Zod-Schema validiert kompletten State.
+2. `supabase.from('funnel_leads').insert({...})` mit `id = funnel_uuid`.
+3. `supabase.rpc('increment_taken_slot', { p_page_key: 'vorschau-funnel' })`.
+4. `supabase.functions.invoke('notify-lead', { body: { source_cta: 'vorschau-funnel', … formatierte Felder … } })` — bestehende Function nimmt bereits generischen Payload; Telegram-Formatierung dort ist okay (source_cta wird durchgereicht, Rest im `message`-Feld als vorformatierter Text mit Emojis wie im Prompt spezifiziert).
+5. Bei Fehler: Toast mit WhatsApp-Fallback-Link, Button re-enable.
+
+### 6. Design-Tokens
+
+Nutzt bestehende `--primary` (250 56% 48%), Poppins Headings, Inter Body, `rounded-2xl`, `shadow-lg`. Sticky-CTA mobil: `sticky bottom-0` mit backdrop-blur. Touch-Targets min-h-12.
+
+### 7. Dependencies
+
+- `canvas-confetti` + Typings (nur Step 0, lazy import).
+- react-dropzone (optional; nativer `<input type=file>` mit Drag-Handling reicht auch — bevorzugt nativ, um Bundle klein zu halten).
+
+### Dateien
+
+```
+supabase/migrations/<ts>_funnel_leads.sql
+src/pages/VorschauStart.tsx
+src/pages/vorschau-start/state.tsx
+src/pages/vorschau-start/utils.ts        (Werktage, Validatoren, Uploader)
+src/pages/vorschau-start/ProgressBar.tsx
+src/pages/vorschau-start/steps/Step0Gratulation.tsx
+src/pages/vorschau-start/steps/Step1Logo.tsx
+src/pages/vorschau-start/steps/Step2Fragen.tsx
+src/pages/vorschau-start/steps/Step3Fotos.tsx
+src/pages/vorschau-start/steps/Step4Termin.tsx
+src/pages/vorschau-start/steps/Step5Danke.tsx
+src/App.tsx                              (Route ergänzen)
 ```
 
-### 3. Snapshot-Erkennung + Hydration-Safety
+### Offene Annahmen (falls nicht anders gewünscht)
 
-Zentrale kleine Utility `src/lib/isPrerender.ts` mit zwei Checks:
-- Beim Snapshot (Node im Puppeteer): `navigator.userAgent.includes("ReactSnap")` → `true`.
-- Zur Hydration: `document.documentElement.dataset.snap === "1"` (wird während des Snapshots per `<script>`-Tag gesetzt bzw. via `react-snap`s `preloadImages: false`-Hooks).
-
-Damit beheben wir gezielt die drei bekannten Mismatch-Quellen im Hero-Baum:
-
-#### 3a. `AnimatedSection`
-Initial-State `inView` heute `false` → Hero wäre in der Snapshot-Datei mit `opacity: 0` eingefroren, LCP-Gewinn wäre weg.
-Fix: `useState(() => isPrerender() || (typeof document !== "undefined" && document.documentElement.dataset.snap === "1"))`. Snapshot → sofort sichtbar; Hydration liest denselben Wert aus dem DOM-Flag → identisch → kein Mismatch. Für spätere Sektionen bleibt die IntersectionObserver-Animation aktiv.
-
-#### 3b. `VorschauVerfuegbarkeit`
-Rendert erst nach dem Supabase-Fetch etwas. Mit `skipThirdPartyRequests: true` bleibt das Element im Snapshot `null` und hydratisiert konsistent zu `null`. Der Fetch läuft danach live weiter → Pille erscheint nach Hydration. Kein Mismatch, minimaler CLS im Hero-Bereich (kleines Pill-Element, unterhalb der Buttons).
-
-#### 3c. `DesignModeProvider`
-`appleDesign` startet `false` und schaltet erst nach Supabase-Fetch die `apple-mode`-Klasse. Da wir Third-Party beim Snapshot blocken, bleibt der Snapshot im Default-Zustand — matcht Hydration. Live-Umschaltung passiert nach Hydration wie bisher.
-
-### 4. `react-helmet-async`
-
-- `HelmetProvider` ist bereits gesetzt → Titel/Meta/LCP-Preload landen im gesnapshotteten `<head>` und stehen sofort im Dokument.
-- Der bereits vorhandene `<link rel="preload" as="image" fetchpriority="high">` fürs Hero-AVIF wird durch das Prerendering **zusätzlich** wirksam, weil er jetzt schon vor dem ersten JS-Parsing im HTML steht.
-
-### 5. Lazy-Sections & DeferredMount
-
-- Below-the-fold-Sektionen (`PainPoints`, `IndexServices`, …) sind `React.lazy` in einer gemeinsamen `<Suspense>` — im Snapshot wird der `SectionPlaceholder` gerendert. Das ist gewollt und matcht Hydration (weil beim Client-Boot dieselben Chunks erst nachladen).
-- `<DeferredMount>` (CookieBanner, Chat-FAB, Pixel) rendert im Snapshot `null` (State `ready=false`) und hydratisiert genauso → kein Mismatch, und die Chrome-Elemente sind nicht im HTML-Snapshot enthalten (gut für LCP & Datei­größe).
-
-### 6. Router-Randfälle
-
-- `BrowserRouter`-Match auf `/` liefert `<Index />` synchron (eager import), das ist der einzige eager Route — passt.
-- `ScrollToTop`, `PageMeta`, `StructuredData`, `PageTracker` sind alle effect-basiert → SSR/Prerender-sicher.
-
-### 7. Verifikation nach dem Build
-
-- Prüfen, dass `dist/index.html` jetzt echtes Hero-Markup enthält (`<h1>Webseiten, die planbar Kundenanfragen bringen…`).
-- `dist/index.html` weiterhin auch die Fallback-Skript-Referenz behält (`<script type="module" src="/assets/…">`), damit Hydration nach dem Snapshot startet.
-- Kurzer Playwright-Check: keine `Hydration failed`/`did not match`-Warnungen in der Console auf `/`.
-- Lighthouse-LCP-Element bleibt das Hero-`<img>` — jetzt sichtbar vor JS-Execution.
-
-## Explizit NICHT geändert
-
-- Kein Umstieg auf SSG/SSR-Framework, kein neuer Router.
-- Keine anderen Routen werden prerendered (Angebot, Kundenportal, Landingpages) — dynamische Inhalte, Auth, personalisierte Angebote.
-- Kein Eingriff in Framer-Motion oder Below-the-fold-Animationen.
-- `MetaPixel`, `CookieBanner`, `ChatAssistant`, `GlobalCtaPopup` bleiben deferred — sie erscheinen nicht im Prerender-Snapshot (gewollt, dann kein DSGVO-/Consent-Risiko im statischen HTML).
-
-## Risiken / offene Punkte
-
-- `react-snap` ist seit ~2019 nicht mehr aktiv gepflegt, funktioniert aber weiterhin mit React 18 (via `hydrateRoot`). Falls es beim Build zu Puppeteer-Version-Problemen kommt, ist der Fallback ein Wechsel zu `@prerenderer/rollup-plugin` — gleicher Ansatz, gleiches Ergebnis.
-- Falls Lovables Build-Umgebung Chromium nicht bereitstellt, muss `react-snap` bzw. Puppeteer beim Install einen mitliefern (kann Install-Zeit +30 s bedeuten).
+- WhatsApp-Nummer: `+49 6131 3076500` (aus Prompt-Platzhalter).
+- Fotos: HEIC wird akzeptiert im accept-Attribut, aber nicht clientseitig konvertiert (Handy-Uploads landen meist bereits als JPG bei modernen iOS-Versionen).
+- Keine E-Mail-Bestätigung an den Lead in dieser Version — nur Telegram-Notify + Admin-Sicht via bestehendes Admin-Panel (funnel_leads wird dort später ergänzt, nicht Teil dieses Plans).
