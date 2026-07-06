@@ -1029,9 +1029,10 @@ const SuccessScreen = ({
 type MultiStepFormProps = {
   isWaitlist: boolean;
   nextMonthLabel: string;
+  phoneNumber?: string;
 };
 
-const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
+const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFormProps) => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -1313,6 +1314,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         setBookingConfirmed={setBookingConfirmed}
         isWaitlist={isWaitlist}
         nextMonthLabel={nextMonthLabel}
+        phoneNumber={phoneNumber}
       />
     );
   }
