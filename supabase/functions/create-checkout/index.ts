@@ -1,4 +1,5 @@
 import { type StripeEnv, createStripeClient } from "../_shared/stripe.ts";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -13,6 +14,107 @@ type Item = {
   recurring?: "month" | "year" | null;
   quantity?: number;
 };
+
+// Tolerance for cent-level rounding differences between client display and
+// server-computed totals. Any larger mismatch is treated as a tampering attempt.
+const AMOUNT_TOLERANCE_CENTS = 10;
+
+type TrustedTotals = {
+  // Sum of client-supplied item amounts (cents * quantity) MUST match this.
+  subtotalCents: number;
+  // Human-friendly label used for error/log context only.
+  source: string;
+};
+
+function clientSubtotalCents(items: Item[]): number {
+  return items.reduce(
+    (sum, it) =>
+      sum +
+      Math.round(it.amount_cents) *
+        Math.max(1, Math.min(100, it.quantity || 1)),
+    0,
+  );
+}
+
+async function resolveTrustedTotals(opts: {
+  supabase: ReturnType<typeof createClient>;
+  metadata: Record<string, string>;
+  mode: "payment" | "subscription";
+}): Promise<TrustedTotals | null> {
+  const { supabase, metadata, mode } = opts;
+
+  // Path A: Wachstumspaket-Umstellung (Kundenportal)
+  const growthId = typeof metadata.growth_subscription_id === "string"
+    ? metadata.growth_subscription_id.trim()
+    : "";
+  if (growthId) {
+    const { data, error } = await supabase
+      .from("growth_subscriptions")
+      .select("monthly_amount_cents")
+      .eq("id", growthId)
+      .maybeSingle();
+    if (error || !data || typeof data.monthly_amount_cents !== "number") {
+      throw new Error("growth_subscription not found");
+    }
+    return {
+      subtotalCents: Math.round(data.monthly_amount_cents),
+      source: `growth_subscription:${growthId}`,
+    };
+  }
+
+  // Path B: Angebots-/Buchungs-Funnel
+  const auftragsNr = typeof metadata.auftrags_nr === "string"
+    ? metadata.auftrags_nr.trim()
+    : "";
+  if (!auftragsNr) return null;
+
+  const { data: buchung, error } = await supabase
+    .from("buchungen")
+    .select("gesamtbetrag_netto, pakete, addons")
+    .eq("angebots_nr", auftragsNr)
+    .maybeSingle();
+  if (error || !buchung) throw new Error("buchung not found");
+
+  const pakete = Array.isArray(buchung.pakete) ? buchung.pakete as any[] : [];
+  const addons = Array.isArray(buchung.addons) ? buchung.addons as any[] : [];
+
+  const paymentMode = metadata.payment_mode === "miete" ? "miete" : "kauf";
+
+  let trustedEuro = 0;
+  if (mode === "subscription" || paymentMode === "miete") {
+    // Miete: monatliche Basis + monatliche Addons
+    for (const p of pakete) {
+      const mietpreis = Number(p?.mietpreis ?? p?.miete_monatlich ?? 0);
+      trustedEuro += Number.isFinite(mietpreis) ? mietpreis : 0;
+    }
+    for (const a of addons) {
+      const typ = a?.typ || (a?.price_type === "monthly" ? "monatlich" : "einmalig");
+      if (typ === "monatlich") {
+        const preis = a?.preis != null ? Number(a.preis) : Number(a?.price_cents || 0) / 100;
+        trustedEuro += Number.isFinite(preis) ? preis : 0;
+      }
+    }
+  } else {
+    // Kauf: einmalige Basis (bzw. Anzahlung falls hinterlegt) + einmalige Addons
+    for (const p of pakete) {
+      const anzahlung = Number(p?.anzahlung ?? 0);
+      const preis = Number(p?.preis ?? 0);
+      trustedEuro += anzahlung > 0 ? anzahlung : (Number.isFinite(preis) ? preis : 0);
+    }
+    for (const a of addons) {
+      const typ = a?.typ || (a?.price_type === "monthly" ? "monatlich" : "einmalig");
+      if (typ === "einmalig") {
+        const preis = a?.preis != null ? Number(a.preis) : Number(a?.price_cents || 0) / 100;
+        trustedEuro += Number.isFinite(preis) ? preis : 0;
+      }
+    }
+  }
+
+  return {
+    subtotalCents: Math.round(trustedEuro * 100),
+    source: `buchung:${auftragsNr}`,
+  };
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -100,6 +202,45 @@ Deno.serve(async (req) => {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
+    }
+
+    // SICHERHEIT: Preise müssen serverseitig gegen die Quelle-der-Wahrheit
+    // verifiziert werden, damit ein manipulierter Client keinen Rabatt
+    // erzeugen kann. Wir erlauben items[] ausschließlich in Verbindung mit
+    // einer serverseitig auflösbaren Metadata-Referenz (Buchung oder
+    // Wachstums-Abo). Der Summenbetrag muss zur Quelle passen.
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      return new Response(JSON.stringify({ error: "Server not configured" }), {
+        status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const admin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+    let trusted: TrustedTotals | null = null;
+    try {
+      trusted = await resolveTrustedTotals({ supabase: admin, metadata, mode });
+    } catch (e) {
+      console.warn("create-checkout: trusted lookup failed", e);
+      return new Response(JSON.stringify({ error: "Auftrag konnte nicht verifiziert werden" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (!trusted) {
+      return new Response(JSON.stringify({ error: "Missing trusted reference (auftrags_nr oder growth_subscription_id erforderlich)" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const clientSubtotal = clientSubtotalCents(items);
+    if (Math.abs(clientSubtotal - trusted.subtotalCents) > AMOUNT_TOLERANCE_CENTS) {
+      console.warn("create-checkout: price mismatch", {
+        source: trusted.source,
+        clientSubtotal,
+        trustedSubtotal: trusted.subtotalCents,
+      });
+      return new Response(JSON.stringify({ error: "Preis stimmt nicht mit dem hinterlegten Auftrag überein" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const lineItems = items.map((it) => ({

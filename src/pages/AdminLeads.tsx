@@ -469,6 +469,7 @@ const AdminLeads = () => {
       supabase.functions
         .invoke("portfolio-screenshot", {
           body: {
+            password,
             url: savedProject.external_url,
             key: savedProject.id,
             projectId: savedProject.id,
@@ -502,7 +503,7 @@ const AdminLeads = () => {
     let fail = 0;
     for (const p of targets) {
       const { error: e } = await supabase.functions.invoke("portfolio-screenshot", {
-        body: { url: p.external_url, key: p.id, projectId: p.id },
+        body: { password, url: p.external_url, key: p.id, projectId: p.id },
       });
       if (e) fail++;
       else ok++;
@@ -531,6 +532,7 @@ const AdminLeads = () => {
     setRegeneratingId(project.id);
     const { data, error } = await supabase.functions.invoke("portfolio-screenshot", {
       body: {
+        password,
         url: project.external_url,
         key: project.id,
         projectId: project.id,

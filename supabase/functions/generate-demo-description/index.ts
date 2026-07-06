@@ -4,7 +4,14 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
-    const { trade, company, existing } = await req.json();
+    const body = await req.json().catch(() => ({}));
+    const ADMIN_PASSWORD = Deno.env.get("ADMIN_PASSWORD");
+    if (!ADMIN_PASSWORD || typeof body?.password !== "string" || body.password !== ADMIN_PASSWORD) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const { trade, company, existing } = body;
     if (!company || typeof company !== 'string') {
       return new Response(JSON.stringify({ error: 'company required' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
