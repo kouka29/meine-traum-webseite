@@ -67,6 +67,11 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
     description:
       "Handwerker: Sichere Dir einen von 5 Plätzen pro Monat. Kostenlose Vorschau in 48 h. Ohne Risiko und Verpflichtung.",
   },
+  "/kostenlose-vorschau-business": {
+    title: `Kostenlose Website-Vorschau für Selbstständige & Unternehmen | ${BRAND}`,
+    description:
+      "Wir bauen dir eine komplette Website-Vorschau, bevor du zahlst. Für Praxen, Berater, Shops, Agenturen und mehr. Nur wenige Plätze pro Monat.",
+  },
   "/webdesign-preise": {
     title: `Webdesign Preise & Kosten | ${BRAND}`,
     description:
