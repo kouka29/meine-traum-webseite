@@ -1727,12 +1727,21 @@ export const MultiStepForm = ({
 // Warteliste – kompakter Mini-Funnel (bei 0 freien Plätzen)
 // ─────────────────────────────────────────────────────────────────────────────
 
-type WaitlistMiniFormProps = {
+export type WaitlistMiniFormProps = {
   nextMonthLabel: string;
   phoneNumber?: string;
+  sourceKey?: string;
+  sourcePage?: string;
+  telegramLabel?: string;
 };
 
-const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps) => {
+export const WaitlistMiniForm = ({
+  nextMonthLabel,
+  phoneNumber,
+  sourceKey = "kostenlose-vorschau",
+  sourcePage = "kostenlose-vorschau",
+  telegramLabel = "/kostenlose-vorschau",
+}: WaitlistMiniFormProps) => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -1764,8 +1773,8 @@ const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps
         is_waitlist: true,
         status: "warteliste",
         notes: "waitlist",
-        source_page: "kostenlose-vorschau",
-        source_cta: "kostenlose-vorschau:warteliste",
+        source_page: sourcePage,
+        source_cta: `${sourceKey}:warteliste`,
       });
       if (error) throw error;
 
@@ -1774,10 +1783,10 @@ const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps
         phone: phone.trim() || "",
         email: email.trim() || undefined,
         message:
-          `⏳ WARTELISTE — /kostenlose-vorschau\n` +
+          `⏳ WARTELISTE — ${telegramLabel}\n` +
           `👤 ${firstName.trim()}\n` +
           `📞 ${phone.trim() || "—"} · ${email.trim()}`,
-        source_cta: "kostenlose-vorschau:warteliste",
+        source_cta: `${sourceKey}:warteliste`,
       });
 
       setDone(true);
