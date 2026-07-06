@@ -321,6 +321,8 @@ type FormState = {
   bookingDate: string;
   bookingTime: string;
   contactMethod: "phone" | "online" | "";
+  budgetModell: "kaufen" | "mieten" | "unklar" | "";
+  budgetWert: string;
 };
 
 const initialState: FormState = {
@@ -339,6 +341,8 @@ const initialState: FormState = {
   bookingDate: "",
   bookingTime: "",
   contactMethod: "",
+  budgetModell: "",
+  budgetWert: "",
 };
 
 const TileButton = ({
