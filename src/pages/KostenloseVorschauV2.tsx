@@ -1419,8 +1419,110 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         </div>
       )}
 
-      {/* Step 5 */}
+      {/* Step 5 – Budget */}
       {state.step === 5 && (
+        <div className="space-y-5">
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold">Welches Budget hast du im Blick?</h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Damit wir dir realistische Vorschläge machen – kein Cent-genauer Preis nötig.
+            </p>
+          </div>
+
+          {/* Stufe A: Modell */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <TileButton
+              icon={CreditCard}
+              label="Kaufen (Einmalzahlung)"
+              selected={state.budgetModell === "kaufen"}
+              onClick={() => update({ budgetModell: "kaufen", budgetWert: "" })}
+            />
+            <TileButton
+              icon={RotateCcw}
+              label="Mieten (monatlich)"
+              selected={state.budgetModell === "mieten"}
+              onClick={() => update({ budgetModell: "mieten", budgetWert: "" })}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground -mt-2">
+            {state.budgetModell === "kaufen"
+              ? "Du kaufst die Website einmalig und sie gehört dir."
+              : state.budgetModell === "mieten"
+              ? "Du zahlst monatlich, Hosting, Updates & Support inklusive."
+              : "Wähle, wie du deine Website finanzieren möchtest."}
+          </p>
+          <button
+            type="button"
+            onClick={() => update({ budgetModell: "unklar", budgetWert: "unsicher" })}
+            className={`text-sm underline-offset-4 hover:underline transition-colors ${
+              state.budgetModell === "unklar"
+                ? "text-primary font-semibold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {state.budgetModell === "unklar" ? "✓ Ich bin mir noch nicht sicher" : "Ich bin mir noch nicht sicher"}
+          </button>
+
+          {/* Stufe B: Range-Chips */}
+          <AnimatePresence initial={false}>
+            {(state.budgetModell === "kaufen" || state.budgetModell === "mieten") && (
+              <motion.div
+                key={`chips-${state.budgetModell}`}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="pt-1 space-y-3">
+                  <label className="text-sm font-medium block">
+                    {state.budgetModell === "kaufen"
+                      ? "Ungefährer Budgetrahmen"
+                      : "Monatliches Budget"}
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {(state.budgetModell === "kaufen" ? budgetChipsKaufen : budgetChipsMieten).map(
+                      (chip) => {
+                        const active = state.budgetWert === chip;
+                        return (
+                          <button
+                            key={chip}
+                            type="button"
+                            onClick={() => update({ budgetWert: chip })}
+                            className={`min-h-12 rounded-xl border-2 px-3 py-2 text-sm font-semibold transition-all ${
+                              active
+                                ? "border-primary bg-primary text-primary-foreground shadow-md"
+                                : "border-border bg-card hover:border-primary/40"
+                            }`}
+                          >
+                            {chip}
+                          </button>
+                        );
+                      },
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <Button
+            type="button"
+            size="lg"
+            className="w-full sm:w-auto"
+            disabled={
+              !state.budgetModell ||
+              (state.budgetModell !== "unklar" && !state.budgetWert)
+            }
+            onClick={next}
+          >
+            Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+          </Button>
+        </div>
+      )}
+
+      {/* Step 6 – Kontaktdaten */}
+      {state.step === 6 && (
         <form onSubmit={handleSubmit} className="space-y-5">
           <h3 className="text-xl sm:text-2xl font-bold">
             Fast geschafft! Wie kann ich Du erreichst?
