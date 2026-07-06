@@ -49,6 +49,7 @@ const WebdesignCoaches = lazy(() => import("./pages/WebdesignCoaches.tsx"));
 const IndividuelleSoftware = lazy(() => import("./pages/IndividuelleSoftware.tsx"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
 const KostenloseVorschauV2 = lazy(() => import("./pages/KostenloseVorschauV2.tsx"));
+const KostenloseVorschauBewerbung = lazy(() => import("./pages/KostenloseVorschauBewerbung.tsx"));
 const Empfehlung = lazy(() => import("./pages/Empfehlung.tsx"));
 const Erstgespraech = lazy(() => import("./pages/Erstgespraech.tsx"));
 const Starter = lazy(() => import("./pages/Starter.tsx"));
@@ -135,7 +136,9 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
     pathname === "/1euro-angebot" ||
     pathname.startsWith("/lp/") ||
     pathname.startsWith("/kundenportal");
-  const hideChatBot = pathname.startsWith("/vorschau-start");
+  const hideChatBot =
+    pathname.startsWith("/vorschau-start") ||
+    pathname === "/kostenlose-vorschau";
   return (
     <>
       <SkipLink />
@@ -180,7 +183,8 @@ const App = () => (
               <Route path="/website-relaunch" element={<WebsiteRelaunch />} />
               <Route path="/conversion-optimierung" element={<ConversionOptimierung />} />
               <Route path="/kostenloser-website-check" element={<KostenloserWebsiteCheck />} />
-              <Route path="/kostenlose-vorschau" element={<KostenloseVorschauV2 />} />
+              <Route path="/kostenlose-vorschau" element={<KostenloseVorschauBewerbung />} />
+              <Route path="/kostenlose-vorschau-alt" element={<KostenloseVorschauV2 />} />
               <Route path="/kostenlose-vorschau-v2" element={<Navigate to="/kostenlose-vorschau" replace />} />
               <Route path="/kostenlose-vorschau2" element={<Navigate to="/kostenlose-vorschau" replace />} />
               <Route path="/kostenlose-vorschau-2" element={<Navigate to="/kostenlose-vorschau" replace />} />
