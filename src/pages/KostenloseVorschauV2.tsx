@@ -1247,7 +1247,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
     );
   }
 
-  const progressPct = (state.step / 5) * 100;
+  const progressPct = (state.step / TOTAL_STEPS) * 100;
 
   return (
     <div
@@ -1257,7 +1257,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {/* Progress */}
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-medium mb-2">
-          <span>Schritt {state.step} von 5</span>
+          <span>Schritt {state.step} von {TOTAL_STEPS}</span>
           <span className="text-muted-foreground">{Math.round(progressPct)}%</span>
         </div>
         <Progress value={progressPct} className="h-2" />
