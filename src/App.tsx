@@ -86,6 +86,7 @@ const LpGesetz = lazy(() => import("./pages/lp/Gesetz.tsx"));
 const EinEuroAngebot = lazy(() => import("./pages/EinEuroAngebot.tsx"));
 const Barrierefreiheit = lazy(() => import("./pages/Barrierefreiheit.tsx"));
 const Premium = lazy(() => import("./pages/Premium.tsx"));
+const VorschauStart = lazy(() => import("./pages/VorschauStart.tsx"));
 
 // Branchen-Landingpages
 const FitnessHub = lazy(() => import("./pages/branchen/FitnessHub.tsx"));
@@ -255,6 +256,7 @@ const App = () => (
               <Route path="/lp/compliance" element={<LpGesetz />} />
               <Route path="/1euro-angebot" element={<EinEuroAngebot />} />
               <Route path="/premium" element={<Premium />} />
+              <Route path="/vorschau-start" element={<VorschauStart />} />
               <Route path="/kundenportal/login" element={<KundenportalLogin />} />
               <Route path="/kundenportal/passwort-zuruecksetzen" element={<KundenportalResetPassword />} />
               <Route path="/kundenportal" element={<KundenportalLayout />}>

@@ -211,6 +211,12 @@ const pageMeta: Record<string, { title: string; description: string; noindex?: b
     description:
       "Premium Webdesign für anspruchsvolle Unternehmen im DACH-Raum. Individuell, strategisch, limitiert auf 5 Projekte pro Monat.",
   },
+  "/vorschau-start": {
+    title: `Deine Website-Vorschau · ${BRAND}`,
+    description:
+      "Exklusiver Onboarding-Bereich für gesicherte Vorschau-Plätze. Logo hochladen, Fragen beantworten, Termin wählen.",
+    noindex: true,
+  },
 };
 
 const setMeta = (selector: string, attr: string, value: string) => {
