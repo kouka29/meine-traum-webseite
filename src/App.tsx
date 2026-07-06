@@ -135,6 +135,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
     pathname === "/1euro-angebot" ||
     pathname.startsWith("/lp/") ||
     pathname.startsWith("/kundenportal");
+  const hideChatBot = pathname.startsWith("/vorschau-start");
   return (
     <>
       <SkipLink />
@@ -146,7 +147,7 @@ const ChromeWrapper = ({ children }: { children: ReactNode }) => {
           <CookieBanner />
           <MetaPixel />
           {!standalone && <GlobalCtaPopup />}
-          <ChatAssistant />
+          {!hideChatBot && <ChatAssistant />}
         </Suspense>
       </DeferredMount>
     </>
