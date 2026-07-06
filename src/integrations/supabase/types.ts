@@ -525,6 +525,8 @@ export type Database = {
           booking_date: string | null
           booking_time: string | null
           branche: string | null
+          budget_modell: string | null
+          budget_wert: string | null
           company_name: string | null
           contact_method: string | null
           created_at: string
@@ -552,6 +554,8 @@ export type Database = {
           booking_date?: string | null
           booking_time?: string | null
           branche?: string | null
+          budget_modell?: string | null
+          budget_wert?: string | null
           company_name?: string | null
           contact_method?: string | null
           created_at?: string
@@ -579,6 +583,8 @@ export type Database = {
           booking_date?: string | null
           booking_time?: string | null
           branche?: string | null
+          budget_modell?: string | null
+          budget_wert?: string | null
           company_name?: string | null
           contact_method?: string | null
           created_at?: string
@@ -1091,6 +1097,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      count_freigegebene_leads_this_month: { Args: never; Returns: number }
       decrement_taken_slot:
         | { Args: never; Returns: undefined }
         | { Args: { p_page_key?: string }; Returns: undefined }
