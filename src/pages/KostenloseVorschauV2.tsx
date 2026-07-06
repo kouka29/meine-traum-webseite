@@ -1827,6 +1827,8 @@ export const WaitlistMiniForm = ({
           isWaitlist={true}
           nextMonthLabel={nextMonthLabel}
           phoneNumber={phoneNumber}
+          sourceKey={sourceKey}
+          telegramLabel={telegramLabel}
         />
       </div>
     );
