@@ -1192,16 +1192,16 @@ export const MultiStepForm = ({
           hat_website: state.hasWebsite,
           ziel: state.goals.join(", "),
           dringlichkeit: state.urgency,
-          seite: "kostenlose-vorschau-v2",
+          seite: sourceKey,
         }),
       }).catch(() => {});
 
       void supabase.functions.invoke("send-transactional-email", {
         body: {
           templateName: "lead-notification",
-          idempotencyKey: `vorschau2-${newLeadId}`,
+          idempotencyKey: `${sourceKey}-${newLeadId}`,
           templateData: {
-            source: "Kostenlose Vorschau V2 (Handwerker)",
+            source: emailSource,
             firstName: state.firstName,
             companyName: state.company,
             email: submissionEmail,
@@ -1228,13 +1228,13 @@ export const MultiStepForm = ({
         phone: state.phone,
         email: state.email || undefined,
         message:
-          `🆕 NEUE ANFRAGE — /kostenlose-vorschau\n` +
+          `🆕 NEUE ANFRAGE — ${telegramLabel}\n` +
           `👤 ${state.firstName} · ${state.company}\n` +
           `🔧 ${state.trade === "Sonstiges" && state.tradeOther ? `Sonstiges: ${state.tradeOther}` : state.trade || "—"}\n` +
           `🌐 ${state.currentWebsite || (state.hasWebsite === "Nein, noch gar keine" ? "keine Website" : state.hasWebsite || "—")}\n` +
           `💰 ${state.budgetModell || "—"}: ${state.budgetWert || "—"}\n` +
           `📞 ${state.phone}${state.email ? ` · ${state.email}` : ""}`,
-        source_cta: "kostenlose-vorschau-v2:lead",
+        source_cta: `${sourceKey}:lead`,
       });
     } catch (err) {
       console.error(err);
