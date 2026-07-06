@@ -1702,8 +1702,24 @@ const KostenloseVorschauV2 = () => {
   const { settings, demos: dbDemos, faqs: dbFaqs, portfolio, testimonials: dbTestimonials } = useVorschauSettings("v2");
   const [demosApi, setDemosApi] = useState<CarouselApi>();
   const [testimonialsApi, setTestimonialsApi] = useState<CarouselApi>();
-  const totalSlots = settings?.total_slots ?? 5;
-  const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
+  // Dynamischer Platz-Zähler: nur "freigegebene" Anfragen im laufenden Monat
+  // zählen als belegt (nicht "neu"). Fail-open: bei Fehler bleiben alle Plätze frei.
+  const [belegteSlots, setBelegteSlots] = useState<number>(0);
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .rpc("count_freigegebene_leads_this_month")
+      .then(({ data, error }) => {
+        if (cancelled) return;
+        if (error) return; // fail-open
+        if (typeof data === "number") setBelegteSlots(data);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  const totalSlots = PLAETZE_PRO_MONAT;
+  const takenSlots = Math.min(belegteSlots, totalSlots);
   const remainingSlots = Math.max(0, totalSlots - takenSlots);
   const slotPct = totalSlots > 0 ? (takenSlots / totalSlots) * 100 : 0;
   const monatName = useMemo(
