@@ -1072,6 +1072,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           current_website: state.currentWebsite || null,
           notes: state.notes || null,
           is_waitlist: isWaitlist,
+          budget_modell: state.budgetModell || null,
+          budget_wert: state.budgetWert || null,
         });
 
       if (leadError) {
@@ -1137,7 +1139,13 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         name: state.firstName,
         phone: state.phone,
         email: state.email || undefined,
-        message: `${state.company}${state.notes ? ` – ${state.notes}` : ""}`,
+        message:
+          `🆕 NEUE ANFRAGE — /kostenlose-vorschau\n` +
+          `👤 ${state.firstName} · ${state.company}\n` +
+          `🔧 ${state.trade === "Sonstiges" && state.tradeOther ? `Sonstiges: ${state.tradeOther}` : state.trade || "—"}\n` +
+          `🌐 ${state.currentWebsite || (state.hasWebsite === "Nein, noch gar keine" ? "keine Website" : state.hasWebsite || "—")}\n` +
+          `💰 ${state.budgetModell || "—"}: ${state.budgetWert || "—"}\n` +
+          `📞 ${state.phone}${state.email ? ` · ${state.email}` : ""}`,
         source_cta: "kostenlose-vorschau-v2:lead",
       });
     } catch (err) {
@@ -1145,7 +1153,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       setSubmitError(
         "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 3076498",
       );
-      toast.error("Etwas ist schiefgelaufen. Bitte versuche es erneut.");
+      toast.error("Da ist was schiefgelaufen — versuch's nochmal oder schreib uns auf WhatsApp.");
     } finally {
       setSubmitting(false);
     }
