@@ -68,12 +68,15 @@ export async function uploadFile(
     contentType: file.type || undefined,
   });
   if (error) throw error;
-  // Signed URL good for ~1 year, so admin/Telegram links stay valid.
-  const { data: signed, error: signErr } = await supabase.storage
-    .from(BUCKET)
-    .createSignedUrl(path, 60 * 60 * 24 * 365);
-  if (signErr) throw signErr;
-  return { url: signed.signedUrl, path };
+  // Signed URL is minted server-side (service role) so anon has no direct
+  // SELECT rights on the bucket. Link good for ~1 year so admin/Telegram
+  // references stay valid.
+  const { data, error: fnErr } = await supabase.functions.invoke<{ url: string }>(
+    "funnel-sign-url",
+    { body: { path } },
+  );
+  if (fnErr || !data?.url) throw fnErr ?? new Error("sign url failed");
+  return { url: data.url, path };
 }
 
 export interface Availability {
