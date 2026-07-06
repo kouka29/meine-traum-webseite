@@ -345,7 +345,7 @@ const KostenloseVorschauBewerbung = () => {
             {[
               "Wir merken, dass deine Branche nicht zu unserer Expertise passt",
               "Grundlegende Infos zu deinem Betrieb fehlen oder nicht auffindbar sind",
-              "Die Erwartung nicht zur Realität passt (z. B. „Website + Online-Shop + App für 500 €")",
+              "Die Erwartung nicht zur Realität passt (z. B. „Website + Online-Shop + App für 500 €“)",
             ].map((item) => (
               <li key={item} className="flex gap-3 text-foreground/90">
                 <span className="mt-2 h-1.5 w-1.5 rounded-full bg-muted-foreground shrink-0" />
