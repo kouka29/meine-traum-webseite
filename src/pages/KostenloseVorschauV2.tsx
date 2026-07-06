@@ -1278,7 +1278,7 @@ export const MultiStepForm = ({
           dringlichkeit: state.urgency,
           aktuelle_website: state.currentWebsite || "",
           notizen: state.notes || "",
-          seite: "kostenlose-vorschau-v2",
+          seite: sourceKey,
         }),
       }).catch(() => {});
       // Auch ohne verbindliche Buchung den gewünschten Kontaktweg im Lead speichern,
@@ -1297,10 +1297,10 @@ export const MultiStepForm = ({
         phone: state.phone || "",
         email: state.email || undefined,
         message: `${state.company} – Kontaktweg: ${methodLabel}`,
-        source_cta: `kostenlose-vorschau-v2:kontaktweg:${method}`,
+        source_cta: `${sourceKey}:kontaktweg:${method}`,
       });
     },
-    [leadId, state],
+    [leadId, state, sourceKey],
   );
 
   const setBookingDate = useCallback(
