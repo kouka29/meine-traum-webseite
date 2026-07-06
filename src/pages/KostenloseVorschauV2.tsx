@@ -1027,7 +1027,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
     setState((s) => ({ ...s, ...patch }));
   }, []);
 
-  const next = () => setState((s) => ({ ...s, step: Math.min(5, s.step + 1) }));
+  const next = () => setState((s) => ({ ...s, step: Math.min(TOTAL_STEPS, s.step + 1) }));
   const prev = () => setState((s) => ({ ...s, step: Math.max(1, s.step - 1) }));
 
   const toggleGoal = (g: string) =>
