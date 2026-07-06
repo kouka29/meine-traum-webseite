@@ -1324,8 +1324,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 onClick={() => {
                   update({ hasWebsite: opt.value });
                   // Bei "Ja"-Optionen bleiben wir stehen, damit der User die
-                  // optionale Website-URL eingeben kann. Nur bei "Nein" gehts
-                  // automatisch weiter.
+                  // optionale Website-URL eingeben kann. Bei "Nein" automatisch weiter.
+                  if (opt.value === "Nein, noch gar keine") {
+                    setTimeout(next, 200);
+                  }
                 }}
               />
             ))}
@@ -1365,18 +1367,6 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
               </motion.div>
             )}
           </AnimatePresence>
-          {state.hasWebsite === "Nein, noch gar keine" && (
-            <div className="pt-1">
-              <Button
-                type="button"
-                size="lg"
-                onClick={next}
-                className="w-full sm:w-auto"
-              >
-                Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
-              </Button>
-            </div>
-          )}
         </div>
       )}
 
