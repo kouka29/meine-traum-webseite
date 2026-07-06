@@ -489,6 +489,8 @@ function getNextWeekdays(count: number): { iso: string; label: string }[] {
 
 const TIME_SLOTS = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 
+export type TradeOption = { value: string; icon: React.ComponentType<{ className?: string }> };
+
 type SuccessScreenProps = {
   firstName: string;
   email: string;
@@ -515,6 +517,8 @@ type SuccessScreenProps = {
   isWaitlist: boolean;
   nextMonthLabel: string;
   phoneNumber?: string;
+  sourceKey?: string;
+  telegramLabel?: string;
 };
 
 const SuccessScreen = ({
@@ -543,6 +547,8 @@ const SuccessScreen = ({
   isWaitlist,
   nextMonthLabel,
   phoneNumber,
+  sourceKey = "kostenlose-vorschau-v2",
+  telegramLabel = "/kostenlose-vorschau",
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
@@ -659,7 +665,7 @@ const SuccessScreen = ({
           dringlichkeit: urgency,
           aktuelle_website: currentWebsite || "",
           notizen: notes || "",
-          seite: "kostenlose-vorschau-v2",
+          seite: sourceKey,
         }),
       }).catch(() => {});
 
@@ -672,7 +678,7 @@ const SuccessScreen = ({
         phone: phone || "",
         email,
         message: `Termin: ${dateLabel} ${bookingTime} (${methodLabel}) – ${company}`,
-        source_cta: "kostenlose-vorschau-v2:booking",
+        source_cta: `${sourceKey}:booking`,
       });
     } catch (error) {
       console.error("Booking konnte nicht gespeichert werden", error);
@@ -1026,13 +1032,32 @@ const SuccessScreen = ({
   );
 };
 
-type MultiStepFormProps = {
+export type MultiStepFormProps = {
   isWaitlist: boolean;
   nextMonthLabel: string;
   phoneNumber?: string;
+  sourceKey?: string;
+  telegramLabel?: string;
+  emailSource?: string;
+  tradeOptions?: TradeOption[];
+  tradeQuestion?: string;
+  sonstigesLabel?: string;
+  sonstigesPlaceholder?: string;
 };
 
-const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFormProps) => {
+export const MultiStepForm = ({
+  isWaitlist,
+  nextMonthLabel,
+  phoneNumber,
+  sourceKey = "kostenlose-vorschau-v2",
+  telegramLabel = "/kostenlose-vorschau",
+  emailSource = "Kostenlose Vorschau V2 (Handwerker)",
+  tradeOptions: tradeOptionsProp,
+  tradeQuestion = "Was machst Du beruflich?",
+  sonstigesLabel = "Beschreibe kurz, was Du beruflich machen *",
+  sonstigesPlaceholder = "z. B. Bodenleger, Fliesenleger, Fensterbauer ...",
+}: MultiStepFormProps) => {
+  const activeTradeOptions = tradeOptionsProp ?? tradeOptions;
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -1167,16 +1192,16 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
           hat_website: state.hasWebsite,
           ziel: state.goals.join(", "),
           dringlichkeit: state.urgency,
-          seite: "kostenlose-vorschau-v2",
+          seite: sourceKey,
         }),
       }).catch(() => {});
 
       void supabase.functions.invoke("send-transactional-email", {
         body: {
           templateName: "lead-notification",
-          idempotencyKey: `vorschau2-${newLeadId}`,
+          idempotencyKey: `${sourceKey}-${newLeadId}`,
           templateData: {
-            source: "Kostenlose Vorschau V2 (Handwerker)",
+            source: emailSource,
             firstName: state.firstName,
             companyName: state.company,
             email: submissionEmail,
@@ -1203,13 +1228,13 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
         phone: state.phone,
         email: state.email || undefined,
         message:
-          `🆕 NEUE ANFRAGE — /kostenlose-vorschau\n` +
+          `🆕 NEUE ANFRAGE — ${telegramLabel}\n` +
           `👤 ${state.firstName} · ${state.company}\n` +
           `🔧 ${state.trade === "Sonstiges" && state.tradeOther ? `Sonstiges: ${state.tradeOther}` : state.trade || "—"}\n` +
           `🌐 ${state.currentWebsite || (state.hasWebsite === "Nein, noch gar keine" ? "keine Website" : state.hasWebsite || "—")}\n` +
           `💰 ${state.budgetModell || "—"}: ${state.budgetWert || "—"}\n` +
           `📞 ${state.phone}${state.email ? ` · ${state.email}` : ""}`,
-        source_cta: "kostenlose-vorschau-v2:lead",
+        source_cta: `${sourceKey}:lead`,
       });
     } catch (err) {
       console.error(err);
@@ -1253,7 +1278,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
           dringlichkeit: state.urgency,
           aktuelle_website: state.currentWebsite || "",
           notizen: state.notes || "",
-          seite: "kostenlose-vorschau-v2",
+          seite: sourceKey,
         }),
       }).catch(() => {});
       // Auch ohne verbindliche Buchung den gewünschten Kontaktweg im Lead speichern,
@@ -1272,10 +1297,10 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
         phone: state.phone || "",
         email: state.email || undefined,
         message: `${state.company} – Kontaktweg: ${methodLabel}`,
-        source_cta: `kostenlose-vorschau-v2:kontaktweg:${method}`,
+        source_cta: `${sourceKey}:kontaktweg:${method}`,
       });
     },
-    [leadId, state],
+    [leadId, state, sourceKey],
   );
 
   const setBookingDate = useCallback(
@@ -1315,6 +1340,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
         isWaitlist={isWaitlist}
         nextMonthLabel={nextMonthLabel}
         phoneNumber={phoneNumber}
+        sourceKey={sourceKey}
+        telegramLabel={telegramLabel}
       />
     );
   }
@@ -1338,9 +1365,9 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
       {/* Step 1 */}
       {state.step === 1 && (
         <div className="space-y-5">
-          <h3 className="text-xl sm:text-2xl font-bold">Was machst Du beruflich?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">{tradeQuestion}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {tradeOptions.map((opt) => (
+            {activeTradeOptions.map((opt) => (
               <TileButton
                 key={opt.value}
                 icon={opt.icon}
@@ -1358,12 +1385,12 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
           {state.trade === "Sonstiges" && (
             <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
               <label className="text-sm font-medium block">
-                Beschreibe kurz, was Du beruflich machen *
+                {sonstigesLabel}
               </label>
               <Input
                 value={state.tradeOther}
                 onChange={(e) => update({ tradeOther: e.target.value })}
-                placeholder="z. B. Bodenleger, Fliesenleger, Fensterbauer ..."
+                placeholder={sonstigesPlaceholder}
                 maxLength={120}
                 autoFocus
               />
@@ -1700,12 +1727,21 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
 // Warteliste – kompakter Mini-Funnel (bei 0 freien Plätzen)
 // ─────────────────────────────────────────────────────────────────────────────
 
-type WaitlistMiniFormProps = {
+export type WaitlistMiniFormProps = {
   nextMonthLabel: string;
   phoneNumber?: string;
+  sourceKey?: string;
+  sourcePage?: string;
+  telegramLabel?: string;
 };
 
-const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps) => {
+export const WaitlistMiniForm = ({
+  nextMonthLabel,
+  phoneNumber,
+  sourceKey = "kostenlose-vorschau",
+  sourcePage = "kostenlose-vorschau",
+  telegramLabel = "/kostenlose-vorschau",
+}: WaitlistMiniFormProps) => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -1737,8 +1773,8 @@ const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps
         is_waitlist: true,
         status: "warteliste",
         notes: "waitlist",
-        source_page: "kostenlose-vorschau",
-        source_cta: "kostenlose-vorschau:warteliste",
+        source_page: sourcePage,
+        source_cta: `${sourceKey}:warteliste`,
       });
       if (error) throw error;
 
@@ -1747,10 +1783,10 @@ const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps
         phone: phone.trim() || "",
         email: email.trim() || undefined,
         message:
-          `⏳ WARTELISTE — /kostenlose-vorschau\n` +
+          `⏳ WARTELISTE — ${telegramLabel}\n` +
           `👤 ${firstName.trim()}\n` +
           `📞 ${phone.trim() || "—"} · ${email.trim()}`,
-        source_cta: "kostenlose-vorschau:warteliste",
+        source_cta: `${sourceKey}:warteliste`,
       });
 
       setDone(true);
@@ -1791,6 +1827,8 @@ const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps
           isWaitlist={true}
           nextMonthLabel={nextMonthLabel}
           phoneNumber={phoneNumber}
+          sourceKey={sourceKey}
+          telegramLabel={telegramLabel}
         />
       </div>
     );
