@@ -1695,6 +1695,187 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Warteliste – kompakter Mini-Funnel (bei 0 freien Plätzen)
+// ─────────────────────────────────────────────────────────────────────────────
+
+type WaitlistMiniFormProps = {
+  nextMonthLabel: string;
+  phoneNumber?: string;
+};
+
+const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps) => {
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return;
+    if (!firstName.trim() || !email.trim()) {
+      toast.error("Bitte fülle Name und E-Mail aus.");
+      return;
+    }
+    if (!consent) {
+      toast.error("Bitte akzeptiere die Datenschutzhinweise.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const newLeadId = crypto.randomUUID();
+      const { error } = await supabase.from("leads").insert({
+        id: newLeadId,
+        first_name: firstName.trim(),
+        email: email.trim(),
+        phone: phone.trim() || "—",
+        company_name: "",
+        is_waitlist: true,
+        status: "warteliste",
+        notes: "waitlist",
+        source_page: "kostenlose-vorschau",
+        source_cta: "kostenlose-vorschau:warteliste",
+      });
+      if (error) throw error;
+
+      void submitLead({
+        name: firstName.trim(),
+        phone: phone.trim() || "",
+        email: email.trim() || undefined,
+        message:
+          `⏳ WARTELISTE — /kostenlose-vorschau\n` +
+          `👤 ${firstName.trim()}\n` +
+          `📞 ${phone.trim() || "—"} · ${email.trim()}`,
+        source_cta: "kostenlose-vorschau:warteliste",
+      });
+
+      setDone(true);
+    } catch (err) {
+      console.error(err);
+      toast.error("Da ist was schiefgelaufen — versuch's nochmal oder schreib uns auf WhatsApp.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (done) {
+    return (
+      <div className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8">
+        <SuccessScreen
+          firstName={firstName}
+          email={email}
+          company=""
+          phone={phone}
+          trade=""
+          tradeOther=""
+          hasWebsite=""
+          goals={[]}
+          urgency=""
+          currentWebsite=""
+          notes=""
+          leadId={null}
+          bookingMode={false}
+          setBookingMode={() => {}}
+          bookingDate=""
+          setBookingDate={() => {}}
+          bookingTime=""
+          setBookingTime={() => {}}
+          contactMethod=""
+          setContactMethod={() => {}}
+          bookingConfirmed={false}
+          setBookingConfirmed={() => {}}
+          isWaitlist={true}
+          nextMonthLabel={nextMonthLabel}
+          phoneNumber={phoneNumber}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8">
+      <div className="mb-5 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 px-4 py-1.5 text-sm font-semibold mb-3">
+          🚫 Diesen Monat sind alle Vorschau-Plätze vergeben.
+        </div>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto">
+          Trag dich in die Warteliste ein — sobald im nächsten Monat wieder Plätze frei sind,
+          meldest du dich zuerst.
+        </p>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="text-sm font-medium mb-1.5 block">Vorname *</label>
+          <Input
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="Max"
+            autoComplete="given-name"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium mb-1.5 block">E-Mail *</label>
+          <Input
+            required
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="max@mustermann.de"
+            autoComplete="email"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium mb-1.5 block">
+            Handynummer <span className="text-muted-foreground font-normal">(optional)</span>
+          </label>
+          <Input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="+49 ..."
+            autoComplete="tel"
+          />
+          <p className="text-xs text-muted-foreground mt-1">Für schnellere Info per WhatsApp.</p>
+        </div>
+        <label className="flex items-start gap-2 text-xs text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5"
+            required
+          />
+          <span>
+            Ich akzeptiere die{" "}
+            <Link to="/datenschutz" className="underline hover:text-foreground">
+              Datenschutzhinweise
+            </Link>
+            .
+          </span>
+        </label>
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="_gotcha"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          style={{ display: "none" }}
+          aria-hidden="true"
+        />
+        <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+          {submitting ? "Wird gesendet..." : "Auf die Warteliste"}
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Page
 // ─────────────────────────────────────────────────────────────────────────────
 
