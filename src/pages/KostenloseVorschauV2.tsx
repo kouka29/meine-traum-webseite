@@ -1523,17 +1523,19 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFor
               ? "Du zahlst monatlich, Hosting, Updates & Support inklusive."
               : "Wähle, wie du deine Website finanzieren möchtest."}
           </p>
-          <button
-            type="button"
-            onClick={() => update({ budgetModell: "unklar", budgetWert: "unsicher" })}
-            className={`text-sm underline-offset-4 hover:underline transition-colors ${
-              state.budgetModell === "unklar"
-                ? "text-primary font-semibold"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {state.budgetModell === "unklar" ? "✓ Ich bin mir noch nicht sicher" : "Ich bin mir noch nicht sicher"}
-          </button>
+          <div className="flex justify-center pt-1">
+            <button
+              type="button"
+              onClick={() => update({ budgetModell: "unklar", budgetWert: "unsicher" })}
+              className={`inline-flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-all ${
+                state.budgetModell === "unklar"
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-dashed border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground"
+              }`}
+            >
+              {state.budgetModell === "unklar" ? "✓ " : ""}Ich bin mir noch nicht sicher
+            </button>
+          </div>
 
           {/* Stufe B: Range-Chips */}
           <AnimatePresence initial={false}>
