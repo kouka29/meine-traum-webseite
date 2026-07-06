@@ -12,7 +12,7 @@ export function ProgressBar({ current, total }: { current: number; total: number
       </div>
       <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
         <motion.div
-          className="h-full rounded-full bg-primary"
+          className="h-full rounded-full gradient-bg"
           initial={false}
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.4, ease: "easeOut" }}

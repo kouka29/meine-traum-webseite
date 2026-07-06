@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, MessageCircle } from "lucide-react";
+import { Check, MessageCircle, ShieldCheck } from "lucide-react";
 import { useEffect } from "react";
 import { useFunnel } from "../state";
 import {
@@ -30,13 +30,16 @@ export default function Step5Danke() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.1, type: "spring", stiffness: 220, damping: 15 }}
-        className="w-20 h-20 rounded-full bg-primary text-primary-foreground mx-auto flex items-center justify-center mb-6 shadow-lg"
+        className="w-20 h-20 rounded-full gradient-bg text-primary-foreground mx-auto flex items-center justify-center mb-6 shadow-elegant"
       >
         <Check className="w-10 h-10" strokeWidth={3} />
       </motion.div>
 
       <h1 className="text-3xl md:text-4xl font-bold mb-3">
-        Stark, {vorname}! Dein Termin steht.
+        Stark, {vorname}!{" "}
+        <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+          Dein Termin steht.
+        </span>
       </h1>
       {state.terminDatum && (
         <p className="text-lg text-muted-foreground mb-8">
@@ -44,7 +47,7 @@ export default function Step5Danke() {
         </p>
       )}
 
-      <div className="rounded-2xl border bg-card p-6 text-left space-y-3 mb-6 shadow-sm">
+      <div className="rounded-2xl border bg-card p-6 text-left space-y-3 mb-6 shadow-elegant">
         <Row label="Betrieb" value={`${state.firmenname} · ${state.ort}`} />
         <Row label="Gewerk" value={state.gewerk} />
         {state.stil && <Row label="Stil" value={STIL_LABEL[state.stil] ?? state.stil} />}
@@ -55,10 +58,18 @@ export default function Step5Danke() {
         />
       </div>
 
-      <p className="text-muted-foreground mb-8">
+      <p className="text-muted-foreground mb-6">
         Wir melden uns zum Termin unter <strong>{state.telefon}</strong>. Deine Vorschau ist bis
         dahin fertig.
       </p>
+
+      <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm text-left flex gap-3 items-start mb-8">
+        <ShieldCheck className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+        <p className="text-muted-foreground">
+          <strong className="text-foreground">Erinnerung:</strong> Die Vorschau ist komplett
+          kostenlos. Wenn sie dir nicht gefällt, war&apos;s das — ohne Wenn und Aber.
+        </p>
+      </div>
 
       <a
         href={whatsappLink()}
