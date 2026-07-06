@@ -9,9 +9,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, ArrowLeft, Check, Clock, ShieldCheck, AlertTriangle, Trophy, ClipboardList, Wand2, Sparkles, Star, Lock, Phone, Zap, Brush, Wrench, Home, Axe, Trees, Car, Settings, XCircle, TrendingUp, MapPin, Award, Flame, Calendar, Share2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Clock, ShieldCheck, AlertTriangle, Trophy, ClipboardList, Wand2, Sparkles, Star, Lock, Phone, Zap, Brush, Wrench, Home, Axe, Trees, Car, Settings, XCircle, TrendingUp, MapPin, Award, Flame, Calendar, Share2, Info, CreditCard, RotateCcw } from "lucide-react";
 import { Calendar as CalendarIcon, Video, MessageCircle } from "lucide-react";
 import { ExternalLink } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertDialog,
   AlertDialogAction,
