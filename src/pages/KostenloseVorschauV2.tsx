@@ -9,9 +9,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowRight, ArrowLeft, Check, Clock, ShieldCheck, AlertTriangle, Trophy, ClipboardList, Wand2, Sparkles, Star, Lock, Phone, Zap, Brush, Wrench, Home, Axe, Trees, Car, Settings, XCircle, TrendingUp, MapPin, Award, Flame, Calendar, Share2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Clock, ShieldCheck, AlertTriangle, Trophy, ClipboardList, Wand2, Sparkles, Star, Lock, Phone, Zap, Brush, Wrench, Home, Axe, Trees, Car, Settings, XCircle, TrendingUp, MapPin, Award, Flame, Calendar, Share2, Info, CreditCard, RotateCcw } from "lucide-react";
 import { Calendar as CalendarIcon, Video, MessageCircle } from "lucide-react";
 import { ExternalLink } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,6 +41,54 @@ import Autoplay from "embla-carousel-autoplay";
 // ─────────────────────────────────────────────────────────────────────────────
 
 const STORAGE_KEY = "kostenlose-vorschau-v2-form";
+
+// Anzahl freier Vorschau-Plätze pro Kalendermonat (dynamisch nur nach "freigegeben"-Leads).
+const PLAETZE_PRO_MONAT = 5;
+
+// Anzahl Funnel-Schritte (1..TOTAL_STEPS).
+const TOTAL_STEPS = 6;
+
+const budgetChipsKaufen = [
+  "bis 1.000 €",
+  "1.000 – 2.500 €",
+  "2.500 – 5.000 €",
+  "5.000 – 10.000 €",
+  "10.000 – 20.000 €",
+  "Über 20.000 €",
+  "Unsicher — beratet mich",
+];
+
+const budgetChipsMieten = [
+  "bis 50 € / Monat",
+  "50 – 100 € / Monat",
+  "100 – 200 € / Monat",
+  "200 – 400 € / Monat",
+  "Über 400 € / Monat",
+  "Unsicher — beratet mich",
+];
+
+const nachSubmitFAQ = [
+  {
+    q: "Kostet die Vorschau wirklich nichts?",
+    a: "Ja. Erst wenn du sie live schalten willst, wird's kostenpflichtig. Vorher kein Cent.",
+  },
+  {
+    q: "Wie lange dauert die Prüfung, ob ich eine kostenlose Vorschau bekomme?",
+    a: "Max. 24 Stunden, meist schneller.",
+  },
+  {
+    q: "Was passiert, wenn ihr Nein sagt?",
+    a: "Wir schreiben dir ehrlich, warum, und empfehlen dir eine Alternative. Keine Kosten, kein Nachhaken.",
+  },
+  {
+    q: "Ich habe schon eine Website — bringt das trotzdem was?",
+    a: "Genau dann besonders. Wir bauen die Vorschau als Vergleich zu deiner aktuellen Seite.",
+  },
+  {
+    q: "Was passiert, wenn's passt?",
+    a: "Du bekommst per Mail/WhatsApp einen Link zum Onboarding. Da lädst du Logo & Fotos hoch, beantwortest 5 kurze Fragen und wählst deinen Vorschau-Termin.",
+  },
+];
 
 const tradeOptions = [
   { value: "Elektriker", icon: Zap },
@@ -272,6 +321,8 @@ type FormState = {
   bookingDate: string;
   bookingTime: string;
   contactMethod: "phone" | "online" | "";
+  budgetModell: "kaufen" | "mieten" | "unklar" | "";
+  budgetWert: string;
 };
 
 const initialState: FormState = {
@@ -290,6 +341,8 @@ const initialState: FormState = {
   bookingDate: "",
   bookingTime: "",
   contactMethod: "",
+  budgetModell: "",
+  budgetWert: "",
 };
 
 const TileButton = ({
@@ -461,6 +514,7 @@ type SuccessScreenProps = {
   setBookingConfirmed: (v: boolean) => void;
   isWaitlist: boolean;
   nextMonthLabel: string;
+  phoneNumber?: string;
 };
 
 const SuccessScreen = ({
@@ -488,6 +542,7 @@ const SuccessScreen = ({
   setBookingConfirmed,
   isWaitlist,
   nextMonthLabel,
+  phoneNumber,
 }: SuccessScreenProps) => {
   const dates = useMemo(() => getNextWeekdays(7), []);
   const [bookingSubmitting, setBookingSubmitting] = useState(false);
@@ -802,14 +857,14 @@ const SuccessScreen = ({
         </div>
         <h3 className="text-2xl sm:text-3xl font-bold mb-2">
           {isWaitlist
-            ? `Danke ${firstName}! Du stehst auf der ${nextMonthLabel}-Warteliste. 🙌`
-            : `Danke ${firstName}! Deine Anfrage ist da. 🙌`}
+            ? `Danke, ${firstName} — du stehst auf der Liste.`
+            : `Danke, ${firstName} — wir sind dran.`}
         </h3>
         <p className="text-muted-foreground max-w-md mx-auto">
           {isWaitlist ? (
-            <>Sobald die Plätze für <strong>{nextMonthLabel}</strong> freigeschaltet werden, melden wir uns zuerst bei Dir. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+            <>Wir melden uns Anfang <strong>{nextMonthLabel}</strong>, sobald neue Plätze frei sind. Eine Bestätigung kommt an <strong>{email}</strong>.</>
           ) : (
-            <>Wir melden uns kurz telefonisch, um zu schauen, ob es passt – dann sichern wir Deinen Platz. Eine Bestätigung kommt an <strong>{email}</strong>.</>
+            <>Wir schauen uns deine Infos in den nächsten <strong>24 Stunden</strong> an und melden uns per WhatsApp oder E-Mail. Wenn's passt, schicken wir dir direkt den Link zum Onboarding, wo du Logo, Fotos und Wunschtermin hinterlegst.</>
           )}
         </p>
       </div>
@@ -907,6 +962,66 @@ const SuccessScreen = ({
         <MessageCircle className="w-3.5 h-3.5" aria-hidden={true} focusable={false} />
         Schau auch in Deinen Spam-Ordner – manchmal landet die Bestätigung dort.
       </p>
+
+      {/* Warum wir manchmal Nein sagen (nur bei normaler Anfrage) */}
+      {!isWaitlist && (
+        <section className="mt-10 pt-8 border-t border-border">
+          <h4 className="text-lg sm:text-xl font-bold mb-3">Warum wir manchmal Nein sagen</h4>
+          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+            Wir bauen jede Vorschau selbst — kein Baukasten, kein Copy-Paste. Das kostet uns pro
+            Kunde mehrere Stunden. Deshalb sagen wir manchmal ehrlich Nein — zum Beispiel wenn:
+          </p>
+          <ul className="space-y-2.5 text-sm text-foreground/90 mb-4">
+            <li className="flex gap-2.5">
+              <Check className="w-4 h-4 text-primary/70 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+              <span>Wir merken, dass deine Branche nicht zu unserer Expertise passt.</span>
+            </li>
+            <li className="flex gap-2.5">
+              <Check className="w-4 h-4 text-primary/70 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+              <span>Grundlegende Infos zu deinem Betrieb fehlen oder nicht auffindbar sind.</span>
+            </li>
+            <li className="flex gap-2.5">
+              <Check className="w-4 h-4 text-primary/70 mt-0.5 shrink-0" aria-hidden={true} focusable={false} />
+              <span>Die Erwartung nicht zur Realität passt (z. B. „Website + Online-Shop + App für 500 €").</span>
+            </li>
+          </ul>
+          <p className="text-sm text-muted-foreground">
+            Kein Drama, keine Kosten — wir sagen dir dann direkt, was besser zu dir passt.
+          </p>
+        </section>
+      )}
+
+      {/* Häufige Fragen */}
+      <section className="mt-8 pt-8 border-t border-border">
+        <h4 className="text-lg sm:text-xl font-bold mb-3">Häufige Fragen</h4>
+        <Accordion type="single" collapsible className="w-full">
+          {nachSubmitFAQ.map((item, i) => (
+            <AccordionItem key={i} value={`item-${i}`}>
+              <AccordionTrigger className="text-left text-sm sm:text-base font-semibold">
+                {item.q}
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                {item.a}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </section>
+
+      {/* Sekundär-CTA: WhatsApp */}
+      {phoneNumber && (
+        <p className="text-sm text-center mt-8">
+          <a
+            href={`https://wa.me/${phoneNumber.replace(/[^\d]/g, "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline underline-offset-4"
+          >
+            <MessageCircle className="w-4 h-4" aria-hidden={true} focusable={false} />
+            Frage vorab? Schreib uns direkt auf WhatsApp
+          </a>
+        </p>
+      )}
     </div>
   );
 };
@@ -914,9 +1029,10 @@ const SuccessScreen = ({
 type MultiStepFormProps = {
   isWaitlist: boolean;
   nextMonthLabel: string;
+  phoneNumber?: string;
 };
 
-const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
+const MultiStepForm = ({ isWaitlist, nextMonthLabel, phoneNumber }: MultiStepFormProps) => {
   const [state, setState] = useState<FormState>(initialState);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -974,7 +1090,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
     setState((s) => ({ ...s, ...patch }));
   }, []);
 
-  const next = () => setState((s) => ({ ...s, step: Math.min(5, s.step + 1) }));
+  const next = () => setState((s) => ({ ...s, step: Math.min(TOTAL_STEPS, s.step + 1) }));
   const prev = () => setState((s) => ({ ...s, step: Math.max(1, s.step - 1) }));
 
   const toggleGoal = (g: string) =>
@@ -1019,6 +1135,8 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
           current_website: state.currentWebsite || null,
           notes: state.notes || null,
           is_waitlist: isWaitlist,
+          budget_modell: state.budgetModell || null,
+          budget_wert: state.budgetWert || null,
         });
 
       if (leadError) {
@@ -1084,7 +1202,13 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         name: state.firstName,
         phone: state.phone,
         email: state.email || undefined,
-        message: `${state.company}${state.notes ? ` – ${state.notes}` : ""}`,
+        message:
+          `🆕 NEUE ANFRAGE — /kostenlose-vorschau\n` +
+          `👤 ${state.firstName} · ${state.company}\n` +
+          `🔧 ${state.trade === "Sonstiges" && state.tradeOther ? `Sonstiges: ${state.tradeOther}` : state.trade || "—"}\n` +
+          `🌐 ${state.currentWebsite || (state.hasWebsite === "Nein, noch gar keine" ? "keine Website" : state.hasWebsite || "—")}\n` +
+          `💰 ${state.budgetModell || "—"}: ${state.budgetWert || "—"}\n` +
+          `📞 ${state.phone}${state.email ? ` · ${state.email}` : ""}`,
         source_cta: "kostenlose-vorschau-v2:lead",
       });
     } catch (err) {
@@ -1092,7 +1216,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       setSubmitError(
         "Etwas ist schiefgelaufen. Bitte ruf mich direkt an: 06131 3076498",
       );
-      toast.error("Etwas ist schiefgelaufen. Bitte versuche es erneut.");
+      toast.error("Da ist was schiefgelaufen — versuch's nochmal oder schreib uns auf WhatsApp.");
     } finally {
       setSubmitting(false);
     }
@@ -1190,11 +1314,12 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         setBookingConfirmed={setBookingConfirmed}
         isWaitlist={isWaitlist}
         nextMonthLabel={nextMonthLabel}
+        phoneNumber={phoneNumber}
       />
     );
   }
 
-  const progressPct = (state.step / 5) * 100;
+  const progressPct = (state.step / TOTAL_STEPS) * 100;
 
   return (
     <div
@@ -1204,7 +1329,7 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
       {/* Progress */}
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-medium mb-2">
-          <span>Schritt {state.step} von 5</span>
+          <span>Schritt {state.step} von {TOTAL_STEPS}</span>
           <span className="text-muted-foreground">{Math.round(progressPct)}%</span>
         </div>
         <Progress value={progressPct} className="h-2" />
@@ -1270,38 +1395,50 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
                 selected={state.hasWebsite === opt.value}
                 onClick={() => {
                   update({ hasWebsite: opt.value });
-                  // Bei "Ja, und ich bin zufrieden" zeigen wir einen Hinweis
-                  // und lassen den Nutzer manuell auf "Weiter" klicken.
-                  if (opt.value !== "Ja, und ich bin zufrieden") {
+                  // Bei "Ja"-Optionen bleiben wir stehen, damit der User die
+                  // optionale Website-URL eingeben kann. Bei "Nein" automatisch weiter.
+                  if (opt.value === "Nein, noch gar keine") {
                     setTimeout(next, 200);
                   }
                 }}
               />
             ))}
           </div>
-          {state.hasWebsite === "Ja, und ich bin zufrieden" && (
-            <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-4">
-              <div
-                className="rounded-lg p-3 text-sm border"
-                style={{ backgroundColor: "#F0FFF4", borderColor: "#C6F6D5" }}
+          <AnimatePresence initial={false}>
+            {state.hasWebsite.startsWith("Ja") && (
+              <motion.div
+                key="website-url-field"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
               >
-                <p className="text-emerald-800 leading-relaxed">
-                  💡 Gut! Wusstest Du dass man auch eine bestehende Website noch
-                  deutlich mehr Kunden bringen kann?
-                  <br />
-                  Wir zeigen Dir kostenlos was möglich ist.
-                </p>
-              </div>
-              <Button
-                type="button"
-                size="lg"
-                onClick={next}
-                className="w-full sm:w-auto"
-              >
-                Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
-              </Button>
-            </div>
-          )}
+                <div className="space-y-3 pt-2">
+                  <label className="text-sm font-medium block">
+                    Link zu deiner aktuellen Website{" "}
+                    <span className="text-muted-foreground font-normal">(optional)</span>
+                  </label>
+                  <Input
+                    type="url"
+                    value={state.currentWebsite}
+                    onChange={(e) => update({ currentWebsite: e.target.value })}
+                    placeholder="https://…"
+                    autoComplete="url"
+                    inputMode="url"
+                  />
+                  <Button
+                    type="button"
+                    size="lg"
+                    onClick={next}
+                    className="w-full sm:w-auto"
+                  >
+                    Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       )}
 
@@ -1354,8 +1491,110 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
         </div>
       )}
 
-      {/* Step 5 */}
+      {/* Step 5 – Budget */}
       {state.step === 5 && (
+        <div className="space-y-5">
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold">Welches Budget hast du im Blick?</h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Damit wir dir realistische Vorschläge machen – kein Cent-genauer Preis nötig.
+            </p>
+          </div>
+
+          {/* Stufe A: Modell */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <TileButton
+              icon={CreditCard}
+              label="Kaufen (Einmalzahlung)"
+              selected={state.budgetModell === "kaufen"}
+              onClick={() => update({ budgetModell: "kaufen", budgetWert: "" })}
+            />
+            <TileButton
+              icon={RotateCcw}
+              label="Mieten (monatlich)"
+              selected={state.budgetModell === "mieten"}
+              onClick={() => update({ budgetModell: "mieten", budgetWert: "" })}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground -mt-2">
+            {state.budgetModell === "kaufen"
+              ? "Du kaufst die Website einmalig und sie gehört dir."
+              : state.budgetModell === "mieten"
+              ? "Du zahlst monatlich, Hosting, Updates & Support inklusive."
+              : "Wähle, wie du deine Website finanzieren möchtest."}
+          </p>
+          <button
+            type="button"
+            onClick={() => update({ budgetModell: "unklar", budgetWert: "unsicher" })}
+            className={`text-sm underline-offset-4 hover:underline transition-colors ${
+              state.budgetModell === "unklar"
+                ? "text-primary font-semibold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {state.budgetModell === "unklar" ? "✓ Ich bin mir noch nicht sicher" : "Ich bin mir noch nicht sicher"}
+          </button>
+
+          {/* Stufe B: Range-Chips */}
+          <AnimatePresence initial={false}>
+            {(state.budgetModell === "kaufen" || state.budgetModell === "mieten") && (
+              <motion.div
+                key={`chips-${state.budgetModell}`}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="pt-1 space-y-3">
+                  <label className="text-sm font-medium block">
+                    {state.budgetModell === "kaufen"
+                      ? "Ungefährer Budgetrahmen"
+                      : "Monatliches Budget"}
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {(state.budgetModell === "kaufen" ? budgetChipsKaufen : budgetChipsMieten).map(
+                      (chip) => {
+                        const active = state.budgetWert === chip;
+                        return (
+                          <button
+                            key={chip}
+                            type="button"
+                            onClick={() => update({ budgetWert: chip })}
+                            className={`min-h-12 rounded-xl border-2 px-3 py-2 text-sm font-semibold transition-all ${
+                              active
+                                ? "border-primary bg-primary text-primary-foreground shadow-md"
+                                : "border-border bg-card hover:border-primary/40"
+                            }`}
+                          >
+                            {chip}
+                          </button>
+                        );
+                      },
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <Button
+            type="button"
+            size="lg"
+            className="w-full sm:w-auto"
+            disabled={
+              !state.budgetModell ||
+              (state.budgetModell !== "unklar" && !state.budgetWert)
+            }
+            onClick={next}
+          >
+            Weiter <ArrowRight className="ml-2 w-4 h-4" aria-hidden={true} focusable={false} />
+          </Button>
+        </div>
+      )}
+
+      {/* Step 6 – Kontaktdaten */}
+      {state.step === 6 && (
         <form onSubmit={handleSubmit} className="space-y-5">
           <h3 className="text-xl sm:text-2xl font-bold">
             Fast geschafft! Wie kann ich Du erreichst?
@@ -1456,6 +1695,187 @@ const MultiStepForm = ({ isWaitlist, nextMonthLabel }: MultiStepFormProps) => {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Warteliste – kompakter Mini-Funnel (bei 0 freien Plätzen)
+// ─────────────────────────────────────────────────────────────────────────────
+
+type WaitlistMiniFormProps = {
+  nextMonthLabel: string;
+  phoneNumber?: string;
+};
+
+const WaitlistMiniForm = ({ nextMonthLabel, phoneNumber }: WaitlistMiniFormProps) => {
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return;
+    if (!firstName.trim() || !email.trim()) {
+      toast.error("Bitte fülle Name und E-Mail aus.");
+      return;
+    }
+    if (!consent) {
+      toast.error("Bitte akzeptiere die Datenschutzhinweise.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const newLeadId = crypto.randomUUID();
+      const { error } = await supabase.from("leads").insert({
+        id: newLeadId,
+        first_name: firstName.trim(),
+        email: email.trim(),
+        phone: phone.trim() || "—",
+        company_name: "",
+        is_waitlist: true,
+        status: "warteliste",
+        notes: "waitlist",
+        source_page: "kostenlose-vorschau",
+        source_cta: "kostenlose-vorschau:warteliste",
+      });
+      if (error) throw error;
+
+      void submitLead({
+        name: firstName.trim(),
+        phone: phone.trim() || "",
+        email: email.trim() || undefined,
+        message:
+          `⏳ WARTELISTE — /kostenlose-vorschau\n` +
+          `👤 ${firstName.trim()}\n` +
+          `📞 ${phone.trim() || "—"} · ${email.trim()}`,
+        source_cta: "kostenlose-vorschau:warteliste",
+      });
+
+      setDone(true);
+    } catch (err) {
+      console.error(err);
+      toast.error("Da ist was schiefgelaufen — versuch's nochmal oder schreib uns auf WhatsApp.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (done) {
+    return (
+      <div className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8">
+        <SuccessScreen
+          firstName={firstName}
+          email={email}
+          company=""
+          phone={phone}
+          trade=""
+          tradeOther=""
+          hasWebsite=""
+          goals={[]}
+          urgency=""
+          currentWebsite=""
+          notes=""
+          leadId={null}
+          bookingMode={false}
+          setBookingMode={() => {}}
+          bookingDate=""
+          setBookingDate={() => {}}
+          bookingTime=""
+          setBookingTime={() => {}}
+          contactMethod=""
+          setContactMethod={() => {}}
+          bookingConfirmed={false}
+          setBookingConfirmed={() => {}}
+          isWaitlist={true}
+          nextMonthLabel={nextMonthLabel}
+          phoneNumber={phoneNumber}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-card rounded-2xl shadow-xl border border-border p-5 sm:p-8">
+      <div className="mb-5 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 px-4 py-1.5 text-sm font-semibold mb-3">
+          🚫 Diesen Monat sind alle Vorschau-Plätze vergeben.
+        </div>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto">
+          Trag dich in die Warteliste ein — sobald im nächsten Monat wieder Plätze frei sind,
+          meldest du dich zuerst.
+        </p>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="text-sm font-medium mb-1.5 block">Vorname *</label>
+          <Input
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="Max"
+            autoComplete="given-name"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium mb-1.5 block">E-Mail *</label>
+          <Input
+            required
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="max@mustermann.de"
+            autoComplete="email"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium mb-1.5 block">
+            Handynummer <span className="text-muted-foreground font-normal">(optional)</span>
+          </label>
+          <Input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="+49 ..."
+            autoComplete="tel"
+          />
+          <p className="text-xs text-muted-foreground mt-1">Für schnellere Info per WhatsApp.</p>
+        </div>
+        <label className="flex items-start gap-2 text-xs text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5"
+            required
+          />
+          <span>
+            Ich akzeptiere die{" "}
+            <Link to="/datenschutz" className="underline hover:text-foreground">
+              Datenschutzhinweise
+            </Link>
+            .
+          </span>
+        </label>
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="_gotcha"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          style={{ display: "none" }}
+          aria-hidden="true"
+        />
+        <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+          {submitting ? "Wird gesendet..." : "Auf die Warteliste"}
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Page
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -1463,8 +1883,24 @@ const KostenloseVorschauV2 = () => {
   const { settings, demos: dbDemos, faqs: dbFaqs, portfolio, testimonials: dbTestimonials } = useVorschauSettings("v2");
   const [demosApi, setDemosApi] = useState<CarouselApi>();
   const [testimonialsApi, setTestimonialsApi] = useState<CarouselApi>();
-  const totalSlots = settings?.total_slots ?? 5;
-  const takenSlots = Math.min(settings?.taken_slots ?? 3, totalSlots);
+  // Dynamischer Platz-Zähler: nur "freigegebene" Anfragen im laufenden Monat
+  // zählen als belegt (nicht "neu"). Fail-open: bei Fehler bleiben alle Plätze frei.
+  const [belegteSlots, setBelegteSlots] = useState<number>(0);
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .rpc("count_freigegebene_leads_this_month")
+      .then(({ data, error }) => {
+        if (cancelled) return;
+        if (error) return; // fail-open
+        if (typeof data === "number") setBelegteSlots(data);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  const totalSlots = PLAETZE_PRO_MONAT;
+  const takenSlots = Math.min(belegteSlots, totalSlots);
   const remainingSlots = Math.max(0, totalSlots - takenSlots);
   const slotPct = totalSlots > 0 ? (takenSlots / totalSlots) * 100 : 0;
   const monatName = useMemo(
@@ -1726,7 +2162,26 @@ const KostenloseVorschauV2 = () => {
             )}
           </div>
           <div className="max-w-2xl mx-auto">
-            <MultiStepForm isWaitlist={isWaitlist} nextMonthLabel={nextMonthLabel} />
+            {isWaitlist ? (
+              <WaitlistMiniForm
+                nextMonthLabel={nextMonthLabel}
+                phoneNumber={settings?.phone_number}
+              />
+            ) : (
+              <MultiStepForm
+                isWaitlist={isWaitlist}
+                nextMonthLabel={nextMonthLabel}
+                phoneNumber={settings?.phone_number}
+              />
+            )}
+            {/* Erwartungssetzende Hinweis-Box (nicht abschreckend) */}
+            <div className="mt-4 flex items-start gap-2 rounded-xl border border-border bg-muted/40 px-3 py-2.5 text-xs text-muted-foreground">
+              <Info className="w-3.5 h-3.5 mt-0.5 shrink-0 text-primary/70" aria-hidden={true} focusable={false} />
+              <p className="leading-relaxed">
+                Hinweis: Wir bauen jede Vorschau von Hand. Deshalb schauen wir kurz, ob's für
+                dich und für uns passt. Details dazu bekommst du direkt nach dem Absenden.
+              </p>
+            </div>
           </div>
         </div>
       </section>
