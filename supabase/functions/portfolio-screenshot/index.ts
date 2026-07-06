@@ -48,6 +48,13 @@ Deno.serve(async (req) => {
     }
 
     const body = await req.json().catch(() => null);
+    const ADMIN_PASSWORD = Deno.env.get("ADMIN_PASSWORD");
+    if (!ADMIN_PASSWORD || typeof body?.password !== "string" || body.password !== ADMIN_PASSWORD) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
     let url = typeof body?.url === "string" ? body.url.trim() : "";
     if (url && !/^https?:\/\//i.test(url)) {
       url = `https://${url.replace(/^\/+/, "")}`;
