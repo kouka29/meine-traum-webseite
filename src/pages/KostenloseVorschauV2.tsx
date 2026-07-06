@@ -1365,9 +1365,9 @@ export const MultiStepForm = ({
       {/* Step 1 */}
       {state.step === 1 && (
         <div className="space-y-5">
-          <h3 className="text-xl sm:text-2xl font-bold">Was machst Du beruflich?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">{tradeQuestion}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {tradeOptions.map((opt) => (
+            {activeTradeOptions.map((opt) => (
               <TileButton
                 key={opt.value}
                 icon={opt.icon}
@@ -1385,12 +1385,12 @@ export const MultiStepForm = ({
           {state.trade === "Sonstiges" && (
             <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
               <label className="text-sm font-medium block">
-                Beschreibe kurz, was Du beruflich machen *
+                {sonstigesLabel}
               </label>
               <Input
                 value={state.tradeOther}
                 onChange={(e) => update({ tradeOther: e.target.value })}
-                placeholder="z. B. Bodenleger, Fliesenleger, Fensterbauer ..."
+                placeholder={sonstigesPlaceholder}
                 maxLength={120}
                 autoFocus
               />
