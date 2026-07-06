@@ -1,17 +1,30 @@
-## Lesbarkeit auf `/vorschau-start` fixen
+## Problem
 
-### Ursache
-Ich hatte im letzten Design-Pass `gradient-hero-bg` als Seiten-Background gesetzt. Dieses Token ist aber ein saturierter Vollton-Verlauf (`#8441E3 → #3488DF`) und nur für den Hero-Bereich mit weißem Text gedacht. Dadurch:
-- Dunkler Text wird unlesbar (grau auf lila).
-- Der Gradient-Text der H1 („Dein Termin steht") verschwindet komplett, weil der Farbverlauf des Textes fast identisch zum Hintergrund ist.
-- Cards wirken bläulich getönt statt sauber weiß.
+Auf `/kostenlose-vorschau` zeigen 4 Portfolio-Karten das Bild „This site can't be reached" statt der echten Website-Vorschau:
 
-### Fix
+- Elektrotechnik Fretter
+- CBI – Sanitär & Heizung
+- ME-KA – Maler- & Estrich GmbH
+- Pro Smart Store
 
-**`src/pages/VorschauStart.tsx`**
-- `gradient-hero-bg` → `gradient-subtle-bg` (pastelliger Hell-Hintergrund, exakt wie der Rest der Seite).
+## Ursache
 
-Damit erben alle Steps sofort den korrekten hellen Untergrund; Cards, Texte, Gradient-Headlines und Buttons sind wieder lesbar. Keine weiteren Änderungen an Steps nötig.
+Die Screenshots in der Datenbank sind veraltete `auto/v3/…jpg`-Dateien (das aktuelle Format ist `auto/v5/`). Zum Zeitpunkt der Aufnahme war die Ziel-Domain kurz nicht erreichbar, deshalb hat der Screenshot-Dienst (Microlink) die Chrome-Fehlerseite fotografiert und diese landete im Storage. Die Domains selbst funktionieren jetzt wieder (HTTP 200 geprüft), aber das falsche Bild bleibt gespeichert, bis wir es neu erzeugen.
 
-### Betroffene Datei
-- `src/pages/VorschauStart.tsx` (eine Class-Änderung)
+## Fix
+
+Die vier betroffenen Karten neu screenshotten und dabei den Cache zwingend überschreiben.
+
+### Schritte
+
+1. Für jedes der 4 Portfolio-Projekte die Edge-Funktion `portfolio-screenshot` mit `force: true` aufrufen (`projectId`, `key` = Projekt-ID, `url` aus DB). Die Funktion:
+   - lädt einen neuen Screenshot von der jetzt erreichbaren Domain,
+   - speichert ihn unter `auto/v5/<id>.jpg`,
+   - aktualisiert `portfolio_projects.screenshot_url` + `screenshot_updated_at`.
+2. Vorschau-Seite prüfen, dass alle 4 Karten die echte Website zeigen.
+
+Kein Code-Change nötig – nur einmaliges Re-Generieren der Bilder über die bestehende Funktion.
+
+### Optional (falls gewünscht, sonst weglassen)
+
+Kleine Härtung in `supabase/functions/portfolio-screenshot/index.ts`: den heruntergeladenen Screenshot verwerfen, wenn er offensichtlich eine Browser-Fehlerseite ist (z. B. Response-Statuscheck der Ziel-URL vor dem Speichern via `fetch(url, {method:"HEAD"})`; nur bei 2xx speichern). Damit passiert dieses „stale error screenshot"-Problem nicht wieder.
