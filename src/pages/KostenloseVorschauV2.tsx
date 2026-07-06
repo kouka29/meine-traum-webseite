@@ -1340,6 +1340,8 @@ export const MultiStepForm = ({
         isWaitlist={isWaitlist}
         nextMonthLabel={nextMonthLabel}
         phoneNumber={phoneNumber}
+        sourceKey={sourceKey}
+        telegramLabel={telegramLabel}
       />
     );
   }
