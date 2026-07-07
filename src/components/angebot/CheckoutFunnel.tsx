@@ -353,6 +353,8 @@ export default function CheckoutFunnel({
               min_term_months: 12,
             },
           } : {}),
+          ...(sourceDemo ? { source_demo: sourceDemo, source_cta: `demo:${sourceDemo}` } : {}),
+          ...(offerCode ? { offer_code: offerCode } : {}),
           agb_akzeptiert: true,
           kostenpflichtig_bestaetigt: true,
         },
