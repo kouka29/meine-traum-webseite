@@ -773,7 +773,7 @@ export default function CheckoutFunnel({
                       {activeOffer && activeOffer.mode === "miete" ? (
                         <>
                           <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtMonatlich)}</span>
-                          {fmtEUR(gesamtMonatlich - (activeOffer.base - activeOffer.discounted))}
+                          {fmtEUR(effGesamtMonatlich)}
                         </>
                       ) : (
                         fmtEUR(gesamtMonatlich)
@@ -786,7 +786,7 @@ export default function CheckoutFunnel({
                     activeOffer ? (
                       <>
                         <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(heuteZuZahlen)}</span>
-                        {fmtEUR(Math.max(0, heuteZuZahlen - (activeOffer.base - activeOffer.discounted)))}
+                        {fmtEUR(effHeuteZuZahlen)}
                       </>
                     ) : (
                       fmtEUR(heuteZuZahlen)
@@ -795,7 +795,7 @@ export default function CheckoutFunnel({
                     activeOffer && activeOffer.mode === "kauf" ? (
                       <>
                         <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtEinmalig)}</span>
-                        {fmtEUR(gesamtEinmalig - (activeOffer.base - activeOffer.discounted))}
+                        {fmtEUR(effGesamtEinmalig)}
                       </>
                     ) : (
                       fmtEUR(gesamtEinmalig)
