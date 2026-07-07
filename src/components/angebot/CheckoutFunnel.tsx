@@ -825,14 +825,19 @@ export default function CheckoutFunnel({
   );
 }
 
+type OfferSide = { regular: number; discounted: number; note?: string };
+type OffersByMode = { miete?: OfferSide; kauf?: OfferSide };
+
 // ─── STEP 0: ZAHLUNGSMODELL ────────────────────────────
 function StepPaket({
-  pakete, selectedId, onSelect, paymentConfig,
+  pakete, selectedId, onSelect, paymentConfig, offersByMode, offerPlan,
 }: {
   pakete: FunnelPaket[];
   selectedId: string;
   onSelect: (id: string) => void;
   paymentConfig: PaymentConfig;
+  offersByMode?: OffersByMode;
+  offerPlan?: "pro" | "starter" | "premium";
 }) {
   const mieteGloballyEnabled = !!paymentConfig.miete?.enabled;
   return (
@@ -848,6 +853,11 @@ function StepPaket({
           const active = p.id === selectedId;
           const recommended = pakete.length >= 3 ? idx === 1 : (idx === pakete.length - 1 && pakete.length > 1);
           const showMiete = mieteGloballyEnabled && p.miete_monatlich && Number(p.miete_monatlich) > 0;
+          const paketMatchesOffer = offerPlan
+            ? p.id.toLowerCase().startsWith(offerPlan)
+            : false;
+          const mieteOffer = paketMatchesOffer ? offersByMode?.miete : undefined;
+          const kaufOffer = paketMatchesOffer ? offersByMode?.kauf : undefined;
           return (
             <button
               key={p.id}
@@ -880,14 +890,40 @@ function StepPaket({
                   <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10 }}>
                     {showMiete && (
                       <div style={{ fontSize: 20, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                        {fmtEUR(Number(p.miete_monatlich))}
+                        {mieteOffer ? (
+                          <>
+                            <span style={{ textDecoration: "line-through", fontSize: 13, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(mieteOffer.regular)}</span>
+                            {fmtEUR(mieteOffer.discounted)}
+                          </>
+                        ) : (
+                          fmtEUR(Number(p.miete_monatlich))
+                        )}
                         <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span>
                       </div>
                     )}
                     <div style={{ fontSize: showMiete ? 13 : 20, fontWeight: showMiete ? 600 : 800, color: showMiete ? TEXT_MUTED : BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                      {showMiete ? `oder ${fmtEUR(p.preis)} einmalig` : fmtEUR(p.preis)}
+                      {kaufOffer ? (
+                        showMiete ? (
+                          <>
+                            oder <span style={{ textDecoration: "line-through", marginRight: 4 }}>{fmtEUR(kaufOffer.regular)}</span>
+                            <strong style={{ color: BRAND }}>{fmtEUR(kaufOffer.discounted)}</strong> einmalig
+                          </>
+                        ) : (
+                          <>
+                            <span style={{ textDecoration: "line-through", fontSize: 14, marginRight: 6, color: TEXT_MUTED }}>{fmtEUR(kaufOffer.regular)}</span>
+                            {fmtEUR(kaufOffer.discounted)}
+                          </>
+                        )
+                      ) : (
+                        showMiete ? `oder ${fmtEUR(p.preis)} einmalig` : fmtEUR(p.preis)
+                      )}
                     </div>
                   </div>
+                  {(mieteOffer || kaufOffer) && (
+                    <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 6, lineHeight: 1.4 }}>
+                      🎁 {mieteOffer?.note ?? kaufOffer?.note ?? "Angebotspreis aktiv"}
+                    </div>
+                  )}
                   {showMiete && (
                     <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 6, lineHeight: 1.4 }}>
                       zzgl. 19% MwSt. · 12 Monate Laufzeit, danach monatlich kündbar
@@ -913,7 +949,7 @@ function StepPaket({
 
 // ─── STEP 1: ZAHLUNGSMODELL ────────────────────────────
 function StepZahlung({
-  paket, paymentMode, setPaymentMode, paymentConfig, kaufEnabled, mieteEnabled,
+  paket, paymentMode, setPaymentMode, paymentConfig, kaufEnabled, mieteEnabled, offersByMode,
 }: {
   paket: FunnelPaket;
   paymentMode: PaymentMode;
@@ -921,6 +957,7 @@ function StepZahlung({
   paymentConfig: PaymentConfig;
   kaufEnabled: boolean;
   mieteEnabled: boolean;
+  offersByMode?: OffersByMode;
 }) {
   // marker
   return (
@@ -940,6 +977,11 @@ function StepZahlung({
             badge="EMPFOHLEN"
             title="Monatliche Miete"
             price={`${fmtEUR(Number(paket.miete_monatlich))} /Monat`}
+            offerPrice={offersByMode?.miete ? {
+              regular: `${fmtEUR(offersByMode.miete.regular)} /Monat`,
+              discounted: `${fmtEUR(offersByMode.miete.discounted)} /Monat`,
+              note: offersByMode.miete.note,
+            } : undefined}
             subtitle={`Mindestlaufzeit ${paymentConfig.miete?.min_months ?? 12} Monate · danach jederzeit kündbar`}
             benefits={[
               "Niedrigere Einstiegshürde",
@@ -955,6 +997,11 @@ function StepZahlung({
             onClick={() => setPaymentMode("kauf")}
             title="Einmalkauf"
             price={fmtEUR(paket.preis)}
+            offerPrice={offersByMode?.kauf ? {
+              regular: fmtEUR(offersByMode.kauf.regular),
+              discounted: fmtEUR(offersByMode.kauf.discounted),
+              note: offersByMode.kauf.note,
+            } : undefined}
             subtitle={
               paymentConfig.kauf?.mode === "deposit" && paymentConfig.kauf.deposit_percent
                 ? `${paymentConfig.kauf.deposit_percent}% Anzahlung heute · Rest nach Lieferung`
@@ -974,7 +1021,7 @@ function StepZahlung({
 }
 
 function PaymentCard({
-  active, onClick, badge, title, price, subtitle, benefits, emoji,
+  active, onClick, badge, title, price, subtitle, benefits, emoji, offerPrice,
 }: {
   active: boolean;
   onClick: () => void;
@@ -984,6 +1031,7 @@ function PaymentCard({
   subtitle: string;
   benefits: string[];
   emoji: string;
+  offerPrice?: { regular: string; discounted: string; note?: string };
 }) {
   return (
     <button
@@ -1021,9 +1069,23 @@ function PaymentCard({
           transition: "all 0.15s",
         }} />
       </div>
-      <div style={{ fontSize: 26, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 4 }}>
-        {price}
-      </div>
+      {offerPrice ? (
+        <>
+          <div style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED, textDecoration: "line-through", lineHeight: 1.1, marginBottom: 2 }}>
+            {offerPrice.regular}
+          </div>
+          <div style={{ fontSize: 26, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 4 }}>
+            {offerPrice.discounted}
+          </div>
+          {offerPrice.note && (
+            <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginBottom: 6 }}>🎁 {offerPrice.note}</div>
+          )}
+        </>
+      ) : (
+        <div style={{ fontSize: 26, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 4 }}>
+          {price}
+        </div>
+      )}
       <div style={{ fontSize: 12, color: TEXT_MUTED, marginBottom: 10 }}>{subtitle}</div>
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
         {benefits.map((b, i) => (
