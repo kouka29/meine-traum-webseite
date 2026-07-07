@@ -1,92 +1,56 @@
+# MTW — Angebots-Popup + Preis-Konsistenz v2 (Update-Plan)
 
-## Ziel
+Erweitert den bestehenden Plan um zwei fehlende Punkte:
+**(A)** Preis der Bestellzusammenfassung im Kontakt-Schritt nutzt jetzt Angebotspreis (MwSt/Gesamt daraus abgeleitet).
+**(B)** Bei aktivem Demo-Angebot läuft der komplette Checkout in einem **zentrierten Modal** statt der Seitenleiste.
 
-Wenn `/preise?demo=SLUG` geöffnet wird und der Slug in einer zentralen Registry existiert, erscheint ein zentrales, hochwertiges Angebots-Popup, das beide Optionen (Miete + Kauf) mit durchgestrichenem Regulärpreis → Angebotspreis zeigt. Der gewählte Rabatt wird konsistent im Checkout-Funnel (Paket-, Zahlungs- und Auswahl-Schritt) angezeigt und serverseitig über den passenden Stripe-Coupon abgerechnet.
-
-Ohne `demo` bleibt `/preise` unverändert.
+Registry (`src/config/demoOffers.ts`), `DemoOfferPopup`, Deep-Link-Handler, Legacy-`offer`-Fallback und die serverseitige Coupon-Validierung sind bereits umgesetzt und bleiben unverändert.
 
 ## Änderungen
 
-### 1) Neue Registry: `src/config/demoOffers.ts`
+### 1) `src/components/angebot/CheckoutFunnel.tsx`
 
-Typed `DemoOffer` + `DEMO_OFFERS` mit Slug-Lookup (case-insensitiv). Initial ein Eintrag `CBI` (Christopher, Pro):
+**Layout-Umschaltung (Sidebar ↔ zentriertes Modal)**
+- Neuer optionaler Prop `layout?: "sidebar" | "centered"` (default `"sidebar"`).
+- `layout === "centered"`:
+  - Wrapper: `alignItems: "center"`, `justifyContent: "center"`, `padding: 24`.
+  - Panel: `maxWidth: 680`, `height: "auto"`, `maxHeight: "calc(100vh - 48px)"`, `borderRadius: 20`, andere Shadow, Animation `funnelZoomIn` statt `funnelSlideIn`.
+  - Mobile (< 767px): weiterhin Vollbild-Slide-Up (kein Fremdverhalten).
+- Alle Inhalts-/Step-Container bleiben identisch; nur die Hülle wechselt.
 
-- `miete`: `coupon: "CBI-Y1"`, `price: "59 €/Monat"`, `regular: "99 €/Monat"`, `discountedNumber: 59`, `regularNumber: 99`, `note: "1. Jahr Starter-Preis · danach 99 €/Monat · monatlich kündbar"`, `priceId: "pro_rent_monthly"`.
-- `kauf`: `coupon: "CBI-KAUF25"`, `price: "1.492,50 €"`, `regular: "1.990 €"`, `discountedNumber: 1492.5`, `regularNumber: 1990`, `note: "25 % Rabatt · einmalig · netto"`, `priceId: "pro_purchase_deposit"`.
-- `headline`, `sub`, `firstName`, `plan: "pro"`.
-- Helper `getDemoOffer(slug?: string | null)` (case-insensitiv, null bei unbekannt).
-- Helper `resolveLegacyOffer(offerCode)` → mapped `cbi-y1` / `cbi-kauf25` auf `{ demoSlug: "CBI", mode: "miete"|"kauf" }` für Rückwärtskompatibilität.
+**Bestellzusammenfassung „Deine Bestellung" (im `StepKontakt`, Zeilen ~1391–1477) auf Angebotspreis umstellen**
+- Neuer effektiver Basis-Preis pro Modus, aus `activeOffer` abgeleitet, im Parent berechnet:
+  - `effBasisMonatlich = activeOffer?.mode === "miete" ? activeOffer.discounted : basisMonatlich`
+  - `effBasisEinmalig  = activeOffer?.mode === "kauf"  ? activeOffer.discounted : basisEinmalig`
+  - `effGesamtMonatlich`, `effGesamtEinmalig`, `effHeuteZuZahlen` analog (Delta = `activeOffer.base - activeOffer.discounted`).
+- `StepKontakt` bekommt zusätzlich `activeOffer` und nutzt die eff-Werte:
+  - Positionszeile Pro-Paket: `{effBasisMonatlich}/Monat` bzw. `{effBasisEinmalig} einmalig`, mit durchgestrichenem Regulärpreis daneben, wenn `activeOffer.mode` matcht.
+  - Optionale Note darunter: „1. Jahr, danach {regular €}/Monat" (nur Miete).
+  - `summary.heuteZuZahlen`, MwSt (`* 19 / 100`) und Gesamtpreis brutto (`* 119 / 100`) werden aus `effHeuteZuZahlen` gerechnet (nicht mehr aus dem alten `heuteZuZahlen`).
+- Footer-Summary (Zeilen ~730–780) wird ebenfalls auf die eff-Werte umgestellt, damit „Deine Auswahl" und „Heute zu zahlen" konsistent sind. Die bestehende `line-through`-Anzeige bleibt erhalten.
+- Add-ons bleiben unrabattiert (Angebot gilt nur für Pro-Basis).
+- `buildStripeItems` bleibt unverändert (regulärer Preis an Stripe; Coupon macht den Abzug serverseitig — bereits so validiert).
 
-### 2) Neues Popup: `src/components/DemoOfferPopup.tsx`
+### 2) `src/pages/WebdesignPreise.tsx`
 
-Zentriertes, barrierefreies Modal (Radix `Dialog`, konsistent mit `PricingLeadPopup`):
+- Beim `<CheckoutFunnel>` zusätzlich `layout={activeOffer ? "centered" : "sidebar"}` übergeben. Sonst alles wie bisher.
 
-- Header: MTW-Logo (`/logo.png`) + `Dein persönliches Angebot, {firstName}`.
-- Große Headline `{headline}`, Sub `{sub}`.
-- Kurze Pro-Feature-Liste (aus `rentPackages[Pro].features.slice(0,5)`).
-- Zwei Options-Karten (mobil untereinander, Desktop nebeneinander):
-  - Miete-Karte (Badge „Empfohlen"): `~~99 €/Monat~~ → 59 €/Monat`, Note, Button „Miete sichern – 59 €/Monat".
-  - Kauf-Karte: `~~1.990 €~~ → 1.492,50 €`, Note, Button „Kaufen – 1.492,50 €".
-- Fußzeile: „Alle Preise netto zzgl. 19 % MwSt. · Website in 7 Tagen live".
-- Schließbar via X / Escape / Overlay-Klick.
-- Klick auf eine Options-Karte → callback `onSelect({ mode, coupon, plan: "pro" })` → Popup schließen und Funnel öffnen.
+### 3) Nicht angefasst
+- `create-checkout/index.ts` (Coupon-Whitelist/Validierung bereits vorhanden).
+- `DemoOfferPopup.tsx`, `demoOffers.ts` (bereits umgesetzt).
+- Sidebar-Verhalten für Nicht-Demo-Besucher bleibt exakt gleich.
+- Preise, `priceId`s, Success-/Return-URLs unverändert.
 
-### 3) `src/pages/WebdesignPreise.tsx` — Deep-Link-Handler & State
+## Technische Notizen
 
-- Import `getDemoOffer`, `resolveLegacyOffer`, `DemoOfferPopup`.
-- Neuer State: `demoOffer: DemoOffer | null`, `showDemoPopup: boolean`, `activeOffer: { mode, coupon } | null`.
-- Im vorhandenen `useEffect` (Zeile 761):
-  1. `demo` lesen → `getDemoOffer(demo)`. Wenn gefunden → `setDemoOffer`, `setShowDemoPopup(true)`, `setDemoSource(demo)`. Wenn ein `mode` param mitgegeben ist, vorwählen.
-  2. Wenn kein `demo`, aber Legacy-`offer` → `resolveLegacyOffer` → gleiches Verhalten (Popup öffnen mit CBI).
-  3. Wenn `demo`+`offer` → `demo` gewinnt; `offer` wird ignoriert.
-- `<DemoOfferPopup>` unter dem Demo-Banner rendern mit `onSelect`, das:
-  - `setActiveOffer({ mode, coupon })`
-  - `setTab(mode)`
-  - `setCheckoutPkg({ name: "Pro", priceId, mode })` (priceId aus `demoOffer[mode].priceId`)
-  - Popup schließt.
-- `demoSource` bleibt für den bestehenden gelben Banner erhalten.
+- Ein einziger „effektiver Preis"-Block im Funnel-Parent, alle Anzeigen (Footer, Kontakt-Summary, MwSt, Brutto) lesen daraus → keine doppelte Rechenlogik.
+- Rundung MwSt/Brutto weiter mit `Math.round(x * 19)/100` bzw. `*119/100` — Verhalten identisch zum jetzigen Muster, nur Eingabewert wechselt auf `effHeuteZuZahlen`.
+- `layout="centered"` nutzt dieselben Steps/Header/Progress/Footer — keine Duplikate.
+- Escape/X/Overlay-Klick funktionieren unverändert.
 
-### 4) `CheckoutFunnel.tsx` — Konsistente Anzeige an allen Stellen
+## Akzeptanzkriterien (Delta)
 
-Der Funnel hat bereits die `activeOffer`-`useMemo`-Logik und die Anzeige im Footer + Chip. Anpassungen:
-
-- Neuer optionaler Prop `activeOfferOverride?: { mode, discountedNumber, regularNumber, label, note }` (statt sich auf `offerCode` + interne `OFFER_DISPLAY` zu verlassen). Wird von `WebdesignPreise` befüllt, wenn `activeOffer` gesetzt ist.
-- Wenn `activeOfferOverride` vorhanden → nutzt es direkt (Guard: Paket muss dem in Override passenden Plan entsprechen und `paymentMode === override.mode`); sonst Fallback auf bestehende `OFFER_DISPLAY`-Logik (Rückwärtskompatibilität).
-- **Neu**: Anzeige auch im **Paket-Schritt** (Pro-Karte) und **Zahlungs-Schritt**:
-  - In der Paket-Karte für Pro: unterhalb des normalen Preises, falls `activeOffer` aktiv und Mode passt → `<line-through>{regularNumber €}</line-through> {discountedNumber €}` + Note.
-  - Im Zahlungs-Schritt: bei „Miete monatlich" / „Einmalkauf" die entsprechende Zeile mit durchgestrichenem Regulär + Angebotspreis. Löst das gemeldete Problem „Kauf zeigt alten Preis".
-- „Deine Auswahl"-Summary bleibt wie bisher, nutzt jetzt aber die Override-Werte.
-- `basisEinmalig`/`basisMonatlich`/`gesamt*`/`heuteZuZahlen` bleiben unverändert (Client-Anzeige nur; echter Rabatt kommt vom Stripe-Coupon).
-- Metadata: `offer_code` weiterhin an `create-checkout` schicken (aus `activeOffer.coupon` case-insensitiv als slug, z. B. `cbi-y1`), damit die serverseitige Whitelist greift.
-
-### 5) `WebdesignPreise.tsx` → `CheckoutFunnel`-Props
-
-- `activeOfferOverride` aus `demoOffer` + `activeOffer.mode` bauen und übergeben.
-- `offerCode` weiterhin für Legacy-Fälle weitergeben (server nutzt nur diesen).
-
-### 6) `supabase/functions/create-checkout/index.ts`
-
-Bereits vorhanden:
-- `OFFER_TO_COUPON` mit `cbi-y1` → `pro_rent_monthly` und `cbi-kauf25` → `pro_purchase_deposit`.
-- Case-insensitives Matching (`offerRaw = metadata.offer_code.trim().toLowerCase()`).
-- Validierung gegen `expectedPriceId` + Mode (recurring vs payment).
-- Silent-Ignore bei Mismatch (Normalpreis).
-
-Kleine Ergänzung:
-- Sicherstellen, dass `metadata.offer_code` aus dem Funnel jetzt einer der beiden Slugs ist (nicht der rohe Coupon-Code). Falls der Coupon-Code (`CBI-Y1`, `CBI-KAUF25`) rein kommt, per Alias-Map auf den Slug normalisieren, damit die bestehende Whitelist greift. Kein Verhalten für andere Codes.
-
-## Nicht im Scope
-
-- Keine Änderung an bestehenden `priceId`s, Preisen oder `buildStripeItems`.
-- Keine neuen Stripe-Coupons anlegen (Setup-Notiz: `CBI-KAUF25` muss noch manuell im Dashboard angelegt werden — 25 % einmalig).
-- Kein neuer Rabatt-Weg für Starter/Premium.
-- `PricingLeadPopup` bleibt unverändert (weiterhin der reguläre „Fast geschafft"-Flow).
-
-## Akzeptanzkriterien
-
-- `/preise?demo=CBI` → zentrales Popup mit beiden Optionen rabattiert (59 €, 1.492,50 €).
-- Klick „Miete sichern" → Funnel öffnet, Pro-Miete vorgewählt, Paket-Schritt zeigt `~~99 €~~ 59 €`, Zahlungs-Schritt + Auswahl konsistent. Stripe zieht `CBI-Y1`.
-- Klick „Kauf" → Funnel zeigt Pro-Kauf `~~1.990 €~~ 1.492,50 €` an allen Stellen. Stripe zieht `CBI-KAUF25`.
-- Unbekannter oder fehlender `demo` → normale `/preise`-Seite ohne Popup.
-- Legacy `?plan=pro&mode=miete&offer=cbi-y1` bzw. `offer=cbi-kauf25` → gleiches Popup + Funnel-Verhalten wie mit `demo=CBI`.
-- Starter/Premium und normale Besucher unverändert.
+- `/preise?demo=CBI` → Angebots-Popup, danach Checkout als **zentriertes Modal** (nicht Sidebar). Ohne `demo` weiterhin Sidebar.
+- Kontakt-Schritt „Deine Bestellung": Pro-Paket 59 €/Monat bzw. 1.492,50 € einmalig, MwSt und Gesamt daraus gerechnet (z. B. Miete: MwSt 11,21 €, brutto 70,21 €).
+- Footer „Heute zu zahlen" identisch mit „Deine Bestellung".
+- Stripe zieht weiterhin den korrekten Coupon (`CBI-Y1` / `CBI-KAUF25`) — kein Verhalten geändert.
