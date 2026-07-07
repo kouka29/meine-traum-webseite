@@ -59,6 +59,10 @@ interface Props {
   leadName?: string;
   stripeLink?: string | null; // optional fallback for stripe payment
   defaultPaymentMode?: PaymentMode;
+  /** Herkunft aus Demo-Deeplink (?demo=...) — wird an Buchung & Stripe-Metadata durchgereicht */
+  sourceDemo?: string;
+  /** Angebots-Code aus Deeplink (?offer=...) — löst serverseitig einen Stripe-Coupon aus */
+  offerCode?: string;
 }
 
 type PaymentMode = "kauf" | "miete";
@@ -109,7 +113,7 @@ function TrustBlock({ compact = false }: { compact?: boolean }) {
 }
 
 export default function CheckoutFunnel({
-  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode,
+  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode,
 }: Props) {
   const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
   const hasPaketStep = allPakete.length > 1;
@@ -349,6 +353,8 @@ export default function CheckoutFunnel({
               min_term_months: 12,
             },
           } : {}),
+          ...(sourceDemo ? { source_demo: sourceDemo, source_cta: `demo:${sourceDemo}` } : {}),
+          ...(offerCode ? { offer_code: offerCode } : {}),
           agb_akzeptiert: true,
           kostenpflichtig_bestaetigt: true,
         },
@@ -575,6 +581,8 @@ export default function CheckoutFunnel({
                   growth_amount_cents: String(growthAddon!.price_cents),
                   growth_min_term: "12",
                 } : {}),
+                ...(offerCode ? { offer_code: offerCode } : {}),
+                ...(sourceDemo ? { demo_source: sourceDemo } : {}),
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
             />

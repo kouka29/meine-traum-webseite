@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import { ArrowRight, Check, Star, Lock, FileText, Target, Phone, Handshake, Award, Clock, ChevronDown, Quote, ThumbsUp, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PricingLeadPopup from "@/components/PricingLeadPopup";
@@ -752,6 +752,41 @@ const WebdesignPreise = () => {
   const [checkoutPkg, setCheckoutPkg] = useState<
     { name: string; priceId?: string; mode: "miete" | "kauf" } | null
   >(null);
+  const [tab, setTab] = useState<"miete" | "kauf">("miete");
+  const [demoSource, setDemoSource] = useState<string | null>(null);
+  const [offerCode, setOfferCode] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+
+  // Deep-Link-Handler: /preise?plan=&mode=&demo=&offer=
+  useEffect(() => {
+    const plan = (searchParams.get("plan") || "").trim().toLowerCase();
+    const mode = (searchParams.get("mode") || "").trim().toLowerCase();
+    const demo = (searchParams.get("demo") || "").trim();
+    const offer = (searchParams.get("offer") || "").trim().toLowerCase();
+
+    if (mode === "kauf") setTab("kauf");
+    else if (mode === "miete") setTab("miete");
+
+    if (demo) setDemoSource(demo);
+    if (offer) setOfferCode(offer);
+
+    if (!plan || !["starter", "pro", "premium"].includes(plan)) return;
+
+    const isKauf = mode === "kauf";
+    const targetPriceId = isKauf
+      ? `${plan}_purchase_deposit`
+      : `${plan}_rent_monthly`;
+
+    if (isKauf) {
+      const pkg = buyPackages.find((p) => p.priceId === targetPriceId);
+      if (pkg) setCheckoutPkg({ name: pkg.name, priceId: pkg.priceId, mode: "kauf" });
+    } else {
+      const pkg = rentPackages.find((p) => p.priceId === targetPriceId);
+      if (pkg) setCheckoutPkg({ name: pkg.name, priceId: pkg.priceId, mode: "miete" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
     setPopupOpen(true);
@@ -838,6 +873,14 @@ const WebdesignPreise = () => {
         Kostenlose Demo anfordern <ArrowRight size={16} aria-hidden={true} focusable={false} />
       </button>
     </div>
+    {demoSource && (
+      <div
+        className="w-full border-b text-center px-4 py-2 text-xs text-foreground/70"
+        style={{ backgroundColor: "#FEF3C7", borderColor: "#FCD34D" }}
+      >
+        Aus Ihrer Demo-Vorschau (<span className="font-semibold">{demoSource}</span>)
+      </div>
+    )}
 
     <section className="section-padding">
       <div className="container-narrow px-4">
@@ -860,7 +903,7 @@ const WebdesignPreise = () => {
 
         <TrustStrip />
 
-        <Tabs defaultValue="miete" className="mb-12">
+        <Tabs value={tab} onValueChange={(v) => setTab(v as "miete" | "kauf")} className="mb-12">
           <TabsList className="mx-auto flex w-full max-w-sm mb-8">
             <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
             <TabsTrigger value="kauf" className="flex-1">Einmalig kaufen</TabsTrigger>
@@ -1055,6 +1098,8 @@ const WebdesignPreise = () => {
           miete: { enabled: true, monthly_cents: (currentFunnelPaket.miete_monatlich || 0) * 100, min_months: 12 },
         }}
         defaultPaymentMode={checkoutPkg.mode}
+        sourceDemo={demoSource ?? undefined}
+        offerCode={offerCode ?? undefined}
       />
     )}
   </main>

@@ -19,6 +19,20 @@ type Item = {
 // server-computed totals. Any larger mismatch is treated as a tampering attempt.
 const AMOUNT_TOLERANCE_CENTS = 10;
 
+// Whitelist der erlaubten Angebots-Codes → Stripe-Coupon-ID + priceId, für die
+// der Coupon gültig ist. Alles außerhalb dieser Map wird ignoriert (Normalpreis).
+// Rabatte werden ausschließlich hier bestimmt — niemals aus der URL berechnet.
+const OFFER_TO_COUPON: Record<string, { coupon: string; requiredPriceId: string }> = {
+  "cbi-y1":     { coupon: "CBI-Y1",     requiredPriceId: "pro_rent_monthly" },
+  "cbi-kauf25": { coupon: "CBI-KAUF25", requiredPriceId: "pro_purchase_deposit" },
+};
+
+function resolveExpectedPriceId(paketId: string, paymentMode: "kauf" | "miete"): string | null {
+  const p = (paketId || "").toLowerCase();
+  if (!["starter", "pro", "premium"].includes(p)) return null;
+  return paymentMode === "miete" ? `${p}_rent_monthly` : `${p}_purchase_deposit`;
+}
+
 type TrustedTotals = {
   // Sum of client-supplied item amounts (cents * quantity) MUST match this.
   subtotalCents: number;
@@ -280,12 +294,31 @@ Deno.serve(async (req) => {
       if (typeof v === "string") safeMetadata[k.slice(0, 40)] = v.slice(0, 500);
     }
 
+    // Angebots-Code → Stripe-Coupon (serverseitig validiert).
+    // Nur anwenden, wenn (a) Code in Whitelist ist UND (b) das aufgelöste
+    // priceId zum Coupon passt UND (c) der Session-Modus zur Coupon-Duration
+    // passt (once → payment, repeating months → subscription). Sonst still
+    // ignorieren (kein Fehler → Normalpreis).
+    const offerRaw = typeof metadata.offer_code === "string" ? metadata.offer_code.trim().toLowerCase() : "";
+    const paymentModeMeta: "kauf" | "miete" = metadata.payment_mode === "miete" ? "miete" : "kauf";
+    const expectedPriceId = resolveExpectedPriceId(metadata.paket || "", paymentModeMeta);
+    const offerMapping = offerRaw ? OFFER_TO_COUPON[offerRaw] : undefined;
+    let discounts: { coupon: string }[] | undefined;
+    if (offerMapping && expectedPriceId === offerMapping.requiredPriceId) {
+      const priceIsRecurring = /_rent_monthly$/.test(expectedPriceId);
+      const sessionIsSubscription = mode === "subscription";
+      if (priceIsRecurring === sessionIsSubscription) {
+        discounts = [{ coupon: offerMapping.coupon }];
+      }
+    }
+
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
       mode,
       ui_mode: "embedded_page",
       return_url: returnUrl,
       ...(customerEmail && { customer_email: customerEmail }),
+      ...(discounts ? { discounts } : {}),
       ...(mode === "payment"
         ? { payment_method_types: ["card", "paypal", "sepa_debit", "klarna"] }
         : {}),
