@@ -14,6 +14,36 @@ const TEXT_MUTED = "#6B7280";
 // Rechnungszahlung im Checkout wieder erlaubt werden soll.
 const RECHNUNG_ENABLED = false;
 
+// Angebots-Codes (Whitelist NUR für die UI-Anzeige des reduzierten Preises).
+// Der abgerechnete Rabatt kommt weiterhin ausschließlich aus dem serverseitig
+// validierten Stripe-Coupon in `create-checkout` — hier wird NUR angezeigt.
+const OFFER_DISPLAY: Record<string, {
+  requiredPaketId: "pro";
+  requiredMode: PaymentMode;
+  compute: (base: number) => { discounted: number; label: string; note?: string };
+}> = {
+  "cbi-y1": {
+    requiredPaketId: "pro",
+    requiredMode: "miete",
+    compute: (base) => ({
+      discounted: Math.max(0, base - 40),
+      label: "1. Jahr, danach regulärer Preis",
+      note: "Angebotspreis für 12 Monate (CBI-Y1)",
+    }),
+  },
+  "cbi-kauf25": {
+    requiredPaketId: "pro",
+    requiredMode: "kauf",
+    compute: (base) => ({
+      discounted: Math.round(base * 0.75 * 100) / 100,
+      label: "−25 % Angebotspreis",
+      note: "Rabatt CBI-KAUF25",
+    }),
+  },
+};
+
+type PaymentMode = "kauf" | "miete";
+
 export interface FunnelAddon {
   id: string;
   name: string;
@@ -65,7 +95,6 @@ interface Props {
   offerCode?: string;
 }
 
-type PaymentMode = "kauf" | "miete";
 type PayMethod = "online" | "rechnung";
 type StepKey = "paket" | "zahlung" | "extras" | "kontakt" | "bezahlen" | "fertig";
 
