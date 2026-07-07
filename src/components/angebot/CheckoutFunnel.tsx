@@ -1438,11 +1438,28 @@ function StepKontakt({
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
           <strong style={{ fontWeight: 700 }}>{paketName}-Paket</strong>
           <span style={{ fontWeight: 600, color: TEXT_DARK, whiteSpace: "nowrap" }}>
-            {summary.paymentMode === "miete"
-              ? `${fmtEUR(basisMonatlich)}/Monat`
-              : `${fmtEUR(basisEinmalig)} einmalig`}
+            {summary.paymentMode === "miete" ? (
+              activeOffer?.mode === "miete" ? (
+                <>
+                  <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>{fmtEUR(regularBasisMonatlich)}</span>
+                  {fmtEUR(basisMonatlich)}/Monat
+                </>
+              ) : `${fmtEUR(basisMonatlich)}/Monat`
+            ) : (
+              activeOffer?.mode === "kauf" ? (
+                <>
+                  <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>{fmtEUR(regularBasisEinmalig)}</span>
+                  {fmtEUR(basisEinmalig)} einmalig
+                </>
+              ) : `${fmtEUR(basisEinmalig)} einmalig`
+            )}
           </span>
         </div>
+        {activeOffer && (
+          <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
+            {activeOffer.label}
+          </div>
+        )}
         {selectedAddons.length > 0 && (
           <div style={{ marginTop: 6, display: "grid", gap: 4 }}>
             {selectedAddons.map((a) => (
@@ -1507,13 +1524,13 @@ function StepKontakt({
         })()}
         <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
         <div style={{ fontSize: 12, color: TEXT_MUTED }}>
-          {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(summary.heuteZuZahlen)}</strong>
+          {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(effHeuteZuZahlen)}</strong>
         </div>
         <div style={{ fontSize: 12, color: TEXT_MUTED, marginTop: 4 }}>
-          MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(Math.round(summary.heuteZuZahlen * 19) / 100)}</strong>
+          MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(Math.round(effHeuteZuZahlen * 19) / 100)}</strong>
         </div>
         <div style={{ fontSize: 13, color: TEXT_DARK, marginTop: 6, fontWeight: 700 }}>
-          Gesamtpreis brutto: {fmtEUR(Math.round(summary.heuteZuZahlen * 119) / 100)}
+          Gesamtpreis brutto: {fmtEUR(Math.round(effHeuteZuZahlen * 119) / 100)}
         </div>
       </div>
 
