@@ -707,8 +707,12 @@ export default function CheckoutFunnel({
               kostenpflichtig={kostenpflichtig} setKostenpflichtig={setKostenpflichtig}
               summary={{ heuteZuZahlen, heuteLabel, paymentMode, gesamtMonatlich, gesamtEinmalig }}
               paketName={currentPaket.name}
-              basisEinmalig={basisEinmalig}
-              basisMonatlich={basisMonatlich}
+              basisEinmalig={effBasisEinmalig}
+              basisMonatlich={effBasisMonatlich}
+              regularBasisEinmalig={basisEinmalig}
+              regularBasisMonatlich={basisMonatlich}
+              effHeuteZuZahlen={effHeuteZuZahlen}
+              activeOffer={activeOffer}
               selectedAddons={selectedAddons}
               payMethod={payMethod}
               setPayMethod={setPayMethod}
