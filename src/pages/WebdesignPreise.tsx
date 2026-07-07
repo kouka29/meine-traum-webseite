@@ -1153,6 +1153,7 @@ const WebdesignPreise = () => {
         sourceDemo={demoSource ?? undefined}
         offerCode={offerCode ?? undefined}
         activeOfferOverride={funnelOfferOverride}
+        layout={demoOffer ? "centered" : "sidebar"}
       />
     )}
   </main>
