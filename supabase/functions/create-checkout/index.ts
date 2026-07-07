@@ -294,12 +294,31 @@ Deno.serve(async (req) => {
       if (typeof v === "string") safeMetadata[k.slice(0, 40)] = v.slice(0, 500);
     }
 
+    // Angebots-Code → Stripe-Coupon (serverseitig validiert).
+    // Nur anwenden, wenn (a) Code in Whitelist ist UND (b) das aufgelöste
+    // priceId zum Coupon passt UND (c) der Session-Modus zur Coupon-Duration
+    // passt (once → payment, repeating months → subscription). Sonst still
+    // ignorieren (kein Fehler → Normalpreis).
+    const offerRaw = typeof metadata.offer_code === "string" ? metadata.offer_code.trim().toLowerCase() : "";
+    const paymentModeMeta: "kauf" | "miete" = metadata.payment_mode === "miete" ? "miete" : "kauf";
+    const expectedPriceId = resolveExpectedPriceId(metadata.paket || "", paymentModeMeta);
+    const offerMapping = offerRaw ? OFFER_TO_COUPON[offerRaw] : undefined;
+    let discounts: { coupon: string }[] | undefined;
+    if (offerMapping && expectedPriceId === offerMapping.requiredPriceId) {
+      const priceIsRecurring = /_rent_monthly$/.test(expectedPriceId);
+      const sessionIsSubscription = mode === "subscription";
+      if (priceIsRecurring === sessionIsSubscription) {
+        discounts = [{ coupon: offerMapping.coupon }];
+      }
+    }
+
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
       mode,
       ui_mode: "embedded_page",
       return_url: returnUrl,
       ...(customerEmail && { customer_email: customerEmail }),
+      ...(discounts ? { discounts } : {}),
       ...(mode === "payment"
         ? { payment_method_types: ["card", "paypal", "sepa_debit", "klarna"] }
         : {}),
