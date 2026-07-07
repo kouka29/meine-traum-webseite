@@ -1,55 +1,82 @@
-# /kostenlose-vorschau-business — Business-LP mit geteiltem Funnel
-
 ## Ziel
-Zweite Landingpage für breite Zielgruppe (Berater, Praxen, Shops, Agenturen…) mit eigener Hero/Copy, aber identischem Funnel + Success-Screen wie die bestehende Handwerker-Seite. Platz-Zähler wird geteilt.
 
-## 1. Refactor: `<VorschauFunnel />` Komponente
-Bisher lebt alles in `src/pages/KostenloseVorschauV2.tsx` (~2450 Zeilen). Ich extrahiere den Funnel-Teil (Multi-Step-Form + Warteliste-Mini-Form + Success-Screen inkl. FAQ/Ehrlichkeits-Sektion + Slot-Zähler) in eine neue Komponente:
+Externe Deep-Links (z. B. aus Demo-Vorschauen) auf `/preise?plan=pro&mode=kauf&demo=CBI&offer=cbi-kauf25` sollen:
+- den richtigen Tab (Kauf / Miete) vorwählen,
+- das richtige Paket im bestehenden `CheckoutFunnel` öffnen,
+- die Herkunft (`demo=CBI`) als Quelle mittragen,
+- optional einen Angebots-Code (`offer=…`) in einen **serverseitig validierten** Stripe-Coupon übersetzen.
 
-- **Neu:** `src/components/vorschau/VorschauFunnel.tsx`
-- **Props:**
-  ```ts
-  type VorschauFunnelProps = {
-    quelle: "handwerker" | "business";       // → source_cta Suffix
-    branchePlaceholder: string;              // Placeholder Gewerk/Branche
-    ansprache?: "du" | "sie";                // Default "du"
-    telegramLabel: string;                   // z.B. "/kostenlose-vorschau" oder "Business-LP"
-    budgetChips?: { kaufen?: string[]; mieten?: string[] };
+Bestehende Tabs, `PackageCard`/`BuyCard`, `openRentCheckout` / `openBuyCheckout`, `CheckoutFunnel`, Preise, `priceId`s und der Stripe-Flow bleiben unverändert — es wird **nur ergänzt**.
+
+## Änderungen
+
+### 1) `src/pages/WebdesignPreise.tsx` — Deep-Link-Handling
+
+- `useSearchParams` aus `react-router-dom` importieren.
+- `Tabs` von unkontrolliert (`defaultValue="miete"`) auf **kontrolliert** umstellen: neuer State `tab: "miete" | "kauf"` (Default `"miete"`), `value={tab} onValueChange={setTab}`.
+- Neue States: `demoSource: string | null`, `offerCode: string | null`.
+- Neuer `useEffect` (einmalig beim Mount):
+  1. `plan`, `mode`, `demo`, `offer` aus den Search-Params lesen (alles lowercase / trim).
+  2. Wenn `mode === "miete"` → `setTab("miete")`, sonst wenn `mode === "kauf"` → `setTab("kauf")`.
+  3. `demo` → `setDemoSource(demo)`, `offer` → `setOfferCode(offer)`.
+  4. Paket-Lookup per `id`-Präfix auf `priceId` (robust gegen Reihenfolge):
+     - `starter` → `starter_rent_monthly` / `starter_purchase_deposit`
+     - `pro` → `pro_rent_monthly` / `pro_purchase_deposit`
+     - `premium` → `premium_rent_monthly` / `premium_purchase_deposit`
+     - In `rentPackages` bzw. `buyPackages` per `p.priceId === <ziel>` finden.
+  5. Falls Paket gefunden: `openRentCheckout` bzw. `openBuyCheckout` mit `{ name, priceId }` aufrufen → der bestehende `CheckoutFunnel` öffnet sich exakt wie bei einem Klick.
+  6. Wenn `plan` fehlt/unbekannt: nur Tab setzen, kein Funnel öffnen.
+- Dezenter Hinweis-Banner unter dem bestehenden Demo-Banner, nur wenn `demoSource` gesetzt ist: „Aus Ihrer Demo-Vorschau ({demoSource})".
+- `CheckoutFunnel`-Aufruf am Ende der Datei um neue Props ergänzen: `sourceDemo={demoSource ?? undefined}` und `offerCode={offerCode ?? undefined}`.
+
+### 2) `src/components/angebot/CheckoutFunnel.tsx` — Props durchreichen
+
+- Interface `Props` um `sourceDemo?: string` und `offerCode?: string` erweitern; im Component-Signature destrukturieren.
+- Bei der bereits vorhandenen Lead-/Buchungs-Erstellung (`supabase.functions.invoke("buchung-bestaetigen", …)` bzw. dem vorgelagerten `notify-lead`/Buchungs-Insert) `source_demo` (bzw. `source_cta: "demo:<code>"`) im Payload mitschicken, sofern gesetzt.
+- Im `StepBezahlen`-Aufruf die `metadata` erweitern:
+  ```
+  ...(offerCode ? { offer_code: offerCode } : {}),
+  ...(sourceDemo ? { demo_source: sourceDemo } : {}),
+  ```
+  `offer_code` ist der Auslöser für den Coupon serverseitig; es wird **nie clientseitig** ein Rabattbetrag berechnet.
+
+### 3) `supabase/functions/create-checkout/index.ts` — Coupon serverseitig
+
+- Neues Coupon-Mapping (hart codiert, keine URL-Werte durchreichen):
+  ```
+  const OFFER_TO_COUPON: Record<string, { coupon: string; requiredPriceId: string }> = {
+    "cbi-y1":     { coupon: "CBI-Y1",     requiredPriceId: "pro_rent_monthly" },
+    "cbi-kauf25": { coupon: "CBI-KAUF25", requiredPriceId: "pro_purchase_deposit" },
   };
   ```
-- Alle Submit-Handler (Lead, Warteliste, Booking, Kontaktweg) erhalten `quelle`/`telegramLabel` in `source_cta` und Telegram-Header.
-- Slot-Zähler bleibt via `count_freigegebene_leads_this_month` (LP-übergreifend, exakt wie gewünscht).
-- Handwerker-Seite `KostenloseVorschauV2.tsx` ersetzt ihren Inline-Funnel durch `<VorschauFunnel quelle="handwerker" telegramLabel="/kostenlose-vorschau" branchePlaceholder="z. B. Elektriker, Sanitär, Maler" />` — Copy oberhalb (Hero, Sektionen) bleibt 1:1.
+- Nach dem bestehenden Trusted-Totals-Check:
+  1. `metadata.offer_code` lesen, kleinschreiben, im Mapping suchen.
+  2. Aus `buchungen.pakete` (bereits geladen für `resolveTrustedTotals`) den `priceId` des Basis-Pakets ermitteln — oder alternativ `metadata.paket` + Konvention (`<paket>_rent_monthly` bzw. `<paket>_purchase_deposit` je nach `payment_mode`).
+  3. Wenn `mapping.requiredPriceId === ermittelterPriceId` → beim `stripe.checkout.sessions.create(...)` `discounts: [{ coupon: mapping.coupon }]` mitgeben. Sonst ignorieren.
+  4. Coupon nur setzen, wenn `mode === "payment"` für `pro_purchase_deposit` bzw. `mode === "subscription"` für `pro_rent_monthly` (Passung Duration/Once).
+- Wichtig: `automatic_tax` / `allow_promotion_codes` bleiben unverändert. Fehlender/unbekannter `offer_code` → kein Coupon, kein Fehler (Normalpreis).
+- **Trusted-Total-Check bleibt unberührt** — der Client-Subtotal muss weiterhin dem hinterlegten Auftrag entsprechen; der Rabatt wird erst danach von Stripe auf die Session angewendet.
 
-## 2. Neue Seite `src/pages/KostenloseVorschauBusiness.tsx`
-Aufbau (nutzt bestehende Design-Tokens, keine neuen Farben):
+### 4) Coupons in Stripe (Voraussetzung, kein Code)
 
-1. **Hero** — H1, Subline, 2 Status-Chips (Plätze frei / Monat), Primary-CTA scrollt zu Funnel, Vertrauens-Zeile.
-2. **Für wen wir bauen** — Grid mit 10 Branchen-Cards, Lucide-Icons (Stethoscope, Briefcase, UtensilsCrossed, ShoppingBag, Palette, Scale, Dumbbell, Car, GraduationCap, Wrench), Fallback-Text drunter.
-3. **So läuft's ab** — 3-Schritte-Section identisch strukturiert wie Handwerker-Seite.
-4. **Was du bekommst** — 4 Nutzen-Cards (Startseite live / Farben & Logo / Struktur klickbar / Mobile).
-5. **`<VorschauFunnel quelle="business" ... />`** + dezenter Hinweis-Text.
-6. **Social Proof** — vorerst weggelassen (keine passenden branchen-diversen Testimonials im Projekt, siehe offene Punkte).
-7. Bestehender globaler WhatsApp-Button greift automatisch — keine Extra-Arbeit.
+Einmalig im Stripe-Dashboard anlegen (Sandbox + Live):
+- `CBI-Y1`: −40,00 € EUR, Duration „Multiple months" = 12
+- `CBI-KAUF25`: −25 %, Duration „Once"
 
-## 3. Routing & SEO
-- `src/App.tsx`: neue Route `/kostenlose-vorschau-business` → `KostenloseVorschauBusiness`.
-- `<PageMeta>` (bestehendes Muster) mit:
-  - Title: „Kostenlose Website-Vorschau für Selbstständige & Unternehmen | MTW"
-  - Description wie im Brief
-  - Canonical `/kostenlose-vorschau-business`
+Coupon-IDs müssen exakt `CBI-Y1` bzw. `CBI-KAUF25` heißen (matcht das Mapping oben).
 
-## 4. Backend
-Keine DB-Migration nötig. `source_cta` wird pro Insert gesetzt:
-- Lead-Submit: `kostenlose-vorschau-business:lead`
-- Warteliste: `kostenlose-vorschau-business:warteliste`
-- Booking / Kontaktweg-Updates: analog mit `business:` Prefix
-- Telegram-Header: „🆕 NEUE ANFRAGE — Business-LP" bzw. „⏳ WARTELISTE — Business-LP"
+## Akzeptanzkriterien
 
-## 5. Textregeln
-- Du-Form, kein „Bewerbung", kein Agentur-Sprech.
-- Success-Screen (Ehrlichkeit + FAQ + WhatsApp-Link) bleibt inhaltlich identisch, da in der Komponente.
+- `/preise?mode=miete` → Tab „Mieten" aktiv, kein Funnel.
+- `/preise?plan=pro&mode=kauf&demo=CBI` → Tab „Kaufen", Funnel für Pro-Kauf offen, Banner „Aus Ihrer Demo-Vorschau (CBI)".
+- `/preise?plan=pro&mode=miete&demo=CBI&offer=cbi-y1` → Pro-Miete, Stripe zeigt Coupon `CBI-Y1` (59 € statt 99 € für 12 Monate).
+- `/preise?plan=pro&mode=kauf&demo=CBI&offer=cbi-kauf25` → Pro-Kauf, Coupon `CBI-KAUF25` (1.492,50 € statt 1.990 €).
+- Falscher/fehlender `offer` oder Mismatch mit priceId → normaler Preis, kein Fehler.
+- `demo=CBI` landet als Quelle im Lead/Buchung + in Stripe-Session-Metadata.
+- Ohne Params verhält sich `/preise` exakt wie bisher.
 
-## Offene Punkte
-1. **Testimonials-Sektion (6):** Erstmal weglassen bis passende Testimonials aus verschiedenen Branchen vorliegen. OK?
-2. **Refactor-Risiko:** Der bestehende Funnel ist groß und stark verzahnt mit `KostenloseVorschauV2`. Ich extrahiere sauber in eine Komponente und teste, dass die Handwerker-Seite optisch/funktional 1:1 gleich bleibt. Falls du das Refactor lieber vermeiden willst, wäre die Alternative: Datei duplizieren und die zwei Copy-Stellen anpassen (schneller, aber doppelter Wartungsaufwand). Sag Bescheid welche Variante.
+## Nicht im Scope
+
+- Änderungen an Preisen, `priceId`s, `PackageCard`/`BuyCard`, Tab-UI.
+- Automatische Rabattanzeige im UI (bewusst nicht — Rabatt ist Stripe-seitig sichtbar).
+- Neue Landingpage-Varianten.
