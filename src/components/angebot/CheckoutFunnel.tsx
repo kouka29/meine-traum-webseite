@@ -233,6 +233,24 @@ export default function CheckoutFunnel({
     [currentAddons, selectedAddonIds],
   );
 
+  // Aktiver Angebots-Code für die UI-Anzeige. Case-insensitiv, restriktiv:
+  // greift nur für Pro-Paket und den passenden Zahlungsmodus. Keine Rabatt-
+  // Berechnung im Payment-Flow — nur visuell.
+  const activeOffer = useMemo(() => {
+    const key = offerCode?.trim().toLowerCase();
+    if (!key) return null;
+    const cfg = OFFER_DISPLAY[key];
+    if (!cfg) return null;
+    const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
+    if (!paketOk || paymentMode !== cfg.requiredMode) return null;
+    const base = cfg.requiredMode === "miete"
+      ? Number(currentPaket.miete_monatlich || 0)
+      : Number(currentPaket.preis || 0);
+    if (!base) return null;
+    const { discounted, label, note } = cfg.compute(base);
+    return { base, discounted, label, note, mode: cfg.requiredMode };
+  }, [offerCode, currentPaket, paymentMode]);
+
   // Erkennung „Wachstumspaket im Kauf-Modus" → verbindlich gebucht, separat abgerechnet
   const growthAddon = useMemo(
     () => selectedAddons.find((a) => a.price_type === "monthly" && /wachstum/i.test(a.name)),
