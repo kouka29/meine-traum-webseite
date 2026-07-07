@@ -19,6 +19,20 @@ type Item = {
 // server-computed totals. Any larger mismatch is treated as a tampering attempt.
 const AMOUNT_TOLERANCE_CENTS = 10;
 
+// Whitelist der erlaubten Angebots-Codes → Stripe-Coupon-ID + priceId, für die
+// der Coupon gültig ist. Alles außerhalb dieser Map wird ignoriert (Normalpreis).
+// Rabatte werden ausschließlich hier bestimmt — niemals aus der URL berechnet.
+const OFFER_TO_COUPON: Record<string, { coupon: string; requiredPriceId: string }> = {
+  "cbi-y1":     { coupon: "CBI-Y1",     requiredPriceId: "pro_rent_monthly" },
+  "cbi-kauf25": { coupon: "CBI-KAUF25", requiredPriceId: "pro_purchase_deposit" },
+};
+
+function resolveExpectedPriceId(paketId: string, paymentMode: "kauf" | "miete"): string | null {
+  const p = (paketId || "").toLowerCase();
+  if (!["starter", "pro", "premium"].includes(p)) return null;
+  return paymentMode === "miete" ? `${p}_rent_monthly` : `${p}_purchase_deposit`;
+}
+
 type TrustedTotals = {
   // Sum of client-supplied item amounts (cents * quantity) MUST match this.
   subtotalCents: number;
