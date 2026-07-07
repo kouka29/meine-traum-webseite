@@ -515,6 +515,22 @@ export default function CheckoutFunnel({
           </button>
         </div>
 
+        {activeOffer && currentKey !== "bezahlen" && currentKey !== "fertig" && (
+          <div style={{
+            margin: "10px 20px 0",
+            padding: "8px 12px",
+            background: `${BRAND}12`,
+            border: `1px solid ${BRAND}33`,
+            borderRadius: 10,
+            fontSize: 12,
+            fontWeight: 600,
+            color: BRAND,
+            display: "flex", alignItems: "center", gap: 6,
+          }}>
+            🎁 <span>Angebot aktiv: <strong>{fmtEUR(activeOffer.discounted)}</strong>{activeOffer.mode === "miete" ? " /Monat" : ""} <span style={{ textDecoration: "line-through", fontWeight: 500, opacity: 0.7, marginLeft: 4 }}>{fmtEUR(activeOffer.base)}</span> · {activeOffer.note ?? activeOffer.label}</span>
+          </div>
+        )}
+
         {/* PROGRESS */}
         <div style={{
           padding: "12px 20px 0",
