@@ -104,6 +104,11 @@ interface Props {
    *  internen OFFER_DISPLAY-Fallback-Logik. Betrifft nur die UI; der echte
    *  Rabatt kommt weiterhin aus dem serverseitigen Stripe-Coupon. */
   activeOfferOverride?: ActiveOfferOverride;
+  /** Layout-Variante:
+   *  - "sidebar" (default): rechte Seitenleiste wie bisher.
+   *  - "centered": zentriertes Modal (für Demo-/Angebots-Kontext).
+   *  Mobile bleibt in beiden Varianten Vollbild-Slide-Up. */
+  layout?: "sidebar" | "centered";
 }
 
 type PayMethod = "online" | "rechnung";
@@ -153,7 +158,7 @@ function TrustBlock({ compact = false }: { compact?: boolean }) {
 }
 
 export default function CheckoutFunnel({
-  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode, activeOfferOverride,
+  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode, activeOfferOverride, layout = "sidebar",
 }: Props) {
   const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
   const hasPaketStep = allPakete.length > 1;
@@ -364,6 +369,15 @@ export default function CheckoutFunnel({
       : "Erster Monat heute · monatlich kündbar nach Mindestlaufzeit";
   }
 
+  // ---- Effektive Preise unter Berücksichtigung des aktiven Angebots (nur UI).
+  // Der echte Rabatt kommt weiterhin serverseitig aus dem Stripe-Coupon.
+  const offerDelta = activeOffer ? (activeOffer.base - activeOffer.discounted) : 0;
+  const effBasisMonatlich = activeOffer?.mode === "miete" ? activeOffer.discounted : basisMonatlich;
+  const effBasisEinmalig  = activeOffer?.mode === "kauf"  ? activeOffer.discounted : basisEinmalig;
+  const effGesamtMonatlich = Math.max(0, gesamtMonatlich - (activeOffer?.mode === "miete" ? offerDelta : 0));
+  const effGesamtEinmalig  = Math.max(0, gesamtEinmalig  - (activeOffer?.mode === "kauf"  ? offerDelta : 0));
+  const effHeuteZuZahlen   = Math.max(0, heuteZuZahlen - (activeOffer ? offerDelta : 0));
+
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
 
@@ -491,6 +505,8 @@ export default function CheckoutFunnel({
 
   if (!open) return null;
 
+  const isCentered = layout === "centered";
+
   return (
     <div
       role="dialog"
@@ -500,8 +516,9 @@ export default function CheckoutFunnel({
         background: "rgba(15, 12, 41, 0.55)",
         backdropFilter: "blur(6px)",
         display: "flex",
-        alignItems: "stretch",
-        justifyContent: "flex-end",
+        alignItems: isCentered ? "center" : "stretch",
+        justifyContent: isCentered ? "center" : "flex-end",
+        padding: isCentered ? 24 : 0,
         animation: "funnelFadeIn 0.25s ease-out",
         fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
       }}
@@ -517,9 +534,15 @@ export default function CheckoutFunnel({
           from { transform: translateY(100%) }
           to { transform: translateY(0) }
         }
+        @keyframes funnelZoomIn {
+          from { opacity: 0; transform: scale(0.96) }
+          to { opacity: 1; transform: scale(1) }
+        }
         .funnel-panel { animation: funnelSlideIn 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .funnel-panel-centered { animation: funnelZoomIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @media (max-width: 767px) {
           .funnel-panel { animation: funnelSlideUp 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) !important; }
+          .funnel-panel-centered { animation: funnelSlideUp 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) !important; }
         }
         .funnel-addon-card:hover { border-color: ${BRAND}80 !important; }
         .funnel-paymode-card:hover { border-color: ${BRAND}80 !important; }
@@ -527,15 +550,20 @@ export default function CheckoutFunnel({
       `}</style>
 
       <div
-        className="funnel-panel"
+        className={isCentered ? "funnel-panel-centered" : "funnel-panel"}
         style={{
           background: "#fff",
           width: "100%",
-          maxWidth: 520,
-          height: "100%",
+          maxWidth: isCentered ? 680 : 520,
+          height: isCentered ? "auto" : "100%",
+          maxHeight: isCentered ? "calc(100vh - 48px)" : "100%",
+          borderRadius: isCentered ? 20 : 0,
           display: "flex",
           flexDirection: "column",
-          boxShadow: "-20px 0 60px rgba(15,12,41,0.25)",
+          boxShadow: isCentered
+            ? "0 30px 80px rgba(15,12,41,0.35)"
+            : "-20px 0 60px rgba(15,12,41,0.25)",
+          overflow: "hidden",
         }}
       >
         {/* HEADER */}
@@ -679,8 +707,12 @@ export default function CheckoutFunnel({
               kostenpflichtig={kostenpflichtig} setKostenpflichtig={setKostenpflichtig}
               summary={{ heuteZuZahlen, heuteLabel, paymentMode, gesamtMonatlich, gesamtEinmalig }}
               paketName={currentPaket.name}
-              basisEinmalig={basisEinmalig}
-              basisMonatlich={basisMonatlich}
+              basisEinmalig={effBasisEinmalig}
+              basisMonatlich={effBasisMonatlich}
+              regularBasisEinmalig={basisEinmalig}
+              regularBasisMonatlich={basisMonatlich}
+              effHeuteZuZahlen={effHeuteZuZahlen}
+              activeOffer={activeOffer}
               selectedAddons={selectedAddons}
               payMethod={payMethod}
               setPayMethod={setPayMethod}
@@ -741,7 +773,7 @@ export default function CheckoutFunnel({
                       {activeOffer && activeOffer.mode === "miete" ? (
                         <>
                           <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtMonatlich)}</span>
-                          {fmtEUR(gesamtMonatlich - (activeOffer.base - activeOffer.discounted))}
+                          {fmtEUR(effGesamtMonatlich)}
                         </>
                       ) : (
                         fmtEUR(gesamtMonatlich)
@@ -754,7 +786,7 @@ export default function CheckoutFunnel({
                     activeOffer ? (
                       <>
                         <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(heuteZuZahlen)}</span>
-                        {fmtEUR(Math.max(0, heuteZuZahlen - (activeOffer.base - activeOffer.discounted)))}
+                        {fmtEUR(effHeuteZuZahlen)}
                       </>
                     ) : (
                       fmtEUR(heuteZuZahlen)
@@ -763,7 +795,7 @@ export default function CheckoutFunnel({
                     activeOffer && activeOffer.mode === "kauf" ? (
                       <>
                         <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtEinmalig)}</span>
-                        {fmtEUR(gesamtEinmalig - (activeOffer.base - activeOffer.discounted))}
+                        {fmtEUR(effGesamtEinmalig)}
                       </>
                     ) : (
                       fmtEUR(gesamtEinmalig)
@@ -1322,6 +1354,10 @@ function StepKontakt({
   paketName,
   basisEinmalig,
   basisMonatlich,
+  regularBasisEinmalig,
+  regularBasisMonatlich,
+  effHeuteZuZahlen,
+  activeOffer,
   selectedAddons,
   payMethod, setPayMethod, stripeAvailable,
   growthCommitment,
@@ -1337,6 +1373,10 @@ function StepKontakt({
   paketName: string;
   basisEinmalig: number;
   basisMonatlich: number;
+  regularBasisEinmalig: number;
+  regularBasisMonatlich: number;
+  effHeuteZuZahlen: number;
+  activeOffer: { base: number; discounted: number; label: string; note?: string; mode: PaymentMode } | null;
   selectedAddons: FunnelAddon[];
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
@@ -1398,11 +1438,28 @@ function StepKontakt({
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
           <strong style={{ fontWeight: 700 }}>{paketName}-Paket</strong>
           <span style={{ fontWeight: 600, color: TEXT_DARK, whiteSpace: "nowrap" }}>
-            {summary.paymentMode === "miete"
-              ? `${fmtEUR(basisMonatlich)}/Monat`
-              : `${fmtEUR(basisEinmalig)} einmalig`}
+            {summary.paymentMode === "miete" ? (
+              activeOffer?.mode === "miete" ? (
+                <>
+                  <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>{fmtEUR(regularBasisMonatlich)}</span>
+                  {fmtEUR(basisMonatlich)}/Monat
+                </>
+              ) : `${fmtEUR(basisMonatlich)}/Monat`
+            ) : (
+              activeOffer?.mode === "kauf" ? (
+                <>
+                  <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>{fmtEUR(regularBasisEinmalig)}</span>
+                  {fmtEUR(basisEinmalig)} einmalig
+                </>
+              ) : `${fmtEUR(basisEinmalig)} einmalig`
+            )}
           </span>
         </div>
+        {activeOffer && (
+          <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
+            {activeOffer.label}
+          </div>
+        )}
         {selectedAddons.length > 0 && (
           <div style={{ marginTop: 6, display: "grid", gap: 4 }}>
             {selectedAddons.map((a) => (
@@ -1467,13 +1524,13 @@ function StepKontakt({
         })()}
         <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
         <div style={{ fontSize: 12, color: TEXT_MUTED }}>
-          {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(summary.heuteZuZahlen)}</strong>
+          {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(effHeuteZuZahlen)}</strong>
         </div>
         <div style={{ fontSize: 12, color: TEXT_MUTED, marginTop: 4 }}>
-          MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(Math.round(summary.heuteZuZahlen * 19) / 100)}</strong>
+          MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(Math.round(effHeuteZuZahlen * 19) / 100)}</strong>
         </div>
         <div style={{ fontSize: 13, color: TEXT_DARK, marginTop: 6, fontWeight: 700 }}>
-          Gesamtpreis brutto: {fmtEUR(Math.round(summary.heuteZuZahlen * 119) / 100)}
+          Gesamtpreis brutto: {fmtEUR(Math.round(effHeuteZuZahlen * 119) / 100)}
         </div>
       </div>
 
