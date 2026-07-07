@@ -44,6 +44,12 @@ const OFFER_DISPLAY: Record<string, {
 
 type PaymentMode = "kauf" | "miete";
 
+export interface ActiveOfferOverride {
+  plan: "pro" | "starter" | "premium";
+  miete?: { regular: number; discounted: number; note?: string; label: string };
+  kauf?: { regular: number; discounted: number; note?: string; label: string };
+}
+
 export interface FunnelAddon {
   id: string;
   name: string;
@@ -93,6 +99,11 @@ interface Props {
   sourceDemo?: string;
   /** Angebots-Code aus Deeplink (?offer=...) — löst serverseitig einen Stripe-Coupon aus */
   offerCode?: string;
+  /** Optional: von /preise?demo=... übergebene Anzeigepreise pro Modus.
+   *  Wenn gesetzt, wird die Anzeige daraus abgeleitet — hat Vorrang vor der
+   *  internen OFFER_DISPLAY-Fallback-Logik. Betrifft nur die UI; der echte
+   *  Rabatt kommt weiterhin aus dem serverseitigen Stripe-Coupon. */
+  activeOfferOverride?: ActiveOfferOverride;
 }
 
 type PayMethod = "online" | "rechnung";
@@ -142,7 +153,7 @@ function TrustBlock({ compact = false }: { compact?: boolean }) {
 }
 
 export default function CheckoutFunnel({
-  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode,
+  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode, activeOfferOverride,
 }: Props) {
   const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
   const hasPaketStep = allPakete.length > 1;
@@ -237,6 +248,20 @@ export default function CheckoutFunnel({
   // greift nur für Pro-Paket und den passenden Zahlungsmodus. Keine Rabatt-
   // Berechnung im Payment-Flow — nur visuell.
   const activeOffer = useMemo(() => {
+    // 1) Explizites Override von /preise?demo=... hat Vorrang
+    if (activeOfferOverride) {
+      const paketOk = currentPaket.id.toLowerCase().startsWith(activeOfferOverride.plan);
+      if (!paketOk) return null;
+      const side = paymentMode === "miete" ? activeOfferOverride.miete : activeOfferOverride.kauf;
+      if (!side) return null;
+      return {
+        base: side.regular,
+        discounted: side.discounted,
+        label: side.label,
+        note: side.note,
+        mode: paymentMode,
+      };
+    }
     const key = offerCode?.trim().toLowerCase();
     if (!key) return null;
     const cfg = OFFER_DISPLAY[key];
@@ -249,7 +274,43 @@ export default function CheckoutFunnel({
     if (!base) return null;
     const { discounted, label, note } = cfg.compute(base);
     return { base, discounted, label, note, mode: cfg.requiredMode };
-  }, [offerCode, currentPaket, paymentMode]);
+  }, [offerCode, currentPaket, paymentMode, activeOfferOverride]);
+
+  /**
+   * Angebots-Anzeigewerte pro Modus (unabhängig vom aktuell gewählten). Wird im
+   * Paket- und Zahlungs-Schritt benutzt, um beide Optionen mit durchgestrichenem
+   * Regulärpreis darzustellen.
+   */
+  const offersByMode = useMemo(() => {
+    const out: { miete?: { regular: number; discounted: number; note?: string }; kauf?: { regular: number; discounted: number; note?: string } } = {};
+    if (activeOfferOverride) {
+      const paketOk = currentPaket.id.toLowerCase().startsWith(activeOfferOverride.plan);
+      if (!paketOk) return out;
+      if (activeOfferOverride.miete) out.miete = { ...activeOfferOverride.miete };
+      if (activeOfferOverride.kauf) out.kauf = { ...activeOfferOverride.kauf };
+      return out;
+    }
+    const key = offerCode?.trim().toLowerCase();
+    if (!key) return out;
+    const cfg = OFFER_DISPLAY[key];
+    if (!cfg) return out;
+    const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
+    if (!paketOk) return out;
+    if (cfg.requiredMode === "miete") {
+      const base = Number(currentPaket.miete_monatlich || 0);
+      if (base) {
+        const { discounted, note } = cfg.compute(base);
+        out.miete = { regular: base, discounted, note };
+      }
+    } else {
+      const base = Number(currentPaket.preis || 0);
+      if (base) {
+        const { discounted, note } = cfg.compute(base);
+        out.kauf = { regular: base, discounted, note };
+      }
+    }
+    return out;
+  }, [offerCode, currentPaket, activeOfferOverride]);
 
   // Erkennung „Wachstumspaket im Kauf-Modus" → verbindlich gebucht, separat abgerechnet
   const growthAddon = useMemo(
@@ -584,6 +645,8 @@ export default function CheckoutFunnel({
               selectedId={selectedPaketId}
               onSelect={setSelectedPaketId}
               paymentConfig={paymentConfig}
+              offersByMode={offersByMode}
+              offerPlan={activeOfferOverride?.plan}
             />
           )}
           {currentKey === "zahlung" && (
@@ -594,6 +657,7 @@ export default function CheckoutFunnel({
               paymentConfig={paymentConfig}
               kaufEnabled={kaufEnabled}
               mieteEnabled={mieteEnabled}
+              offersByMode={offersByMode}
             />
           )}
           {currentKey === "extras" && (
@@ -761,14 +825,19 @@ export default function CheckoutFunnel({
   );
 }
 
+type OfferSide = { regular: number; discounted: number; note?: string };
+type OffersByMode = { miete?: OfferSide; kauf?: OfferSide };
+
 // ─── STEP 0: ZAHLUNGSMODELL ────────────────────────────
 function StepPaket({
-  pakete, selectedId, onSelect, paymentConfig,
+  pakete, selectedId, onSelect, paymentConfig, offersByMode, offerPlan,
 }: {
   pakete: FunnelPaket[];
   selectedId: string;
   onSelect: (id: string) => void;
   paymentConfig: PaymentConfig;
+  offersByMode?: OffersByMode;
+  offerPlan?: "pro" | "starter" | "premium";
 }) {
   const mieteGloballyEnabled = !!paymentConfig.miete?.enabled;
   return (
@@ -784,6 +853,11 @@ function StepPaket({
           const active = p.id === selectedId;
           const recommended = pakete.length >= 3 ? idx === 1 : (idx === pakete.length - 1 && pakete.length > 1);
           const showMiete = mieteGloballyEnabled && p.miete_monatlich && Number(p.miete_monatlich) > 0;
+          const paketMatchesOffer = offerPlan
+            ? p.id.toLowerCase().startsWith(offerPlan)
+            : false;
+          const mieteOffer = paketMatchesOffer ? offersByMode?.miete : undefined;
+          const kaufOffer = paketMatchesOffer ? offersByMode?.kauf : undefined;
           return (
             <button
               key={p.id}
@@ -816,14 +890,40 @@ function StepPaket({
                   <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10 }}>
                     {showMiete && (
                       <div style={{ fontSize: 20, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                        {fmtEUR(Number(p.miete_monatlich))}
+                        {mieteOffer ? (
+                          <>
+                            <span style={{ textDecoration: "line-through", fontSize: 13, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(mieteOffer.regular)}</span>
+                            {fmtEUR(mieteOffer.discounted)}
+                          </>
+                        ) : (
+                          fmtEUR(Number(p.miete_monatlich))
+                        )}
                         <span style={{ fontSize: 12, color: TEXT_MUTED, fontWeight: 600 }}> /Monat</span>
                       </div>
                     )}
                     <div style={{ fontSize: showMiete ? 13 : 20, fontWeight: showMiete ? 600 : 800, color: showMiete ? TEXT_MUTED : BRAND, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                      {showMiete ? `oder ${fmtEUR(p.preis)} einmalig` : fmtEUR(p.preis)}
+                      {kaufOffer ? (
+                        showMiete ? (
+                          <>
+                            oder <span style={{ textDecoration: "line-through", marginRight: 4 }}>{fmtEUR(kaufOffer.regular)}</span>
+                            <strong style={{ color: BRAND }}>{fmtEUR(kaufOffer.discounted)}</strong> einmalig
+                          </>
+                        ) : (
+                          <>
+                            <span style={{ textDecoration: "line-through", fontSize: 14, marginRight: 6, color: TEXT_MUTED }}>{fmtEUR(kaufOffer.regular)}</span>
+                            {fmtEUR(kaufOffer.discounted)}
+                          </>
+                        )
+                      ) : (
+                        showMiete ? `oder ${fmtEUR(p.preis)} einmalig` : fmtEUR(p.preis)
+                      )}
                     </div>
                   </div>
+                  {(mieteOffer || kaufOffer) && (
+                    <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 6, lineHeight: 1.4 }}>
+                      🎁 {mieteOffer?.note ?? kaufOffer?.note ?? "Angebotspreis aktiv"}
+                    </div>
+                  )}
                   {showMiete && (
                     <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 6, lineHeight: 1.4 }}>
                       zzgl. 19% MwSt. · 12 Monate Laufzeit, danach monatlich kündbar
@@ -849,7 +949,7 @@ function StepPaket({
 
 // ─── STEP 1: ZAHLUNGSMODELL ────────────────────────────
 function StepZahlung({
-  paket, paymentMode, setPaymentMode, paymentConfig, kaufEnabled, mieteEnabled,
+  paket, paymentMode, setPaymentMode, paymentConfig, kaufEnabled, mieteEnabled, offersByMode,
 }: {
   paket: FunnelPaket;
   paymentMode: PaymentMode;
@@ -857,6 +957,7 @@ function StepZahlung({
   paymentConfig: PaymentConfig;
   kaufEnabled: boolean;
   mieteEnabled: boolean;
+  offersByMode?: OffersByMode;
 }) {
   // marker
   return (
@@ -876,6 +977,11 @@ function StepZahlung({
             badge="EMPFOHLEN"
             title="Monatliche Miete"
             price={`${fmtEUR(Number(paket.miete_monatlich))} /Monat`}
+            offerPrice={offersByMode?.miete ? {
+              regular: `${fmtEUR(offersByMode.miete.regular)} /Monat`,
+              discounted: `${fmtEUR(offersByMode.miete.discounted)} /Monat`,
+              note: offersByMode.miete.note,
+            } : undefined}
             subtitle={`Mindestlaufzeit ${paymentConfig.miete?.min_months ?? 12} Monate · danach jederzeit kündbar`}
             benefits={[
               "Niedrigere Einstiegshürde",
@@ -891,6 +997,11 @@ function StepZahlung({
             onClick={() => setPaymentMode("kauf")}
             title="Einmalkauf"
             price={fmtEUR(paket.preis)}
+            offerPrice={offersByMode?.kauf ? {
+              regular: fmtEUR(offersByMode.kauf.regular),
+              discounted: fmtEUR(offersByMode.kauf.discounted),
+              note: offersByMode.kauf.note,
+            } : undefined}
             subtitle={
               paymentConfig.kauf?.mode === "deposit" && paymentConfig.kauf.deposit_percent
                 ? `${paymentConfig.kauf.deposit_percent}% Anzahlung heute · Rest nach Lieferung`
@@ -910,7 +1021,7 @@ function StepZahlung({
 }
 
 function PaymentCard({
-  active, onClick, badge, title, price, subtitle, benefits, emoji,
+  active, onClick, badge, title, price, subtitle, benefits, emoji, offerPrice,
 }: {
   active: boolean;
   onClick: () => void;
@@ -920,6 +1031,7 @@ function PaymentCard({
   subtitle: string;
   benefits: string[];
   emoji: string;
+  offerPrice?: { regular: string; discounted: string; note?: string };
 }) {
   return (
     <button
@@ -957,9 +1069,23 @@ function PaymentCard({
           transition: "all 0.15s",
         }} />
       </div>
-      <div style={{ fontSize: 26, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 4 }}>
-        {price}
-      </div>
+      {offerPrice ? (
+        <>
+          <div style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED, textDecoration: "line-through", lineHeight: 1.1, marginBottom: 2 }}>
+            {offerPrice.regular}
+          </div>
+          <div style={{ fontSize: 26, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 4 }}>
+            {offerPrice.discounted}
+          </div>
+          {offerPrice.note && (
+            <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginBottom: 6 }}>🎁 {offerPrice.note}</div>
+          )}
+        </>
+      ) : (
+        <div style={{ fontSize: 26, fontWeight: 800, color: BRAND, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 4 }}>
+          {price}
+        </div>
+      )}
       <div style={{ fontSize: 12, color: TEXT_MUTED, marginBottom: 10 }}>{subtitle}</div>
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
         {benefits.map((b, i) => (
