@@ -505,6 +505,8 @@ export default function CheckoutFunnel({
 
   if (!open) return null;
 
+  const isCentered = layout === "centered";
+
   return (
     <div
       role="dialog"
@@ -514,8 +516,9 @@ export default function CheckoutFunnel({
         background: "rgba(15, 12, 41, 0.55)",
         backdropFilter: "blur(6px)",
         display: "flex",
-        alignItems: "stretch",
-        justifyContent: "flex-end",
+        alignItems: isCentered ? "center" : "stretch",
+        justifyContent: isCentered ? "center" : "flex-end",
+        padding: isCentered ? 24 : 0,
         animation: "funnelFadeIn 0.25s ease-out",
         fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
       }}
@@ -531,9 +534,15 @@ export default function CheckoutFunnel({
           from { transform: translateY(100%) }
           to { transform: translateY(0) }
         }
+        @keyframes funnelZoomIn {
+          from { opacity: 0; transform: scale(0.96) }
+          to { opacity: 1; transform: scale(1) }
+        }
         .funnel-panel { animation: funnelSlideIn 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .funnel-panel-centered { animation: funnelZoomIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @media (max-width: 767px) {
           .funnel-panel { animation: funnelSlideUp 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) !important; }
+          .funnel-panel-centered { animation: funnelSlideUp 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) !important; }
         }
         .funnel-addon-card:hover { border-color: ${BRAND}80 !important; }
         .funnel-paymode-card:hover { border-color: ${BRAND}80 !important; }
@@ -541,15 +550,20 @@ export default function CheckoutFunnel({
       `}</style>
 
       <div
-        className="funnel-panel"
+        className={isCentered ? "funnel-panel-centered" : "funnel-panel"}
         style={{
           background: "#fff",
           width: "100%",
-          maxWidth: 520,
-          height: "100%",
+          maxWidth: isCentered ? 680 : 520,
+          height: isCentered ? "auto" : "100%",
+          maxHeight: isCentered ? "calc(100vh - 48px)" : "100%",
+          borderRadius: isCentered ? 20 : 0,
           display: "flex",
           flexDirection: "column",
-          boxShadow: "-20px 0 60px rgba(15,12,41,0.25)",
+          boxShadow: isCentered
+            ? "0 30px 80px rgba(15,12,41,0.35)"
+            : "-20px 0 60px rgba(15,12,41,0.25)",
+          overflow: "hidden",
         }}
       >
         {/* HEADER */}
