@@ -674,19 +674,45 @@ export default function CheckoutFunnel({
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
                   {paymentMode === "miete" && currentKey !== "kontakt" ? (
                     <>
-                      {fmtEUR(gesamtMonatlich)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
+                      {activeOffer && activeOffer.mode === "miete" ? (
+                        <>
+                          <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtMonatlich)}</span>
+                          {fmtEUR(gesamtMonatlich - (activeOffer.base - activeOffer.discounted))}
+                        </>
+                      ) : (
+                        fmtEUR(gesamtMonatlich)
+                      )} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
                       {addonsEinmalig > 0 && (
                         <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}> · +{fmtEUR(addonsEinmalig)} einmalig</span>
                       )}
                     </>
                   ) : currentKey === "kontakt" ? (
-                    fmtEUR(heuteZuZahlen)
+                    activeOffer ? (
+                      <>
+                        <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(heuteZuZahlen)}</span>
+                        {fmtEUR(Math.max(0, heuteZuZahlen - (activeOffer.base - activeOffer.discounted)))}
+                      </>
+                    ) : (
+                      fmtEUR(heuteZuZahlen)
+                    )
                   ) : (
-                    fmtEUR(gesamtEinmalig)
+                    activeOffer && activeOffer.mode === "kauf" ? (
+                      <>
+                        <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtEinmalig)}</span>
+                        {fmtEUR(gesamtEinmalig - (activeOffer.base - activeOffer.discounted))}
+                      </>
+                    ) : (
+                      fmtEUR(gesamtEinmalig)
+                    )
                   )}
                 </div>
                 {currentKey === "kontakt" && (
                   <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
+                )}
+                {activeOffer && (
+                  <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
+                    {activeOffer.label}
+                  </div>
                 )}
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: TEXT_MUTED }}>
