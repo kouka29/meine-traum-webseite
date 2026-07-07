@@ -104,6 +104,11 @@ interface Props {
    *  internen OFFER_DISPLAY-Fallback-Logik. Betrifft nur die UI; der echte
    *  Rabatt kommt weiterhin aus dem serverseitigen Stripe-Coupon. */
   activeOfferOverride?: ActiveOfferOverride;
+  /** Layout-Variante:
+   *  - "sidebar" (default): rechte Seitenleiste wie bisher.
+   *  - "centered": zentriertes Modal (für Demo-/Angebots-Kontext).
+   *  Mobile bleibt in beiden Varianten Vollbild-Slide-Up. */
+  layout?: "sidebar" | "centered";
 }
 
 type PayMethod = "online" | "rechnung";
@@ -153,7 +158,7 @@ function TrustBlock({ compact = false }: { compact?: boolean }) {
 }
 
 export default function CheckoutFunnel({
-  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode, activeOfferOverride,
+  open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode, activeOfferOverride, layout = "sidebar",
 }: Props) {
   const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
   const hasPaketStep = allPakete.length > 1;
