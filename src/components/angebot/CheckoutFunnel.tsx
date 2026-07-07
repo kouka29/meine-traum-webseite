@@ -581,6 +581,8 @@ export default function CheckoutFunnel({
                   growth_amount_cents: String(growthAddon!.price_cents),
                   growth_min_term: "12",
                 } : {}),
+                ...(offerCode ? { offer_code: offerCode } : {}),
+                ...(sourceDemo ? { demo_source: sourceDemo } : {}),
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
             />
