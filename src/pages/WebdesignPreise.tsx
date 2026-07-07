@@ -895,7 +895,7 @@ const WebdesignPreise = () => {
 
         <TrustStrip />
 
-        <Tabs defaultValue="miete" className="mb-12">
+        <Tabs value={tab} onValueChange={(v) => setTab(v as "miete" | "kauf")} className="mb-12">
           <TabsList className="mx-auto flex w-full max-w-sm mb-8">
             <TabsTrigger value="miete" className="flex-1">Monatlich flexibel</TabsTrigger>
             <TabsTrigger value="kauf" className="flex-1">Einmalig kaufen</TabsTrigger>
