@@ -1354,6 +1354,10 @@ function StepKontakt({
   paketName,
   basisEinmalig,
   basisMonatlich,
+  regularBasisEinmalig,
+  regularBasisMonatlich,
+  effHeuteZuZahlen,
+  activeOffer,
   selectedAddons,
   payMethod, setPayMethod, stripeAvailable,
   growthCommitment,
@@ -1369,6 +1373,10 @@ function StepKontakt({
   paketName: string;
   basisEinmalig: number;
   basisMonatlich: number;
+  regularBasisEinmalig: number;
+  regularBasisMonatlich: number;
+  effHeuteZuZahlen: number;
+  activeOffer: { base: number; discounted: number; label: string; note?: string; mode: PaymentMode } | null;
   selectedAddons: FunnelAddon[];
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
