@@ -10,6 +10,14 @@ import CheckoutFunnel, { type FunnelPaket, type FunnelAddon } from "@/components
 import PaymentTrustStrip from "@/components/PaymentTrustStrip";
 import { supabase } from "@/integrations/supabase/client";
 import { usePricingName, PricingName } from "@/lib/pricingNames";
+import DemoOfferPopup from "@/components/DemoOfferPopup";
+import {
+  getDemoOffer,
+  resolveLegacyOffer,
+  buildFunnelOfferOverride,
+  type DemoOffer,
+  type DemoMode,
+} from "@/config/demoOffers";
 
 const TrustStrip = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full my-8">
@@ -755,6 +763,8 @@ const WebdesignPreise = () => {
   const [tab, setTab] = useState<"miete" | "kauf">("miete");
   const [demoSource, setDemoSource] = useState<string | null>(null);
   const [offerCode, setOfferCode] = useState<string | null>(null);
+  const [demoOffer, setDemoOffer] = useState<DemoOffer | null>(null);
+  const [showDemoPopup, setShowDemoPopup] = useState(false);
   const [searchParams] = useSearchParams();
 
   // Deep-Link-Handler: /preise?plan=&mode=&demo=&offer=
@@ -768,6 +778,31 @@ const WebdesignPreise = () => {
     else if (mode === "miete") setTab("miete");
 
     if (demo) setDemoSource(demo);
+
+    // 1) demo=SLUG → Angebots-Popup öffnen
+    const registered = getDemoOffer(demo);
+    if (registered) {
+      setDemoOffer(registered);
+      setShowDemoPopup(true);
+      setDemoSource(registered.slug);
+      // demo gewinnt gegen offer — kein weiterer Deep-Link nötig
+      return;
+    }
+
+    // 2) Legacy: kein demo, aber offer=cbi-y1 / cbi-kauf25
+    const legacy = resolveLegacyOffer(offer);
+    if (legacy) {
+      const off = getDemoOffer(legacy.demoSlug);
+      if (off) {
+        setDemoOffer(off);
+        setShowDemoPopup(true);
+        setDemoSource(off.slug);
+        if (legacy.mode === "kauf") setTab("kauf");
+        else setTab("miete");
+        return;
+      }
+    }
+
     if (offer) setOfferCode(offer);
 
     if (!plan || !["starter", "pro", "premium"].includes(plan)) return;
@@ -786,6 +821,17 @@ const WebdesignPreise = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleDemoSelect = (mode: DemoMode) => {
+    if (!demoOffer) return;
+    const opt = mode === "kauf" ? demoOffer.kauf : demoOffer.miete;
+    setOfferCode(opt.offerCode);
+    setTab(mode);
+    setCheckoutPkg({ name: "Pro", priceId: opt.priceId, mode });
+    setShowDemoPopup(false);
+  };
+
+  const funnelOfferOverride = demoOffer ? buildFunnelOfferOverride(demoOffer) : undefined;
 
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
@@ -1086,6 +1132,12 @@ const WebdesignPreise = () => {
     </button>
 
     <PricingLeadPopup open={popupOpen} badge={popupBadge} onClose={() => setPopupOpen(false)} />
+    <DemoOfferPopup
+      open={showDemoPopup}
+      offer={demoOffer}
+      onClose={() => setShowDemoPopup(false)}
+      onSelect={handleDemoSelect}
+    />
     {currentFunnelPaket && checkoutPkg && (
       <CheckoutFunnel
         open={checkoutPkg !== null}
@@ -1100,6 +1152,7 @@ const WebdesignPreise = () => {
         defaultPaymentMode={checkoutPkg.mode}
         sourceDemo={demoSource ?? undefined}
         offerCode={offerCode ?? undefined}
+        activeOfferOverride={funnelOfferOverride}
       />
     )}
   </main>
