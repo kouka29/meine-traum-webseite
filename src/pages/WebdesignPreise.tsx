@@ -752,6 +752,41 @@ const WebdesignPreise = () => {
   const [checkoutPkg, setCheckoutPkg] = useState<
     { name: string; priceId?: string; mode: "miete" | "kauf" } | null
   >(null);
+  const [tab, setTab] = useState<"miete" | "kauf">("miete");
+  const [demoSource, setDemoSource] = useState<string | null>(null);
+  const [offerCode, setOfferCode] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+
+  // Deep-Link-Handler: /preise?plan=&mode=&demo=&offer=
+  useEffect(() => {
+    const plan = (searchParams.get("plan") || "").trim().toLowerCase();
+    const mode = (searchParams.get("mode") || "").trim().toLowerCase();
+    const demo = (searchParams.get("demo") || "").trim();
+    const offer = (searchParams.get("offer") || "").trim().toLowerCase();
+
+    if (mode === "kauf") setTab("kauf");
+    else if (mode === "miete") setTab("miete");
+
+    if (demo) setDemoSource(demo);
+    if (offer) setOfferCode(offer);
+
+    if (!plan || !["starter", "pro", "premium"].includes(plan)) return;
+
+    const isKauf = mode === "kauf";
+    const targetPriceId = isKauf
+      ? `${plan}_purchase_deposit`
+      : `${plan}_rent_monthly`;
+
+    if (isKauf) {
+      const pkg = buyPackages.find((p) => p.priceId === targetPriceId);
+      if (pkg) setCheckoutPkg({ name: pkg.name, priceId: pkg.priceId, mode: "kauf" });
+    } else {
+      const pkg = rentPackages.find((p) => p.priceId === targetPriceId);
+      if (pkg) setCheckoutPkg({ name: pkg.name, priceId: pkg.priceId, mode: "miete" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
     setPopupOpen(true);
