@@ -645,6 +645,8 @@ export default function CheckoutFunnel({
               selectedId={selectedPaketId}
               onSelect={setSelectedPaketId}
               paymentConfig={paymentConfig}
+              offersByMode={offersByMode}
+              offerPlan={activeOfferOverride?.plan}
             />
           )}
           {currentKey === "zahlung" && (
@@ -655,6 +657,7 @@ export default function CheckoutFunnel({
               paymentConfig={paymentConfig}
               kaufEnabled={kaufEnabled}
               mieteEnabled={mieteEnabled}
+              offersByMode={offersByMode}
             />
           )}
           {currentKey === "extras" && (
