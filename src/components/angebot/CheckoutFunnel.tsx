@@ -14,6 +14,36 @@ const TEXT_MUTED = "#6B7280";
 // Rechnungszahlung im Checkout wieder erlaubt werden soll.
 const RECHNUNG_ENABLED = false;
 
+// Angebots-Codes (Whitelist NUR für die UI-Anzeige des reduzierten Preises).
+// Der abgerechnete Rabatt kommt weiterhin ausschließlich aus dem serverseitig
+// validierten Stripe-Coupon in `create-checkout` — hier wird NUR angezeigt.
+const OFFER_DISPLAY: Record<string, {
+  requiredPaketId: "pro";
+  requiredMode: PaymentMode;
+  compute: (base: number) => { discounted: number; label: string; note?: string };
+}> = {
+  "cbi-y1": {
+    requiredPaketId: "pro",
+    requiredMode: "miete",
+    compute: (base) => ({
+      discounted: Math.max(0, base - 40),
+      label: "1. Jahr, danach regulärer Preis",
+      note: "Angebotspreis für 12 Monate (CBI-Y1)",
+    }),
+  },
+  "cbi-kauf25": {
+    requiredPaketId: "pro",
+    requiredMode: "kauf",
+    compute: (base) => ({
+      discounted: Math.round(base * 0.75 * 100) / 100,
+      label: "−25 % Angebotspreis",
+      note: "Rabatt CBI-KAUF25",
+    }),
+  },
+};
+
+type PaymentMode = "kauf" | "miete";
+
 export interface FunnelAddon {
   id: string;
   name: string;
@@ -65,7 +95,6 @@ interface Props {
   offerCode?: string;
 }
 
-type PaymentMode = "kauf" | "miete";
 type PayMethod = "online" | "rechnung";
 type StepKey = "paket" | "zahlung" | "extras" | "kontakt" | "bezahlen" | "fertig";
 
@@ -203,6 +232,24 @@ export default function CheckoutFunnel({
     () => currentAddons.filter((a) => selectedAddonIds.includes(a.id)),
     [currentAddons, selectedAddonIds],
   );
+
+  // Aktiver Angebots-Code für die UI-Anzeige. Case-insensitiv, restriktiv:
+  // greift nur für Pro-Paket und den passenden Zahlungsmodus. Keine Rabatt-
+  // Berechnung im Payment-Flow — nur visuell.
+  const activeOffer = useMemo(() => {
+    const key = offerCode?.trim().toLowerCase();
+    if (!key) return null;
+    const cfg = OFFER_DISPLAY[key];
+    if (!cfg) return null;
+    const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
+    if (!paketOk || paymentMode !== cfg.requiredMode) return null;
+    const base = cfg.requiredMode === "miete"
+      ? Number(currentPaket.miete_monatlich || 0)
+      : Number(currentPaket.preis || 0);
+    if (!base) return null;
+    const { discounted, label, note } = cfg.compute(base);
+    return { base, discounted, label, note, mode: cfg.requiredMode };
+  }, [offerCode, currentPaket, paymentMode]);
 
   // Erkennung „Wachstumspaket im Kauf-Modus" → verbindlich gebucht, separat abgerechnet
   const growthAddon = useMemo(
@@ -468,6 +515,22 @@ export default function CheckoutFunnel({
           </button>
         </div>
 
+        {activeOffer && currentKey !== "bezahlen" && currentKey !== "fertig" && (
+          <div style={{
+            margin: "10px 20px 0",
+            padding: "8px 12px",
+            background: `${BRAND}12`,
+            border: `1px solid ${BRAND}33`,
+            borderRadius: 10,
+            fontSize: 12,
+            fontWeight: 600,
+            color: BRAND,
+            display: "flex", alignItems: "center", gap: 6,
+          }}>
+            🎁 <span>Angebot aktiv: <strong>{fmtEUR(activeOffer.discounted)}</strong>{activeOffer.mode === "miete" ? " /Monat" : ""} <span style={{ textDecoration: "line-through", fontWeight: 500, opacity: 0.7, marginLeft: 4 }}>{fmtEUR(activeOffer.base)}</span> · {activeOffer.note ?? activeOffer.label}</span>
+          </div>
+        )}
+
         {/* PROGRESS */}
         <div style={{
           padding: "12px 20px 0",
@@ -611,19 +674,45 @@ export default function CheckoutFunnel({
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
                   {paymentMode === "miete" && currentKey !== "kontakt" ? (
                     <>
-                      {fmtEUR(gesamtMonatlich)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
+                      {activeOffer && activeOffer.mode === "miete" ? (
+                        <>
+                          <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtMonatlich)}</span>
+                          {fmtEUR(gesamtMonatlich - (activeOffer.base - activeOffer.discounted))}
+                        </>
+                      ) : (
+                        fmtEUR(gesamtMonatlich)
+                      )} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
                       {addonsEinmalig > 0 && (
                         <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}> · +{fmtEUR(addonsEinmalig)} einmalig</span>
                       )}
                     </>
                   ) : currentKey === "kontakt" ? (
-                    fmtEUR(heuteZuZahlen)
+                    activeOffer ? (
+                      <>
+                        <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(heuteZuZahlen)}</span>
+                        {fmtEUR(Math.max(0, heuteZuZahlen - (activeOffer.base - activeOffer.discounted)))}
+                      </>
+                    ) : (
+                      fmtEUR(heuteZuZahlen)
+                    )
                   ) : (
-                    fmtEUR(gesamtEinmalig)
+                    activeOffer && activeOffer.mode === "kauf" ? (
+                      <>
+                        <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtEinmalig)}</span>
+                        {fmtEUR(gesamtEinmalig - (activeOffer.base - activeOffer.discounted))}
+                      </>
+                    ) : (
+                      fmtEUR(gesamtEinmalig)
+                    )
                   )}
                 </div>
                 {currentKey === "kontakt" && (
                   <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
+                )}
+                {activeOffer && (
+                  <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
+                    {activeOffer.label}
+                  </div>
                 )}
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: TEXT_MUTED }}>

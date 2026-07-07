@@ -1,82 +1,94 @@
-## Ziel
+## Kontext
 
-Externe Deep-Links (z. B. aus Demo-Vorschauen) auf `/preise?plan=pro&mode=kauf&demo=CBI&offer=cbi-kauf25` sollen:
-- den richtigen Tab (Kauf / Miete) vorwählen,
-- das richtige Paket im bestehenden `CheckoutFunnel` öffnen,
-- die Herkunft (`demo=CBI`) als Quelle mittragen,
-- optional einen Angebots-Code (`offer=…`) in einen **serverseitig validierten** Stripe-Coupon übersetzen.
+Der Deep-Link-Handler (`?plan`, `?mode`, `?demo`, `?offer`) und die serverseitige Coupon-Validierung sind bereits implementiert (`WebdesignPreise.tsx`, `CheckoutFunnel.tsx`, `create-checkout/index.ts`). Fehlend ist nur noch die **UI-Anzeige** des reduzierten Preises im Funnel — damit der Kunde den Rabatt bereits vor Stripe sieht.
 
-Bestehende Tabs, `PackageCard`/`BuyCard`, `openRentCheckout` / `openBuyCheckout`, `CheckoutFunnel`, Preise, `priceId`s und der Stripe-Flow bleiben unverändert — es wird **nur ergänzt**.
+Wichtig: Der abgerechnete Rabatt kommt weiterhin ausschließlich aus dem serverseitig validierten Stripe-Coupon. Die UI zeigt den Preis nur an, sie berechnet keinen wirksamen Rabatt.
 
-## Änderungen
+## Änderungen (nur `src/components/angebot/CheckoutFunnel.tsx`)
 
-### 1) `src/pages/WebdesignPreise.tsx` — Deep-Link-Handling
+### 1) Offer-Whitelist clientseitig (nur für Anzeige)
 
-- `useSearchParams` aus `react-router-dom` importieren.
-- `Tabs` von unkontrolliert (`defaultValue="miete"`) auf **kontrolliert** umstellen: neuer State `tab: "miete" | "kauf"` (Default `"miete"`), `value={tab} onValueChange={setTab}`.
-- Neue States: `demoSource: string | null`, `offerCode: string | null`.
-- Neuer `useEffect` (einmalig beim Mount):
-  1. `plan`, `mode`, `demo`, `offer` aus den Search-Params lesen (alles lowercase / trim).
-  2. Wenn `mode === "miete"` → `setTab("miete")`, sonst wenn `mode === "kauf"` → `setTab("kauf")`.
-  3. `demo` → `setDemoSource(demo)`, `offer` → `setOfferCode(offer)`.
-  4. Paket-Lookup per `id`-Präfix auf `priceId` (robust gegen Reihenfolge):
-     - `starter` → `starter_rent_monthly` / `starter_purchase_deposit`
-     - `pro` → `pro_rent_monthly` / `pro_purchase_deposit`
-     - `premium` → `premium_rent_monthly` / `premium_purchase_deposit`
-     - In `rentPackages` bzw. `buyPackages` per `p.priceId === <ziel>` finden.
-  5. Falls Paket gefunden: `openRentCheckout` bzw. `openBuyCheckout` mit `{ name, priceId }` aufrufen → der bestehende `CheckoutFunnel` öffnet sich exakt wie bei einem Klick.
-  6. Wenn `plan` fehlt/unbekannt: nur Tab setzen, kein Funnel öffnen.
-- Dezenter Hinweis-Banner unter dem bestehenden Demo-Banner, nur wenn `demoSource` gesetzt ist: „Aus Ihrer Demo-Vorschau ({demoSource})".
-- `CheckoutFunnel`-Aufruf am Ende der Datei um neue Props ergänzen: `sourceDemo={demoSource ?? undefined}` und `offerCode={offerCode ?? undefined}`.
+Am Dateikopf eine kleine, gespiegelte Whitelist ergänzen — identische IDs wie in `create-checkout`:
 
-### 2) `src/components/angebot/CheckoutFunnel.tsx` — Props durchreichen
+```ts
+const OFFER_DISPLAY: Record<string, {
+  requiredPaketId: "pro";
+  requiredMode: "kauf" | "miete";
+  compute: (base: number) => { discounted: number; label: string; note?: string };
+}> = {
+  "cbi-y1": {
+    requiredPaketId: "pro",
+    requiredMode: "miete",
+    compute: (base) => ({
+      discounted: Math.max(0, base - 40),
+      label: "1. Jahr, danach 99 €/Monat",
+      note: "Angebotspreis für 12 Monate (CBI-Y1)",
+    }),
+  },
+  "cbi-kauf25": {
+    requiredPaketId: "pro",
+    requiredMode: "kauf",
+    compute: (base) => ({
+      discounted: Math.round(base * 0.75 * 100) / 100,
+      label: "−25 % (CBI-KAUF25)",
+    }),
+  },
+};
+```
 
-- Interface `Props` um `sourceDemo?: string` und `offerCode?: string` erweitern; im Component-Signature destrukturieren.
-- Bei der bereits vorhandenen Lead-/Buchungs-Erstellung (`supabase.functions.invoke("buchung-bestaetigen", …)` bzw. dem vorgelagerten `notify-lead`/Buchungs-Insert) `source_demo` (bzw. `source_cta: "demo:<code>"`) im Payload mitschicken, sofern gesetzt.
-- Im `StepBezahlen`-Aufruf die `metadata` erweitern:
-  ```
-  ...(offerCode ? { offer_code: offerCode } : {}),
-  ...(sourceDemo ? { demo_source: sourceDemo } : {}),
-  ```
-  `offer_code` ist der Auslöser für den Coupon serverseitig; es wird **nie clientseitig** ein Rabattbetrag berechnet.
+Matching case-insensitiv (`offerCode?.trim().toLowerCase()`), Paket-Match per `currentPaket.id.toLowerCase().startsWith("pro")`.
 
-### 3) `supabase/functions/create-checkout/index.ts` — Coupon serverseitig
+### 2) Aktiver Offer als `useMemo`
 
-- Neues Coupon-Mapping (hart codiert, keine URL-Werte durchreichen):
-  ```
-  const OFFER_TO_COUPON: Record<string, { coupon: string; requiredPriceId: string }> = {
-    "cbi-y1":     { coupon: "CBI-Y1",     requiredPriceId: "pro_rent_monthly" },
-    "cbi-kauf25": { coupon: "CBI-KAUF25", requiredPriceId: "pro_purchase_deposit" },
-  };
-  ```
-- Nach dem bestehenden Trusted-Totals-Check:
-  1. `metadata.offer_code` lesen, kleinschreiben, im Mapping suchen.
-  2. Aus `buchungen.pakete` (bereits geladen für `resolveTrustedTotals`) den `priceId` des Basis-Pakets ermitteln — oder alternativ `metadata.paket` + Konvention (`<paket>_rent_monthly` bzw. `<paket>_purchase_deposit` je nach `payment_mode`).
-  3. Wenn `mapping.requiredPriceId === ermittelterPriceId` → beim `stripe.checkout.sessions.create(...)` `discounts: [{ coupon: mapping.coupon }]` mitgeben. Sonst ignorieren.
-  4. Coupon nur setzen, wenn `mode === "payment"` für `pro_purchase_deposit` bzw. `mode === "subscription"` für `pro_rent_monthly` (Passung Duration/Once).
-- Wichtig: `automatic_tax` / `allow_promotion_codes` bleiben unverändert. Fehlender/unbekannter `offer_code` → kein Coupon, kein Fehler (Normalpreis).
-- **Trusted-Total-Check bleibt unberührt** — der Client-Subtotal muss weiterhin dem hinterlegten Auftrag entsprechen; der Rabatt wird erst danach von Stripe auf die Session angewendet.
+Innerhalb der Component:
 
-### 4) Coupons in Stripe (Voraussetzung, kein Code)
+```ts
+const activeOffer = useMemo(() => {
+  const key = offerCode?.trim().toLowerCase();
+  if (!key) return null;
+  const cfg = OFFER_DISPLAY[key];
+  if (!cfg) return null;
+  const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
+  if (!paketOk || paymentMode !== cfg.requiredMode) return null;
+  const base = cfg.requiredMode === "miete"
+    ? Number(currentPaket.miete_monatlich || 0)
+    : Number(currentPaket.preis || 0);
+  if (!base) return null;
+  const { discounted, label, note } = cfg.compute(base);
+  return { base, discounted, label, note, mode: cfg.requiredMode };
+}, [offerCode, currentPaket, paymentMode]);
+```
 
-Einmalig im Stripe-Dashboard anlegen (Sandbox + Live):
-- `CBI-Y1`: −40,00 € EUR, Duration „Multiple months" = 12
-- `CBI-KAUF25`: −25 %, Duration „Once"
+### 3) Anzeige an drei Stellen
 
-Coupon-IDs müssen exakt `CBI-Y1` bzw. `CBI-KAUF25` heißen (matcht das Mapping oben).
+- **Paket-Schritt** (Karte für Pro): unterhalb des normalen Preises einen kleinen Badge/Absatz, wenn `activeOffer` aktiv:  
+  `<durchgestrichen 99 €> → 59 €/Monat · „1. Jahr, danach 99 €"` (bzw. `1.492,50 € · „−25 %"` im Kauf).  
+  Der normal gerenderte Basispreis bleibt bestehen (nicht ersetzen — nur ergänzen).
+- **Zahlung-Schritt** und **Extras-Schritt** in der „Deine Auswahl"-/Summary-Sektion: gleiche Zeile („Basispreis" → Angebotspreis mit durchgestrichenem Original + Fußnote).
+- **Kontakt-Schritt** in der Summary-Zeile ebenfalls anzeigen, damit der Preis direkt vor dem Klick auf „Kostenpflichtig bestellen" konsistent bleibt.
 
-## Akzeptanzkriterien
+Nur Anzeige — `basisEinmalig`, `basisMonatlich`, `gesamtEinmalig`, `gesamtMonatlich`, `heuteZuZahlen` und `buildStripeItems()` bleiben unverändert. Stripe rechnet weiterhin den vollen Netto-Betrag ab und zieht den Coupon serverseitig ab. Der Trusted-Totals-Check in `create-checkout` bleibt unberührt (Client-Subtotal = ungerabatteter Basispreis, Coupon nachgelagert).
 
-- `/preise?mode=miete` → Tab „Mieten" aktiv, kein Funnel.
-- `/preise?plan=pro&mode=kauf&demo=CBI` → Tab „Kaufen", Funnel für Pro-Kauf offen, Banner „Aus Ihrer Demo-Vorschau (CBI)".
-- `/preise?plan=pro&mode=miete&demo=CBI&offer=cbi-y1` → Pro-Miete, Stripe zeigt Coupon `CBI-Y1` (59 € statt 99 € für 12 Monate).
-- `/preise?plan=pro&mode=kauf&demo=CBI&offer=cbi-kauf25` → Pro-Kauf, Coupon `CBI-KAUF25` (1.492,50 € statt 1.990 €).
-- Falscher/fehlender `offer` oder Mismatch mit priceId → normaler Preis, kein Fehler.
-- `demo=CBI` landet als Quelle im Lead/Buchung + in Stripe-Session-Metadata.
-- Ohne Params verhält sich `/preise` exakt wie bisher.
+### 4) Dezenter Offer-Hinweis oben im Panel
+
+Direkt unter dem Panel-Header (nur wenn `activeOffer`):
+
+```
+🎁 Angebot aktiv: {activeOffer.note ?? activeOffer.label}
+```
+in Brand-Farbe/Chip-Style — konsistent mit dem bestehenden Demo-Banner auf `/preise`.
 
 ## Nicht im Scope
 
-- Änderungen an Preisen, `priceId`s, `PackageCard`/`BuyCard`, Tab-UI.
-- Automatische Rabattanzeige im UI (bewusst nicht — Rabatt ist Stripe-seitig sichtbar).
-- Neue Landingpage-Varianten.
+- Keine Änderung an `WebdesignPreise.tsx` (Deep-Link + Tab + Banner bereits fertig).
+- Keine Änderung an `create-checkout/index.ts` (Coupon-Mapping + Trusted-Totals bereits fertig).
+- Keine Änderung an Preisen, `priceId`s, `buildStripeItems`, Buchungs-Payload-Struktur.
+- Keine Rabattlogik für andere Pakete als Pro (Whitelist restriktiv).
+
+## Akzeptanzkriterien
+
+- `/preise?plan=pro&mode=miete&offer=cbi-y1` → Funnel öffnet, Pro-Miete-Karte zeigt `~~99 €~~ 59 €/Monat` + „1. Jahr, danach 99 €". Summary zeigt 59 €. Stripe zieht Coupon `CBI-Y1` ab.
+- `/preise?plan=pro&mode=kauf&offer=cbi-kauf25` → Pro-Kauf-Karte zeigt `~~1.990 €~~ 1.492,50 €` + „−25 %". Stripe zieht Coupon `CBI-KAUF25` ab.
+- `offer=cbi-y1` mit Starter/Premium oder mit Kauf-Modus → keine UI-Änderung, normaler Preis, keine Fehler.
+- Unbekannter `offer` → keine UI-Änderung.
+- Ohne `offer` → Funnel exakt wie bisher.
