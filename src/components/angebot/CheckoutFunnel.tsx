@@ -369,6 +369,15 @@ export default function CheckoutFunnel({
       : "Erster Monat heute · monatlich kündbar nach Mindestlaufzeit";
   }
 
+  // ---- Effektive Preise unter Berücksichtigung des aktiven Angebots (nur UI).
+  // Der echte Rabatt kommt weiterhin serverseitig aus dem Stripe-Coupon.
+  const offerDelta = activeOffer ? (activeOffer.base - activeOffer.discounted) : 0;
+  const effBasisMonatlich = activeOffer?.mode === "miete" ? activeOffer.discounted : basisMonatlich;
+  const effBasisEinmalig  = activeOffer?.mode === "kauf"  ? activeOffer.discounted : basisEinmalig;
+  const effGesamtMonatlich = Math.max(0, gesamtMonatlich - (activeOffer?.mode === "miete" ? offerDelta : 0));
+  const effGesamtEinmalig  = Math.max(0, gesamtEinmalig  - (activeOffer?.mode === "kauf"  ? offerDelta : 0));
+  const effHeuteZuZahlen   = Math.max(0, heuteZuZahlen - (activeOffer ? offerDelta : 0));
+
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
 
