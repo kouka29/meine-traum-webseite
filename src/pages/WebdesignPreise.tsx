@@ -873,6 +873,14 @@ const WebdesignPreise = () => {
         Kostenlose Demo anfordern <ArrowRight size={16} aria-hidden={true} focusable={false} />
       </button>
     </div>
+    {demoSource && (
+      <div
+        className="w-full border-b text-center px-4 py-2 text-xs text-foreground/70"
+        style={{ backgroundColor: "#FEF3C7", borderColor: "#FCD34D" }}
+      >
+        Aus Ihrer Demo-Vorschau (<span className="font-semibold">{demoSource}</span>)
+      </div>
+    )}
 
     <section className="section-padding">
       <div className="container-narrow px-4">
