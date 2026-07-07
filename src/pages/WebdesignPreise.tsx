@@ -1098,6 +1098,8 @@ const WebdesignPreise = () => {
           miete: { enabled: true, monthly_cents: (currentFunnelPaket.miete_monatlich || 0) * 100, min_months: 12 },
         }}
         defaultPaymentMode={checkoutPkg.mode}
+        sourceDemo={demoSource ?? undefined}
+        offerCode={offerCode ?? undefined}
       />
     )}
   </main>
