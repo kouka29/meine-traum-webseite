@@ -73,6 +73,8 @@ Deno.serve(async (req) => {
   const code = generateCode()
   const codeHash = await sha256(code)
   const expiresAt = new Date(Date.now() + CODE_TTL_MIN * 60_000).toISOString()
+  // Server-generated session id — never trust one from the client
+  const checkoutSessionId = crypto.randomUUID()
 
   // Invalidate previous unused codes for this email
   await supabase
@@ -82,7 +84,12 @@ Deno.serve(async (req) => {
     .is('consumed_at', null)
 
   const { error: insErr } = await supabase.from('order_verifications').insert({
-    email, angebots_id, code_hash: codeHash, expires_at: expiresAt, verified: false,
+    email,
+    angebots_id,
+    code_hash: codeHash,
+    expires_at: expiresAt,
+    verified: false,
+    checkout_session_id: checkoutSessionId,
   })
   if (insErr) {
     console.error('insert code failed', insErr)
@@ -109,7 +116,12 @@ Deno.serve(async (req) => {
     })
   }
 
-  return new Response(JSON.stringify({ ok: true, email, expiresInMinutes: CODE_TTL_MIN }), {
+  return new Response(JSON.stringify({
+    ok: true,
+    email,
+    expiresInMinutes: CODE_TTL_MIN,
+    checkoutSessionId,
+  }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 })

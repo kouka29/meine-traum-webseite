@@ -219,6 +219,7 @@ export default function CheckoutFunnel({
   const [invoiceCodeSending, setInvoiceCodeSending] = useState(false);
   const [invoiceCodeInput, setInvoiceCodeInput] = useState("");
   const [invoiceCodeVerifying, setInvoiceCodeVerifying] = useState(false);
+  const [invoiceCheckoutSessionId, setInvoiceCheckoutSessionId] = useState<string | null>(null);
   const [stripeItems, setStripeItems] = useState<StripeItem[] | null>(null);
 
   // Kontaktdaten
@@ -967,6 +968,7 @@ export default function CheckoutFunnel({
               if (error || data?.error) {
                 throw new Error(data?.error || error?.message || "Konnte Code nicht senden");
               }
+              setInvoiceCheckoutSessionId(data?.checkoutSessionId ?? null);
               toast.success("Bestätigungscode an deine E-Mail gesendet");
               setInvoiceConfirmStage("code");
             } catch (e: unknown) {
@@ -978,15 +980,19 @@ export default function CheckoutFunnel({
           onVerify={async () => {
             setInvoiceCodeVerifying(true);
             try {
+              if (!invoiceCheckoutSessionId) {
+                throw new Error("Sitzung abgelaufen. Bitte Code neu anfordern.");
+              }
               const { data, error } = await supabase.functions.invoke(
                 "verify-verification-code",
-                { body: { code: invoiceCodeInput.trim() } },
+                { body: { code: invoiceCodeInput.trim(), checkoutSessionId: invoiceCheckoutSessionId } },
               );
               if (error || data?.error) {
                 throw new Error(data?.error || error?.message || "Code ungültig");
               }
               setInvoiceConfirmStage(null);
               setInvoiceCodeInput("");
+              setInvoiceCheckoutSessionId(null);
               // Bestätigung erfolgreich → Bestellung anlegen
               await handleSubmit();
             } catch (e: unknown) {
