@@ -917,14 +917,44 @@ function StepPaket({
                 transition: "all 0.15s",
               }}
             >
-              {recommended && (
-                <span style={{
-                  position: "absolute", top: -10, right: 14,
-                  background: BRAND_GRADIENT, color: "#fff",
-                  fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
-                  padding: "4px 10px", borderRadius: 20,
-                }}>EMPFOHLEN</span>
-              )}
+              {(() => {
+                const hasOffer = paketMatchesOffer && (mieteOffer || kaufOffer);
+                if (hasOffer) {
+                  return (
+                    <>
+                      <span style={{
+                        position: "absolute", top: -12, right: 14,
+                        background: "linear-gradient(135deg, #F59E0B, #F97316)",
+                        color: "#fff",
+                        fontSize: 11, fontWeight: 800, letterSpacing: "0.04em",
+                        padding: "5px 12px", borderRadius: 20,
+                        boxShadow: "0 4px 12px rgba(245,158,11,0.35)",
+                        whiteSpace: "nowrap",
+                      }}>🎁 Freundschaftsrabatt</span>
+                      {recommended && (
+                        <span style={{
+                          position: "absolute", top: 18, right: 14,
+                          background: "#fff", color: BRAND,
+                          border: `1px solid ${BRAND}`,
+                          fontSize: 9, fontWeight: 700, letterSpacing: "0.08em",
+                          padding: "2px 8px", borderRadius: 20,
+                        }}>EMPFOHLEN</span>
+                      )}
+                    </>
+                  );
+                }
+                if (recommended) {
+                  return (
+                    <span style={{
+                      position: "absolute", top: -10, right: 14,
+                      background: BRAND_GRADIENT, color: "#fff",
+                      fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
+                      padding: "4px 10px", borderRadius: 20,
+                    }}>EMPFOHLEN</span>
+                  );
+                }
+                return null;
+              })()}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                 <div style={{ minWidth: 0, flex: 1 }}>
                   <div style={{ fontSize: 16, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
