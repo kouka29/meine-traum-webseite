@@ -1,56 +1,22 @@
-# MTW — Angebots-Popup + Preis-Konsistenz v2 (Update-Plan)
+## Finding 2 — `coupon_applies_to_nothing` bei CBI-Y1 / CBI-KAUF25
 
-Erweitert den bestehenden Plan um zwei fehlende Punkte:
-**(A)** Preis der Bestellzusammenfassung im Kontakt-Schritt nutzt jetzt Angebotspreis (MwSt/Gesamt daraus abgeleitet).
-**(B)** Bei aktivem Demo-Angebot läuft der komplette Checkout in einem **zentrierten Modal** statt der Seitenleiste.
+### Diagnose (bestätigt)
+`supabase/functions/create-checkout/index.ts` baut alle Line-Items als ad-hoc `price_data` mit `product_data.name` (keine feste Stripe-Product-ID). Wenn ein Coupon in Stripe eine `applies_to.products`-Einschränkung hat, findet Stripe kein passendes Produkt → `StripeInvalidRequestError: coupon_applies_to_nothing` → 500. Zusätzlich läuft eine „MwSt. 19%"-Position immer mit, die von einem produkt-restringierten Coupon nie abgedeckt sein kann.
 
-Registry (`src/config/demoOffers.ts`), `DemoOfferPopup`, Deep-Link-Handler, Legacy-`offer`-Fallback und die serverseitige Coupon-Validierung sind bereits umgesetzt und bleiben unverändert.
+### Zwei mögliche Wege — bitte auswählen
 
-## Änderungen
+**A) Operativer Fix (empfohlen, kein Code)**
+Im Stripe-Dashboard bei den beiden Coupons `CBI-Y1` und `CBI-KAUF25` die „Specific products"-Einschränkung entfernen (auf „All products" stellen). Danach funktioniert der bestehende Flow ohne Codeänderung, weil die Coupons dann auf jedes Line-Item angewendet werden können. MwSt. wird von Stripe automatisch entsprechend proportional gekürzt.
 
-### 1) `src/components/angebot/CheckoutFunnel.tsx`
+**B) Code-Fix (Server berechnet Rabatt selbst)**
+`session.discounts` entfernen. Stattdessen im Server aus `metadata.offer_code` + `DEMO_OFFERS` den Zielpreis auflösen und die primäre Paket-Line-Item auf `unit_amount = discountedNumber * 100` reduzieren, bevor MwSt. berechnet wird. Trusted-Totals-Check bleibt zuerst gegen den Regulärbetrag (aus `buchungen`) laufen — Rabatt wird erst danach angewendet.
 
-**Layout-Umschaltung (Sidebar ↔ zentriertes Modal)**
-- Neuer optionaler Prop `layout?: "sidebar" | "centered"` (default `"sidebar"`).
-- `layout === "centered"`:
-  - Wrapper: `alignItems: "center"`, `justifyContent: "center"`, `padding: 24`.
-  - Panel: `maxWidth: 680`, `height: "auto"`, `maxHeight: "calc(100vh - 48px)"`, `borderRadius: 20`, andere Shadow, Animation `funnelZoomIn` statt `funnelSlideIn`.
-  - Mobile (< 767px): weiterhin Vollbild-Slide-Up (kein Fremdverhalten).
-- Alle Inhalts-/Step-Container bleiben identisch; nur die Hülle wechselt.
+Nachteile B:
+- CBI-Y1 („40 € Rabatt für 12 Monate") lässt sich in einer Stripe-Subscription ohne Coupon nicht sauber zeitlich befristen — wir müssten entweder (a) den Kunden nach 12 Monaten manuell hochstufen, oder (b) einen zweiten Sub-Zyklus über Stripe-Automation abbilden. Weg A vermeidet das komplett.
+- Duplizierte Preis-Logik zwischen `demoOffers.ts` (Client) und Edge-Function (Server), muss synchron gehalten werden.
 
-**Bestellzusammenfassung „Deine Bestellung" (im `StepKontakt`, Zeilen ~1391–1477) auf Angebotspreis umstellen**
-- Neuer effektiver Basis-Preis pro Modus, aus `activeOffer` abgeleitet, im Parent berechnet:
-  - `effBasisMonatlich = activeOffer?.mode === "miete" ? activeOffer.discounted : basisMonatlich`
-  - `effBasisEinmalig  = activeOffer?.mode === "kauf"  ? activeOffer.discounted : basisEinmalig`
-  - `effGesamtMonatlich`, `effGesamtEinmalig`, `effHeuteZuZahlen` analog (Delta = `activeOffer.base - activeOffer.discounted`).
-- `StepKontakt` bekommt zusätzlich `activeOffer` und nutzt die eff-Werte:
-  - Positionszeile Pro-Paket: `{effBasisMonatlich}/Monat` bzw. `{effBasisEinmalig} einmalig`, mit durchgestrichenem Regulärpreis daneben, wenn `activeOffer.mode` matcht.
-  - Optionale Note darunter: „1. Jahr, danach {regular €}/Monat" (nur Miete).
-  - `summary.heuteZuZahlen`, MwSt (`* 19 / 100`) und Gesamtpreis brutto (`* 119 / 100`) werden aus `effHeuteZuZahlen` gerechnet (nicht mehr aus dem alten `heuteZuZahlen`).
-- Footer-Summary (Zeilen ~730–780) wird ebenfalls auf die eff-Werte umgestellt, damit „Deine Auswahl" und „Heute zu zahlen" konsistent sind. Die bestehende `line-through`-Anzeige bleibt erhalten.
-- Add-ons bleiben unrabattiert (Angebot gilt nur für Pro-Basis).
-- `buildStripeItems` bleibt unverändert (regulärer Preis an Stripe; Coupon macht den Abzug serverseitig — bereits so validiert).
+### Empfehlung
+Weg **A** — Coupons in Stripe auf „All products" umstellen. Kein Code-Change nötig, keine Neu-Implementierung der 12-Monats-Rabattlogik, keine Duplizierung von Preisregeln.
 
-### 2) `src/pages/WebdesignPreise.tsx`
-
-- Beim `<CheckoutFunnel>` zusätzlich `layout={activeOffer ? "centered" : "sidebar"}` übergeben. Sonst alles wie bisher.
-
-### 3) Nicht angefasst
-- `create-checkout/index.ts` (Coupon-Whitelist/Validierung bereits vorhanden).
-- `DemoOfferPopup.tsx`, `demoOffers.ts` (bereits umgesetzt).
-- Sidebar-Verhalten für Nicht-Demo-Besucher bleibt exakt gleich.
-- Preise, `priceId`s, Success-/Return-URLs unverändert.
-
-## Technische Notizen
-
-- Ein einziger „effektiver Preis"-Block im Funnel-Parent, alle Anzeigen (Footer, Kontakt-Summary, MwSt, Brutto) lesen daraus → keine doppelte Rechenlogik.
-- Rundung MwSt/Brutto weiter mit `Math.round(x * 19)/100` bzw. `*119/100` — Verhalten identisch zum jetzigen Muster, nur Eingabewert wechselt auf `effHeuteZuZahlen`.
-- `layout="centered"` nutzt dieselben Steps/Header/Progress/Footer — keine Duplikate.
-- Escape/X/Overlay-Klick funktionieren unverändert.
-
-## Akzeptanzkriterien (Delta)
-
-- `/preise?demo=CBI` → Angebots-Popup, danach Checkout als **zentriertes Modal** (nicht Sidebar). Ohne `demo` weiterhin Sidebar.
-- Kontakt-Schritt „Deine Bestellung": Pro-Paket 59 €/Monat bzw. 1.492,50 € einmalig, MwSt und Gesamt daraus gerechnet (z. B. Miete: MwSt 11,21 €, brutto 70,21 €).
-- Footer „Heute zu zahlen" identisch mit „Deine Bestellung".
-- Stripe zieht weiterhin den korrekten Coupon (`CBI-Y1` / `CBI-KAUF25`) — kein Verhalten geändert.
+Wenn A gewählt: Ich markiere Finding 2 als „fixed (operational)" und der bestehende Server-Code funktioniert unverändert.
+Wenn B gewählt: Ich baue die Server-seitige Rabattberechnung für den Kauf-Pfad (CBI-KAUF25 = −25 % einmalig) und lasse den Miete-Pfad (CBI-Y1) weiterhin über den Stripe-Coupon laufen (der dann in Stripe auf „All products" umgestellt sein muss).
