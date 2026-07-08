@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const CODE_TTL_MIN = 15
+const CODE_TTL_MIN = 10
 
 async function sha256(text: string): Promise<string> {
   const buf = new TextEncoder().encode(text)
@@ -34,14 +34,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  const email = String(body?.email || '').trim().toLowerCase()
-  const firstName = body?.firstName ? String(body.firstName) : undefined
   const angebots_id = body?.angebots_id ? String(body.angebots_id) : null
-  if (!email || !/.+@.+\..+/.test(email)) {
-    return new Response(JSON.stringify({ error: 'E-Mail ungültig' }), {
-      status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
-  }
 
   // Authorization: caller must be authenticated + customer_accounts.invoice_allowed = true
   const authHeader = req.headers.get('Authorization') || ''
@@ -69,19 +62,27 @@ Deno.serve(async (req) => {
     })
   }
 
+  // ALWAYS send to the account's stored business email, never free-text from the popup
+  const email = String(account.email || '').trim().toLowerCase()
+  if (!email || !/.+@.+\..+/.test(email)) {
+    return new Response(JSON.stringify({ error: 'Keine gültige Geschäfts-E-Mail hinterlegt.' }), {
+      status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
   const code = generateCode()
   const codeHash = await sha256(code)
   const expiresAt = new Date(Date.now() + CODE_TTL_MIN * 60_000).toISOString()
 
   // Invalidate previous unused codes for this email
   await supabase
-    .from('invoice_confirmation_codes')
+    .from('order_verifications')
     .update({ consumed_at: new Date().toISOString() })
     .eq('email', email)
     .is('consumed_at', null)
 
-  const { error: insErr } = await supabase.from('invoice_confirmation_codes').insert({
-    email, angebots_id, code_hash: codeHash, expires_at: expiresAt,
+  const { error: insErr } = await supabase.from('order_verifications').insert({
+    email, angebots_id, code_hash: codeHash, expires_at: expiresAt, verified: false,
   })
   if (insErr) {
     console.error('insert code failed', insErr)
@@ -90,14 +91,13 @@ Deno.serve(async (req) => {
     })
   }
 
-  // Send email via existing send-transactional-email
   const { error: mailErr } = await supabase.functions.invoke('send-transactional-email', {
     body: {
       templateName: 'invoice-confirmation-code',
       recipientEmail: email,
       templateData: {
         code,
-        firstName: firstName ?? account.first_name ?? undefined,
+        firstName: account.first_name ?? undefined,
         expiresInMinutes: CODE_TTL_MIN,
       },
     },
@@ -109,7 +109,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  return new Response(JSON.stringify({ ok: true, expiresInMinutes: CODE_TTL_MIN }), {
+  return new Response(JSON.stringify({ ok: true, email, expiresInMinutes: CODE_TTL_MIN }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 })

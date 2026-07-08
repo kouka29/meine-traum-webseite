@@ -29,15 +29,13 @@ Deno.serve(async (req) => {
     })
   }
 
-  const email = String(body?.email || '').trim().toLowerCase()
   const code = String(body?.code || '').replace(/\D/g, '')
-  if (!email || code.length !== 6) {
+  if (code.length !== 6) {
     return new Response(JSON.stringify({ error: 'Ungültige Eingabe' }), {
       status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   }
 
-  // Auth check (same as send)
   const authHeader = req.headers.get('Authorization') || ''
   const token = authHeader.replace(/^Bearer\s+/i, '')
   const { data: userData } = await supabase.auth.getUser(token)
@@ -47,9 +45,20 @@ Deno.serve(async (req) => {
       status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   }
+  const { data: account } = await supabase
+    .from('customer_accounts')
+    .select('email, invoice_allowed')
+    .eq('user_id', user.id)
+    .maybeSingle()
+  if (!account?.invoice_allowed || !account.email) {
+    return new Response(JSON.stringify({ error: 'Nicht autorisiert' }), {
+      status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+  const email = String(account.email).trim().toLowerCase()
 
   const { data: row } = await supabase
-    .from('invoice_confirmation_codes')
+    .from('order_verifications')
     .select('*')
     .eq('email', email)
     .is('consumed_at', null)
@@ -70,7 +79,7 @@ Deno.serve(async (req) => {
   }
 
   if (row.attempts >= MAX_ATTEMPTS) {
-    await supabase.from('invoice_confirmation_codes').update({ consumed_at: new Date().toISOString() }).eq('id', row.id)
+    await supabase.from('order_verifications').update({ consumed_at: new Date().toISOString() }).eq('id', row.id)
     return new Response(JSON.stringify({ error: 'Zu viele Versuche. Bitte neuen Code anfordern.' }), {
       status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
@@ -78,15 +87,15 @@ Deno.serve(async (req) => {
 
   const submittedHash = await sha256(code)
   if (submittedHash !== row.code_hash) {
-    await supabase.from('invoice_confirmation_codes')
+    await supabase.from('order_verifications')
       .update({ attempts: row.attempts + 1 }).eq('id', row.id)
     return new Response(JSON.stringify({ error: 'Falscher Code', attemptsRemaining: MAX_ATTEMPTS - row.attempts - 1 }), {
       status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   }
 
-  await supabase.from('invoice_confirmation_codes')
-    .update({ consumed_at: new Date().toISOString() }).eq('id', row.id)
+  await supabase.from('order_verifications')
+    .update({ consumed_at: new Date().toISOString(), verified: true }).eq('id', row.id)
 
   return new Response(JSON.stringify({ ok: true }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },

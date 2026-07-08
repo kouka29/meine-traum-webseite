@@ -961,8 +961,8 @@ export default function CheckoutFunnel({
             setInvoiceCodeSending(true);
             try {
               const { data, error } = await supabase.functions.invoke(
-                "send-invoice-confirmation-code",
-                { body: { email: email.trim(), firstName: vorname.trim(), angebots_id } },
+                "send-verification-code",
+                { body: { angebots_id } },
               );
               if (error || data?.error) {
                 throw new Error(data?.error || error?.message || "Konnte Code nicht senden");
@@ -979,8 +979,8 @@ export default function CheckoutFunnel({
             setInvoiceCodeVerifying(true);
             try {
               const { data, error } = await supabase.functions.invoke(
-                "verify-invoice-confirmation-code",
-                { body: { email: email.trim(), code: invoiceCodeInput.trim() } },
+                "verify-verification-code",
+                { body: { code: invoiceCodeInput.trim() } },
               );
               if (error || data?.error) {
                 throw new Error(data?.error || error?.message || "Code ungültig");
