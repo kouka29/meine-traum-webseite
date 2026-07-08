@@ -1659,9 +1659,9 @@ function StepKontakt({
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
             {(["online", "rechnung"] as const).map((m) => {
-              const disabled = m === "rechnung" && !RECHNUNG_ENABLED;
+              const disabled = m === "rechnung" && !invoiceAllowed;
               const active = payMethod === m && !disabled;
-              const tooltipText = "Aktuell nicht verfügbar. Bitte kontaktiere uns telefonisch unter 06131 3076498 oder per Mail an info@meine-traum-webseite.de.";
+              const tooltipText = "Rechnungszahlung ist nur für freigeschaltete Kundenkonten verfügbar. Bitte kontaktiere uns telefonisch unter 06131 3076498 oder per Mail an info@meine-traum-webseite.de.";
               return (
                 <div key={m} style={{ position: "relative" }} className={disabled ? "rechnung-disabled-wrap" : undefined}>
                   <button
