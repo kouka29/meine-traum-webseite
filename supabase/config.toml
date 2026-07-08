@@ -33,3 +33,7 @@ project_id = "zwxucictfdbwhnnyemri"
     verify_jwt = false
   [functions.chat-assistant]
     verify_jwt = false
+  [functions.send-invoice-confirmation-code]
+    verify_jwt = true
+  [functions.verify-invoice-confirmation-code]
+    verify_jwt = true

@@ -25,6 +25,7 @@ import AdminVorschauTab from "@/components/admin/AdminVorschauTab";
 import AdminAngeboteTab from "@/components/admin/AdminAngeboteTab";
 import AdminTicketsTab from "@/components/admin/AdminTicketsTab";
 import AdminWachstumTab from "@/components/admin/AdminWachstumTab";
+import AdminKundenTab from "@/components/admin/AdminKundenTab";
 import AngebotModal from "@/components/admin/AngebotModal";
 import NewLeadModal from "@/components/admin/NewLeadModal";
 import { useDesignMode } from "@/contexts/DesignModeProvider";
@@ -175,7 +176,7 @@ const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "angebote" | "tickets" | "vorschau" | "wachstum">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "portfolio" | "testimonials" | "angebote" | "tickets" | "vorschau" | "wachstum" | "kunden">("dashboard");
   const [leadStatusFilter, setLeadStatusFilter] = useState<"all" | "new" | "qualified" | "rejected" | "customer" | "waitlist">("all");
   const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
 
@@ -778,6 +779,7 @@ const AdminLeads = () => {
             { key: "tickets" as const, icon: MessageSquare, label: "Tickets" },
             { key: "wachstum" as const, icon: Sparkles, label: "Wachstumspakete" },
             { key: "vorschau" as const, icon: Sparkles, label: "Kostenlose Vorschau" },
+            { key: "kunden" as const, icon: Users, label: "Kunden" },
           ]).map(tab => (
             <button
               key={tab.key}
@@ -1555,6 +1557,10 @@ const AdminLeads = () => {
 
         {activeTab === "wachstum" && (
           <AdminWachstumTab password={password} />
+        )}
+
+        {activeTab === "kunden" && (
+          <AdminKundenTab password={password} />
         )}
       </div>
 

@@ -211,6 +211,14 @@ export default function CheckoutFunnel({
   const [payMethod, setPayMethod] = useState<PayMethod>(
     stripeAvailable || !RECHNUNG_ENABLED ? "online" : "rechnung",
   );
+  // Ob der eingeloggte Kunde „Auf Rechnung" freigeschaltet hat.
+  const [invoiceAllowed, setInvoiceAllowed] = useState<boolean>(false);
+  // State für den Rechnungs-Bestätigungscode-Flow (2 Popups).
+  const [invoiceConfirmStage, setInvoiceConfirmStage] =
+    useState<null | "intro" | "code">(null);
+  const [invoiceCodeSending, setInvoiceCodeSending] = useState(false);
+  const [invoiceCodeInput, setInvoiceCodeInput] = useState("");
+  const [invoiceCodeVerifying, setInvoiceCodeVerifying] = useState(false);
   const [stripeItems, setStripeItems] = useState<StripeItem[] | null>(null);
 
   // Kontaktdaten
@@ -235,9 +243,32 @@ export default function CheckoutFunnel({
       setPayMethod(stripeAvailable || !RECHNUNG_ENABLED ? "online" : "rechnung");
       setStripeItems(null);
       setGrowthBindend(false);
+      setInvoiceConfirmStage(null);
+      setInvoiceCodeInput("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, paket.id]);
+
+  // Kundenkonto-Flag „invoice_allowed" laden, sobald das Modal öffnet.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) { if (!cancelled) setInvoiceAllowed(false); return; }
+        const { data } = await supabase
+          .from("customer_accounts")
+          .select("invoice_allowed")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        if (!cancelled) setInvoiceAllowed(!!data?.invoice_allowed);
+      } catch {
+        if (!cancelled) setInvoiceAllowed(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [open]);
 
   // Wenn Paket im Funnel gewechselt wird → Zahlmodus auf passenden Default zurücksetzen
   useEffect(() => {
@@ -728,6 +759,7 @@ export default function CheckoutFunnel({
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
+              invoiceAllowed={invoiceAllowed}
               growthCommitment={hasGrowthCommitment ? {
                 amountCents: growthAddon!.price_cents,
                 checked: growthBindend,
@@ -875,7 +907,12 @@ export default function CheckoutFunnel({
               onClick={() => {
                 if (!canProceedFromStep(step)) return;
                 if (currentKey === "kontakt") {
-                  handleSubmit();
+                  if (payMethod === "rechnung") {
+                    // Rechnungs-Bestätigungsflow starten (E-Mail-Code)
+                    setInvoiceConfirmStage("intro");
+                  } else {
+                    handleSubmit();
+                  }
                 } else {
                   setStep((s) => s + 1);
                 }
@@ -907,6 +944,59 @@ export default function CheckoutFunnel({
           </div>
         )}
       </div>
+
+      {/* Popup 1: Bestellung verbindlich aufgeben (Intro + Code senden) */}
+      {invoiceConfirmStage && (
+        <InvoiceConfirmModal
+          stage={invoiceConfirmStage}
+          email={email}
+          firstName={vorname}
+          angebotsId={angebots_id}
+          sending={invoiceCodeSending}
+          verifying={invoiceCodeVerifying}
+          codeInput={invoiceCodeInput}
+          setCodeInput={setInvoiceCodeInput}
+          onClose={() => setInvoiceConfirmStage(null)}
+          onSendCode={async () => {
+            setInvoiceCodeSending(true);
+            try {
+              const { data, error } = await supabase.functions.invoke(
+                "send-invoice-confirmation-code",
+                { body: { email: email.trim(), firstName: vorname.trim(), angebots_id } },
+              );
+              if (error || data?.error) {
+                throw new Error(data?.error || error?.message || "Konnte Code nicht senden");
+              }
+              toast.success("Bestätigungscode an deine E-Mail gesendet");
+              setInvoiceConfirmStage("code");
+            } catch (e: unknown) {
+              toast.error(e instanceof Error ? e.message : "Fehler beim Senden");
+            } finally {
+              setInvoiceCodeSending(false);
+            }
+          }}
+          onVerify={async () => {
+            setInvoiceCodeVerifying(true);
+            try {
+              const { data, error } = await supabase.functions.invoke(
+                "verify-invoice-confirmation-code",
+                { body: { email: email.trim(), code: invoiceCodeInput.trim() } },
+              );
+              if (error || data?.error) {
+                throw new Error(data?.error || error?.message || "Code ungültig");
+              }
+              setInvoiceConfirmStage(null);
+              setInvoiceCodeInput("");
+              // Bestätigung erfolgreich → Bestellung anlegen
+              await handleSubmit();
+            } catch (e: unknown) {
+              toast.error(e instanceof Error ? e.message : "Verifikation fehlgeschlagen");
+            } finally {
+              setInvoiceCodeVerifying(false);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -1444,6 +1534,7 @@ function StepKontakt({
   activeOffer,
   selectedAddons,
   payMethod, setPayMethod, stripeAvailable,
+  invoiceAllowed,
   growthCommitment,
 }: {
   vorname: string; setVorname: (v: string) => void;
@@ -1464,6 +1555,7 @@ function StepKontakt({
   selectedAddons: FunnelAddon[];
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
+  invoiceAllowed: boolean;
   growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
 }) {
   const inputStyle: React.CSSProperties = {
@@ -1625,9 +1717,9 @@ function StepKontakt({
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
             {(["online", "rechnung"] as const).map((m) => {
-              const disabled = m === "rechnung" && !RECHNUNG_ENABLED;
+              const disabled = m === "rechnung" && !invoiceAllowed;
               const active = payMethod === m && !disabled;
-              const tooltipText = "Aktuell nicht verfügbar. Bitte kontaktiere uns telefonisch unter 06131 3076498 oder per Mail an info@meine-traum-webseite.de.";
+              const tooltipText = "Rechnungszahlung ist nur für freigeschaltete Kundenkonten verfügbar. Bitte kontaktiere uns telefonisch unter 06131 3076498 oder per Mail an info@meine-traum-webseite.de.";
               return (
                 <div key={m} style={{ position: "relative" }} className={disabled ? "rechnung-disabled-wrap" : undefined}>
                   <button
@@ -1778,6 +1870,208 @@ function StepFertig({ auftragsNr, email }: { auftragsNr: string; email: string }
       <p style={{ fontSize: 13, color: TEXT_MUTED }}>
         Eine Bestätigung wurde an <strong style={{ color: TEXT_DARK }}>{email}</strong> versendet.
       </p>
+    </div>
+  );
+}
+// ─── INVOICE CONFIRM MODAL ─────────────────────────────
+// Zweistufiges Popup, das nach Klick auf "Weiter zur Zahlung" bei payMethod=rechnung
+// erscheint: Stage 1 = Info + "Code senden", Stage 2 = Code-Eingabe.
+function InvoiceConfirmModal({
+  stage, email, firstName, angebotsId,
+  sending, verifying, codeInput, setCodeInput,
+  onClose, onSendCode, onVerify,
+}: {
+  stage: "intro" | "code";
+  email: string;
+  firstName: string;
+  angebotsId?: string;
+  sending: boolean;
+  verifying: boolean;
+  codeInput: string;
+  setCodeInput: (v: string) => void;
+  onClose: () => void;
+  onSendCode: () => void;
+  onVerify: () => void;
+}) {
+  const cleanCode = codeInput.replace(/\D/g, "").slice(0, 6);
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      onClick={(e) => { if (e.target === e.currentTarget && !sending && !verifying) onClose(); }}
+      style={{
+        position: "fixed", inset: 0, zIndex: 10100,
+        background: "rgba(15,12,41,0.65)",
+        backdropFilter: "blur(6px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 16,
+      }}
+    >
+      <div
+        style={{
+          width: "100%", maxWidth: 460,
+          background: "#fff", borderRadius: 20,
+          padding: "28px 26px 24px",
+          boxShadow: "0 30px 80px rgba(15,12,41,0.35)",
+          fontFamily: "inherit",
+        }}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          disabled={sending || verifying}
+          aria-label="Schließen"
+          style={{
+            position: "absolute", top: 16, right: 16,
+            background: "transparent", border: "none",
+            color: TEXT_MUTED, cursor: "pointer",
+            display: "none",
+          }}
+        >
+          <X size={18} aria-hidden={true} focusable={false} />
+        </button>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: 10,
+            background: "#F5F4FF", color: BRAND,
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <Shield size={18} aria-hidden={true} focusable={false} />
+          </div>
+          <h3 style={{ fontSize: 18, fontWeight: 800, color: TEXT_DARK, margin: 0, letterSpacing: "-0.02em" }}>
+            Bestellung verbindlich aufgeben
+          </h3>
+        </div>
+
+        {stage === "intro" ? (
+          <>
+            <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: "10px 0 4px" }}>
+              Du bestätigst hiermit eine <strong style={{ color: TEXT_DARK }}>verbindliche, kostenpflichtige Bestellung</strong> auf
+              Rechnungsbasis. Zur Sicherheit senden wir dir einen Bestätigungscode an deine hinterlegte
+              Geschäfts-E-Mail-Adresse.
+            </p>
+            <div style={{
+              marginTop: 14, padding: "10px 12px",
+              background: "#F5F4FF", border: "1px solid #E5E3FF",
+              borderRadius: 10, fontSize: 13, color: TEXT_DARK,
+              wordBreak: "break-all",
+            }}>
+              📧 {email || "—"}
+            </div>
+            <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={sending}
+                style={{
+                  flex: "0 0 auto", padding: "12px 16px",
+                  background: "#fff", border: `2px solid #E5E3FF`,
+                  color: TEXT_DARK, borderRadius: 12, fontWeight: 700, fontSize: 14,
+                  cursor: sending ? "not-allowed" : "pointer", fontFamily: "inherit",
+                }}
+              >
+                Abbrechen
+              </button>
+              <button
+                type="button"
+                onClick={onSendCode}
+                disabled={sending || !email}
+                style={{
+                  flex: 1, padding: "12px 16px",
+                  background: sending || !email ? "#D1CFEF" : BRAND_GRADIENT,
+                  color: "#fff", border: "none", borderRadius: 12,
+                  fontWeight: 700, fontSize: 14, fontFamily: "inherit",
+                  cursor: sending || !email ? "not-allowed" : "pointer",
+                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  boxShadow: sending || !email ? "none" : "0 8px 24px rgba(79,63,240,0.3)",
+                }}
+              >
+                {sending ? (
+                  <><Loader2 size={16} className="animate-spin" aria-hidden={true} focusable={false} /> Sende…</>
+                ) : (
+                  <>Code senden <ArrowRight size={16} aria-hidden={true} focusable={false} /></>
+                )}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p style={{ fontSize: 14, color: TEXT_MUTED, lineHeight: 1.6, margin: "10px 0 4px" }}>
+              Wir haben einen 6-stelligen Bestätigungscode an <strong style={{ color: TEXT_DARK }}>{email}</strong> gesendet.
+              Bitte trage ihn hier ein, um die Bestellung verbindlich auszulösen.
+            </p>
+            <input
+              autoFocus
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={6}
+              value={cleanCode}
+              onChange={(e) => setCodeInput(e.target.value)}
+              placeholder="123456"
+              aria-label="6-stelliger Bestätigungscode"
+              style={{
+                width: "100%", marginTop: 16, padding: "14px 16px",
+                textAlign: "center", fontSize: 26, fontWeight: 800,
+                letterSpacing: "0.4em", fontFamily: "ui-monospace, monospace",
+                border: `2px solid #E5E3FF`, borderRadius: 12,
+                color: TEXT_DARK, background: "#fff",
+              }}
+            />
+            <button
+              type="button"
+              onClick={onSendCode}
+              disabled={sending}
+              style={{
+                marginTop: 8, background: "transparent", border: "none",
+                color: BRAND, fontWeight: 600, fontSize: 12,
+                cursor: sending ? "not-allowed" : "pointer", fontFamily: "inherit",
+                padding: "4px 0",
+              }}
+            >
+              {sending ? "Sende neuen Code…" : "Code erneut senden"}
+            </button>
+            <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={verifying}
+                style={{
+                  flex: "0 0 auto", padding: "12px 16px",
+                  background: "#fff", border: `2px solid #E5E3FF`,
+                  color: TEXT_DARK, borderRadius: 12, fontWeight: 700, fontSize: 14,
+                  cursor: verifying ? "not-allowed" : "pointer", fontFamily: "inherit",
+                }}
+              >
+                Abbrechen
+              </button>
+              <button
+                type="button"
+                onClick={onVerify}
+                disabled={verifying || cleanCode.length !== 6}
+                style={{
+                  flex: 1, padding: "12px 16px",
+                  background: verifying || cleanCode.length !== 6 ? "#D1CFEF" : BRAND_GRADIENT,
+                  color: "#fff", border: "none", borderRadius: 12,
+                  fontWeight: 700, fontSize: 14, fontFamily: "inherit",
+                  cursor: verifying || cleanCode.length !== 6 ? "not-allowed" : "pointer",
+                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  boxShadow: verifying || cleanCode.length !== 6 ? "none" : "0 8px 24px rgba(79,63,240,0.3)",
+                }}
+              >
+                {verifying ? (
+                  <><Loader2 size={16} className="animate-spin" aria-hidden={true} focusable={false} /> Prüfe…</>
+                ) : (
+                  <>Verbindlich bestellen <ArrowRight size={16} aria-hidden={true} focusable={false} /></>
+                )}
+              </button>
+            </div>
+          </>
+        )}
+        <p style={{ fontSize: 11, color: TEXT_MUTED, textAlign: "center", marginTop: 14, lineHeight: 1.4 }}>
+          Mit dem Absenden bestätigst du eine kostenpflichtige Bestellung. Die Rechnung erhältst du per E-Mail.
+        </p>
+      </div>
     </div>
   );
 }
