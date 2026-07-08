@@ -831,7 +831,14 @@ const WebdesignPreise = () => {
     setShowDemoPopup(false);
   };
 
-  const funnelOfferOverride = demoOffer ? buildFunnelOfferOverride(demoOffer) : undefined;
+  // WICHTIG: Rabatt-Anzeige nur aktivieren, wenn tatsächlich ein offerCode gesetzt
+  // ist (d. h. der Kunde hat eine Option im Popup gewählt). Wird das Popup
+  // ohne Auswahl geschlossen, bleibt offerCode leer → keine rabattierten
+  // Preise im Funnel, damit die angezeigten Beträge exakt dem entsprechen,
+  // was Stripe später abrechnet.
+  const funnelOfferOverride = demoOffer && offerCode
+    ? buildFunnelOfferOverride(demoOffer)
+    : undefined;
 
   const openPopup = (badge: string) => {
     setPopupBadge(badge);
@@ -1135,7 +1142,13 @@ const WebdesignPreise = () => {
     <DemoOfferPopup
       open={showDemoPopup}
       offer={demoOffer}
-      onClose={() => setShowDemoPopup(false)}
+      onClose={() => {
+        setShowDemoPopup(false);
+        // Popup ohne Auswahl geschlossen → keine rabattierten Preise mehr
+        // anzeigen. Der Kunde sieht ab jetzt die regulären Preise und zahlt
+        // exakt den Betrag, den der Funnel anzeigt.
+        if (!offerCode) setDemoOffer(null);
+      }}
       onSelect={handleDemoSelect}
     />
     {currentFunnelPaket && checkoutPkg && (
