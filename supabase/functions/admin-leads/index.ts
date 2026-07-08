@@ -1122,6 +1122,34 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "customer-accounts-list") {
+      const { data, error } = await supabase
+        .from("customer_accounts")
+        .select("user_id, email, first_name, company_name, phone, invoice_allowed, created_at")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return new Response(JSON.stringify({ accounts: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "customer-account-set-invoice-allowed") {
+      const { userId, invoiceAllowed } = body as { userId?: string; invoiceAllowed?: boolean };
+      if (!userId || typeof invoiceAllowed !== "boolean") {
+        return new Response(JSON.stringify({ error: "userId / invoiceAllowed fehlt" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await supabase
+        .from("customer_accounts")
+        .update({ invoice_allowed: invoiceAllowed, updated_at: new Date().toISOString() })
+        .eq("user_id", userId);
+      if (error) throw error;
+      return new Response(JSON.stringify({ ok: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Ungültige Aktion" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
