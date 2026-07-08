@@ -14,6 +14,7 @@ import { template as bookingConfirmation } from './booking-confirmation.tsx'
 import { template as leadQualified } from './lead-qualified.tsx'
 import { template as buchungAdminNotification } from './buchung-admin-notification.tsx'
 import { template as buchungKundeBestaetigung } from './buchung-kunde-bestaetigung.tsx'
+import { template as invoiceConfirmationCode } from './invoice-confirmation-code.tsx'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'lead-notification': leadNotification,
@@ -21,4 +22,5 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'lead-qualified': leadQualified,
   'buchung-admin-notification': buchungAdminNotification,
   'buchung-kunde-bestaetigung': buchungKundeBestaetigung,
+  'invoice-confirmation-code': invoiceConfirmationCode,
 }
