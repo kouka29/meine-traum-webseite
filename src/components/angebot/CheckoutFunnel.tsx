@@ -774,10 +774,52 @@ export default function CheckoutFunnel({
               display: "flex", alignItems: "center", justifyContent: "space-between",
               marginBottom: 10, gap: 8, flexWrap: "wrap",
             }}>
-              <div>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
                   {currentKey === "kontakt" ? "Heute zu zahlen" : "deine Auswahl"}
                 </div>
+                {paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro") ? (
+                  (() => {
+                    const netto = effGesamtMonatlich;
+                    const mwst = mwstAmount(netto);
+                    const brutto = nettoToBrutto(netto);
+                    const nettoReg = gesamtMonatlich;
+                    const bruttoReg = nettoToBrutto(nettoReg);
+                    const showStrike = activeOffer && activeOffer.mode === "miete";
+                    return (
+                      <div style={{ marginTop: 4 }}>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK, lineHeight: 1.4 }}>
+                          {showStrike && (
+                            <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>
+                              {fmtEUR2(nettoReg)}
+                            </span>
+                          )}
+                          {fmtEUR2(netto)} <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>netto/Monat</span>
+                        </div>
+                        <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.4 }}>
+                          + {fmtEUR2(mwst)} MwSt. (19%)
+                        </div>
+                        <div style={{
+                          marginTop: 6, paddingTop: 6,
+                          borderTop: "1px solid rgba(79,63,240,0.15)",
+                          fontSize: 20, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.15,
+                        }}>
+                          {fmtEUR2(brutto)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>brutto/Monat</span>
+                        </div>
+                        {showStrike && (
+                          <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 4, lineHeight: 1.4 }}>
+                            1. Jahr, danach {fmtEUR2(bruttoReg)} brutto/Monat ({fmtEUR(nettoReg)} netto)
+                          </div>
+                        )}
+                        {addonsEinmalig > 0 && (
+                          <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
+                            + {fmtEUR(addonsEinmalig)} einmalig
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()
+                ) : (
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
                   {paymentMode === "miete" && currentKey !== "kontakt" ? (
                     <>
@@ -813,10 +855,11 @@ export default function CheckoutFunnel({
                     )
                   )}
                 </div>
+                )}
                 {currentKey === "kontakt" && (
                   <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
                 )}
-                {activeOffer && (
+                {activeOffer && !(paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro")) && (
                   <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
                     {activeOffer.label}
                   </div>
