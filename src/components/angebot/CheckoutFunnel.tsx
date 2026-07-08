@@ -907,7 +907,12 @@ export default function CheckoutFunnel({
               onClick={() => {
                 if (!canProceedFromStep(step)) return;
                 if (currentKey === "kontakt") {
-                  handleSubmit();
+                  if (payMethod === "rechnung") {
+                    // Rechnungs-Bestätigungsflow starten (E-Mail-Code)
+                    setInvoiceConfirmStage("intro");
+                  } else {
+                    handleSubmit();
+                  }
                 } else {
                   setStep((s) => s + 1);
                 }
@@ -939,6 +944,59 @@ export default function CheckoutFunnel({
           </div>
         )}
       </div>
+
+      {/* Popup 1: Bestellung verbindlich aufgeben (Intro + Code senden) */}
+      {invoiceConfirmStage && (
+        <InvoiceConfirmModal
+          stage={invoiceConfirmStage}
+          email={email}
+          firstName={vorname}
+          angebotsId={angebots_id}
+          sending={invoiceCodeSending}
+          verifying={invoiceCodeVerifying}
+          codeInput={invoiceCodeInput}
+          setCodeInput={setInvoiceCodeInput}
+          onClose={() => setInvoiceConfirmStage(null)}
+          onSendCode={async () => {
+            setInvoiceCodeSending(true);
+            try {
+              const { data, error } = await supabase.functions.invoke(
+                "send-invoice-confirmation-code",
+                { body: { email: email.trim(), firstName: vorname.trim(), angebots_id } },
+              );
+              if (error || data?.error) {
+                throw new Error(data?.error || error?.message || "Konnte Code nicht senden");
+              }
+              toast.success("Bestätigungscode an deine E-Mail gesendet");
+              setInvoiceConfirmStage("code");
+            } catch (e: unknown) {
+              toast.error(e instanceof Error ? e.message : "Fehler beim Senden");
+            } finally {
+              setInvoiceCodeSending(false);
+            }
+          }}
+          onVerify={async () => {
+            setInvoiceCodeVerifying(true);
+            try {
+              const { data, error } = await supabase.functions.invoke(
+                "verify-invoice-confirmation-code",
+                { body: { email: email.trim(), code: invoiceCodeInput.trim() } },
+              );
+              if (error || data?.error) {
+                throw new Error(data?.error || error?.message || "Code ungültig");
+              }
+              setInvoiceConfirmStage(null);
+              setInvoiceCodeInput("");
+              // Bestätigung erfolgreich → Bestellung anlegen
+              await handleSubmit();
+            } catch (e: unknown) {
+              toast.error(e instanceof Error ? e.message : "Verifikation fehlgeschlagen");
+            } finally {
+              setInvoiceCodeVerifying(false);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }
