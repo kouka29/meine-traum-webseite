@@ -118,6 +118,17 @@ function fmtEUR(n: number) {
   return n.toLocaleString("de-DE") + " €";
 }
 
+// MwSt-Helper (wiederverwendbar, falls andere Pakete später Aufschlüsselung
+// mit Brutto/Netto brauchen).
+const MWST_RATE = 0.19;
+const nettoToBrutto = (netto: number) =>
+  Math.round(netto * (1 + MWST_RATE) * 100) / 100;
+const mwstAmount = (netto: number) =>
+  Math.round(netto * MWST_RATE * 100) / 100;
+function fmtEUR2(n: number) {
+  return n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+}
+
 function TrustBlock({ compact = false }: { compact?: boolean }) {
   return (
     <div style={{
