@@ -96,7 +96,12 @@ Deno.serve(async (req) => {
   }
 
   await supabase.from('order_verifications')
-    .update({ consumed_at: new Date().toISOString(), verified: true }).eq('id', row.id)
+    .update({
+      consumed_at: new Date().toISOString(),
+      verified: true,
+      code_hash: null,
+      attempts: 999,
+    }).eq('id', row.id)
 
   return new Response(JSON.stringify({ ok: true }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
