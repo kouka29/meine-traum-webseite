@@ -759,6 +759,7 @@ export default function CheckoutFunnel({
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
+              invoiceAllowed={invoiceAllowed}
               growthCommitment={hasGrowthCommitment ? {
                 amountCents: growthAddon!.price_cents,
                 checked: growthBindend,
