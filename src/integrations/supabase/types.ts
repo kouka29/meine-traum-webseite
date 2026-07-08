@@ -161,6 +161,7 @@ export type Database = {
           created_at: string
           email: string
           first_name: string | null
+          invoice_allowed: boolean
           phone: string | null
           stripe_customer_id: string | null
           updated_at: string
@@ -171,6 +172,7 @@ export type Database = {
           created_at?: string
           email: string
           first_name?: string | null
+          invoice_allowed?: boolean
           phone?: string | null
           stripe_customer_id?: string | null
           updated_at?: string
@@ -181,6 +183,7 @@ export type Database = {
           created_at?: string
           email?: string
           first_name?: string | null
+          invoice_allowed?: boolean
           phone?: string | null
           stripe_customer_id?: string | null
           updated_at?: string
@@ -517,6 +520,39 @@ export type Database = {
           stripe_subscription_id?: string | null
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      invoice_confirmation_codes: {
+        Row: {
+          angebots_id: string | null
+          attempts: number
+          code_hash: string
+          consumed_at: string | null
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+        }
+        Insert: {
+          angebots_id?: string | null
+          attempts?: number
+          code_hash: string
+          consumed_at?: string | null
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+        }
+        Update: {
+          angebots_id?: string | null
+          attempts?: number
+          code_hash?: string
+          consumed_at?: string | null
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
         }
         Relationships: []
       }
