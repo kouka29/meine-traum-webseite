@@ -1476,6 +1476,7 @@ function StepKontakt({
   activeOffer,
   selectedAddons,
   payMethod, setPayMethod, stripeAvailable,
+  invoiceAllowed,
   growthCommitment,
 }: {
   vorname: string; setVorname: (v: string) => void;
@@ -1496,6 +1497,7 @@ function StepKontakt({
   selectedAddons: FunnelAddon[];
   payMethod: PayMethod; setPayMethod: (m: PayMethod) => void;
   stripeAvailable: boolean;
+  invoiceAllowed: boolean;
   growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
 }) {
   const inputStyle: React.CSSProperties = {
