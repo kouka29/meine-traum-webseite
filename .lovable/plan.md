@@ -1,22 +1,19 @@
-## Finding 2 — `coupon_applies_to_nothing` bei CBI-Y1 / CBI-KAUF25
+## Finding 2 — Weg A: Operativer Fix in Stripe
 
-### Diagnose (bestätigt)
-`supabase/functions/create-checkout/index.ts` baut alle Line-Items als ad-hoc `price_data` mit `product_data.name` (keine feste Stripe-Product-ID). Wenn ein Coupon in Stripe eine `applies_to.products`-Einschränkung hat, findet Stripe kein passendes Produkt → `StripeInvalidRequestError: coupon_applies_to_nothing` → 500. Zusätzlich läuft eine „MwSt. 19%"-Position immer mit, die von einem produkt-restringierten Coupon nie abgedeckt sein kann.
+### Was du im Stripe-Dashboard machst
+1. Stripe-Dashboard → Produkte → Gutscheine.
+2. Coupon **CBI-Y1** öffnen → „Applies to" / „Gilt für" von „Specific products" auf **„All products"** ändern → speichern.
+3. Coupon **CBI-KAUF25** öffnen → gleiche Änderung → speichern.
 
-### Zwei mögliche Wege — bitte auswählen
+Falls Stripe kein direktes Bearbeiten der „applies_to"-Einschränkung erlaubt (das ist bei bestehenden Coupons oft der Fall): Coupon archivieren und neu anlegen — diesmal ohne Produkt-Einschränkung:
+- CBI-Y1: „Fester Betrag 40,00 €", Dauer „Mehrere Monate = 12", **keine** Produkt-Einschränkung.
+- CBI-KAUF25: „Prozent 25 %", Dauer „Einmalig", **keine** Produkt-Einschränkung.
 
-**A) Operativer Fix (empfohlen, kein Code)**
-Im Stripe-Dashboard bei den beiden Coupons `CBI-Y1` und `CBI-KAUF25` die „Specific products"-Einschränkung entfernen (auf „All products" stellen). Danach funktioniert der bestehende Flow ohne Codeänderung, weil die Coupons dann auf jedes Line-Item angewendet werden können. MwSt. wird von Stripe automatisch entsprechend proportional gekürzt.
+### Was ich danach tue
+- Finding 2 als „fixed" markieren.
+- Kein Code-Change nötig — der bestehende Server-Flow (`session.discounts = [{ coupon }]`) funktioniert dann, weil die Coupons auf alle Line-Items (inkl. MwSt-Position) angewendet werden dürfen.
 
-**B) Code-Fix (Server berechnet Rabatt selbst)**
-`session.discounts` entfernen. Stattdessen im Server aus `metadata.offer_code` + `DEMO_OFFERS` den Zielpreis auflösen und die primäre Paket-Line-Item auf `unit_amount = discountedNumber * 100` reduzieren, bevor MwSt. berechnet wird. Trusted-Totals-Check bleibt zuerst gegen den Regulärbetrag (aus `buchungen`) laufen — Rabatt wird erst danach angewendet.
+### Verifikation
+Nach der Umstellung eine Testbuchung über `/preise?demo=CBI` → Popup → Miete oder Kauf wählen → Checkout sollte ohne 500-Fehler laden und den rabattierten Betrag anzeigen (Stripe zeigt „−40 € / −25 %" als eigene Zeile).
 
-Nachteile B:
-- CBI-Y1 („40 € Rabatt für 12 Monate") lässt sich in einer Stripe-Subscription ohne Coupon nicht sauber zeitlich befristen — wir müssten entweder (a) den Kunden nach 12 Monaten manuell hochstufen, oder (b) einen zweiten Sub-Zyklus über Stripe-Automation abbilden. Weg A vermeidet das komplett.
-- Duplizierte Preis-Logik zwischen `demoOffers.ts` (Client) und Edge-Function (Server), muss synchron gehalten werden.
-
-### Empfehlung
-Weg **A** — Coupons in Stripe auf „All products" umstellen. Kein Code-Change nötig, keine Neu-Implementierung der 12-Monats-Rabattlogik, keine Duplizierung von Preisregeln.
-
-Wenn A gewählt: Ich markiere Finding 2 als „fixed (operational)" und der bestehende Server-Code funktioniert unverändert.
-Wenn B gewählt: Ich baue die Server-seitige Rabattberechnung für den Kauf-Pfad (CBI-KAUF25 = −25 % einmalig) und lasse den Miete-Pfad (CBI-Y1) weiterhin über den Stripe-Coupon laufen (der dann in Stripe auf „All products" umgestellt sein muss).
+Sag mir Bescheid, sobald die Coupons umgestellt sind — dann schließe ich Finding 2.
