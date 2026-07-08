@@ -211,6 +211,14 @@ export default function CheckoutFunnel({
   const [payMethod, setPayMethod] = useState<PayMethod>(
     stripeAvailable || !RECHNUNG_ENABLED ? "online" : "rechnung",
   );
+  // Ob der eingeloggte Kunde „Auf Rechnung" freigeschaltet hat.
+  const [invoiceAllowed, setInvoiceAllowed] = useState<boolean>(false);
+  // State für den Rechnungs-Bestätigungscode-Flow (2 Popups).
+  const [invoiceConfirmStage, setInvoiceConfirmStage] =
+    useState<null | "intro" | "code">(null);
+  const [invoiceCodeSending, setInvoiceCodeSending] = useState(false);
+  const [invoiceCodeInput, setInvoiceCodeInput] = useState("");
+  const [invoiceCodeVerifying, setInvoiceCodeVerifying] = useState(false);
   const [stripeItems, setStripeItems] = useState<StripeItem[] | null>(null);
 
   // Kontaktdaten
@@ -235,9 +243,32 @@ export default function CheckoutFunnel({
       setPayMethod(stripeAvailable || !RECHNUNG_ENABLED ? "online" : "rechnung");
       setStripeItems(null);
       setGrowthBindend(false);
+      setInvoiceConfirmStage(null);
+      setInvoiceCodeInput("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, paket.id]);
+
+  // Kundenkonto-Flag „invoice_allowed" laden, sobald das Modal öffnet.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) { if (!cancelled) setInvoiceAllowed(false); return; }
+        const { data } = await supabase
+          .from("customer_accounts")
+          .select("invoice_allowed")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        if (!cancelled) setInvoiceAllowed(!!data?.invoice_allowed);
+      } catch {
+        if (!cancelled) setInvoiceAllowed(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [open]);
 
   // Wenn Paket im Funnel gewechselt wird → Zahlmodus auf passenden Default zurücksetzen
   useEffect(() => {
