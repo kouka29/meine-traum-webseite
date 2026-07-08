@@ -118,6 +118,17 @@ function fmtEUR(n: number) {
   return n.toLocaleString("de-DE") + " €";
 }
 
+// MwSt-Helper (wiederverwendbar, falls andere Pakete später Aufschlüsselung
+// mit Brutto/Netto brauchen).
+const MWST_RATE = 0.19;
+const nettoToBrutto = (netto: number) =>
+  Math.round(netto * (1 + MWST_RATE) * 100) / 100;
+const mwstAmount = (netto: number) =>
+  Math.round(netto * MWST_RATE * 100) / 100;
+function fmtEUR2(n: number) {
+  return n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+}
+
 function TrustBlock({ compact = false }: { compact?: boolean }) {
   return (
     <div style={{
@@ -763,10 +774,52 @@ export default function CheckoutFunnel({
               display: "flex", alignItems: "center", justifyContent: "space-between",
               marginBottom: 10, gap: 8, flexWrap: "wrap",
             }}>
-              <div>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
                   {currentKey === "kontakt" ? "Heute zu zahlen" : "deine Auswahl"}
                 </div>
+                {paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro") ? (
+                  (() => {
+                    const netto = effGesamtMonatlich;
+                    const mwst = mwstAmount(netto);
+                    const brutto = nettoToBrutto(netto);
+                    const nettoReg = gesamtMonatlich;
+                    const bruttoReg = nettoToBrutto(nettoReg);
+                    const showStrike = activeOffer && activeOffer.mode === "miete";
+                    return (
+                      <div style={{ marginTop: 4 }}>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK, lineHeight: 1.4 }}>
+                          {showStrike && (
+                            <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>
+                              {fmtEUR2(nettoReg)}
+                            </span>
+                          )}
+                          {fmtEUR2(netto)} <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>netto/Monat</span>
+                        </div>
+                        <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.4 }}>
+                          + {fmtEUR2(mwst)} MwSt. (19%)
+                        </div>
+                        <div style={{
+                          marginTop: 6, paddingTop: 6,
+                          borderTop: "1px solid rgba(79,63,240,0.15)",
+                          fontSize: 20, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.15,
+                        }}>
+                          {fmtEUR2(brutto)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>brutto/Monat</span>
+                        </div>
+                        {showStrike && (
+                          <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 4, lineHeight: 1.4 }}>
+                            1. Jahr, danach {fmtEUR2(bruttoReg)} brutto/Monat ({fmtEUR(nettoReg)} netto)
+                          </div>
+                        )}
+                        {addonsEinmalig > 0 && (
+                          <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
+                            + {fmtEUR(addonsEinmalig)} einmalig
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()
+                ) : (
                 <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
                   {paymentMode === "miete" && currentKey !== "kontakt" ? (
                     <>
@@ -802,10 +855,11 @@ export default function CheckoutFunnel({
                     )
                   )}
                 </div>
+                )}
                 {currentKey === "kontakt" && (
                   <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
                 )}
-                {activeOffer && (
+                {activeOffer && !(paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro")) && (
                   <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
                     {activeOffer.label}
                   </div>
@@ -906,14 +960,44 @@ function StepPaket({
                 transition: "all 0.15s",
               }}
             >
-              {recommended && (
-                <span style={{
-                  position: "absolute", top: -10, right: 14,
-                  background: BRAND_GRADIENT, color: "#fff",
-                  fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
-                  padding: "4px 10px", borderRadius: 20,
-                }}>EMPFOHLEN</span>
-              )}
+              {(() => {
+                const hasOffer = paketMatchesOffer && (mieteOffer || kaufOffer);
+                if (hasOffer) {
+                  return (
+                    <>
+                      <span style={{
+                        position: "absolute", top: -12, right: 14,
+                        background: "linear-gradient(135deg, #F59E0B, #F97316)",
+                        color: "#fff",
+                        fontSize: 11, fontWeight: 800, letterSpacing: "0.04em",
+                        padding: "5px 12px", borderRadius: 20,
+                        boxShadow: "0 4px 12px rgba(245,158,11,0.35)",
+                        whiteSpace: "nowrap",
+                      }}>🎁 Freundschaftsrabatt</span>
+                      {recommended && (
+                        <span style={{
+                          position: "absolute", top: 18, right: 14,
+                          background: "#fff", color: BRAND,
+                          border: `1px solid ${BRAND}`,
+                          fontSize: 9, fontWeight: 700, letterSpacing: "0.08em",
+                          padding: "2px 8px", borderRadius: 20,
+                        }}>EMPFOHLEN</span>
+                      )}
+                    </>
+                  );
+                }
+                if (recommended) {
+                  return (
+                    <span style={{
+                      position: "absolute", top: -10, right: 14,
+                      background: BRAND_GRADIENT, color: "#fff",
+                      fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
+                      padding: "4px 10px", borderRadius: 20,
+                    }}>EMPFOHLEN</span>
+                  );
+                }
+                return null;
+              })()}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                 <div style={{ minWidth: 0, flex: 1 }}>
                   <div style={{ fontSize: 16, fontWeight: 800, color: TEXT_DARK, marginBottom: 6 }}>
