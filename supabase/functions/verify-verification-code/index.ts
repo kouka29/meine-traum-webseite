@@ -30,7 +30,9 @@ Deno.serve(async (req) => {
   }
 
   const code = String(body?.code || '').replace(/\D/g, '')
-  if (code.length !== 6) {
+  const checkoutSessionId = String(body?.checkoutSessionId || '').trim()
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  if (code.length !== 6 || !UUID_RE.test(checkoutSessionId)) {
     return new Response(JSON.stringify({ error: 'Ungültige Eingabe' }), {
       status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
@@ -60,10 +62,9 @@ Deno.serve(async (req) => {
   const { data: row } = await supabase
     .from('order_verifications')
     .select('*')
+    .eq('checkout_session_id', checkoutSessionId)
     .eq('email', email)
     .is('consumed_at', null)
-    .order('created_at', { ascending: false })
-    .limit(1)
     .maybeSingle()
 
   if (!row) {
