@@ -6,6 +6,13 @@ const corsHeaders = {
 }
 
 const CODE_TTL_MIN = 10
+const BINDING_TEXT_VERSION = '1.0'
+
+function getClientIp(req: Request): string {
+  const fwd = req.headers.get('x-forwarded-for')
+  if (fwd) return fwd.split(',')[0].trim()
+  return req.headers.get('cf-connecting-ip') || 'unknown'
+}
 
 async function sha256(text: string): Promise<string> {
   const buf = new TextEncoder().encode(text)
@@ -76,6 +83,11 @@ Deno.serve(async (req) => {
   // Server-generated session id — never trust one from the client
   const checkoutSessionId = crypto.randomUUID()
 
+  // Binding-click audit (analog zum AGB-Log)
+  const bindingIp = getClientIp(req)
+  const bindingUa = (req.headers.get('user-agent') || '').slice(0, 500)
+  const bindingConfirmedAt = new Date().toISOString()
+
   // Invalidate previous unused codes for this email
   await supabase
     .from('order_verifications')
@@ -90,6 +102,10 @@ Deno.serve(async (req) => {
     expires_at: expiresAt,
     verified: false,
     checkout_session_id: checkoutSessionId,
+    binding_ip: bindingIp,
+    binding_user_agent: bindingUa,
+    binding_confirmed_at: bindingConfirmedAt,
+    binding_text_version: BINDING_TEXT_VERSION,
   })
   if (insErr) {
     console.error('insert code failed', insErr)
