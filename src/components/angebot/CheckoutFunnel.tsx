@@ -1842,15 +1842,116 @@ function StepKontakt({
           );
         })()}
         <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
-        <div style={{ fontSize: 12, color: TEXT_MUTED }}>
-          {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(effHeuteZuZahlen)}</strong>
+        {/* AKTIVE CODES (Multi-Code-System) */}
+        {codeUi.appliedCodes.length > 0 && (
+          <div style={{ marginBottom: 12 }}>
+            <div style={{
+              fontSize: 11, fontWeight: 700, color: TEXT_MUTED,
+              textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6,
+            }}>
+              Aktive Codes
+            </div>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {codeUi.appliedCodes.map((c) => {
+                const suffix = c.type === "discount"
+                  ? `−${fmtEUR(c.discount_amount_cents / 100)}`
+                  : "Rechnung freigeschaltet";
+                return (
+                  <span key={c.code} style={{
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    padding: "4px 4px 4px 10px", borderRadius: 999,
+                    background: c.type === "discount" ? `${BRAND}18` : "rgba(34,197,94,0.14)",
+                    color: c.type === "discount" ? BRAND : "#166534",
+                    fontSize: 12, fontWeight: 600,
+                  }}>
+                    <span>{c.code} · {suffix}</span>
+                    <button
+                      type="button"
+                      onClick={() => codeUi.removeCode(c.code)}
+                      aria-label={`Code ${c.code} entfernen`}
+                      style={{
+                        display: "inline-flex", alignItems: "center", justifyContent: "center",
+                        width: 20, height: 20, borderRadius: 999, border: "none",
+                        background: "rgba(255,255,255,0.6)", color: "inherit",
+                        cursor: "pointer", padding: 0,
+                      }}
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Code eingeben */}
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ display: "flex", gap: 6, alignItems: "stretch" }}>
+            <input
+              type="text"
+              value={codeUi.codeInput}
+              onChange={(e) => codeUi.setCodeInput(e.target.value.toUpperCase())}
+              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); codeUi.submitCode(); } }}
+              placeholder="Code eingeben"
+              aria-label="Rabatt- oder Freischaltcode"
+              maxLength={64}
+              disabled={codeUi.codeSubmitting}
+              style={{
+                flex: 1, minWidth: 0, padding: "8px 10px",
+                borderRadius: 8, border: `1px solid ${BRAND}40`,
+                fontSize: 13, background: "#fff", color: TEXT_DARK,
+                textTransform: "uppercase", letterSpacing: "0.04em",
+                fontFamily: "inherit",
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => codeUi.submitCode()}
+              disabled={!codeUi.codeInput.trim() || codeUi.codeSubmitting}
+              style={{
+                padding: "8px 14px", borderRadius: 8, border: "none",
+                background: BRAND_GRADIENT, color: "#fff", fontWeight: 700,
+                fontSize: 13, cursor: codeUi.codeSubmitting ? "wait" : "pointer",
+                opacity: (!codeUi.codeInput.trim() || codeUi.codeSubmitting) ? 0.55 : 1,
+                display: "inline-flex", alignItems: "center", gap: 6,
+                fontFamily: "inherit",
+              }}
+            >
+              {codeUi.codeSubmitting && <Loader2 size={14} className="animate-spin" aria-hidden="true" />}
+              Einlösen
+            </button>
+          </div>
+          <div aria-live="polite" style={{ minHeight: 16, marginTop: 4 }}>
+            {codeUi.codeError && (
+              <div style={{ fontSize: 12, color: "#B91C1C", fontWeight: 600 }}>{codeUi.codeError}</div>
+            )}
+            {!codeUi.codeError && codeUi.codeNotice && (
+              <div style={{ fontSize: 12, color: BRAND, fontWeight: 600 }}>{codeUi.codeNotice}</div>
+            )}
+          </div>
         </div>
-        <div style={{ fontSize: 12, color: TEXT_MUTED, marginTop: 4 }}>
-          MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(Math.round(effHeuteZuZahlen * 19) / 100)}</strong>
-        </div>
-        <div style={{ fontSize: 13, color: TEXT_DARK, marginTop: 6, fontWeight: 700 }}>
-          Gesamtpreis brutto: {fmtEUR(Math.round(effHeuteZuZahlen * 119) / 100)}
-        </div>
+
+        {(() => {
+          // Preise: bevorzugt aus Server-Antwort, sonst lokaler Fallback.
+          const useServer = codeUi.serverPricing != null && (codeUi.appliedCodes.length > 0 || codeUi.serverPricing.discount_cents > 0);
+          const netto = useServer ? codeUi.serverPricing!.netto : effHeuteZuZahlen;
+          const mwst = useServer ? codeUi.serverPricing!.mwst : Math.round(effHeuteZuZahlen * 19) / 100;
+          const brutto = useServer ? codeUi.serverPricing!.brutto : Math.round(effHeuteZuZahlen * 119) / 100;
+          return (
+            <>
+              <div style={{ fontSize: 12, color: TEXT_MUTED }}>
+                {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(netto)}</strong>
+              </div>
+              <div style={{ fontSize: 12, color: TEXT_MUTED, marginTop: 4 }}>
+                MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(mwst)}</strong>
+              </div>
+              <div style={{ fontSize: 13, color: TEXT_DARK, marginTop: 6, fontWeight: 700 }}>
+                Gesamtpreis brutto: {fmtEUR(brutto)}
+              </div>
+            </>
+          );
+        })()}
       </div>
 
       {stripeAvailable && (
