@@ -596,6 +596,7 @@ export default function CheckoutFunnel({
           } : {}),
           ...(sourceDemo ? { source_demo: sourceDemo, source_cta: `demo:${sourceDemo}` } : {}),
           ...(offerCode ? { offer_code: offerCode } : {}),
+          ...(checkoutSessionId ? { checkout_session_id: checkoutSessionId } : {}),
           agb_akzeptiert: true,
           kostenpflichtig_bestaetigt: true,
         },
@@ -861,6 +862,7 @@ export default function CheckoutFunnel({
                   growth_min_term: "12",
                 } : {}),
                 ...(offerCode ? { offer_code: offerCode } : {}),
+                ...(checkoutSessionId ? { checkout_session_id: checkoutSessionId } : {}),
                 ...(sourceDemo ? { demo_source: sourceDemo } : {}),
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
