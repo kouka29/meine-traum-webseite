@@ -230,6 +230,9 @@ export default function CheckoutFunnel({
   const [sessionInvoiceAllowed, setSessionInvoiceAllowed] = useState(false);
   const [codeInput, setCodeInput] = useState("");
   const [codeSubmitting, setCodeSubmitting] = useState(false);
+  const [codeError, setCodeError] = useState<string | null>(null);
+  const [codeNotice, setCodeNotice] = useState<string | null>(null);
+  const [serverPricing, setServerPricing] = useState<{ netto: number; mwst: number; brutto: number; discount_cents: number } | null>(null);
 
   // Kontaktdaten
   const initialName = (leadName || "").split(" ");
@@ -287,10 +290,15 @@ export default function CheckoutFunnel({
     let cancelled = false;
     (async () => {
       try {
+        const storageKey = `checkout_session_id:${angebots_id || "default"}`;
+        const cached = (() => {
+          try { return sessionStorage.getItem(storageKey); } catch { return null; }
+        })();
         const { data, error } = await supabase.functions.invoke("checkout-session-create", {
           body: {
             angebots_nr: angebots_id || null,
             email: (leadEmail || email || "").trim().toLowerCase() || null,
+            session_id: cached || undefined,
           },
         });
         if (cancelled) return;
@@ -298,6 +306,23 @@ export default function CheckoutFunnel({
           setCheckoutSessionId(data.session_id);
           setAppliedCodes(data.applied_codes || []);
           setSessionInvoiceAllowed(!!data.invoice_allowed);
+          setServerPricing(data.pricing || null);
+          try { sessionStorage.setItem(storageKey, data.session_id); } catch { /* ignore */ }
+
+          // URL-getriebenen Angebots-Code (?offer=...) einmalig automatisch
+          // einlösen. Ersetzt den bisherigen frontend-only OFFER_DISPLAY-Pfad.
+          if (offerCode && !(data.applied_codes || []).some((c: any) => c.code === offerCode.trim().toUpperCase())) {
+            try {
+              const r = await supabase.functions.invoke("redeem-code", {
+                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase() },
+              });
+              if (!cancelled && r.data?.ok) {
+                setAppliedCodes(r.data.applied_codes || []);
+                setSessionInvoiceAllowed(!!r.data.invoice_allowed);
+                setServerPricing(r.data.pricing || null);
+              }
+            } catch { /* still fine — user can enter manually */ }
+          }
         }
       } catch (e) {
         console.error("checkout-session-create failed:", e);
@@ -313,18 +338,25 @@ export default function CheckoutFunnel({
     const raw = codeInput.trim().toUpperCase();
     if (!raw || !checkoutSessionId || codeSubmitting) return;
     setCodeSubmitting(true);
+    setCodeError(null);
+    setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("redeem-code", {
         body: { session_id: checkoutSessionId, code: raw },
       });
       if (error || !data?.ok) {
-        toast.error(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
+        setCodeError(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
         return;
       }
       setAppliedCodes(data.applied_codes || []);
       setSessionInvoiceAllowed(!!data.invoice_allowed);
+      setServerPricing(data.pricing || null);
       setCodeInput("");
-      toast.success(data.replaced ? `Code aktiviert (ersetzt ${data.replaced}).` : "Code aktiviert.");
+      if (data.replaced) {
+        setCodeNotice(`${data.replaced} wurde durch ${raw} ersetzt.`);
+      } else {
+        setCodeNotice(`Code ${raw} aktiviert.`);
+      }
     } finally {
       setCodeSubmitting(false);
     }
@@ -332,16 +364,20 @@ export default function CheckoutFunnel({
 
   const removeCode = async (code: string) => {
     if (!checkoutSessionId) return;
+    setCodeError(null);
+    setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("remove-code", {
         body: { session_id: checkoutSessionId, code },
       });
       if (error || !data?.ok) {
-        toast.error(data?.reason || "Konnte Code nicht entfernen.");
+        setCodeError(data?.reason || "Konnte Code nicht entfernen.");
         return;
       }
       setAppliedCodes(data.applied_codes || []);
       setSessionInvoiceAllowed(!!data.invoice_allowed);
+      setServerPricing(data.pricing || null);
+      setCodeNotice(`Code ${code} entfernt.`);
     } catch (e) {
       console.error(e);
     }
@@ -843,6 +879,17 @@ export default function CheckoutFunnel({
                 checked: growthBindend,
                 setChecked: setGrowthBindend,
               } : null}
+              codeUi={{
+                appliedCodes,
+                codeInput,
+                setCodeInput,
+                submitCode,
+                removeCode,
+                codeSubmitting,
+                codeError,
+                codeNotice,
+                serverPricing,
+              }}
             />
           )}
           {currentKey === "bezahlen" && success && (
@@ -881,67 +928,6 @@ export default function CheckoutFunnel({
             background: "linear-gradient(180deg, #FAFAFF 0%, #F5F4FF 100%)",
             flexShrink: 0,
           }}>
-            {/* Code-Einlöse-Widget (Multi-Code-System) */}
-            {checkoutSessionId && (
-              <div style={{ marginBottom: 12 }}>
-                <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-                  <input
-                    type="text"
-                    value={codeInput}
-                    onChange={(e) => setCodeInput(e.target.value.toUpperCase())}
-                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); submitCode(); } }}
-                    placeholder="Code eingeben"
-                    aria-label="Rabatt- oder Freischaltcode"
-                    maxLength={64}
-                    style={{
-                      flex: 1, minWidth: 140, padding: "8px 10px",
-                      borderRadius: 8, border: "1px solid rgba(79,63,240,0.25)",
-                      fontSize: 13, background: "white", color: TEXT_DARK,
-                      textTransform: "uppercase",
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={submitCode}
-                    disabled={!codeInput.trim() || codeSubmitting}
-                    style={{
-                      padding: "8px 14px", borderRadius: 8, border: "none",
-                      background: BRAND_GRADIENT, color: "white", fontWeight: 600,
-                      fontSize: 13, cursor: codeSubmitting ? "wait" : "pointer",
-                      opacity: (!codeInput.trim() || codeSubmitting) ? 0.55 : 1,
-                    }}
-                  >
-                    {codeSubmitting ? "…" : "Einlösen"}
-                  </button>
-                </div>
-                {appliedCodes.length > 0 && (
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 }}>
-                    {appliedCodes.map((c) => (
-                      <span key={c.code} style={{
-                        display: "inline-flex", alignItems: "center", gap: 6,
-                        padding: "4px 10px", borderRadius: 999,
-                        background: c.type === "discount" ? "rgba(79,63,240,0.12)" : "rgba(34,197,94,0.12)",
-                        color: c.type === "discount" ? BRAND : "#166534",
-                        fontSize: 12, fontWeight: 600,
-                      }}>
-                        {c.label}
-                        <button
-                          type="button"
-                          onClick={() => removeCode(c.code)}
-                          aria-label={`Code ${c.code} entfernen`}
-                          style={{
-                            border: "none", background: "transparent", padding: 0,
-                            display: "inline-flex", cursor: "pointer", color: "inherit",
-                          }}
-                        >
-                          <X size={12} />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
             <div style={{
               display: "flex", alignItems: "center", justifyContent: "space-between",
               marginBottom: 10, gap: 8, flexWrap: "wrap",
@@ -1681,6 +1667,7 @@ function StepKontakt({
   payMethod, setPayMethod, stripeAvailable,
   invoiceAllowed,
   growthCommitment,
+  codeUi,
 }: {
   vorname: string; setVorname: (v: string) => void;
   nachname: string; setNachname: (v: string) => void;
@@ -1702,6 +1689,17 @@ function StepKontakt({
   stripeAvailable: boolean;
   invoiceAllowed: boolean;
   growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
+  codeUi: {
+    appliedCodes: Array<{ code: string; label: string; type: 'discount' | 'unlock'; discount_amount_cents: number }>;
+    codeInput: string;
+    setCodeInput: (v: string) => void;
+    submitCode: () => void | Promise<void>;
+    removeCode: (code: string) => void | Promise<void>;
+    codeSubmitting: boolean;
+    codeError: string | null;
+    codeNotice: string | null;
+    serverPricing: { netto: number; mwst: number; brutto: number; discount_cents: number } | null;
+  };
 }) {
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "11px 14px",
@@ -1844,15 +1842,116 @@ function StepKontakt({
           );
         })()}
         <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
-        <div style={{ fontSize: 12, color: TEXT_MUTED }}>
-          {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(effHeuteZuZahlen)}</strong>
+        {/* AKTIVE CODES (Multi-Code-System) */}
+        {codeUi.appliedCodes.length > 0 && (
+          <div style={{ marginBottom: 12 }}>
+            <div style={{
+              fontSize: 11, fontWeight: 700, color: TEXT_MUTED,
+              textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6,
+            }}>
+              Aktive Codes
+            </div>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {codeUi.appliedCodes.map((c) => {
+                const suffix = c.type === "discount"
+                  ? `−${fmtEUR(c.discount_amount_cents / 100)}`
+                  : "Rechnung freigeschaltet";
+                return (
+                  <span key={c.code} style={{
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    padding: "4px 4px 4px 10px", borderRadius: 999,
+                    background: c.type === "discount" ? `${BRAND}18` : "rgba(34,197,94,0.14)",
+                    color: c.type === "discount" ? BRAND : "#166534",
+                    fontSize: 12, fontWeight: 600,
+                  }}>
+                    <span>{c.code} · {suffix}</span>
+                    <button
+                      type="button"
+                      onClick={() => codeUi.removeCode(c.code)}
+                      aria-label={`Code ${c.code} entfernen`}
+                      style={{
+                        display: "inline-flex", alignItems: "center", justifyContent: "center",
+                        width: 20, height: 20, borderRadius: 999, border: "none",
+                        background: "rgba(255,255,255,0.6)", color: "inherit",
+                        cursor: "pointer", padding: 0,
+                      }}
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Code eingeben */}
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ display: "flex", gap: 6, alignItems: "stretch" }}>
+            <input
+              type="text"
+              value={codeUi.codeInput}
+              onChange={(e) => codeUi.setCodeInput(e.target.value.toUpperCase())}
+              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); codeUi.submitCode(); } }}
+              placeholder="Code eingeben"
+              aria-label="Rabatt- oder Freischaltcode"
+              maxLength={64}
+              disabled={codeUi.codeSubmitting}
+              style={{
+                flex: 1, minWidth: 0, padding: "8px 10px",
+                borderRadius: 8, border: `1px solid ${BRAND}40`,
+                fontSize: 13, background: "#fff", color: TEXT_DARK,
+                textTransform: "uppercase", letterSpacing: "0.04em",
+                fontFamily: "inherit",
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => codeUi.submitCode()}
+              disabled={!codeUi.codeInput.trim() || codeUi.codeSubmitting}
+              style={{
+                padding: "8px 14px", borderRadius: 8, border: "none",
+                background: BRAND_GRADIENT, color: "#fff", fontWeight: 700,
+                fontSize: 13, cursor: codeUi.codeSubmitting ? "wait" : "pointer",
+                opacity: (!codeUi.codeInput.trim() || codeUi.codeSubmitting) ? 0.55 : 1,
+                display: "inline-flex", alignItems: "center", gap: 6,
+                fontFamily: "inherit",
+              }}
+            >
+              {codeUi.codeSubmitting && <Loader2 size={14} className="animate-spin" aria-hidden="true" />}
+              Einlösen
+            </button>
+          </div>
+          <div aria-live="polite" style={{ minHeight: 16, marginTop: 4 }}>
+            {codeUi.codeError && (
+              <div style={{ fontSize: 12, color: "#B91C1C", fontWeight: 600 }}>{codeUi.codeError}</div>
+            )}
+            {!codeUi.codeError && codeUi.codeNotice && (
+              <div style={{ fontSize: 12, color: BRAND, fontWeight: 600 }}>{codeUi.codeNotice}</div>
+            )}
+          </div>
         </div>
-        <div style={{ fontSize: 12, color: TEXT_MUTED, marginTop: 4 }}>
-          MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(Math.round(effHeuteZuZahlen * 19) / 100)}</strong>
-        </div>
-        <div style={{ fontSize: 13, color: TEXT_DARK, marginTop: 6, fontWeight: 700 }}>
-          Gesamtpreis brutto: {fmtEUR(Math.round(effHeuteZuZahlen * 119) / 100)}
-        </div>
+
+        {(() => {
+          // Preise: bevorzugt aus Server-Antwort, sonst lokaler Fallback.
+          const useServer = codeUi.serverPricing != null && (codeUi.appliedCodes.length > 0 || codeUi.serverPricing.discount_cents > 0);
+          const netto = useServer ? codeUi.serverPricing!.netto : effHeuteZuZahlen;
+          const mwst = useServer ? codeUi.serverPricing!.mwst : Math.round(effHeuteZuZahlen * 19) / 100;
+          const brutto = useServer ? codeUi.serverPricing!.brutto : Math.round(effHeuteZuZahlen * 119) / 100;
+          return (
+            <>
+              <div style={{ fontSize: 12, color: TEXT_MUTED }}>
+                {summary.heuteLabel}: <strong style={{ color: TEXT_DARK }}>{fmtEUR(netto)}</strong>
+              </div>
+              <div style={{ fontSize: 12, color: TEXT_MUTED, marginTop: 4 }}>
+                MwSt. 19%: <strong style={{ color: TEXT_DARK }}>{fmtEUR(mwst)}</strong>
+              </div>
+              <div style={{ fontSize: 13, color: TEXT_DARK, marginTop: 6, fontWeight: 700 }}>
+                Gesamtpreis brutto: {fmtEUR(brutto)}
+              </div>
+            </>
+          );
+        })()}
       </div>
 
       {stripeAvailable && (
@@ -1894,7 +1993,7 @@ function StepKontakt({
                     <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
                       {m === "online"
                         ? "Karte, Apple/Google Pay"
-                        : disabled ? "Aktuell nicht verfügbar" : "Überweisung in 14 Tagen"}
+                        : disabled ? "Aktuell nicht verfügbar" : "Zahlungsziel 14 Tage"}
                     </div>
                   </button>
                   {disabled && (
