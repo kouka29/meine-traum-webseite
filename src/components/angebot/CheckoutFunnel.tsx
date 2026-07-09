@@ -299,6 +299,7 @@ export default function CheckoutFunnel({
             angebots_nr: angebots_id || null,
             email: (leadEmail || email || "").trim().toLowerCase() || null,
             session_id: cached || undefined,
+            environment: getStripeEnvironment(),
           },
         });
         if (cancelled) return;
@@ -314,7 +315,7 @@ export default function CheckoutFunnel({
           if (offerCode && !(data.applied_codes || []).some((c: any) => c.code === offerCode.trim().toUpperCase())) {
             try {
               const r = await supabase.functions.invoke("redeem-code", {
-                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase() },
+                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase(), base_net_cents: Math.round(effHeuteZuZahlen * 100) },
               });
               if (!cancelled && r.data?.ok) {
                 setAppliedCodes(r.data.applied_codes || []);
@@ -342,7 +343,7 @@ export default function CheckoutFunnel({
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("redeem-code", {
-        body: { session_id: checkoutSessionId, code: raw },
+        body: { session_id: checkoutSessionId, code: raw, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
@@ -368,7 +369,7 @@ export default function CheckoutFunnel({
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("remove-code", {
-        body: { session_id: checkoutSessionId, code },
+        body: { session_id: checkoutSessionId, code, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || "Konnte Code nicht entfernen.");
