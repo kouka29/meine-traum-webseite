@@ -280,6 +280,73 @@ export default function CheckoutFunnel({
     return () => { cancelled = true; };
   }, [open]);
 
+  // Multi-Code-System: beim Öffnen serverseitig eine checkout_sessions-Zeile
+  // anlegen. Ohne diese ID kann kein Code eingelöst werden.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke("checkout-session-create", {
+          body: {
+            angebots_nr: angebots_id || null,
+            email: (leadEmail || email || "").trim().toLowerCase() || null,
+          },
+        });
+        if (cancelled) return;
+        if (!error && data?.session_id) {
+          setCheckoutSessionId(data.session_id);
+          setAppliedCodes(data.applied_codes || []);
+          setSessionInvoiceAllowed(!!data.invoice_allowed);
+        }
+      } catch (e) {
+        console.error("checkout-session-create failed:", e);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const effectiveInvoiceAllowed = invoiceAllowed || sessionInvoiceAllowed;
+
+  const submitCode = async () => {
+    const raw = codeInput.trim().toUpperCase();
+    if (!raw || !checkoutSessionId || codeSubmitting) return;
+    setCodeSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("redeem-code", {
+        body: { session_id: checkoutSessionId, code: raw },
+      });
+      if (error || !data?.ok) {
+        toast.error(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
+        return;
+      }
+      setAppliedCodes(data.applied_codes || []);
+      setSessionInvoiceAllowed(!!data.invoice_allowed);
+      setCodeInput("");
+      toast.success(data.replaced ? `Code aktiviert (ersetzt ${data.replaced}).` : "Code aktiviert.");
+    } finally {
+      setCodeSubmitting(false);
+    }
+  };
+
+  const removeCode = async (code: string) => {
+    if (!checkoutSessionId) return;
+    try {
+      const { data, error } = await supabase.functions.invoke("remove-code", {
+        body: { session_id: checkoutSessionId, code },
+      });
+      if (error || !data?.ok) {
+        toast.error(data?.reason || "Konnte Code nicht entfernen.");
+        return;
+      }
+      setAppliedCodes(data.applied_codes || []);
+      setSessionInvoiceAllowed(!!data.invoice_allowed);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   // Wenn Paket im Funnel gewechselt wird → Zahlmodus auf passenden Default zurücksetzen
   useEffect(() => {
     if (!open) return;
