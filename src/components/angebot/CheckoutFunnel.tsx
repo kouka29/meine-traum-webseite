@@ -1667,6 +1667,7 @@ function StepKontakt({
   payMethod, setPayMethod, stripeAvailable,
   invoiceAllowed,
   growthCommitment,
+  codeUi,
 }: {
   vorname: string; setVorname: (v: string) => void;
   nachname: string; setNachname: (v: string) => void;
@@ -1688,6 +1689,17 @@ function StepKontakt({
   stripeAvailable: boolean;
   invoiceAllowed: boolean;
   growthCommitment: { amountCents: number; checked: boolean; setChecked: (v: boolean) => void } | null;
+  codeUi: {
+    appliedCodes: Array<{ code: string; label: string; type: 'discount' | 'unlock'; discount_amount_cents: number }>;
+    codeInput: string;
+    setCodeInput: (v: string) => void;
+    submitCode: () => void | Promise<void>;
+    removeCode: (code: string) => void | Promise<void>;
+    codeSubmitting: boolean;
+    codeError: string | null;
+    codeNotice: string | null;
+    serverPricing: { netto: number; mwst: number; brutto: number; discount_cents: number } | null;
+  };
 }) {
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "11px 14px",
