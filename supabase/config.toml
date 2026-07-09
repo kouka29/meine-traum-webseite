@@ -37,3 +37,9 @@ project_id = "zwxucictfdbwhnnyemri"
     verify_jwt = true
   [functions.verify-verification-code]
     verify_jwt = true
+  [functions.checkout-session-create]
+    verify_jwt = false
+  [functions.redeem-code]
+    verify_jwt = false
+  [functions.remove-code]
+    verify_jwt = false
