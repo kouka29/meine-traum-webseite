@@ -230,6 +230,9 @@ export default function CheckoutFunnel({
   const [sessionInvoiceAllowed, setSessionInvoiceAllowed] = useState(false);
   const [codeInput, setCodeInput] = useState("");
   const [codeSubmitting, setCodeSubmitting] = useState(false);
+  const [codeError, setCodeError] = useState<string | null>(null);
+  const [codeNotice, setCodeNotice] = useState<string | null>(null);
+  const [serverPricing, setServerPricing] = useState<{ netto: number; mwst: number; brutto: number; discount_cents: number } | null>(null);
 
   // Kontaktdaten
   const initialName = (leadName || "").split(" ");
