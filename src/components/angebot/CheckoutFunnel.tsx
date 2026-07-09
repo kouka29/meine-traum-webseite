@@ -1025,14 +1025,26 @@ export default function CheckoutFunnel({
                       )}
                     </>
                   ) : currentKey === "kontakt" ? (
-                    activeOffer ? (
-                      <>
-                        <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(heuteZuZahlen)}</span>
-                        {fmtEUR(effHeuteZuZahlen)}
-                      </>
-                    ) : (
-                      fmtEUR(heuteZuZahlen)
-                    )
+                    (() => {
+                      // Sticky-Bar: renders EXACTLY dieselben Zahlen wie die
+                      // Bestellübersicht. Server-Pricing hat Vorrang, sobald
+                      // Codes aktiv sind oder ein Rabatt greift.
+                      const useServer =
+                        serverPricing != null &&
+                        (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
+                      const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
+                      const strike = useServer
+                        ? (serverPricing!.discount_cents > 0 ? heuteZuZahlen : null)
+                        : (activeOffer ? heuteZuZahlen : null);
+                      return strike != null ? (
+                        <>
+                          <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(strike)}</span>
+                          {fmtEUR(shown)}
+                        </>
+                      ) : (
+                        <>{fmtEUR(shown)}</>
+                      );
+                    })()
                   ) : (
                     activeOffer && activeOffer.mode === "kauf" ? (
                       <>
