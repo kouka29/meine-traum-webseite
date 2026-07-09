@@ -59,6 +59,8 @@ Deno.serve(async (req) => {
   const kunde_email = safeStr(body.kunde_email, 200);
   const kunde_telefon = safeStr(body.kunde_telefon, 50);
   const angebots_id = safeStr(body.angebots_id, 200) || null;
+  const checkout_session_id = safeStr(body.checkout_session_id, 64) || null;
+  const payment_method = safeStr(body.payment_method, 30) || "rechnung";
   const agb_akzeptiert = !!body.agb_akzeptiert;
   const kostenpflichtig_bestaetigt = !!body.kostenpflichtig_bestaetigt;
   const send_copy = body.send_copy === false ? false : true;
@@ -100,6 +102,38 @@ Deno.serve(async (req) => {
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+  // Server-side invoice_allowed enforcement. Never trust the client. A booking
+  // may only be created with payment_method='rechnung' when EITHER the caller's
+  // customer_accounts.invoice_allowed is true OR the referenced checkout session
+  // was unlocked via a valid unlock code (e.g. RECHNUNG24).
+  let session_applied_codes: unknown = [];
+  if (payment_method === "rechnung") {
+    let sessionInvoiceAllowed = false;
+    if (checkout_session_id) {
+      const { data: sess } = await supabase
+        .from("checkout_sessions")
+        .select("invoice_allowed, applied_codes, expires_at")
+        .eq("id", checkout_session_id)
+        .maybeSingle();
+      if (sess && new Date(sess.expires_at).getTime() > Date.now()) {
+        sessionInvoiceAllowed = !!sess.invoice_allowed;
+        session_applied_codes = sess.applied_codes ?? [];
+      }
+    }
+    let accountInvoiceAllowed = false;
+    const { data: acc } = await supabase
+      .from("customer_accounts")
+      .select("invoice_allowed")
+      .eq("email", kunde_email.toLowerCase())
+      .maybeSingle();
+    if (acc?.invoice_allowed) accountInvoiceAllowed = true;
+    if (!sessionInvoiceAllowed && !accountInvoiceAllowed) {
+      return new Response(JSON.stringify({ error: "Rechnungskauf ist für dieses Konto nicht freigeschaltet." }), {
+        status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }
+
   // Auftragsnummer (mit kleinem Retry bei Kollision)
   let auftrags_nr = genAuftragsNr();
   let inserted: any = null;
@@ -108,7 +142,7 @@ Deno.serve(async (req) => {
     const { data, error } = await supabase.from("buchungen").insert({
       angebots_id,
       angebots_nr: auftrags_nr,
-      payment_method: safeStr(body.payment_method, 30) || "rechnung",
+      payment_method,
       kunde_vorname, kunde_nachname, kunde_firma, kunde_email,
       kunde_telefon: kunde_telefon || null,
       pakete: body.pakete ?? null,
@@ -119,6 +153,7 @@ Deno.serve(async (req) => {
       agb_akzeptiert: true, agb_version: "1.0",
       kostenpflichtig_bestaetigt: true,
       ip_adresse: ip, user_agent: ua,
+      applied_codes: session_applied_codes,
       status: "neu",
     }).select().single();
     if (!error) { inserted = data; break; }

@@ -222,6 +222,15 @@ export default function CheckoutFunnel({
   const [invoiceCheckoutSessionId, setInvoiceCheckoutSessionId] = useState<string | null>(null);
   const [stripeItems, setStripeItems] = useState<StripeItem[] | null>(null);
 
+  // Multi-Code-System: serverseitige Checkout-Session. Alle eingelösten Codes
+  // (Rabatt + Freischaltung) leben ausschließlich hinter dieser Session-ID
+  // in der DB. Der Client hält nur die Anzeigedaten aus den Function-Responses.
+  const [checkoutSessionId, setCheckoutSessionId] = useState<string | null>(null);
+  const [appliedCodes, setAppliedCodes] = useState<Array<{ code: string; label: string; type: 'discount' | 'unlock'; discount_amount_cents: number }>>([]);
+  const [sessionInvoiceAllowed, setSessionInvoiceAllowed] = useState(false);
+  const [codeInput, setCodeInput] = useState("");
+  const [codeSubmitting, setCodeSubmitting] = useState(false);
+
   // Kontaktdaten
   const initialName = (leadName || "").split(" ");
   const [vorname, setVorname] = useState(initialName[0] || "");
@@ -270,6 +279,73 @@ export default function CheckoutFunnel({
     })();
     return () => { cancelled = true; };
   }, [open]);
+
+  // Multi-Code-System: beim Öffnen serverseitig eine checkout_sessions-Zeile
+  // anlegen. Ohne diese ID kann kein Code eingelöst werden.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke("checkout-session-create", {
+          body: {
+            angebots_nr: angebots_id || null,
+            email: (leadEmail || email || "").trim().toLowerCase() || null,
+          },
+        });
+        if (cancelled) return;
+        if (!error && data?.session_id) {
+          setCheckoutSessionId(data.session_id);
+          setAppliedCodes(data.applied_codes || []);
+          setSessionInvoiceAllowed(!!data.invoice_allowed);
+        }
+      } catch (e) {
+        console.error("checkout-session-create failed:", e);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const effectiveInvoiceAllowed = invoiceAllowed || sessionInvoiceAllowed;
+
+  const submitCode = async () => {
+    const raw = codeInput.trim().toUpperCase();
+    if (!raw || !checkoutSessionId || codeSubmitting) return;
+    setCodeSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("redeem-code", {
+        body: { session_id: checkoutSessionId, code: raw },
+      });
+      if (error || !data?.ok) {
+        toast.error(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
+        return;
+      }
+      setAppliedCodes(data.applied_codes || []);
+      setSessionInvoiceAllowed(!!data.invoice_allowed);
+      setCodeInput("");
+      toast.success(data.replaced ? `Code aktiviert (ersetzt ${data.replaced}).` : "Code aktiviert.");
+    } finally {
+      setCodeSubmitting(false);
+    }
+  };
+
+  const removeCode = async (code: string) => {
+    if (!checkoutSessionId) return;
+    try {
+      const { data, error } = await supabase.functions.invoke("remove-code", {
+        body: { session_id: checkoutSessionId, code },
+      });
+      if (error || !data?.ok) {
+        toast.error(data?.reason || "Konnte Code nicht entfernen.");
+        return;
+      }
+      setAppliedCodes(data.applied_codes || []);
+      setSessionInvoiceAllowed(!!data.invoice_allowed);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   // Wenn Paket im Funnel gewechselt wird → Zahlmodus auf passenden Default zurücksetzen
   useEffect(() => {
@@ -520,6 +596,7 @@ export default function CheckoutFunnel({
           } : {}),
           ...(sourceDemo ? { source_demo: sourceDemo, source_cta: `demo:${sourceDemo}` } : {}),
           ...(offerCode ? { offer_code: offerCode } : {}),
+          ...(checkoutSessionId ? { checkout_session_id: checkoutSessionId } : {}),
           agb_akzeptiert: true,
           kostenpflichtig_bestaetigt: true,
         },
@@ -760,7 +837,7 @@ export default function CheckoutFunnel({
               payMethod={payMethod}
               setPayMethod={setPayMethod}
               stripeAvailable={stripeAvailable}
-              invoiceAllowed={invoiceAllowed}
+              invoiceAllowed={effectiveInvoiceAllowed}
               growthCommitment={hasGrowthCommitment ? {
                 amountCents: growthAddon!.price_cents,
                 checked: growthBindend,
@@ -785,6 +862,7 @@ export default function CheckoutFunnel({
                   growth_min_term: "12",
                 } : {}),
                 ...(offerCode ? { offer_code: offerCode } : {}),
+                ...(checkoutSessionId ? { checkout_session_id: checkoutSessionId } : {}),
                 ...(sourceDemo ? { demo_source: sourceDemo } : {}),
               }}
               returnUrl={`${window.location.origin}/zahlung-erfolgreich?auftrag=${encodeURIComponent(success.auftrags_nr)}&session_id={CHECKOUT_SESSION_ID}`}
@@ -803,6 +881,67 @@ export default function CheckoutFunnel({
             background: "linear-gradient(180deg, #FAFAFF 0%, #F5F4FF 100%)",
             flexShrink: 0,
           }}>
+            {/* Code-Einlöse-Widget (Multi-Code-System) */}
+            {checkoutSessionId && (
+              <div style={{ marginBottom: 12 }}>
+                <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+                  <input
+                    type="text"
+                    value={codeInput}
+                    onChange={(e) => setCodeInput(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); submitCode(); } }}
+                    placeholder="Code eingeben"
+                    aria-label="Rabatt- oder Freischaltcode"
+                    maxLength={64}
+                    style={{
+                      flex: 1, minWidth: 140, padding: "8px 10px",
+                      borderRadius: 8, border: "1px solid rgba(79,63,240,0.25)",
+                      fontSize: 13, background: "white", color: TEXT_DARK,
+                      textTransform: "uppercase",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={submitCode}
+                    disabled={!codeInput.trim() || codeSubmitting}
+                    style={{
+                      padding: "8px 14px", borderRadius: 8, border: "none",
+                      background: BRAND_GRADIENT, color: "white", fontWeight: 600,
+                      fontSize: 13, cursor: codeSubmitting ? "wait" : "pointer",
+                      opacity: (!codeInput.trim() || codeSubmitting) ? 0.55 : 1,
+                    }}
+                  >
+                    {codeSubmitting ? "…" : "Einlösen"}
+                  </button>
+                </div>
+                {appliedCodes.length > 0 && (
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 }}>
+                    {appliedCodes.map((c) => (
+                      <span key={c.code} style={{
+                        display: "inline-flex", alignItems: "center", gap: 6,
+                        padding: "4px 10px", borderRadius: 999,
+                        background: c.type === "discount" ? "rgba(79,63,240,0.12)" : "rgba(34,197,94,0.12)",
+                        color: c.type === "discount" ? BRAND : "#166534",
+                        fontSize: 12, fontWeight: 600,
+                      }}>
+                        {c.label}
+                        <button
+                          type="button"
+                          onClick={() => removeCode(c.code)}
+                          aria-label={`Code ${c.code} entfernen`}
+                          style={{
+                            border: "none", background: "transparent", padding: 0,
+                            display: "inline-flex", cursor: "pointer", color: "inherit",
+                          }}
+                        >
+                          <X size={12} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
             <div style={{
               display: "flex", alignItems: "center", justifyContent: "space-between",
               marginBottom: 10, gap: 8, flexWrap: "wrap",

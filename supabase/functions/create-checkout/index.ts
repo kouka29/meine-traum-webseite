@@ -19,14 +19,6 @@ type Item = {
 // server-computed totals. Any larger mismatch is treated as a tampering attempt.
 const AMOUNT_TOLERANCE_CENTS = 10;
 
-// Whitelist der erlaubten Angebots-Codes → Stripe-Coupon-ID + priceId, für die
-// der Coupon gültig ist. Alles außerhalb dieser Map wird ignoriert (Normalpreis).
-// Rabatte werden ausschließlich hier bestimmt — niemals aus der URL berechnet.
-const OFFER_TO_COUPON: Record<string, { coupon: string; requiredPriceId: string }> = {
-  "cbi-y1":     { coupon: "CBI-Y1",     requiredPriceId: "pro_rent_monthly" },
-  "cbi-kauf25": { coupon: "CBI-KAUF25", requiredPriceId: "pro_purchase_deposit" },
-};
-
 function resolveExpectedPriceId(paketId: string, paymentMode: "kauf" | "miete"): string | null {
   const p = (paketId || "").toLowerCase();
   if (!["starter", "pro", "premium"].includes(p)) return null;
@@ -294,21 +286,45 @@ Deno.serve(async (req) => {
       if (typeof v === "string") safeMetadata[k.slice(0, 40)] = v.slice(0, 500);
     }
 
-    // Angebots-Code → Stripe-Coupon (serverseitig validiert).
-    // Nur anwenden, wenn (a) Code in Whitelist ist UND (b) das aufgelöste
-    // priceId zum Coupon passt UND (c) der Session-Modus zur Coupon-Duration
-    // passt (once → payment, repeating months → subscription). Sonst still
-    // ignorieren (kein Fehler → Normalpreis).
-    const offerRaw = typeof metadata.offer_code === "string" ? metadata.offer_code.trim().toLowerCase() : "";
+    // Angebots-Code → Stripe-Coupon (serverseitig aus der Datenbank aufgelöst).
+    // Quelle der Wahrheit ist ausschließlich die Tabelle `checkout_sessions`
+    // (Multi-Code-System). Der Client kann keinen Coupon mehr direkt setzen —
+    // er reicht nur die `checkout_session_id` durch. Zusätzlich weiterhin die
+    // paket/payment_mode-Konsistenzprüfung als zweite Verteidigungslinie.
     const paymentModeMeta: "kauf" | "miete" = metadata.payment_mode === "miete" ? "miete" : "kauf";
     const expectedPriceId = resolveExpectedPriceId(metadata.paket || "", paymentModeMeta);
-    const offerMapping = offerRaw ? OFFER_TO_COUPON[offerRaw] : undefined;
     let discounts: { coupon: string }[] | undefined;
-    if (offerMapping && expectedPriceId === offerMapping.requiredPriceId) {
-      const priceIsRecurring = /_rent_monthly$/.test(expectedPriceId);
-      const sessionIsSubscription = mode === "subscription";
-      if (priceIsRecurring === sessionIsSubscription) {
-        discounts = [{ coupon: offerMapping.coupon }];
+    const checkoutSessionId = typeof metadata.checkout_session_id === "string" ? metadata.checkout_session_id.trim() : "";
+    if (checkoutSessionId) {
+      const { data: sess } = await admin
+        .from("checkout_sessions")
+        .select("applied_codes, expires_at")
+        .eq("id", checkoutSessionId)
+        .maybeSingle();
+      if (sess && new Date(sess.expires_at).getTime() > Date.now()) {
+        const codes: string[] = Array.isArray(sess.applied_codes)
+          ? sess.applied_codes.filter((c: any) => typeof c === "string")
+          : [];
+        if (codes.length) {
+          const { data: rows } = await admin
+            .from("discount_codes")
+            .select("code, type, stripe_coupon, active, expires_at, max_uses, used_count")
+            .in("code", codes);
+          const discountRow = (rows ?? []).find((r: any) =>
+            r.type === "discount"
+            && r.active
+            && r.stripe_coupon
+            && (!r.expires_at || new Date(r.expires_at).getTime() > Date.now())
+            && (r.max_uses == null || r.used_count <= r.max_uses),
+          );
+          if (discountRow?.stripe_coupon && expectedPriceId) {
+            const priceIsRecurring = /_rent_monthly$/.test(expectedPriceId);
+            const sessionIsSubscription = mode === "subscription";
+            if (priceIsRecurring === sessionIsSubscription) {
+              discounts = [{ coupon: discountRow.stripe_coupon }];
+            }
+          }
+        }
       }
     }
 
