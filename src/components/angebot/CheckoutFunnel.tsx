@@ -290,10 +290,15 @@ export default function CheckoutFunnel({
     let cancelled = false;
     (async () => {
       try {
+        const storageKey = `checkout_session_id:${angebots_id || "default"}`;
+        const cached = (() => {
+          try { return sessionStorage.getItem(storageKey); } catch { return null; }
+        })();
         const { data, error } = await supabase.functions.invoke("checkout-session-create", {
           body: {
             angebots_nr: angebots_id || null,
             email: (leadEmail || email || "").trim().toLowerCase() || null,
+            session_id: cached || undefined,
           },
         });
         if (cancelled) return;
@@ -301,6 +306,23 @@ export default function CheckoutFunnel({
           setCheckoutSessionId(data.session_id);
           setAppliedCodes(data.applied_codes || []);
           setSessionInvoiceAllowed(!!data.invoice_allowed);
+          setServerPricing(data.pricing || null);
+          try { sessionStorage.setItem(storageKey, data.session_id); } catch { /* ignore */ }
+
+          // URL-getriebenen Angebots-Code (?offer=...) einmalig automatisch
+          // einlösen. Ersetzt den bisherigen frontend-only OFFER_DISPLAY-Pfad.
+          if (offerCode && !(data.applied_codes || []).some((c: any) => c.code === offerCode.trim().toUpperCase())) {
+            try {
+              const r = await supabase.functions.invoke("redeem-code", {
+                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase() },
+              });
+              if (!cancelled && r.data?.ok) {
+                setAppliedCodes(r.data.applied_codes || []);
+                setSessionInvoiceAllowed(!!r.data.invoice_allowed);
+                setServerPricing(r.data.pricing || null);
+              }
+            } catch { /* still fine — user can enter manually */ }
+          }
         }
       } catch (e) {
         console.error("checkout-session-create failed:", e);
@@ -316,18 +338,25 @@ export default function CheckoutFunnel({
     const raw = codeInput.trim().toUpperCase();
     if (!raw || !checkoutSessionId || codeSubmitting) return;
     setCodeSubmitting(true);
+    setCodeError(null);
+    setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("redeem-code", {
         body: { session_id: checkoutSessionId, code: raw },
       });
       if (error || !data?.ok) {
-        toast.error(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
+        setCodeError(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
         return;
       }
       setAppliedCodes(data.applied_codes || []);
       setSessionInvoiceAllowed(!!data.invoice_allowed);
+      setServerPricing(data.pricing || null);
       setCodeInput("");
-      toast.success(data.replaced ? `Code aktiviert (ersetzt ${data.replaced}).` : "Code aktiviert.");
+      if (data.replaced) {
+        setCodeNotice(`${data.replaced} wurde durch ${raw} ersetzt.`);
+      } else {
+        setCodeNotice(`Code ${raw} aktiviert.`);
+      }
     } finally {
       setCodeSubmitting(false);
     }
@@ -335,16 +364,20 @@ export default function CheckoutFunnel({
 
   const removeCode = async (code: string) => {
     if (!checkoutSessionId) return;
+    setCodeError(null);
+    setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("remove-code", {
         body: { session_id: checkoutSessionId, code },
       });
       if (error || !data?.ok) {
-        toast.error(data?.reason || "Konnte Code nicht entfernen.");
+        setCodeError(data?.reason || "Konnte Code nicht entfernen.");
         return;
       }
       setAppliedCodes(data.applied_codes || []);
       setSessionInvoiceAllowed(!!data.invoice_allowed);
+      setServerPricing(data.pricing || null);
+      setCodeNotice(`Code ${code} entfernt.`);
     } catch (e) {
       console.error(e);
     }
