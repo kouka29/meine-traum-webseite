@@ -162,8 +162,10 @@ export type Database = {
         Row: {
           angebots_nr: string | null
           applied_codes: Json
+          base_net_cents: number | null
           created_at: string
           email: string | null
+          environment: string
           expires_at: string
           id: string
           invoice_allowed: boolean
@@ -172,8 +174,10 @@ export type Database = {
         Insert: {
           angebots_nr?: string | null
           applied_codes?: Json
+          base_net_cents?: number | null
           created_at?: string
           email?: string | null
+          environment?: string
           expires_at?: string
           id?: string
           invoice_allowed?: boolean
@@ -182,8 +186,10 @@ export type Database = {
         Update: {
           angebots_nr?: string | null
           applied_codes?: Json
+          base_net_cents?: number | null
           created_at?: string
           email?: string | null
+          environment?: string
           expires_at?: string
           id?: string
           invoice_allowed?: boolean
