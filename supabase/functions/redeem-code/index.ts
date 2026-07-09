@@ -2,11 +2,13 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 import {
   ALLOWED_UNLOCK_FLAGS,
   checkRateLimits,
-  computePricing,
+  buildPricing,
+  resolveAppliedFromStripe,
+  InvalidCouponError,
   getClientIp,
-  loadBaseNetCents,
   logRedemption,
 } from '../_shared/checkout-pricing.ts';
+import { type StripeEnv, createStripeClient } from '../_shared/stripe.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -23,8 +25,6 @@ interface CodeRow {
   stripe_coupon: string | null;
   unlock_flag: string | null;
   label: string;
-  percent_off: number | null;
-  amount_off_cents: number | null;
   active: boolean;
   max_uses: number | null;
   used_count: number;
@@ -33,7 +33,7 @@ interface CodeRow {
 
 async function loadActiveDiscountCodes(sb: any, codes: string[]): Promise<CodeRow[]> {
   if (!codes.length) return [];
-  const { data } = await sb.from('discount_codes').select('*').in('code', codes);
+  const { data } = await sb.from('discount_codes').select('code,type,stripe_coupon,unlock_flag,label,active,max_uses,used_count,expires_at').in('code', codes);
   return (data ?? []) as CodeRow[];
 }
 
@@ -53,6 +53,8 @@ Deno.serve(async (req) => {
 
   const sessionId = String(body?.session_id || '').trim();
   const codeInput = String(body?.code || '').trim().toUpperCase();
+  const baseNetCentsIn = Number.isFinite(Number(body?.base_net_cents))
+    ? Math.max(0, Math.round(Number(body.base_net_cents))) : null;
   if (!UUID_RE.test(sessionId) || !codeInput || codeInput.length > 64) {
     await logRedemption(sb, { sessionId: null, ip, code: codeInput || '(empty)', success: false, reason: 'invalid_input' });
     return new Response(JSON.stringify({ ok: false, reason: 'Ungültige Eingabe.' }), {
@@ -83,6 +85,14 @@ Deno.serve(async (req) => {
     });
   }
 
+  // Keep base amount in sync with what the client currently displays.
+  // The base itself is later re-verified server-side in create-checkout
+  // and buchung-erstellen against buchungen; here it is the input to the
+  // preview pricing shown in the UI.
+  const baseCents = baseNetCentsIn != null ? baseNetCentsIn : Number(session.base_net_cents ?? 0) || 0;
+  const stripeEnv: StripeEnv = session.environment === 'live' ? 'live' : 'sandbox';
+  const stripe = createStripeClient(stripeEnv);
+
   const applied: string[] = Array.isArray(session.applied_codes) ? session.applied_codes.filter((c: any) => typeof c === 'string') : [];
   if (applied.includes(codeInput)) {
     await logRedemption(sb, { sessionId, ip, code: codeInput, success: false, reason: 'already_applied' });
@@ -107,6 +117,30 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ ok: false, reason: GENERIC_INVALID }), {
       status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
+  }
+
+  // For discount codes: verify the Stripe coupon resolves to a real amount
+  // BEFORE mutating anything. If Stripe returns neither amount_off nor
+  // percent_off (or the coupon is missing/inactive), reject the code.
+  if (row.type === 'discount') {
+    if (!row.stripe_coupon) {
+      await logRedemption(sb, { sessionId, ip, code: codeInput, success: false, reason: 'no_stripe_coupon' });
+      return new Response(JSON.stringify({ ok: false, reason: GENERIC_INVALID }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    try {
+      // Probe (result is recomputed below alongside the other codes).
+      await resolveAppliedFromStripe(stripe, [{
+        code: row.code, type: 'discount', label: row.label, stripe_coupon: row.stripe_coupon,
+      }], Math.max(baseCents, 1));
+    } catch (e) {
+      const reason = e instanceof InvalidCouponError ? 'stripe_coupon_invalid' : 'stripe_error';
+      await logRedemption(sb, { sessionId, ip, code: codeInput, success: false, reason });
+      return new Response(JSON.stringify({ ok: false, reason: GENERIC_INVALID }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
   }
 
   // Build next applied list.
@@ -140,7 +174,11 @@ Deno.serve(async (req) => {
   }
 
   const { error: updErr } = await sb.from('checkout_sessions')
-    .update({ applied_codes: nextApplied, invoice_allowed: invoiceAllowed })
+    .update({
+      applied_codes: nextApplied,
+      invoice_allowed: invoiceAllowed,
+      ...(baseNetCentsIn != null ? { base_net_cents: baseNetCentsIn } : {}),
+    })
     .eq('id', sessionId);
   if (updErr) {
     await logRedemption(sb, { sessionId, ip, code: codeInput, success: false, reason: 'session_update_failed' });
@@ -149,8 +187,21 @@ Deno.serve(async (req) => {
     });
   }
 
-  const baseCents = await loadBaseNetCents(sb, session.angebots_nr);
-  const { pricing, applied: appliedDetail } = computePricing(baseCents, allRows);
+  let appliedDetail;
+  try {
+    appliedDetail = await resolveAppliedFromStripe(
+      stripe,
+      allRows.map(r => ({ code: r.code, type: r.type, label: r.label, stripe_coupon: r.stripe_coupon })),
+      baseCents,
+    );
+  } catch (e) {
+    await logRedemption(sb, { sessionId, ip, code: codeInput, success: false, reason: 'stripe_pricing_failed' });
+    return new Response(JSON.stringify({ ok: false, reason: GENERIC_INVALID }), {
+      status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+  const pricing = buildPricing(baseCents, appliedDetail);
+  console.log('redeem-code priced', { code: codeInput, baseCents, appliedDetail, pricing });
 
   await logRedemption(sb, { sessionId, ip, code: codeInput, success: true, reason: null });
 

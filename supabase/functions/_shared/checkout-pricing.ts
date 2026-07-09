@@ -1,10 +1,14 @@
 // Server-side pricing for checkout sessions. Single source of truth used by
-// redeem-code, remove-code, checkout-session-create and buchung-erstellen.
-// NEVER trust client-supplied amounts — always recompute here from
-// buchungen/angebote via the session's angebots_nr.
+// redeem-code, remove-code and checkout-session-create.
+// The discount amount for every code is ALWAYS retrieved from Stripe
+// (stripe.coupons.retrieve) — never from a duplicated DB column. If Stripe
+// cannot resolve amount_off / percent_off for a discount code, the caller
+// MUST reject the code as invalid.
 
 // deno-lint-ignore no-explicit-any
 type SB = any;
+// deno-lint-ignore no-explicit-any
+type StripeLike = any;
 
 export interface AppliedCode {
   code: string;
@@ -21,62 +25,92 @@ export interface Pricing {
   mwst_cents: number;
   brutto_cents: number;
   discount_cents: number;
+  base_net_cents: number;
 }
 
 function round2(n: number) { return Math.round(n * 100) / 100; }
 
-/**
- * Loads base amount (net cents) for a checkout session by looking up the
- * matching buchungen row via angebots_nr. Returns 0 if not resolvable — the
- * pricing is then purely informational (session hasn't reached checkout yet).
- */
-export async function loadBaseNetCents(sb: SB, angebotsNr: string | null): Promise<number> {
-  if (!angebotsNr) return 0;
-  const { data } = await sb
-    .from('buchungen')
-    .select('gesamtbetrag_netto')
-    .eq('angebots_nr', angebotsNr)
-    .maybeSingle();
-  const eur = Number(data?.gesamtbetrag_netto ?? 0);
-  return Number.isFinite(eur) ? Math.round(eur * 100) : 0;
+export class InvalidCouponError extends Error {
+  constructor(public readonly code: string, msg = 'Code ungültig oder nicht mehr verfügbar.') {
+    super(msg);
+  }
 }
 
 /**
- * Applies the currently active codes to the base net amount and returns
- * per-code discount details plus final pricing. Stripe still enforces the
- * discount authoritatively at checkout via the coupon; this calculation is
- * for UI display and consistency checks.
+ * Retrieves a coupon from Stripe and returns the discount amount in cents
+ * applied against the given base. Throws InvalidCouponError if the coupon
+ * is missing, inactive, or has neither amount_off nor percent_off.
  */
-export function computePricing(baseNetCents: number, codes: Array<{
-  code: string; type: 'discount' | 'unlock'; label: string;
-  percent_off: number | null; amount_off_cents: number | null;
-}>): { pricing: Pricing; applied: AppliedCode[] } {
-  let discountCents = 0;
-  const applied: AppliedCode[] = [];
-  for (const c of codes) {
-    let d = 0;
-    if (c.type === 'discount') {
-      if (c.percent_off != null) d = Math.round(baseNetCents * (Number(c.percent_off) / 100));
-      else if (c.amount_off_cents != null) d = Math.min(baseNetCents, Number(c.amount_off_cents));
-    }
-    discountCents += d;
-    applied.push({ code: c.code, type: c.type, label: c.label, discount_amount_cents: d });
+export async function fetchCouponDiscountCents(
+  stripe: StripeLike,
+  couponId: string,
+  baseNetCents: number,
+  code: string,
+): Promise<number> {
+  let coupon: any;
+  try {
+    coupon = await stripe.coupons.retrieve(couponId);
+  } catch (_e) {
+    throw new InvalidCouponError(code);
   }
-  discountCents = Math.min(discountCents, baseNetCents);
-  const netCents = baseNetCents - discountCents;
+  if (!coupon || coupon.valid === false) throw new InvalidCouponError(code);
+  if (typeof coupon.amount_off === 'number' && coupon.amount_off > 0) {
+    // Stripe returns amount_off in the coupon's currency smallest unit (cents for EUR).
+    return Math.min(baseNetCents, Math.round(coupon.amount_off));
+  }
+  if (typeof coupon.percent_off === 'number' && coupon.percent_off > 0) {
+    return Math.min(baseNetCents, Math.round(baseNetCents * (coupon.percent_off / 100)));
+  }
+  throw new InvalidCouponError(code);
+}
+
+/**
+ * Resolves discount amounts for every active discount code by consulting
+ * Stripe. Unlock codes always resolve to 0. Throws InvalidCouponError on
+ * the first discount code Stripe cannot price.
+ */
+export async function resolveAppliedFromStripe(
+  stripe: StripeLike,
+  codes: Array<{ code: string; type: 'discount' | 'unlock'; label: string; stripe_coupon: string | null }>,
+  baseNetCents: number,
+): Promise<AppliedCode[]> {
+  const out: AppliedCode[] = [];
+  for (const c of codes) {
+    if (c.type === 'unlock') {
+      out.push({ code: c.code, type: 'unlock', label: c.label, discount_amount_cents: 0 });
+      continue;
+    }
+    if (!c.stripe_coupon) throw new InvalidCouponError(c.code);
+    const d = await fetchCouponDiscountCents(stripe, c.stripe_coupon, baseNetCents, c.code);
+    out.push({ code: c.code, type: 'discount', label: c.label, discount_amount_cents: d });
+  }
+  return out;
+}
+
+/**
+ * Builds the Pricing object from base amount and already-resolved discounts.
+ *   netto_final = max(0, base_net - Σ discount_amount)
+ *   mwst        = round(netto_final * 0.19)
+ *   brutto      = netto_final + mwst
+ */
+export function buildPricing(baseNetCents: number, applied: AppliedCode[]): Pricing {
+  const base = Math.max(0, Math.round(baseNetCents || 0));
+  const totalDiscount = Math.min(
+    base,
+    applied.reduce((s, a) => s + Math.max(0, a.discount_amount_cents | 0), 0),
+  );
+  const netCents = Math.max(0, base - totalDiscount);
   const vatCents = Math.round(netCents * 0.19);
   const grossCents = netCents + vatCents;
   return {
-    pricing: {
-      netto: round2(netCents / 100),
-      mwst: round2(vatCents / 100),
-      brutto: round2(grossCents / 100),
-      netto_cents: netCents,
-      mwst_cents: vatCents,
-      brutto_cents: grossCents,
-      discount_cents: discountCents,
-    },
-    applied,
+    netto: round2(netCents / 100),
+    mwst: round2(vatCents / 100),
+    brutto: round2(grossCents / 100),
+    netto_cents: netCents,
+    mwst_cents: vatCents,
+    brutto_cents: grossCents,
+    discount_cents: totalDiscount,
+    base_net_cents: base,
   };
 }
 

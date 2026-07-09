@@ -1,5 +1,6 @@
 import { createClient } from 'npm:@supabase/supabase-js@2';
-import { loadBaseNetCents, computePricing } from '../_shared/checkout-pricing.ts';
+import { buildPricing, resolveAppliedFromStripe, InvalidCouponError } from '../_shared/checkout-pricing.ts';
+import { type StripeEnv, createStripeClient } from '../_shared/stripe.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -10,18 +11,31 @@ const corsHeaders = {
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 async function respondForSession(sb: any, sessionRow: any) {
+  const env: StripeEnv = sessionRow.environment === 'live' ? 'live' : 'sandbox';
+  const stripe = createStripeClient(env);
   const codes: string[] = Array.isArray(sessionRow.applied_codes)
     ? sessionRow.applied_codes.filter((c: any) => typeof c === 'string')
     : [];
   const { data: rows } = codes.length
-    ? await sb.from('discount_codes').select('*').in('code', codes)
+    ? await sb.from('discount_codes').select('code,type,label,stripe_coupon').in('code', codes)
     : { data: [] as any[] };
-  const baseCents = await loadBaseNetCents(sb, sessionRow.angebots_nr);
-  const { pricing, applied } = computePricing(baseCents, rows ?? []);
+  const baseCents = Number(sessionRow.base_net_cents ?? 0) || 0;
+  let applied;
+  try {
+    applied = await resolveAppliedFromStripe(stripe, rows ?? [], baseCents);
+  } catch (e) {
+    // If Stripe cannot price a previously-applied code (deleted coupon etc.),
+    // fall back to a defensive representation with 0€ discount. The next
+    // redeem-code / remove-code call will surface the error to the user.
+    console.warn('respondForSession: stripe pricing failed', e);
+    applied = (rows ?? []).map((r: any) => ({
+      code: r.code, type: r.type, label: r.label, discount_amount_cents: 0,
+    }));
+  }
   return {
     session_id: sessionRow.id,
     applied_codes: applied,
-    pricing,
+    pricing: buildPricing(baseCents, applied),
     invoice_allowed: !!sessionRow.invoice_allowed,
   };
 }
@@ -48,6 +62,9 @@ Deno.serve(async (req) => {
   const email = emailRaw && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailRaw) ? emailRaw : null;
   const existingId = typeof body?.session_id === 'string' && UUID_RE.test(body.session_id.trim())
     ? body.session_id.trim() : null;
+  const baseNetCentsIn = Number.isFinite(Number(body?.base_net_cents))
+    ? Math.max(0, Math.round(Number(body.base_net_cents))) : null;
+  const environment: StripeEnv = body?.environment === 'live' ? 'live' : 'sandbox';
 
   // Rehydrate an existing (still-valid) session so returning users see their
   // already-applied codes and invoice_allowed state on reload.
@@ -58,7 +75,19 @@ Deno.serve(async (req) => {
       .eq('id', existingId)
       .maybeSingle();
     if (existing && new Date(existing.expires_at).getTime() > Date.now()) {
-      return new Response(JSON.stringify(await respondForSession(sb, existing)), {
+      // Keep the stored base up to date whenever the client's selection
+      // changes. Environment stays sticky after first creation.
+      let refreshed = existing;
+      if (baseNetCentsIn != null && baseNetCentsIn !== Number(existing.base_net_cents ?? -1)) {
+        const { data: upd } = await sb
+          .from('checkout_sessions')
+          .update({ base_net_cents: baseNetCentsIn })
+          .eq('id', existing.id)
+          .select()
+          .single();
+        if (upd) refreshed = upd;
+      }
+      return new Response(JSON.stringify(await respondForSession(sb, refreshed)), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -84,7 +113,11 @@ Deno.serve(async (req) => {
 
   const { data: inserted, error } = await sb
     .from('checkout_sessions')
-    .insert({ angebots_nr, email, invoice_allowed: invoiceAllowedInit })
+    .insert({
+      angebots_nr, email, invoice_allowed: invoiceAllowedInit,
+      base_net_cents: baseNetCentsIn,
+      environment,
+    })
     .select()
     .single();
   if (error || !inserted) {

@@ -3,7 +3,7 @@ import { X, ChevronLeft, Check, Loader2, Shield, ArrowRight, Sparkles } from "lu
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import StripeEmbeddedCheckoutBox, { type StripeItem } from "./StripeEmbeddedCheckout";
-import { isStripeConfigured } from "@/lib/stripe";
+import { isStripeConfigured, getStripeEnvironment } from "@/lib/stripe";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
@@ -299,6 +299,7 @@ export default function CheckoutFunnel({
             angebots_nr: angebots_id || null,
             email: (leadEmail || email || "").trim().toLowerCase() || null,
             session_id: cached || undefined,
+            environment: getStripeEnvironment(),
           },
         });
         if (cancelled) return;
@@ -314,7 +315,7 @@ export default function CheckoutFunnel({
           if (offerCode && !(data.applied_codes || []).some((c: any) => c.code === offerCode.trim().toUpperCase())) {
             try {
               const r = await supabase.functions.invoke("redeem-code", {
-                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase() },
+                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase(), base_net_cents: Math.round(effHeuteZuZahlen * 100) },
               });
               if (!cancelled && r.data?.ok) {
                 setAppliedCodes(r.data.applied_codes || []);
@@ -342,7 +343,7 @@ export default function CheckoutFunnel({
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("redeem-code", {
-        body: { session_id: checkoutSessionId, code: raw },
+        body: { session_id: checkoutSessionId, code: raw, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
@@ -368,7 +369,7 @@ export default function CheckoutFunnel({
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("remove-code", {
-        body: { session_id: checkoutSessionId, code },
+        body: { session_id: checkoutSessionId, code, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || "Konnte Code nicht entfernen.");
@@ -532,6 +533,36 @@ export default function CheckoutFunnel({
   const effGesamtMonatlich = Math.max(0, gesamtMonatlich - (activeOffer?.mode === "miete" ? offerDelta : 0));
   const effGesamtEinmalig  = Math.max(0, gesamtEinmalig  - (activeOffer?.mode === "kauf"  ? offerDelta : 0));
   const effHeuteZuZahlen   = Math.max(0, heuteZuZahlen - (activeOffer ? offerDelta : 0));
+
+  // Halte das Netto-Basis-Feld der Server-Session bei jeder Auswahländerung
+  // aktuell. Der Server ist die einzige Preisquelle für die Bestellübersicht
+  // und die Sticky-Zahlenleiste — er muss also wissen, worauf ein Rabatt
+  // angewendet werden soll.
+  useEffect(() => {
+    if (!open || !checkoutSessionId) return;
+    const baseCents = Math.round(effHeuteZuZahlen * 100);
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await supabase.functions.invoke("checkout-session-create", {
+          body: {
+            angebots_nr: angebots_id || null,
+            email: (leadEmail || email || "").trim().toLowerCase() || null,
+            session_id: checkoutSessionId,
+            base_net_cents: baseCents,
+            environment: getStripeEnvironment(),
+          },
+        });
+        if (cancelled || !data?.session_id) return;
+        setAppliedCodes(data.applied_codes || []);
+        setServerPricing(data.pricing || null);
+      } catch (e) {
+        console.warn("base sync failed", e);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [effHeuteZuZahlen, checkoutSessionId, open]);
 
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
@@ -994,14 +1025,26 @@ export default function CheckoutFunnel({
                       )}
                     </>
                   ) : currentKey === "kontakt" ? (
-                    activeOffer ? (
-                      <>
-                        <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(heuteZuZahlen)}</span>
-                        {fmtEUR(effHeuteZuZahlen)}
-                      </>
-                    ) : (
-                      fmtEUR(heuteZuZahlen)
-                    )
+                    (() => {
+                      // Sticky-Bar: renders EXACTLY dieselben Zahlen wie die
+                      // Bestellübersicht. Server-Pricing hat Vorrang, sobald
+                      // Codes aktiv sind oder ein Rabatt greift.
+                      const useServer =
+                        serverPricing != null &&
+                        (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
+                      const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
+                      const strike = useServer
+                        ? (serverPricing!.discount_cents > 0 ? heuteZuZahlen : null)
+                        : (activeOffer ? heuteZuZahlen : null);
+                      return strike != null ? (
+                        <>
+                          <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(strike)}</span>
+                          {fmtEUR(shown)}
+                        </>
+                      ) : (
+                        <>{fmtEUR(shown)}</>
+                      );
+                    })()
                   ) : (
                     activeOffer && activeOffer.mode === "kauf" ? (
                       <>
