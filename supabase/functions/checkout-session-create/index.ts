@@ -7,6 +7,25 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+async function respondForSession(sb: any, sessionRow: any) {
+  const codes: string[] = Array.isArray(sessionRow.applied_codes)
+    ? sessionRow.applied_codes.filter((c: any) => typeof c === 'string')
+    : [];
+  const { data: rows } = codes.length
+    ? await sb.from('discount_codes').select('*').in('code', codes)
+    : { data: [] as any[] };
+  const baseCents = await loadBaseNetCents(sb, sessionRow.angebots_nr);
+  const { pricing, applied } = computePricing(baseCents, rows ?? []);
+  return {
+    session_id: sessionRow.id,
+    applied_codes: applied,
+    pricing,
+    invoice_allowed: !!sessionRow.invoice_allowed,
+  };
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
   if (req.method !== 'POST') {
@@ -27,6 +46,23 @@ Deno.serve(async (req) => {
   const angebots_nr = typeof body?.angebots_nr === 'string' ? body.angebots_nr.trim().slice(0, 50) : null;
   const emailRaw = typeof body?.email === 'string' ? body.email.trim().toLowerCase().slice(0, 200) : null;
   const email = emailRaw && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailRaw) ? emailRaw : null;
+  const existingId = typeof body?.session_id === 'string' && UUID_RE.test(body.session_id.trim())
+    ? body.session_id.trim() : null;
+
+  // Rehydrate an existing (still-valid) session so returning users see their
+  // already-applied codes and invoice_allowed state on reload.
+  if (existingId) {
+    const { data: existing } = await sb
+      .from('checkout_sessions')
+      .select('*')
+      .eq('id', existingId)
+      .maybeSingle();
+    if (existing && new Date(existing.expires_at).getTime() > Date.now()) {
+      return new Response(JSON.stringify(await respondForSession(sb, existing)), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+  }
 
   // Preseed invoice_allowed=true if the caller is an authenticated customer whose
   // account already has the permanent toggle enabled.
@@ -58,13 +94,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const baseCents = await loadBaseNetCents(sb, angebots_nr);
-  const { pricing, applied } = computePricing(baseCents, []);
-
-  return new Response(JSON.stringify({
-    session_id: inserted.id,
-    applied_codes: applied,
-    pricing,
-    invoice_allowed: inserted.invoice_allowed,
-  }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify(await respondForSession(sb, inserted)), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
 });
