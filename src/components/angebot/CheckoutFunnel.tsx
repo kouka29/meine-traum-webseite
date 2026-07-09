@@ -881,6 +881,67 @@ export default function CheckoutFunnel({
             background: "linear-gradient(180deg, #FAFAFF 0%, #F5F4FF 100%)",
             flexShrink: 0,
           }}>
+            {/* Code-Einlöse-Widget (Multi-Code-System) */}
+            {checkoutSessionId && (
+              <div style={{ marginBottom: 12 }}>
+                <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+                  <input
+                    type="text"
+                    value={codeInput}
+                    onChange={(e) => setCodeInput(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); submitCode(); } }}
+                    placeholder="Code eingeben"
+                    aria-label="Rabatt- oder Freischaltcode"
+                    maxLength={64}
+                    style={{
+                      flex: 1, minWidth: 140, padding: "8px 10px",
+                      borderRadius: 8, border: "1px solid rgba(79,63,240,0.25)",
+                      fontSize: 13, background: "white", color: TEXT_DARK,
+                      textTransform: "uppercase",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={submitCode}
+                    disabled={!codeInput.trim() || codeSubmitting}
+                    style={{
+                      padding: "8px 14px", borderRadius: 8, border: "none",
+                      background: BRAND_GRADIENT, color: "white", fontWeight: 600,
+                      fontSize: 13, cursor: codeSubmitting ? "wait" : "pointer",
+                      opacity: (!codeInput.trim() || codeSubmitting) ? 0.55 : 1,
+                    }}
+                  >
+                    {codeSubmitting ? "…" : "Einlösen"}
+                  </button>
+                </div>
+                {appliedCodes.length > 0 && (
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 }}>
+                    {appliedCodes.map((c) => (
+                      <span key={c.code} style={{
+                        display: "inline-flex", alignItems: "center", gap: 6,
+                        padding: "4px 10px", borderRadius: 999,
+                        background: c.type === "discount" ? "rgba(79,63,240,0.12)" : "rgba(34,197,94,0.12)",
+                        color: c.type === "discount" ? BRAND : "#166534",
+                        fontSize: 12, fontWeight: 600,
+                      }}>
+                        {c.label}
+                        <button
+                          type="button"
+                          onClick={() => removeCode(c.code)}
+                          aria-label={`Code ${c.code} entfernen`}
+                          style={{
+                            border: "none", background: "transparent", padding: 0,
+                            display: "inline-flex", cursor: "pointer", color: "inherit",
+                          }}
+                        >
+                          <X size={12} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
             <div style={{
               display: "flex", alignItems: "center", justifyContent: "space-between",
               marginBottom: 10, gap: 8, flexWrap: "wrap",
