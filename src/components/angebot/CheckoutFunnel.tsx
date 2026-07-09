@@ -879,6 +879,17 @@ export default function CheckoutFunnel({
                 checked: growthBindend,
                 setChecked: setGrowthBindend,
               } : null}
+              codeUi={{
+                appliedCodes,
+                codeInput,
+                setCodeInput,
+                submitCode,
+                removeCode,
+                codeSubmitting,
+                codeError,
+                codeNotice,
+                serverPricing,
+              }}
             />
           )}
           {currentKey === "bezahlen" && success && (
