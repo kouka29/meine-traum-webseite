@@ -3,7 +3,7 @@ import { X, ChevronLeft, Check, Loader2, Shield, ArrowRight, Sparkles } from "lu
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import StripeEmbeddedCheckoutBox, { type StripeItem } from "./StripeEmbeddedCheckout";
-import { isStripeConfigured } from "@/lib/stripe";
+import { isStripeConfigured, getStripeEnvironment } from "@/lib/stripe";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
