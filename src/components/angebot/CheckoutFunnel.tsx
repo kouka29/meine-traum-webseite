@@ -1993,7 +1993,7 @@ function StepKontakt({
                     <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
                       {m === "online"
                         ? "Karte, Apple/Google Pay"
-                        : disabled ? "Aktuell nicht verfügbar" : "Überweisung in 14 Tagen"}
+                        : disabled ? "Aktuell nicht verfügbar" : "Zahlungsziel 14 Tage"}
                     </div>
                   </button>
                   {disabled && (
