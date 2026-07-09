@@ -1,10 +1,11 @@
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import {
-  computePricing,
+  buildPricing,
+  resolveAppliedFromStripe,
   getClientIp,
-  loadBaseNetCents,
   logRedemption,
 } from '../_shared/checkout-pricing.ts';
+import { type StripeEnv, createStripeClient } from '../_shared/stripe.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -29,6 +30,8 @@ Deno.serve(async (req) => {
   }
   const sessionId = String(body?.session_id || '').trim();
   const codeInput = String(body?.code || '').trim().toUpperCase();
+  const baseNetCentsIn = Number.isFinite(Number(body?.base_net_cents))
+    ? Math.max(0, Math.round(Number(body.base_net_cents))) : null;
   if (!UUID_RE.test(sessionId) || !codeInput) {
     return new Response(JSON.stringify({ ok: false, reason: 'Ungültige Eingabe' }), {
       status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -53,12 +56,18 @@ Deno.serve(async (req) => {
   // Recompute unlock flags from remaining codes. Session-level flag stays true
   // if any remaining unlock code still sets it. customer_accounts is never
   // touched here — that toggle is admin-only.
-  const { data: allRows } = await sb.from('discount_codes').select('*').in('code', nextApplied.length ? nextApplied : ['__none__']);
+  const { data: allRows } = await sb.from('discount_codes')
+    .select('code,type,label,stripe_coupon,unlock_flag')
+    .in('code', nextApplied.length ? nextApplied : ['__none__']);
   const remainingUnlockInvoice = (allRows ?? []).some((r: any) => r.type === 'unlock' && r.unlock_flag === 'invoice_allowed');
   const invoiceAllowed = remainingUnlockInvoice; // session-scoped flag only
 
   const { error: updErr } = await sb.from('checkout_sessions')
-    .update({ applied_codes: nextApplied, invoice_allowed: invoiceAllowed })
+    .update({
+      applied_codes: nextApplied,
+      invoice_allowed: invoiceAllowed,
+      ...(baseNetCentsIn != null ? { base_net_cents: baseNetCentsIn } : {}),
+    })
     .eq('id', sessionId);
   if (updErr) {
     return new Response(JSON.stringify({ ok: false, reason: 'Speichern fehlgeschlagen' }), {
@@ -66,8 +75,21 @@ Deno.serve(async (req) => {
     });
   }
 
-  const baseCents = await loadBaseNetCents(sb, session.angebots_nr);
-  const { pricing, applied: appliedDetail } = computePricing(baseCents, allRows ?? []);
+  const baseCents = baseNetCentsIn != null ? baseNetCentsIn : Number(session.base_net_cents ?? 0) || 0;
+  const stripeEnv: StripeEnv = session.environment === 'live' ? 'live' : 'sandbox';
+  const stripe = createStripeClient(stripeEnv);
+  let appliedDetail: any[] = [];
+  try {
+    appliedDetail = await resolveAppliedFromStripe(
+      stripe,
+      (allRows ?? []).map((r: any) => ({ code: r.code, type: r.type, label: r.label, stripe_coupon: r.stripe_coupon })),
+      baseCents,
+    );
+  } catch (e) {
+    console.warn('remove-code: stripe pricing failed', e);
+    appliedDetail = (allRows ?? []).map((r: any) => ({ code: r.code, type: r.type, label: r.label, discount_amount_cents: 0 }));
+  }
+  const pricing = buildPricing(baseCents, appliedDetail);
 
   await logRedemption(sb, { sessionId, ip, code: codeInput, success: true, reason: 'removed' });
 
