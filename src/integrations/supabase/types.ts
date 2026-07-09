@@ -78,6 +78,7 @@ export type Database = {
           agb_version: string
           angebots_id: string | null
           angebots_nr: string
+          applied_codes: Json
           gebucht_am: string
           gesamtbetrag_brutto: number
           gesamtbetrag_netto: number
@@ -105,6 +106,7 @@ export type Database = {
           agb_version?: string
           angebots_id?: string | null
           angebots_nr: string
+          applied_codes?: Json
           gebucht_am?: string
           gesamtbetrag_brutto?: number
           gesamtbetrag_netto?: number
@@ -132,6 +134,7 @@ export type Database = {
           agb_version?: string
           angebots_id?: string | null
           angebots_nr?: string
+          applied_codes?: Json
           gebucht_am?: string
           gesamtbetrag_brutto?: number
           gesamtbetrag_netto?: number
@@ -154,6 +157,77 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      checkout_sessions: {
+        Row: {
+          angebots_nr: string | null
+          applied_codes: Json
+          created_at: string
+          email: string | null
+          expires_at: string
+          id: string
+          invoice_allowed: boolean
+          updated_at: string
+        }
+        Insert: {
+          angebots_nr?: string | null
+          applied_codes?: Json
+          created_at?: string
+          email?: string | null
+          expires_at?: string
+          id?: string
+          invoice_allowed?: boolean
+          updated_at?: string
+        }
+        Update: {
+          angebots_nr?: string | null
+          applied_codes?: Json
+          created_at?: string
+          email?: string | null
+          expires_at?: string
+          id?: string
+          invoice_allowed?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      code_redemption_log: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          ip_address: unknown
+          reason: string | null
+          session_id: string | null
+          success: boolean
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          ip_address: unknown
+          reason?: string | null
+          session_id?: string | null
+          success: boolean
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown
+          reason?: string | null
+          session_id?: string | null
+          success?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "code_redemption_log_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "checkout_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       customer_accounts: {
         Row: {
@@ -280,6 +354,51 @@ export type Database = {
           apple_design_enabled?: boolean
           id?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      discount_codes: {
+        Row: {
+          active: boolean
+          amount_off_cents: number | null
+          code: string
+          created_at: string
+          expires_at: string | null
+          label: string
+          max_uses: number | null
+          percent_off: number | null
+          stripe_coupon: string | null
+          type: string
+          unlock_flag: string | null
+          used_count: number
+        }
+        Insert: {
+          active?: boolean
+          amount_off_cents?: number | null
+          code: string
+          created_at?: string
+          expires_at?: string | null
+          label: string
+          max_uses?: number | null
+          percent_off?: number | null
+          stripe_coupon?: string | null
+          type: string
+          unlock_flag?: string | null
+          used_count?: number
+        }
+        Update: {
+          active?: boolean
+          amount_off_cents?: number | null
+          code?: string
+          created_at?: string
+          expires_at?: string | null
+          label?: string
+          max_uses?: number | null
+          percent_off?: number | null
+          stripe_coupon?: string | null
+          type?: string
+          unlock_flag?: string | null
+          used_count?: number
         }
         Relationships: []
       }
