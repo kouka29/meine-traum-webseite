@@ -222,6 +222,15 @@ export default function CheckoutFunnel({
   const [invoiceCheckoutSessionId, setInvoiceCheckoutSessionId] = useState<string | null>(null);
   const [stripeItems, setStripeItems] = useState<StripeItem[] | null>(null);
 
+  // Multi-Code-System: serverseitige Checkout-Session. Alle eingelösten Codes
+  // (Rabatt + Freischaltung) leben ausschließlich hinter dieser Session-ID
+  // in der DB. Der Client hält nur die Anzeigedaten aus den Function-Responses.
+  const [checkoutSessionId, setCheckoutSessionId] = useState<string | null>(null);
+  const [appliedCodes, setAppliedCodes] = useState<Array<{ code: string; label: string; type: 'discount' | 'unlock'; discount_amount_cents: number }>>([]);
+  const [sessionInvoiceAllowed, setSessionInvoiceAllowed] = useState(false);
+  const [codeInput, setCodeInput] = useState("");
+  const [codeSubmitting, setCodeSubmitting] = useState(false);
+
   // Kontaktdaten
   const initialName = (leadName || "").split(" ");
   const [vorname, setVorname] = useState(initialName[0] || "");
