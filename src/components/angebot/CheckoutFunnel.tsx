@@ -534,6 +534,36 @@ export default function CheckoutFunnel({
   const effGesamtEinmalig  = Math.max(0, gesamtEinmalig  - (activeOffer?.mode === "kauf"  ? offerDelta : 0));
   const effHeuteZuZahlen   = Math.max(0, heuteZuZahlen - (activeOffer ? offerDelta : 0));
 
+  // Halte das Netto-Basis-Feld der Server-Session bei jeder Auswahländerung
+  // aktuell. Der Server ist die einzige Preisquelle für die Bestellübersicht
+  // und die Sticky-Zahlenleiste — er muss also wissen, worauf ein Rabatt
+  // angewendet werden soll.
+  useEffect(() => {
+    if (!open || !checkoutSessionId) return;
+    const baseCents = Math.round(effHeuteZuZahlen * 100);
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await supabase.functions.invoke("checkout-session-create", {
+          body: {
+            angebots_nr: angebots_id || null,
+            email: (leadEmail || email || "").trim().toLowerCase() || null,
+            session_id: checkoutSessionId,
+            base_net_cents: baseCents,
+            environment: getStripeEnvironment(),
+          },
+        });
+        if (cancelled || !data?.session_id) return;
+        setAppliedCodes(data.applied_codes || []);
+        setServerPricing(data.pricing || null);
+      } catch (e) {
+        console.warn("base sync failed", e);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [effHeuteZuZahlen, checkoutSessionId, open]);
+
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
 
