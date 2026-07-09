@@ -335,6 +335,35 @@ export default function CheckoutFunnel({
 
   const effectiveInvoiceAllowed = invoiceAllowed || sessionInvoiceAllowed;
 
+  // Halte das Netto-Basis-Feld der Server-Session bei jeder Auswahländerung
+  // aktuell. Der Server ist die einzige Preisquelle im UI (siehe Sticky-Bar
+  // und Bestellübersicht), also muss er wissen, worauf er den Rabatt anwendet.
+  useEffect(() => {
+    if (!open || !checkoutSessionId) return;
+    const baseCents = Math.round(effHeuteZuZahlen * 100);
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await supabase.functions.invoke("checkout-session-create", {
+          body: {
+            angebots_nr: angebots_id || null,
+            email: (leadEmail || email || "").trim().toLowerCase() || null,
+            session_id: checkoutSessionId,
+            base_net_cents: baseCents,
+            environment: getStripeEnvironment(),
+          },
+        });
+        if (cancelled || !data?.session_id) return;
+        setAppliedCodes(data.applied_codes || []);
+        setServerPricing(data.pricing || null);
+      } catch (e) {
+        console.warn("base sync failed", e);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [effHeuteZuZahlen, checkoutSessionId, open]);
+
   const submitCode = async () => {
     const raw = codeInput.trim().toUpperCase();
     if (!raw || !checkoutSessionId || codeSubmitting) return;
