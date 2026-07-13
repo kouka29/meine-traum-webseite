@@ -536,7 +536,10 @@ export default function CheckoutFunnel({
   // angewendet werden soll.
   useEffect(() => {
     if (!open || !checkoutSessionId) return;
-    const baseCents = Math.round(effHeuteZuZahlen * 100);
+    // Die Session-Basis ist IMMER der ungekürzte Rohpreis. Der URL-Angebots-
+    // preis darf hier nicht einfließen, sonst würde ein zusätzlich eingelöster
+    // Rabattcode auf einer bereits reduzierten Basis rechnen (Doppelrabatt).
+    const baseCents = Math.round(heuteZuZahlen * 100);
     let cancelled = false;
     (async () => {
       try {
@@ -558,7 +561,7 @@ export default function CheckoutFunnel({
     })();
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [effHeuteZuZahlen, checkoutSessionId, open]);
+  }, [heuteZuZahlen, checkoutSessionId, open]);
 
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
