@@ -695,6 +695,181 @@ export default function CheckoutFunnel({
 
   const isCentered = layout === "centered" && !isMobile;
 
+  // ─── Shared Summary + CTA (mobile splits these into scroll-body + sticky bar) ───
+  const summaryDetailsBlock =
+    currentKey === "bezahlen" || currentKey === "fertig" ? null : (
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        marginBottom: 10, gap: 8, flexWrap: "wrap",
+      }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            {currentKey === "kontakt" ? "Heute zu zahlen" : "deine Auswahl"}
+          </div>
+          {paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro") ? (
+            (() => {
+              const netto = effGesamtMonatlich;
+              const mwst = mwstAmount(netto);
+              const brutto = nettoToBrutto(netto);
+              const nettoReg = gesamtMonatlich;
+              const bruttoReg = nettoToBrutto(nettoReg);
+              const showStrike = activeOffer && activeOffer.mode === "miete";
+              return (
+                <div style={{ marginTop: 4 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK, lineHeight: 1.4 }}>
+                    {showStrike && (
+                      <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>
+                        {fmtEUR2(nettoReg)}
+                      </span>
+                    )}
+                    {fmtEUR2(netto)} <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>netto/Monat</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.4 }}>
+                    + {fmtEUR2(mwst)} MwSt. (19%)
+                  </div>
+                  <div style={{
+                    marginTop: 6, paddingTop: 6,
+                    borderTop: "1px solid rgba(79,63,240,0.15)",
+                    fontSize: 20, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.15,
+                  }}>
+                    {fmtEUR2(brutto)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>brutto/Monat</span>
+                  </div>
+                  {showStrike && (
+                    <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 4, lineHeight: 1.4 }}>
+                      1. Jahr, danach {fmtEUR2(bruttoReg)} brutto/Monat ({fmtEUR(nettoReg)} netto)
+                    </div>
+                  )}
+                  {addonsEinmalig > 0 && (
+                    <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
+                      + {fmtEUR(addonsEinmalig)} einmalig
+                    </div>
+                  )}
+                </div>
+              );
+            })()
+          ) : (
+          <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+            {paymentMode === "miete" && currentKey !== "kontakt" ? (
+              <>
+                {activeOffer && activeOffer.mode === "miete" ? (
+                  <>
+                    <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtMonatlich)}</span>
+                    {fmtEUR(effGesamtMonatlich)}
+                  </>
+                ) : (
+                  fmtEUR(gesamtMonatlich)
+                )} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
+                {addonsEinmalig > 0 && (
+                  <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}> · +{fmtEUR(addonsEinmalig)} einmalig</span>
+                )}
+              </>
+            ) : currentKey === "kontakt" ? (
+              (() => {
+                const useServer =
+                  !activeOffer &&
+                  serverPricing != null &&
+                  (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
+                const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
+                const strike = useServer
+                  ? (serverPricing!.discount_cents > 0 ? heuteZuZahlen : null)
+                  : (activeOffer ? heuteZuZahlen : null);
+                return strike != null ? (
+                  <>
+                    <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(strike)}</span>
+                    {fmtEUR(shown)}
+                  </>
+                ) : (
+                  <>{fmtEUR(shown)}</>
+                );
+              })()
+            ) : (
+              activeOffer && activeOffer.mode === "kauf" ? (
+                <>
+                  <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtEinmalig)}</span>
+                  {fmtEUR(effGesamtEinmalig)}
+                </>
+              ) : (
+                fmtEUR(gesamtEinmalig)
+              )
+            )}
+          </div>
+          )}
+          {currentKey === "kontakt" && (
+            <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
+          )}
+          {activeOffer && !(paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro")) && (
+            <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
+              {activeOffer.label}
+            </div>
+          )}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: TEXT_MUTED }}>
+          <Shield size={16} aria-hidden={true} focusable={false} /> Sicher
+        </div>
+      </div>
+    );
+
+  const handleCtaClick = () => {
+    if (!canProceedFromStep(step)) return;
+    if (currentKey === "kontakt") {
+      if (payMethod === "rechnung") {
+        setInvoiceConfirmStage("intro");
+      } else {
+        handleSubmit();
+      }
+    } else {
+      setStep((s) => s + 1);
+    }
+  };
+
+  const renderCta = (compact: boolean) => (
+    <button
+      type="button"
+      onClick={handleCtaClick}
+      disabled={!canProceedFromStep(step) || submitting}
+      style={{
+        width: compact ? "auto" : "100%",
+        minWidth: compact ? 130 : undefined,
+        padding: compact ? "12px 18px" : "14px 20px",
+        minHeight: 48,
+        background: canProceedFromStep(step) && !submitting ? BRAND_GRADIENT : "#D1CFEF",
+        color: "#fff",
+        fontSize: compact ? 14 : 16, fontWeight: 700,
+        border: "none", borderRadius: compact ? 12 : 14,
+        cursor: canProceedFromStep(step) && !submitting ? "pointer" : "not-allowed",
+        fontFamily: "inherit",
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+        boxShadow: canProceedFromStep(step) && !submitting ? "0 8px 24px rgba(79,63,240,0.3)" : "none",
+        transition: "all 0.15s",
+        whiteSpace: "nowrap",
+        flexShrink: 0,
+      }}
+    >
+      {submitting ? (
+        <><Loader2 size={20} className="animate-spin" aria-hidden={true} focusable={false} /> {compact ? "…" : "Wird abgeschickt…"}</>
+      ) : currentKey === "kontakt" ? (
+        <>{payMethod === "online" && stripeAvailable
+            ? (compact ? "Zahlen" : "Weiter zur Zahlung")
+            : (compact ? "Beauftragen" : "Verbindlich beauftragen")} <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
+      ) : (
+        <>Weiter <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
+      )}
+    </button>
+  );
+
+  const compactPriceLabel = (() => {
+    if (currentKey === "bezahlen" || currentKey === "fertig") return "";
+    if (paymentMode === "miete" && currentKey !== "kontakt") {
+      return `${fmtEUR2(nettoToBrutto(effGesamtMonatlich))} /Monat`;
+    }
+    if (currentKey === "kontakt") {
+      const useServer = !activeOffer && serverPricing != null && (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
+      const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
+      return fmtEUR(shown);
+    }
+    return fmtEUR(effGesamtEinmalig);
+  })();
+
   return (
     <div
       role="dialog"
