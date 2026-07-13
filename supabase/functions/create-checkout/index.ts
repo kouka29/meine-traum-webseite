@@ -294,6 +294,35 @@ Deno.serve(async (req) => {
     const paymentModeMeta: "kauf" | "miete" = metadata.payment_mode === "miete" ? "miete" : "kauf";
     const expectedPriceId = resolveExpectedPriceId(metadata.paket || "", paymentModeMeta);
     let discounts: { coupon: string }[] | undefined;
+    const attachedCouponCodes = new Set<string>();
+
+    // Priorität 1: URL-Angebotscode aus metadata.offer_code. Der Client-Line-
+    // Item enthält weiterhin den Rohpreis; der Rabatt läuft ausschließlich
+    // über diesen Stripe-Coupon. Wichtig: dieser Code darf NICHT parallel in
+    // checkout_sessions.applied_codes stehen, sonst würde er doppelt greifen.
+    const offerCodeRaw = typeof metadata.offer_code === "string" ? metadata.offer_code.trim().toUpperCase() : "";
+    if (offerCodeRaw && expectedPriceId) {
+      const { data: offerRow } = await admin
+        .from("discount_codes")
+        .select("code, type, stripe_coupon, active, expires_at, max_uses, used_count")
+        .eq("code", offerCodeRaw)
+        .maybeSingle();
+      const validOffer = offerRow
+        && (offerRow as any).type === "discount"
+        && (offerRow as any).active
+        && (offerRow as any).stripe_coupon
+        && (!(offerRow as any).expires_at || new Date((offerRow as any).expires_at).getTime() > Date.now())
+        && ((offerRow as any).max_uses == null || (offerRow as any).used_count <= (offerRow as any).max_uses);
+      if (validOffer) {
+        const priceIsRecurring = /_rent_monthly$/.test(expectedPriceId);
+        const sessionIsSubscription = mode === "subscription";
+        if (priceIsRecurring === sessionIsSubscription) {
+          discounts = [{ coupon: (offerRow as any).stripe_coupon }];
+          attachedCouponCodes.add(offerCodeRaw);
+        }
+      }
+    }
+
     const checkoutSessionId = typeof metadata.checkout_session_id === "string" ? metadata.checkout_session_id.trim() : "";
     if (checkoutSessionId) {
       const { data: sess } = await admin
@@ -314,10 +343,14 @@ Deno.serve(async (req) => {
             r.type === "discount"
             && r.active
             && r.stripe_coupon
+            && !attachedCouponCodes.has(String(r.code).toUpperCase())
             && (!r.expires_at || new Date(r.expires_at).getTime() > Date.now())
             && (r.max_uses == null || r.used_count <= r.max_uses),
           );
-          if (discountRow?.stripe_coupon && expectedPriceId) {
+          // Guardrail: falls der URL-Offer-Code irrtümlich auch in der Session
+          // steht, überspringen wir ihn — der Coupon wurde oben bereits einmal
+          // angehängt und darf nicht doppelt greifen.
+          if (discountRow?.stripe_coupon && expectedPriceId && !discounts) {
             const priceIsRecurring = /_rent_monthly$/.test(expectedPriceId);
             const sessionIsSubscription = mode === "subscription";
             if (priceIsRecurring === sessionIsSubscription) {
