@@ -742,7 +742,7 @@ export default function CheckoutFunnel({
           width: "100%",
           maxWidth: isCentered ? 680 : 520,
           height: isCentered ? "auto" : "100%",
-          maxHeight: isCentered ? "calc(100vh - 48px)" : "100%",
+          maxHeight: isCentered ? "calc(100dvh - 48px)" : "100dvh",
           borderRadius: isCentered ? 20 : 0,
           display: "flex",
           flexDirection: "column",
@@ -850,7 +850,11 @@ export default function CheckoutFunnel({
 
         {/* CONTENT */}
         <div style={{
-          flex: 1, overflowY: "auto",
+          flex: 1,
+          minHeight: 0,
+          overflowY: "auto",
+          overscrollBehavior: "contain",
+          WebkitOverflowScrolling: "touch",
           padding: "20px",
         }}>
           {currentKey === "paket" && (
