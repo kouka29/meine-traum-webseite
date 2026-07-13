@@ -309,21 +309,11 @@ export default function CheckoutFunnel({
           setSessionInvoiceAllowed(!!data.invoice_allowed);
           setServerPricing(data.pricing || null);
           try { sessionStorage.setItem(storageKey, data.session_id); } catch { /* ignore */ }
-
-          // URL-getriebenen Angebots-Code (?offer=...) einmalig automatisch
-          // einlösen. Ersetzt den bisherigen frontend-only OFFER_DISPLAY-Pfad.
-          if (offerCode && !(data.applied_codes || []).some((c: any) => c.code === offerCode.trim().toUpperCase())) {
-            try {
-              const r = await supabase.functions.invoke("redeem-code", {
-                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase(), base_net_cents: Math.round(effHeuteZuZahlen * 100) },
-              });
-              if (!cancelled && r.data?.ok) {
-                setAppliedCodes(r.data.applied_codes || []);
-                setSessionInvoiceAllowed(!!r.data.invoice_allowed);
-                setServerPricing(r.data.pricing || null);
-              }
-            } catch { /* still fine — user can enter manually */ }
-          }
+          // Der URL-Angebotscode (?offer=...) wird NICHT automatisch in die
+          // checkout_sessions.applied_codes eingelöst. Er wirkt ausschließlich
+          // über den Basispreis-Override + den serverseitig in create-checkout
+          // angehängten Stripe-Coupon. Auto-Redeem würde denselben Rabatt
+          // ein zweites Mal anwenden.
         }
       } catch (e) {
         console.error("checkout-session-create failed:", e);
@@ -338,12 +328,18 @@ export default function CheckoutFunnel({
   const submitCode = async () => {
     const raw = codeInput.trim().toUpperCase();
     if (!raw || !checkoutSessionId || codeSubmitting) return;
+    // Angebotscode aus der URL wirkt bereits als Basispreis-Override.
+    // Manuelles Einlösen desselben Codes würde denselben Rabatt doppelt anwenden.
+    if (offerCode && raw === offerCode.trim().toUpperCase()) {
+      setCodeError("Dieser Angebotspreis ist bereits über deinen Link aktiv.");
+      return;
+    }
     setCodeSubmitting(true);
     setCodeError(null);
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("redeem-code", {
-        body: { session_id: checkoutSessionId, code: raw, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
+        body: { session_id: checkoutSessionId, code: raw, base_net_cents: Math.round(heuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
@@ -369,7 +365,7 @@ export default function CheckoutFunnel({
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("remove-code", {
-        body: { session_id: checkoutSessionId, code, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
+        body: { session_id: checkoutSessionId, code, base_net_cents: Math.round(heuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || "Konnte Code nicht entfernen.");
