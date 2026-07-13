@@ -1889,7 +1889,7 @@ function StepKontakt({
         })()}
         <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
         {/* AKTIVE CODES (Multi-Code-System) */}
-        {codeUi.appliedCodes.length > 0 && (
+        {(codeUi.appliedCodes.length > 0 || activeOffer) && (
           <div style={{ marginBottom: 12 }}>
             <div style={{
               fontSize: 11, fontWeight: 700, color: TEXT_MUTED,
@@ -1898,6 +1898,20 @@ function StepKontakt({
               Aktive Codes
             </div>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {activeOffer && (
+                <span style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "4px 10px", borderRadius: 999,
+                  background: `${BRAND}18`, color: BRAND,
+                  fontSize: 12, fontWeight: 600,
+                }}>
+                  <span>
+                    {activeOffer.note ? `${activeOffer.note} · ` : ""}
+                    Angebotspreis {fmtEUR(activeOffer.discounted)}
+                    {activeOffer.mode === "miete" ? "/Monat" : ""}
+                  </span>
+                </span>
+              )}
               {codeUi.appliedCodes.map((c) => {
                 const suffix = c.type === "discount"
                   ? `−${fmtEUR(c.discount_amount_cents / 100)}`
