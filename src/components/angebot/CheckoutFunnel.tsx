@@ -742,15 +742,17 @@ export default function CheckoutFunnel({
         style={{
           background: "#fff",
           width: "100%",
-          maxWidth: isCentered ? 680 : 520,
-          height: isCentered ? "auto" : "100%",
-          maxHeight: isCentered ? "calc(100dvh - 48px)" : "100dvh",
-          borderRadius: isCentered ? 20 : 0,
+          maxWidth: isMobile ? "none" : (isCentered ? 680 : 520),
+          height: isMobile ? "100dvh" : (isCentered ? "auto" : "100%"),
+          maxHeight: isMobile ? "100dvh" : (isCentered ? "calc(100dvh - 48px)" : "100dvh"),
+          borderRadius: isMobile ? 0 : (isCentered ? 20 : 0),
           display: "flex",
           flexDirection: "column",
-          boxShadow: isCentered
-            ? "0 30px 80px rgba(15,12,41,0.35)"
-            : "-20px 0 60px rgba(15,12,41,0.25)",
+          boxShadow: isMobile
+            ? "none"
+            : (isCentered
+                ? "0 30px 80px rgba(15,12,41,0.35)"
+                : "-20px 0 60px rgba(15,12,41,0.25)"),
           overflow: "hidden",
         }}
       >
