@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import StripeEmbeddedCheckoutBox, { type StripeItem } from "./StripeEmbeddedCheckout";
 import { isStripeConfigured, getStripeEnvironment } from "@/lib/stripe";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
