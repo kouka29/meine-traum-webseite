@@ -172,6 +172,7 @@ function TrustBlock({ compact = false }: { compact?: boolean }) {
 export default function CheckoutFunnel({
   open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode, activeOfferOverride, layout = "sidebar",
 }: Props) {
+  const isMobile = useIsMobile();
   const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
   const hasPaketStep = allPakete.length > 1;
 
