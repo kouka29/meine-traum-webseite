@@ -398,19 +398,8 @@ export default function CheckoutFunnel({
         mode: paymentMode,
       };
     }
-    const key = offerCode?.trim().toLowerCase();
-    if (!key) return null;
-    const cfg = OFFER_DISPLAY[key];
-    if (!cfg) return null;
-    const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
-    if (!paketOk || paymentMode !== cfg.requiredMode) return null;
-    const base = cfg.requiredMode === "miete"
-      ? Number(currentPaket.miete_monatlich || 0)
-      : Number(currentPaket.preis || 0);
-    if (!base) return null;
-    const { discounted, label, note } = cfg.compute(base);
-    return { base, discounted, label, note, mode: cfg.requiredMode };
-  }, [offerCode, currentPaket, paymentMode, activeOfferOverride]);
+    return null;
+  }, [currentPaket, paymentMode, activeOfferOverride]);
 
   /**
    * Angebots-Anzeigewerte pro Modus (unabhängig vom aktuell gewählten). Wird im
@@ -426,27 +415,8 @@ export default function CheckoutFunnel({
       if (activeOfferOverride.kauf) out.kauf = { ...activeOfferOverride.kauf };
       return out;
     }
-    const key = offerCode?.trim().toLowerCase();
-    if (!key) return out;
-    const cfg = OFFER_DISPLAY[key];
-    if (!cfg) return out;
-    const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
-    if (!paketOk) return out;
-    if (cfg.requiredMode === "miete") {
-      const base = Number(currentPaket.miete_monatlich || 0);
-      if (base) {
-        const { discounted, note } = cfg.compute(base);
-        out.miete = { regular: base, discounted, note };
-      }
-    } else {
-      const base = Number(currentPaket.preis || 0);
-      if (base) {
-        const { discounted, note } = cfg.compute(base);
-        out.kauf = { regular: base, discounted, note };
-      }
-    }
     return out;
-  }, [offerCode, currentPaket, activeOfferOverride]);
+  }, [currentPaket, activeOfferOverride]);
 
   // Erkennung „Wachstumspaket im Kauf-Modus" → verbindlich gebucht, separat abgerechnet
   const growthAddon = useMemo(
