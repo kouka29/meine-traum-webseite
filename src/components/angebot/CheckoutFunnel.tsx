@@ -1028,7 +1028,11 @@ export default function CheckoutFunnel({
                       // Sticky-Bar: renders EXACTLY dieselben Zahlen wie die
                       // Bestellübersicht. Server-Pricing hat Vorrang, sobald
                       // Codes aktiv sind oder ein Rabatt greift.
+                      // Bei aktivem URL-Angebot ist der Client die einzige
+                      // Preisquelle — sonst würde ein zusätzlich vom Server
+                      // gerechneter Rabatt den Angebotspreis erneut kürzen.
                       const useServer =
+                        !activeOffer &&
                         serverPricing != null &&
                         (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
                       const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
