@@ -15,35 +15,12 @@ const TEXT_MUTED = "#6B7280";
 // Rechnungszahlung im Checkout wieder erlaubt werden soll.
 const RECHNUNG_ENABLED = false;
 
-// Angebots-Codes (Whitelist NUR für die UI-Anzeige des reduzierten Preises).
-// Der abgerechnete Rabatt kommt weiterhin ausschließlich aus dem serverseitig
-// validierten Stripe-Coupon in `create-checkout` — hier wird NUR angezeigt.
-const OFFER_DISPLAY: Record<string, {
-  requiredPaketId: "pro";
-  requiredMode: PaymentMode;
-  compute: (base: number) => { discounted: number; label: string; note?: string };
-}> = {
-  "cbi-y1": {
-    requiredPaketId: "pro",
-    requiredMode: "miete",
-    compute: (base) => ({
-      discounted: Math.max(0, base - 40),
-      label: "1. Jahr, danach regulärer Preis",
-      note: "Angebotspreis für 12 Monate (CBI-Y1)",
-    }),
-  },
-  "cbi-kauf25": {
-    requiredPaketId: "pro",
-    requiredMode: "kauf",
-    compute: (base) => ({
-      discounted: Math.round(base * 0.75 * 100) / 100,
-      label: "−25 % Angebotspreis",
-      note: "Rabatt CBI-KAUF25",
-    }),
-  },
-};
-
 type PaymentMode = "kauf" | "miete";
+
+// Demo-Angebots-Anzeige läuft ausschließlich über `activeOfferOverride`,
+// gespeist aus `src/config/demoOffers.ts` (einzige Registry). Der abgerechnete
+// Rabatt kommt weiterhin serverseitig aus dem validierten Stripe-Coupon in
+// `create-checkout`.
 
 export interface ActiveOfferOverride {
   plan: "pro" | "starter" | "premium";
@@ -421,19 +398,8 @@ export default function CheckoutFunnel({
         mode: paymentMode,
       };
     }
-    const key = offerCode?.trim().toLowerCase();
-    if (!key) return null;
-    const cfg = OFFER_DISPLAY[key];
-    if (!cfg) return null;
-    const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
-    if (!paketOk || paymentMode !== cfg.requiredMode) return null;
-    const base = cfg.requiredMode === "miete"
-      ? Number(currentPaket.miete_monatlich || 0)
-      : Number(currentPaket.preis || 0);
-    if (!base) return null;
-    const { discounted, label, note } = cfg.compute(base);
-    return { base, discounted, label, note, mode: cfg.requiredMode };
-  }, [offerCode, currentPaket, paymentMode, activeOfferOverride]);
+    return null;
+  }, [currentPaket, paymentMode, activeOfferOverride]);
 
   /**
    * Angebots-Anzeigewerte pro Modus (unabhängig vom aktuell gewählten). Wird im
@@ -449,27 +415,8 @@ export default function CheckoutFunnel({
       if (activeOfferOverride.kauf) out.kauf = { ...activeOfferOverride.kauf };
       return out;
     }
-    const key = offerCode?.trim().toLowerCase();
-    if (!key) return out;
-    const cfg = OFFER_DISPLAY[key];
-    if (!cfg) return out;
-    const paketOk = currentPaket.id.toLowerCase().startsWith(cfg.requiredPaketId);
-    if (!paketOk) return out;
-    if (cfg.requiredMode === "miete") {
-      const base = Number(currentPaket.miete_monatlich || 0);
-      if (base) {
-        const { discounted, note } = cfg.compute(base);
-        out.miete = { regular: base, discounted, note };
-      }
-    } else {
-      const base = Number(currentPaket.preis || 0);
-      if (base) {
-        const { discounted, note } = cfg.compute(base);
-        out.kauf = { regular: base, discounted, note };
-      }
-    }
     return out;
-  }, [offerCode, currentPaket, activeOfferOverride]);
+  }, [currentPaket, activeOfferOverride]);
 
   // Erkennung „Wachstumspaket im Kauf-Modus" → verbindlich gebucht, separat abgerechnet
   const growthAddon = useMemo(

@@ -1,75 +1,44 @@
 ## Ziel
-Mobile-Checkout (< md) in `src/components/angebot/CheckoutFunnel.tsx` so umbauen, dass die Paket-/Zahlungs-Karten den größten Teil des Screens bekommen, alles als **eine** Einheit scrollt und unten nur eine schlanke, immer sichtbare Aktionsleiste (Brutto-Preis + „Weiter") sitzt. Desktop bleibt unverändert.
+`src/config/demoOffers.ts` als einzige Quelle für Demo-Angebote etablieren, ZAK ergänzen, das tote Inline-Duplikat aus dem CheckoutFunnel entfernen.
 
-## Ausgangslage (bestätigt im Code)
-- Ein einziger `<div>`-Panel-Wrapper (Zeile 738) mit fixem Header (755), fixem Progress (809), Scroll-Body (851, `flex:1 minHeight:0 overflowY:auto`) und einem **fetten Footer** (958–1121), der auf Mobile fast den halben Screen frisst:
-  - „DEINE AUSWAHL" + Preis-Aufschlüsselung (netto/MwSt/brutto, Angebotszusatz, „1. Jahr, danach …")
-  - „Weiter →"-Button
-  - `<TrustBlock />` = VISA/Mastercard/SEPA/Klarna-Logos + „Erste Monatsmiete jetzt …" + Disclaimer (12 Monate) + Garantie-Banner „🛡️ Website in 7 Tagen live …"
-- Struktur ist bereits Flex-Column mit `minHeight:0` im Scroll-Body — das Layout an sich funktioniert; nur der Footer ist zu hoch.
-- Keine shadcn `<Dialog>` — reines Inline-Style-Overlay. Kein zusätzlicher `overflow` im Inneren.
-- `useIsMobile()` (`src/hooks/use-mobile.tsx`, `< 768px`) ist bereits vorhanden.
+## Ist-Zustand (bereits ok)
+- `WebdesignPreise.tsx` importiert `getDemoOffer` / `buildFunnelOfferOverride` aus `@/config/demoOffers` und übergibt `activeOfferOverride` sowie `offerCode` an den `CheckoutFunnel`.
+- Auflösung via `?demo=<slug>` ist bereits case-insensitiv (`getDemoOffer` macht `toUpperCase`).
+- Server (`create-checkout`) nimmt `offer_code` aus der Metadata und holt den Stripe-Coupon aus der Tabelle `discount_codes` (Spalte `code`).
 
-## Fix (nur Layout, Mobile-only, keine Preise/Texte/Logik ändern)
+## Änderungen
 
-### 1. Mobile-Flag einführen
-Am Anfang der Komponente:
-```tsx
-const isMobile = useIsMobile();
-```
-Import ergänzen.
+### 1. `src/config/demoOffers.ts` — ZAK ergänzen
+`DEMO_OFFERS` bekommt neben `CBI` einen zweiten Eintrag `ZAK`, exakte Kopie von CBI, geänderte Felder:
+- `slug: "ZAK"`
+- `firstName: "Ahmed"`
+- `miete.coupon: "MTW-Y1"`, `miete.offerCode: "mtw-y1"`
+- `kauf.coupon: "MTW-KAUF25"`, `kauf.offerCode: "mtw-kauf25"`
 
-### 2. Overlay + Panel Mobile → Vollbild (Zeilen 697–753)
-- Overlay: auf Mobile `padding: 0`, `alignItems: "stretch"`, `justifyContent: "stretch"` (statt centered/sidebar).
-- Panel: auf Mobile
-  - `width: "100%"`, `maxWidth: "none"`,
-  - `height: "100dvh"`, `maxHeight: "100dvh"`,
-  - `borderRadius: 0`,
-  - `boxShadow: "none"`.
-- Desktop-Zweige (`isCentered`) unverändert; alle bestehenden `100vh`-Ausdrücke sind bereits `100dvh`.
+Alle übrigen Felder (`plan`, `headline`, `sub`, `features`, Preise, `discountedNumber`, `regularNumber`, `notes`, `priceId`) 1:1 wie CBI.
 
-### 3. Footer aufteilen (Zeilen 958–1121)
-Auf Mobile wird der bisherige Footer in zwei Teile geteilt:
+### 2. `src/components/angebot/CheckoutFunnel.tsx` — Inline-Duplikat entfernen
+- `OFFER_DISPLAY`-Objekt (Zeilen ~21–44 mit `"cbi-y1"` / `"cbi-kauf25"`) komplett löschen.
+- In `activeOffer` (Zeilen ~424–435) und `offersByMode` (Zeilen ~452–471) den `OFFER_DISPLAY`-Fallback-Zweig entfernen. Übrig bleibt jeweils nur der `activeOfferOverride`-Pfad, der von `WebdesignPreise` aus der Registry gespeist wird. Wenn kein Override gesetzt ist → `null` bzw. `{}` zurückgeben.
 
-**a) In den Scroll-Body (Zeile 851–955) am Ende einfügen** (nur wenn `isMobile && currentKey !== "bezahlen" && currentKey !== "fertig"`):
-- Der komplette „DEINE AUSWAHL"-Block mit Preis-Aufschlüsselung (die IIFE für Miete/Pro und die Alternativ-Anzeige, plus `heuteLabel` und `activeOffer.label`) — identisch zum aktuellen Footer-Inhalt, nur ohne `borderTop`/Sticky-Styles.
-- `<TrustBlock />` (Logos + Disclaimer + Garantie-Banner „Website in 7 Tagen live …").
-- Zusätzlicher Bottom-Spacer `paddingBottom: 96` innerhalb des Scroll-Bodys nur auf Mobile, damit die Sticky-Leiste nicht den letzten Inhalt verdeckt.
+Das ändert nichts am CBI-Verhalten, weil `WebdesignPreise` bereits `funnelOfferOverride` aus der Registry setzt.
 
-**b) Sticky-Leiste am Panel-Boden (ersetzt den bisherigen fetten Footer nur auf Mobile)**:
-```tsx
-<div style={{
-  flexShrink: 0,
-  padding: "10px 16px",
-  borderTop: "1px solid rgba(79,63,240,0.1)",
-  background: "#fff",
-  display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
-}}>
-  <div style={{ fontSize: 15, fontWeight: 800, color: TEXT_DARK, lineHeight: 1.1 }}>
-    {/* Kompakter Brutto-Preis: 
-        - miete: fmtEUR2(nettoToBrutto(effGesamtMonatlich)) + " /Monat" (bzw. reg wenn kein Angebot)
-        - kauf/kontakt: fmtEUR(effGesamtEinmalig bzw. effHeuteZuZahlen) */}
-  </div>
-  <button /* identisch zum bisherigen Weiter-Button (Handler, disabled, Labels, Icon), aber kompakter: minHeight: 48, minWidth: 140, width nicht 100% */ />
-</div>
-```
-Kein TrustBlock, keine Aufschlüsselung, keine Logos in dieser Leiste.
+### 3. Auflösung `?demo=ZAK` (keine Codeänderung nötig)
+- `getDemoOffer("ZAK")` liefert nach Schritt 1 den Eintrag → Popup öffnet.
+- Nach Auswahl im Popup setzt `handleDemoSelect` `offerCode` auf `mtw-y1` bzw. `mtw-kauf25` (aus `demoOffer.miete.offerCode` / `kauf.offerCode`).
+- `CheckoutFunnel` reicht `offer_code` an `create-checkout` weiter → Server sucht in `discount_codes` und wendet Stripe-Coupon an.
 
-**c) Desktop-Zweig** (`!isMobile`): existierender Footer-Block (Zeilen 958–1121) bleibt exakt wie er ist.
+## Voraussetzung serverseitig (kein Code, nur Datenbank)
+Damit Endpreis bei ZAK korrekt abgerechnet wird, müssen in der Tabelle `discount_codes` folgende Zeilen existieren (analog zu den bestehenden CBI-Einträgen):
 
-Umsetzung technisch: den bestehenden Footer-JSX-Block in ein Ternary `{!isMobile ? (<currentFooter/>) : (<slimStickyBar/>)}` packen; den Scroll-Body-Container erweitert um ein `{isMobile && currentKey !== "bezahlen" && currentKey !== "fertig" && <MobileSummaryAndTrust/>}` als letztes Kind. Zur Wiederverwendung wird der bestehende „DEINE AUSWAHL"-Preisblock zu einer lokalen Sub-Komponente `PriceBreakdown` extrahiert (dieselben Props/Closures wie bisher — ist eine reine Umsortierung, keine Logikänderung).
+| code | type | stripe_coupon | active |
+|---|---|---|---|
+| MTW-Y1 | discount | <Stripe-Coupon-ID für 1. Jahr Rabatt Miete> | true |
+| MTW-KAUF25 | discount | <Stripe-Coupon-ID für 25 % Kauf> | true |
 
-### 4. Sicherstellen (bereits im Code, nur bestätigen — kein Change nötig)
-- Scroll-Body hat `flex:1 minHeight:0 overflowY:auto overscrollBehavior:contain WebkitOverflowScrolling:touch` ✅
-- Kein zweiter `overflow-y` mit fester Höhe im Inneren.
-- Panel-`overflow:hidden` bleibt (verhindert Overlay-Bleed, unterbindet aber nicht den inneren Scroll).
+Wenn diese Zeilen fehlen, bleibt die UI-Anzeige rabattiert (das Override kommt aus der Registry), aber Stripe rechnet den Regulärpreis ab. Ich lege die DB-Zeilen im Build-Schritt an, sobald du bestätigst welche Stripe-Coupon-IDs verwendet werden sollen — oder ob dieselben wie bei CBI (`CBI-Y1`, `CBI-KAUF25`) recycled werden dürfen.
 
-## Nicht angefasst
-Preise, Rabatt-Logik, Stepper, Server-Pricing, Stripe-Schritte („bezahlen"/„fertig" — diese Steps haben ohnehin keinen Footer), Content der Paket-Karten, `StepZahlung`/`StepPaket`/`StepAddOns`/`StepKontakt`.
-
-## Akzeptanz
-- iPhone 375–390 × 667 px: alle Paket-Karten per normalem Scrollen erreichbar; Preis-Aufschlüsselung + Zahlart-Logos + Disclaimer + Garantie-Banner sind Teil des Scroll-Flusses (unten).
-- Genau **ein** Scroll-Bereich, kein winziger innerer Streifen.
-- Sticky-Leiste (kompakter Preis + „Weiter →", Button ≥ 48 px hoch) immer sichtbar, verdeckt dank `pb-[96px]` keinen Inhalt.
-- Keine horizontale Scroll-Leiste.
-- Desktop-Layout (`md+`) unverändert.
+## Nicht betroffen
+- Normaler `/preise`-Flow ohne `demo=`
+- CBI-Flow (`?demo=CBI`, Legacy `?offer=cbi-y1|cbi-kauf25`)
+- Preise, Texte, Rabattlogik, Stripe-Integration
