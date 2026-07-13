@@ -309,21 +309,11 @@ export default function CheckoutFunnel({
           setSessionInvoiceAllowed(!!data.invoice_allowed);
           setServerPricing(data.pricing || null);
           try { sessionStorage.setItem(storageKey, data.session_id); } catch { /* ignore */ }
-
-          // URL-getriebenen Angebots-Code (?offer=...) einmalig automatisch
-          // einlösen. Ersetzt den bisherigen frontend-only OFFER_DISPLAY-Pfad.
-          if (offerCode && !(data.applied_codes || []).some((c: any) => c.code === offerCode.trim().toUpperCase())) {
-            try {
-              const r = await supabase.functions.invoke("redeem-code", {
-                body: { session_id: data.session_id, code: offerCode.trim().toUpperCase(), base_net_cents: Math.round(effHeuteZuZahlen * 100) },
-              });
-              if (!cancelled && r.data?.ok) {
-                setAppliedCodes(r.data.applied_codes || []);
-                setSessionInvoiceAllowed(!!r.data.invoice_allowed);
-                setServerPricing(r.data.pricing || null);
-              }
-            } catch { /* still fine — user can enter manually */ }
-          }
+          // Der URL-Angebotscode (?offer=...) wird NICHT automatisch in die
+          // checkout_sessions.applied_codes eingelöst. Er wirkt ausschließlich
+          // über den Basispreis-Override + den serverseitig in create-checkout
+          // angehängten Stripe-Coupon. Auto-Redeem würde denselben Rabatt
+          // ein zweites Mal anwenden.
         }
       } catch (e) {
         console.error("checkout-session-create failed:", e);
@@ -338,12 +328,18 @@ export default function CheckoutFunnel({
   const submitCode = async () => {
     const raw = codeInput.trim().toUpperCase();
     if (!raw || !checkoutSessionId || codeSubmitting) return;
+    // Angebotscode aus der URL wirkt bereits als Basispreis-Override.
+    // Manuelles Einlösen desselben Codes würde denselben Rabatt doppelt anwenden.
+    if (offerCode && raw === offerCode.trim().toUpperCase()) {
+      setCodeError("Dieser Angebotspreis ist bereits über deinen Link aktiv.");
+      return;
+    }
     setCodeSubmitting(true);
     setCodeError(null);
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("redeem-code", {
-        body: { session_id: checkoutSessionId, code: raw, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
+        body: { session_id: checkoutSessionId, code: raw, base_net_cents: Math.round(heuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || error?.message || "Code konnte nicht eingelöst werden.");
@@ -369,7 +365,7 @@ export default function CheckoutFunnel({
     setCodeNotice(null);
     try {
       const { data, error } = await supabase.functions.invoke("remove-code", {
-        body: { session_id: checkoutSessionId, code, base_net_cents: Math.round(effHeuteZuZahlen * 100) },
+        body: { session_id: checkoutSessionId, code, base_net_cents: Math.round(heuteZuZahlen * 100) },
       });
       if (error || !data?.ok) {
         setCodeError(data?.reason || "Konnte Code nicht entfernen.");
@@ -540,7 +536,10 @@ export default function CheckoutFunnel({
   // angewendet werden soll.
   useEffect(() => {
     if (!open || !checkoutSessionId) return;
-    const baseCents = Math.round(effHeuteZuZahlen * 100);
+    // Die Session-Basis ist IMMER der ungekürzte Rohpreis. Der URL-Angebots-
+    // preis darf hier nicht einfließen, sonst würde ein zusätzlich eingelöster
+    // Rabattcode auf einer bereits reduzierten Basis rechnen (Doppelrabatt).
+    const baseCents = Math.round(heuteZuZahlen * 100);
     let cancelled = false;
     (async () => {
       try {
@@ -562,7 +561,7 @@ export default function CheckoutFunnel({
     })();
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [effHeuteZuZahlen, checkoutSessionId, open]);
+  }, [heuteZuZahlen, checkoutSessionId, open]);
 
   const toggleAddon = (id: string) =>
     setSelectedAddonIds((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
@@ -1029,7 +1028,11 @@ export default function CheckoutFunnel({
                       // Sticky-Bar: renders EXACTLY dieselben Zahlen wie die
                       // Bestellübersicht. Server-Pricing hat Vorrang, sobald
                       // Codes aktiv sind oder ein Rabatt greift.
+                      // Bei aktivem URL-Angebot ist der Client die einzige
+                      // Preisquelle — sonst würde ein zusätzlich vom Server
+                      // gerechneter Rabatt den Angebotspreis erneut kürzen.
                       const useServer =
+                        !activeOffer &&
                         serverPricing != null &&
                         (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
                       const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
@@ -1886,7 +1889,7 @@ function StepKontakt({
         })()}
         <div style={{ height: 1, background: `${BRAND}22`, margin: "10px 0" }} />
         {/* AKTIVE CODES (Multi-Code-System) */}
-        {codeUi.appliedCodes.length > 0 && (
+        {(codeUi.appliedCodes.length > 0 || activeOffer) && (
           <div style={{ marginBottom: 12 }}>
             <div style={{
               fontSize: 11, fontWeight: 700, color: TEXT_MUTED,
@@ -1895,6 +1898,20 @@ function StepKontakt({
               Aktive Codes
             </div>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {activeOffer && (
+                <span style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "4px 10px", borderRadius: 999,
+                  background: `${BRAND}18`, color: BRAND,
+                  fontSize: 12, fontWeight: 600,
+                }}>
+                  <span>
+                    {activeOffer.note ? `${activeOffer.note} · ` : ""}
+                    Angebotspreis {fmtEUR(activeOffer.discounted)}
+                    {activeOffer.mode === "miete" ? "/Monat" : ""}
+                  </span>
+                </span>
+              )}
               {codeUi.appliedCodes.map((c) => {
                 const suffix = c.type === "discount"
                   ? `−${fmtEUR(c.discount_amount_cents / 100)}`
@@ -1977,10 +1994,17 @@ function StepKontakt({
 
         {(() => {
           // Preise: bevorzugt aus Server-Antwort, sonst lokaler Fallback.
-          const useServer = codeUi.serverPricing != null && (codeUi.appliedCodes.length > 0 || codeUi.serverPricing.discount_cents > 0);
-          const netto = useServer ? codeUi.serverPricing!.netto : effHeuteZuZahlen;
-          const mwst = useServer ? codeUi.serverPricing!.mwst : Math.round(effHeuteZuZahlen * 19) / 100;
-          const brutto = useServer ? codeUi.serverPricing!.brutto : Math.round(effHeuteZuZahlen * 119) / 100;
+          // Bei aktivem URL-Angebot (activeOffer) ist der Client die einzige
+          // Preisquelle — der Server würde denselben Rabatt sonst zusätzlich
+          // gegen den Rohpreis rechnen (Doppelrabatt).
+          const useServer =
+            !activeOffer &&
+            codeUi.serverPricing != null &&
+            (codeUi.appliedCodes.length > 0 || codeUi.serverPricing.discount_cents > 0);
+          const nettoRaw = useServer ? codeUi.serverPricing!.netto : effHeuteZuZahlen;
+          const netto = Math.round(nettoRaw * 100) / 100;
+          const mwst = useServer ? codeUi.serverPricing!.mwst : Math.round(netto * 19) / 100;
+          const brutto = useServer ? codeUi.serverPricing!.brutto : Math.round((netto + mwst) * 100) / 100;
           return (
             <>
               <div style={{ fontSize: 12, color: TEXT_MUTED }}>
