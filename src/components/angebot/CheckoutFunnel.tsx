@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import StripeEmbeddedCheckoutBox, { type StripeItem } from "./StripeEmbeddedCheckout";
 import { isStripeConfigured, getStripeEnvironment } from "@/lib/stripe";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const BRAND = "#4F3FF0";
 const BRAND_GRADIENT = "linear-gradient(135deg, #4F3FF0, #7B5EF8)";
@@ -171,6 +172,7 @@ function TrustBlock({ compact = false }: { compact?: boolean }) {
 export default function CheckoutFunnel({
   open, onClose, paket, pakete, addons, paymentConfig, angebots_id, leadEmail, leadName, stripeLink, defaultPaymentMode, sourceDemo, offerCode, activeOfferOverride, layout = "sidebar",
 }: Props) {
+  const isMobile = useIsMobile();
   const allPakete = pakete && pakete.length > 0 ? pakete : [paket];
   const hasPaketStep = allPakete.length > 1;
 
@@ -691,7 +693,182 @@ export default function CheckoutFunnel({
 
   if (!open) return null;
 
-  const isCentered = layout === "centered";
+  const isCentered = layout === "centered" && !isMobile;
+
+  // ─── Shared Summary + CTA (mobile splits these into scroll-body + sticky bar) ───
+  const summaryDetailsBlock =
+    currentKey === "bezahlen" || currentKey === "fertig" ? null : (
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        marginBottom: 10, gap: 8, flexWrap: "wrap",
+      }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            {currentKey === "kontakt" ? "Heute zu zahlen" : "deine Auswahl"}
+          </div>
+          {paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro") ? (
+            (() => {
+              const netto = effGesamtMonatlich;
+              const mwst = mwstAmount(netto);
+              const brutto = nettoToBrutto(netto);
+              const nettoReg = gesamtMonatlich;
+              const bruttoReg = nettoToBrutto(nettoReg);
+              const showStrike = activeOffer && activeOffer.mode === "miete";
+              return (
+                <div style={{ marginTop: 4 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK, lineHeight: 1.4 }}>
+                    {showStrike && (
+                      <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>
+                        {fmtEUR2(nettoReg)}
+                      </span>
+                    )}
+                    {fmtEUR2(netto)} <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>netto/Monat</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.4 }}>
+                    + {fmtEUR2(mwst)} MwSt. (19%)
+                  </div>
+                  <div style={{
+                    marginTop: 6, paddingTop: 6,
+                    borderTop: "1px solid rgba(79,63,240,0.15)",
+                    fontSize: 20, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.15,
+                  }}>
+                    {fmtEUR2(brutto)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>brutto/Monat</span>
+                  </div>
+                  {showStrike && (
+                    <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 4, lineHeight: 1.4 }}>
+                      1. Jahr, danach {fmtEUR2(bruttoReg)} brutto/Monat ({fmtEUR(nettoReg)} netto)
+                    </div>
+                  )}
+                  {addonsEinmalig > 0 && (
+                    <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
+                      + {fmtEUR(addonsEinmalig)} einmalig
+                    </div>
+                  )}
+                </div>
+              );
+            })()
+          ) : (
+          <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+            {paymentMode === "miete" && currentKey !== "kontakt" ? (
+              <>
+                {activeOffer && activeOffer.mode === "miete" ? (
+                  <>
+                    <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtMonatlich)}</span>
+                    {fmtEUR(effGesamtMonatlich)}
+                  </>
+                ) : (
+                  fmtEUR(gesamtMonatlich)
+                )} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
+                {addonsEinmalig > 0 && (
+                  <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}> · +{fmtEUR(addonsEinmalig)} einmalig</span>
+                )}
+              </>
+            ) : currentKey === "kontakt" ? (
+              (() => {
+                const useServer =
+                  !activeOffer &&
+                  serverPricing != null &&
+                  (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
+                const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
+                const strike = useServer
+                  ? (serverPricing!.discount_cents > 0 ? heuteZuZahlen : null)
+                  : (activeOffer ? heuteZuZahlen : null);
+                return strike != null ? (
+                  <>
+                    <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(strike)}</span>
+                    {fmtEUR(shown)}
+                  </>
+                ) : (
+                  <>{fmtEUR(shown)}</>
+                );
+              })()
+            ) : (
+              activeOffer && activeOffer.mode === "kauf" ? (
+                <>
+                  <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtEinmalig)}</span>
+                  {fmtEUR(effGesamtEinmalig)}
+                </>
+              ) : (
+                fmtEUR(gesamtEinmalig)
+              )
+            )}
+          </div>
+          )}
+          {currentKey === "kontakt" && (
+            <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
+          )}
+          {activeOffer && !(paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro")) && (
+            <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
+              {activeOffer.label}
+            </div>
+          )}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: TEXT_MUTED }}>
+          <Shield size={16} aria-hidden={true} focusable={false} /> Sicher
+        </div>
+      </div>
+    );
+
+  const handleCtaClick = () => {
+    if (!canProceedFromStep(step)) return;
+    if (currentKey === "kontakt") {
+      if (payMethod === "rechnung") {
+        setInvoiceConfirmStage("intro");
+      } else {
+        handleSubmit();
+      }
+    } else {
+      setStep((s) => s + 1);
+    }
+  };
+
+  const renderCta = (compact: boolean) => (
+    <button
+      type="button"
+      onClick={handleCtaClick}
+      disabled={!canProceedFromStep(step) || submitting}
+      style={{
+        width: compact ? "auto" : "100%",
+        minWidth: compact ? 130 : undefined,
+        padding: compact ? "12px 18px" : "14px 20px",
+        minHeight: 48,
+        background: canProceedFromStep(step) && !submitting ? BRAND_GRADIENT : "#D1CFEF",
+        color: "#fff",
+        fontSize: compact ? 14 : 16, fontWeight: 700,
+        border: "none", borderRadius: compact ? 12 : 14,
+        cursor: canProceedFromStep(step) && !submitting ? "pointer" : "not-allowed",
+        fontFamily: "inherit",
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+        boxShadow: canProceedFromStep(step) && !submitting ? "0 8px 24px rgba(79,63,240,0.3)" : "none",
+        transition: "all 0.15s",
+        whiteSpace: "nowrap",
+        flexShrink: 0,
+      }}
+    >
+      {submitting ? (
+        <><Loader2 size={20} className="animate-spin" aria-hidden={true} focusable={false} /> {compact ? "…" : "Wird abgeschickt…"}</>
+      ) : currentKey === "kontakt" ? (
+        <>{payMethod === "online" && stripeAvailable
+            ? (compact ? "Zahlen" : "Weiter zur Zahlung")
+            : (compact ? "Beauftragen" : "Verbindlich beauftragen")} <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
+      ) : (
+        <>Weiter <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
+      )}
+    </button>
+  );
+
+  const compactPriceLabel = (() => {
+    if (currentKey === "bezahlen" || currentKey === "fertig") return "";
+    if (paymentMode === "miete" && currentKey !== "kontakt") {
+      return `${fmtEUR2(nettoToBrutto(effGesamtMonatlich))} /Monat`;
+    }
+    if (currentKey === "kontakt") {
+      const useServer = !activeOffer && serverPricing != null && (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
+      const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
+      return fmtEUR(shown);
+    }
+    return fmtEUR(effGesamtEinmalig);
+  })();
 
   return (
     <div
@@ -703,7 +880,7 @@ export default function CheckoutFunnel({
         backdropFilter: "blur(6px)",
         display: "flex",
         alignItems: isCentered ? "center" : "stretch",
-        justifyContent: isCentered ? "center" : "flex-end",
+        justifyContent: isMobile ? "stretch" : (isCentered ? "center" : "flex-end"),
         padding: isCentered ? 24 : 0,
         animation: "funnelFadeIn 0.25s ease-out",
         fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
@@ -740,15 +917,17 @@ export default function CheckoutFunnel({
         style={{
           background: "#fff",
           width: "100%",
-          maxWidth: isCentered ? 680 : 520,
-          height: isCentered ? "auto" : "100%",
-          maxHeight: isCentered ? "calc(100dvh - 48px)" : "100dvh",
-          borderRadius: isCentered ? 20 : 0,
+          maxWidth: isMobile ? "none" : (isCentered ? 680 : 520),
+          height: isMobile ? "100dvh" : (isCentered ? "auto" : "100%"),
+          maxHeight: isMobile ? "100dvh" : (isCentered ? "calc(100dvh - 48px)" : "100dvh"),
+          borderRadius: isMobile ? 0 : (isCentered ? 20 : 0),
           display: "flex",
           flexDirection: "column",
-          boxShadow: isCentered
-            ? "0 30px 80px rgba(15,12,41,0.35)"
-            : "-20px 0 60px rgba(15,12,41,0.25)",
+          boxShadow: isMobile
+            ? "none"
+            : (isCentered
+                ? "0 30px 80px rgba(15,12,41,0.35)"
+                : "-20px 0 60px rgba(15,12,41,0.25)"),
           overflow: "hidden",
         }}
       >
@@ -952,171 +1131,48 @@ export default function CheckoutFunnel({
           {currentKey === "fertig" && success && (
             <StepFertig auftragsNr={success.auftrags_nr} email={email} />
           )}
+          {isMobile && currentKey !== "bezahlen" && currentKey !== "fertig" && (
+            <div style={{ marginTop: 24, paddingTop: 16, borderTop: "1px solid rgba(79,63,240,0.1)" }}>
+              {summaryDetailsBlock}
+              {currentKey !== "paket" && <TrustBlock />}
+              <div style={{ height: 96 }} aria-hidden="true" />
+            </div>
+          )}
         </div>
 
-        {/* FOOTER (Summary + CTA) */}
-        {currentKey !== "bezahlen" && currentKey !== "fertig" && (
+        {/* FOOTER (Summary + CTA) — Desktop only */}
+        {!isMobile && currentKey !== "bezahlen" && currentKey !== "fertig" && (
           <div style={{
             padding: "14px 20px 18px",
             borderTop: "1px solid rgba(79,63,240,0.1)",
             background: "linear-gradient(180deg, #FAFAFF 0%, #F5F4FF 100%)",
             flexShrink: 0,
           }}>
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              marginBottom: 10, gap: 8, flexWrap: "wrap",
-            }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 11, color: TEXT_MUTED, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                  {currentKey === "kontakt" ? "Heute zu zahlen" : "deine Auswahl"}
-                </div>
-                {paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro") ? (
-                  (() => {
-                    const netto = effGesamtMonatlich;
-                    const mwst = mwstAmount(netto);
-                    const brutto = nettoToBrutto(netto);
-                    const nettoReg = gesamtMonatlich;
-                    const bruttoReg = nettoToBrutto(nettoReg);
-                    const showStrike = activeOffer && activeOffer.mode === "miete";
-                    return (
-                      <div style={{ marginTop: 4 }}>
-                        <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_DARK, lineHeight: 1.4 }}>
-                          {showStrike && (
-                            <span style={{ textDecoration: "line-through", color: TEXT_MUTED, marginRight: 6, fontWeight: 500 }}>
-                              {fmtEUR2(nettoReg)}
-                            </span>
-                          )}
-                          {fmtEUR2(netto)} <span style={{ color: TEXT_MUTED, fontWeight: 500 }}>netto/Monat</span>
-                        </div>
-                        <div style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.4 }}>
-                          + {fmtEUR2(mwst)} MwSt. (19%)
-                        </div>
-                        <div style={{
-                          marginTop: 6, paddingTop: 6,
-                          borderTop: "1px solid rgba(79,63,240,0.15)",
-                          fontSize: 20, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.15,
-                        }}>
-                          {fmtEUR2(brutto)} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>brutto/Monat</span>
-                        </div>
-                        {showStrike && (
-                          <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 4, lineHeight: 1.4 }}>
-                            1. Jahr, danach {fmtEUR2(bruttoReg)} brutto/Monat ({fmtEUR(nettoReg)} netto)
-                          </div>
-                        )}
-                        {addonsEinmalig > 0 && (
-                          <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>
-                            + {fmtEUR(addonsEinmalig)} einmalig
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()
-                ) : (
-                <div style={{ fontSize: 22, fontWeight: 800, color: TEXT_DARK, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                  {paymentMode === "miete" && currentKey !== "kontakt" ? (
-                    <>
-                      {activeOffer && activeOffer.mode === "miete" ? (
-                        <>
-                          <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtMonatlich)}</span>
-                          {fmtEUR(effGesamtMonatlich)}
-                        </>
-                      ) : (
-                        fmtEUR(gesamtMonatlich)
-                      )} <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}>/Monat</span>
-                      {addonsEinmalig > 0 && (
-                        <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MUTED }}> · +{fmtEUR(addonsEinmalig)} einmalig</span>
-                      )}
-                    </>
-                  ) : currentKey === "kontakt" ? (
-                    (() => {
-                      // Sticky-Bar: renders EXACTLY dieselben Zahlen wie die
-                      // Bestellübersicht. Server-Pricing hat Vorrang, sobald
-                      // Codes aktiv sind oder ein Rabatt greift.
-                      // Bei aktivem URL-Angebot ist der Client die einzige
-                      // Preisquelle — sonst würde ein zusätzlich vom Server
-                      // gerechneter Rabatt den Angebotspreis erneut kürzen.
-                      const useServer =
-                        !activeOffer &&
-                        serverPricing != null &&
-                        (appliedCodes.length > 0 || serverPricing.discount_cents > 0);
-                      const shown = useServer ? serverPricing!.netto : effHeuteZuZahlen;
-                      const strike = useServer
-                        ? (serverPricing!.discount_cents > 0 ? heuteZuZahlen : null)
-                        : (activeOffer ? heuteZuZahlen : null);
-                      return strike != null ? (
-                        <>
-                          <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(strike)}</span>
-                          {fmtEUR(shown)}
-                        </>
-                      ) : (
-                        <>{fmtEUR(shown)}</>
-                      );
-                    })()
-                  ) : (
-                    activeOffer && activeOffer.mode === "kauf" ? (
-                      <>
-                        <span style={{ textDecoration: "line-through", fontSize: 14, fontWeight: 600, color: TEXT_MUTED, marginRight: 6 }}>{fmtEUR(gesamtEinmalig)}</span>
-                        {fmtEUR(effGesamtEinmalig)}
-                      </>
-                    ) : (
-                      fmtEUR(gesamtEinmalig)
-                    )
-                  )}
-                </div>
-                )}
-                {currentKey === "kontakt" && (
-                  <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 2 }}>{heuteLabel}</div>
-                )}
-                {activeOffer && !(paymentMode === "miete" && currentKey !== "kontakt" && currentPaket.id.toLowerCase().startsWith("pro")) && (
-                  <div style={{ fontSize: 11, color: BRAND, fontWeight: 600, marginTop: 4 }}>
-                    {activeOffer.label}
-                  </div>
-                )}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: TEXT_MUTED }}>
-                <Shield size={16} aria-hidden={true} focusable={false} /> Sicher
+            {summaryDetailsBlock}
+            {renderCta(false)}
+            <TrustBlock />
+          </div>
+        )}
+
+        {/* MOBILE sticky action bar */}
+        {isMobile && currentKey !== "bezahlen" && currentKey !== "fertig" && (
+          <div style={{
+            flexShrink: 0,
+            padding: "10px 14px",
+            borderTop: "1px solid rgba(79,63,240,0.1)",
+            background: "#fff",
+            display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10,
+            boxShadow: "0 -4px 16px rgba(15,12,41,0.06)",
+          }}>
+            <div style={{ minWidth: 0, overflow: "hidden" }}>
+              <div style={{
+                fontSize: 15, fontWeight: 800, color: TEXT_DARK, lineHeight: 1.15,
+                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+              }}>
+                {compactPriceLabel}
               </div>
             </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                if (!canProceedFromStep(step)) return;
-                if (currentKey === "kontakt") {
-                  if (payMethod === "rechnung") {
-                    // Rechnungs-Bestätigungsflow starten (E-Mail-Code)
-                    setInvoiceConfirmStage("intro");
-                  } else {
-                    handleSubmit();
-                  }
-                } else {
-                  setStep((s) => s + 1);
-                }
-              }}
-              disabled={!canProceedFromStep(step) || submitting}
-              style={{
-                width: "100%",
-                padding: "14px 20px",
-                background: canProceedFromStep(step) && !submitting ? BRAND_GRADIENT : "#D1CFEF",
-                color: "#fff",
-                fontSize: 16, fontWeight: 700,
-                border: "none", borderRadius: 14,
-                cursor: canProceedFromStep(step) && !submitting ? "pointer" : "not-allowed",
-                fontFamily: "inherit",
-                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-                boxShadow: canProceedFromStep(step) && !submitting ? "0 8px 24px rgba(79,63,240,0.3)" : "none",
-                transition: "all 0.15s",
-              }}
-            >
-              {submitting ? (
-                <><Loader2 size={20} className="animate-spin" aria-hidden={true} focusable={false} /> Wird abgeschickt…</>
-              ) : currentKey === "kontakt" ? (
-                <>{payMethod === "online" && stripeAvailable ? "Weiter zur Zahlung" : "Verbindlich beauftragen"} <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
-              ) : (
-                <>Weiter <ArrowRight size={20} aria-hidden={true} focusable={false} /></>
-              )}
-            </button>
-            <TrustBlock />
+            {renderCta(true)}
           </div>
         )}
       </div>
