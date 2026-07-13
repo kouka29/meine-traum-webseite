@@ -693,7 +693,7 @@ export default function CheckoutFunnel({
 
   if (!open) return null;
 
-  const isCentered = layout === "centered";
+  const isCentered = layout === "centered" && !isMobile;
 
   return (
     <div
@@ -705,7 +705,7 @@ export default function CheckoutFunnel({
         backdropFilter: "blur(6px)",
         display: "flex",
         alignItems: isCentered ? "center" : "stretch",
-        justifyContent: isCentered ? "center" : "flex-end",
+        justifyContent: isMobile ? "stretch" : (isCentered ? "center" : "flex-end"),
         padding: isCentered ? 24 : 0,
         animation: "funnelFadeIn 0.25s ease-out",
         fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
