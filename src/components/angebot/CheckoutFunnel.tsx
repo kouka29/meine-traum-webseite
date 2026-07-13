@@ -1980,10 +1980,17 @@ function StepKontakt({
 
         {(() => {
           // Preise: bevorzugt aus Server-Antwort, sonst lokaler Fallback.
-          const useServer = codeUi.serverPricing != null && (codeUi.appliedCodes.length > 0 || codeUi.serverPricing.discount_cents > 0);
-          const netto = useServer ? codeUi.serverPricing!.netto : effHeuteZuZahlen;
-          const mwst = useServer ? codeUi.serverPricing!.mwst : Math.round(effHeuteZuZahlen * 19) / 100;
-          const brutto = useServer ? codeUi.serverPricing!.brutto : Math.round(effHeuteZuZahlen * 119) / 100;
+          // Bei aktivem URL-Angebot (activeOffer) ist der Client die einzige
+          // Preisquelle — der Server würde denselben Rabatt sonst zusätzlich
+          // gegen den Rohpreis rechnen (Doppelrabatt).
+          const useServer =
+            !activeOffer &&
+            codeUi.serverPricing != null &&
+            (codeUi.appliedCodes.length > 0 || codeUi.serverPricing.discount_cents > 0);
+          const nettoRaw = useServer ? codeUi.serverPricing!.netto : effHeuteZuZahlen;
+          const netto = Math.round(nettoRaw * 100) / 100;
+          const mwst = useServer ? codeUi.serverPricing!.mwst : Math.round(netto * 19) / 100;
+          const brutto = useServer ? codeUi.serverPricing!.brutto : Math.round((netto + mwst) * 100) / 100;
           return (
             <>
               <div style={{ fontSize: 12, color: TEXT_MUTED }}>
