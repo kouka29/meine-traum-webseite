@@ -1134,7 +1134,7 @@ export default function CheckoutFunnel({
           {isMobile && currentKey !== "bezahlen" && currentKey !== "fertig" && (
             <div style={{ marginTop: 24, paddingTop: 16, borderTop: "1px solid rgba(79,63,240,0.1)" }}>
               {summaryDetailsBlock}
-              <TrustBlock />
+              {currentKey !== "paket" && <TrustBlock />}
               <div style={{ height: 96 }} aria-hidden="true" />
             </div>
           )}
