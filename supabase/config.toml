@@ -43,3 +43,5 @@ project_id = "zwxucictfdbwhnnyemri"
     verify_jwt = false
   [functions.remove-code]
     verify_jwt = false
+  [functions.demo-feedback]
+    verify_jwt = false
