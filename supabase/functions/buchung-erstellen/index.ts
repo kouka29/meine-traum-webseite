@@ -127,7 +127,26 @@ Deno.serve(async (req) => {
       .eq("email", kunde_email.toLowerCase())
       .maybeSingle();
     if (acc?.invoice_allowed) accountInvoiceAllowed = true;
-    if (!sessionInvoiceAllowed && !accountInvoiceAllowed) {
+    // Admin-created angebote (referenced via short_id oder uuid in angebots_id)
+    // dürfen Rechnungskauf implizit erlauben, wenn der Admin die Zahlungsart im
+    // Angebot selbst auf "rechnung" gesetzt hat. base64_data enthält die
+    // ursprünglichen Angebotsdaten inkl. payment_method.
+    let angebotInvoiceAllowed = false;
+    if (angebots_id) {
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(angebots_id);
+      const q = supabase
+        .from("angebote")
+        .select("base64_data, status, ablauf_datum")
+        .limit(1);
+      const { data: ang } = await (isUuid ? q.eq("id", angebots_id) : q.eq("short_id", angebots_id)).maybeSingle();
+      if (ang && ang.status === "aktiv" && (!ang.ablauf_datum || new Date(ang.ablauf_datum) >= new Date())) {
+        try {
+          const decoded = JSON.parse(atob(String(ang.base64_data || "")));
+          if (decoded?.payment_method === "rechnung") angebotInvoiceAllowed = true;
+        } catch { /* ignore decode errors */ }
+      }
+    }
+    if (!sessionInvoiceAllowed && !accountInvoiceAllowed && !angebotInvoiceAllowed) {
       return new Response(JSON.stringify({ error: "Rechnungskauf ist für dieses Konto nicht freigeschaltet." }), {
         status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
