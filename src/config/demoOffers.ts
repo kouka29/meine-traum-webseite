@@ -17,6 +17,8 @@ export interface DemoOfferOption {
 export interface DemoOffer {
   slug: string;
   firstName: string;
+  anrede?: "du" | "sie";
+  anredeName?: string;
   plan: "pro";
   headline: string;
   sub: string;
