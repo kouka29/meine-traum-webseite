@@ -17,6 +17,8 @@ export interface DemoOfferOption {
 export interface DemoOffer {
   slug: string;
   firstName: string;
+  anrede?: "du" | "sie";
+  anredeName?: string;
   plan: "pro";
   headline: string;
   sub: string;
@@ -70,6 +72,42 @@ export const DEMO_OFFERS: Record<string, DemoOffer> = {
       "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
       "Google Maps & Google Business vollständig eingerichtet",
       "Bei Google gefunden werden – wenn Kunden in Deiner Stadt suchen",
+      "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
+      "Hosting, Domain & SSL inklusive",
+    ],
+    miete: {
+      coupon: "MTW-Y1",
+      offerCode: "mtw-y1",
+      price: "59 €/Monat",
+      regular: "99 €/Monat",
+      discountedNumber: 59,
+      regularNumber: 99,
+      note: "1. Jahr Starter-Preis · danach 99 €/Monat · monatlich kündbar",
+      priceId: "pro_rent_monthly",
+    },
+    kauf: {
+      coupon: "MTW-KAUF25",
+      offerCode: "mtw-kauf25",
+      price: "1.492,50 €",
+      regular: "1.990 €",
+      discountedNumber: 1492.5,
+      regularNumber: 1990,
+      note: "25 % Rabatt · einmalig · netto",
+      priceId: "pro_purchase_deposit",
+    },
+  },
+  "ME-KA": {
+    slug: "ME-KA",
+    firstName: "Erik",
+    anrede: "sie",
+    anredeName: "Herr Meyer",
+    plan: "pro",
+    headline: "Pro-Website zum Preis von Starter",
+    sub: "Volle Pro-Leistung — Sonderkondition nur für Sie.",
+    features: [
+      "Bis zu 5 Seiten – Leistungen, Referenzen, Über uns, Kontakt",
+      "Google Maps & Google Business vollständig eingerichtet",
+      "Bei Google gefunden werden – wenn Kunden in Ihrer Stadt suchen",
       "Fertig in ca. 2 Wochen – sorgfältig umgesetzt",
       "Hosting, Domain & SSL inklusive",
     ],

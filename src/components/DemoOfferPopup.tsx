@@ -30,6 +30,9 @@ export default function DemoOfferPopup({ open, offer, onClose, onSelect }: Props
 
   if (!open || !offer) return null;
 
+  const sie = offer.anrede === "sie";
+  const anredeName = offer.anredeName ?? offer.firstName;
+
   return (
     <div
       role="dialog"
@@ -62,7 +65,7 @@ export default function DemoOfferPopup({ open, offer, onClose, onSelect }: Props
             <img src="/logo.png" alt="Meine Traum-Website" className="h-8 w-auto" />
           </div>
           <p className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-2">
-            Dein persönliches Angebot, {offer.firstName}
+            {sie ? `Ihr persönliches Angebot, ${anredeName}` : `Dein persönliches Angebot, ${offer.firstName}`}
           </p>
           <h2
             id="demo-offer-title"
