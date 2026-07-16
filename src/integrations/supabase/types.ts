@@ -71,6 +71,184 @@ export type Database = {
         }
         Relationships: []
       }
+      appointment_events: {
+        Row: {
+          actor: string | null
+          appointment_id: string
+          created_at: string
+          created_by: string | null
+          event_type: string
+          id: string
+          payload: Json | null
+        }
+        Insert: {
+          actor?: string | null
+          appointment_id: string
+          created_at?: string
+          created_by?: string | null
+          event_type: string
+          id?: string
+          payload?: Json | null
+        }
+        Update: {
+          actor?: string | null
+          appointment_id?: string
+          created_at?: string
+          created_by?: string | null
+          event_type?: string
+          id?: string
+          payload?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointment_events_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      appointments: {
+        Row: {
+          confirmed_at: string | null
+          created_at: string
+          created_by: string | null
+          dauer_min: number
+          end_at: string
+          ergebnis: string | null
+          id: string
+          kanal: string
+          last_notified_at: string | null
+          notes: string | null
+          public_token: string
+          sales_lead_id: string
+          sequence: number
+          short_code: string
+          start_at: string
+          status: string
+          termin_typ: string
+          token_expires_at: string
+          updated_at: string
+        }
+        Insert: {
+          confirmed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          dauer_min?: number
+          end_at: string
+          ergebnis?: string | null
+          id?: string
+          kanal?: string
+          last_notified_at?: string | null
+          notes?: string | null
+          public_token: string
+          sales_lead_id: string
+          sequence?: number
+          short_code: string
+          start_at: string
+          status?: string
+          termin_typ?: string
+          token_expires_at: string
+          updated_at?: string
+        }
+        Update: {
+          confirmed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          dauer_min?: number
+          end_at?: string
+          ergebnis?: string | null
+          id?: string
+          kanal?: string
+          last_notified_at?: string | null
+          notes?: string | null
+          public_token?: string
+          sales_lead_id?: string
+          sequence?: number
+          short_code?: string
+          start_at?: string
+          status?: string
+          termin_typ?: string
+          token_expires_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_sales_lead_id_fkey"
+            columns: ["sales_lead_id"]
+            isOneToOne: false
+            referencedRelation: "sales_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      availability_rules: {
+        Row: {
+          active: boolean
+          created_at: string
+          end_time: string
+          id: string
+          slot_minutes: number
+          start_time: string
+          timezone: string
+          updated_at: string
+          weekday: number
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          end_time: string
+          id?: string
+          slot_minutes?: number
+          start_time: string
+          timezone?: string
+          updated_at?: string
+          weekday: number
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          end_time?: string
+          id?: string
+          slot_minutes?: number
+          start_time?: string
+          timezone?: string
+          updated_at?: string
+          weekday?: number
+        }
+        Relationships: []
+      }
+      blocked_slots: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          end_at: string
+          id: string
+          reason: string | null
+          start_at: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          end_at: string
+          id?: string
+          reason?: string | null
+          start_at: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          end_at?: string
+          id?: string
+          reason?: string | null
+          start_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       buchungen: {
         Row: {
           addons: Json | null
@@ -771,6 +949,62 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          appointment_id: string
+          created_at: string
+          id: string
+          kanal: string
+          last_error: string | null
+          payload: Json | null
+          provider_message_id: string | null
+          scheduled_for: string
+          sent_at: string | null
+          status: string
+          typ: string
+          updated_at: string
+          versuche: number
+        }
+        Insert: {
+          appointment_id: string
+          created_at?: string
+          id?: string
+          kanal: string
+          last_error?: string | null
+          payload?: Json | null
+          provider_message_id?: string | null
+          scheduled_for: string
+          sent_at?: string | null
+          status?: string
+          typ: string
+          updated_at?: string
+          versuche?: number
+        }
+        Update: {
+          appointment_id?: string
+          created_at?: string
+          id?: string
+          kanal?: string
+          last_error?: string | null
+          payload?: Json | null
+          provider_message_id?: string | null
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: string
+          typ?: string
+          updated_at?: string
+          versuche?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       page_views: {
         Row: {
           created_at: string
@@ -855,6 +1089,30 @@ export type Database = {
         }
         Relationships: []
       }
+      public_rate_limit: {
+        Row: {
+          count: number
+          created_at: string
+          id: string
+          ip_hash: string
+          minute_bucket: string
+        }
+        Insert: {
+          count?: number
+          created_at?: string
+          id?: string
+          ip_hash: string
+          minute_bucket: string
+        }
+        Update: {
+          count?: number
+          created_at?: string
+          id?: string
+          ip_hash?: string
+          minute_bucket?: string
+        }
+        Relationships: []
+      }
       purchases: {
         Row: {
           created_at: string
@@ -920,6 +1178,45 @@ export type Database = {
           },
         ]
       }
+      sales_leads: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          kanal: string | null
+          mobil: string | null
+          name: string
+          notes: string | null
+          sms_consent: boolean
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          kanal?: string | null
+          mobil?: string | null
+          name: string
+          notes?: string | null
+          sms_consent?: boolean
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          kanal?: string | null
+          mobil?: string | null
+          name?: string
+          notes?: string | null
+          sms_consent?: boolean
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
@@ -974,6 +1271,27 @@ export type Database = {
           role?: string
           sort_order?: number
           text?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -1271,6 +1589,13 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       increment_taken_slot:
         | { Args: never; Returns: undefined }
         | { Args: { p_page_key?: string }; Returns: undefined }
@@ -1297,7 +1622,7 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1424,6 +1749,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
