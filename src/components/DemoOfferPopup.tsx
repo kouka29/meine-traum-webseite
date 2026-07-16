@@ -62,7 +62,9 @@ export default function DemoOfferPopup({ open, offer, onClose, onSelect }: Props
             <img src="/logo.png" alt="Meine Traum-Website" className="h-8 w-auto" />
           </div>
           <p className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-2">
-            Dein persönliches Angebot, {offer.firstName}
+            {offer.anrede === "sie"
+              ? `Ihr persönliches Angebot, ${offer.anredeName ?? offer.firstName}`
+              : `Dein persönliches Angebot, ${offer.firstName}`}
           </p>
           <h2
             id="demo-offer-title"
